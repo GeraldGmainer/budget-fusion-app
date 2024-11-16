@@ -1,0 +1,142 @@
+{
+  "error": {
+    "internet": "Keine Internetverbindung",
+    "default": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "auth_error": "Authentifizierung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldeinformationen.",
+    "postgrest_error": "Datenbankfehler. Bitte versuchen Sie es später erneut."
+  },
+  "main": {
+    "title": "Budget Book",
+    "drawer": {
+      "account_label": "Konto",
+      "period_label": "Zeitraum",
+      "view_label": "Ansicht",
+      "category_button": "Kategorien",
+      "account_button": "Konten",
+      "settings_button": "Einstellungen"
+    }
+  },
+  "account": {
+    "all_accounts": "Alle Konten",
+    "display_account": "Konto anzeigen"
+  },
+  "button": {
+    "create": "Hinzufügen",
+    "edit": "Speichern"
+  },
+  "booking": {
+    "new_title": "Neue Buchung",
+    "edit_title": "Buchung bearbeiten",
+    "choose_category_button": "Kategorie auswählen",
+    "select_account": "Konto auswählen",
+    "outcome_type": "Ausgaben",
+    "income_type": "Einnahmen",
+    "today": "heute",
+    "yesterday": "gestern",
+    "before_yesterday": "vor 2 Tagen",
+    "note": "Notiz",
+    "dialog": {
+      "delete_title": "Löschen",
+      "delete_body": "Möchten Sie diese Buchung löschen?"
+    },
+    "validation": {
+      "required_category": "Bitte eine Kategorie auswählen"
+    },
+    "create_success": "Buchung erstellt",
+    "edit_success": "Buchung bearbeitet",
+    "delete_success": "Buchung gelöscht"
+  },
+  "category": {
+    "new_title": "Neu",
+    "edit_title": "Bearbeiten",
+    "list_title": "Kategorien",
+    "select_icon_label": "Symbol auswählen",
+    "select_color_label": "Farbe auswählen",
+    "name_label": "Kategoriename",
+    "type_label": "Kategorieart",
+    "dialog": {
+      "delete_title": "Löschen",
+      "delete_body": "Möchten Sie diese Kategorie löschen?"
+    },
+    "validation": {
+      "required_icon_color": "Symbol und Farbe auswählen",
+      "required_name": "Namen eingeben"
+    },
+    "create_success": "Kategorie erstellt",
+    "edit_success": "Kategorie bearbeitet",
+    "delete_success": "Kategorie gelöscht",
+    "error": {
+      "create": "Konnte die Kategorie nicht erstellen. Bitte versuchen Sie es erneut.",
+      "edit": "Konnte die Kategorie nicht bearbeiten. Bitte versuchen Sie es erneut.",
+      "foreign_key": "Kategorie wird noch verwendet und kann nicht gelöscht werden."
+    }
+  },
+  "currency": {
+    "name": "Währung"
+  },
+  "dialog": {
+    "ok": "OK",
+    "cancel": "Abbrechen"
+  },
+  "language": {
+    "name": "Sprache",
+    "dialog": {
+      "title": "Wähle eine Sprache"
+    },
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "login": {
+    "title": "Anmeldung",
+    "sign_with_label": "Anmelden mit",
+    "or_continue_with_label": "oder fortsetzen mit",
+    "forgot_password_label": "Passwort vergessen?",
+    "dont_have_account_label": "Noch kein Konto? Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "login_button": "Anmelden",
+    "error": {
+      "incorrect_credentials": "Falsche E-Mail oder Passwort",
+      "logout": "Konnte nicht abmelden. Bitte versuchen Sie es erneut.",
+      "token_not_found": "Token nicht gefunden",
+      "signature_invalid": "Ungültige Signatur",
+      "default": "Konnte nicht anmelden. Bitte versuchen Sie es erneut."
+    },
+    "logout": {
+      "dialog": {
+        "title": "Abmelden",
+        "body": "Möchten Sie sich abmelden?"
+      }
+    }
+  },
+  "period": {
+    "day": "Tag",
+    "month": "Monat",
+    "year": "Jahr",
+    "all": "Alle"
+  },
+  "profile": {
+    "name": "Name",
+    "email": "E-Mail"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "general_label": "Allgemein",
+    "account_label": "Konto",
+    "other_label": "Sonstiges",
+    "logout_button": "Abmelden",
+    "my_profile": "Mein Profil"
+  },
+  "sign_up": {
+    "title": "Registrieren",
+    "sign_up_button": "Registrieren",
+    "success": "Erfolg",
+    "success_detail": "Überprüfen Sie Ihr Postfach, um Ihre E-Mail-Adresse zu bestätigen"
+  },
+  "view": {
+    "graph": "Graph",
+    "calendar": "Kalender",
+    "list": "Liste"
+  }
+}

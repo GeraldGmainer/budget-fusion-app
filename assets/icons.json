@@ -1,0 +1,245 @@
+{
+  "category_colors": [
+    {
+      "code": "#FF5733",
+      "name": "red"
+    },
+    {
+      "code": "#33FF57",
+      "name": "green"
+    },
+    {
+      "code": "#3366FF",
+      "name": "blue"
+    },
+    {
+      "code": "#c2c226",
+      "name": "yellow"
+    },
+    {
+      "code": "#FF33FF",
+      "name": "pink"
+    },
+    {
+      "code": "#FF6633",
+      "name": "orange"
+    },
+    {
+      "code": "#9933FF",
+      "name": "purple"
+    },
+    {
+      "code": "#33FFFF",
+      "name": "cyan"
+    },
+    {
+      "code": "#6cb622",
+      "name": "lime_green"
+    },
+    {
+      "code": "#FF9966",
+      "name": "peach"
+    },
+    {
+      "code": "#3399CC",
+      "name": "teal"
+    },
+    {
+      "code": "#808080",
+      "name": "gray"
+    }
+  ],
+  "category_icons": [
+    {
+      "parent": "Finance",
+      "icons": [
+        {
+          "name": "account"
+        },
+        {
+          "name": "cash-multiple"
+        },
+        {
+          "name": "credit-card"
+        },
+        {
+          "name": "wallet-giftcard"
+        },
+        {
+          "name": "wallet-membership"
+        }
+      ]
+    },
+    {
+      "parent": "Transportation",
+      "icons": [
+        {
+          "name": "airplane"
+        },
+        {
+          "name": "car"
+        },
+        {
+          "name": "train"
+        },
+        {
+          "name": "train-car"
+        }
+      ]
+    },
+    {
+      "parent": "Entertainment",
+      "icons": [
+        {
+          "name": "movie"
+        },
+        {
+          "name": "music"
+        },
+        {
+          "name": "guitar"
+        },
+        {
+          "name": "shopping-music"
+        },
+        {
+          "name": "ticket-account"
+        }
+      ]
+    },
+    {
+      "parent": "Essentials",
+      "icons": [
+        {
+          "name": "book"
+        },
+        {
+          "name": "home"
+        },
+        {
+          "name": "food"
+        },
+        {
+          "name": "lightbulb-outline"
+        },
+        {
+          "name": "shopping"
+        }
+      ]
+    },
+    {
+      "parent": "Miscellaneous",
+      "icons": [
+        {
+          "name": "umbrella"
+        },
+        {
+          "name": "palette"
+        },
+        {
+          "name": "dots"
+        },
+        {
+          "name": "medical-bag"
+        }
+      ]
+    }
+  ],
+  "account_colors": [
+    {
+      "code": "#FF5733",
+      "name": "red"
+    },
+    {
+      "code": "#33FF57",
+      "name": "green"
+    },
+    {
+      "code": "#3366FF",
+      "name": "blue"
+    },
+    {
+      "code": "#c2c226",
+      "name": "yellow"
+    },
+    {
+      "code": "#FF33FF",
+      "name": "pink"
+    },
+    {
+      "code": "#FF6633",
+      "name": "orange"
+    },
+    {
+      "code": "#9933FF",
+      "name": "purple"
+    },
+    {
+      "code": "#33FFFF",
+      "name": "cyan"
+    },
+    {
+      "code": "#6cb622",
+      "name": "lime_green"
+    },
+    {
+      "code": "#FF9966",
+      "name": "peach"
+    },
+    {
+      "code": "#3399CC",
+      "name": "teal"
+    },
+    {
+      "code": "#808080",
+      "name": "gray"
+    }
+  ],
+  "account_icons": [
+    {
+      "parent": "Banking",
+      "icons": [
+        {
+          "name": "cash-multiple"
+        },
+        {
+          "name": "wallet-giftcard"
+        },
+        {
+          "name": "credit-card-outline"
+        },
+        {
+          "name": "bank"
+        }
+      ]
+    },
+    {
+      "parent": "Savings",
+      "icons": [
+        {
+          "name": "coin"
+        },
+        {
+          "name": "credit-card-plus"
+        },
+        {
+          "name": "wallet"
+        }
+      ]
+    },
+    {
+      "parent": "Expenses",
+      "icons": [
+        {
+          "name": "shopping"
+        },
+        {
+          "name": "credit-card-clock"
+        },
+        {
+          "name": "atm"
+        }
+      ]
+    }
+  ]
+}
