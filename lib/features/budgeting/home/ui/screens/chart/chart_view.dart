@@ -92,20 +92,40 @@ class ChartView extends StatelessWidget {
                 ),
                 SizedBox(height: 12.0),
 
-                // Category Summaries Count
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Number of Categories:",
-                      style: TextStyle(fontSize: 16),
+                      "Categories:",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      "${chart.categorySummaries.length}",
-                      style: TextStyle(fontSize: 16, color: Colors.blue),
+                    ...chart.categorySummaries.map(
+                      (summary) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 140,
+                              child: Text(
+                                summary.categoryName,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            Text(
+                              "${summary.percentage}%",
+                              style: TextStyle(fontSize: 16, color: Colors.blue),
+                            ),
+                            Text(
+                              summary.value.toStringAsFixed(2),
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
