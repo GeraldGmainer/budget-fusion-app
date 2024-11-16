@@ -23,7 +23,8 @@ class ChartView extends StatelessWidget {
       itemCount: charts.length,
       itemBuilder: (context, index) {
         final chart = charts[index];
-        final balance = chart.income - chart.outcome;
+        final balance = chart.period.income - chart.period.outcome;
+        final date = chart.period.filter.dateTime ?? DateTime.now();
 
         return Card(
           margin: EdgeInsets.all(12.0),
@@ -35,7 +36,7 @@ class ChartView extends StatelessWidget {
               children: [
                 // Currency Display
                 Text(
-                  "Currency: ${chart.currency.name} (${chart.currency.name})",
+                  "${date.year}.${date.month}",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8.0),
@@ -49,7 +50,7 @@ class ChartView extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      "${chart.currency.symbol}${chart.income.toDouble().toStringAsFixed(2)}",
+                      "${chart.currency.symbol}${chart.period.income.toDouble().toStringAsFixed(2)}",
                       style: TextStyle(fontSize: 16, color: Colors.green),
                     ),
                   ],
@@ -65,7 +66,7 @@ class ChartView extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      "${chart.currency.symbol}${chart.outcome.toDouble().toStringAsFixed(2)}",
+                      "${chart.currency.symbol}${chart.period.outcome.toDouble().toStringAsFixed(2)}",
                       style: TextStyle(fontSize: 16, color: Colors.red),
                     ),
                   ],
@@ -105,25 +106,6 @@ class ChartView extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // Optionally, Display More Information
-                // For example, Total Number of Bookings
-                // Uncomment if needed
-                /*
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total Bookings:",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Text(
-                      "${chart.categorySummaries.fold(0, (sum, summary) => sum + summary.value.toInt())}",
-                      style: TextStyle(fontSize: 16, color: Colors.orange),
-                    ),
-                  ],
-                ),
-                */
               ],
             ),
           ),

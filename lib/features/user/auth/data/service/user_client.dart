@@ -11,6 +11,7 @@ class UserClient {
     if (success && supabase.auth.currentUser != null) {
       return supabase.auth.currentUser!;
     }
+    // TODO exception
     throw "login error";
   }
 
@@ -19,6 +20,7 @@ class UserClient {
     if (response.user != null) {
       return response.user!;
     }
+    // TODO exception
     throw "login error";
   }
 

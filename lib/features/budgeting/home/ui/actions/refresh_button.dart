@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../home.dart';
 
 class RefreshButton extends StatelessWidget {
   _refresh(BuildContext context) {
-    // TODO
-    // BlocProvider.of<GraphViewBloc>(context).add(RefreshGraphViewEvent());
+    context.read<BookingPeriodBloc>().add(BookingPeriodEvent.load(PeriodMode.month));
   }
 
   @override

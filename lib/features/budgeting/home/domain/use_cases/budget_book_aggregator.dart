@@ -78,15 +78,15 @@ class BudgetBookAggregator {
         );
       } else {
         final DateTime month = DateTime.fromMillisecondsSinceEpoch(monthKey);
-        // List<CategoryBookingGroupModel> groupModels = [];
-        //
-        // bookingsByCategory[monthKey]?.forEach((categoryId, dataModels) {
-        //   final category = _bookingConverter.findCategory(categories, categoryId);
-        //   final bookings = _bookingConverter.fromDataModels(dataModels, category, accounts);
-        //   final amount = _calculateAmount(dataModels);
-        //   groupModels.add(CategoryBookingGroupModel(category: category, bookings: bookings, amount: amount));
-        // });
         List<CategoryGroup> groupModels = [];
+
+        bookingsByCategory[monthKey]?.forEach((categoryId, bookings) {
+          // final category = _bookingConverter.findCategory(categories, categoryId);
+          // final bookings = _bookingConverter.fromDataModels(dataModels, category, accounts);
+          final amount = bookings.totalAmount;
+          groupModels.add(CategoryGroup(category: bookings[0].category, bookings: bookings, amount: amount));
+        });
+        // List<CategoryGroup> groupModels = [];
 
         groupModels.sort((a, b) {
           final typeComparison = a.category.categoryType.index.compareTo(b.category.categoryType.index);

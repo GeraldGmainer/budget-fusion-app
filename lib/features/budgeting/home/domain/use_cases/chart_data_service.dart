@@ -19,8 +19,7 @@ class ChartDataService {
 
     return ChartViewData(
       currency: currency,
-      income: period.income,
-      outcome: period.outcome,
+      period: period,
       pieData: pieData,
       categorySummaries: categorySummaries,
     );
