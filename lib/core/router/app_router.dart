@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/features/budgeting/budgeting.dart';
+import 'package:budget_fusion_app/features/mockup/mockup_page.dart';
 import 'package:budget_fusion_app/features/user/user.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,10 @@ import 'package:flutter/material.dart';
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
     BudgetLogger.instance.d("AppRouter, go to ${settings.name}");
+
+    return MyCustomRoute(
+      builder: (context) => MockupPage(),
+    );
 
     switch (settings.name) {
       case LoginPage.route:
