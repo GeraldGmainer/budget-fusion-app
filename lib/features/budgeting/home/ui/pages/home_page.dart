@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../home.dart';
 
 class HomePage extends StatefulWidget {
-  static const String route = "HomePage";
+  // static const String route = "HomePage";
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/budgeting/budgeting.dart';
+import 'package:budget_fusion_app/features/main/main.dart';
 import 'package:budget_fusion_app/features/user/user.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/foundation.dart';
@@ -137,7 +137,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
         }
         BudgetLogger.instance.d("_recoverSessionFromDeeplink success!");
         _showMessage("sign_up.success");
-        widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(HomePage.route, (route) => false, arguments: false);
+        widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(MainPage.route, (route) => false, arguments: false);
       }
     } on Exception catch (e) {
       _onErrorAuthenticating(e.toString());

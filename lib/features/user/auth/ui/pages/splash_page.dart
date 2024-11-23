@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/budgeting/budgeting.dart';
+import 'package:budget_fusion_app/features/main/main.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../profile/application/blocs/blocs.dart';
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _onProfileSuccess(Profile profile) {
-    Navigator.of(context).pushNamedAndRemoveUntil(HomePage.route, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(MainPage.route, (route) => false);
   }
 
   _onError(String message) {
