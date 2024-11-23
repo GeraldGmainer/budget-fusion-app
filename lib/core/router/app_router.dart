@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/features/main/main.dart';
+import 'package:budget_fusion_app/features/settings/settings.dart';
 import 'package:budget_fusion_app/features/user/user.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,18 @@ class AppRouter {
       case MainPage.route:
         return MyCustomRoute(
           builder: (context) => MainPage(),
+        );
+      case EditProfilePage.route:
+        return MyCustomRoute(
+          builder: (context) => EditProfilePage(),
+        );
+      case ManageWorkspacePage.route:
+        return MyCustomRoute(
+          builder: (context) => ManageWorkspacePage(),
+        );
+      case SettingsPage.route:
+        return MyCustomRoute(
+          builder: (context) => SettingsPage(),
         );
       // case ResetPasswordPage.route:
       //   return MyCustomRoute(
