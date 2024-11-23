@@ -1,74 +1,73 @@
-import 'package:budget_fusion_app/features/mockup/monthly_balance.dart';
 import 'package:budget_fusion_app/features/mockup/recent_transactions.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
+import 'dynamic_sliver_app_bar.dart';
+import 'monthly_balance.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
-    const paddingTop = kToolbarHeight + 50;
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          expandedHeight: 375.0,
+        DynamicSliverAppBar(
           pinned: true,
+          toolbarHeight: kToolbarHeight,
+          leading: Icon(
+            Icons.account_circle,
+            color: AppColors.secondaryTextColor,
+            size: 44,
+          ),
+          automaticallyImplyLeading: false,
           title: Row(
-            children: [
-              Icon(
-                Icons.account_circle,
-                color: AppColors.secondaryTextColor,
-                size: 44,
-              ),
-              SizedBox(width: 12),
+            children: const [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Text(
                     'Hello User!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3.0,
-                          color: Colors.black54,
-                          offset: Offset(1.0, 1.0),
-                        ),
-                      ],
                     ),
                   ),
                 ],
               ),
-              Expanded(child: Container()),
-              IconButton(
-                icon: const Icon(Icons.notifications, color: Colors.white),
-                onPressed: () {},
-              )
             ],
           ),
-          flexibleSpace: FlexibleSpaceBar(
-            background: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: const [Color(0xFF1565C0), Color(0xFF42A5F5)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications, color: Colors.white),
+              onPressed: () {},
+            ),
+          ],
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: const [Color(0xFF1565C0), Color(0xFF42A5F5)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              child: Padding(
-                // padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 80.0),
-                padding: EdgeInsets.only(top: paddingTop, left: 16, right: 16),
-                child: MonthlyBalance(),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + kToolbarHeight,
+                left: 16,
+                right: 16,
+                bottom: 8,
               ),
+              child: MonthlyBalance(),
             ),
           ),
         ),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 16),
-        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -88,13 +87,10 @@ class HomeTab extends StatelessWidget {
                       ),
                       subtitle: const Text(
                         'Review your spending for this month to stay on track.',
-                        // style: TextStyle(fontSize: 13),
                       ),
                       trailing: IconButton(
                         icon: const Icon(Icons.arrow_forward, color: AppColors.accentColor),
-                        onPressed: () {
-                          // Add your logic to navigate to the report
-                        },
+                        onPressed: () {},
                       ),
                     ),
                   ),
