@@ -1,12 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/constants/app_colors.dart';
-
 class GraphView extends StatefulWidget {
-  final String month;
-
-  const GraphView({super.key, required this.month});
+  const GraphView({super.key});
 
   @override
   _GraphViewState createState() => _GraphViewState();
@@ -29,22 +25,6 @@ class _GraphViewState extends State<GraphView> {
       child: Column(
         children: [
           SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.month,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.accentColor,
-                ),
-              ),
-              SizedBox(width: 8),
-              Text("345,19€", style: TextStyle(color: Colors.green, fontSize: 20)),
-            ],
-          ),
-          SizedBox(height: 16),
           SizedBox(
             height: 270,
             child: Stack(
@@ -93,6 +73,7 @@ class _GraphViewState extends State<GraphView> {
               ],
             ),
           ),
+          SizedBox(height: 8),
           ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 16),
             shrinkWrap: true,
