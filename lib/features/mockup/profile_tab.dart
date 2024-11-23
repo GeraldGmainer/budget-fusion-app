@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../core/constants/app_colors.dart';
+import 'settings_page.dart';
 
 class ProfileTab extends StatelessWidget {
   @override
@@ -32,13 +33,6 @@ class ProfileTab extends StatelessWidget {
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 3.0,
-                              color: Colors.black54,
-                              offset: Offset(1.0, 1.0),
-                            ),
-                          ],
                         ),
                       ),
                       Text(
@@ -82,7 +76,7 @@ class ProfileTab extends StatelessWidget {
       brightness: Brightness.dark,
       sections: [
         SettingsSection(
-          title: const Text('Account'),
+          title: const Text('Profile'),
           tiles: [
             SettingsTile.navigation(
               leading: const Icon(Icons.person),
@@ -92,70 +86,30 @@ class ProfileTab extends StatelessWidget {
                 // Navigate to profile editing
               },
             ),
+            SettingsTile.navigation(
+              leading: const Icon(Icons.group),
+              title: const Text('Manage Workspace'),
+              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
+              onPressed: (context) {
+                // Navigate to profile editing
+              },
+            ),
+            SettingsTile.navigation(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
+              onPressed: (context) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()),
+                );
+              },
+            ),
             SettingsTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Logout logic
-              },
-            ),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('General'),
-          tiles: [
-            SettingsTile.navigation(
-              leading: const Icon(Icons.currency_exchange),
-              title: const Text('Currency'),
-              value: const Text('EUR (€)'),
-              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Navigate to currency settings
-              },
-            ),
-            SettingsTile.navigation(
-              leading: const Icon(Icons.language),
-              title: const Text('Language'),
-              value: const Text('English'),
-              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Navigate to language settings
-              },
-            ),
-            SettingsTile.navigation(
-              leading: const Icon(Icons.account_balance_wallet),
-              title: const Text('Accounts'),
-              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Navigate to accounts settings
-              },
-            ),
-            SettingsTile.navigation(
-              leading: const Icon(Icons.category),
-              title: const Text('Categories'),
-              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Navigate to categories settings
-              },
-            ),
-            SettingsTile.navigation(
-              leading: const Icon(Icons.pie_chart),
-              title: const Text('Budget Plan'),
-              trailing: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-              onPressed: (context) {
-                // Navigate to budget plan settings
-              },
-            ),
-          ],
-        ),
-        SettingsSection(
-          title: const Text('Other'),
-          tiles: [
-            SettingsTile(
-              leading: const Icon(Icons.info),
-              title: const Text('App Version'),
-              value: const Text('1.0.0'), // Replace dynamically
+              onPressed: (context) {},
             ),
           ],
         ),
