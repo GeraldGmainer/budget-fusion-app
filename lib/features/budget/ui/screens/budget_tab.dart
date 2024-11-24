@@ -131,6 +131,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocListener<BookingPeriodBloc, BookingPeriodState>(
       listener: (context, state) {
         state.whenOrNull(

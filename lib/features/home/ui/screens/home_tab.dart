@@ -11,6 +11,7 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final toolbarPadding = MediaQuery.of(context).padding.top + kToolbarHeight;
 
     return CustomScrollView(
