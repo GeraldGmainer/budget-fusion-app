@@ -22,11 +22,7 @@ class MainBottomNavigationBar extends StatelessWidget {
         highlightColor: Colors.transparent,
       ),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: AppColors.secondaryTextColor, width: 0.4),
-          ),
-        ),
+        decoration: BoxDecoration(border: Border(top: AppBorders.secondaryBorder)),
         child: BlocBuilder<MainBloc, MainState>(
           builder: (context, state) {
             final selectedIndex = state.selectedIndex;

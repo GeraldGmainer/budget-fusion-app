@@ -49,29 +49,33 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      padding: const EdgeInsets.only(top: 8),
+      decoration: BoxDecoration(border: Border(bottom: AppBorders.secondaryBorder)),
       child: SingleChildScrollView(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: List.generate(widget.items.length, (index) {
             final isSelected = widget.selectedIndex == index;
             return GestureDetector(
               onTap: () => _onItemTap(index),
               child: Container(
                 key: _itemKeys[index],
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+                margin: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: isSelected ? AppColors.secondaryColor : Colors.transparent,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isSelected ? AppColors.primaryTextColor : Colors.transparent,
+                      width: 3.0,
+                    ),
+                  ),
                 ),
                 child: Text(
                   widget.items[index],
                   style: TextStyle(
                     fontSize: 14,
-                    color: isSelected ? Colors.white : Colors.grey,
+                    color: isSelected ? AppColors.primaryTextColor : Colors.grey,
                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),

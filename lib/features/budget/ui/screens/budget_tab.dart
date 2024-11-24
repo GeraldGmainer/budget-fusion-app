@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/budget/ui/actions/actions.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../application/application.dart';
 import '../../domain/domain.dart';
 import '../modal/modal.dart';
+import '../widgets/widgets.dart';
 import 'screens.dart';
 
 class BudgetTab extends StatefulWidget {
@@ -158,15 +158,11 @@ class _BudgetTabState extends State<BudgetTab> {
             ],
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
-            ),
+            RefreshButton(),
             IconButton(
               icon: const Icon(Icons.filter_list),
               onPressed: _showFilters,
             ),
-            RefreshButton(),
           ],
         ),
         body: Column(
@@ -177,26 +173,13 @@ class _BudgetTabState extends State<BudgetTab> {
               selectedIndex: _selectedNavIndex,
             ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "May 2024",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.accentColor,
-                  ),
-                ),
-                SizedBox(width: 8),
-                Text("345,19€", style: TextStyle(color: Colors.green, fontSize: 20)),
-              ],
-            ),
+            PeriodSelector(),
             const SizedBox(height: 8),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: _navigationViews.length,
                 itemBuilder: (context, index) {
                   return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
