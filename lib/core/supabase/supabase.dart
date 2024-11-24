@@ -1,3 +1,2 @@
-export 'domain/entities/supabase_user.dart';
-export 'infrastructure/services/supabase_client.dart';
-export 'presentation/supabase_container.dart';
+export 'supabase_client.dart';
+export 'supabase_user.dart';

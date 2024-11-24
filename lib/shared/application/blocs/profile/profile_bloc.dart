@@ -5,13 +5,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../../domain/repos/repos.dart';
+import '../../../../core/domain/repos/repos.dart';
 
 part 'profile_bloc.freezed.dart';
-
 part 'profile_event.dart';
-
 part 'profile_state.dart';
 
 @injectable
