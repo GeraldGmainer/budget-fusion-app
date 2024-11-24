@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/auth/auth.dart';
+import '../../features/budget/budget.dart';
 import '../../features/profile/profile.dart';
 import '../main_page/bloc/main_bloc.dart';
 
@@ -12,8 +13,11 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<LoginBloc>(create: (_) => GetIt.I<LoginBloc>()),
     BlocProvider<ProfileBloc>(create: (_) => GetIt.I<ProfileBloc>()),
     BlocProvider<LanguageBloc>(create: (_) => GetIt.I<LanguageBloc>()),
-    // BlocProvider<BookingPeriodBloc>(create: (_) => GetIt.I<BookingPeriodBloc>()),
-    // BlocProvider<BookingViewBloc>(create: (_) => GetIt.I<BookingViewBloc>()),
+    BlocProvider<BookingPeriodBloc>(create: (_) => GetIt.I<BookingPeriodBloc>()),
+    BlocProvider<BalancesBloc>(create: (_) => GetIt.I<BalancesBloc>()),
+    BlocProvider<CalendarBloc>(create: (_) => GetIt.I<CalendarBloc>()),
+    BlocProvider<SummaryBloc>(create: (_) => GetIt.I<SummaryBloc>()),
+    BlocProvider<TransactionsBloc>(create: (_) => GetIt.I<TransactionsBloc>()),
   ];
 }
 

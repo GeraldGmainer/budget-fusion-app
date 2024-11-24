@@ -1,7 +1,11 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/budget/ui/actions/actions.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/application.dart';
+import '../../domain/domain.dart';
 import '../modal/modal.dart';
 import 'screens.dart';
 
@@ -31,6 +35,7 @@ class _BudgetTabState extends State<BudgetTab> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _selectedNavIndex);
+    _load();
   }
 
   @override
@@ -39,19 +44,24 @@ class _BudgetTabState extends State<BudgetTab> {
     super.dispose();
   }
 
+  void _load() {
+    context.read<BookingPeriodBloc>().add(BookingPeriodEvent.load(PeriodMode.month));
+  }
+
   void _onTabSelected(int index) {
-    _onPageChanged(index);
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
       curve: Curves.linear,
     );
+    _onPageChanged(index);
   }
 
   void _onPageChanged(int index) {
     setState(() {
       _selectedNavIndex = index;
     });
+    _dispatchLoadToViewBloc(index);
   }
 
   void _onPeriodSelected(String period) {
@@ -94,72 +104,107 @@ class _BudgetTabState extends State<BudgetTab> {
     );
   }
 
+  void _dispatchLoadToViewBloc(int index) {
+    final bookingPeriodState = context.read<BookingPeriodBloc>().state;
+
+    bookingPeriodState.whenOrNull(
+      loaded: (periods) {
+        switch (index) {
+          case 0:
+            context.read<SummaryBloc>().add(SummaryEvent.load(periods));
+            break;
+          case 1:
+            context.read<TransactionsBloc>().add(TransactionsEvent.load(periods));
+            break;
+          case 2:
+            context.read<BalancesBloc>().add(BalancesEvent.load(periods));
+            break;
+          case 3:
+            context.read<CalendarBloc>().add(CalendarEvent.load(periods));
+            break;
+          default:
+            break;
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Budget Book',
-              style: TextStyle(fontSize: 20),
+    return BlocListener<BookingPeriodBloc, BookingPeriodState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loaded: (periods) {
+            _dispatchLoadToViewBloc(_selectedNavIndex);
+          },
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Budget Book',
+                style: TextStyle(fontSize: 20),
+              ),
+              Text(
+                '$_selectedTransaction for ${_selectedAccount == 'all accounts' ? 'All Accounts' : _selectedAccount} - $_selectedPeriod',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
             ),
-            Text(
-              '$_selectedTransaction for ${_selectedAccount == 'all accounts' ? 'All Accounts' : _selectedAccount} - $_selectedPeriod',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.white70,
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: _showFilters,
+            ),
+            RefreshButton(),
+          ],
+        ),
+        body: Column(
+          children: [
+            ScrollableNavBar(
+              onTabSelect: _onTabSelected,
+              items: _navItems,
+              selectedIndex: _selectedNavIndex,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "May 2024",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.accentColor,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text("345,19€", style: TextStyle(color: Colors.green, fontSize: 20)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                itemCount: _navigationViews.length,
+                itemBuilder: (context, index) {
+                  return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
+                },
               ),
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: _showFilters,
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          ScrollableNavBar(
-            onTabSelect: _onTabSelected,
-            items: _navItems,
-            selectedIndex: _selectedNavIndex,
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                "May 2024",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.accentColor,
-                ),
-              ),
-              SizedBox(width: 8),
-              Text("345,19€", style: TextStyle(color: Colors.green, fontSize: 20)),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: _onPageChanged,
-              itemCount: _navigationViews.length,
-              itemBuilder: (context, index) {
-                return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
