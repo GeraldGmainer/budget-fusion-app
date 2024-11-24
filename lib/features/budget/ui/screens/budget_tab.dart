@@ -14,7 +14,7 @@ class BudgetTab extends StatefulWidget {
   State<BudgetTab> createState() => _BudgetTabState();
 }
 
-class _BudgetTabState extends State<BudgetTab> {
+class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixin {
   final Map<int, Widget Function()> _navigationViews = {
     0: () => SummaryTab(),
     1: () => TransactionsTab(),
@@ -141,22 +141,7 @@ class _BudgetTabState extends State<BudgetTab> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Budget Book',
-                style: TextStyle(fontSize: 20),
-              ),
-              Text(
-                '$_selectedTransaction for ${_selectedAccount == 'all accounts' ? 'All Accounts' : _selectedAccount} - $_selectedPeriod',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ],
-          ),
+          title: BudgetTabTitle(transaction: _selectedTransaction, account: _selectedAccount, period: _selectedPeriod),
           actions: [
             RefreshButton(),
             IconButton(
@@ -191,4 +176,7 @@ class _BudgetTabState extends State<BudgetTab> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

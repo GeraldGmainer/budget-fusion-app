@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../widgets/widgets.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     final toolbarPadding = MediaQuery.of(context).padding.top + kToolbarHeight;
@@ -47,4 +52,7 @@ class HomeTab extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
