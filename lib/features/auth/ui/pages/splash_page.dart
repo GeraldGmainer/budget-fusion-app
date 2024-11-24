@@ -1,4 +1,4 @@
-import 'package:budget_fusion_app/app/main_page.dart';
+import 'package:budget_fusion_app/app/main_page/main_page.dart';
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';

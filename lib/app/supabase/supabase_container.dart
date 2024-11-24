@@ -12,7 +12,7 @@ import 'package:provider/provider.dart' as prov;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/auth/auth.dart';
-import '../main_page.dart';
+import '../main_page/main_page.dart';
 
 class SupabaseContainer extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;

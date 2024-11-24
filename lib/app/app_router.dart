@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../features/auth/auth.dart';
 import '../features/settings/settings.dart';
-import 'main_page.dart';
+import 'main_page/main_page.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {

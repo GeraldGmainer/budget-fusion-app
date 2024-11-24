@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 
 import '../../features/auth/auth.dart';
 import '../../features/profile/profile.dart';
+import '../main_page/bloc/main_bloc.dart';
 
 List<BlocProvider> getBlocProviders() {
   return [
+    BlocProvider<MainBloc>(create: (_) => GetIt.I<MainBloc>()),
     BlocProvider<LoginBloc>(create: (_) => GetIt.I<LoginBloc>()),
     BlocProvider<ProfileBloc>(create: (_) => GetIt.I<ProfileBloc>()),
     BlocProvider<LanguageBloc>(create: (_) => GetIt.I<LanguageBloc>()),

@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:budget_fusion_app/app/main_page/bloc/main_bloc.dart' as _i809;
 import 'package:budget_fusion_app/core/core.dart' as _i714;
 import 'package:budget_fusion_app/core/di/injection.dart' as _i87;
 import 'package:budget_fusion_app/core/service/connectivity_service.dart'
@@ -64,6 +65,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final registerModule = _$RegisterModule();
     gh.factory<_i1012.LanguageBloc>(() => _i1012.LanguageBloc());
+    gh.factory<_i809.MainBloc>(() => _i809.MainBloc());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i173.BookingRemoteSource>(
         () => _i173.BookingRemoteSource());
