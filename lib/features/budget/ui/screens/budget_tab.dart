@@ -153,13 +153,12 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
         ),
         body: Column(
           children: [
+            PeriodSelector(),
             ScrollableNavBar(
               onTabSelect: _onTabSelected,
               items: _navItems,
               selectedIndex: _selectedNavIndex,
             ),
-            const SizedBox(height: 8),
-            PeriodSelector(),
             const SizedBox(height: 8),
             Expanded(
               child: PageView.builder(

@@ -61,7 +61,7 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
               onTap: () => _onItemTap(index),
               child: Container(
                 key: _itemKeys[index],
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+                padding: EdgeInsets.fromLTRB(4, 4, 4, 8),
                 margin: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   border: Border(

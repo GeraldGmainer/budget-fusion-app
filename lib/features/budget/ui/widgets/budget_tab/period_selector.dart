@@ -8,26 +8,23 @@ class PeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border(bottom: AppBorders.secondaryBorder)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: Icon(Icons.chevron_left),
-            onPressed: () {
-              _onPrevious(context);
-            },
-          ),
-          _buildPeriod(),
-          IconButton(
-            icon: Icon(Icons.chevron_right),
-            onPressed: () {
-              _onNext(context);
-            },
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          icon: Icon(Icons.chevron_left),
+          onPressed: () {
+            _onPrevious(context);
+          },
+        ),
+        _buildPeriod(),
+        IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () {
+            _onNext(context);
+          },
+        ),
+      ],
     );
   }
 
