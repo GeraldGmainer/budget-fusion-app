@@ -12,8 +12,29 @@ class SummaryTab extends StatefulWidget {
 }
 
 class _SummaryTabState extends State<SummaryTab> {
-  void _load() {
+  late PageController _pageController;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentPage);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _reload() {
     context.read<BookingPeriodBloc>().add(BookingPeriodEvent.load(PeriodMode.month));
+  }
+
+  void _onPageChanged(int pageIndex) {
+    setState(() {
+      _currentPage = pageIndex;
+    });
   }
 
   @override
@@ -21,11 +42,26 @@ class _SummaryTabState extends State<SummaryTab> {
     return BlocBuilder<SummaryBloc, SummaryState>(
       builder: (context, state) {
         return state.maybeWhen(
-          loaded: (charts) => SummaryView(charts: charts),
+          loaded: (charts) => _buildView(charts),
           empty: () => Center(child: Text("Empty")),
-          error: (error) => ErrorText(message: error, onReload: _load),
+          error: (error) => ErrorText(message: error, onReload: _reload),
           orElse: () => LoadingIndicator(),
         );
+      },
+    );
+  }
+
+  Widget _buildView(List<ChartViewData> charts) {
+    for (var chart in charts) {
+      print(chart.period.filter);
+    }
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: charts.length,
+      onPageChanged: _onPageChanged,
+      reverse: true,
+      itemBuilder: (context, index) {
+        return SummaryView(chart: charts[charts.length - 1 - index]);
       },
     );
   }

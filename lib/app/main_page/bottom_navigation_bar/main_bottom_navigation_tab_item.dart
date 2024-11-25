@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'main_bottom_navigation_bar_item.dart';
@@ -24,13 +25,13 @@ class MainBottomNavigationTabItem extends MainBottomNavigationBarItem {
           Icon(
             icon,
             size: 22,
-            color: isSelected ? Colors.blue : Colors.grey,
+            color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
           ),
           Text(
             label,
             style: TextStyle(
               fontSize: 12,
-              color: isSelected ? Colors.blue : Colors.grey,
+              color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
             ),
           ),
         ],

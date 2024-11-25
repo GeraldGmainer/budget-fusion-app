@@ -32,8 +32,6 @@ class MainBottomNavigationBar extends StatelessWidget {
               type: BottomNavigationBarType.fixed,
               items: items.map((item) => item.build(selectedIndex)).toList(),
               currentIndex: selectedIndex,
-              selectedItemColor: Colors.green,
-              unselectedItemColor: Colors.grey,
               onTap: (index) {
                 _selectTab(context, index);
               },

@@ -3,65 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/domain.dart';
 
-class SummaryView extends StatefulWidget {
-  final List<ChartViewData> charts;
+class SummaryView extends StatelessWidget {
+  final ChartViewData chart;
 
-  const SummaryView({super.key, required this.charts});
-
-  @override
-  State<SummaryView> createState() => _SummaryViewState();
-}
-
-class _SummaryViewState extends State<SummaryView> {
-  PageController? _pageController;
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: widget.charts.length - 1);
-    _currentPage = widget.charts.length - 1;
-  }
-
-  @override
-  void dispose() {
-    _pageController?.dispose();
-    super.dispose();
-  }
+  const SummaryView({super.key, required this.chart});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: widget.charts.length,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              final chart = widget.charts[index];
-              final balance = chart.period.income - chart.period.outcome;
-              final date = chart.period.filter.dateTime ?? DateTime.now();
-
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Card(
-                  elevation: 4.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: _buildChartCard(chart, balance, date),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+    return _buildChartCard(chart, Decimal.zero, chart.period.filter.dateTime!);
   }
 
   Widget _buildChartCard(ChartViewData chart, Decimal balance, DateTime date) {

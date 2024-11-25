@@ -12,14 +12,14 @@ class PeriodSelector extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: Icon(Icons.chevron_left),
+          icon: Icon(Icons.chevron_left, color: AppColors.secondaryTextColor),
           onPressed: () {
             _onPrevious(context);
           },
         ),
         _buildPeriod(),
         IconButton(
-          icon: Icon(Icons.chevron_right),
+          icon: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
           onPressed: () {
             _onNext(context);
           },
@@ -33,6 +33,7 @@ class PeriodSelector extends StatelessWidget {
       "May",
       style: const TextStyle(
         fontSize: 18,
+        color: AppColors.primaryTextColor,
       ),
     );
   }
