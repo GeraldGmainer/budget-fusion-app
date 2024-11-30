@@ -28,7 +28,9 @@ class _SummaryTabState extends State<SummaryTab> {
   }
 
   void _reload() {
-    context.read<BookingPeriodBloc>().add(BookingPeriodEvent.load(PeriodMode.month));
+    // TODO use filter
+    final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
+    context.read<SummaryBloc>().add(PeriodPaginationEvent.refresh(filter));
   }
 
   void _onPageChanged(int pageIndex) {
@@ -39,22 +41,20 @@ class _SummaryTabState extends State<SummaryTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SummaryBloc, SummaryState>(
+    return BlocBuilder<SummaryBloc, PeriodPaginationState>(
       builder: (context, state) {
-        return state.maybeWhen(
-          loaded: (charts) => _buildView(charts),
+        return state.when(
+          initial: () => LoadingIndicator(),
+          loading: (items, isFirstFetch) => LoadingIndicator(),
+          loaded: (items, hasReachedMax) => _buildView(items as List<ChartViewData>),
           empty: () => Center(child: Text("Empty")),
-          error: (error) => ErrorText(message: error, onReload: _reload),
-          orElse: () => LoadingIndicator(),
+          error: (error, items) => ErrorText(message: error, onReload: _reload),
         );
       },
     );
   }
 
   Widget _buildView(List<ChartViewData> charts) {
-    for (var chart in charts) {
-      print(chart.period.filter);
-    }
     return PageView.builder(
       controller: _pageController,
       itemCount: charts.length,

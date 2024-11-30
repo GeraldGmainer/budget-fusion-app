@@ -5,15 +5,15 @@ import 'package:injectable/injectable.dart';
 import '../domain.dart';
 
 @lazySingleton
-class BudgetBookAggregator {
-  final BookingRepo bookingRepo;
+class BookingPeriodLoader {
+  final BookingRepo _bookingRepo;
+  final PeriodRangeConverter _periodRangeConverter;
 
-  BudgetBookAggregator({required this.bookingRepo});
+  BookingPeriodLoader(this._bookingRepo, this._periodRangeConverter);
 
-  Future<List<BookingPeriod>> getAccountGroups(PeriodMode period) async {
-    // TODO filter by date depending on period
-    // TODO load only 3 months backwards
-    final bookings = await bookingRepo.getBookings();
+  Future<List<BookingPeriod>> loadPage(PeriodMode period, int page) async {
+    // TODO load only 3 months
+    final bookings = await _bookingRepo.getBookings();
     return _mapBookings(period, bookings);
   }
 
@@ -32,7 +32,7 @@ class BudgetBookAggregator {
 
   List<BookingPeriod> _convertToMonth(List<Booking> bookings) {
     if (bookings.isEmpty) {
-      return [_createEmptyPeriod(DateTime.now(), PeriodMode.month)];
+      return [_createEmptyPeriod(PeriodMode.month, DateTime.now())];
     }
 
     final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
@@ -59,22 +59,22 @@ class BudgetBookAggregator {
     return bookings.map((b) => b.bookingDate).reduce((a, b) => a.isBefore(b) ? a : b);
   }
 
-  List<BookingPeriod> _generateMonthlyPeriods(DateTime startDate, DateTime endDate, Map<int, Map<int, List<Booking>>> bookingsByMonthAndCategory) {
+  List<BookingPeriod> _generateMonthlyPeriods(DateTime earliestFrom, DateTime end, Map<int, Map<int, List<Booking>>> bookingsByMonthAndCategory) {
     final periods = <BookingPeriod>[];
-    DateTime currentMonth = DateTime(startDate.year, startDate.month);
+    DateTime currentMonth = DateTime(earliestFrom.year, earliestFrom.month);
 
-    while (!currentMonth.isAfter(endDate)) {
+    while (!currentMonth.isAfter(end)) {
       final monthKey = currentMonth.millisecondsSinceEpoch;
 
       if (!bookingsByMonthAndCategory.containsKey(monthKey)) {
-        periods.add(_createEmptyPeriod(currentMonth, PeriodMode.month));
+        periods.add(_createEmptyPeriod(PeriodMode.month, currentMonth));
       } else {
         final categoryGroups = _createCategoryGroups(bookingsByMonthAndCategory[monthKey]!);
         final income = _calculateTotalIncome(categoryGroups);
         final outcome = _calculateTotalOutcome(categoryGroups);
 
         periods.add(BookingPeriod(
-          filter: BookingViewFilter(period: PeriodMode.month, dateTime: currentMonth),
+          dateRange: _periodRangeConverter.convert(PeriodMode.month, currentMonth),
           income: income,
           outcome: outcome,
           categoryGroups: categoryGroups,
@@ -87,9 +87,9 @@ class BudgetBookAggregator {
     return periods;
   }
 
-  BookingPeriod _createEmptyPeriod(DateTime date, PeriodMode period) {
+  BookingPeriod _createEmptyPeriod(PeriodMode period, DateTime dateTime) {
     return BookingPeriod(
-      filter: BookingViewFilter(period: period, dateTime: date),
+      dateRange: _periodRangeConverter.convert(period, dateTime),
       income: Decimal.zero,
       outcome: Decimal.zero,
       categoryGroups: [],
@@ -98,7 +98,7 @@ class BudgetBookAggregator {
 
   List<CategoryGroup> _createCategoryGroups(Map<int, List<Booking>> bookingsByCategory) {
     return bookingsByCategory.entries.map((entry) {
-      final category = entry.value.first.category; // Assuming all bookings have the same category.
+      final category = entry.value.first.category;
       final amount = entry.value.fold(Decimal.zero, (sum, booking) => sum + booking.amount);
       return CategoryGroup(category: category, bookings: entry.value, amount: amount);
     }).toList()
@@ -126,7 +126,7 @@ class BudgetBookAggregator {
   List<BookingPeriod> _convertToAll(List<Booking> bookings) {
     return [
       BookingPeriod(
-        filter: BookingViewFilter(period: PeriodMode.all),
+        dateRange: BookingDateRange.all(),
         income: Decimal.zero,
         outcome: Decimal.zero,
         categoryGroups: [],

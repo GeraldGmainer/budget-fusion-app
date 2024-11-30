@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BookingPeriod {
-  BookingViewFilter get filter => throw _privateConstructorUsedError;
+  BookingDateRange get dateRange => throw _privateConstructorUsedError;
   Decimal get income => throw _privateConstructorUsedError;
   Decimal get outcome => throw _privateConstructorUsedError;
   List<CategoryGroup> get categoryGroups => throw _privateConstructorUsedError;
@@ -35,12 +35,12 @@ abstract class $BookingPeriodCopyWith<$Res> {
       _$BookingPeriodCopyWithImpl<$Res, BookingPeriod>;
   @useResult
   $Res call(
-      {BookingViewFilter filter,
+      {BookingDateRange dateRange,
       Decimal income,
       Decimal outcome,
       List<CategoryGroup> categoryGroups});
 
-  $BookingViewFilterCopyWith<$Res> get filter;
+  $BookingDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -58,16 +58,16 @@ class _$BookingPeriodCopyWithImpl<$Res, $Val extends BookingPeriod>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filter = null,
+    Object? dateRange = null,
     Object? income = null,
     Object? outcome = null,
     Object? categoryGroups = null,
   }) {
     return _then(_value.copyWith(
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as BookingViewFilter,
+      dateRange: null == dateRange
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as BookingDateRange,
       income: null == income
           ? _value.income
           : income // ignore: cast_nullable_to_non_nullable
@@ -87,9 +87,9 @@ class _$BookingPeriodCopyWithImpl<$Res, $Val extends BookingPeriod>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BookingViewFilterCopyWith<$Res> get filter {
-    return $BookingViewFilterCopyWith<$Res>(_value.filter, (value) {
-      return _then(_value.copyWith(filter: value) as $Val);
+  $BookingDateRangeCopyWith<$Res> get dateRange {
+    return $BookingDateRangeCopyWith<$Res>(_value.dateRange, (value) {
+      return _then(_value.copyWith(dateRange: value) as $Val);
     });
   }
 }
@@ -103,13 +103,13 @@ abstract class _$$BookingPeriodImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {BookingViewFilter filter,
+      {BookingDateRange dateRange,
       Decimal income,
       Decimal outcome,
       List<CategoryGroup> categoryGroups});
 
   @override
-  $BookingViewFilterCopyWith<$Res> get filter;
+  $BookingDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -125,16 +125,16 @@ class __$$BookingPeriodImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filter = null,
+    Object? dateRange = null,
     Object? income = null,
     Object? outcome = null,
     Object? categoryGroups = null,
   }) {
     return _then(_$BookingPeriodImpl(
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as BookingViewFilter,
+      dateRange: null == dateRange
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as BookingDateRange,
       income: null == income
           ? _value.income
           : income // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class __$$BookingPeriodImplCopyWithImpl<$Res>
 
 class _$BookingPeriodImpl extends _BookingPeriod {
   const _$BookingPeriodImpl(
-      {required this.filter,
+      {required this.dateRange,
       required this.income,
       required this.outcome,
       required final List<CategoryGroup> categoryGroups})
@@ -163,7 +163,7 @@ class _$BookingPeriodImpl extends _BookingPeriod {
         super._();
 
   @override
-  final BookingViewFilter filter;
+  final BookingDateRange dateRange;
   @override
   final Decimal income;
   @override
@@ -178,7 +178,7 @@ class _$BookingPeriodImpl extends _BookingPeriod {
 
   @override
   String toString() {
-    return 'BookingPeriod(filter: $filter, income: $income, outcome: $outcome, categoryGroups: $categoryGroups)';
+    return 'BookingPeriod(dateRange: $dateRange, income: $income, outcome: $outcome, categoryGroups: $categoryGroups)';
   }
 
   @override
@@ -186,7 +186,8 @@ class _$BookingPeriodImpl extends _BookingPeriod {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookingPeriodImpl &&
-            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange) &&
             (identical(other.income, income) || other.income == income) &&
             (identical(other.outcome, outcome) || other.outcome == outcome) &&
             const DeepCollectionEquality()
@@ -194,7 +195,7 @@ class _$BookingPeriodImpl extends _BookingPeriod {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter, income, outcome,
+  int get hashCode => Object.hash(runtimeType, dateRange, income, outcome,
       const DeepCollectionEquality().hash(_categoryGroups));
 
   /// Create a copy of BookingPeriod
@@ -208,14 +209,14 @@ class _$BookingPeriodImpl extends _BookingPeriod {
 
 abstract class _BookingPeriod extends BookingPeriod {
   const factory _BookingPeriod(
-      {required final BookingViewFilter filter,
+      {required final BookingDateRange dateRange,
       required final Decimal income,
       required final Decimal outcome,
       required final List<CategoryGroup> categoryGroups}) = _$BookingPeriodImpl;
   const _BookingPeriod._() : super._();
 
   @override
-  BookingViewFilter get filter;
+  BookingDateRange get dateRange;
   @override
   Decimal get income;
   @override

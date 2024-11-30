@@ -10,7 +10,7 @@ class SummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildChartCard(chart, Decimal.zero, chart.period.filter.dateTime!);
+    return _buildChartCard(chart, Decimal.zero, chart.period.dateRange.from);
   }
 
   Widget _buildChartCard(ChartViewData chart, Decimal balance, DateTime date) {

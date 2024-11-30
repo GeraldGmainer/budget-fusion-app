@@ -45,7 +45,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   }
 
   void _load() {
-    context.read<BookingPeriodBloc>().add(BookingPeriodEvent.load(PeriodMode.month));
+    context.read<SummaryBloc>().add(PeriodPaginationEvent.refresh(BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month)));
   }
 
   void _onTabSelected(int index) {
@@ -61,7 +61,6 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
     setState(() {
       _selectedNavIndex = index;
     });
-    _dispatchLoadToViewBloc(index);
   }
 
   void _onPeriodSelected(String period) {
@@ -104,75 +103,41 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
     );
   }
 
-  void _dispatchLoadToViewBloc(int index) {
-    final bookingPeriodState = context.read<BookingPeriodBloc>().state;
-
-    bookingPeriodState.whenOrNull(
-      loaded: (periods) {
-        switch (index) {
-          case 0:
-            context.read<SummaryBloc>().add(SummaryEvent.load(periods));
-            break;
-          case 1:
-            context.read<TransactionsBloc>().add(TransactionsEvent.load(periods));
-            break;
-          case 2:
-            context.read<BalancesBloc>().add(BalancesEvent.load(periods));
-            break;
-          case 3:
-            context.read<CalendarBloc>().add(CalendarEvent.load(periods));
-            break;
-          default:
-            break;
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocListener<BookingPeriodBloc, BookingPeriodState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          loaded: (periods) {
-            _dispatchLoadToViewBloc(_selectedNavIndex);
-          },
-        );
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: BudgetTabTitle(transaction: _selectedTransaction, account: _selectedAccount, period: _selectedPeriod),
-          actions: [
-            RefreshButton(),
-            IconButton(
-              icon: const Icon(Icons.filter_list),
-              onPressed: _showFilters,
+    return Scaffold(
+      appBar: AppBar(
+        title: BudgetTabTitle(transaction: _selectedTransaction, account: _selectedAccount, period: _selectedPeriod),
+        actions: [
+          RefreshButton(),
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: _showFilters,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          PeriodSelector(),
+          ScrollableNavBar(
+            onTabSelect: _onTabSelected,
+            items: _navItems,
+            selectedIndex: _selectedNavIndex,
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _navigationViews.length,
+              itemBuilder: (context, index) {
+                return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
+              },
             ),
-          ],
-        ),
-        body: Column(
-          children: [
-            PeriodSelector(),
-            ScrollableNavBar(
-              onTabSelect: _onTabSelected,
-              items: _navItems,
-              selectedIndex: _selectedNavIndex,
-            ),
-            const SizedBox(height: 8),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _navigationViews.length,
-                itemBuilder: (context, index) {
-                  return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
-                },
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

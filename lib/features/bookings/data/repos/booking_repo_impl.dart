@@ -7,16 +7,19 @@ import '../dtos/dtos.dart';
 @LazySingleton(as: BookingRepo)
 class BookingRepoImpl implements BookingRepo {
   static const Duration cacheDuration = Duration(minutes: 5);
-  final _cache = InMemoryCache<List<Booking>>(cacheDuration: cacheDuration);
+  final CacheManager _cacheManager;
   final BookingRemoteSource _bookingRemoteSource;
   final CategoryRepo _categoryRepo;
   final AccountRepo _accountRepo;
 
-  BookingRepoImpl(this._bookingRemoteSource, this._categoryRepo, this._accountRepo);
+  BookingRepoImpl(this._bookingRemoteSource, this._categoryRepo, this._accountRepo, this._cacheManager);
 
   @override
+  // Future<List<Booking>> getBookings({required DateTime fromDate, required toDate}) async {
   Future<List<Booking>> getBookings() async {
-    return await _cache.fetch(() async {
+    final cache = _cacheManager.getCache<List<Booking>>(CacheKey.bookings, cacheDuration: cacheDuration);
+
+    return await cache.fetch(() async {
       final results = await Future.wait([
         _bookingRemoteSource.fetchAllBookings(),
         _categoryRepo.getCategories(),
