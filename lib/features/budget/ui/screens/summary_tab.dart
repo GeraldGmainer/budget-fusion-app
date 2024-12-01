@@ -28,12 +28,6 @@ class _SummaryTabState extends State<SummaryTab> {
     super.dispose();
   }
 
-  void _reload() {
-    // TODO use filter
-    final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
-    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(filter));
-  }
-
   void _onPageChanged(int pageIndex) {
     setState(() {
       _currentPage = pageIndex;

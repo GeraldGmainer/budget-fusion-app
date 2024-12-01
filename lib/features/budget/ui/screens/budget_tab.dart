@@ -67,7 +67,12 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
     return Scaffold(
       appBar: AppBar(
         title: BudgetTabTitle(transaction: _selectedTransaction, account: _selectedAccount, period: _selectedPeriod),
-        actions: [BookingFilterButton()],
+        actions: [
+          RefreshButton(onTap: () {
+            _load();
+          }),
+          BookingFilterButton()
+        ],
       ),
       body: Column(
         children: [
