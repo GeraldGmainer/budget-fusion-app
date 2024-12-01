@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'booking_period.dart';
+part of 'booking_page_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,24 +15,24 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$BookingPeriod {
+mixin _$BookingPageData {
   BookingDateRange get dateRange => throw _privateConstructorUsedError;
   Decimal get income => throw _privateConstructorUsedError;
   Decimal get outcome => throw _privateConstructorUsedError;
   List<CategoryGroup> get categoryGroups => throw _privateConstructorUsedError;
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BookingPeriodCopyWith<BookingPeriod> get copyWith =>
+  $BookingPageDataCopyWith<BookingPageData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BookingPeriodCopyWith<$Res> {
-  factory $BookingPeriodCopyWith(
-          BookingPeriod value, $Res Function(BookingPeriod) then) =
-      _$BookingPeriodCopyWithImpl<$Res, BookingPeriod>;
+abstract class $BookingPageDataCopyWith<$Res> {
+  factory $BookingPageDataCopyWith(
+          BookingPageData value, $Res Function(BookingPageData) then) =
+      _$BookingPageDataCopyWithImpl<$Res, BookingPageData>;
   @useResult
   $Res call(
       {BookingDateRange dateRange,
@@ -44,16 +44,16 @@ abstract class $BookingPeriodCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BookingPeriodCopyWithImpl<$Res, $Val extends BookingPeriod>
-    implements $BookingPeriodCopyWith<$Res> {
-  _$BookingPeriodCopyWithImpl(this._value, this._then);
+class _$BookingPageDataCopyWithImpl<$Res, $Val extends BookingPageData>
+    implements $BookingPageDataCopyWith<$Res> {
+  _$BookingPageDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -83,7 +83,7 @@ class _$BookingPeriodCopyWithImpl<$Res, $Val extends BookingPeriod>
     ) as $Val);
   }
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -95,11 +95,11 @@ class _$BookingPeriodCopyWithImpl<$Res, $Val extends BookingPeriod>
 }
 
 /// @nodoc
-abstract class _$$BookingPeriodImplCopyWith<$Res>
-    implements $BookingPeriodCopyWith<$Res> {
-  factory _$$BookingPeriodImplCopyWith(
-          _$BookingPeriodImpl value, $Res Function(_$BookingPeriodImpl) then) =
-      __$$BookingPeriodImplCopyWithImpl<$Res>;
+abstract class _$$BookingPageDataImplCopyWith<$Res>
+    implements $BookingPageDataCopyWith<$Res> {
+  factory _$$BookingPageDataImplCopyWith(_$BookingPageDataImpl value,
+          $Res Function(_$BookingPageDataImpl) then) =
+      __$$BookingPageDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,14 +113,14 @@ abstract class _$$BookingPeriodImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$BookingPeriodImplCopyWithImpl<$Res>
-    extends _$BookingPeriodCopyWithImpl<$Res, _$BookingPeriodImpl>
-    implements _$$BookingPeriodImplCopyWith<$Res> {
-  __$$BookingPeriodImplCopyWithImpl(
-      _$BookingPeriodImpl _value, $Res Function(_$BookingPeriodImpl) _then)
+class __$$BookingPageDataImplCopyWithImpl<$Res>
+    extends _$BookingPageDataCopyWithImpl<$Res, _$BookingPageDataImpl>
+    implements _$$BookingPageDataImplCopyWith<$Res> {
+  __$$BookingPageDataImplCopyWithImpl(
+      _$BookingPageDataImpl _value, $Res Function(_$BookingPageDataImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -130,7 +130,7 @@ class __$$BookingPeriodImplCopyWithImpl<$Res>
     Object? outcome = null,
     Object? categoryGroups = null,
   }) {
-    return _then(_$BookingPeriodImpl(
+    return _then(_$BookingPageDataImpl(
       dateRange: null == dateRange
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
@@ -153,8 +153,8 @@ class __$$BookingPeriodImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BookingPeriodImpl extends _BookingPeriod {
-  const _$BookingPeriodImpl(
+class _$BookingPageDataImpl extends _BookingPageData {
+  const _$BookingPageDataImpl(
       {required this.dateRange,
       required this.income,
       required this.outcome,
@@ -178,14 +178,14 @@ class _$BookingPeriodImpl extends _BookingPeriod {
 
   @override
   String toString() {
-    return 'BookingPeriod(dateRange: $dateRange, income: $income, outcome: $outcome, categoryGroups: $categoryGroups)';
+    return 'BookingPageData(dateRange: $dateRange, income: $income, outcome: $outcome, categoryGroups: $categoryGroups)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BookingPeriodImpl &&
+            other is _$BookingPageDataImpl &&
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange) &&
             (identical(other.income, income) || other.income == income) &&
@@ -198,22 +198,24 @@ class _$BookingPeriodImpl extends _BookingPeriod {
   int get hashCode => Object.hash(runtimeType, dateRange, income, outcome,
       const DeepCollectionEquality().hash(_categoryGroups));
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$BookingPeriodImplCopyWith<_$BookingPeriodImpl> get copyWith =>
-      __$$BookingPeriodImplCopyWithImpl<_$BookingPeriodImpl>(this, _$identity);
+  _$$BookingPageDataImplCopyWith<_$BookingPageDataImpl> get copyWith =>
+      __$$BookingPageDataImplCopyWithImpl<_$BookingPageDataImpl>(
+          this, _$identity);
 }
 
-abstract class _BookingPeriod extends BookingPeriod {
-  const factory _BookingPeriod(
-      {required final BookingDateRange dateRange,
-      required final Decimal income,
-      required final Decimal outcome,
-      required final List<CategoryGroup> categoryGroups}) = _$BookingPeriodImpl;
-  const _BookingPeriod._() : super._();
+abstract class _BookingPageData extends BookingPageData {
+  const factory _BookingPageData(
+          {required final BookingDateRange dateRange,
+          required final Decimal income,
+          required final Decimal outcome,
+          required final List<CategoryGroup> categoryGroups}) =
+      _$BookingPageDataImpl;
+  const _BookingPageData._() : super._();
 
   @override
   BookingDateRange get dateRange;
@@ -224,10 +226,10 @@ abstract class _BookingPeriod extends BookingPeriod {
   @override
   List<CategoryGroup> get categoryGroups;
 
-  /// Create a copy of BookingPeriod
+  /// Create a copy of BookingPageData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BookingPeriodImplCopyWith<_$BookingPeriodImpl> get copyWith =>
+  _$$BookingPageDataImplCopyWith<_$BookingPageDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
