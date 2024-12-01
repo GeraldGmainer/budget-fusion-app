@@ -110,21 +110,32 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
                     return Stack(
                       children: [
                         if (isInitialLoading)
-                          Positioned.fill(
+                          Align(
+                            alignment: Alignment.topCenter,
                             child: Container(
-                              color: Colors.black.withOpacity(0.1),
-                              child: Center(child: CircularProgressIndicator()),
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3.0,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              ),
                             ),
                           ),
                         // Pagination Loading Indicator
                         if (isPaginationLoading)
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 4.0,
-                              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                            child: SizedBox(
+                              height: 3.0,
                               child: LinearProgressIndicator(
-                                backgroundColor: Colors.grey.shade300,
+                                backgroundColor: Colors.grey.shade500,
                                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                               ),
                             ),
