@@ -3,18 +3,18 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain.dart';
 
-part 'booking_period.freezed.dart';
+part 'booking_page_data.freezed.dart';
 
 @freezed
-class BookingPeriod with _$BookingPeriod {
-  const BookingPeriod._();
+class BookingPageData with _$BookingPageData {
+  const BookingPageData._();
 
-  const factory BookingPeriod({
+  const factory BookingPageData({
     required BookingDateRange dateRange,
     required Decimal income,
     required Decimal outcome,
     required List<CategoryGroup> categoryGroups,
-  }) = _BookingPeriod;
+  }) = _BookingPageData;
 
   Decimal get balance {
     return income - outcome;

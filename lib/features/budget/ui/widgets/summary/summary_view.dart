@@ -10,7 +10,7 @@ class SummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildChartCard(chart, Decimal.zero, chart.period.dateRange.from);
+    return _buildChartCard(chart, Decimal.zero, chart.dateRange.from);
   }
 
   Widget _buildChartCard(ChartViewData chart, Decimal balance, DateTime date) {
@@ -25,12 +25,12 @@ class SummaryView extends StatelessWidget {
         const SizedBox(height: 8.0),
 
         // Income Display
-        _buildRow("Income:", "${chart.currency.symbol}${chart.period.income.toDouble().toStringAsFixed(2)}", Colors.green),
+        _buildRow("Income:", "${chart.currency.symbol}${chart.income.toDouble().toStringAsFixed(2)}", Colors.green),
 
         const SizedBox(height: 4.0),
 
         // Outcome Display
-        _buildRow("Outcome:", "${chart.currency.symbol}${chart.period.outcome.toDouble().toStringAsFixed(2)}", Colors.red),
+        _buildRow("Outcome:", "${chart.currency.symbol}${chart.outcome.toDouble().toStringAsFixed(2)}", Colors.red),
 
         const SizedBox(height: 4.0),
 

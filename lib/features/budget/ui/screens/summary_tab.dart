@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class _SummaryTabState extends State<SummaryTab> {
   void _reload() {
     // TODO use filter
     final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
-    context.read<SummaryBloc>().add(PeriodPaginationEvent.refresh(filter));
+    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(filter));
   }
 
   void _onPageChanged(int pageIndex) {
@@ -41,16 +42,27 @@ class _SummaryTabState extends State<SummaryTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SummaryBloc, PeriodPaginationState>(
-      builder: (context, state) {
-        return state.when(
-          initial: () => LoadingIndicator(),
-          loading: (items, isFirstFetch) => LoadingIndicator(),
-          loaded: (items, hasReachedMax) => _buildView(items as List<ChartViewData>),
-          empty: () => Center(child: Text("Empty")),
-          error: (error, items) => ErrorText(message: error, onReload: _reload),
+    return BlocListener<BookingPageBloc, BookingPageState>(
+      listener: (context, bookingState) {
+        bookingState.whenOrNull(
+          loaded: (items) {
+            context.read<SummaryBloc>().add(SummaryEvent.refresh(items));
+          },
+          error: (items, error) {
+            showErrorSnackBar(context, error);
+          },
         );
       },
+      child: BlocBuilder<SummaryBloc, SummaryState>(
+        builder: (context, summaryState) {
+          return summaryState.maybeWhen(
+            loaded: (items) => _buildView(items),
+            empty: () => Center(child: Text("No data available.")),
+            error: (items, error) => _buildView(items),
+            orElse: () => LoadingIndicator(),
+          );
+        },
+      ),
     );
   }
 

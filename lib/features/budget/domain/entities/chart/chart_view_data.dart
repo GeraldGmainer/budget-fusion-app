@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entities.dart';
@@ -11,8 +12,14 @@ class ChartViewData with _$ChartViewData {
 
   const factory ChartViewData({
     required Currency currency,
-    required BookingPeriod period,
+    required BookingDateRange dateRange,
     required List<PieData> pieData,
     required List<CategorySummary> categorySummaries,
+    required Decimal income,
+    required Decimal outcome,
   }) = _ChartViewData;
+
+  Decimal get balance {
+    return income - outcome;
+  }
 }

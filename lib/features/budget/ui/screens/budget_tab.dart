@@ -45,7 +45,9 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   }
 
   void _load() {
-    context.read<SummaryBloc>().add(PeriodPaginationEvent.refresh(BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month)));
+    // TODO use filter
+    final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
+    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(filter));
   }
 
   void _onTabSelected(int index) {
@@ -127,14 +129,56 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: _onPageChanged,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _navigationViews.length,
-              itemBuilder: (context, index) {
-                return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
-              },
+            child: Stack(
+              children: [
+                PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: _onPageChanged,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _navigationViews.length,
+                  itemBuilder: (context, index) {
+                    return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
+                  },
+                ),
+                BlocBuilder<BookingPageBloc, BookingPageState>(
+                  builder: (context, bookingState) {
+                    final isInitialLoading = bookingState.maybeWhen(
+                      loading: (_, isFirstFetch) => isFirstFetch,
+                      orElse: () => false,
+                    );
+
+                    final isPaginationLoading = bookingState.maybeWhen(
+                      loading: (_, isFirstFetch) => !isFirstFetch,
+                      orElse: () => false,
+                    );
+
+                    return Stack(
+                      children: [
+                        if (isInitialLoading)
+                          Positioned.fill(
+                            child: Container(
+                              color: Colors.black.withOpacity(0.1),
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                          ),
+                        // Pagination Loading Indicator
+                        if (isPaginationLoading)
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 4.0,
+                              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                              child: LinearProgressIndicator(
+                                backgroundColor: Colors.grey.shade300,
+                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],

@@ -16,20 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CalendarEvent {
-  List<BookingPeriod> get periods => throw _privateConstructorUsedError;
+  List<BookingPageData> get periods => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<BookingPeriod> periods) load,
+    required TResult Function(List<BookingPageData> periods) load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<BookingPeriod> periods)? load,
+    TResult? Function(List<BookingPageData> periods)? load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<BookingPeriod> periods)? load,
+    TResult Function(List<BookingPageData> periods)? load,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,7 +63,7 @@ abstract class $CalendarEventCopyWith<$Res> {
           CalendarEvent value, $Res Function(CalendarEvent) then) =
       _$CalendarEventCopyWithImpl<$Res, CalendarEvent>;
   @useResult
-  $Res call({List<BookingPeriod> periods});
+  $Res call({List<BookingPageData> periods});
 }
 
 /// @nodoc
@@ -87,7 +87,7 @@ class _$CalendarEventCopyWithImpl<$Res, $Val extends CalendarEvent>
       periods: null == periods
           ? _value.periods
           : periods // ignore: cast_nullable_to_non_nullable
-              as List<BookingPeriod>,
+              as List<BookingPageData>,
     ) as $Val);
   }
 }
@@ -100,7 +100,7 @@ abstract class _$$LoadImplCopyWith<$Res>
       __$$LoadImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<BookingPeriod> periods});
+  $Res call({List<BookingPageData> periods});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$LoadImplCopyWithImpl<$Res>
       null == periods
           ? _value._periods
           : periods // ignore: cast_nullable_to_non_nullable
-              as List<BookingPeriod>,
+              as List<BookingPageData>,
     ));
   }
 }
@@ -129,11 +129,11 @@ class __$$LoadImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadImpl implements _Load {
-  const _$LoadImpl(final List<BookingPeriod> periods) : _periods = periods;
+  const _$LoadImpl(final List<BookingPageData> periods) : _periods = periods;
 
-  final List<BookingPeriod> _periods;
+  final List<BookingPageData> _periods;
   @override
-  List<BookingPeriod> get periods {
+  List<BookingPageData> get periods {
     if (_periods is EqualUnmodifiableListView) return _periods;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_periods);
@@ -167,7 +167,7 @@ class _$LoadImpl implements _Load {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<BookingPeriod> periods) load,
+    required TResult Function(List<BookingPageData> periods) load,
   }) {
     return load(periods);
   }
@@ -175,7 +175,7 @@ class _$LoadImpl implements _Load {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<BookingPeriod> periods)? load,
+    TResult? Function(List<BookingPageData> periods)? load,
   }) {
     return load?.call(periods);
   }
@@ -183,7 +183,7 @@ class _$LoadImpl implements _Load {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<BookingPeriod> periods)? load,
+    TResult Function(List<BookingPageData> periods)? load,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -222,10 +222,10 @@ class _$LoadImpl implements _Load {
 }
 
 abstract class _Load implements CalendarEvent {
-  const factory _Load(final List<BookingPeriod> periods) = _$LoadImpl;
+  const factory _Load(final List<BookingPageData> periods) = _$LoadImpl;
 
   @override
-  List<BookingPeriod> get periods;
+  List<BookingPageData> get periods;
 
   /// Create a copy of CalendarEvent
   /// with the given fields replaced by the non-null parameter values.

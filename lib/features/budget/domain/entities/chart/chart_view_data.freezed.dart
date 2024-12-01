@@ -17,10 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ChartViewData {
   Currency get currency => throw _privateConstructorUsedError;
-  BookingPeriod get period => throw _privateConstructorUsedError;
+  BookingDateRange get dateRange => throw _privateConstructorUsedError;
   List<PieData> get pieData => throw _privateConstructorUsedError;
   List<CategorySummary> get categorySummaries =>
       throw _privateConstructorUsedError;
+  Decimal get income => throw _privateConstructorUsedError;
+  Decimal get outcome => throw _privateConstructorUsedError;
 
   /// Create a copy of ChartViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -37,12 +39,14 @@ abstract class $ChartViewDataCopyWith<$Res> {
   @useResult
   $Res call(
       {Currency currency,
-      BookingPeriod period,
+      BookingDateRange dateRange,
       List<PieData> pieData,
-      List<CategorySummary> categorySummaries});
+      List<CategorySummary> categorySummaries,
+      Decimal income,
+      Decimal outcome});
 
   $CurrencyCopyWith<$Res> get currency;
-  $BookingPeriodCopyWith<$Res> get period;
+  $BookingDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -61,19 +65,21 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
   @override
   $Res call({
     Object? currency = null,
-    Object? period = null,
+    Object? dateRange = null,
     Object? pieData = null,
     Object? categorySummaries = null,
+    Object? income = null,
+    Object? outcome = null,
   }) {
     return _then(_value.copyWith(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as BookingPeriod,
+      dateRange: null == dateRange
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as BookingDateRange,
       pieData: null == pieData
           ? _value.pieData
           : pieData // ignore: cast_nullable_to_non_nullable
@@ -82,6 +88,14 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
           ? _value.categorySummaries
           : categorySummaries // ignore: cast_nullable_to_non_nullable
               as List<CategorySummary>,
+      income: null == income
+          ? _value.income
+          : income // ignore: cast_nullable_to_non_nullable
+              as Decimal,
+      outcome: null == outcome
+          ? _value.outcome
+          : outcome // ignore: cast_nullable_to_non_nullable
+              as Decimal,
     ) as $Val);
   }
 
@@ -99,9 +113,9 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BookingPeriodCopyWith<$Res> get period {
-    return $BookingPeriodCopyWith<$Res>(_value.period, (value) {
-      return _then(_value.copyWith(period: value) as $Val);
+  $BookingDateRangeCopyWith<$Res> get dateRange {
+    return $BookingDateRangeCopyWith<$Res>(_value.dateRange, (value) {
+      return _then(_value.copyWith(dateRange: value) as $Val);
     });
   }
 }
@@ -116,14 +130,16 @@ abstract class _$$ChartViewDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {Currency currency,
-      BookingPeriod period,
+      BookingDateRange dateRange,
       List<PieData> pieData,
-      List<CategorySummary> categorySummaries});
+      List<CategorySummary> categorySummaries,
+      Decimal income,
+      Decimal outcome});
 
   @override
   $CurrencyCopyWith<$Res> get currency;
   @override
-  $BookingPeriodCopyWith<$Res> get period;
+  $BookingDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -140,19 +156,21 @@ class __$$ChartViewDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currency = null,
-    Object? period = null,
+    Object? dateRange = null,
     Object? pieData = null,
     Object? categorySummaries = null,
+    Object? income = null,
+    Object? outcome = null,
   }) {
     return _then(_$ChartViewDataImpl(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as BookingPeriod,
+      dateRange: null == dateRange
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as BookingDateRange,
       pieData: null == pieData
           ? _value._pieData
           : pieData // ignore: cast_nullable_to_non_nullable
@@ -161,6 +179,14 @@ class __$$ChartViewDataImplCopyWithImpl<$Res>
           ? _value._categorySummaries
           : categorySummaries // ignore: cast_nullable_to_non_nullable
               as List<CategorySummary>,
+      income: null == income
+          ? _value.income
+          : income // ignore: cast_nullable_to_non_nullable
+              as Decimal,
+      outcome: null == outcome
+          ? _value.outcome
+          : outcome // ignore: cast_nullable_to_non_nullable
+              as Decimal,
     ));
   }
 }
@@ -170,9 +196,11 @@ class __$$ChartViewDataImplCopyWithImpl<$Res>
 class _$ChartViewDataImpl extends _ChartViewData {
   const _$ChartViewDataImpl(
       {required this.currency,
-      required this.period,
+      required this.dateRange,
       required final List<PieData> pieData,
-      required final List<CategorySummary> categorySummaries})
+      required final List<CategorySummary> categorySummaries,
+      required this.income,
+      required this.outcome})
       : _pieData = pieData,
         _categorySummaries = categorySummaries,
         super._();
@@ -180,7 +208,7 @@ class _$ChartViewDataImpl extends _ChartViewData {
   @override
   final Currency currency;
   @override
-  final BookingPeriod period;
+  final BookingDateRange dateRange;
   final List<PieData> _pieData;
   @override
   List<PieData> get pieData {
@@ -199,8 +227,13 @@ class _$ChartViewDataImpl extends _ChartViewData {
   }
 
   @override
+  final Decimal income;
+  @override
+  final Decimal outcome;
+
+  @override
   String toString() {
-    return 'ChartViewData(currency: $currency, period: $period, pieData: $pieData, categorySummaries: $categorySummaries)';
+    return 'ChartViewData(currency: $currency, dateRange: $dateRange, pieData: $pieData, categorySummaries: $categorySummaries, income: $income, outcome: $outcome)';
   }
 
   @override
@@ -210,19 +243,24 @@ class _$ChartViewDataImpl extends _ChartViewData {
             other is _$ChartViewDataImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
-            (identical(other.period, period) || other.period == period) &&
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange) &&
             const DeepCollectionEquality().equals(other._pieData, _pieData) &&
             const DeepCollectionEquality()
-                .equals(other._categorySummaries, _categorySummaries));
+                .equals(other._categorySummaries, _categorySummaries) &&
+            (identical(other.income, income) || other.income == income) &&
+            (identical(other.outcome, outcome) || other.outcome == outcome));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       currency,
-      period,
+      dateRange,
       const DeepCollectionEquality().hash(_pieData),
-      const DeepCollectionEquality().hash(_categorySummaries));
+      const DeepCollectionEquality().hash(_categorySummaries),
+      income,
+      outcome);
 
   /// Create a copy of ChartViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -235,21 +273,26 @@ class _$ChartViewDataImpl extends _ChartViewData {
 
 abstract class _ChartViewData extends ChartViewData {
   const factory _ChartViewData(
-          {required final Currency currency,
-          required final BookingPeriod period,
-          required final List<PieData> pieData,
-          required final List<CategorySummary> categorySummaries}) =
-      _$ChartViewDataImpl;
+      {required final Currency currency,
+      required final BookingDateRange dateRange,
+      required final List<PieData> pieData,
+      required final List<CategorySummary> categorySummaries,
+      required final Decimal income,
+      required final Decimal outcome}) = _$ChartViewDataImpl;
   const _ChartViewData._() : super._();
 
   @override
   Currency get currency;
   @override
-  BookingPeriod get period;
+  BookingDateRange get dateRange;
   @override
   List<PieData> get pieData;
   @override
   List<CategorySummary> get categorySummaries;
+  @override
+  Decimal get income;
+  @override
+  Decimal get outcome;
 
   /// Create a copy of ChartViewData
   /// with the given fields replaced by the non-null parameter values.

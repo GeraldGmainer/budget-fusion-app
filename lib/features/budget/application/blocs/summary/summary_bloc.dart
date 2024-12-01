@@ -1,28 +1,35 @@
+import 'package:bloc/bloc.dart';
+import 'package:budget_fusion_app/features/budget/domain/domain.dart';
+import 'package:budget_fusion_app/utils/logging/logger.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/domain.dart';
-import '../base/period_pagination/period_pagination_bloc.dart';
+part 'summary_bloc.freezed.dart';
+part 'summary_event.dart';
+part 'summary_state.dart';
 
 @injectable
-class SummaryBloc extends PeriodPaginationBloc<ChartViewData> {
-  final BookingPeriodLoader _budgetBookLoader;
+class SummaryBloc extends Bloc<SummaryEvent, SummaryState> {
   final ChartDataService _chartDataService;
 
-  SummaryBloc(this._budgetBookLoader, this._chartDataService);
-
-  @override
-  Future<List<BookingPeriod>> fetchItems(PeriodMode period, int page) async {
-    var items = await _budgetBookLoader.loadPage(period, page);
-    return items;
+  SummaryBloc(this._chartDataService) : super(const SummaryState.initial()) {
+    on<SummaryEvent>((event, emit) async {
+      await event.when(refresh: (items) => _onRefresh(emit, items));
+    });
   }
 
-  @override
-  Future<List<ChartViewData>> convertItems(List<BookingPeriod> items) async {
-    List<ChartViewData> charts = [];
-    for (var item in items) {
-      final chart = await _chartDataService.calculate(item);
-      charts.add(chart);
+  Future<void> _onRefresh(Emitter<SummaryState> emit, List<BookingPageData> datas) async {
+    try {
+      final items = await _chartDataService.convert(datas);
+      if (items.isEmpty) {
+        emit(SummaryState.empty());
+      } else {
+        emit(SummaryState.loaded(items: items));
+      }
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("Error while refreshing SummaryBloc", e, stackTrace);
+      final List<ChartViewData> currentItems = state.maybeWhen(loaded: (items) => items, loading: (items, _) => items, orElse: () => []);
+      emit(SummaryState.error(items: currentItems, message: e.toString()));
     }
-    return charts;
   }
 }

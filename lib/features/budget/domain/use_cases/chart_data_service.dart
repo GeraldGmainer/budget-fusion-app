@@ -10,24 +10,30 @@ class ChartDataService {
 
   ChartDataService(this._profileRepo);
 
-  Future<ChartViewData> calculate(BookingPeriod period) async {
-    List<CategorySummary> categorySummaries = _mapSummaries(period);
-    List<PieData> pieData = _mapToPieData(period.categoryGroups.outcomeCategories(), period.outcome);
+  Future<List<ChartViewData>> convert(List<BookingPageData> datas) async {
+    return await Future.wait(datas.map((data) => _convert(data)));
+  }
+
+  Future<ChartViewData> _convert(BookingPageData pageData) async {
+    List<CategorySummary> categorySummaries = _mapSummaries(pageData);
+    List<PieData> pieData = _mapToPieData(pageData.categoryGroups.outcomeCategories(), pageData.outcome);
 
     final currency = await _profileRepo.getCurrency();
 
     return ChartViewData(
       currency: currency,
-      period: period,
+      dateRange: pageData.dateRange,
       pieData: pieData,
       categorySummaries: categorySummaries,
+      income: pageData.income,
+      outcome: pageData.outcome,
     );
   }
 
-  List<CategorySummary> _mapSummaries(BookingPeriod period) {
+  List<CategorySummary> _mapSummaries(BookingPageData pageData) {
     List<CategorySummary> categorySummaries = [];
-    for (var categoryGroup in period.categoryGroups) {
-      final categoryTotal = categoryGroup.category.categoryType == CategoryType.income ? period.income : period.outcome;
+    for (var categoryGroup in pageData.categoryGroups) {
+      final categoryTotal = categoryGroup.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
       final amount = categoryGroup.amount;
       categorySummaries.add(
         CategorySummary(

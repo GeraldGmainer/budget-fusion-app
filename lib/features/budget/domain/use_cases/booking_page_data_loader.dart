@@ -5,19 +5,19 @@ import 'package:injectable/injectable.dart';
 import '../domain.dart';
 
 @lazySingleton
-class BookingPeriodLoader {
+class BookingPageDataLoader {
   final BookingRepo _bookingRepo;
   final PeriodRangeConverter _periodRangeConverter;
 
-  BookingPeriodLoader(this._bookingRepo, this._periodRangeConverter);
+  BookingPageDataLoader(this._bookingRepo, this._periodRangeConverter);
 
-  Future<List<BookingPeriod>> loadPage(PeriodMode period, int page) async {
+  Future<List<BookingPageData>> loadPage(PeriodMode period, int page) async {
     // TODO load only 3 months
     final bookings = await _bookingRepo.getBookings();
     return _mapBookings(period, bookings);
   }
 
-  List<BookingPeriod> _mapBookings(PeriodMode period, List<Booking> bookings) {
+  List<BookingPageData> _mapBookings(PeriodMode period, List<Booking> bookings) {
     switch (period) {
       case PeriodMode.day:
         return _convertToDay(bookings);
@@ -30,7 +30,7 @@ class BookingPeriodLoader {
     }
   }
 
-  List<BookingPeriod> _convertToMonth(List<Booking> bookings) {
+  List<BookingPageData> _convertToMonth(List<Booking> bookings) {
     if (bookings.isEmpty) {
       return [_createEmptyPeriod(PeriodMode.month, DateTime.now())];
     }
@@ -59,8 +59,8 @@ class BookingPeriodLoader {
     return bookings.map((b) => b.bookingDate).reduce((a, b) => a.isBefore(b) ? a : b);
   }
 
-  List<BookingPeriod> _generateMonthlyPeriods(DateTime earliestFrom, DateTime end, Map<int, Map<int, List<Booking>>> bookingsByMonthAndCategory) {
-    final periods = <BookingPeriod>[];
+  List<BookingPageData> _generateMonthlyPeriods(DateTime earliestFrom, DateTime end, Map<int, Map<int, List<Booking>>> bookingsByMonthAndCategory) {
+    final periods = <BookingPageData>[];
     DateTime currentMonth = DateTime(earliestFrom.year, earliestFrom.month);
 
     while (!currentMonth.isAfter(end)) {
@@ -73,7 +73,7 @@ class BookingPeriodLoader {
         final income = _calculateTotalIncome(categoryGroups);
         final outcome = _calculateTotalOutcome(categoryGroups);
 
-        periods.add(BookingPeriod(
+        periods.add(BookingPageData(
           dateRange: _periodRangeConverter.convert(PeriodMode.month, currentMonth),
           income: income,
           outcome: outcome,
@@ -87,8 +87,8 @@ class BookingPeriodLoader {
     return periods;
   }
 
-  BookingPeriod _createEmptyPeriod(PeriodMode period, DateTime dateTime) {
-    return BookingPeriod(
+  BookingPageData _createEmptyPeriod(PeriodMode period, DateTime dateTime) {
+    return BookingPageData(
       dateRange: _periodRangeConverter.convert(period, dateTime),
       income: Decimal.zero,
       outcome: Decimal.zero,
@@ -119,13 +119,13 @@ class BookingPeriodLoader {
     return typeComparison != 0 ? typeComparison : amountComparison;
   }
 
-  List<BookingPeriod> _convertToDay(List<Booking> bookings) => _convertToAll(bookings);
+  List<BookingPageData> _convertToDay(List<Booking> bookings) => _convertToAll(bookings);
 
-  List<BookingPeriod> _convertToYear(List<Booking> bookings) => _convertToAll(bookings);
+  List<BookingPageData> _convertToYear(List<Booking> bookings) => _convertToAll(bookings);
 
-  List<BookingPeriod> _convertToAll(List<Booking> bookings) {
+  List<BookingPageData> _convertToAll(List<Booking> bookings) {
     return [
-      BookingPeriod(
+      BookingPageData(
         dateRange: BookingDateRange.all(),
         income: Decimal.zero,
         outcome: Decimal.zero,

@@ -13,6 +13,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<LoginBloc>(create: (_) => GetIt.I<LoginBloc>()),
     BlocProvider<ProfileBloc>(create: (_) => GetIt.I<ProfileBloc>()),
     BlocProvider<LanguageBloc>(create: (_) => GetIt.I<LanguageBloc>()),
+    BlocProvider<BookingPageBloc>(create: (_) => GetIt.I<BookingPageBloc>()),
     BlocProvider<BalancesBloc>(create: (_) => GetIt.I<BalancesBloc>()),
     BlocProvider<CalendarBloc>(create: (_) => GetIt.I<CalendarBloc>()),
     BlocProvider<SummaryBloc>(create: (_) => GetIt.I<SummaryBloc>()),
