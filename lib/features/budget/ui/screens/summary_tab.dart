@@ -53,7 +53,7 @@ class _SummaryTabState extends State<SummaryTab> {
             loaded: (items) => _buildView(items),
             empty: () => Center(child: Text("No data available.")),
             error: (items, error) => _buildView(items),
-            orElse: () => LoadingIndicator(),
+            orElse: () => SizedBox.shrink(),
           );
         },
       ),

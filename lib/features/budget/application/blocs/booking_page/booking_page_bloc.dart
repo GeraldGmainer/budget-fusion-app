@@ -42,6 +42,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       _cacheManager.invalidateCache(CacheKey.bookings);
 
       final newItems = await _bookingPageDataLoader.loadPage(filter.period, _currentPage);
+      _currentItems.clear();
       _currentItems.addAll(newItems);
       final filteredItems = _filterItems(_currentItems, filter);
       await Future.delayed(Duration(seconds: 1));

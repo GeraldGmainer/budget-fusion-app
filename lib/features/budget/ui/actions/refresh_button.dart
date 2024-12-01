@@ -1,50 +1,76 @@
+// refresh_button.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
 
-class RefreshButton extends StatelessWidget {
+class RefreshButton extends StatefulWidget {
   final VoidCallback onTap;
 
-  const RefreshButton({super.key, required this.onTap});
+  const RefreshButton({Key? key, required this.onTap}) : super(key: key);
 
-  void _refresh() {
-    onTap.call();
+  @override
+  State<RefreshButton> createState() => _RefreshButtonState();
+}
+
+class _RefreshButtonState extends State<RefreshButton> {
+  bool _isLoading = false;
+
+  void _handleRefresh() {
+    setState(() {
+      _isLoading = true;
+    });
+    widget.onTap();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookingPageBloc, BookingPageState>(
-      buildWhen: (previous, current) => previous != current,
-      builder: (context, state) {
-        final isLoading = state.maybeWhen(loading: (_, __) => true, orElse: () => false);
-
-        return IconButton(
-          icon: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (child, animation) => FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-            child: isLoading
-                ? SizedBox(
-                    key: const ValueKey('loading'),
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                : const Icon(
-                    Icons.refresh,
-                    key: ValueKey('refresh'),
-                  ),
-          ),
-          onPressed: isLoading ? null : () => _refresh(),
-          tooltip: isLoading ? 'Refreshing...' : 'Refresh',
-        );
+    return BlocListener<BookingPageBloc, BookingPageState>(
+      listener: (context, state) {
+        if (_isLoading) {
+          state.whenOrNull(
+            loaded: (items) {
+              setState(() {
+                _isLoading = false;
+              });
+            },
+            error: (items, message) {
+              setState(() {
+                _isLoading = false;
+              });
+              // Optionally, show a SnackBar or another form of error feedback
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error: $message')),
+              );
+            },
+          );
+        }
       },
+      child: IconButton(
+        icon: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+          child: _isLoading
+              ? SizedBox(
+                  key: const ValueKey('loading'),
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+              : const Icon(
+                  Icons.refresh,
+                  key: ValueKey('refresh'),
+                ),
+        ),
+        onPressed: _isLoading ? null : _handleRefresh,
+        tooltip: _isLoading ? 'Refreshing...' : 'Refresh',
+      ),
     );
   }
 }
