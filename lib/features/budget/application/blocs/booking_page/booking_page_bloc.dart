@@ -15,8 +15,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   final List<BookingPageData> _currentItems = [];
   final CacheManager _cacheManager;
   final BookingPageDataLoader _bookingPageDataLoader;
-  int _currentPage = 0;
-  bool _hasReachedMax = false;
 
   BookingPageBloc(this._cacheManager, this._bookingPageDataLoader) : super(const BookingPageState.initial()) {
     on<BookingPageEvent>((event, emit) async {
@@ -29,7 +27,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   }
 
   Future<void> _onLoadInitial(Emitter<BookingPageState> emit, BudgetBookFilter filter) async {
-    if (_hasReachedMax) return;
     final stopwatch = Stopwatch()..start();
 
     try {
@@ -41,7 +38,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       });
       _cacheManager.invalidateCache(CacheKey.bookings);
 
-      final newItems = await _bookingPageDataLoader.loadPage(filter.period, _currentPage);
+      final newItems = await _bookingPageDataLoader.loadPage(filter.period);
       _currentItems.clear();
       _currentItems.addAll(newItems);
       final filteredItems = _filterItems(_currentItems, filter);

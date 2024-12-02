@@ -11,8 +11,7 @@ class BookingPageDataLoader {
 
   BookingPageDataLoader(this._bookingRepo, this._periodRangeConverter);
 
-  Future<List<BookingPageData>> loadPage(PeriodMode period, int page) async {
-    // TODO load only 3 months
+  Future<List<BookingPageData>> loadPage(PeriodMode period) async {
     final bookings = await _bookingRepo.getBookings();
     return _mapBookings(period, bookings);
   }
