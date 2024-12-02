@@ -1,3 +1,4 @@
 enum CacheKey {
-  bookings,
+  accounts,
+  categories,
 }

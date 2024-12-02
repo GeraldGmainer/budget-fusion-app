@@ -84,13 +84,14 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.factory<_i1012.LanguageBloc>(() => _i1012.LanguageBloc());
     gh.factory<_i809.MainBloc>(() => _i809.MainBloc());
-    gh.factory<_i59.BookingFilterBloc>(() => _i59.BookingFilterBloc());
+    gh.factory<_i1012.LanguageBloc>(() => _i1012.LanguageBloc());
     gh.factory<_i83.CalendarBloc>(() => _i83.CalendarBloc());
+    gh.factory<_i59.BookingFilterBloc>(() => _i59.BookingFilterBloc());
     gh.factory<_i159.TransactionsBloc>(() => _i159.TransactionsBloc());
     gh.factory<_i477.BalancesBloc>(() => _i477.BalancesBloc());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
+    gh.lazySingleton<_i1026.CacheManager>(() => _i1026.CacheManager());
     gh.lazySingleton<_i173.BookingRemoteSource>(
         () => _i173.BookingRemoteSource());
     gh.lazySingleton<_i778.UserClient>(() => _i778.UserClient());
@@ -102,7 +103,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i555.CategoryRemoteSource());
     gh.lazySingleton<_i982.PeriodRangeConverter>(
         () => _i982.PeriodRangeConverter());
-    gh.lazySingleton<_i1026.CacheManager>(() => _i1026.CacheManager());
     gh.lazySingleton<_i714.CategoryRepo>(
         () => _i760.CategoryRepoImpl(gh<_i123.CategoryRemoteSource>()));
     gh.lazySingleton<_i714.ProfileRepo>(
@@ -119,22 +119,19 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i871.UserRepo(gh<_i778.UserClient>()));
     gh.lazySingleton<_i714.AccountRepo>(
         () => _i352.AccountRepoImpl(gh<_i636.AccountRemoteSource>()));
-    gh.factory<_i983.LoginBloc>(() => _i983.LoginBloc(gh<_i706.UserRepo>()));
     gh.lazySingleton<_i714.BookingRepo>(() => _i1073.BookingRepoImpl(
           gh<_i729.BookingRemoteSource>(),
           gh<_i714.CategoryRepo>(),
           gh<_i714.AccountRepo>(),
-          gh<_i714.CacheManager>(),
         ));
+    gh.factory<_i983.LoginBloc>(() => _i983.LoginBloc(gh<_i706.UserRepo>()));
     gh.lazySingleton<_i697.BookingPageDataLoader>(
         () => _i697.BookingPageDataLoader(
               gh<_i714.BookingRepo>(),
               gh<_i680.PeriodRangeConverter>(),
             ));
-    gh.factory<_i175.BookingPageBloc>(() => _i175.BookingPageBloc(
-          gh<_i714.CacheManager>(),
-          gh<_i680.BookingPageDataLoader>(),
-        ));
+    gh.factory<_i175.BookingPageBloc>(
+        () => _i175.BookingPageBloc(gh<_i680.BookingPageDataLoader>()));
     return this;
   }
 }

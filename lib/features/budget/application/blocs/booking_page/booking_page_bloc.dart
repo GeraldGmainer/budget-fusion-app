@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,10 +12,9 @@ part 'booking_page_state.dart';
 @injectable
 class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   final List<BookingPageData> _currentItems = [];
-  final CacheManager _cacheManager;
   final BookingPageDataLoader _bookingPageDataLoader;
 
-  BookingPageBloc(this._cacheManager, this._bookingPageDataLoader) : super(const BookingPageState.initial()) {
+  BookingPageBloc(this._bookingPageDataLoader) : super(const BookingPageState.initial()) {
     on<BookingPageEvent>((event, emit) async {
       await event.when(
         loadInitial: (filter) => _onLoadInitial(emit, filter),
@@ -36,9 +34,8 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       }, loaded: (items) {
         emit(BookingPageState.loading(items: items, isFirstFetch: false));
       });
-      _cacheManager.invalidateCache(CacheKey.bookings);
 
-      final newItems = await _bookingPageDataLoader.loadPage(filter.period);
+      final newItems = await _bookingPageDataLoader.load(filter.period);
       _currentItems.clear();
       _currentItems.addAll(newItems);
       final filteredItems = _filterItems(_currentItems, filter);
