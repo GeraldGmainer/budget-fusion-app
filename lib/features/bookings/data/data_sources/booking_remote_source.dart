@@ -12,16 +12,14 @@ class BookingRemoteSource extends SupabaseClient {
       var query = supabase.from('bookings').select('id, booking_date, description, amount, category_id, account_id, is_deleted');
 
       if (from != null) {
-        String fromIso = from.toIso8601String();
-        query = query.gt('booking_date', fromIso);
+        query = query.gte('booking_date', from.toIso8601String());
       }
-
       if (to != null) {
-        String toIso = to.toIso8601String();
-        query = query.lte('booking_date', toIso);
+        query = query.lte('booking_date', to.toIso8601String());
       }
 
       final response = await query.order('booking_date', ascending: true);
+      BudgetLogger.instance.d(List.from(response).map((item) => BookingDto.fromJson(item)).toList().length);
       return List.from(response).map((item) => BookingDto.fromJson(item)).toList();
     });
   }

@@ -46,8 +46,10 @@ import 'package:budget_fusion_app/features/budget/application/blocs/summary/summ
 import 'package:budget_fusion_app/features/budget/application/blocs/transactions/transactions_bloc.dart'
     as _i159;
 import 'package:budget_fusion_app/features/budget/domain/domain.dart' as _i680;
-import 'package:budget_fusion_app/features/budget/domain/services/period_range_converter.dart'
-    as _i982;
+import 'package:budget_fusion_app/features/budget/domain/services/booking_page_converter.dart'
+    as _i739;
+import 'package:budget_fusion_app/features/budget/domain/services/booking_pagination_service.dart'
+    as _i267;
 import 'package:budget_fusion_app/features/budget/domain/use_cases/booking_page_data_loader.dart'
     as _i697;
 import 'package:budget_fusion_app/features/budget/domain/use_cases/chart_data_service.dart'
@@ -101,8 +103,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i664.AccountRemoteSource());
     gh.lazySingleton<_i555.CategoryRemoteSource>(
         () => _i555.CategoryRemoteSource());
-    gh.lazySingleton<_i982.PeriodRangeConverter>(
-        () => _i982.PeriodRangeConverter());
+    gh.lazySingleton<_i739.BookingPageConverter>(
+        () => _i739.BookingPageConverter());
     gh.lazySingleton<_i714.CategoryRepo>(
         () => _i760.CategoryRepoImpl(gh<_i123.CategoryRemoteSource>()));
     gh.lazySingleton<_i714.ProfileRepo>(
@@ -125,10 +127,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.AccountRepo>(),
         ));
     gh.factory<_i983.LoginBloc>(() => _i983.LoginBloc(gh<_i706.UserRepo>()));
+    gh.lazySingleton<_i267.BookingPaginationService>(
+        () => _i267.BookingPaginationService(gh<_i714.BookingRepo>()));
     gh.lazySingleton<_i697.BookingPageDataLoader>(
         () => _i697.BookingPageDataLoader(
-              gh<_i714.BookingRepo>(),
-              gh<_i680.PeriodRangeConverter>(),
+              gh<_i680.BookingPageConverter>(),
+              gh<_i680.BookingPaginationService>(),
             ));
     gh.factory<_i175.BookingPageBloc>(
         () => _i175.BookingPageBloc(gh<_i680.BookingPageDataLoader>()));
