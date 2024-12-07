@@ -6,7 +6,7 @@ class BookingPageState with _$BookingPageState {
 
   const factory BookingPageState.loading({required List<BookingPageData> items, required bool isFirstFetch}) = _Loading;
 
-  const factory BookingPageState.loaded({required List<BookingPageData> items}) = _Loaded;
+  const factory BookingPageState.loaded({required List<BookingPageData> items, required bool isInitial}) = _Loaded;
 
   const factory BookingPageState.error({required List<BookingPageData> items, required String message}) = _Error;
 }

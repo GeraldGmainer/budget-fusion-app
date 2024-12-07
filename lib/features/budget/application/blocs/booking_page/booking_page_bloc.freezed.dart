@@ -582,7 +582,8 @@ mixin _$BookingPageState {
     required TResult Function() initial,
     required TResult Function(List<BookingPageData> items, bool isFirstFetch)
         loading,
-    required TResult Function(List<BookingPageData> items) loaded,
+    required TResult Function(List<BookingPageData> items, bool isInitial)
+        loaded,
     required TResult Function(List<BookingPageData> items, String message)
         error,
   }) =>
@@ -591,7 +592,7 @@ mixin _$BookingPageState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items)? loaded,
+    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult? Function(List<BookingPageData> items, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -599,7 +600,7 @@ mixin _$BookingPageState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items)? loaded,
+    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult Function(List<BookingPageData> items, String message)? error,
     required TResult orElse(),
   }) =>
@@ -696,7 +697,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function(List<BookingPageData> items, bool isFirstFetch)
         loading,
-    required TResult Function(List<BookingPageData> items) loaded,
+    required TResult Function(List<BookingPageData> items, bool isInitial)
+        loaded,
     required TResult Function(List<BookingPageData> items, String message)
         error,
   }) {
@@ -708,7 +710,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items)? loaded,
+    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult? Function(List<BookingPageData> items, String message)? error,
   }) {
     return initial?.call();
@@ -719,7 +721,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items)? loaded,
+    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult Function(List<BookingPageData> items, String message)? error,
     required TResult orElse(),
   }) {
@@ -860,7 +862,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function(List<BookingPageData> items, bool isFirstFetch)
         loading,
-    required TResult Function(List<BookingPageData> items) loaded,
+    required TResult Function(List<BookingPageData> items, bool isInitial)
+        loaded,
     required TResult Function(List<BookingPageData> items, String message)
         error,
   }) {
@@ -872,7 +875,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items)? loaded,
+    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult? Function(List<BookingPageData> items, String message)? error,
   }) {
     return loading?.call(items, isFirstFetch);
@@ -883,7 +886,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items)? loaded,
+    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult Function(List<BookingPageData> items, String message)? error,
     required TResult orElse(),
   }) {
@@ -952,7 +955,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<BookingPageData> items});
+  $Res call({List<BookingPageData> items, bool isInitial});
 }
 
 /// @nodoc
@@ -969,12 +972,17 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? items = null,
+    Object? isInitial = null,
   }) {
     return _then(_$LoadedImpl(
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<BookingPageData>,
+      isInitial: null == isInitial
+          ? _value.isInitial
+          : isInitial // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -982,7 +990,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({required final List<BookingPageData> items})
+  const _$LoadedImpl(
+      {required final List<BookingPageData> items, required this.isInitial})
       : _items = items;
 
   final List<BookingPageData> _items;
@@ -994,8 +1003,11 @@ class _$LoadedImpl implements _Loaded {
   }
 
   @override
+  final bool isInitial;
+
+  @override
   String toString() {
-    return 'BookingPageState.loaded(items: $items)';
+    return 'BookingPageState.loaded(items: $items, isInitial: $isInitial)';
   }
 
   @override
@@ -1003,12 +1015,14 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            (identical(other.isInitial, isInitial) ||
+                other.isInitial == isInitial));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_items), isInitial);
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -1024,11 +1038,12 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() initial,
     required TResult Function(List<BookingPageData> items, bool isFirstFetch)
         loading,
-    required TResult Function(List<BookingPageData> items) loaded,
+    required TResult Function(List<BookingPageData> items, bool isInitial)
+        loaded,
     required TResult Function(List<BookingPageData> items, String message)
         error,
   }) {
-    return loaded(items);
+    return loaded(items, isInitial);
   }
 
   @override
@@ -1036,10 +1051,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items)? loaded,
+    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult? Function(List<BookingPageData> items, String message)? error,
   }) {
-    return loaded?.call(items);
+    return loaded?.call(items, isInitial);
   }
 
   @override
@@ -1047,12 +1062,12 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items)? loaded,
+    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult Function(List<BookingPageData> items, String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items);
+      return loaded(items, isInitial);
     }
     return orElse();
   }
@@ -1096,10 +1111,12 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements BookingPageState {
-  const factory _Loaded({required final List<BookingPageData> items}) =
-      _$LoadedImpl;
+  const factory _Loaded(
+      {required final List<BookingPageData> items,
+      required final bool isInitial}) = _$LoadedImpl;
 
   List<BookingPageData> get items;
+  bool get isInitial;
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -1196,7 +1213,8 @@ class _$ErrorImpl implements _Error {
     required TResult Function() initial,
     required TResult Function(List<BookingPageData> items, bool isFirstFetch)
         loading,
-    required TResult Function(List<BookingPageData> items) loaded,
+    required TResult Function(List<BookingPageData> items, bool isInitial)
+        loaded,
     required TResult Function(List<BookingPageData> items, String message)
         error,
   }) {
@@ -1208,7 +1226,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items)? loaded,
+    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult? Function(List<BookingPageData> items, String message)? error,
   }) {
     return error?.call(items, message);
@@ -1219,7 +1237,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items)? loaded,
+    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
     TResult Function(List<BookingPageData> items, String message)? error,
     required TResult orElse(),
   }) {

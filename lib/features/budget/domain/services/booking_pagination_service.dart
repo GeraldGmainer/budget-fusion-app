@@ -11,37 +11,37 @@ class BookingPaginationService {
 
   BookingPaginationService(this._bookingRepo);
 
-  Future<List<Booking>> getBookings(PeriodMode period, int fromPage, int toPage) async {
-    BudgetLogger.instance.i("from $fromPage / to: $toPage");
-    final fromDate = _calculateFromDate(period, fromPage);
-    final toDate = _calculateToDate(period, fromDate, toPage);
+  Future<List<Booking>> getBookings(PeriodMode period, int currentPage, int pageCount) async {
+    BudgetLogger.instance.i("currentPage $currentPage / pageCount: $pageCount");
+    final fromDate = calculateFromDate(period, currentPage, pageCount);
+    final toDate = calculateToDate(period, fromDate, pageCount);
     return await _bookingRepo.getBookings(from: fromDate, to: toDate);
   }
 
-  DateTime? _calculateFromDate(PeriodMode period, int fromPage) {
+  DateTime? calculateFromDate(PeriodMode period, int currentPage, int pageCount) {
     final now = DateTime.now();
     switch (period) {
       case PeriodMode.day:
-        return now.subtract(Duration(days: fromPage)).startOfDay;
+        return now.startOfDay;
       case PeriodMode.month:
-        return DateTime(now.year, now.month - fromPage).startOfMonth;
+        return DateTime(now.year, now.month - currentPage - (pageCount - 1)).startOfMonth;
       case PeriodMode.year:
-        return DateTime(now.year - fromPage, 1, 1).startOfYear;
+        return now.startOfYear;
       default:
         return null;
     }
   }
 
-  DateTime? _calculateToDate(PeriodMode period, DateTime? fromDate, int toPage) {
+  DateTime? calculateToDate(PeriodMode period, DateTime? fromDate, int pageCount) {
     if (fromDate == null) return null;
 
     switch (period) {
       case PeriodMode.day:
-        return fromDate.subtract(Duration(days: toPage - 1)).endOfDay;
+        return fromDate.endOfDay;
       case PeriodMode.month:
-        return DateTime(fromDate.year, fromDate.month + toPage - 1).endOfMonth;
+        return DateTime(fromDate.year, fromDate.month + pageCount - 1).endOfMonth;
       case PeriodMode.year:
-        return DateTime(fromDate.year - toPage - 1, 1, 1).endOfYear;
+        return fromDate.endOfYear;
       default:
         return null;
     }

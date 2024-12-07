@@ -9,8 +9,10 @@ class BookingPageDataLoader {
 
   BookingPageDataLoader(this._bookingPageConverter, this._bookingPaginationService);
 
-  Future<List<BookingPageData>> load(PeriodMode period, int fromPage, int toPage) async {
-    final bookings = await _bookingPaginationService.getBookings(period, fromPage, toPage);
-    return _bookingPageConverter.mapBookings(period, bookings);
+  Future<List<BookingPageData>> load(PeriodMode period, int currentPage, int pageCount) async {
+    final bookings = await _bookingPaginationService.getBookings(period, currentPage, pageCount);
+    final fromDate = _bookingPaginationService.calculateFromDate(period, currentPage, pageCount);
+    final toDate = _bookingPaginationService.calculateToDate(period, fromDate, pageCount);
+    return _bookingPageConverter.mapBookings(period, bookings, toDate!);
   }
 }

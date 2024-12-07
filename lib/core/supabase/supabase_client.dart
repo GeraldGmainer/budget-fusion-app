@@ -6,7 +6,7 @@ import '../core.dart';
 abstract class SupabaseClient {
   static const bool logSession = false;
 
-  Future<T> execute<T>(String functionName, Future<T> Function() action) async {
+  Future<T> execute<T>(String functionName, Future<T> Function() action, {String? extraInfo}) async {
     final stopwatch = Stopwatch()..start();
     try {
       await checkToken();
@@ -24,7 +24,11 @@ abstract class SupabaseClient {
       throw TranslatedException("error.default");
     } finally {
       stopwatch.stop();
-      BudgetLogger.instance.d("$functionName took ${stopwatch.elapsed.inMilliseconds} ms");
+      if (extraInfo != null && extraInfo.isNotEmpty) {
+        BudgetLogger.instance.d("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms");
+      } else {
+        BudgetLogger.instance.d("$functionName took ${stopwatch.elapsed.inMilliseconds} ms");
+      }
     }
   }
 

@@ -29,7 +29,7 @@ class _RefreshButtonState extends State<RefreshButton> {
       listener: (context, state) {
         if (_isLoading) {
           state.whenOrNull(
-            loaded: (items) {
+            loaded: (items, _) {
               setState(() {
                 _isLoading = false;
               });
