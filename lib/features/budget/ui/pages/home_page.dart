@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onBookingPeriodLoaded(BuildContext context, List<BookingPeriod> periods) {
-    context.read<BookingViewBloc>().add(BookingViewEvent.load(ViewMode.chart, periods));
+    context.read<BookingViewBloc>().add(BookingViewEvent.load(ViewMode.summary, periods));
   }
 
   @override

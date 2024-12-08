@@ -43,7 +43,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   void _load() {
     // TODO use filter
     final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
-    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(filter));
+    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(filter, BookingViewMode.summary));
   }
 
   void _onTabSelected(int index) {
@@ -98,12 +98,12 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
                 BlocBuilder<BookingPageBloc, BookingPageState>(
                   builder: (context, bookingState) {
                     final isInitialLoading = bookingState.maybeWhen(
-                      loading: (_, isFirstFetch) => isFirstFetch,
+                      loading: (_, __, isFirstFetch, ___, ____) => isFirstFetch,
                       orElse: () => false,
                     );
 
                     final isPaginationLoading = bookingState.maybeWhen(
-                      loading: (_, isFirstFetch) => !isFirstFetch,
+                      loading: (_, __, isFirstFetch, ___, ____) => !isFirstFetch,
                       orElse: () => false,
                     );
 

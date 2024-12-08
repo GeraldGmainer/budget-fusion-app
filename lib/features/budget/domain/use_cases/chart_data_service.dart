@@ -10,17 +10,17 @@ class ChartDataService {
 
   ChartDataService(this._profileRepo);
 
-  Future<List<ChartViewData>> convert(List<BookingPageData> datas) async {
+  Future<List<SummaryViewData>> convert(List<BookingPageData> datas) async {
     return await Future.wait(datas.map((data) => _convert(data)));
   }
 
-  Future<ChartViewData> _convert(BookingPageData pageData) async {
+  Future<SummaryViewData> _convert(BookingPageData pageData) async {
     List<CategorySummary> categorySummaries = _mapSummaries(pageData);
     List<PieData> pieData = _mapToPieData(pageData.categoryGroups.outcomeCategories(), pageData.outcome);
 
     final currency = await _profileRepo.getCurrency();
 
-    return ChartViewData(
+    return SummaryViewData(
       currency: currency,
       dateRange: pageData.dateRange,
       pieData: pieData,

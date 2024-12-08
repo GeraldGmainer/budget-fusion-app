@@ -1,10 +1,8 @@
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
-import '../../domain/domain.dart';
 import '../widgets/widgets.dart';
 
 class SummaryTab extends StatefulWidget {
@@ -15,7 +13,6 @@ class SummaryTab extends StatefulWidget {
 class _SummaryTabState extends State<SummaryTab> {
   late PageController _pageController;
   int _currentPage = 0;
-  int _previousItemCount = 0;
 
   @override
   void initState() {
@@ -30,46 +27,63 @@ class _SummaryTabState extends State<SummaryTab> {
   }
 
   Future<void> _onLoadMore() async {
-    final filter = BudgetBookFilter(transaction: TransactionType.outcome, period: PeriodMode.month);
-    context.read<BookingPageBloc>().add(BookingPageEvent.loadMore(filter));
+    context.read<BookingPageBloc>().add(const BookingPageEvent.loadMore());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<BookingPageBloc, BookingPageState>(
-      listener: (context, bookingState) {
-        bookingState.whenOrNull(
-          loaded: (items, isInitial) {
-            context.read<SummaryBloc>().add(SummaryEvent.refresh(items));
-            if (isInitial) {
-              _pageController.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.linear);
-            } else {
-              int newItemsCount = items.length - _previousItemCount;
-              if (newItemsCount > 0) {
-                _pageController.animateToPage(_currentPage + 1, duration: Duration(milliseconds: 300), curve: Curves.linear);
-              }
-            }
-            _previousItemCount = items.length;
-          },
-          error: (items, error) {
-            showErrorSnackBar(context, error);
-          },
+    return BlocBuilder<BookingPageBloc, BookingPageState>(
+      builder: (context, bookingState) {
+        final isFirstFetch = bookingState.maybeWhen(loading: (_, __, isFirstFetch, ___, ____) => isFirstFetch, orElse: () => false);
+        return Stack(
+          children: [
+            _buildContent(bookingState),
+            if (bookingState.isLoading && isFirstFetch) Center(child: CircularProgressIndicator()),
+            if (bookingState.isLoading && !isFirstFetch)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: LinearProgressIndicator(),
+              ),
+            // Error Handling (Optional: Could use a separate widget or Snackbar)
+            if (bookingState.isError)
+              Positioned(
+                top: 16,
+                left: 16,
+                right: 16,
+                child: Material(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      bookingState.whenOrNull(error: (_, __, message, ___, ____) => message) ?? "unknown error",
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         );
       },
-      child: BlocBuilder<SummaryBloc, SummaryState>(
-        builder: (context, summaryState) {
-          return summaryState.maybeWhen(
-            loaded: (items) => _buildView(items),
-            empty: () => Center(child: Text("No data available.")),
-            error: (items, error) => _buildView(items),
-            orElse: () => SizedBox.shrink(),
-          );
-        },
-      ),
     );
   }
 
-  Widget _buildView(List<ChartViewData> charts) {
+  /// Builds the main content of the SummaryTab based on the current state.
+  Widget _buildContent(BookingPageState bookingState) {
+    // Extract SummaryViewData from viewItems
+    final summaries = bookingState.summaries;
+
+    if (summaries.isEmpty) {
+      if (bookingState.isLoading) {
+        // Show a placeholder while loading
+        return SizedBox.shrink();
+      }
+      return Center(child: Text("No summary data available."));
+    }
+
     return CustomRefreshIndicator(
       builder: (BuildContext context, Widget child, IndicatorController controller) {
         return Stack(
@@ -94,16 +108,17 @@ class _SummaryTabState extends State<SummaryTab> {
       triggerMode: IndicatorTriggerMode.onEdge,
       child: PageView.builder(
         controller: _pageController,
-        itemCount: charts.length,
+        itemCount: summaries.length,
         onPageChanged: _onPageChanged,
         reverse: true,
         itemBuilder: (context, index) {
-          return SummaryView(chart: charts[charts.length - 1 - index]);
+          return SummaryView(chart: summaries.reversed.toList()[index]);
         },
       ),
     );
   }
 
+  /// Updates the current page index when the user navigates between pages.
   void _onPageChanged(int pageIndex) {
     setState(() {
       _currentPage = pageIndex;

@@ -23,7 +23,7 @@ class BookingRemoteSource extends SupabaseClient {
         extraInfo.write("to $toIso");
       }
 
-      final response = await query.order('booking_date', ascending: true);
+      final response = await query.order('booking_date', ascending: false);
       return List.from(response).map((item) => BookingDto.fromJson(item)).toList();
     });
   }

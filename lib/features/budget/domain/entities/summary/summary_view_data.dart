@@ -4,20 +4,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entities.dart';
 
-part 'chart_view_data.freezed.dart';
+part 'summary_view_data.freezed.dart';
 
 @freezed
-class ChartViewData with _$ChartViewData {
-  const ChartViewData._();
+class SummaryViewData with _$SummaryViewData implements BookingPageViewData {
+  const SummaryViewData._();
 
-  const factory ChartViewData({
+  const factory SummaryViewData({
     required Currency currency,
     required BookingDateRange dateRange,
     required List<PieData> pieData,
     required List<CategorySummary> categorySummaries,
     required Decimal income,
     required Decimal outcome,
-  }) = _ChartViewData;
+  }) = _SummaryViewData;
 
   Decimal get balance {
     return income - outcome;

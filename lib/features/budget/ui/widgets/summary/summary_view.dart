@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/domain.dart';
 
 class SummaryView extends StatelessWidget {
-  final ChartViewData chart;
+  final SummaryViewData chart;
 
   const SummaryView({super.key, required this.chart});
 
@@ -13,7 +13,7 @@ class SummaryView extends StatelessWidget {
     return _buildChartCard(chart, Decimal.zero, chart.dateRange.from);
   }
 
-  Widget _buildChartCard(ChartViewData chart, Decimal balance, DateTime date) {
+  Widget _buildChartCard(SummaryViewData chart, Decimal balance, DateTime date) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

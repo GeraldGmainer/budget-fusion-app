@@ -16,26 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BookingPageEvent {
-  BudgetBookFilter get filter => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BudgetBookFilter filter) loadInitial,
-    required TResult Function(BudgetBookFilter filter) loadMore,
-    required TResult Function(BudgetBookFilter filter) applyFilter,
+    required TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)
+        loadInitial,
+    required TResult Function() loadMore,
+    required TResult Function(
+            BudgetBookFilter? filter, BookingViewMode? viewMode)
+        updateView,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BudgetBookFilter filter)? loadInitial,
-    TResult? Function(BudgetBookFilter filter)? loadMore,
-    TResult? Function(BudgetBookFilter filter)? applyFilter,
+    TResult? Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult? Function()? loadMore,
+    TResult? Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BudgetBookFilter filter)? loadInitial,
-    TResult Function(BudgetBookFilter filter)? loadMore,
-    TResult Function(BudgetBookFilter filter)? applyFilter,
+    TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult Function()? loadMore,
+    TResult Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,29 +49,23 @@ mixin _$BookingPageEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadInitial value) loadInitial,
     required TResult Function(_LoadMore value) loadMore,
-    required TResult Function(_ApplyFilter value) applyFilter,
+    required TResult Function(_UpdateView value) updateView,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadInitial value)? loadInitial,
     TResult? Function(_LoadMore value)? loadMore,
-    TResult? Function(_ApplyFilter value)? applyFilter,
+    TResult? Function(_UpdateView value)? updateView,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadInitial value)? loadInitial,
     TResult Function(_LoadMore value)? loadMore,
-    TResult Function(_ApplyFilter value)? applyFilter,
+    TResult Function(_UpdateView value)? updateView,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BookingPageEventCopyWith<BookingPageEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -74,10 +74,6 @@ abstract class $BookingPageEventCopyWith<$Res> {
   factory $BookingPageEventCopyWith(
           BookingPageEvent value, $Res Function(BookingPageEvent) then) =
       _$BookingPageEventCopyWithImpl<$Res, BookingPageEvent>;
-  @useResult
-  $Res call({BudgetBookFilter filter});
-
-  $BudgetBookFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -92,41 +88,16 @@ class _$BookingPageEventCopyWithImpl<$Res, $Val extends BookingPageEvent>
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? filter = null,
-  }) {
-    return _then(_value.copyWith(
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as BudgetBookFilter,
-    ) as $Val);
-  }
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BudgetBookFilterCopyWith<$Res> get filter {
-    return $BudgetBookFilterCopyWith<$Res>(_value.filter, (value) {
-      return _then(_value.copyWith(filter: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$LoadInitialImplCopyWith<$Res>
-    implements $BookingPageEventCopyWith<$Res> {
+abstract class _$$LoadInitialImplCopyWith<$Res> {
   factory _$$LoadInitialImplCopyWith(
           _$LoadInitialImpl value, $Res Function(_$LoadInitialImpl) then) =
       __$$LoadInitialImplCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({BudgetBookFilter filter});
+  $Res call({BudgetBookFilter filter, BookingViewMode viewMode});
 
-  @override
   $BudgetBookFilterCopyWith<$Res> get filter;
 }
 
@@ -144,27 +115,44 @@ class __$$LoadInitialImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? filter = null,
+    Object? viewMode = null,
   }) {
     return _then(_$LoadInitialImpl(
       null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as BudgetBookFilter,
+      null == viewMode
+          ? _value.viewMode
+          : viewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
     ));
+  }
+
+  /// Create a copy of BookingPageEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BudgetBookFilterCopyWith<$Res> get filter {
+    return $BudgetBookFilterCopyWith<$Res>(_value.filter, (value) {
+      return _then(_value.copyWith(filter: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$LoadInitialImpl implements _LoadInitial {
-  const _$LoadInitialImpl(this.filter);
+  const _$LoadInitialImpl(this.filter, this.viewMode);
 
   @override
   final BudgetBookFilter filter;
+  @override
+  final BookingViewMode viewMode;
 
   @override
   String toString() {
-    return 'BookingPageEvent.loadInitial(filter: $filter)';
+    return 'BookingPageEvent.loadInitial(filter: $filter, viewMode: $viewMode)';
   }
 
   @override
@@ -172,11 +160,13 @@ class _$LoadInitialImpl implements _LoadInitial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadInitialImpl &&
-            (identical(other.filter, filter) || other.filter == filter));
+            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.viewMode, viewMode) ||
+                other.viewMode == viewMode));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter);
+  int get hashCode => Object.hash(runtimeType, filter, viewMode);
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -189,33 +179,40 @@ class _$LoadInitialImpl implements _LoadInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BudgetBookFilter filter) loadInitial,
-    required TResult Function(BudgetBookFilter filter) loadMore,
-    required TResult Function(BudgetBookFilter filter) applyFilter,
+    required TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)
+        loadInitial,
+    required TResult Function() loadMore,
+    required TResult Function(
+            BudgetBookFilter? filter, BookingViewMode? viewMode)
+        updateView,
   }) {
-    return loadInitial(filter);
+    return loadInitial(filter, viewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BudgetBookFilter filter)? loadInitial,
-    TResult? Function(BudgetBookFilter filter)? loadMore,
-    TResult? Function(BudgetBookFilter filter)? applyFilter,
+    TResult? Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult? Function()? loadMore,
+    TResult? Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
   }) {
-    return loadInitial?.call(filter);
+    return loadInitial?.call(filter, viewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BudgetBookFilter filter)? loadInitial,
-    TResult Function(BudgetBookFilter filter)? loadMore,
-    TResult Function(BudgetBookFilter filter)? applyFilter,
+    TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult Function()? loadMore,
+    TResult Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
     required TResult orElse(),
   }) {
     if (loadInitial != null) {
-      return loadInitial(filter);
+      return loadInitial(filter, viewMode);
     }
     return orElse();
   }
@@ -225,7 +222,7 @@ class _$LoadInitialImpl implements _LoadInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadInitial value) loadInitial,
     required TResult Function(_LoadMore value) loadMore,
-    required TResult Function(_ApplyFilter value) applyFilter,
+    required TResult Function(_UpdateView value) updateView,
   }) {
     return loadInitial(this);
   }
@@ -235,7 +232,7 @@ class _$LoadInitialImpl implements _LoadInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadInitial value)? loadInitial,
     TResult? Function(_LoadMore value)? loadMore,
-    TResult? Function(_ApplyFilter value)? applyFilter,
+    TResult? Function(_UpdateView value)? updateView,
   }) {
     return loadInitial?.call(this);
   }
@@ -245,7 +242,7 @@ class _$LoadInitialImpl implements _LoadInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadInitial value)? loadInitial,
     TResult Function(_LoadMore value)? loadMore,
-    TResult Function(_ApplyFilter value)? applyFilter,
+    TResult Function(_UpdateView value)? updateView,
     required TResult orElse(),
   }) {
     if (loadInitial != null) {
@@ -256,31 +253,25 @@ class _$LoadInitialImpl implements _LoadInitial {
 }
 
 abstract class _LoadInitial implements BookingPageEvent {
-  const factory _LoadInitial(final BudgetBookFilter filter) = _$LoadInitialImpl;
+  const factory _LoadInitial(
+          final BudgetBookFilter filter, final BookingViewMode viewMode) =
+      _$LoadInitialImpl;
 
-  @override
   BudgetBookFilter get filter;
+  BookingViewMode get viewMode;
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadInitialImplCopyWith<_$LoadInitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadMoreImplCopyWith<$Res>
-    implements $BookingPageEventCopyWith<$Res> {
+abstract class _$$LoadMoreImplCopyWith<$Res> {
   factory _$$LoadMoreImplCopyWith(
           _$LoadMoreImpl value, $Res Function(_$LoadMoreImpl) then) =
       __$$LoadMoreImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({BudgetBookFilter filter});
-
-  @override
-  $BudgetBookFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -293,82 +284,64 @@ class __$$LoadMoreImplCopyWithImpl<$Res>
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? filter = null,
-  }) {
-    return _then(_$LoadMoreImpl(
-      null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as BudgetBookFilter,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$LoadMoreImpl implements _LoadMore {
-  const _$LoadMoreImpl(this.filter);
-
-  @override
-  final BudgetBookFilter filter;
+  const _$LoadMoreImpl();
 
   @override
   String toString() {
-    return 'BookingPageEvent.loadMore(filter: $filter)';
+    return 'BookingPageEvent.loadMore()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadMoreImpl &&
-            (identical(other.filter, filter) || other.filter == filter));
+        (other.runtimeType == runtimeType && other is _$LoadMoreImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter);
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadMoreImplCopyWith<_$LoadMoreImpl> get copyWith =>
-      __$$LoadMoreImplCopyWithImpl<_$LoadMoreImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BudgetBookFilter filter) loadInitial,
-    required TResult Function(BudgetBookFilter filter) loadMore,
-    required TResult Function(BudgetBookFilter filter) applyFilter,
+    required TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)
+        loadInitial,
+    required TResult Function() loadMore,
+    required TResult Function(
+            BudgetBookFilter? filter, BookingViewMode? viewMode)
+        updateView,
   }) {
-    return loadMore(filter);
+    return loadMore();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BudgetBookFilter filter)? loadInitial,
-    TResult? Function(BudgetBookFilter filter)? loadMore,
-    TResult? Function(BudgetBookFilter filter)? applyFilter,
+    TResult? Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult? Function()? loadMore,
+    TResult? Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
   }) {
-    return loadMore?.call(filter);
+    return loadMore?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BudgetBookFilter filter)? loadInitial,
-    TResult Function(BudgetBookFilter filter)? loadMore,
-    TResult Function(BudgetBookFilter filter)? applyFilter,
+    TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult Function()? loadMore,
+    TResult Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
     required TResult orElse(),
   }) {
     if (loadMore != null) {
-      return loadMore(filter);
+      return loadMore();
     }
     return orElse();
   }
@@ -378,7 +351,7 @@ class _$LoadMoreImpl implements _LoadMore {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadInitial value) loadInitial,
     required TResult Function(_LoadMore value) loadMore,
-    required TResult Function(_ApplyFilter value) applyFilter,
+    required TResult Function(_UpdateView value) updateView,
   }) {
     return loadMore(this);
   }
@@ -388,7 +361,7 @@ class _$LoadMoreImpl implements _LoadMore {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadInitial value)? loadInitial,
     TResult? Function(_LoadMore value)? loadMore,
-    TResult? Function(_ApplyFilter value)? applyFilter,
+    TResult? Function(_UpdateView value)? updateView,
   }) {
     return loadMore?.call(this);
   }
@@ -398,7 +371,7 @@ class _$LoadMoreImpl implements _LoadMore {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadInitial value)? loadInitial,
     TResult Function(_LoadMore value)? loadMore,
-    TResult Function(_ApplyFilter value)? applyFilter,
+    TResult Function(_UpdateView value)? updateView,
     required TResult orElse(),
   }) {
     if (loadMore != null) {
@@ -409,39 +382,26 @@ class _$LoadMoreImpl implements _LoadMore {
 }
 
 abstract class _LoadMore implements BookingPageEvent {
-  const factory _LoadMore(final BudgetBookFilter filter) = _$LoadMoreImpl;
-
-  @override
-  BudgetBookFilter get filter;
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadMoreImplCopyWith<_$LoadMoreImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _LoadMore() = _$LoadMoreImpl;
 }
 
 /// @nodoc
-abstract class _$$ApplyFilterImplCopyWith<$Res>
-    implements $BookingPageEventCopyWith<$Res> {
-  factory _$$ApplyFilterImplCopyWith(
-          _$ApplyFilterImpl value, $Res Function(_$ApplyFilterImpl) then) =
-      __$$ApplyFilterImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$UpdateViewImplCopyWith<$Res> {
+  factory _$$UpdateViewImplCopyWith(
+          _$UpdateViewImpl value, $Res Function(_$UpdateViewImpl) then) =
+      __$$UpdateViewImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BudgetBookFilter filter});
+  $Res call({BudgetBookFilter? filter, BookingViewMode? viewMode});
 
-  @override
-  $BudgetBookFilterCopyWith<$Res> get filter;
+  $BudgetBookFilterCopyWith<$Res>? get filter;
 }
 
 /// @nodoc
-class __$$ApplyFilterImplCopyWithImpl<$Res>
-    extends _$BookingPageEventCopyWithImpl<$Res, _$ApplyFilterImpl>
-    implements _$$ApplyFilterImplCopyWith<$Res> {
-  __$$ApplyFilterImplCopyWithImpl(
-      _$ApplyFilterImpl _value, $Res Function(_$ApplyFilterImpl) _then)
+class __$$UpdateViewImplCopyWithImpl<$Res>
+    extends _$BookingPageEventCopyWithImpl<$Res, _$UpdateViewImpl>
+    implements _$$UpdateViewImplCopyWith<$Res> {
+  __$$UpdateViewImplCopyWithImpl(
+      _$UpdateViewImpl _value, $Res Function(_$UpdateViewImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of BookingPageEvent
@@ -449,79 +409,109 @@ class __$$ApplyFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? filter = null,
+    Object? filter = freezed,
+    Object? viewMode = freezed,
   }) {
-    return _then(_$ApplyFilterImpl(
-      null == filter
+    return _then(_$UpdateViewImpl(
+      filter: freezed == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
-              as BudgetBookFilter,
+              as BudgetBookFilter?,
+      viewMode: freezed == viewMode
+          ? _value.viewMode
+          : viewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode?,
     ));
+  }
+
+  /// Create a copy of BookingPageEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BudgetBookFilterCopyWith<$Res>? get filter {
+    if (_value.filter == null) {
+      return null;
+    }
+
+    return $BudgetBookFilterCopyWith<$Res>(_value.filter!, (value) {
+      return _then(_value.copyWith(filter: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ApplyFilterImpl implements _ApplyFilter {
-  const _$ApplyFilterImpl(this.filter);
+class _$UpdateViewImpl implements _UpdateView {
+  const _$UpdateViewImpl({this.filter, this.viewMode});
 
   @override
-  final BudgetBookFilter filter;
+  final BudgetBookFilter? filter;
+  @override
+  final BookingViewMode? viewMode;
 
   @override
   String toString() {
-    return 'BookingPageEvent.applyFilter(filter: $filter)';
+    return 'BookingPageEvent.updateView(filter: $filter, viewMode: $viewMode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ApplyFilterImpl &&
-            (identical(other.filter, filter) || other.filter == filter));
+            other is _$UpdateViewImpl &&
+            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.viewMode, viewMode) ||
+                other.viewMode == viewMode));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter);
+  int get hashCode => Object.hash(runtimeType, filter, viewMode);
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ApplyFilterImplCopyWith<_$ApplyFilterImpl> get copyWith =>
-      __$$ApplyFilterImplCopyWithImpl<_$ApplyFilterImpl>(this, _$identity);
+  _$$UpdateViewImplCopyWith<_$UpdateViewImpl> get copyWith =>
+      __$$UpdateViewImplCopyWithImpl<_$UpdateViewImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BudgetBookFilter filter) loadInitial,
-    required TResult Function(BudgetBookFilter filter) loadMore,
-    required TResult Function(BudgetBookFilter filter) applyFilter,
+    required TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)
+        loadInitial,
+    required TResult Function() loadMore,
+    required TResult Function(
+            BudgetBookFilter? filter, BookingViewMode? viewMode)
+        updateView,
   }) {
-    return applyFilter(filter);
+    return updateView(filter, viewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BudgetBookFilter filter)? loadInitial,
-    TResult? Function(BudgetBookFilter filter)? loadMore,
-    TResult? Function(BudgetBookFilter filter)? applyFilter,
+    TResult? Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult? Function()? loadMore,
+    TResult? Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
   }) {
-    return applyFilter?.call(filter);
+    return updateView?.call(filter, viewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BudgetBookFilter filter)? loadInitial,
-    TResult Function(BudgetBookFilter filter)? loadMore,
-    TResult Function(BudgetBookFilter filter)? applyFilter,
+    TResult Function(BudgetBookFilter filter, BookingViewMode viewMode)?
+        loadInitial,
+    TResult Function()? loadMore,
+    TResult Function(BudgetBookFilter? filter, BookingViewMode? viewMode)?
+        updateView,
     required TResult orElse(),
   }) {
-    if (applyFilter != null) {
-      return applyFilter(filter);
+    if (updateView != null) {
+      return updateView(filter, viewMode);
     }
     return orElse();
   }
@@ -531,9 +521,9 @@ class _$ApplyFilterImpl implements _ApplyFilter {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadInitial value) loadInitial,
     required TResult Function(_LoadMore value) loadMore,
-    required TResult Function(_ApplyFilter value) applyFilter,
+    required TResult Function(_UpdateView value) updateView,
   }) {
-    return applyFilter(this);
+    return updateView(this);
   }
 
   @override
@@ -541,9 +531,9 @@ class _$ApplyFilterImpl implements _ApplyFilter {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoadInitial value)? loadInitial,
     TResult? Function(_LoadMore value)? loadMore,
-    TResult? Function(_ApplyFilter value)? applyFilter,
+    TResult? Function(_UpdateView value)? updateView,
   }) {
-    return applyFilter?.call(this);
+    return updateView?.call(this);
   }
 
   @override
@@ -551,57 +541,131 @@ class _$ApplyFilterImpl implements _ApplyFilter {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadInitial value)? loadInitial,
     TResult Function(_LoadMore value)? loadMore,
-    TResult Function(_ApplyFilter value)? applyFilter,
+    TResult Function(_UpdateView value)? updateView,
     required TResult orElse(),
   }) {
-    if (applyFilter != null) {
-      return applyFilter(this);
+    if (updateView != null) {
+      return updateView(this);
     }
     return orElse();
   }
 }
 
-abstract class _ApplyFilter implements BookingPageEvent {
-  const factory _ApplyFilter(final BudgetBookFilter filter) = _$ApplyFilterImpl;
+abstract class _UpdateView implements BookingPageEvent {
+  const factory _UpdateView(
+      {final BudgetBookFilter? filter,
+      final BookingViewMode? viewMode}) = _$UpdateViewImpl;
 
-  @override
-  BudgetBookFilter get filter;
+  BudgetBookFilter? get filter;
+  BookingViewMode? get viewMode;
 
   /// Create a copy of BookingPageEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ApplyFilterImplCopyWith<_$ApplyFilterImpl> get copyWith =>
+  _$$UpdateViewImplCopyWith<_$UpdateViewImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$BookingPageState {
+  List<BookingPageData> get rawItems => throw _privateConstructorUsedError;
+  List<BookingPageViewData> get viewItems => throw _privateConstructorUsedError;
+  BudgetBookFilter get currentFilter => throw _privateConstructorUsedError;
+  BookingViewMode get currentViewMode => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<BookingPageData> items, bool isFirstFetch)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
+        initial,
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loading,
-    required TResult Function(List<BookingPageData> items, bool isInitial)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loaded,
-    required TResult Function(List<BookingPageData> items, String message)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult? Function(List<BookingPageData> items, String message)? error,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult Function(List<BookingPageData> items, String message)? error,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -630,6 +694,12 @@ mixin _$BookingPageState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Create a copy of BookingPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BookingPageStateCopyWith<BookingPageState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -637,6 +707,14 @@ abstract class $BookingPageStateCopyWith<$Res> {
   factory $BookingPageStateCopyWith(
           BookingPageState value, $Res Function(BookingPageState) then) =
       _$BookingPageStateCopyWithImpl<$Res, BookingPageState>;
+  @useResult
+  $Res call(
+      {List<BookingPageData> rawItems,
+      List<BookingPageViewData> viewItems,
+      BudgetBookFilter currentFilter,
+      BookingViewMode currentViewMode});
+
+  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -651,13 +729,61 @@ class _$BookingPageStateCopyWithImpl<$Res, $Val extends BookingPageState>
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rawItems = null,
+    Object? viewItems = null,
+    Object? currentFilter = null,
+    Object? currentViewMode = null,
+  }) {
+    return _then(_value.copyWith(
+      rawItems: null == rawItems
+          ? _value.rawItems
+          : rawItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageData>,
+      viewItems: null == viewItems
+          ? _value.viewItems
+          : viewItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageViewData>,
+      currentFilter: null == currentFilter
+          ? _value.currentFilter
+          : currentFilter // ignore: cast_nullable_to_non_nullable
+              as BudgetBookFilter,
+      currentViewMode: null == currentViewMode
+          ? _value.currentViewMode
+          : currentViewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
+    ) as $Val);
+  }
+
+  /// Create a copy of BookingPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BudgetBookFilterCopyWith<$Res> get currentFilter {
+    return $BudgetBookFilterCopyWith<$Res>(_value.currentFilter, (value) {
+      return _then(_value.copyWith(currentFilter: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
+abstract class _$$InitialImplCopyWith<$Res>
+    implements $BookingPageStateCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<BookingPageData> rawItems,
+      List<BookingPageViewData> viewItems,
+      BudgetBookFilter currentFilter,
+      BookingViewMode currentViewMode});
+
+  @override
+  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -670,63 +796,207 @@ class __$$InitialImplCopyWithImpl<$Res>
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rawItems = null,
+    Object? viewItems = null,
+    Object? currentFilter = null,
+    Object? currentViewMode = null,
+  }) {
+    return _then(_$InitialImpl(
+      rawItems: null == rawItems
+          ? _value._rawItems
+          : rawItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageData>,
+      viewItems: null == viewItems
+          ? _value._viewItems
+          : viewItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageViewData>,
+      currentFilter: null == currentFilter
+          ? _value.currentFilter
+          : currentFilter // ignore: cast_nullable_to_non_nullable
+              as BudgetBookFilter,
+      currentViewMode: null == currentViewMode
+          ? _value.currentViewMode
+          : currentViewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl();
+  const _$InitialImpl(
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required this.currentFilter,
+      required this.currentViewMode})
+      : _rawItems = rawItems,
+        _viewItems = viewItems;
+
+  final List<BookingPageData> _rawItems;
+  @override
+  List<BookingPageData> get rawItems {
+    if (_rawItems is EqualUnmodifiableListView) return _rawItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rawItems);
+  }
+
+  final List<BookingPageViewData> _viewItems;
+  @override
+  List<BookingPageViewData> get viewItems {
+    if (_viewItems is EqualUnmodifiableListView) return _viewItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_viewItems);
+  }
+
+  @override
+  final BudgetBookFilter currentFilter;
+  @override
+  final BookingViewMode currentViewMode;
 
   @override
   String toString() {
-    return 'BookingPageState.initial()';
+    return 'BookingPageState.initial(rawItems: $rawItems, viewItems: $viewItems, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InitialImpl &&
+            const DeepCollectionEquality().equals(other._rawItems, _rawItems) &&
+            const DeepCollectionEquality()
+                .equals(other._viewItems, _viewItems) &&
+            (identical(other.currentFilter, currentFilter) ||
+                other.currentFilter == currentFilter) &&
+            (identical(other.currentViewMode, currentViewMode) ||
+                other.currentViewMode == currentViewMode));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_rawItems),
+      const DeepCollectionEquality().hash(_viewItems),
+      currentFilter,
+      currentViewMode);
+
+  /// Create a copy of BookingPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<BookingPageData> items, bool isFirstFetch)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
+        initial,
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loading,
-    required TResult Function(List<BookingPageData> items, bool isInitial)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loaded,
-    required TResult Function(List<BookingPageData> items, String message)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         error,
   }) {
-    return initial();
+    return initial(rawItems, viewItems, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult? Function(List<BookingPageData> items, String message)? error,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
   }) {
-    return initial?.call();
+    return initial?.call(rawItems, viewItems, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult Function(List<BookingPageData> items, String message)? error,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(rawItems, viewItems, currentFilter, currentViewMode);
     }
     return orElse();
   }
@@ -770,16 +1040,46 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements BookingPageState {
-  const factory _Initial() = _$InitialImpl;
+  const factory _Initial(
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required final BudgetBookFilter currentFilter,
+      required final BookingViewMode currentViewMode}) = _$InitialImpl;
+
+  @override
+  List<BookingPageData> get rawItems;
+  @override
+  List<BookingPageViewData> get viewItems;
+  @override
+  BudgetBookFilter get currentFilter;
+  @override
+  BookingViewMode get currentViewMode;
+
+  /// Create a copy of BookingPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
+abstract class _$$LoadingImplCopyWith<$Res>
+    implements $BookingPageStateCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({List<BookingPageData> items, bool isFirstFetch});
+  $Res call(
+      {List<BookingPageData> rawItems,
+      List<BookingPageViewData> viewItems,
+      bool isFirstFetch,
+      BudgetBookFilter currentFilter,
+      BookingViewMode currentViewMode});
+
+  @override
+  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -795,18 +1095,33 @@ class __$$LoadingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = null,
+    Object? rawItems = null,
+    Object? viewItems = null,
     Object? isFirstFetch = null,
+    Object? currentFilter = null,
+    Object? currentViewMode = null,
   }) {
     return _then(_$LoadingImpl(
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
+      rawItems: null == rawItems
+          ? _value._rawItems
+          : rawItems // ignore: cast_nullable_to_non_nullable
               as List<BookingPageData>,
+      viewItems: null == viewItems
+          ? _value._viewItems
+          : viewItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageViewData>,
       isFirstFetch: null == isFirstFetch
           ? _value.isFirstFetch
           : isFirstFetch // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentFilter: null == currentFilter
+          ? _value.currentFilter
+          : currentFilter // ignore: cast_nullable_to_non_nullable
+              as BudgetBookFilter,
+      currentViewMode: null == currentViewMode
+          ? _value.currentViewMode
+          : currentViewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
     ));
   }
 }
@@ -815,23 +1130,40 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 class _$LoadingImpl implements _Loading {
   const _$LoadingImpl(
-      {required final List<BookingPageData> items, required this.isFirstFetch})
-      : _items = items;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required this.isFirstFetch,
+      required this.currentFilter,
+      required this.currentViewMode})
+      : _rawItems = rawItems,
+        _viewItems = viewItems;
 
-  final List<BookingPageData> _items;
+  final List<BookingPageData> _rawItems;
   @override
-  List<BookingPageData> get items {
-    if (_items is EqualUnmodifiableListView) return _items;
+  List<BookingPageData> get rawItems {
+    if (_rawItems is EqualUnmodifiableListView) return _rawItems;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(_rawItems);
+  }
+
+  final List<BookingPageViewData> _viewItems;
+  @override
+  List<BookingPageViewData> get viewItems {
+    if (_viewItems is EqualUnmodifiableListView) return _viewItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_viewItems);
   }
 
   @override
   final bool isFirstFetch;
+  @override
+  final BudgetBookFilter currentFilter;
+  @override
+  final BookingViewMode currentViewMode;
 
   @override
   String toString() {
-    return 'BookingPageState.loading(items: $items, isFirstFetch: $isFirstFetch)';
+    return 'BookingPageState.loading(rawItems: $rawItems, viewItems: $viewItems, isFirstFetch: $isFirstFetch, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
   }
 
   @override
@@ -839,14 +1171,25 @@ class _$LoadingImpl implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadingImpl &&
-            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other._rawItems, _rawItems) &&
+            const DeepCollectionEquality()
+                .equals(other._viewItems, _viewItems) &&
             (identical(other.isFirstFetch, isFirstFetch) ||
-                other.isFirstFetch == isFirstFetch));
+                other.isFirstFetch == isFirstFetch) &&
+            (identical(other.currentFilter, currentFilter) ||
+                other.currentFilter == currentFilter) &&
+            (identical(other.currentViewMode, currentViewMode) ||
+                other.currentViewMode == currentViewMode));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_items), isFirstFetch);
+      runtimeType,
+      const DeepCollectionEquality().hash(_rawItems),
+      const DeepCollectionEquality().hash(_viewItems),
+      isFirstFetch,
+      currentFilter,
+      currentViewMode);
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -859,39 +1202,111 @@ class _$LoadingImpl implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<BookingPageData> items, bool isFirstFetch)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
+        initial,
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loading,
-    required TResult Function(List<BookingPageData> items, bool isInitial)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loaded,
-    required TResult Function(List<BookingPageData> items, String message)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         error,
   }) {
-    return loading(items, isFirstFetch);
+    return loading(
+        rawItems, viewItems, isFirstFetch, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult? Function(List<BookingPageData> items, String message)? error,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
   }) {
-    return loading?.call(items, isFirstFetch);
+    return loading?.call(
+        rawItems, viewItems, isFirstFetch, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult Function(List<BookingPageData> items, String message)? error,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(items, isFirstFetch);
+      return loading(
+          rawItems, viewItems, isFirstFetch, currentFilter, currentViewMode);
     }
     return orElse();
   }
@@ -936,26 +1351,48 @@ class _$LoadingImpl implements _Loading {
 
 abstract class _Loading implements BookingPageState {
   const factory _Loading(
-      {required final List<BookingPageData> items,
-      required final bool isFirstFetch}) = _$LoadingImpl;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required final bool isFirstFetch,
+      required final BudgetBookFilter currentFilter,
+      required final BookingViewMode currentViewMode}) = _$LoadingImpl;
 
-  List<BookingPageData> get items;
+  @override
+  List<BookingPageData> get rawItems;
+  @override
+  List<BookingPageViewData> get viewItems;
   bool get isFirstFetch;
+  @override
+  BudgetBookFilter get currentFilter;
+  @override
+  BookingViewMode get currentViewMode;
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
+abstract class _$$LoadedImplCopyWith<$Res>
+    implements $BookingPageStateCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({List<BookingPageData> items, bool isInitial});
+  $Res call(
+      {List<BookingPageData> rawItems,
+      List<BookingPageViewData> viewItems,
+      bool hasReachedMax,
+      bool isInitial,
+      BudgetBookFilter currentFilter,
+      BookingViewMode currentViewMode});
+
+  @override
+  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -971,18 +1408,38 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = null,
+    Object? rawItems = null,
+    Object? viewItems = null,
+    Object? hasReachedMax = null,
     Object? isInitial = null,
+    Object? currentFilter = null,
+    Object? currentViewMode = null,
   }) {
     return _then(_$LoadedImpl(
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
+      rawItems: null == rawItems
+          ? _value._rawItems
+          : rawItems // ignore: cast_nullable_to_non_nullable
               as List<BookingPageData>,
+      viewItems: null == viewItems
+          ? _value._viewItems
+          : viewItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageViewData>,
+      hasReachedMax: null == hasReachedMax
+          ? _value.hasReachedMax
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool,
       isInitial: null == isInitial
           ? _value.isInitial
           : isInitial // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentFilter: null == currentFilter
+          ? _value.currentFilter
+          : currentFilter // ignore: cast_nullable_to_non_nullable
+              as BudgetBookFilter,
+      currentViewMode: null == currentViewMode
+          ? _value.currentViewMode
+          : currentViewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
     ));
   }
 }
@@ -991,23 +1448,43 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(
-      {required final List<BookingPageData> items, required this.isInitial})
-      : _items = items;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required this.hasReachedMax,
+      required this.isInitial,
+      required this.currentFilter,
+      required this.currentViewMode})
+      : _rawItems = rawItems,
+        _viewItems = viewItems;
 
-  final List<BookingPageData> _items;
+  final List<BookingPageData> _rawItems;
   @override
-  List<BookingPageData> get items {
-    if (_items is EqualUnmodifiableListView) return _items;
+  List<BookingPageData> get rawItems {
+    if (_rawItems is EqualUnmodifiableListView) return _rawItems;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(_rawItems);
+  }
+
+  final List<BookingPageViewData> _viewItems;
+  @override
+  List<BookingPageViewData> get viewItems {
+    if (_viewItems is EqualUnmodifiableListView) return _viewItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_viewItems);
   }
 
   @override
+  final bool hasReachedMax;
+  @override
   final bool isInitial;
+  @override
+  final BudgetBookFilter currentFilter;
+  @override
+  final BookingViewMode currentViewMode;
 
   @override
   String toString() {
-    return 'BookingPageState.loaded(items: $items, isInitial: $isInitial)';
+    return 'BookingPageState.loaded(rawItems: $rawItems, viewItems: $viewItems, hasReachedMax: $hasReachedMax, isInitial: $isInitial, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
   }
 
   @override
@@ -1015,14 +1492,28 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other._rawItems, _rawItems) &&
+            const DeepCollectionEquality()
+                .equals(other._viewItems, _viewItems) &&
+            (identical(other.hasReachedMax, hasReachedMax) ||
+                other.hasReachedMax == hasReachedMax) &&
             (identical(other.isInitial, isInitial) ||
-                other.isInitial == isInitial));
+                other.isInitial == isInitial) &&
+            (identical(other.currentFilter, currentFilter) ||
+                other.currentFilter == currentFilter) &&
+            (identical(other.currentViewMode, currentViewMode) ||
+                other.currentViewMode == currentViewMode));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_items), isInitial);
+      runtimeType,
+      const DeepCollectionEquality().hash(_rawItems),
+      const DeepCollectionEquality().hash(_viewItems),
+      hasReachedMax,
+      isInitial,
+      currentFilter,
+      currentViewMode);
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -1035,39 +1526,111 @@ class _$LoadedImpl implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<BookingPageData> items, bool isFirstFetch)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
+        initial,
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loading,
-    required TResult Function(List<BookingPageData> items, bool isInitial)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loaded,
-    required TResult Function(List<BookingPageData> items, String message)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         error,
   }) {
-    return loaded(items, isInitial);
+    return loaded(rawItems, viewItems, hasReachedMax, isInitial, currentFilter,
+        currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult? Function(List<BookingPageData> items, String message)? error,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
   }) {
-    return loaded?.call(items, isInitial);
+    return loaded?.call(rawItems, viewItems, hasReachedMax, isInitial,
+        currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult Function(List<BookingPageData> items, String message)? error,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, isInitial);
+      return loaded(rawItems, viewItems, hasReachedMax, isInitial,
+          currentFilter, currentViewMode);
     }
     return orElse();
   }
@@ -1112,26 +1675,49 @@ class _$LoadedImpl implements _Loaded {
 
 abstract class _Loaded implements BookingPageState {
   const factory _Loaded(
-      {required final List<BookingPageData> items,
-      required final bool isInitial}) = _$LoadedImpl;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required final bool hasReachedMax,
+      required final bool isInitial,
+      required final BudgetBookFilter currentFilter,
+      required final BookingViewMode currentViewMode}) = _$LoadedImpl;
 
-  List<BookingPageData> get items;
+  @override
+  List<BookingPageData> get rawItems;
+  @override
+  List<BookingPageViewData> get viewItems;
+  bool get hasReachedMax;
   bool get isInitial;
+  @override
+  BudgetBookFilter get currentFilter;
+  @override
+  BookingViewMode get currentViewMode;
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
+abstract class _$$ErrorImplCopyWith<$Res>
+    implements $BookingPageStateCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({List<BookingPageData> items, String message});
+  $Res call(
+      {List<BookingPageData> rawItems,
+      List<BookingPageViewData> viewItems,
+      String message,
+      BudgetBookFilter currentFilter,
+      BookingViewMode currentViewMode});
+
+  @override
+  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -1147,18 +1733,33 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? items = null,
+    Object? rawItems = null,
+    Object? viewItems = null,
     Object? message = null,
+    Object? currentFilter = null,
+    Object? currentViewMode = null,
   }) {
     return _then(_$ErrorImpl(
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
+      rawItems: null == rawItems
+          ? _value._rawItems
+          : rawItems // ignore: cast_nullable_to_non_nullable
               as List<BookingPageData>,
+      viewItems: null == viewItems
+          ? _value._viewItems
+          : viewItems // ignore: cast_nullable_to_non_nullable
+              as List<BookingPageViewData>,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      currentFilter: null == currentFilter
+          ? _value.currentFilter
+          : currentFilter // ignore: cast_nullable_to_non_nullable
+              as BudgetBookFilter,
+      currentViewMode: null == currentViewMode
+          ? _value.currentViewMode
+          : currentViewMode // ignore: cast_nullable_to_non_nullable
+              as BookingViewMode,
     ));
   }
 }
@@ -1167,23 +1768,40 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 class _$ErrorImpl implements _Error {
   const _$ErrorImpl(
-      {required final List<BookingPageData> items, required this.message})
-      : _items = items;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required this.message,
+      required this.currentFilter,
+      required this.currentViewMode})
+      : _rawItems = rawItems,
+        _viewItems = viewItems;
 
-  final List<BookingPageData> _items;
+  final List<BookingPageData> _rawItems;
   @override
-  List<BookingPageData> get items {
-    if (_items is EqualUnmodifiableListView) return _items;
+  List<BookingPageData> get rawItems {
+    if (_rawItems is EqualUnmodifiableListView) return _rawItems;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(_rawItems);
+  }
+
+  final List<BookingPageViewData> _viewItems;
+  @override
+  List<BookingPageViewData> get viewItems {
+    if (_viewItems is EqualUnmodifiableListView) return _viewItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_viewItems);
   }
 
   @override
   final String message;
+  @override
+  final BudgetBookFilter currentFilter;
+  @override
+  final BookingViewMode currentViewMode;
 
   @override
   String toString() {
-    return 'BookingPageState.error(items: $items, message: $message)';
+    return 'BookingPageState.error(rawItems: $rawItems, viewItems: $viewItems, message: $message, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
   }
 
   @override
@@ -1191,13 +1809,24 @@ class _$ErrorImpl implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
-            const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.message, message) || other.message == message));
+            const DeepCollectionEquality().equals(other._rawItems, _rawItems) &&
+            const DeepCollectionEquality()
+                .equals(other._viewItems, _viewItems) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.currentFilter, currentFilter) ||
+                other.currentFilter == currentFilter) &&
+            (identical(other.currentViewMode, currentViewMode) ||
+                other.currentViewMode == currentViewMode));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_items), message);
+      runtimeType,
+      const DeepCollectionEquality().hash(_rawItems),
+      const DeepCollectionEquality().hash(_viewItems),
+      message,
+      currentFilter,
+      currentViewMode);
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
@@ -1210,39 +1839,110 @@ class _$ErrorImpl implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<BookingPageData> items, bool isFirstFetch)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
+        initial,
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loading,
-    required TResult Function(List<BookingPageData> items, bool isInitial)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         loaded,
-    required TResult Function(List<BookingPageData> items, String message)
+    required TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)
         error,
   }) {
-    return error(items, message);
+    return error(rawItems, viewItems, message, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult? Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult? Function(List<BookingPageData> items, String message)? error,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult? Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
   }) {
-    return error?.call(items, message);
+    return error?.call(
+        rawItems, viewItems, message, currentFilter, currentViewMode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<BookingPageData> items, bool isFirstFetch)? loading,
-    TResult Function(List<BookingPageData> items, bool isInitial)? loaded,
-    TResult Function(List<BookingPageData> items, String message)? error,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        initial,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool isFirstFetch,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loading,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            bool hasReachedMax,
+            bool isInitial,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        loaded,
+    TResult Function(
+            List<BookingPageData> rawItems,
+            List<BookingPageViewData> viewItems,
+            String message,
+            BudgetBookFilter currentFilter,
+            BookingViewMode currentViewMode)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(items, message);
+      return error(
+          rawItems, viewItems, message, currentFilter, currentViewMode);
     }
     return orElse();
   }
@@ -1287,14 +1987,25 @@ class _$ErrorImpl implements _Error {
 
 abstract class _Error implements BookingPageState {
   const factory _Error(
-      {required final List<BookingPageData> items,
-      required final String message}) = _$ErrorImpl;
+      {required final List<BookingPageData> rawItems,
+      required final List<BookingPageViewData> viewItems,
+      required final String message,
+      required final BudgetBookFilter currentFilter,
+      required final BookingViewMode currentViewMode}) = _$ErrorImpl;
 
-  List<BookingPageData> get items;
+  @override
+  List<BookingPageData> get rawItems;
+  @override
+  List<BookingPageViewData> get viewItems;
   String get message;
+  @override
+  BudgetBookFilter get currentFilter;
+  @override
+  BookingViewMode get currentViewMode;
 
   /// Create a copy of BookingPageState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

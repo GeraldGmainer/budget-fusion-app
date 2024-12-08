@@ -14,4 +14,10 @@ class BudgetBookFilter with _$BudgetBookFilter {
     required TransactionType transaction,
     required PeriodMode period,
   }) = _BudgetBookFilter;
+
+  factory BudgetBookFilter.initial() => const BudgetBookFilter(
+        account: null,
+        transaction: TransactionType.outcome,
+        period: PeriodMode.month,
+      );
 }

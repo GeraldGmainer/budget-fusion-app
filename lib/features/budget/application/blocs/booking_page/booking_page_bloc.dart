@@ -10,101 +10,152 @@ part 'booking_page_event.dart';
 part 'booking_page_state.dart';
 
 // TODO
+// move pagination logic in budget tab or widget ...
+// refactor BookingPageDataLoader
+// refactor BookingPageBloc
+// better loading indictor
+
 // missing months when no booking because 3 months are loaded and only last month is displayed in UI
 // check backend has more data
 // add data for 2023 and check if 2024-01, 2024-02 are also loaded
-// better loading indictor
 // dont load more when loading more
-// refactor BookingPageDataLoader
-// refactor BookingPageBloc
-// move pagination logic in budget tab or widget ...
 
 @injectable
 class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
-  final List<BookingPageData> _currentItems = [];
   final BookingPageDataLoader _bookingPageDataLoader;
-  int _nextLoadingPage = 0;
 
-  BookingPageBloc(this._bookingPageDataLoader) : super(const BookingPageState.initial()) {
+  // TODO rename service
+  final ChartDataService _chartDataService;
+
+  BookingPageBloc(this._bookingPageDataLoader, this._chartDataService)
+      : super(BookingPageState.initial(
+          rawItems: [],
+          viewItems: [],
+          currentFilter: BudgetBookFilter.initial(),
+          currentViewMode: BookingViewMode.summary,
+        )) {
     on<BookingPageEvent>((event, emit) async {
       await event.when(
-        loadInitial: (filter) => _onLoadInitial(emit, filter),
-        loadMore: (filter) => _onLoadMore(emit, filter),
-        applyFilter: (filter) => _onApplyFilter(emit, filter),
+        loadInitial: (filter, viewMode) => _onLoadInitial(emit, filter, viewMode),
+        loadMore: () => _onLoadMore(emit),
+        updateView: (filter, viewMode) => _onUpdateView(emit, filter, viewMode),
       );
     });
   }
 
-  Future<void> _onLoadInitial(Emitter<BookingPageState> emit, BudgetBookFilter filter) async {
+  Future<void> _onLoadInitial(Emitter<BookingPageState> emit, BudgetBookFilter filter, BookingViewMode viewMode) async {
     final stopwatch = Stopwatch()..start();
 
     try {
-      _currentItems.clear();
-      state.whenOrNull(initial: () {
-        emit(const BookingPageState.loading(items: [], isFirstFetch: true));
-      }, loaded: (items, _) {
-        emit(BookingPageState.loading(items: items, isFirstFetch: false));
-      });
+      // TODO maybe display already loaded items from previous state
+      emit(BookingPageState.loading(
+        rawItems: state.rawItems,
+        viewItems: state.viewItems,
+        isFirstFetch: true,
+        currentFilter: filter,
+        currentViewMode: viewMode,
+      ));
 
       const currentPage = 0;
       final pageCount = filter.period.initialDuration;
-      final newItems = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
-      _currentItems.clear();
-      _currentItems.addAll(newItems);
-      final filteredItems = _filterItems(_currentItems, filter);
-      await Future.delayed(Duration(seconds: 1));
-      _nextLoadingPage = pageCount;
-      emit(BookingPageState.loaded(items: filteredItems, isInitial: true));
+      final loadedItems = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
+      final filteredItems = _filterItems(loadedItems, filter);
+      final viewItems = await _convertItems(filteredItems, viewMode);
+      emit(BookingPageState.loaded(
+        rawItems: loadedItems,
+        viewItems: viewItems,
+        isInitial: true,
+        hasReachedMax: false,
+        currentFilter: filter,
+        currentViewMode: viewMode,
+      ));
     } catch (e) {
       BudgetLogger.instance.e(e);
-      final List<BookingPageData> currentItems = state.maybeWhen(loaded: (items, _) => items, loading: (items, _) => items, orElse: () => []);
-      emit(BookingPageState.error(message: e.toString(), items: currentItems));
+      emit(BookingPageState.error(
+        message: e.toString(),
+        rawItems: state.rawItems,
+        viewItems: state.viewItems,
+        currentFilter: filter,
+        currentViewMode: viewMode,
+      ));
     } finally {
       BudgetLogger.instance.d("loading Pagination for ${filter.period} took ${stopwatch.elapsed.inMilliseconds} ms");
     }
   }
 
-  Future<void> _onLoadMore(Emitter<BookingPageState> emit, BudgetBookFilter filter) async {
+  Future<void> _onLoadMore(Emitter<BookingPageState> emit) async {
     final stopwatch = Stopwatch()..start();
     try {
-      state.whenOrNull(
-        loaded: (items, _) {
-          emit(BookingPageState.loading(items: items, isFirstFetch: false));
-        },
-        error: (items, msg) {
-          emit(BookingPageState.loading(items: items, isFirstFetch: false));
-        },
-      );
+      emit(BookingPageState.loading(
+        rawItems: state.rawItems,
+        viewItems: state.viewItems,
+        isFirstFetch: false,
+        currentFilter: state.currentFilter,
+        currentViewMode: state.currentViewMode,
+      ));
 
-      final currentPage = _nextLoadingPage;
-      final pageCount = filter.period.moreDuration;
-      final newItems = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
-
-      if (newItems.isEmpty) {
-        emit(BookingPageState.loaded(items: _filterItems(_currentItems, filter), isInitial: false));
-      } else {
-        _currentItems.insertAll(0, newItems);
-        final filteredItems = _filterItems(_currentItems, filter);
-        emit(BookingPageState.loaded(items: filteredItems, isInitial: false));
-      }
-      _nextLoadingPage = currentPage + pageCount;
+      final currentPage = _calculateNextPage(state.rawItems.length);
+      final pageCount = state.currentFilter.period.moreDuration;
+      final loadedItems = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
+      final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadedItems);
+      final filteredItems = _filterItems(allItems, state.currentFilter);
+      final viewItems = await _convertItems(filteredItems, state.currentViewMode);
+      emit(BookingPageState.loaded(
+        rawItems: allItems,
+        viewItems: viewItems,
+        isInitial: false,
+        hasReachedMax: false,
+        currentFilter: state.currentFilter,
+        currentViewMode: state.currentViewMode,
+      ));
     } catch (e) {
       BudgetLogger.instance.e(e);
-      final List<BookingPageData> currentItems = state.maybeWhen(
-        loaded: (items, _) => items,
-        loading: (items, _) => items,
-        orElse: () => [],
-      );
-      emit(BookingPageState.error(message: e.toString(), items: currentItems));
+      emit(BookingPageState.error(
+        message: e.toString(),
+        rawItems: state.rawItems,
+        viewItems: state.viewItems,
+        currentFilter: state.currentFilter,
+        currentViewMode: state.currentViewMode,
+      ));
     } finally {
-      BudgetLogger.instance.d("loading more data for ${filter.period} took ${stopwatch.elapsed.inMilliseconds} ms");
+      BudgetLogger.instance.d("loading more data for ${state.currentFilter.period} took ${stopwatch.elapsed.inMilliseconds} ms");
     }
   }
 
-  Future<void> _onApplyFilter(Emitter<BookingPageState> emit, BudgetBookFilter filter) async {}
+  Future<void> _onUpdateView(Emitter<BookingPageState> emit, BudgetBookFilter? filter, BookingViewMode? viewMode) async {
+    final rawItems = state.rawItems;
+    final newFilter = filter ?? state.currentFilter;
+    final newViewMode = viewMode ?? state.currentViewMode;
+    emit(BookingPageState.loading(
+      rawItems: rawItems,
+      viewItems: state.viewItems,
+      isFirstFetch: false,
+      currentFilter: newFilter,
+      currentViewMode: newViewMode,
+    ));
+
+    final filteredItems = _filterItems(rawItems, newFilter);
+    final viewItems = await _convertItems(filteredItems, newViewMode);
+    emit(BookingPageState.loaded(
+      rawItems: rawItems,
+      viewItems: viewItems,
+      isInitial: false,
+      hasReachedMax: false,
+      currentFilter: newFilter,
+      currentViewMode: newViewMode,
+    ));
+  }
 
   List<BookingPageData> _filterItems(List<BookingPageData> items, BudgetBookFilter filter) {
     // TODO filter
     return items;
+  }
+
+  Future<List<BookingPageViewData>> _convertItems(List<BookingPageData> items, BookingViewMode viewMode) async {
+    return await _chartDataService.convert(items);
+  }
+
+  int _calculateNextPage(int currentItemCount) {
+    return currentItemCount;
   }
 }

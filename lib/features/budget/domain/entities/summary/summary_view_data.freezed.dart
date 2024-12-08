@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'chart_view_data.dart';
+part of 'summary_view_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ChartViewData {
+mixin _$SummaryViewData {
   Currency get currency => throw _privateConstructorUsedError;
   BookingDateRange get dateRange => throw _privateConstructorUsedError;
   List<PieData> get pieData => throw _privateConstructorUsedError;
@@ -24,18 +24,18 @@ mixin _$ChartViewData {
   Decimal get income => throw _privateConstructorUsedError;
   Decimal get outcome => throw _privateConstructorUsedError;
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ChartViewDataCopyWith<ChartViewData> get copyWith =>
+  $SummaryViewDataCopyWith<SummaryViewData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChartViewDataCopyWith<$Res> {
-  factory $ChartViewDataCopyWith(
-          ChartViewData value, $Res Function(ChartViewData) then) =
-      _$ChartViewDataCopyWithImpl<$Res, ChartViewData>;
+abstract class $SummaryViewDataCopyWith<$Res> {
+  factory $SummaryViewDataCopyWith(
+          SummaryViewData value, $Res Function(SummaryViewData) then) =
+      _$SummaryViewDataCopyWithImpl<$Res, SummaryViewData>;
   @useResult
   $Res call(
       {Currency currency,
@@ -50,16 +50,16 @@ abstract class $ChartViewDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
-    implements $ChartViewDataCopyWith<$Res> {
-  _$ChartViewDataCopyWithImpl(this._value, this._then);
+class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
+    implements $SummaryViewDataCopyWith<$Res> {
+  _$SummaryViewDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -99,7 +99,7 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
     ) as $Val);
   }
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
     });
   }
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -121,11 +121,11 @@ class _$ChartViewDataCopyWithImpl<$Res, $Val extends ChartViewData>
 }
 
 /// @nodoc
-abstract class _$$ChartViewDataImplCopyWith<$Res>
-    implements $ChartViewDataCopyWith<$Res> {
-  factory _$$ChartViewDataImplCopyWith(
-          _$ChartViewDataImpl value, $Res Function(_$ChartViewDataImpl) then) =
-      __$$ChartViewDataImplCopyWithImpl<$Res>;
+abstract class _$$SummaryViewDataImplCopyWith<$Res>
+    implements $SummaryViewDataCopyWith<$Res> {
+  factory _$$SummaryViewDataImplCopyWith(_$SummaryViewDataImpl value,
+          $Res Function(_$SummaryViewDataImpl) then) =
+      __$$SummaryViewDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -143,14 +143,14 @@ abstract class _$$ChartViewDataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ChartViewDataImplCopyWithImpl<$Res>
-    extends _$ChartViewDataCopyWithImpl<$Res, _$ChartViewDataImpl>
-    implements _$$ChartViewDataImplCopyWith<$Res> {
-  __$$ChartViewDataImplCopyWithImpl(
-      _$ChartViewDataImpl _value, $Res Function(_$ChartViewDataImpl) _then)
+class __$$SummaryViewDataImplCopyWithImpl<$Res>
+    extends _$SummaryViewDataCopyWithImpl<$Res, _$SummaryViewDataImpl>
+    implements _$$SummaryViewDataImplCopyWith<$Res> {
+  __$$SummaryViewDataImplCopyWithImpl(
+      _$SummaryViewDataImpl _value, $Res Function(_$SummaryViewDataImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -162,7 +162,7 @@ class __$$ChartViewDataImplCopyWithImpl<$Res>
     Object? income = null,
     Object? outcome = null,
   }) {
-    return _then(_$ChartViewDataImpl(
+    return _then(_$SummaryViewDataImpl(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -193,8 +193,8 @@ class __$$ChartViewDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChartViewDataImpl extends _ChartViewData {
-  const _$ChartViewDataImpl(
+class _$SummaryViewDataImpl extends _SummaryViewData {
+  const _$SummaryViewDataImpl(
       {required this.currency,
       required this.dateRange,
       required final List<PieData> pieData,
@@ -233,14 +233,14 @@ class _$ChartViewDataImpl extends _ChartViewData {
 
   @override
   String toString() {
-    return 'ChartViewData(currency: $currency, dateRange: $dateRange, pieData: $pieData, categorySummaries: $categorySummaries, income: $income, outcome: $outcome)';
+    return 'SummaryViewData(currency: $currency, dateRange: $dateRange, pieData: $pieData, categorySummaries: $categorySummaries, income: $income, outcome: $outcome)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChartViewDataImpl &&
+            other is _$SummaryViewDataImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.dateRange, dateRange) ||
@@ -262,24 +262,25 @@ class _$ChartViewDataImpl extends _ChartViewData {
       income,
       outcome);
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChartViewDataImplCopyWith<_$ChartViewDataImpl> get copyWith =>
-      __$$ChartViewDataImplCopyWithImpl<_$ChartViewDataImpl>(this, _$identity);
+  _$$SummaryViewDataImplCopyWith<_$SummaryViewDataImpl> get copyWith =>
+      __$$SummaryViewDataImplCopyWithImpl<_$SummaryViewDataImpl>(
+          this, _$identity);
 }
 
-abstract class _ChartViewData extends ChartViewData {
-  const factory _ChartViewData(
+abstract class _SummaryViewData extends SummaryViewData {
+  const factory _SummaryViewData(
       {required final Currency currency,
       required final BookingDateRange dateRange,
       required final List<PieData> pieData,
       required final List<CategorySummary> categorySummaries,
       required final Decimal income,
-      required final Decimal outcome}) = _$ChartViewDataImpl;
-  const _ChartViewData._() : super._();
+      required final Decimal outcome}) = _$SummaryViewDataImpl;
+  const _SummaryViewData._() : super._();
 
   @override
   Currency get currency;
@@ -294,10 +295,10 @@ abstract class _ChartViewData extends ChartViewData {
   @override
   Decimal get outcome;
 
-  /// Create a copy of ChartViewData
+  /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChartViewDataImplCopyWith<_$ChartViewDataImpl> get copyWith =>
+  _$$SummaryViewDataImplCopyWith<_$SummaryViewDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

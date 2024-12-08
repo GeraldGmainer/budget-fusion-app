@@ -28,22 +28,16 @@ class _RefreshButtonState extends State<RefreshButton> {
     return BlocListener<BookingPageBloc, BookingPageState>(
       listener: (context, state) {
         if (_isLoading) {
-          state.whenOrNull(
-            loaded: (items, _) {
-              setState(() {
-                _isLoading = false;
-              });
-            },
-            error: (items, message) {
-              setState(() {
-                _isLoading = false;
-              });
-              // Optionally, show a SnackBar or another form of error feedback
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: $message')),
-              );
-            },
-          );
+          if (state.isLoaded) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+          if (state.isError) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
         }
       },
       child: IconButton(

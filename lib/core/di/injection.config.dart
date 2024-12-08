@@ -33,18 +33,10 @@ import 'package:budget_fusion_app/features/bookings/data/data_sources/data_sourc
     as _i729;
 import 'package:budget_fusion_app/features/bookings/data/repos/booking_repo_impl.dart'
     as _i1073;
-import 'package:budget_fusion_app/features/budget/application/blocs/balances/balances_bloc.dart'
-    as _i477;
 import 'package:budget_fusion_app/features/budget/application/blocs/booking_filter/booking_filter_bloc.dart'
     as _i59;
 import 'package:budget_fusion_app/features/budget/application/blocs/booking_page/booking_page_bloc.dart'
     as _i175;
-import 'package:budget_fusion_app/features/budget/application/blocs/calendar/calendar_bloc.dart'
-    as _i83;
-import 'package:budget_fusion_app/features/budget/application/blocs/summary/summary_bloc.dart'
-    as _i588;
-import 'package:budget_fusion_app/features/budget/application/blocs/transactions/transactions_bloc.dart'
-    as _i159;
 import 'package:budget_fusion_app/features/budget/domain/domain.dart' as _i680;
 import 'package:budget_fusion_app/features/budget/domain/services/booking_page_converter.dart'
     as _i739;
@@ -88,10 +80,7 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i809.MainBloc>(() => _i809.MainBloc());
     gh.factory<_i1012.LanguageBloc>(() => _i1012.LanguageBloc());
-    gh.factory<_i83.CalendarBloc>(() => _i83.CalendarBloc());
     gh.factory<_i59.BookingFilterBloc>(() => _i59.BookingFilterBloc());
-    gh.factory<_i159.TransactionsBloc>(() => _i159.TransactionsBloc());
-    gh.factory<_i477.BalancesBloc>(() => _i477.BalancesBloc());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i1026.CacheManager>(() => _i1026.CacheManager());
     gh.lazySingleton<_i173.BookingRemoteSource>(
@@ -115,8 +104,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i589.ChartDataService(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i834.ConnectivityService>(
         () => _i834.ConnectivityService(gh<_i895.Connectivity>()));
-    gh.factory<_i588.SummaryBloc>(
-        () => _i588.SummaryBloc(gh<_i680.ChartDataService>()));
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i778.UserClient>()));
     gh.lazySingleton<_i714.AccountRepo>(
@@ -134,8 +121,10 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i680.BookingPageConverter>(),
               gh<_i680.BookingPaginationService>(),
             ));
-    gh.factory<_i175.BookingPageBloc>(
-        () => _i175.BookingPageBloc(gh<_i680.BookingPageDataLoader>()));
+    gh.factory<_i175.BookingPageBloc>(() => _i175.BookingPageBloc(
+          gh<_i680.BookingPageDataLoader>(),
+          gh<_i680.ChartDataService>(),
+        ));
     return this;
   }
 }
