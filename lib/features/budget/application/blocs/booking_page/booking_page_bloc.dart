@@ -10,7 +10,6 @@ part 'booking_page_event.dart';
 part 'booking_page_state.dart';
 
 // TODO
-// move pagination logic in budget tab or widget ...
 // refactor BookingPageDataLoader
 // refactor BookingPageBloc
 // better loading indictor

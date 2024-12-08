@@ -45,6 +45,11 @@ extension BookingPageStateExtensions on BookingPageState {
         orElse: () => false,
       );
 
+  bool get isFirstFetch => maybeWhen(
+        loading: (_, __, isFirstFetch, ____, _____) => isFirstFetch,
+        orElse: () => false,
+      );
+
   bool get isLoaded => maybeWhen(
         loaded: (_, __, ___, ____, _____, ______) => true,
         orElse: () => false,
@@ -57,6 +62,11 @@ extension BookingPageStateExtensions on BookingPageState {
 
   bool get canLoadMore => maybeWhen(
         loaded: (_, __, hasReachedMax, ____, _____, ______) => !hasReachedMax,
+        orElse: () => false,
+      );
+
+  bool get isInitial => maybeWhen(
+        loaded: (_, __, ___, isInitial, _____, ______) => isInitial,
         orElse: () => false,
       );
 }

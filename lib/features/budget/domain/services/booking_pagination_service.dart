@@ -12,7 +12,6 @@ class BookingPaginationService {
   BookingPaginationService(this._bookingRepo);
 
   Future<List<Booking>> getBookings(PeriodMode period, int currentPage, int pageCount) async {
-    BudgetLogger.instance.i("currentPage $currentPage / pageCount: $pageCount");
     final fromDate = calculateFromDate(period, currentPage, pageCount);
     final toDate = calculateToDate(period, fromDate, pageCount);
     return await _bookingRepo.getBookings(from: fromDate, to: toDate);
