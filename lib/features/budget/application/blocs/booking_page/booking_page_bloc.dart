@@ -46,7 +46,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
     final stopwatch = Stopwatch()..start();
 
     try {
-      // TODO maybe display already loaded items from previous state
       emit(BookingPageState.loading(
         rawItems: state.rawItems,
         viewItems: state.viewItems,
@@ -99,6 +98,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadedItems);
       final filteredItems = _filterItems(allItems, state.currentFilter);
       final viewItems = await _convertItems(filteredItems, state.currentViewMode);
+      // await Future.delayed(Duration(seconds: 3));
       emit(BookingPageState.loaded(
         rawItems: allItems,
         viewItems: viewItems,
