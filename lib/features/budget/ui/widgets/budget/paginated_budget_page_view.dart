@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../application/application.dart';
-import 'check_mark_indicator.dart';
 
 class PaginatedBudgetPageView<T> extends StatefulWidget {
   final Widget Function(BuildContext context, T item) itemBuilder;
@@ -36,11 +37,8 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
   Future<void> _onLoadMore() async {
     final bookingBloc = context.read<BookingPageBloc>();
     if (!bookingBloc.state.canLoadMore || bookingBloc.state.isLoading) return;
-
     _loadMoreCompleter = Completer<void>();
-
     bookingBloc.add(const BookingPageEvent.loadMore());
-
     return _loadMoreCompleter!.future;
   }
 
@@ -54,40 +52,49 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
     });
   }
 
+  void _onInitialLoading() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+      }
+    });
+  }
+
+  void _onMoreLoading() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage + 1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+      }
+    });
+    _loadMoreCompleter?.complete();
+    _loadMoreCompleter = null;
+  }
+
+  void _onError(String message) {
+    _loadMoreCompleter?.completeError(message);
+    _loadMoreCompleter = null;
+    showSnackBar(context, message);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BookingPageBloc, BookingPageState>(
       listener: (context, bookingState) {
         if (bookingState.isInitial) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_pageController.hasClients) {
-              _pageController.animateToPage(
-                0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.linear,
-              );
-            }
-          });
+          _onInitialLoading();
         } else if (bookingState.isLoaded) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (_pageController.hasClients) {
-              _pageController.animateToPage(
-                _currentPage + 1,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.linear,
-              );
-            }
-          });
-
-          _loadMoreCompleter?.complete();
-          _loadMoreCompleter = null;
-        }
-
-        if (bookingState.isError) {
-          _loadMoreCompleter?.completeError(Exception("An error occurred!"));
-          _loadMoreCompleter = null;
-
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred!")));
+          _onMoreLoading();
+        } else if (bookingState.isError) {
+          final error = bookingState.maybeWhen(error: (_, __, message, ___, ____) => message, orElse: () => "unknown error");
+          _onError(error);
         }
       },
       builder: (context, bookingState) {
@@ -97,7 +104,7 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
         return Stack(
           children: [
             if (items.isNotEmpty)
-              CheckMarkIndicator(
+              CustomHorizontalIndicator(
                 onRefresh: _onLoadMore,
                 child: PageView.builder(
                   controller: _pageController,

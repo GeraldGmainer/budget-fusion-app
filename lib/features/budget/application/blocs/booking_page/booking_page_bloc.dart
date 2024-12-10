@@ -83,7 +83,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
   Future<void> _onLoadMore(Emitter<BookingPageState> emit) async {
     final stopwatch = Stopwatch()..start();
-    BudgetLogger.instance.d("start");
     try {
       emit(BookingPageState.loading(
         rawItems: state.rawItems,
