@@ -10,23 +10,16 @@ part 'booking_page_event.dart';
 part 'booking_page_state.dart';
 
 // TODO
-// refactor BookingPageDataLoader
-// refactor BookingPageBloc
-// better loading indictor
-
 // missing months when no booking because 3 months are loaded and only last month is displayed in UI
 // check backend has more data
 // add data for 2023 and check if 2024-01, 2024-02 are also loaded
-// dont load more when loading more
 
 @injectable
 class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   final BookingPageDataLoader _bookingPageDataLoader;
+  final SummaryAggregator _summaryAggregator;
 
-  // TODO rename service
-  final ChartDataService _chartDataService;
-
-  BookingPageBloc(this._bookingPageDataLoader, this._chartDataService)
+  BookingPageBloc(this._bookingPageDataLoader, this._summaryAggregator)
       : super(BookingPageState.initial(
           rawItems: [],
           viewItems: [],
@@ -94,12 +87,12 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
       final currentPage = _calculateNextPage(state.rawItems.length);
       final pageCount = state.currentFilter.period.moreDuration;
-      final loadedItems = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
-      final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadedItems);
-      final filteredItems = _filterItems(allItems, state.currentFilter);
+      final newItems = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
+      final loadedItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, newItems);
+      final filteredItems = _filterItems(loadedItems, state.currentFilter);
       final viewItems = await _convertItems(filteredItems, state.currentViewMode);
       emit(BookingPageState.loaded(
-        rawItems: allItems,
+        rawItems: loadedItems,
         viewItems: viewItems,
         isInitial: false,
         hasReachedMax: false,
@@ -150,7 +143,13 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   }
 
   Future<List<BookingPageViewData>> _convertItems(List<BookingPageData> items, BookingViewMode viewMode) async {
-    return await _chartDataService.convert(items);
+    switch (viewMode) {
+      case BookingViewMode.summary:
+      case BookingViewMode.transaction:
+      case BookingViewMode.balance:
+      case BookingViewMode.calendar:
+        return await _summaryAggregator.convert(items);
+    }
   }
 
   int _calculateNextPage(int currentItemCount) {

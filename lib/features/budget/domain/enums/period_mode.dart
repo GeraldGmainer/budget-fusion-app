@@ -11,7 +11,7 @@ extension PeriodModeExtension on PeriodMode {
       case PeriodMode.day:
         return 31;
       case PeriodMode.month:
-        return 1;
+        return 2;
       case PeriodMode.year:
         return 1;
       case PeriodMode.all:
@@ -25,7 +25,7 @@ extension PeriodModeExtension on PeriodMode {
         return 31;
       case PeriodMode.month:
         // return 3;
-        return 1;
+        return 6;
       case PeriodMode.year:
         return 1;
       case PeriodMode.all:

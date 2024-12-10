@@ -44,8 +44,8 @@ import 'package:budget_fusion_app/features/budget/domain/services/booking_pagina
     as _i267;
 import 'package:budget_fusion_app/features/budget/domain/use_cases/booking_page_data_loader.dart'
     as _i697;
-import 'package:budget_fusion_app/features/budget/domain/use_cases/chart_data_service.dart'
-    as _i589;
+import 'package:budget_fusion_app/features/budget/domain/use_cases/summary_aggregator.dart'
+    as _i414;
 import 'package:budget_fusion_app/features/categories/data/data_sources/category_remote_source.dart'
     as _i555;
 import 'package:budget_fusion_app/features/categories/data/data_sources/data_sources.dart'
@@ -92,6 +92,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i664.AccountRemoteSource());
     gh.lazySingleton<_i555.CategoryRemoteSource>(
         () => _i555.CategoryRemoteSource());
+    gh.lazySingleton<_i267.BookingPaginationService>(
+        () => _i267.BookingPaginationService());
     gh.lazySingleton<_i739.BookingPageConverter>(
         () => _i739.BookingPageConverter());
     gh.lazySingleton<_i714.CategoryRepo>(
@@ -100,8 +102,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i604.ProfileRepoImpl(gh<_i1053.ProfileRemoteSource>()));
     gh.factory<_i401.ProfileBloc>(
         () => _i401.ProfileBloc(gh<_i714.ProfileRepo>()));
-    gh.lazySingleton<_i589.ChartDataService>(
-        () => _i589.ChartDataService(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i414.SummaryAggregator>(
+        () => _i414.SummaryAggregator(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i834.ConnectivityService>(
         () => _i834.ConnectivityService(gh<_i895.Connectivity>()));
     gh.lazySingleton<_i871.UserRepo>(
@@ -114,16 +116,15 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.AccountRepo>(),
         ));
     gh.factory<_i983.LoginBloc>(() => _i983.LoginBloc(gh<_i706.UserRepo>()));
-    gh.lazySingleton<_i267.BookingPaginationService>(
-        () => _i267.BookingPaginationService(gh<_i714.BookingRepo>()));
     gh.lazySingleton<_i697.BookingPageDataLoader>(
         () => _i697.BookingPageDataLoader(
               gh<_i680.BookingPageConverter>(),
               gh<_i680.BookingPaginationService>(),
+              gh<_i714.BookingRepo>(),
             ));
     gh.factory<_i175.BookingPageBloc>(() => _i175.BookingPageBloc(
           gh<_i680.BookingPageDataLoader>(),
-          gh<_i680.ChartDataService>(),
+          gh<_i680.SummaryAggregator>(),
         ));
     return this;
   }

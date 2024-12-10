@@ -5,10 +5,10 @@ import 'package:injectable/injectable.dart';
 import '../domain.dart';
 
 @lazySingleton
-class ChartDataService {
+class SummaryAggregator {
   final ProfileRepo _profileRepo;
 
-  ChartDataService(this._profileRepo);
+  SummaryAggregator(this._profileRepo);
 
   Future<List<SummaryViewData>> convert(List<BookingPageData> datas) async {
     return await Future.wait(datas.map((data) => _convert(data)));

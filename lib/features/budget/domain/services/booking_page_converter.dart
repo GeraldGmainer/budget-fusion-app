@@ -7,12 +7,12 @@ import '../domain.dart';
 
 @lazySingleton
 class BookingPageConverter {
-  List<BookingPageData> mapBookings(PeriodMode period, List<Booking> bookings, DateTime endDate) {
+  List<BookingPageData> mapBookings(PeriodMode period, List<Booking> bookings, DateTime? endDate) {
     switch (period) {
       case PeriodMode.day:
         return _convertToDay(bookings);
       case PeriodMode.month:
-        return _convertToMonth(bookings, endDate);
+        return _convertToMonth(bookings, endDate!);
       case PeriodMode.year:
         return _convertToYear(bookings);
       case PeriodMode.all:
