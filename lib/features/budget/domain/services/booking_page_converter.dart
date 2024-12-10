@@ -7,12 +7,12 @@ import '../domain.dart';
 
 @lazySingleton
 class BookingPageConverter {
-  List<BookingPageData> mapBookings(PeriodMode period, List<Booking> bookings, DateTime? endDate) {
+  List<BookingPageData> mapBookings(PeriodMode period, List<Booking> bookings, DateTime? fromDate, DateTime? endDate) {
     switch (period) {
       case PeriodMode.day:
         return _convertToDay(bookings);
       case PeriodMode.month:
-        return _convertToMonth(bookings, endDate!);
+        return _convertToMonth(bookings, fromDate!, endDate!);
       case PeriodMode.year:
         return _convertToYear(bookings);
       case PeriodMode.all:
@@ -20,15 +20,13 @@ class BookingPageConverter {
     }
   }
 
-  List<BookingPageData> _convertToMonth(List<Booking> bookings, DateTime endDate) {
+  List<BookingPageData> _convertToMonth(List<Booking> bookings, DateTime fromDate, DateTime endDate) {
     if (bookings.isEmpty) {
       return [_createEmptyPeriod(PeriodMode.month, endDate.startOfMonth, endDate)];
     }
 
     final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
-    final startDate = _findEarliestDate(bookings);
-
-    return _generateMonthlyPeriods(startDate, endDate, bookingsByMonthAndCategory);
+    return _generateMonthlyPeriods(fromDate, endDate, bookingsByMonthAndCategory);
   }
 
   Map<int, Map<int, List<Booking>>> _groupBookingsByMonthAndCategory(List<Booking> bookings) {
@@ -42,10 +40,6 @@ class BookingPageConverter {
     }
 
     return grouped;
-  }
-
-  DateTime _findEarliestDate(List<Booking> bookings) {
-    return bookings.map((b) => b.bookingDate).reduce((a, b) => a.isBefore(b) ? a : b);
   }
 
   List<BookingPageData> _generateMonthlyPeriods(DateTime earliestFrom, DateTime end, Map<int, Map<int, List<Booking>>> bookingsByMonthAndCategory) {

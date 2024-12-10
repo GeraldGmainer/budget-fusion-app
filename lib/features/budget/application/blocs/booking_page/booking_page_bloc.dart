@@ -9,10 +9,6 @@ part 'booking_page_bloc.freezed.dart';
 part 'booking_page_event.dart';
 part 'booking_page_state.dart';
 
-// TODO
-// missing months when no booking because 3 months are loaded and only last month is displayed in UI
-// add data for 2023 and check if 2024-01, 2024-02 are also loaded
-
 @injectable
 class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   final BookingPageDataLoader _bookingPageDataLoader;

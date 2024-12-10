@@ -16,11 +16,11 @@ class BookingPageDataLoader {
     final toDate = _bookingPaginationService.calculateToDate(period, fromDate, pageCount);
     if (period == PeriodMode.all) {
       final bookings = await _bookingRepo.getBookings(from: fromDate, to: toDate);
-      final items = _bookingPageConverter.mapBookings(period, bookings, toDate);
+      final items = _bookingPageConverter.mapBookings(period, bookings, fromDate, toDate);
       return LoadResult(items, false);
     } else {
       final results = await Future.wait([_bookingRepo.getBookings(from: fromDate, to: toDate), _bookingRepo.hasBookingsBefore(fromDate)]);
-      final items = _bookingPageConverter.mapBookings(period, results[0] as List<Booking>, toDate);
+      final items = _bookingPageConverter.mapBookings(period, results[0] as List<Booking>, fromDate, toDate);
       return LoadResult(items, results[1] as bool);
     }
   }
