@@ -11,10 +11,24 @@ class BookingPageDataLoader {
 
   BookingPageDataLoader(this._bookingPageConverter, this._bookingPaginationService, this._bookingRepo);
 
-  Future<List<BookingPageData>> load(PeriodMode period, int currentPage, int pageCount) async {
+  Future<LoadResult> load(PeriodMode period, int currentPage, int pageCount) async {
     final fromDate = _bookingPaginationService.calculateFromDate(period, currentPage, pageCount);
     final toDate = _bookingPaginationService.calculateToDate(period, fromDate, pageCount);
-    final bookings = await _bookingRepo.getBookings(from: fromDate, to: toDate);
-    return _bookingPageConverter.mapBookings(period, bookings, toDate);
+    if (period == PeriodMode.all) {
+      final bookings = await _bookingRepo.getBookings(from: fromDate, to: toDate);
+      final items = _bookingPageConverter.mapBookings(period, bookings, toDate);
+      return LoadResult(items, false);
+    } else {
+      final results = await Future.wait([_bookingRepo.getBookings(from: fromDate, to: toDate), _bookingRepo.hasBookingsBefore(fromDate)]);
+      final items = _bookingPageConverter.mapBookings(period, results[0] as List<Booking>, toDate);
+      return LoadResult(items, results[1] as bool);
+    }
   }
+}
+
+class LoadResult {
+  final List<BookingPageData> items;
+  final bool hasMore;
+
+  LoadResult(this.items, this.hasMore);
 }

@@ -24,12 +24,10 @@ class SummaryView extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
 
-        // Income Display
         _buildRow("Income:", "${chart.currency.symbol}${chart.income.toDouble().toStringAsFixed(2)}", Colors.green),
 
         const SizedBox(height: 4.0),
 
-        // Outcome Display
         _buildRow("Outcome:", "${chart.currency.symbol}${chart.outcome.toDouble().toStringAsFixed(2)}", Colors.red),
 
         const SizedBox(height: 4.0),

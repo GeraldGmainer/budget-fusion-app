@@ -60,8 +60,8 @@ extension BookingPageStateExtensions on BookingPageState {
         orElse: () => false,
       );
 
-  bool get canLoadMore => maybeWhen(
-        loaded: (_, __, hasReachedMax, ____, _____, ______) => !hasReachedMax,
+  bool get hasReachedMax => maybeWhen(
+        loaded: (_, __, hasReachedMax, ____, _____, ______) => hasReachedMax,
         orElse: () => false,
       );
 

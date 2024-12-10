@@ -41,4 +41,10 @@ class BookingRepoImpl implements BookingRepo {
 
     return bookings;
   }
+
+  @override
+  Future<bool> hasBookingsBefore(DateTime date) async {
+    final response = await _bookingRemoteSource.hasBookingsBefore(date);
+    return (response as List).isNotEmpty;
+  }
 }

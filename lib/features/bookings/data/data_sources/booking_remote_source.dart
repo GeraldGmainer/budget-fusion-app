@@ -42,4 +42,10 @@ class BookingRemoteSource extends SupabaseClient {
     }
     return null;
   }
+
+  Future<dynamic> hasBookingsBefore(DateTime date) async {
+    return execute("hasBookingsBefore", () async {
+      return await supabase.from('bookings').select('id').lte('booking_date', date.subtract(Duration(days: 1))).limit(1);
+    });
+  }
 }

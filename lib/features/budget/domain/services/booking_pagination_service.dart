@@ -5,7 +5,7 @@ import '../domain.dart';
 
 @lazySingleton
 class BookingPaginationService {
-  DateTime? calculateFromDate(PeriodMode period, int currentPage, int pageCount) {
+  DateTime calculateFromDate(PeriodMode period, int currentPage, int pageCount) {
     final now = DateTime.now();
     switch (period) {
       case PeriodMode.day:
@@ -15,13 +15,11 @@ class BookingPaginationService {
       case PeriodMode.year:
         return now.startOfYear;
       default:
-        return null;
+        return DateTime.now();
     }
   }
 
-  DateTime? calculateToDate(PeriodMode period, DateTime? fromDate, int pageCount) {
-    if (fromDate == null) return null;
-
+  DateTime calculateToDate(PeriodMode period, DateTime fromDate, int pageCount) {
     switch (period) {
       case PeriodMode.day:
         return fromDate.endOfDay;
@@ -30,7 +28,7 @@ class BookingPaginationService {
       case PeriodMode.year:
         return fromDate.endOfYear;
       default:
-        return null;
+        return DateTime.now();
     }
   }
 }

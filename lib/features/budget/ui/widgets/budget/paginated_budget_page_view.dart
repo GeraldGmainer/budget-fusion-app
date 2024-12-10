@@ -36,7 +36,11 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
 
   Future<void> _onLoadMore() async {
     final bookingBloc = context.read<BookingPageBloc>();
-    if (!bookingBloc.state.canLoadMore || bookingBloc.state.isLoading) return;
+    if (bookingBloc.state.isLoading) return;
+    if (bookingBloc.state.hasReachedMax) {
+      showSnackBar(context, "All bookings have been loaded");
+      return;
+    }
     _loadMoreCompleter = Completer<void>();
     bookingBloc.add(const BookingPageEvent.loadMore());
     return _loadMoreCompleter!.future;

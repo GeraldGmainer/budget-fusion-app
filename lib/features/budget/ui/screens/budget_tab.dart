@@ -22,9 +22,9 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   };
   final List<String> _navItems = ['Summary', 'Transactions', 'Balances', 'Calendar'];
   late PageController _pageController;
-  String _selectedAccount = 'All Accounts';
-  String _selectedTransaction = 'Outcome';
-  String _selectedPeriod = 'Month';
+  final String _selectedAccount = 'All Accounts';
+  final String _selectedTransaction = 'Outcome';
+  final String _selectedPeriod = 'Month';
   int _selectedNavIndex = 0;
 
   @override
@@ -67,12 +67,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
     return Scaffold(
       appBar: AppBar(
         title: BudgetTabTitle(transaction: _selectedTransaction, account: _selectedAccount, period: _selectedPeriod),
-        actions: [
-          RefreshButton(onTap: () {
-            _load();
-          }),
-          BookingFilterButton()
-        ],
+        actions: [RefreshButton(onTap: () => _load()), BookingFilterButton()],
       ),
       body: Column(
         children: [

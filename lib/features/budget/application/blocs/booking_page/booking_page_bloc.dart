@@ -11,7 +11,6 @@ part 'booking_page_state.dart';
 
 // TODO
 // missing months when no booking because 3 months are loaded and only last month is displayed in UI
-// check backend has more data
 // add data for 2023 and check if 2024-01, 2024-02 are also loaded
 
 @injectable
@@ -49,14 +48,14 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
       const currentPage = 0;
       final pageCount = filter.period.initialDuration;
-      final loadedItems = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
-      final filteredItems = _filterItems(loadedItems, filter);
+      final loadResult = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
+      final filteredItems = _filterItems(loadResult.items, filter);
       final viewItems = await _convertItems(filteredItems, viewMode);
       emit(BookingPageState.loaded(
-        rawItems: loadedItems,
+        rawItems: loadResult.items,
         viewItems: viewItems,
         isInitial: true,
-        hasReachedMax: false,
+        hasReachedMax: !loadResult.hasMore,
         currentFilter: filter,
         currentViewMode: viewMode,
       ));
@@ -87,15 +86,15 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
       final currentPage = _calculateNextPage(state.rawItems.length);
       final pageCount = state.currentFilter.period.moreDuration;
-      final newItems = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
-      final loadedItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, newItems);
-      final filteredItems = _filterItems(loadedItems, state.currentFilter);
+      final loadResult = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
+      final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadResult.items);
+      final filteredItems = _filterItems(allItems, state.currentFilter);
       final viewItems = await _convertItems(filteredItems, state.currentViewMode);
       emit(BookingPageState.loaded(
-        rawItems: loadedItems,
+        rawItems: allItems,
         viewItems: viewItems,
         isInitial: false,
-        hasReachedMax: false,
+        hasReachedMax: !loadResult.hasMore,
         currentFilter: state.currentFilter,
         currentViewMode: state.currentViewMode,
       ));
