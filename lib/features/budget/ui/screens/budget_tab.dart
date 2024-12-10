@@ -84,67 +84,14 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: Stack(
-              children: [
-                PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _navigationViews.length,
-                  itemBuilder: (context, index) {
-                    return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
-                  },
-                ),
-                BlocBuilder<BookingPageBloc, BookingPageState>(
-                  builder: (context, bookingState) {
-                    final isInitialLoading = bookingState.maybeWhen(
-                      loading: (_, __, isFirstFetch, ___, ____) => isFirstFetch,
-                      orElse: () => false,
-                    );
-
-                    final isPaginationLoading = bookingState.maybeWhen(
-                      loading: (_, __, isFirstFetch, ___, ____) => !isFirstFetch,
-                      orElse: () => false,
-                    );
-
-                    return Stack(
-                      children: [
-                        if (isInitialLoading)
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3.0,
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        // Pagination Loading Indicator
-                        if (isPaginationLoading)
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SizedBox(
-                              height: 3.0,
-                              child: LinearProgressIndicator(
-                                backgroundColor: Colors.grey.shade500,
-                                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                              ),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-              ],
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _navigationViews.length,
+              itemBuilder: (context, index) {
+                return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
+              },
             ),
           ),
         ],

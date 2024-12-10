@@ -47,8 +47,8 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
     try {
       emit(BookingPageState.loading(
-        rawItems: state.rawItems,
-        viewItems: state.viewItems,
+        rawItems: [],
+        viewItems: [],
         isFirstFetch: true,
         currentFilter: filter,
         currentViewMode: viewMode,
@@ -83,6 +83,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
 
   Future<void> _onLoadMore(Emitter<BookingPageState> emit) async {
     final stopwatch = Stopwatch()..start();
+    BudgetLogger.instance.d("start");
     try {
       emit(BookingPageState.loading(
         rawItems: state.rawItems,
@@ -98,7 +99,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadedItems);
       final filteredItems = _filterItems(allItems, state.currentFilter);
       final viewItems = await _convertItems(filteredItems, state.currentViewMode);
-      // await Future.delayed(Duration(seconds: 3));
       emit(BookingPageState.loaded(
         rawItems: allItems,
         viewItems: viewItems,

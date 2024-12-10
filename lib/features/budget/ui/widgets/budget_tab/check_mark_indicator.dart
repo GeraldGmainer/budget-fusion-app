@@ -99,10 +99,7 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator> with SingleTick
       },
       trigger: IndicatorTrigger.trailingEdge,
       triggerMode: IndicatorTriggerMode.onEdge,
-      indicatorBuilder: (
-        BuildContext context,
-        IndicatorController controller,
-      ) {
+      indicatorBuilder: (BuildContext context, IndicatorController controller) {
         final CheckMarkColors style;
         if (_renderCompleteState) {
           if (_hasError) {
@@ -121,20 +118,15 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator> with SingleTick
             color: style.background,
             shape: BoxShape.circle,
           ),
-          child: _renderCompleteState
-              ? Icon(
-                  _hasError ? Icons.close : Icons.check,
-                  color: style.content,
-                )
-              : SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: style.content,
-                    value: controller.isDragging || controller.isArmed ? controller.value.clamp(0.0, 1.0) : null,
-                  ),
-                ),
+          child: SizedBox(
+            height: 24,
+            width: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: style.content,
+              value: controller.isDragging || controller.isArmed ? controller.value.clamp(0.0, 1.0) : null,
+            ),
+          ),
         );
       },
       child: widget.child,
