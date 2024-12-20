@@ -51,6 +51,7 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
   }
 
   void _onPageChanged(int pageIndex) {
+    print("_onPageChanged: $pageIndex");
     setState(() {
       _currentPage = pageIndex;
     });

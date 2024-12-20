@@ -827,14 +827,15 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
+class _$InitialImpl extends _Initial {
   const _$InitialImpl(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
       required this.currentFilter,
       required this.currentViewMode})
       : _rawItems = rawItems,
-        _viewItems = viewItems;
+        _viewItems = viewItems,
+        super._();
 
   final List<BookingPageData> _rawItems;
   @override
@@ -856,11 +857,6 @@ class _$InitialImpl implements _Initial {
   final BudgetBookFilter currentFilter;
   @override
   final BookingViewMode currentViewMode;
-
-  @override
-  String toString() {
-    return 'BookingPageState.initial(rawItems: $rawItems, viewItems: $viewItems, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -1039,12 +1035,13 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements BookingPageState {
+abstract class _Initial extends BookingPageState {
   const factory _Initial(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
       required final BudgetBookFilter currentFilter,
       required final BookingViewMode currentViewMode}) = _$InitialImpl;
+  const _Initial._() : super._();
 
   @override
   List<BookingPageData> get rawItems;
@@ -1128,7 +1125,7 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
+class _$LoadingImpl extends _Loading {
   const _$LoadingImpl(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
@@ -1136,7 +1133,8 @@ class _$LoadingImpl implements _Loading {
       required this.currentFilter,
       required this.currentViewMode})
       : _rawItems = rawItems,
-        _viewItems = viewItems;
+        _viewItems = viewItems,
+        super._();
 
   final List<BookingPageData> _rawItems;
   @override
@@ -1160,11 +1158,6 @@ class _$LoadingImpl implements _Loading {
   final BudgetBookFilter currentFilter;
   @override
   final BookingViewMode currentViewMode;
-
-  @override
-  String toString() {
-    return 'BookingPageState.loading(rawItems: $rawItems, viewItems: $viewItems, isFirstFetch: $isFirstFetch, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -1349,13 +1342,14 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements BookingPageState {
+abstract class _Loading extends BookingPageState {
   const factory _Loading(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
       required final bool isFirstFetch,
       required final BudgetBookFilter currentFilter,
       required final BookingViewMode currentViewMode}) = _$LoadingImpl;
+  const _Loading._() : super._();
 
   @override
   List<BookingPageData> get rawItems;
@@ -1446,7 +1440,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
+class _$LoadedImpl extends _Loaded {
   const _$LoadedImpl(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
@@ -1455,7 +1449,8 @@ class _$LoadedImpl implements _Loaded {
       required this.currentFilter,
       required this.currentViewMode})
       : _rawItems = rawItems,
-        _viewItems = viewItems;
+        _viewItems = viewItems,
+        super._();
 
   final List<BookingPageData> _rawItems;
   @override
@@ -1481,11 +1476,6 @@ class _$LoadedImpl implements _Loaded {
   final BudgetBookFilter currentFilter;
   @override
   final BookingViewMode currentViewMode;
-
-  @override
-  String toString() {
-    return 'BookingPageState.loaded(rawItems: $rawItems, viewItems: $viewItems, hasReachedMax: $hasReachedMax, isInitial: $isInitial, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -1673,7 +1663,7 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements BookingPageState {
+abstract class _Loaded extends BookingPageState {
   const factory _Loaded(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
@@ -1681,6 +1671,7 @@ abstract class _Loaded implements BookingPageState {
       required final bool isInitial,
       required final BudgetBookFilter currentFilter,
       required final BookingViewMode currentViewMode}) = _$LoadedImpl;
+  const _Loaded._() : super._();
 
   @override
   List<BookingPageData> get rawItems;
@@ -1766,7 +1757,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
+class _$ErrorImpl extends _Error {
   const _$ErrorImpl(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
@@ -1774,7 +1765,8 @@ class _$ErrorImpl implements _Error {
       required this.currentFilter,
       required this.currentViewMode})
       : _rawItems = rawItems,
-        _viewItems = viewItems;
+        _viewItems = viewItems,
+        super._();
 
   final List<BookingPageData> _rawItems;
   @override
@@ -1798,11 +1790,6 @@ class _$ErrorImpl implements _Error {
   final BudgetBookFilter currentFilter;
   @override
   final BookingViewMode currentViewMode;
-
-  @override
-  String toString() {
-    return 'BookingPageState.error(rawItems: $rawItems, viewItems: $viewItems, message: $message, currentFilter: $currentFilter, currentViewMode: $currentViewMode)';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -1985,13 +1972,14 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements BookingPageState {
+abstract class _Error extends BookingPageState {
   const factory _Error(
       {required final List<BookingPageData> rawItems,
       required final List<BookingPageViewData> viewItems,
       required final String message,
       required final BudgetBookFilter currentFilter,
       required final BookingViewMode currentViewMode}) = _$ErrorImpl;
+  const _Error._() : super._();
 
   @override
   List<BookingPageData> get rawItems;

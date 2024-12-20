@@ -1,11 +1,12 @@
 import 'package:budget_fusion_app/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 
-class FilterChipGroup extends StatelessWidget {
-  final List<String> items;
-  final String selectedItem;
-  final ValueChanged<String> onItemSelected;
+class FilterChipGroup<T> extends StatelessWidget {
+  final List<T> items;
+  final T selectedItem;
+  final ValueChanged<T> onItemSelected;
   final String title;
+  final String Function(T)? valueToString;
 
   const FilterChipGroup({
     super.key,
@@ -13,7 +14,8 @@ class FilterChipGroup extends StatelessWidget {
     required this.selectedItem,
     required this.onItemSelected,
     required this.title,
-  });
+    this.valueToString,
+  }) : assert(T == String || valueToString != null, 'When T is not String, valueToString must be provided.');
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class FilterChipGroup extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
         Wrap(
@@ -30,24 +32,17 @@ class FilterChipGroup extends StatelessWidget {
           runSpacing: 8.0,
           children: items.map((item) {
             final isSelected = selectedItem == item;
-            return GestureDetector(
-              onTap: () {
+            return ChoiceChip(
+              label: Text(T == String ? item.toString() : valueToString!(item)),
+              selected: isSelected,
+              onSelected: (_) {
                 onItemSelected(item);
-                Navigator.pop(context); // Close the bottom sheet if needed
               },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: isSelected ? AppColors.accentColor : AppColors.secondaryColor,
-                ),
-                child: Text(
-                  item,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.primaryTextColor,
-                  ),
-                ),
+              selectedColor: AppColors.accentColor,
+              // backgroundColor: AppColors.secondaryColor,
+              labelStyle: TextStyle(
+                fontSize: 14,
+                color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
               ),
             );
           }).toList(),

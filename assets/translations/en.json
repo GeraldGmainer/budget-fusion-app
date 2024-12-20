@@ -116,6 +116,10 @@
     "year": "Year",
     "all": "All"
   },
+  "transaction_type": {
+    "outcome": "Outcome",
+    "income": "Income"
+  },
   "profile": {
     "name": "Name",
     "email": "Email"

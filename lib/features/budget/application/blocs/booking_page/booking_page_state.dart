@@ -2,6 +2,8 @@ part of 'booking_page_bloc.dart';
 
 @freezed
 class BookingPageState with _$BookingPageState {
+  const BookingPageState._();
+
   const factory BookingPageState.initial({
     required List<BookingPageData> rawItems,
     required List<BookingPageViewData> viewItems,
@@ -33,6 +35,28 @@ class BookingPageState with _$BookingPageState {
     required BudgetBookFilter currentFilter,
     required BookingViewMode currentViewMode,
   }) = _Error;
+
+  @override
+  String toString() {
+    return when(
+      initial: (rawItems, viewItems, currentFilter, currentViewMode) => 'BookingPageState Initial State:\n'
+          '- Current Filter: $currentFilter\n'
+          '- Current View Mode: $currentViewMode',
+      loading: (rawItems, viewItems, isFirstFetch, currentFilter, currentViewMode) => 'BookingPageState Loading State:\n'
+          '- Is First Fetch: $isFirstFetch\n'
+          '- Current Filter: $currentFilter\n'
+          '- Current View Mode: $currentViewMode',
+      loaded: (rawItems, viewItems, hasReachedMax, isInitial, currentFilter, currentViewMode) => 'BookingPageState Loaded State:\n'
+          '- Has Reached Max: $hasReachedMax\n'
+          '- Is Initial: $isInitial\n'
+          '- Current Filter: $currentFilter\n'
+          '- Current View Mode: $currentViewMode',
+      error: (rawItems, viewItems, message, currentFilter, currentViewMode) => 'BookingPageState Error State:\n'
+          '- Message: $message\n'
+          '- Current Filter: $currentFilter\n'
+          '- Current View Mode: $currentViewMode',
+    );
+  }
 }
 
 extension BookingPageStateExtensions on BookingPageState {
