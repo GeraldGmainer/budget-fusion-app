@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../../application/application.dart';
+import '../../controllers/page_controllers.dart';
 
 class PaginatedBudgetPageView<T> extends StatefulWidget {
   final Widget Function(BuildContext context, T item) itemBuilder;
@@ -17,21 +20,34 @@ class PaginatedBudgetPageView<T> extends StatefulWidget {
 }
 
 class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> {
-  late PageController _pageController;
+  late final PageControllers _pageControllers;
   int _currentPage = 0;
-
   Completer<void>? _loadMoreCompleter;
+
+  PageController get _pageController => _pageControllers.periodController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _currentPage);
+    _pageControllers = Provider.of<PageControllers>(context, listen: false);
+    _currentPage = _pageController.hasClients ? _pageController.page?.toInt() ?? 0 : 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _emitCurrentPageData();
+    });
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void _emitCurrentPageData() {
+    final bookingPageState = context.read<BookingPageBloc>().state;
+
+    if (bookingPageState.viewItems.isEmpty) return;
+
+    if (_currentPage >= 0 && _currentPage < bookingPageState.viewItems.length) {
+      final actualIndex = bookingPageState.viewItems.length - 1 - _currentPage;
+      final viewData = bookingPageState.viewItems[actualIndex];
+      _pageControllers.emit(viewData);
+    } else {
+      BudgetLogger.instance.i("unknown page $_currentPage / ${bookingPageState.viewItems.length}");
+    }
   }
 
   Future<void> _onLoadMore() async {
@@ -47,14 +63,14 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
   }
 
   List<T> _extractItems(BookingPageState bookingState) {
-    return bookingState.summaries as List<T>;
+    return bookingState.viewItems.whereType<T>().toList();
   }
 
   void _onPageChanged(int pageIndex) {
-    print("_onPageChanged: $pageIndex");
     setState(() {
       _currentPage = pageIndex;
     });
+    _emitCurrentPageData();
   }
 
   void _onInitialLoading() {
@@ -65,6 +81,7 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
           duration: const Duration(milliseconds: 300),
           curve: Curves.linear,
         );
+        _onPageChanged(0);
       }
     });
   }
@@ -77,6 +94,7 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
           duration: const Duration(milliseconds: 300),
           curve: Curves.linear,
         );
+        _onPageChanged(_currentPage + 1);
       }
     });
     _loadMoreCompleter?.complete();
@@ -125,7 +143,7 @@ class PaginatedBudgetPageViewState<T> extends State<PaginatedBudgetPageView<T>> 
             else if (isInitialLoading)
               Center(child: CircularProgressIndicator())
             else
-              Center(child: Text("No data available.")),
+              Center(child: Text("No data available.".tr())),
           ],
         );
       },

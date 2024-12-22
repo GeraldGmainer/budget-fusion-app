@@ -1,23 +1,31 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain.dart';
 
-part 'budget_book_filter.freezed.dart';
+class BudgetBookFilter {
+  Account? account;
+  TransactionType transaction;
+  PeriodMode period;
+  String? description;
 
-@freezed
-class BudgetBookFilter with _$BudgetBookFilter {
-  const BudgetBookFilter._();
+  BudgetBookFilter({
+    this.account,
+    required this.transaction,
+    required this.period,
+    this.description,
+  });
 
-  const factory BudgetBookFilter({
-    Account? account,
-    required TransactionType transaction,
-    required PeriodMode period,
-  }) = _BudgetBookFilter;
+  factory BudgetBookFilter.initial() {
+    return BudgetBookFilter(
+      account: null,
+      transaction: TransactionType.outcome,
+      period: PeriodMode.month,
+      description: null,
+    );
+  }
 
-  factory BudgetBookFilter.initial() => const BudgetBookFilter(
-        account: null,
-        transaction: TransactionType.outcome,
-        period: PeriodMode.month,
-      );
+  @override
+  String toString() {
+    return 'BudgetBookFilter(account: $account, transaction: $transaction, period: $period, description: $description)';
+  }
 }

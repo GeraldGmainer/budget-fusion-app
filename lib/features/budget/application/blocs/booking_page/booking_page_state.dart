@@ -60,8 +60,6 @@ class BookingPageState with _$BookingPageState {
 }
 
 extension BookingPageStateExtensions on BookingPageState {
-  List<SummaryViewData> get summaries => viewItems.whereType<SummaryViewData>().toList();
-
   bool isViewMode(BookingViewMode mode) => currentViewMode == mode;
 
   bool get isLoading => maybeWhen(

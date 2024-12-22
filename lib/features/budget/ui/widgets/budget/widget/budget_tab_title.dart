@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 
-class BudgetTabTitle extends StatelessWidget {
-  final String transaction;
-  final String account;
-  final String period;
+import '../../../../domain/domain.dart';
 
-  const BudgetTabTitle({
-    super.key,
-    required this.transaction,
-    required this.account,
-    required this.period,
-  });
+class BudgetTabTitle extends StatelessWidget {
+  final BudgetBookFilter filter;
+
+  const BudgetTabTitle({super.key, required this.filter});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class BudgetTabTitle extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
         Text(
-          '$transaction for $account - $period',
+          '${filter.transaction} for ${filter.account} - ${filter.period}',
           style: const TextStyle(
             fontSize: 14,
             color: Colors.white70,

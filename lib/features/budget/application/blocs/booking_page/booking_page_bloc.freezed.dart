@@ -97,8 +97,6 @@ abstract class _$$LoadInitialImplCopyWith<$Res> {
       __$$LoadInitialImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BudgetBookFilter filter, BookingViewMode viewMode});
-
-  $BudgetBookFilterCopyWith<$Res> get filter;
 }
 
 /// @nodoc
@@ -127,16 +125,6 @@ class __$$LoadInitialImplCopyWithImpl<$Res>
           : viewMode // ignore: cast_nullable_to_non_nullable
               as BookingViewMode,
     ));
-  }
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BudgetBookFilterCopyWith<$Res> get filter {
-    return $BudgetBookFilterCopyWith<$Res>(_value.filter, (value) {
-      return _then(_value.copyWith(filter: value));
-    });
   }
 }
 
@@ -392,8 +380,6 @@ abstract class _$$UpdateViewImplCopyWith<$Res> {
       __$$UpdateViewImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BudgetBookFilter? filter, BookingViewMode? viewMode});
-
-  $BudgetBookFilterCopyWith<$Res>? get filter;
 }
 
 /// @nodoc
@@ -422,20 +408,6 @@ class __$$UpdateViewImplCopyWithImpl<$Res>
           : viewMode // ignore: cast_nullable_to_non_nullable
               as BookingViewMode?,
     ));
-  }
-
-  /// Create a copy of BookingPageEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BudgetBookFilterCopyWith<$Res>? get filter {
-    if (_value.filter == null) {
-      return null;
-    }
-
-    return $BudgetBookFilterCopyWith<$Res>(_value.filter!, (value) {
-      return _then(_value.copyWith(filter: value));
-    });
   }
 }
 
@@ -713,8 +685,6 @@ abstract class $BookingPageStateCopyWith<$Res> {
       List<BookingPageViewData> viewItems,
       BudgetBookFilter currentFilter,
       BookingViewMode currentViewMode});
-
-  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -756,16 +726,6 @@ class _$BookingPageStateCopyWithImpl<$Res, $Val extends BookingPageState>
               as BookingViewMode,
     ) as $Val);
   }
-
-  /// Create a copy of BookingPageState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BudgetBookFilterCopyWith<$Res> get currentFilter {
-    return $BudgetBookFilterCopyWith<$Res>(_value.currentFilter, (value) {
-      return _then(_value.copyWith(currentFilter: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -781,9 +741,6 @@ abstract class _$$InitialImplCopyWith<$Res>
       List<BookingPageViewData> viewItems,
       BudgetBookFilter currentFilter,
       BookingViewMode currentViewMode});
-
-  @override
-  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -1074,9 +1031,6 @@ abstract class _$$LoadingImplCopyWith<$Res>
       bool isFirstFetch,
       BudgetBookFilter currentFilter,
       BookingViewMode currentViewMode});
-
-  @override
-  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -1384,9 +1338,6 @@ abstract class _$$LoadedImplCopyWith<$Res>
       bool isInitial,
       BudgetBookFilter currentFilter,
       BookingViewMode currentViewMode});
-
-  @override
-  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc
@@ -1706,9 +1657,6 @@ abstract class _$$ErrorImplCopyWith<$Res>
       String message,
       BudgetBookFilter currentFilter,
       BookingViewMode currentViewMode});
-
-  @override
-  $BudgetBookFilterCopyWith<$Res> get currentFilter;
 }
 
 /// @nodoc

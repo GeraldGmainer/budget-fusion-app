@@ -1,64 +1,20 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:budget_fusion_app/features/budget/ui/modal/widgets/account_filter.dart';
+import 'package:budget_fusion_app/features/budget/ui/modal/widgets/description_filter.dart';
+import 'package:budget_fusion_app/features/budget/ui/modal/widgets/period_filter.dart';
+import 'package:budget_fusion_app/features/budget/ui/modal/widgets/transaction_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../shared/shared.dart';
 import '../../application/application.dart';
 import '../../domain/domain.dart';
 
-class FilterModal extends StatefulWidget {
-  const FilterModal({
-    super.key,
-  });
+class FilterModal extends StatelessWidget {
+  final BudgetBookFilter filter;
 
-  @override
-  State<FilterModal> createState() => _FilterModalState();
-}
-
-class _FilterModalState extends State<FilterModal> {
-  final List<PeriodMode> _periods = [PeriodMode.all, PeriodMode.year, PeriodMode.month, PeriodMode.day];
-  final List<TransactionType> _transactions = [TransactionType.income, TransactionType.outcome];
-  final List<String> _accounts = ['All Accounts', 'Cash', 'Credit Card'];
-  final TextEditingController _searchController = TextEditingController();
-
-  PeriodMode _selectedPeriod = PeriodMode.month;
-  TransactionType _selectedTransaction = TransactionType.outcome;
-  String _selectedAccount = 'All Accounts';
-  String _searchQuery = '';
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _onTransactionChanged(TransactionType value) {
-    setState(() {
-      _selectedTransaction = value;
-    });
-  }
-
-  void _onPeriodChanged(PeriodMode value) {
-    setState(() {
-      _selectedPeriod = value;
-    });
-  }
-
-  void _onAccountChanged(String value) {
-    setState(() {
-      _selectedAccount = value;
-    });
-  }
+  const FilterModal({super.key, required this.filter});
 
   void _onSave(BuildContext context) {
-    final newFilter = BudgetBookFilter(
-      account: null,
-      transaction: _selectedTransaction,
-      period: _selectedPeriod,
-    );
-
-    final event = BookingPageEvent.updateView(filter: newFilter, viewMode: context.read<BookingPageBloc>().state.currentViewMode);
-    context.read<BookingPageBloc>().add(event);
+    context.read<BookingPageBloc>().add(BookingPageEvent.updateView(filter: filter));
     Navigator.of(context).pop();
   }
 
@@ -76,69 +32,21 @@ class _FilterModalState extends State<FilterModal> {
         children: [
           const Text('Filters', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
-          _buildSearchField(),
+          DescriptionFilter(filter: filter),
           const SizedBox(height: 16),
-          _buildTransaction(),
+          TransactionFilter(filter: filter),
           const SizedBox(height: 8),
-          _buildPeriod(),
+          PeriodFilter(filter: filter),
           const SizedBox(height: 8),
-          _buildAccount(),
+          AccountFilter(filter: filter),
           const SizedBox(height: 16),
-          _buildButtons(),
+          _buildButtons(context),
         ],
       ),
     );
   }
 
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchController,
-      style: TextStyle(fontSize: 14),
-      decoration: InputDecoration(
-        labelText: 'Search by description'.tr(),
-        prefixIcon: const Icon(Icons.search),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
-      onChanged: (value) {
-        setState(() {
-          _searchQuery = value;
-        });
-      },
-    );
-  }
-
-  Widget _buildTransaction() {
-    return FilterChipGroup(
-      title: 'Transaction',
-      items: _transactions,
-      selectedItem: _selectedTransaction,
-      onItemSelected: _onTransactionChanged,
-      valueToString: (value) => value.label.tr(),
-    );
-  }
-
-  Widget _buildPeriod() {
-    return FilterChipGroup(
-      title: 'Period',
-      items: _periods,
-      selectedItem: _selectedPeriod,
-      onItemSelected: _onPeriodChanged,
-      valueToString: (value) => value.label.tr(),
-    );
-  }
-
-  Widget _buildAccount() {
-    return FilterChipGroup(
-      title: 'Accounts',
-      items: _accounts,
-      selectedItem: _selectedAccount,
-      onItemSelected: _onAccountChanged,
-    );
-  }
-
-  Widget _buildButtons() {
+  Widget _buildButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
