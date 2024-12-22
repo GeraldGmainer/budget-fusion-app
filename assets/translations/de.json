@@ -1,1 +1,146 @@
-{}
+{
+  "error": {
+    "internet": "Keine Internetverbindung",
+    "default": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "auth_error": "Authentifizierung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldeinformationen.",
+    "postgrest_error": "Datenbankfehler. Bitte versuchen Sie es später erneut."
+  },
+  "main": {
+    "title": "Budget Book",
+    "drawer": {
+      "account_label": "Account",
+      "period_label": "Period",
+      "view_label": "View",
+      "category_button": "Categories",
+      "account_button": "Accounts",
+      "settings_button": "Settings"
+    }
+  },
+  "account": {
+    "all_accounts": "All Accounts",
+    "display_account": "Display Account"
+  },
+  "button": {
+    "create": "Add",
+    "edit": "Save"
+  },
+  "booking": {
+    "new_title": "New",
+    "edit_title": "Edit",
+    "choose_category_button": "Choose Category",
+    "select_account": "Select an Account",
+    "outcome_type": "Outcome",
+    "income_type": "Income",
+    "today": "today",
+    "yesterday": "yesterday",
+    "before_yesterday": "2 days ago",
+    "note": "Note",
+    "dialog": {
+      "delete_title": "Delete",
+      "delete_body": "Do you want to delete this booking?"
+    },
+    "validation": {
+      "required_category": "Please select a category"
+    },
+    "create_success": "Booking created",
+    "edit_success": "Booking edited",
+    "delete_success": "Booking deleted"
+  },
+  "category": {
+    "new_title": "New",
+    "edit_title": "Edit",
+    "list_title": "Categories",
+    "select_icon_label": "Select an icon",
+    "select_color_label": "Select a color",
+    "name_label": "Category name",
+    "type_label": "Category Type",
+    "dialog": {
+      "delete_title": "Delete",
+      "delete_body": "Do you want to delete this category?"
+    },
+    "validation": {
+      "required_icon_color": "Select an icon and a color",
+      "required_name": "Enter a name"
+    },
+    "create_success": "Category created",
+    "edit_success": "Category edited",
+    "delete_success": "Category deleted",
+    "error": {
+      "create": "Could not create the category. Please try again",
+      "edit": "Could not edit the category. Please try again",
+      "foreign_key": "Category is still used and cannot be deleted"
+    }
+  },
+  "currency": {
+    "name": "Currency"
+  },
+  "dialog": {
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "language": {
+    "name": "Language",
+    "dialog": {
+      "title": "Select a Language"
+    },
+    "en": "English",
+    "de": "German"
+  },
+  "login": {
+    "title": "Login",
+    "sign_with_label": "Sign in with",
+    "or_continue_with_label": "or continue with",
+    "forgot_password_label": "Forgot your password?",
+    "dont_have_account_label": "Don't have an account yet? Sign up",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "login_button": "Login",
+    "error": {
+      "incorrect_credentials": "Incorrect email or password",
+      "logout": "Could not logout. Please try again",
+      "token_not_found": "token not found",
+      "signature_invalid": "Signature Invalid",
+      "default": "Could not login. Please try again"
+    },
+    "logout": {
+      "dialog": {
+        "title": "Logout",
+        "body": "Do you want to logout?"
+      }
+    }
+  },
+  "period": {
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "all": "All"
+  },
+  "transaction_type": {
+    "outcome": "Outcome",
+    "income": "Income"
+  },
+  "profile": {
+    "name": "Name",
+    "email": "Email"
+  },
+  "settings": {
+    "title": "Settings",
+    "general_label": "General",
+    "account_label": "Account",
+    "other_label": "Other",
+    "logout_button": "Logout",
+    "my_profile": "My Profile"
+  },
+  "sign_up": {
+    "title": "Sign Up",
+    "sign_up_button": "Sign up",
+    "success": "Sign up success",
+    "success_detail": "Check your inbox to verify your email address"
+  },
+  "view": {
+    "graph": "Graph",
+    "calendar": "Calendar",
+    "list": "List"
+  }
+}
