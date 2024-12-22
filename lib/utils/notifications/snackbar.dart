@@ -6,7 +6,7 @@ import '../utils.dart';
 
 void showSnackBar(BuildContext? context, String message) {
   if (context == null) {
-    BudgetLogger.instance.e("showSnackBar: context is NULL");
+    BudgetLogger.instance.w("showSnackBar: context is NULL");
     return;
   }
   ScaffoldMessenger.of(context).showSnackBar(
@@ -18,7 +18,7 @@ void showSnackBar(BuildContext? context, String message) {
 
 void showErrorSnackBar(BuildContext? context, String message, {Duration? duration}) {
   if (context == null) {
-    BudgetLogger.instance.e("showSnackBar: context is NULL");
+    BudgetLogger.instance.w("showSnackBar: context is NULL");
     return;
   }
   ScaffoldMessenger.of(context).showSnackBar(

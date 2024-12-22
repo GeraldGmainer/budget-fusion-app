@@ -85,7 +85,8 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   }
 
   _onErrorAuthenticating(String message) {
-    BudgetLogger.instance.e(message);
+    // TODO better message for sentry
+    BudgetLogger.instance.w(message);
     String text = message;
     if (message == "Confirmation Token not found") {
       text = "login.error.token_not_found";
@@ -171,7 +172,8 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
 
   @override
   void onErrorReceivingDeeplink(String message) {
-    BudgetLogger.instance.e('onErrorReceivingDeeplink: $message');
+    // TODO better message for sentry
+    BudgetLogger.instance.w('onErrorReceivingDeeplink: $message');
     _onErrorAuthenticating(message);
   }
 }

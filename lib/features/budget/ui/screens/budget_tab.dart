@@ -90,7 +90,6 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   }
 
   void _onPageChanged(int pageIndex) {
-    BudgetLogger.instance.i("_onPageChanged $pageIndex");
     final items = context.read<BookingPageBloc>().state.viewItems;
     final reveredIndex = items.length - 1 - pageIndex;
     setState(() {

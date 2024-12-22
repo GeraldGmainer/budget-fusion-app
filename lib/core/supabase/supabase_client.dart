@@ -25,9 +25,9 @@ abstract class SupabaseClient {
     } finally {
       stopwatch.stop();
       if (extraInfo != null && extraInfo.isNotEmpty) {
-        BudgetLogger.instance.d("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms");
+        BudgetLogger.instance.d("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
       } else {
-        BudgetLogger.instance.d("$functionName took ${stopwatch.elapsed.inMilliseconds} ms");
+        BudgetLogger.instance.d("$functionName took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
       }
     }
   }

@@ -55,8 +55,9 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
         currentFilter: filter,
         currentViewMode: viewMode,
       ));
-    } catch (e) {
-      BudgetLogger.instance.e(e);
+    } catch (e, stackTrace) {
+      // TODO better message
+      BudgetLogger.instance.e("BookingPageBloc Error", e, stackTrace);
       emit(BookingPageState.error(
         message: e.toString(),
         rawItems: state.rawItems,
@@ -94,8 +95,9 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
         currentFilter: state.currentFilter,
         currentViewMode: state.currentViewMode,
       ));
-    } catch (e) {
-      BudgetLogger.instance.e(e);
+    } catch (e, stackTrace) {
+      // TODO better message
+      BudgetLogger.instance.e("BookingPageBloc Error", e, stackTrace);
       emit(BookingPageState.error(
         message: e.toString(),
         rawItems: state.rawItems,

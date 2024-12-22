@@ -9,50 +9,64 @@ class BudgetLogger {
 
   static BudgetLogger get instance => _instance;
   final MyLogger _logger = MyLogger();
+  final MyLogger _shortLogger = MyLogger(
+      printer: MyPrinter(
+    printTime: true,
+    printEmojis: true,
+    errorMethodCount: 12,
+    stackTraceBeginIndex: 0,
+    noBoxingByDefault: true,
+    methodCount: 0,
+  ));
 
   /// Log a message at level [Level.trace].
-  void t(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.t(message, error: error, stackTrace: stackTrace);
+  void t(dynamic message, {dynamic e, StackTrace? stackTrace}) {
+    _logger.t(message, error: e, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.debug].
-  void d(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.d(message, error: error, stackTrace: stackTrace);
+  void d(dynamic message, {dynamic e, StackTrace? stackTrace, bool short = false}) {
+    if (short) {
+      _shortLogger.d(message, error: e, stackTrace: stackTrace);
+    } else {
+      _logger.d(message, error: e, stackTrace: stackTrace);
+    }
   }
 
   /// Log a message at level [Level.info].
-  void i(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.i(message, error: error, stackTrace: stackTrace);
+  void i(dynamic message, {dynamic e, StackTrace? stackTrace}) {
+    _logger.i(message, error: e, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.warning].
-  void w(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.w(message, error: error, stackTrace: stackTrace);
+  void w(dynamic message, {dynamic e, StackTrace? stackTrace}) {
+    _logger.w(message, error: e, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.error].
-  void e(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.e(message, error: error, stackTrace: stackTrace);
+  void e(dynamic message, dynamic e, StackTrace stackTrace) {
+    _logger.e(message, error: e, stackTrace: stackTrace);
   }
 
   /// Log a message at level [Level.f].
-  void f(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    _logger.f(message, error: error, stackTrace: stackTrace);
+  void f(dynamic message, dynamic e, stackTrace) {
+    _logger.f(message, error: e, stackTrace: stackTrace);
   }
 }
 
 class MyLogger extends Logger {
-  MyLogger()
+  MyLogger({MyPrinter? printer})
       : super(
-    printer: MyPrinter(
-      printTime: true,
-      printEmojis: true,
-      errorMethodCount: 12,
-      stackTraceBeginIndex: 0,
-      // noBoxingByDefault: kReleaseMode,
-      methodCount: 2,
-    ),
-  );
+          printer: printer ??
+              MyPrinter(
+                printTime: true,
+                printEmojis: true,
+                errorMethodCount: 12,
+                stackTraceBeginIndex: 0,
+                // noBoxingByDefault: kReleaseMode,
+                methodCount: 2,
+              ),
+        );
 }
 
 /// Default implementation of [LogPrinter].
@@ -318,11 +332,13 @@ class MyPrinter extends LogPrinter {
     }
   }
 
-  List<String> _formatAndPrint(Level level,
-      String message,
-      String? time,
-      String? error,
-      String? stacktrace,) {
+  List<String> _formatAndPrint(
+    Level level,
+    String message,
+    String? time,
+    String? error,
+    String? stacktrace,
+  ) {
     // This code is non trivial and a type annotation here helps understanding.
     // ignore: omit_local_variable_types
     List<String> buffer = [];

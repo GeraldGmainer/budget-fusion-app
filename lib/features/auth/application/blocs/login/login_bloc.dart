@@ -7,9 +7,7 @@ import 'package:injectable/injectable.dart';
 import '../../../data/repos/repos.dart';
 
 part 'login_bloc.freezed.dart';
-
 part 'login_event.dart';
-
 part 'login_state.dart';
 
 @injectable
@@ -70,7 +68,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await userRepo.logout();
       emit(const LoginState.init());
     } catch (e) {
-      BudgetLogger.instance.e(e);
+      BudgetLogger.instance.i(e);
       if (!e.toString().contains("User not found")) {
         emit(const LoginState.error("login.error.logout"));
       } else {
