@@ -10,27 +10,27 @@ import '../../../../domain/domain.dart';
 class PeriodSelector extends StatelessWidget {
   final BudgetBookFilter filter;
   final BookingDateRange dateRange;
-  final PageController paginatedController;
+  final PageController pageController;
 
-  const PeriodSelector({super.key, required this.filter, required this.dateRange, required this.paginatedController});
+  const PeriodSelector({super.key, required this.filter, required this.dateRange, required this.pageController});
 
   void _onPrevious(BuildContext context) {
     final bookingPageState = context.read<BookingPageBloc>().state;
     final viewItems = bookingPageState.viewItems;
-    if (paginatedController.hasClients) {
-      paginatedController.nextPage(
+    if (pageController.hasClients) {
+      pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
       // TODO send to sentry without ${paginatedController.page!.round()} / ${viewItems.length}
-      BudgetLogger.instance.w("cannot navigate to next page: ${paginatedController.page!.round()} / ${viewItems.length}");
+      BudgetLogger.instance.w("cannot navigate to next page: ${pageController.page!.round()} / ${viewItems.length}");
     }
   }
 
   void _onNext(BuildContext context) {
-    if (paginatedController.hasClients && paginatedController.page! > 0) {
-      paginatedController.previousPage(
+    if (pageController.hasClients && pageController.page! > 0) {
+      pageController.previousPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );

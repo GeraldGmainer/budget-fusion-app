@@ -2,119 +2,171 @@ import 'dart:async';
 
 import 'package:budget_fusion_app/features/budget/ui/actions/actions.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/logging/logger.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
 import '../../domain/domain.dart';
-import '../controllers/page_controllers.dart';
 import '../widgets/widgets.dart';
-import 'screens.dart';
 
 class BudgetTab extends StatefulWidget {
   @override
   State<BudgetTab> createState() => _BudgetTabState();
 }
 
-// TODO how to calculate date label in period selector
 class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixin {
-  final Map<int, Widget Function()> _navigationViews = {
-    0: () => SummaryTab(),
-    1: () => TransactionsTab(),
-    2: () => BalancesTab(),
-    3: () => CalendarTab(),
-  };
-  final List<String> _navItems = ['Summary', 'Transactions', 'Balances', 'Calendar'];
-  late final PageControllers _pageControllers;
-  final BudgetBookFilter _filter = BudgetBookFilter.initial();
+  final List<String> _viewModes = ['Summary', 'Transactions', 'Balances', 'Calendar'];
+  final PageController _pageController = PageController();
+  Completer<void>? _loadMoreCompleter;
+  int _currentPage = 0;
   late BookingDateRange _currentDateRange;
-  int _selectedNavIndex = 0;
-  StreamSubscription<BookingPageViewData>? _subscription;
+
+  BookingViewMode get currentViewMode => context.read<BookingPageBloc>().state.currentViewMode;
+
+  BudgetBookFilter get currentFilter => context.read<BookingPageBloc>().state.currentFilter;
 
   @override
   void initState() {
     super.initState();
-    _currentDateRange = BookingDateRange(period: _filter.period, from: DateTime.now(), to: DateTime.now());
-    _pageControllers = PageControllers(
-      viewModeController: PageController(initialPage: _selectedNavIndex),
-      periodController: PageController(),
-    );
+    _currentDateRange = BookingDateRange(period: currentFilter.period, from: DateTime.now(), to: DateTime.now());
     _load();
-    _subscription = _pageControllers.stream.listen((data) {
-      _updateDateRange(data);
-    });
   }
 
   @override
   void dispose() {
-    _pageControllers.dispose();
-    _subscription?.cancel();
+    _pageController.dispose();
     super.dispose();
   }
 
   void _load() {
-    final viewMode = BookingViewMode.values[_selectedNavIndex];
-    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(_filter, viewMode));
+    context.read<BookingPageBloc>().add(BookingPageEvent.loadInitial(currentFilter, currentViewMode));
   }
 
-  void _onTabSelected(int index) {
-    _pageControllers.viewModeController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.linear,
-    );
-    _onViewPageChanged(index);
-  }
-
-  void _onViewPageChanged(int index) {
-    setState(() {
-      _selectedNavIndex = index;
+  void _onInitialLoading() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+        _onPageChanged(0);
+      }
     });
   }
 
-  void _updateDateRange(BookingPageViewData data) {
-    setState(() {
-      _currentDateRange = data.dateRange;
+  void _onMoreLoading() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage + 1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.linear,
+        );
+      }
     });
+    _loadMoreCompleter?.complete();
+    _loadMoreCompleter = null;
+  }
+
+  void _onError(String message) {
+    _loadMoreCompleter?.completeError(message);
+    _loadMoreCompleter = null;
+    showSnackBar(context, message);
+  }
+
+  Future<void> _onLoadMore() async {
+    final bookingBloc = context.read<BookingPageBloc>();
+    if (bookingBloc.state.isLoading) return;
+    if (bookingBloc.state.hasReachedMax) {
+      showSnackBar(context, "All bookings have been loaded");
+      return;
+    }
+    _loadMoreCompleter = Completer<void>();
+    bookingBloc.add(const BookingPageEvent.loadMore());
+    return _loadMoreCompleter!.future;
+  }
+
+  void _onPageChanged(int pageIndex) {
+    BudgetLogger.instance.i("_onPageChanged $pageIndex");
+    final items = context.read<BookingPageBloc>().state.viewItems;
+    final reveredIndex = items.length - 1 - pageIndex;
+    setState(() {
+      _currentPage = pageIndex;
+      if (items.isNotEmpty) {
+        _currentDateRange = items[reveredIndex].dateRange;
+      }
+    });
+  }
+
+  void _onViewSelected(int index) {
+    final viewMode = BookingViewMode.values[index];
+    context.read<BookingPageBloc>().add(BookingPageEvent.updateView(viewMode: viewMode));
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Provider<PageControllers>(
-      create: (_) => _pageControllers,
-      dispose: (_, controllers) => controllers.dispose(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: BudgetTabTitle(filter: _filter),
-          actions: [
-            RefreshButton(onTap: () => _load()),
-            BookingFilterButton(filter: _filter),
-          ],
-        ),
-        body: Column(
-          children: [
-            PeriodSelector(filter: _filter, dateRange: _currentDateRange, paginatedController: _pageControllers.periodController),
-            ScrollableNavBar(
-              onTabSelect: _onTabSelected,
-              items: _navItems,
-              selectedIndex: _selectedNavIndex,
-            ),
-            const SizedBox(height: 8),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageControllers.viewModeController,
-                onPageChanged: _onViewPageChanged,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _navigationViews.length,
-                itemBuilder: (context, index) {
-                  return _navigationViews[index]?.call() ?? const Center(child: Text('Unknown View'));
-                },
+    return Scaffold(
+      appBar: AppBar(
+        title: BudgetTabTitle(filter: currentFilter),
+        actions: [
+          RefreshButton(onTap: () => _load()),
+          BookingFilterButton(filter: currentFilter),
+        ],
+      ),
+      body: BlocConsumer<BookingPageBloc, BookingPageState>(
+        listener: (context, state) {
+          if (state.isInitial) {
+            _onInitialLoading();
+          } else if (state.isLoaded) {
+            _onMoreLoading();
+          } else if (state.isError) {
+            final error = state.maybeWhen(error: (_, __, message, ___, ____) => message, orElse: () => "unknown error");
+            _onError(error);
+          }
+        },
+        builder: (context, state) {
+          final List<BookingPageViewData> items = state.viewItems;
+          final bool isInitialLoading = state.isLoading && state.isFirstFetch && items.isEmpty;
+
+          return Column(
+            children: [
+              PeriodSelector(filter: currentFilter, dateRange: _currentDateRange, pageController: _pageController),
+              ScrollableNavBar(
+                onTabSelect: _onViewSelected,
+                items: _viewModes,
               ),
-            ),
-          ],
-        ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: Stack(
+                  children: [
+                    if (items.isNotEmpty)
+                      CustomHorizontalIndicator(
+                          onRefresh: _onLoadMore,
+                          child: PageView.builder(
+                            controller: _pageController,
+                            itemCount: items.length,
+                            onPageChanged: _onPageChanged,
+                            reverse: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final item = items.reversed.toList()[index];
+                              return SummaryView(chart: item as SummaryViewData);
+                            },
+                          ))
+                    else if (isInitialLoading)
+                      Center(child: CircularProgressIndicator())
+                    else
+                      Center(child: Text("No data available.".tr())),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 
 class ScrollableNavBar extends StatefulWidget {
   final List<String> items;
-  final int selectedIndex;
   final Function(int) onTabSelect;
 
   const ScrollableNavBar({
     super.key,
     required this.onTabSelect,
     required this.items,
-    required this.selectedIndex,
   });
 
   @override
@@ -20,6 +18,7 @@ class ScrollableNavBar extends StatefulWidget {
 class _ScrollableNavBarState extends State<ScrollableNavBar> {
   final ScrollController _scrollController = ScrollController();
   late List<GlobalKey> _itemKeys;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -34,6 +33,7 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
   }
 
   void _onItemTap(int index) {
+    _selectedIndex = index;
     widget.onTabSelect(index);
     final key = _itemKeys[index];
     if (key.currentContext != null) {
@@ -56,7 +56,7 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: List.generate(widget.items.length, (index) {
-            final isSelected = widget.selectedIndex == index;
+            final isSelected = _selectedIndex == index;
             return GestureDetector(
               onTap: () => _onItemTap(index),
               child: Container(
