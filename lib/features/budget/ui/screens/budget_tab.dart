@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:budget_fusion_app/features/budget/ui/actions/actions.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,7 @@ class BudgetTab extends StatefulWidget {
 class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixin {
   final List<String> _viewModes = ['Summary', 'Transactions', 'Balances', 'Calendar'];
   final PageController _pageController = PageController();
+  final _indicatorKey = GlobalKey<CustomRefreshIndicatorState>();
   Completer<void>? _loadMoreCompleter;
   int _currentPage = 0;
   late BookingDateRange _currentDateRange;
@@ -133,7 +135,12 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
 
           return Column(
             children: [
-              PeriodSelector(filter: currentFilter, dateRange: _currentDateRange, pageController: _pageController),
+              PeriodSelector(
+                filter: currentFilter,
+                dateRange: _currentDateRange,
+                pageController: _pageController,
+                indicatorKey: _indicatorKey,
+              ),
               ScrollableNavBar(
                 onTabSelect: _onViewSelected,
                 items: _viewModes,
@@ -144,6 +151,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
                   children: [
                     if (items.isNotEmpty)
                       CustomHorizontalIndicator(
+                          indicatorKey: _indicatorKey,
                           onRefresh: _onLoadMore,
                           child: PageView.builder(
                             controller: _pageController,

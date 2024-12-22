@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/logging/logger.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,17 +12,25 @@ class PeriodSelector extends StatelessWidget {
   final BudgetBookFilter filter;
   final BookingDateRange dateRange;
   final PageController pageController;
+  final GlobalKey<CustomRefreshIndicatorState> indicatorKey;
 
-  const PeriodSelector({super.key, required this.filter, required this.dateRange, required this.pageController});
+  const PeriodSelector({super.key, required this.filter, required this.dateRange, required this.pageController, required this.indicatorKey});
 
   void _onPrevious(BuildContext context) {
     final bookingPageState = context.read<BookingPageBloc>().state;
     final viewItems = bookingPageState.viewItems;
+
     if (pageController.hasClients) {
-      pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      final currentPage = pageController.page?.round() ?? 0;
+      final lastPageIndex = viewItems.length - 1;
+      if (currentPage < lastPageIndex) {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else if (indicatorKey.currentState!.controller.state.isIdle) {
+        indicatorKey.currentState?.refresh();
+      }
     } else {
       // TODO send to sentry without ${paginatedController.page!.round()} / ${viewItems.length}
       BudgetLogger.instance.w("cannot navigate to next page: ${pageController.page!.round()} / ${viewItems.length}");
