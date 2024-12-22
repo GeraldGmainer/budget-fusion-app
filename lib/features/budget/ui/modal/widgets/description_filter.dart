@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/constants.dart';
 import '../../../domain/domain.dart';
 
 class DescriptionFilter extends StatefulWidget {
@@ -26,9 +27,12 @@ class _DescriptionFilterState extends State<DescriptionFilter> {
     return TextField(
       controller: _searchController,
       style: TextStyle(fontSize: 14),
+      maxLines: 1,
       decoration: InputDecoration(
         labelText: 'Search by description'.tr(),
+        labelStyle: TextStyle(fontSize: 14, color: AppColors.disabledTextColor),
         prefixIcon: const Icon(Icons.search),
+        contentPadding: EdgeInsets.zero,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),

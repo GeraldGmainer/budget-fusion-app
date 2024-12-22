@@ -14,7 +14,8 @@ class AccountFilter extends StatelessWidget {
     return FilterChipGroup(
       title: 'Accounts',
       items: _accounts,
-      selectedItem: filter.account,
+      // selectedItem: filter.account,
+      selectedItem: 'All Accounts',
       onItemSelected: (value) {
         // TODO filter by account
         // filter.account = value;

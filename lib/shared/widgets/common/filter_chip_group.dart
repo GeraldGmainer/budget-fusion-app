@@ -39,7 +39,6 @@ class FilterChipGroup<T> extends StatelessWidget {
                 onItemSelected(item);
               },
               selectedColor: AppColors.accentColor,
-              // backgroundColor: AppColors.secondaryColor,
               labelStyle: TextStyle(
                 fontSize: 14,
                 color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,

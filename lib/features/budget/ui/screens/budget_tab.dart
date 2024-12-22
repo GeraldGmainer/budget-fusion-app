@@ -32,7 +32,7 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   @override
   void initState() {
     super.initState();
-    _currentDateRange = BookingDateRange(period: currentFilter.period, from: DateTime.now(), to: DateTime.now());
+    _initializeDateRange();
     _load();
   }
 
@@ -40,6 +40,10 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _initializeDateRange() {
+    _currentDateRange = BookingDateRange(period: currentFilter.period, from: DateTime.now(), to: DateTime.now());
   }
 
   void _load() {
@@ -98,6 +102,8 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
       _currentPage = pageIndex;
       if (items.isNotEmpty) {
         _currentDateRange = items[reveredIndex].dateRange;
+      } else {
+        BudgetLogger.instance.w("items are empty");
       }
     });
   }
@@ -130,52 +136,78 @@ class _BudgetTabState extends State<BudgetTab> with AutomaticKeepAliveClientMixi
           }
         },
         builder: (context, state) {
-          final List<BookingPageViewData> items = state.viewItems;
-          final bool isInitialLoading = state.isLoading && state.isFirstFetch && items.isEmpty;
-
           return Column(
             children: [
-              PeriodSelector(
-                filter: currentFilter,
-                dateRange: _currentDateRange,
-                pageController: _pageController,
-                indicatorKey: _indicatorKey,
-              ),
-              ScrollableNavBar(
-                onTabSelect: _onViewSelected,
-                items: _viewModes,
-              ),
+              _buildPeriodSelector(),
               const SizedBox(height: 8),
-              Expanded(
-                child: Stack(
-                  children: [
-                    if (items.isNotEmpty)
-                      CustomHorizontalIndicator(
-                          indicatorKey: _indicatorKey,
-                          onRefresh: _onLoadMore,
-                          child: PageView.builder(
-                            controller: _pageController,
-                            itemCount: items.length,
-                            onPageChanged: _onPageChanged,
-                            reverse: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final item = items.reversed.toList()[index];
-                              return SummaryView(chart: item as SummaryViewData);
-                            },
-                          ))
-                    else if (isInitialLoading)
-                      Center(child: CircularProgressIndicator())
-                    else
-                      Center(child: Text("No data available.".tr())),
-                  ],
-                ),
-              ),
+              _buildNavbar(),
+              const SizedBox(height: 8),
+              _buildContent(state),
             ],
           );
         },
       ),
     );
+  }
+
+  Widget _buildPeriodSelector() {
+    return PeriodSelector(
+      filter: currentFilter,
+      dateRange: _currentDateRange,
+      pageController: _pageController,
+      indicatorKey: _indicatorKey,
+    );
+  }
+
+  Widget _buildNavbar() {
+    return ScrollableNavBar(
+      onTabSelect: _onViewSelected,
+      items: _viewModes,
+    );
+  }
+
+  Widget _buildContent(BookingPageState state) {
+    final List<BookingPageViewData> items = state.viewItems;
+    final bool isInitialLoading = state.isLoading && state.isFirstFetch && items.isEmpty;
+
+    return Expanded(
+      child: Stack(
+        children: [
+          if (items.isNotEmpty)
+            CustomHorizontalIndicator(
+                indicatorKey: _indicatorKey,
+                onRefresh: _onLoadMore,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: items.length,
+                  onPageChanged: _onPageChanged,
+                  reverse: true,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = items.reversed.toList()[index];
+                    return _buildView(item);
+                  },
+                ))
+          else if (isInitialLoading)
+            Center(child: CircularProgressIndicator())
+          else
+            Center(child: Text("No data available.".tr())),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildView(BookingPageViewData item) {
+    switch (currentViewMode) {
+      case BookingViewMode.summary:
+        return SummaryView(data: item as SummaryViewData);
+      case BookingViewMode.transaction:
+        return TransactionView();
+      case BookingViewMode.balance:
+        return BalanceView();
+      case BookingViewMode.calendar:
+        return CalendarView();
+    }
   }
 
   @override

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import '../../../domain/domain.dart';
 
 class SummaryView extends StatelessWidget {
-  final SummaryViewData chart;
+  final SummaryViewData data;
 
-  const SummaryView({super.key, required this.chart});
+  const SummaryView({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return _buildChartCard(chart, Decimal.zero, chart.dateRange.from);
+    return _buildChartCard(data, Decimal.zero, data.dateRange.from);
   }
 
   Widget _buildChartCard(SummaryViewData chart, Decimal balance, DateTime date) {
