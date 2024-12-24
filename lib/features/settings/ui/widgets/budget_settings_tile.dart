@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 typedef BudgetSettingsTileCallback = void Function(BuildContext context);
@@ -53,7 +54,7 @@ class BudgetSettingsTile extends AbstractSettingsTile {
 
     if (route != null) {
       tapCallback = () {
-        Navigator.pushNamed(context, route!);
+        context.push(route!);
       };
     } else if (onPressed != null) {
       tapCallback = () => onPressed!(context);

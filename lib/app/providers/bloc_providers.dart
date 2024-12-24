@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/auth/auth.dart';
-import '../../features/budget/budget.dart';
+import '../../features/budget_book/budget_book.dart';
 import '../../features/profile/profile.dart';
 import '../main_page/bloc/main_bloc.dart';
 

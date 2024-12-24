@@ -1,13 +1,12 @@
-import 'package:budget_fusion_app/app/main_page/main_page.dart';
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../profile/application/blocs/blocs.dart';
 import '../../application/blocs/blocs.dart';
-import 'pages.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -27,7 +26,7 @@ class _SplashScreenState extends State<SplashPage> {
   _checkLogin() async {
     final session = supabase.auth.currentSession;
     if (session == null) {
-      Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.route, (route) => false);
+      context.go("/login");
     } else {
       _loadProfile();
     }
@@ -40,7 +39,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _onProfileSuccess(Profile profile) {
-    Navigator.of(context).pushNamedAndRemoveUntil(MainPage.route, (route) => false);
+    context.go("/main");
   }
 
   _onError(String message) {

@@ -45,4 +45,8 @@ class AppColors {
   // Transaction Colors
   static const Color incomeColor = Color(0xFF4CAF50); // Green for income
   static const Color outcomeColor = Color(0xFFF44336); // Red for expenses
+
+  // Gradient Colors
+  static const Color linearGradient1 = Color(0xFF1565C0);
+  static const Color linearGradient2 = Color(0xFF42A5F5);
 }

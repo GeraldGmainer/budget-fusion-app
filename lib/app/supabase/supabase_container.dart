@@ -8,17 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' as prov;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../features/auth/auth.dart';
-import '../main_page/main_page.dart';
-
 class SupabaseContainer extends StatefulWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
   final Widget child;
 
-  const SupabaseContainer({required this.child, required this.navigatorKey});
+  const SupabaseContainer({required this.child});
 
   @override
   State<SupabaseContainer> createState() => _SupabaseContainerState();
@@ -63,7 +60,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   void _onUnauthenticated() {
     if (mounted) {
       BudgetLogger.instance.d("onUnauthenticated");
-      widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(LoginPage.route, (route) => false);
+      context.go("/login");
     }
   }
 
@@ -81,7 +78,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
 
   _onPasswordRecovery(Session session) {
     BudgetLogger.instance.d("onPasswordRecovery: ${session.user}");
-    widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(ResetPasswordPage.route, (route) => false, arguments: false);
+    context.go("/reset-password");
   }
 
   _onErrorAuthenticating(String message) {
@@ -141,7 +138,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
         }
         BudgetLogger.instance.d("_recoverSessionFromDeeplink success!");
         _showMessage("sign_up.success");
-        widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(MainPage.route, (route) => false, arguments: false);
+        context.go("/main");
       }
     } on Exception catch (e) {
       _onErrorAuthenticating(e.toString());

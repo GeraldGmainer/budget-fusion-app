@@ -6,6 +6,7 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../application/blocs/blocs.dart';
 import '../pages/pages.dart';
@@ -46,11 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _forgotPassword() {
-    Navigator.of(context).pushNamed(ForgotPasswordPage.route);
+    context.go("/forgot-password");
   }
 
   _signUp() {
-    Navigator.of(context).pushNamed(SignUpPage.route);
+    context.go("/sign-up");
   }
 
   @override

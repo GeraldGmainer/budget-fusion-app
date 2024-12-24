@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/budget/budget.dart';
-import '../../features/home/home.dart';
-import '../../features/invest/invest.dart';
-import '../../features/profile/profile.dart';
+import '../../features/analytics/analytics.dart';
+import '../../features/budget_book/budget_book.dart';
+import '../../features/budget_goals/budget_goals.dart';
+import '../../features/overview/overview.dart';
+import '../../shared/shared.dart';
 import 'bloc/main_bloc.dart';
 import 'bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'bottom_navigation_bar/main_bottom_navigation_bar_item.dart';
@@ -22,43 +23,19 @@ class _MainPageState extends State<MainPage> {
   final PageController _pageController = PageController();
 
   final List<Widget> _tabs = [
-    HomeTab(),
-    BudgetTab(),
+    OverviewTab(),
+    BudgetBookTab(),
     Container(),
-    InvestTab(),
-    ProfileTab(),
+    BudgetGoalsTab(),
+    AnalyticsTab(),
   ];
-  late final List<MainBottomNavigationBarItem> _items;
-
-  @override
-  void initState() {
-    super.initState();
-    _items = [
-      MainBottomNavigationTabItem(
-        icon: Icons.home,
-        label: 'Home',
-        tabIndex: 0,
-      ),
-      MainBottomNavigationTabItem(
-        icon: Icons.pie_chart,
-        label: 'Budget',
-        tabIndex: 1,
-      ),
-      MainBottomNavigationCreateItem(
-        onTap: _createBooking,
-      ),
-      MainBottomNavigationTabItem(
-        icon: Icons.trending_up,
-        label: 'Invest',
-        tabIndex: 3,
-      ),
-      MainBottomNavigationTabItem(
-        icon: Icons.person,
-        label: 'Profile',
-        tabIndex: 4,
-      ),
-    ];
-  }
+  late final List<MainBottomNavigationBarItem> _items = [
+    MainBottomNavigationTabItem(icon: Icons.home, label: 'Home', tabIndex: 0),
+    MainBottomNavigationTabItem(icon: Icons.book, label: 'Budget', tabIndex: 1),
+    MainBottomNavigationCreateItem(onTap: _createBooking),
+    MainBottomNavigationTabItem(icon: Icons.golf_course, label: 'Goals', tabIndex: 3),
+    MainBottomNavigationTabItem(icon: Icons.analytics, label: 'Analytics', tabIndex: 4),
+  ];
 
   void _createBooking() {
     showDialog(
@@ -91,12 +68,13 @@ class _MainPageState extends State<MainPage> {
         state.whenOrNull(tabChange: _onTabChange);
       },
       child: Scaffold(
+        drawer: AppDrawer(),
+        bottomNavigationBar: MainBottomNavigationBar(items: _items),
         body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: _tabs,
         ),
-        bottomNavigationBar: MainBottomNavigationBar(items: _items),
       ),
     );
   }

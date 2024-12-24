@@ -1,2 +1,2 @@
 export 'application/blocs/blocs.dart';
-export 'ui/ui.dart';
+export 'ui/screens/screens.dart';

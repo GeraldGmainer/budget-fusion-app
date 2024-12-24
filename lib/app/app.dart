@@ -10,9 +10,6 @@ import 'providers/bloc_providers.dart';
 import 'supabase/supabase_container.dart';
 
 class MyApp extends StatelessWidget {
-  final AppRouter _appRouter = AppRouter();
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-
   MyApp({super.key}) {
     if (!kReleaseMode) {
       KeepScreenOn.turnOn();
@@ -26,14 +23,11 @@ class MyApp extends StatelessWidget {
         ...getBlocProviders(),
       ],
       child: SupabaseContainer(
-        navigatorKey: _navigatorKey,
-        child: MaterialApp(
+        child: MaterialApp.router(
           title: 'Budget book',
           theme: createTheme(context),
+          routerConfig: router,
           debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          navigatorKey: _navigatorKey,
-          onGenerateRoute: _appRouter.onGenerateRoute,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
