@@ -159,6 +159,8 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
       forceMaterialTransparency: widget.forceMaterialTransparency,
       clipBehavior: widget.clipBehavior,
       flexibleSpace: FlexibleSpaceBar(
+        titlePadding: EdgeInsets.zero,
+        expandedTitleScale: 1.0,
         background: Column(
           children: [
             NotificationListener<SizeChangedLayoutNotification>(

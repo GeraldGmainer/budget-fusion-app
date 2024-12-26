@@ -29,58 +29,72 @@ class BudgetOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardWithAction(
       backgroundColor: AppColors.primaryColor,
-      onTap: () {},
+      onTap: () {
+        // You might navigate or open options here
+        print('More options tapped');
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'MONTHLY BALANCE',
-            style: TextStyle(fontSize: 13, color: Colors.grey),
-          ),
-          const SizedBox(height: 8),
+          // Title
+          const Text('MONTHLY BALANCE', style: TextStyle(fontSize: 12, color: Colors.grey)),
+          const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.arrow_downward,
-                    color: Colors.greenAccent,
-                    size: 24,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '\$${currentIncome.toStringAsFixed(0)}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.bold,
+              // INCOME tile
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '\$${currentIncome.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.greenAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    const Text(
+                      'INCOME',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.arrow_upward,
-                    color: Colors.redAccent,
-                    size: 24,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '\$${currentOutcome.toStringAsFixed(0)}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.redAccent,
-                      fontWeight: FontWeight.bold,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '\$${currentOutcome.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    const Text(
+                      'EXPENSE',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          const Text('TOP EXPENSES THIS MONTH', style: TextStyle(fontSize: 13, color: Colors.grey)),
+          const SizedBox(height: 16),
+          const Text('TOP EXPENSES THIS MONTH', style: TextStyle(fontSize: 12, color: Colors.grey)),
           const SizedBox(height: 8),
           Column(
             children: topCategories.map((category) {
@@ -114,13 +128,7 @@ class BudgetOverview extends StatelessWidget {
             }).toList(),
           ),
           const SizedBox(height: 16),
-          const Text(
-            '6 MONTH BALANCES',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.grey,
-            ),
-          ),
+          const Text('6 MONTH BALANCES', style: TextStyle(fontSize: 12, color: Colors.grey)),
           const SizedBox(height: 16),
           SizedBox(
             height: 50,
@@ -147,9 +155,7 @@ class BudgetOverview extends StatelessWidget {
                       },
                     ),
                   ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
+                  leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 ),
@@ -159,7 +165,6 @@ class BudgetOverview extends StatelessWidget {
                   touchSpotThreshold: 20,
                   handleBuiltInTouches: true,
                   touchTooltipData: LineTouchTooltipData(
-                    // tooltipBgColor: Colors.black87,
                     getTooltipItems: (List<LineBarSpot> touchedSpots) {
                       return touchedSpots.map((spot) {
                         final month = balanceData[spot.x.toInt()].month;
@@ -177,12 +182,17 @@ class BudgetOverview extends StatelessWidget {
                 ),
                 lineBarsData: [
                   LineChartBarData(
-                    gradient: LinearGradient(
-                      colors: const [Color(0xFF1565C0), Color(0xFF42A5F5)],
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    spots: balanceData.map((data) => FlSpot(balanceData.indexOf(data).toDouble(), data.balance)).toList(),
+                    spots: balanceData
+                        .map((data) => FlSpot(
+                              balanceData.indexOf(data).toDouble(),
+                              data.balance,
+                            ))
+                        .toList(),
                     isCurved: true,
                     color: AppColors.accentColor,
                     dotData: FlDotData(

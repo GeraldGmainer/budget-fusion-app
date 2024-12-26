@@ -35,7 +35,7 @@ class AppColors {
   static const Color disabledTextColor = Color(0xFF7F7F7F); // Disabled text color
 
   // Card Colors
-  static const Color cardColor = Color(0xFF303030); // Same as secondaryColor for consistency
+  static const Color cardColor = Color(0xFF404040); // Same as secondaryColor for consistency
   static const Color cardAccentColor = Color(0xFF03DAC6); // Teal accent for cards
 
   // Status Colors

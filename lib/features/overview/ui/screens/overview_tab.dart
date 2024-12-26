@@ -1,7 +1,7 @@
-import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../shared/shared.dart';
 import '../widgets/widgets.dart';
 
 class OverviewTab extends StatefulWidget {
@@ -21,13 +21,14 @@ class _OverviewTabState extends State<OverviewTab> with AutomaticKeepAliveClient
           title: Text('Home', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
           leading: AppDrawerButton(),
           actions: [Notifications()],
+          backgroundColor: AppColors.primaryColor,
           flexibleSpace: _buildFlexibleSpace(
             topPadding: toolbarPadding,
             child: BudgetOverview(),
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
           sliver: SliverToBoxAdapter(child: Reports()),
         ),
         SliverPadding(

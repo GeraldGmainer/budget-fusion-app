@@ -7,21 +7,17 @@ class Reports extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Card(
+        elevation: 4,
         margin: const EdgeInsets.symmetric(vertical: 8.0),
-        color: AppColors.secondaryColor,
-        child: ListTile(
-          dense: true,
-          leading: const Icon(Icons.pending_actions, color: AppColors.accentColor),
-          title: const Text(
-            'Monthly Report',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: const Text(
-            'Review your spending for this month to stay on track.',
-          ),
-          trailing: IconButton(
-            icon: const Icon(Icons.arrow_forward, color: AppColors.accentColor),
-            onPressed: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: ListTile(
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.pending_actions, color: AppColors.accentColor),
+            title: const Text('Monthly Report', style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: const Text('Review your spending for this month to stay on track.'),
+            trailing: IconButton(icon: const Icon(Icons.arrow_forward, color: AppColors.accentColor), onPressed: () {}),
           ),
         ),
       ),

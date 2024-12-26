@@ -20,23 +20,11 @@ class TransactionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       dense: true,
-      leading: Icon(
-        iconData,
-        color: iconColor,
-        size: 32,
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-      ),
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(iconData, color: iconColor, size: 26),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
       subtitle: Text(subtitle),
-      trailing: Text(
-        amount,
-        style: TextStyle(
-          fontSize: 15,
-          color: amount.startsWith('+') ? Colors.green : Colors.red,
-        ),
-      ),
+      trailing: Text(amount, style: TextStyle(fontSize: 15, color: amount.startsWith('+') ? Colors.green : Colors.red)),
     );
   }
 }

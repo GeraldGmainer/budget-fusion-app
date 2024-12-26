@@ -12,7 +12,7 @@ class CardWithAction extends StatelessWidget {
     super.key,
     this.icon = Icons.more_vert,
     required this.onTap,
-    this.backgroundColor = AppColors.primaryColor,
+    this.backgroundColor = AppColors.cardColor,
     required this.child,
   });
 

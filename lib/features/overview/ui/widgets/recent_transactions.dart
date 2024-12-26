@@ -22,33 +22,21 @@ class RecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildTitle(context),
-              _buildShowMore(context),
-            ],
-          ),
-        ),
-        _buildList(context),
-      ],
+    return CardWithAction(
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTitle(context),
+          _buildList(context),
+          _buildShowMore(context),
+        ],
+      ),
     );
   }
 
   Widget _buildTitle(BuildContext context) {
-    return Text(
-      'Recent Transactions',
-      style: TextStyle(
-        fontSize: 18,
-        color: Colors.grey,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    return Text('Recent Transactions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
   }
 
   Widget _buildShowMore(BuildContext context) {
