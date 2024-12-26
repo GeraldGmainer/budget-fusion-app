@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../ui.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -18,6 +19,11 @@ class SettingsPage extends StatelessWidget {
           SettingsSection(
             title: const Text('General Settings'),
             tiles: [
+              BudgetSettingsTile.navigation(
+                icon: Icons.account_circle,
+                title: 'Profile',
+                route: '',
+              ),
               BudgetSettingsTile.action(
                 icon: Icons.currency_exchange,
                 title: 'Currency',
@@ -52,43 +58,36 @@ class SettingsPage extends StatelessWidget {
                 value: 'Month',
                 onPressed: (context) {},
               ),
-              BudgetSettingsTile.navigation(
-                icon: Icons.account_balance,
-                title: 'Accounts',
-                route: '',
-              ),
-              BudgetSettingsTile.navigation(
-                icon: Icons.category,
-                title: 'Categories',
-                route: '',
-              ),
-              BudgetSettingsTile.navigation(
-                icon: Icons.pie_chart,
-                title: 'Budget Plan',
-                route: '',
+              BudgetSettingsTile.action(
+                icon: Icons.book,
+                title: 'Default Budget Book View',
+                value: 'Summary',
+                onPressed: (context) {},
               ),
             ],
           ),
           SettingsSection(
-            title: const Text('Data Maintenance'),
+            title: const Text('Data & Security'),
             tiles: const [
+              BudgetSettingsTile.navigation(
+                icon: Icons.pin,
+                title: 'App Pin or Fingerprint',
+                route: '',
+              ),
               BudgetSettingsTile.navigation(
                 icon: Icons.backup,
                 title: 'Backup & Restore',
                 route: '/backupRestore',
               ),
-            ],
-          ),
-          SettingsSection(
-            title: const Text('Account Management'),
-            tiles: const [
               BudgetSettingsTile.navigation(
-                icon: Icons.lock,
-                title: 'Privacy & Security',
-                route: '/privacySecurity',
+                icon: Icons.logout,
+                iconColor: AppColors.outcomeColor,
+                title: 'Logout',
+                route: '/deleteAccount',
               ),
               BudgetSettingsTile.navigation(
                 icon: Icons.delete_forever,
+                iconColor: AppColors.outcomeColor,
                 title: 'Delete Account',
                 route: '/deleteAccount',
               ),
@@ -101,6 +100,11 @@ class SettingsPage extends StatelessWidget {
                 icon: Icons.help,
                 title: 'Help & Feedback',
                 route: '',
+              ),
+              BudgetSettingsTile.navigation(
+                icon: Icons.lock,
+                title: 'Privacy & Security',
+                route: '/privacySecurity',
               ),
               BudgetSettingsTile.action(
                 icon: Icons.info,
