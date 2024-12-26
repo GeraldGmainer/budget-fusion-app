@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/application.dart';
 import '../../domain/domain.dart';
-import '../actions/actions.dart';
 import '../widgets/widgets.dart';
 
 class BudgetBookTab extends StatefulWidget {
@@ -116,37 +115,28 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: BudgetTabTitle(filter: currentFilter),
-        actions: [
-          RefreshButton(onTap: () => _load()),
-          BookingFilterButton(filter: currentFilter),
-        ],
-      ),
-      body: BlocConsumer<BookingPageBloc, BookingPageState>(
-        listener: (context, state) {
-          if (state.isInitial) {
-            _onInitialLoading();
-          } else if (state.isLoaded) {
-            _onMoreLoading();
-          } else if (state.isError) {
-            final error = state.maybeWhen(error: (_, __, message, ___, ____) => message, orElse: () => "unknown error");
-            _onError(error);
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            children: [
-              _buildPeriodSelector(),
-              const SizedBox(height: 8),
-              _buildNavbar(),
-              const SizedBox(height: 8),
-              _buildContent(state),
-            ],
-          );
-        },
-      ),
+    return BlocConsumer<BookingPageBloc, BookingPageState>(
+      listener: (context, state) {
+        if (state.isInitial) {
+          _onInitialLoading();
+        } else if (state.isLoaded) {
+          _onMoreLoading();
+        } else if (state.isError) {
+          final error = state.maybeWhen(error: (_, __, message, ___, ____) => message, orElse: () => "unknown error");
+          _onError(error);
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          children: [
+            _buildPeriodSelector(),
+            const SizedBox(height: 8),
+            _buildNavbar(),
+            const SizedBox(height: 8),
+            _buildContent(state),
+          ],
+        );
+      },
     );
   }
 

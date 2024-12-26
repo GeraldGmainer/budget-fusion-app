@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/analytics/analytics.dart';
-import '../../features/budget_book/budget_book.dart';
+import '../../features/budget_book/ui/ui.dart';
 import '../../features/budget_goals/budget_goals.dart';
 import '../../features/overview/overview.dart';
 import '../../shared/shared.dart';
@@ -21,6 +21,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final PageController _pageController = PageController();
+  int _currentIndex = 0;
 
   final List<Widget> _tabs = [
     OverviewTab(),
@@ -54,6 +55,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onTabChange(int index) {
+    setState(() => _currentIndex = index);
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -68,6 +70,7 @@ class _MainPageState extends State<MainPage> {
         state.whenOrNull(tabChange: _onTabChange);
       },
       child: Scaffold(
+        appBar: _buildAppBarForIndex(_currentIndex),
         drawer: AppDrawer(),
         bottomNavigationBar: MainBottomNavigationBar(items: _items),
         body: PageView(
@@ -77,5 +80,12 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
+  }
+
+  PreferredSizeWidget? _buildAppBarForIndex(int index) {
+    if (index == 1) {
+      return BudgetBookAppBar();
+    }
+    return null;
   }
 }

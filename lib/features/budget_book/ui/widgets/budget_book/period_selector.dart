@@ -5,8 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../application/application.dart';
-import '../../../../domain/domain.dart';
+import '../../../application/application.dart';
+import '../../../domain/domain.dart';
 
 class PeriodSelector extends StatelessWidget {
   final BudgetBookFilter filter;

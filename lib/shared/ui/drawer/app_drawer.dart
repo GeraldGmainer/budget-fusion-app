@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,35 +13,35 @@ class AppDrawer extends StatelessWidget {
     DrawerSection(
       header: 'Main',
       items: [
-        DrawerItem(icon: Icons.book, title: 'Home', route: '/main'),
-        DrawerItem(icon: Icons.trending_up, title: 'Investments', route: '/investments'),
-        DrawerItem(icon: Icons.show_chart, title: 'Predictions', route: '/predictions'),
-        DrawerItem(icon: Icons.shopping_cart, title: 'Shopping List', route: '/shopping-list'),
+        DrawerItem(icon: CommunityMaterialIcons.home_variant, title: 'Home', route: '/main'),
+        DrawerItem(icon: CommunityMaterialIcons.chart_line, title: 'Investments', route: '/investments'),
+        DrawerItem(icon: CommunityMaterialIcons.chart_bar, title: 'Predictions', route: '/predictions'),
+        DrawerItem(icon: CommunityMaterialIcons.shopping, title: 'Shopping List', route: '/shopping-list'),
       ],
     ),
     DrawerSection(
       header: 'Financial Management',
       items: [
-        DrawerItem(icon: Icons.account_balance, title: 'Accounts', route: '/accounts'),
-        DrawerItem(icon: Icons.category, title: 'Categories', route: '/categories'),
-        DrawerItem(icon: Icons.repeat, title: 'Recurring Transactions', route: '/recurring-transactions'),
-        DrawerItem(icon: Icons.flag, title: 'Budget Goals', route: '/budget-goals'),
-        DrawerItem(icon: Icons.money_off, title: 'Debts', route: '/debts'),
+        DrawerItem(icon: CommunityMaterialIcons.bank, title: 'Accounts', route: '/accounts'),
+        DrawerItem(icon: CommunityMaterialIcons.table_large, title: 'Categories', route: '/categories'),
+        DrawerItem(icon: CommunityMaterialIcons.repeat, title: 'Recurring Transactions', route: '/recurring-transactions'),
+        DrawerItem(icon: CommunityMaterialIcons.flag_variant, title: 'Budget Goals', route: '/budget_book-goals'),
+        DrawerItem(icon: CommunityMaterialIcons.death_star, title: 'Debts', route: '/debts'),
       ],
     ),
     DrawerSection(
       header: 'Collaboration',
       items: [
-        DrawerItem(icon: Icons.workspace_premium, title: 'Workspace', route: '/workspace'),
+        DrawerItem(icon: CommunityMaterialIcons.account_group, title: 'Workspace', route: '/workspace'),
       ],
     ),
     DrawerSection(
       header: 'Other',
       items: [
-        DrawerItem(icon: Icons.upgrade, title: 'Get Pro', route: '/get-pro'),
-        DrawerItem(icon: Icons.web, title: 'Open Webpage', route: '/open-webpage'),
-        DrawerItem(icon: Icons.settings, title: 'Settings', route: '/settings'),
-        DrawerItem(icon: Icons.support_agent, title: 'Support', route: '/support'),
+        DrawerItem(icon: CommunityMaterialIcons.crown, title: 'Get Pro', route: '/get-pro'),
+        DrawerItem(icon: CommunityMaterialIcons.web, title: 'Open Webpage', route: '/open-webpage'),
+        DrawerItem(icon: CommunityMaterialIcons.cog_outline, title: 'Settings', route: '/settings'),
+        DrawerItem(icon: CommunityMaterialIcons.help_circle, title: 'Support', route: '/support'),
       ],
     ),
   ];

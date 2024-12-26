@@ -90,10 +90,8 @@ class DynamicSliverAppBar extends StatefulWidget {
 
 class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
   final GlobalKey _childKey = GlobalKey();
-
-  // As long as the height is 0 instead of the sliver app bar a sliver to box adapter will be used
-  // to calculate dynamically the size for the sliver app bar
   double _height = 0;
+  bool _isHeightCalculated = false;
 
   @override
   void initState() {
@@ -108,8 +106,6 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
   }
 
   void _updateHeight() {
-    // Gets the new height and updates the sliver app bar. Needs to be called after the last frame has been rebuild
-    // otherwise this will throw an error
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (_childKey.currentContext == null) return;
       setState(() {
@@ -120,35 +116,12 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    //Needed to lay out the flexibleSpace the first time, so we can calculate its intrinsic height
-    if (_height == 0) {
-      return SliverToBoxAdapter(
-        child: Stack(
-          children: [
-            Padding(
-              // Padding which centers the flexible space within the app bar
-              // padding: EdgeInsets.symmetric(vertical: MediaQuery.paddingOf(context).top / 2),
-              padding: EdgeInsets.zero,
-              child: Container(key: _childKey, child: widget.flexibleSpace ?? SizedBox(height: kToolbarHeight)),
-            ),
-            Positioned.fill(
-              // 10 is the magic number which the app bar is pushed down within the sliver app bar. Couldnt find exactly where this number
-              // comes from and found it through trial and error.
-              top: 10,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  leading: widget.leading,
-                  actions: widget.actions,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!_isHeightCalculated) {
+        _isHeightCalculated = true;
+        _updateHeight();
+      }
+    });
 
     return SliverAppBar(
       leading: widget.leading,
@@ -185,7 +158,28 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
       systemOverlayStyle: widget.systemOverlayStyle,
       forceMaterialTransparency: widget.forceMaterialTransparency,
       clipBehavior: widget.clipBehavior,
-      flexibleSpace: FlexibleSpaceBar(background: widget.flexibleSpace),
+      flexibleSpace: FlexibleSpaceBar(
+        background: Column(
+          children: [
+            NotificationListener<SizeChangedLayoutNotification>(
+              onNotification: (notification) {
+                _isHeightCalculated = true;
+                _updateHeight();
+                return false;
+              },
+              child: SizeChangedLayoutNotifier(
+                child: Container(
+                  key: _childKey,
+                  child: widget.flexibleSpace,
+                ),
+              ),
+            ),
+            const Expanded(
+              child: SizedBox.shrink(),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
