@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/domain.dart';
+import '../../application/application.dart';
 import '../modal/filter_modal.dart';
 
 class BookingFilterButton extends StatelessWidget {
-  final BudgetBookFilter filter;
-
-  const BookingFilterButton({super.key, required this.filter});
-
   void _showFilterDialog(BuildContext context) {
+    final filter = context.read<BookingPageBloc>().state.currentFilter.clone();
+    print("#### ${filter.transaction}");
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

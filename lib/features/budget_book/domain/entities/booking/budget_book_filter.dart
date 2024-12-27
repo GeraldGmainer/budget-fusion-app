@@ -24,6 +24,15 @@ class BudgetBookFilter {
     );
   }
 
+  BudgetBookFilter clone() {
+    return BudgetBookFilter(
+      account: account,
+      transaction: transaction,
+      period: period,
+      description: description,
+    );
+  }
+
   @override
   String toString() {
     return 'BudgetBookFilter(account: $account, transaction: $transaction, period: $period, description: $description)';

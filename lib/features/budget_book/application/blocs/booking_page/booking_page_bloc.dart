@@ -13,8 +13,9 @@ part 'booking_page_state.dart';
 class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
   final BookingPageDataLoader _bookingPageDataLoader;
   final SummaryAggregator _summaryAggregator;
+  final FilterBookingsUseCase _filterBookingsUseCase;
 
-  BookingPageBloc(this._bookingPageDataLoader, this._summaryAggregator)
+  BookingPageBloc(this._bookingPageDataLoader, this._summaryAggregator, this._filterBookingsUseCase)
       : super(BookingPageState.initial(
           rawItems: [],
           viewItems: [],
@@ -45,7 +46,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       const currentPage = 0;
       final pageCount = filter.period.initialDuration;
       final loadResult = await _bookingPageDataLoader.load(filter.period, currentPage, pageCount);
-      final filteredItems = _filterItems(loadResult.items, filter);
+      final filteredItems = _filterBookingsUseCase.execute(loadResult.items, filter);
       final viewItems = await _convertItems(filteredItems, viewMode);
       emit(BookingPageState.loaded(
         rawItems: loadResult.items,
@@ -85,7 +86,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       final pageCount = state.currentFilter.period.moreDuration;
       final loadResult = await _bookingPageDataLoader.load(state.currentFilter.period, currentPage, pageCount);
       final allItems = List<BookingPageData>.from(state.rawItems)..insertAll(0, loadResult.items);
-      final filteredItems = _filterItems(allItems, state.currentFilter);
+      final filteredItems = _filterBookingsUseCase.execute(allItems, state.currentFilter);
       final viewItems = await _convertItems(filteredItems, state.currentViewMode);
       emit(BookingPageState.loaded(
         rawItems: allItems,
@@ -122,7 +123,7 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       currentViewMode: newViewMode,
     ));
 
-    final filteredItems = _filterItems(rawItems, newFilter);
+    final filteredItems = _filterBookingsUseCase.execute(rawItems, newFilter);
     final viewItems = await _convertItems(filteredItems, newViewMode);
     emit(BookingPageState.loaded(
       rawItems: rawItems,
@@ -132,11 +133,6 @@ class BookingPageBloc extends Bloc<BookingPageEvent, BookingPageState> {
       currentFilter: newFilter,
       currentViewMode: newViewMode,
     ));
-  }
-
-  List<BookingPageData> _filterItems(List<BookingPageData> items, BudgetBookFilter filter) {
-    // TODO filter
-    return items;
   }
 
   Future<List<BookingPageViewData>> _convertItems(List<BookingPageData> items, BookingViewMode viewMode) async {

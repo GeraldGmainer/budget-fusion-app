@@ -40,7 +40,7 @@ class SummaryAggregator {
             categoryName: categoryGroup.category.name,
             iconName: categoryGroup.category.iconName,
             iconColor: categoryGroup.category.iconColor,
-            percentage: ((amount / categoryTotal).toDouble() * 100.0).round(),
+            percentage: categoryTotal == Decimal.zero ? 0 : ((amount / categoryTotal).toDouble() * 100.0).round(),
             value: amount),
       );
     }

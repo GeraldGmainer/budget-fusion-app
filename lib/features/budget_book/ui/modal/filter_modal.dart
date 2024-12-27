@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/utils/logging/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,13 +9,26 @@ import 'widgets/description_filter.dart';
 import 'widgets/period_filter.dart';
 import 'widgets/transaction_filter.dart';
 
-class FilterModal extends StatelessWidget {
+class FilterModal extends StatefulWidget {
   final BudgetBookFilter filter;
 
   const FilterModal({super.key, required this.filter});
 
+  @override
+  State<FilterModal> createState() => _FilterModalState();
+}
+
+class _FilterModalState extends State<FilterModal> {
+  late final BudgetBookFilter _filter;
+
+  @override
+  void initState() {
+    super.initState();
+    _filter = widget.filter;
+  }
+
   void _onSave(BuildContext context) {
-    context.read<BookingPageBloc>().add(BookingPageEvent.updateView(filter: filter));
+    context.read<BookingPageBloc>().add(BookingPageEvent.updateView(filter: _filter));
     Navigator.of(context).pop();
   }
 
@@ -32,13 +46,13 @@ class FilterModal extends StatelessWidget {
         children: [
           const Text('Filters', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
-          DescriptionFilter(filter: filter),
+          DescriptionFilter(filter: _filter),
           const SizedBox(height: 16),
-          TransactionFilter(filter: filter),
+          TransactionFilter(filter: _filter),
           const SizedBox(height: 8),
-          PeriodFilter(filter: filter),
+          PeriodFilter(filter: _filter),
           const SizedBox(height: 8),
-          AccountFilter(filter: filter),
+          AccountFilter(filter: _filter),
           const SizedBox(height: 16),
           _buildButtons(context),
         ],

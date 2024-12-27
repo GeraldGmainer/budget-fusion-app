@@ -4,20 +4,28 @@ import 'package:flutter/material.dart';
 import '../../../../../shared/shared.dart';
 import '../../../domain/domain.dart';
 
-class TransactionFilter extends StatelessWidget {
-  final List<TransactionType> _transactions = [TransactionType.income, TransactionType.outcome];
+class TransactionFilter extends StatefulWidget {
   final BudgetBookFilter filter;
 
-  TransactionFilter({super.key, required this.filter});
+  const TransactionFilter({super.key, required this.filter});
+
+  @override
+  State<TransactionFilter> createState() => _TransactionFilterState();
+}
+
+class _TransactionFilterState extends State<TransactionFilter> {
+  final List<TransactionType> _transactions = [TransactionType.income, TransactionType.outcome];
 
   @override
   Widget build(BuildContext context) {
     return FilterChipGroup(
       title: 'Transaction',
       items: _transactions,
-      selectedItem: filter.transaction,
+      selectedItem: widget.filter.transaction,
       onItemSelected: (value) {
-        filter.transaction = value;
+        setState(() {
+          widget.filter.transaction = value;
+        });
       },
       valueToString: (value) => value.label.tr(),
     );

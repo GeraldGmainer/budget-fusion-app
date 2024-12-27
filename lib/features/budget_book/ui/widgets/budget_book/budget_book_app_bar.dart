@@ -22,15 +22,14 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocBuilder<BookingPageBloc, BookingPageState>(
       builder: (context, state) {
         final currentFilter = state.currentFilter;
-        final currentViewMode = state.currentViewMode;
         return AppBar(
           title: BudgetTabTitle(filter: currentFilter),
           leading: AppDrawerButton(),
           actions: [
             RefreshButton(onTap: () {
-              _load(context, currentFilter, currentViewMode);
+              _load(context, currentFilter, state.currentViewMode);
             }),
-            BookingFilterButton(filter: currentFilter),
+            BookingFilterButton(),
           ],
         );
       },
