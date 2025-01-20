@@ -1,7 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'entities.dart';
+import 'account.dart';
+import 'category.dart';
 
 part 'booking.freezed.dart';
 

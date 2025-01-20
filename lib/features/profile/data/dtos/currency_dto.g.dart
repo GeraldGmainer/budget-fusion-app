@@ -8,7 +8,7 @@ part of 'currency_dto.dart';
 
 _$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
     _$CurrencyDtoImpl(
-      id: (json['id'] as num).toInt(),
+      id: Uuid.fromJson(json['id'] as String),
       name: json['name'] as String,
       decimalPrecision: (json['decimal_precision'] as num).toInt(),
       unitPositionFront: json['unit_position_front'] as bool? ?? true,

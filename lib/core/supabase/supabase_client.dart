@@ -1,10 +1,18 @@
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core.dart';
 
 abstract class SupabaseClient {
   static const bool logSession = false;
+
+  ConnectivityService? _cachedConnectivityService;
+
+  ConnectivityService get _connectivityService {
+    _cachedConnectivityService ??= GetIt.instance<ConnectivityService>();
+    return _cachedConnectivityService!;
+  }
 
   Future<T> execute<T>(String functionName, Future<T> Function() action, {String? extraInfo}) async {
     final stopwatch = Stopwatch()..start();
@@ -33,7 +41,7 @@ abstract class SupabaseClient {
   }
 
   Future<void> checkToken() async {
-    if (!ConnectivitySingleton.instance.isConnected()) {
+    if (_connectivityService.hasNoInternet) {
       throw NoInternetException();
     }
     if (supabase.auth.currentUser == null || supabase.auth.currentSession == null) {
@@ -69,15 +77,14 @@ abstract class SupabaseClient {
     return supabase.auth.currentUser!.id;
   }
 
-  int getProfileId() {
+  String getProfileId() {
     if (supabase.auth.currentUser == null) {
       throw UnauthenticatedException();
     }
-    final User user = supabase.auth.currentUser!;
-    if (user.userMetadata == null || user.userMetadata!.isEmpty || user.userMetadata!["profile_id"] == null) {
+    final profileId = supabase.auth.currentUser?.profileId;
+    if (profileId == null) {
       throw TranslatedException("error.auth_error");
     }
-
-    return user.userMetadata!["profile_id"]! as int;
+    return profileId;
   }
 }

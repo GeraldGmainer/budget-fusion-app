@@ -20,11 +20,11 @@ ProfileSettingsDto _$ProfileSettingsDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProfileSettingsDto {
-  int get id => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'profile_id')
-  int get profileId => throw _privateConstructorUsedError;
+  Uuid get profileId => throw _privateConstructorUsedError;
   @JsonKey(name: 'currency_id')
-  int get currencyId => throw _privateConstructorUsedError;
+  Uuid get currencyId => throw _privateConstructorUsedError;
   @JsonKey(name: 'currencies')
   CurrencyDto get currency => throw _privateConstructorUsedError;
 
@@ -45,9 +45,9 @@ abstract class $ProfileSettingsDtoCopyWith<$Res> {
       _$ProfileSettingsDtoCopyWithImpl<$Res, ProfileSettingsDto>;
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'profile_id') int profileId,
-      @JsonKey(name: 'currency_id') int currencyId,
+      {Uuid id,
+      @JsonKey(name: 'profile_id') Uuid profileId,
+      @JsonKey(name: 'currency_id') Uuid currencyId,
       @JsonKey(name: 'currencies') CurrencyDto currency});
 
   $CurrencyDtoCopyWith<$Res> get currency;
@@ -77,15 +77,15 @@ class _$ProfileSettingsDtoCopyWithImpl<$Res, $Val extends ProfileSettingsDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currencyId: null == currencyId
           ? _value.currencyId
           : currencyId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -113,9 +113,9 @@ abstract class _$$ProfileSettingsDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'profile_id') int profileId,
-      @JsonKey(name: 'currency_id') int currencyId,
+      {Uuid id,
+      @JsonKey(name: 'profile_id') Uuid profileId,
+      @JsonKey(name: 'currency_id') Uuid currencyId,
       @JsonKey(name: 'currencies') CurrencyDto currency});
 
   @override
@@ -144,15 +144,15 @@ class __$$ProfileSettingsDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currencyId: null == currencyId
           ? _value.currencyId
           : currencyId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -175,13 +175,13 @@ class _$ProfileSettingsDtoImpl extends _ProfileSettingsDto {
       _$$ProfileSettingsDtoImplFromJson(json);
 
   @override
-  final int id;
+  final Uuid id;
   @override
   @JsonKey(name: 'profile_id')
-  final int profileId;
+  final Uuid profileId;
   @override
   @JsonKey(name: 'currency_id')
-  final int currencyId;
+  final Uuid currencyId;
   @override
   @JsonKey(name: 'currencies')
   final CurrencyDto currency;
@@ -229,9 +229,9 @@ class _$ProfileSettingsDtoImpl extends _ProfileSettingsDto {
 
 abstract class _ProfileSettingsDto extends ProfileSettingsDto {
   const factory _ProfileSettingsDto(
-          {required final int id,
-          @JsonKey(name: 'profile_id') required final int profileId,
-          @JsonKey(name: 'currency_id') required final int currencyId,
+          {required final Uuid id,
+          @JsonKey(name: 'profile_id') required final Uuid profileId,
+          @JsonKey(name: 'currency_id') required final Uuid currencyId,
           @JsonKey(name: 'currencies') required final CurrencyDto currency}) =
       _$ProfileSettingsDtoImpl;
   const _ProfileSettingsDto._() : super._();
@@ -240,13 +240,13 @@ abstract class _ProfileSettingsDto extends ProfileSettingsDto {
       _$ProfileSettingsDtoImpl.fromJson;
 
   @override
-  int get id;
+  Uuid get id;
   @override
   @JsonKey(name: 'profile_id')
-  int get profileId;
+  Uuid get profileId;
   @override
   @JsonKey(name: 'currency_id')
-  int get currencyId;
+  Uuid get currencyId;
   @override
   @JsonKey(name: 'currencies')
   CurrencyDto get currency;

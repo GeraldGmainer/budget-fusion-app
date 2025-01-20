@@ -1,5 +1,7 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../core/core.dart';
+import '../../../../utils/utils.dart';
 
 part 'currency_dto.freezed.dart';
 
@@ -10,7 +12,7 @@ class CurrencyDto with _$CurrencyDto {
   const CurrencyDto._();
 
   const factory CurrencyDto({
-    required int id,
+    required Uuid id,
     required String name,
     @JsonKey(name: 'decimal_precision') required int decimalPrecision,
     @JsonKey(name: 'unit_position_front') @Default(true) bool unitPositionFront,

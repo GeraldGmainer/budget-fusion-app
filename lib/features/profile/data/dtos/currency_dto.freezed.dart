@@ -20,7 +20,7 @@ CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CurrencyDto {
-  int get id => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'decimal_precision')
   int get decimalPrecision => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $CurrencyDtoCopyWith<$Res> {
       _$CurrencyDtoCopyWithImpl<$Res, CurrencyDto>;
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       String name,
       @JsonKey(name: 'decimal_precision') int decimalPrecision,
       @JsonKey(name: 'unit_position_front') bool unitPositionFront,
@@ -80,7 +80,7 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -114,7 +114,7 @@ abstract class _$$CurrencyDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       String name,
       @JsonKey(name: 'decimal_precision') int decimalPrecision,
       @JsonKey(name: 'unit_position_front') bool unitPositionFront,
@@ -146,7 +146,7 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
       _$$CurrencyDtoImplFromJson(json);
 
   @override
-  final int id;
+  final Uuid id;
   @override
   final String name;
   @override
@@ -244,7 +244,7 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
 
 abstract class _CurrencyDto extends CurrencyDto {
   const factory _CurrencyDto(
-      {required final int id,
+      {required final Uuid id,
       required final String name,
       @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
       @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
@@ -256,7 +256,7 @@ abstract class _CurrencyDto extends CurrencyDto {
       _$CurrencyDtoImpl.fromJson;
 
   @override
-  int get id;
+  Uuid get id;
   @override
   String get name;
   @override

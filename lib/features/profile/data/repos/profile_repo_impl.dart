@@ -1,32 +1,28 @@
-import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data_sources/data_source.dart';
-import '../dtos/dtos.dart';
+import '../../../../core/core.dart';
+import '../data_sources/profile_remote_source.dart';
 
 @LazySingleton(as: ProfileRepo)
 class ProfileRepoImpl implements ProfileRepo {
   final ProfileRemoteSource _profileRemoteSource;
 
-  // TODO better caching
   ProfileSettings? _profileSettings;
 
   ProfileRepoImpl(this._profileRemoteSource);
 
   @override
-  Future<Profile> getProfile(SupabaseUser user) async {
-    final profileId = user.profileId!;
-    final responses = await Future.wait([
-      _profileRemoteSource.fetchProfile(profileId),
-      _profileRemoteSource.fetchProfileSettings(profileId),
-    ]);
-    final profileDto = responses[0] as ProfileDto;
-    final profileSettingsDto = responses[1] as ProfileSettingsDto;
+  Future<Profile> getProfile(String profileId) async {
+    final profileDto = await _profileRemoteSource.fetchProfile(profileId);
+    return profileDto.toDomain();
+  }
 
+  @override
+  Future<ProfileSettings> getProfileSettings(String profileId) async {
+    final profileSettingsDto = await _profileRemoteSource.fetchProfileSettings(profileId);
     final profileSettings = profileSettingsDto.toDomain();
     _profileSettings = profileSettings;
-    return profileDto.toDomain(user.email, profileSettings);
+    return profileSettings;
   }
 
   @override

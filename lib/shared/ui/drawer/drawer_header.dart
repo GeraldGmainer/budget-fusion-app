@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/constants.dart';
+import '../../../core/core.dart';
 
 class AppDrawerHeader extends StatelessWidget {
   final String userName;

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'profile_settings.dart';
+import '../../../utils/utils.dart';
 
 part 'profile.freezed.dart';
 
@@ -9,11 +9,10 @@ class Profile with _$Profile {
   const Profile._();
 
   const factory Profile({
-    required int id,
+    required Uuid id,
     required String userId,
     String? name,
     String? email,
     String? avatarUrl,
-    required ProfileSettings settings,
   }) = _Profile;
 }

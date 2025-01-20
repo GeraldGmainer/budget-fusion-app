@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../enums/enums.dart';
-import 'entities.dart';
+import '../../core.dart';
 
 part 'category.freezed.dart';
 

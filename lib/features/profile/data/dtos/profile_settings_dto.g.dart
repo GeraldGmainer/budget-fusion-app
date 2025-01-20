@@ -9,9 +9,9 @@ part of 'profile_settings_dto.dart';
 _$ProfileSettingsDtoImpl _$$ProfileSettingsDtoImplFromJson(
         Map<String, dynamic> json) =>
     _$ProfileSettingsDtoImpl(
-      id: (json['id'] as num).toInt(),
-      profileId: (json['profile_id'] as num).toInt(),
-      currencyId: (json['currency_id'] as num).toInt(),
+      id: Uuid.fromJson(json['id'] as String),
+      profileId: Uuid.fromJson(json['profile_id'] as String),
+      currencyId: Uuid.fromJson(json['currency_id'] as String),
       currency:
           CurrencyDto.fromJson(json['currencies'] as Map<String, dynamic>),
     );

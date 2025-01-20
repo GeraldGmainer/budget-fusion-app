@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'entities.dart';
-
 part 'account.freezed.dart';
 
 @freezed

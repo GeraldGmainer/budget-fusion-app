@@ -1,1 +1,1 @@
-export 'ui/screens/screens.dart';
+export 'ui/screens/analytics_tab.dart';

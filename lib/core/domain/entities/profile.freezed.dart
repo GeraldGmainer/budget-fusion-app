@@ -16,12 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Profile {
-  int get id => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
-  ProfileSettings get settings => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -35,14 +34,7 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {int id,
-      String userId,
-      String? name,
-      String? email,
-      String? avatarUrl,
-      ProfileSettings settings});
-
-  $ProfileSettingsCopyWith<$Res> get settings;
+      {Uuid id, String userId, String? name, String? email, String? avatarUrl});
 }
 
 /// @nodoc
@@ -65,13 +57,12 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? name = freezed,
     Object? email = freezed,
     Object? avatarUrl = freezed,
-    Object? settings = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -88,21 +79,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as ProfileSettings,
     ) as $Val);
-  }
-
-  /// Create a copy of Profile
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileSettingsCopyWith<$Res> get settings {
-    return $ProfileSettingsCopyWith<$Res>(_value.settings, (value) {
-      return _then(_value.copyWith(settings: value) as $Val);
-    });
   }
 }
 
@@ -114,15 +91,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String userId,
-      String? name,
-      String? email,
-      String? avatarUrl,
-      ProfileSettings settings});
-
-  @override
-  $ProfileSettingsCopyWith<$Res> get settings;
+      {Uuid id, String userId, String? name, String? email, String? avatarUrl});
 }
 
 /// @nodoc
@@ -143,13 +112,12 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = freezed,
     Object? avatarUrl = freezed,
-    Object? settings = null,
   }) {
     return _then(_$ProfileImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -166,10 +134,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      settings: null == settings
-          ? _value.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as ProfileSettings,
     ));
   }
 }
@@ -182,12 +146,11 @@ class _$ProfileImpl extends _Profile {
       required this.userId,
       this.name,
       this.email,
-      this.avatarUrl,
-      required this.settings})
+      this.avatarUrl})
       : super._();
 
   @override
-  final int id;
+  final Uuid id;
   @override
   final String userId;
   @override
@@ -196,12 +159,10 @@ class _$ProfileImpl extends _Profile {
   final String? email;
   @override
   final String? avatarUrl;
-  @override
-  final ProfileSettings settings;
 
   @override
   String toString() {
-    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl, settings: $settings)';
+    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -214,14 +175,12 @@ class _$ProfileImpl extends _Profile {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
-            (identical(other.settings, settings) ||
-                other.settings == settings));
+                other.avatarUrl == avatarUrl));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, name, email, avatarUrl, settings);
+      Object.hash(runtimeType, id, userId, name, email, avatarUrl);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -234,16 +193,15 @@ class _$ProfileImpl extends _Profile {
 
 abstract class _Profile extends Profile {
   const factory _Profile(
-      {required final int id,
+      {required final Uuid id,
       required final String userId,
       final String? name,
       final String? email,
-      final String? avatarUrl,
-      required final ProfileSettings settings}) = _$ProfileImpl;
+      final String? avatarUrl}) = _$ProfileImpl;
   const _Profile._() : super._();
 
   @override
-  int get id;
+  Uuid get id;
   @override
   String get userId;
   @override
@@ -252,8 +210,6 @@ abstract class _Profile extends Profile {
   String? get email;
   @override
   String? get avatarUrl;
-  @override
-  ProfileSettings get settings;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

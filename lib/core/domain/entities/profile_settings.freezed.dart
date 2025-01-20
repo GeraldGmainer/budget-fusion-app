@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfileSettings {
-  int get id => throw _privateConstructorUsedError;
-  int get profileId => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
+  Uuid get profileId => throw _privateConstructorUsedError;
   Currency get currency => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileSettings
@@ -33,7 +33,7 @@ abstract class $ProfileSettingsCopyWith<$Res> {
           ProfileSettings value, $Res Function(ProfileSettings) then) =
       _$ProfileSettingsCopyWithImpl<$Res, ProfileSettings>;
   @useResult
-  $Res call({int id, int profileId, Currency currency});
+  $Res call({Uuid id, Uuid profileId, Currency currency});
 
   $CurrencyCopyWith<$Res> get currency;
 }
@@ -61,11 +61,11 @@ class _$ProfileSettingsCopyWithImpl<$Res, $Val extends ProfileSettings>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$ProfileSettingsImplCopyWith<$Res>
       __$$ProfileSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int profileId, Currency currency});
+  $Res call({Uuid id, Uuid profileId, Currency currency});
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -119,11 +119,11 @@ class __$$ProfileSettingsImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -140,9 +140,9 @@ class _$ProfileSettingsImpl extends _ProfileSettings {
       : super._();
 
   @override
-  final int id;
+  final Uuid id;
   @override
-  final int profileId;
+  final Uuid profileId;
   @override
   final Currency currency;
 
@@ -178,15 +178,15 @@ class _$ProfileSettingsImpl extends _ProfileSettings {
 
 abstract class _ProfileSettings extends ProfileSettings {
   const factory _ProfileSettings(
-      {required final int id,
-      required final int profileId,
+      {required final Uuid id,
+      required final Uuid profileId,
       required final Currency currency}) = _$ProfileSettingsImpl;
   const _ProfileSettings._() : super._();
 
   @override
-  int get id;
+  Uuid get id;
   @override
-  int get profileId;
+  Uuid get profileId;
   @override
   Currency get currency;
 

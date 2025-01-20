@@ -1,4 +1,0 @@
-enum CacheKey {
-  accounts,
-  categories,
-}

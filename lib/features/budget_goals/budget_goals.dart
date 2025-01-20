@@ -1,1 +1,1 @@
-export 'ui/screens/screens.dart';
+export 'ui/screens/budget_goals_tab.dart';

@@ -20,10 +20,11 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProfileDto {
-  int get id => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
 
@@ -44,9 +45,10 @@ abstract class $ProfileDtoCopyWith<$Res> {
       _$ProfileDtoCopyWithImpl<$Res, ProfileDto>;
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       @JsonKey(name: 'user_id') String userId,
       String? name,
+      String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl});
 }
 
@@ -68,13 +70,14 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
     Object? id = null,
     Object? userId = null,
     Object? name = freezed,
+    Object? email = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -83,6 +86,10 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -100,9 +107,10 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       @JsonKey(name: 'user_id') String userId,
       String? name,
+      String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl});
 }
 
@@ -122,13 +130,14 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
     Object? id = null,
     Object? userId = null,
     Object? name = freezed,
+    Object? email = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_$ProfileDtoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -137,6 +146,10 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -152,6 +165,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
       {required this.id,
       @JsonKey(name: 'user_id') required this.userId,
       this.name,
+      required this.email,
       @JsonKey(name: 'avatar_url') this.avatarUrl})
       : super._();
 
@@ -159,19 +173,21 @@ class _$ProfileDtoImpl extends _ProfileDto {
       _$$ProfileDtoImplFromJson(json);
 
   @override
-  final int id;
+  final Uuid id;
   @override
   @JsonKey(name: 'user_id')
   final String userId;
   @override
   final String? name;
   @override
+  final String email;
+  @override
   @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
 
   @override
   String toString() {
-    return 'ProfileDto(id: $id, userId: $userId, name: $name, avatarUrl: $avatarUrl)';
+    return 'ProfileDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -182,13 +198,15 @@ class _$ProfileDtoImpl extends _ProfileDto {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, name, avatarUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, id, userId, name, email, avatarUrl);
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.
@@ -208,9 +226,10 @@ class _$ProfileDtoImpl extends _ProfileDto {
 
 abstract class _ProfileDto extends ProfileDto {
   const factory _ProfileDto(
-      {required final int id,
+      {required final Uuid id,
       @JsonKey(name: 'user_id') required final String userId,
       final String? name,
+      required final String email,
       @JsonKey(name: 'avatar_url') final String? avatarUrl}) = _$ProfileDtoImpl;
   const _ProfileDto._() : super._();
 
@@ -218,12 +237,14 @@ abstract class _ProfileDto extends ProfileDto {
       _$ProfileDtoImpl.fromJson;
 
   @override
-  int get id;
+  Uuid get id;
   @override
   @JsonKey(name: 'user_id')
   String get userId;
   @override
   String? get name;
+  @override
+  String get email;
   @override
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl;

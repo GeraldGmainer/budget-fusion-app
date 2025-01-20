@@ -1,4 +1,4 @@
-import '../entities/entities.dart';
+import '../../core.dart';
 
 abstract class BookingRepo {
   Future<List<Booking>> getBookings({DateTime? from, DateTime? to});

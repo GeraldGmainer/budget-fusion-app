@@ -1,29 +1,27 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../service/user_client.dart';
+import '../remote_sources/user_remote_source.dart';
 
 @lazySingleton
 class UserRepo {
-  final UserClient _userClient;
+  final UserRemoteSource _userRemoteSource;
 
-  UserRepo(this._userClient);
+  UserRepo(this._userRemoteSource);
 
-  Future<SupabaseUser> googleLogin() async {
-    final user = await _userClient.googleLogin();
-    return SupabaseUser.fromGoTrueUser(user);
+  Future<User> googleLogin() async {
+    return await _userRemoteSource.googleLogin();
   }
 
-  Future<SupabaseUser> credentialsLogin(String email, String password) async {
-    final user = await _userClient.credentialsLogin(email, password);
-    return SupabaseUser.fromGoTrueUser(user);
+  Future<User> credentialsLogin(String email, String password) async {
+    return await _userRemoteSource.credentialsLogin(email, password);
   }
 
   Future<void> signUp(String email, String password) async {
-    await _userClient.signUp(email, password);
+    await _userRemoteSource.signUp(email, password);
   }
 
   Future<void> logout() async {
-    await _userClient.logout();
+    await _userRemoteSource.logout();
   }
 }

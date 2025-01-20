@@ -1,6 +1,3 @@
-import 'package:budget_fusion_app/app/main_page/main_page.dart';
-import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../application/blocs/blocs.dart';
-import '../screens/screens.dart';
+import '../../../../core/core.dart';
+import '../../../profile/profile.dart';
+import '../../auth.dart';
+import '../widgets/login_form.dart';
 
 class LoginPage extends StatefulWidget {
   static const String route = "LoginPage";
@@ -22,16 +21,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   initState() {
     super.initState();
-    context.read<LoginBloc>().add(LoginEvent.init());
+    context.read<LoginCubit>().init();
   }
 
   _onProfileSuccess(Profile profile) {
-    context.go("/main");
+    context.go(AppRoutes.main);
   }
 
   _onError(String message) {
     showErrorSnackBar(context, message);
-    context.read<LoginBloc>().add(LoginEvent.logout());
+    context.read<LoginCubit>().logout();
   }
 
   @override
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Builder(builder: (ctx) {
         scaffoldProvider.setScaffoldContext((ctx));
 
-        return BlocConsumer<ProfileBloc, ProfileState>(
+        return BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
             state.whenOrNull(
               loaded: _onProfileSuccess,
@@ -50,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             );
           },
           builder: (context, state1) {
-            return BlocConsumer<LoginBloc, LoginState>(
+            return BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 state.whenOrNull(
                   error: _onError,
@@ -68,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Image.asset('assets/logo.png', height: 100),
                         const SizedBox(height: 20),
-                        LoginScreen(isLoading: isLoginLoading || isProfileLoading),
+                        LoginForm(isLoading: isLoginLoading || isProfileLoading),
                       ],
                     ),
                   ),

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Currency {
-  int get id => throw _privateConstructorUsedError;
+  Uuid get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get decimalPrecision => throw _privateConstructorUsedError;
   bool get unitPositionFront => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $CurrencyCopyWith<$Res> {
       _$CurrencyCopyWithImpl<$Res, Currency>;
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       String name,
       int decimalPrecision,
       bool unitPositionFront,
@@ -70,7 +70,7 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -104,7 +104,7 @@ abstract class _$$CurrencyImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {Uuid id,
       String name,
       int decimalPrecision,
       bool unitPositionFront,
@@ -136,7 +136,7 @@ class __$$CurrencyImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Uuid,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -174,7 +174,7 @@ class _$CurrencyImpl extends _Currency {
       : super._();
 
   @override
-  final int id;
+  final Uuid id;
   @override
   final String name;
   @override
@@ -221,7 +221,7 @@ class _$CurrencyImpl extends _Currency {
 
 abstract class _Currency extends Currency {
   const factory _Currency(
-      {required final int id,
+      {required final Uuid id,
       required final String name,
       required final int decimalPrecision,
       required final bool unitPositionFront,
@@ -230,7 +230,7 @@ abstract class _Currency extends Currency {
   const _Currency._() : super._();
 
   @override
-  int get id;
+  Uuid get id;
   @override
   String get name;
   @override
