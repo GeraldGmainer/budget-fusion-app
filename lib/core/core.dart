@@ -5,16 +5,12 @@ export 'constants/app_routes.dart';
 //
 export 'di/injection.dart';
 //
-export 'domain/entities/account.dart';
-export 'domain/entities/booking.dart';
-export 'domain/entities/category.dart';
-export 'domain/entities/currency.dart';
-export 'domain/entities/profile.dart';
-export 'domain/entities/profile_settings.dart';
-export 'domain/repos/account_repo.dart';
-export 'domain/repos/booking_repo.dart';
-export 'domain/repos/category_repo.dart';
-export 'domain/repos/profile_repo.dart';
+export 'entities/account.dart';
+export 'entities/booking.dart';
+export 'entities/category.dart';
+export 'entities/currency.dart';
+export 'entities/profile.dart';
+export 'entities/profile_settings.dart';
 //
 export 'enums/category_type.dart';
 //
@@ -25,6 +21,11 @@ export 'exceptions/unauthenticated_exception.dart';
 export 'extensions/currency_formatting_extension.dart';
 export 'extensions/date_time_extension.dart';
 export 'extensions/supabase_extensions.dart';
+//
+export 'repos/account_repo.dart';
+export 'repos/booking_repo.dart';
+export 'repos/category_repo.dart';
+export 'repos/profile_repo.dart';
 //
 export 'supabase/supabase.dart';
 export 'supabase/supabase_client.dart';
