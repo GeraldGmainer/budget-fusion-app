@@ -1,24 +1,45 @@
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/get_profile.dart';
+import 'dart:async';
+
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../utils/utils.dart';
+import '../../use_cases/profile/watch_profile.dart';
 
 part 'profile_cubit.freezed.dart';
 part 'profile_state.dart';
 
 @injectable
 class ProfileCubit extends Cubit<ProfileState> {
-  final GetProfile _getProfile;
+  final WatchProfile _watchProfile;
+  final LoadProfile _loadProfile;
+  StreamSubscription? _sub;
 
-  ProfileCubit(this._getProfile) : super(const ProfileState.initial());
+  ProfileCubit(this._watchProfile, this._loadProfile) : super(const ProfileState.initial()) {
+    _startWatching();
+  }
 
-  Future<void> load() async {
+  void _startWatching() {
+    _sub?.cancel();
+    _sub = _watchProfile().listen(
+      (profile) => emit(ProfileState.loaded(profile)),
+      onError: (error) => emit(ProfileState.error(error is TranslatedException ? error.message : 'error.default')),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _sub?.cancel();
+    return super.close();
+  }
+
+  Future<void> load({String? profileId}) async {
     try {
-      final profile = await _getProfile();
-      emit(ProfileState.loaded(profile));
+      emit(const ProfileState.loading());
+      await _loadProfile();
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("ProfileBloc Exception", e, stackTrace);
       emit(ProfileState.error(e.message));

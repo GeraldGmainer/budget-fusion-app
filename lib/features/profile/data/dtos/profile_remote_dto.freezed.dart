@@ -27,6 +27,8 @@ mixin _$ProfileRemoteDto {
   String get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileRemoteDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +51,8 @@ abstract class $ProfileRemoteDtoCopyWith<$Res> {
       @JsonKey(name: 'user_id') String userId,
       String? name,
       String email,
-      @JsonKey(name: 'avatar_url') String? avatarUrl});
+      @JsonKey(name: 'avatar_url') String? avatarUrl,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -72,6 +75,7 @@ class _$ProfileRemoteDtoCopyWithImpl<$Res, $Val extends ProfileRemoteDto>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,6 +98,10 @@ class _$ProfileRemoteDtoCopyWithImpl<$Res, $Val extends ProfileRemoteDto>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -111,7 +119,8 @@ abstract class _$$ProfileRemoteDtoImplCopyWith<$Res>
       @JsonKey(name: 'user_id') String userId,
       String? name,
       String email,
-      @JsonKey(name: 'avatar_url') String? avatarUrl});
+      @JsonKey(name: 'avatar_url') String? avatarUrl,
+      @JsonKey(name: 'updated_at') DateTime updatedAt});
 }
 
 /// @nodoc
@@ -132,6 +141,7 @@ class __$$ProfileRemoteDtoImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_$ProfileRemoteDtoImpl(
       id: null == id
@@ -154,6 +164,10 @@ class __$$ProfileRemoteDtoImplCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -166,7 +180,8 @@ class _$ProfileRemoteDtoImpl extends _ProfileRemoteDto {
       @JsonKey(name: 'user_id') required this.userId,
       this.name,
       required this.email,
-      @JsonKey(name: 'avatar_url') this.avatarUrl})
+      @JsonKey(name: 'avatar_url') this.avatarUrl,
+      @JsonKey(name: 'updated_at') required this.updatedAt})
       : super._();
 
   factory _$ProfileRemoteDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -184,10 +199,13 @@ class _$ProfileRemoteDtoImpl extends _ProfileRemoteDto {
   @override
   @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
+  @override
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'ProfileRemoteDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
+    return 'ProfileRemoteDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
   }
 
   @override
@@ -200,13 +218,15 @@ class _$ProfileRemoteDtoImpl extends _ProfileRemoteDto {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, name, email, avatarUrl);
+      Object.hash(runtimeType, id, userId, name, email, avatarUrl, updatedAt);
 
   /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
@@ -231,7 +251,8 @@ abstract class _ProfileRemoteDto extends ProfileRemoteDto {
           @JsonKey(name: 'user_id') required final String userId,
           final String? name,
           required final String email,
-          @JsonKey(name: 'avatar_url') final String? avatarUrl}) =
+          @JsonKey(name: 'avatar_url') final String? avatarUrl,
+          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
       _$ProfileRemoteDtoImpl;
   const _ProfileRemoteDto._() : super._();
 
@@ -250,6 +271,9 @@ abstract class _ProfileRemoteDto extends ProfileRemoteDto {
   @override
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl;
+  @override
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
 
   /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.

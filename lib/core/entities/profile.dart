@@ -14,5 +14,6 @@ class Profile with _$Profile {
     String? name,
     required String email,
     String? avatarUrl,
+    required DateTime updatedAt,
   }) = _Profile;
 }

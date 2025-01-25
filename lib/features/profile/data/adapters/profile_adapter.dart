@@ -14,6 +14,7 @@ class ProfileAdapter {
       name: domain.name,
       email: domain.email,
       avatarUrl: domain.avatarUrl,
+      updatedAt: domain.updatedAt,
     );
   }
 
@@ -24,6 +25,7 @@ class ProfileAdapter {
       name: domain.name,
       email: domain.email,
       avatarUrl: domain.avatarUrl,
+      updatedAt: domain.updatedAt,
     );
   }
 
@@ -34,6 +36,7 @@ class ProfileAdapter {
       name: dto.name,
       email: dto.email,
       avatarUrl: dto.avatarUrl,
+      updatedAt: dto.updatedAt,
     );
   }
 
@@ -44,6 +47,7 @@ class ProfileAdapter {
       name: dto.name,
       email: dto.email,
       avatarUrl: dto.avatarUrl,
+      updatedAt: dto.updatedAt,
     );
   }
 }

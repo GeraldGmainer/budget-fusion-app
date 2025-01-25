@@ -21,6 +21,7 @@ mixin _$ProfileLocalDto {
   String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileLocalDto
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +41,8 @@ abstract class $ProfileLocalDtoCopyWith<$Res> {
       String userId,
       String? name,
       String email,
-      String? avatarUrl});
+      String? avatarUrl,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$ProfileLocalDtoCopyWithImpl<$Res, $Val extends ProfileLocalDto>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,6 +88,10 @@ class _$ProfileLocalDtoCopyWithImpl<$Res, $Val extends ProfileLocalDto>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -102,7 +109,8 @@ abstract class _$$ProfileLocalDtoImplCopyWith<$Res>
       String userId,
       String? name,
       String email,
-      String? avatarUrl});
+      String? avatarUrl,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -123,6 +131,7 @@ class __$$ProfileLocalDtoImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_$ProfileLocalDtoImpl(
       id: null == id
@@ -145,6 +154,10 @@ class __$$ProfileLocalDtoImplCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -157,7 +170,8 @@ class _$ProfileLocalDtoImpl extends _ProfileLocalDto {
       required this.userId,
       this.name,
       required this.email,
-      this.avatarUrl})
+      this.avatarUrl,
+      required this.updatedAt})
       : super._();
 
   @override
@@ -170,10 +184,12 @@ class _$ProfileLocalDtoImpl extends _ProfileLocalDto {
   final String email;
   @override
   final String? avatarUrl;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'ProfileLocalDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
+    return 'ProfileLocalDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
   }
 
   @override
@@ -186,12 +202,14 @@ class _$ProfileLocalDtoImpl extends _ProfileLocalDto {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, name, email, avatarUrl);
+      Object.hash(runtimeType, id, userId, name, email, avatarUrl, updatedAt);
 
   /// Create a copy of ProfileLocalDto
   /// with the given fields replaced by the non-null parameter values.
@@ -209,7 +227,8 @@ abstract class _ProfileLocalDto extends ProfileLocalDto {
       required final String userId,
       final String? name,
       required final String email,
-      final String? avatarUrl}) = _$ProfileLocalDtoImpl;
+      final String? avatarUrl,
+      required final DateTime updatedAt}) = _$ProfileLocalDtoImpl;
   const _ProfileLocalDto._() : super._();
 
   @override
@@ -222,6 +241,8 @@ abstract class _ProfileLocalDto extends ProfileLocalDto {
   String get email;
   @override
   String? get avatarUrl;
+  @override
+  DateTime get updatedAt;
 
   /// Create a copy of ProfileLocalDto
   /// with the given fields replaced by the non-null parameter values.

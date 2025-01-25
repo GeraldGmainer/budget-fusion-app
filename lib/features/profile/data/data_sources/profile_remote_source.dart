@@ -7,7 +7,7 @@ import '../dtos/profile_remote_dto.dart';
 class ProfileRemoteSource extends SupabaseClient {
   Future<ProfileRemoteDto> fetchProfileById(String profileId) async {
     return execute("fetchProfileById", () async {
-      final response = await supabase.from('profiles').select('id, user_id, name, email, avatar_url').eq('id', profileId).single();
+      final response = await supabase.from('profiles').select('id, user_id, name, email, avatar_url, updated_at').eq('id', profileId).single();
       return ProfileRemoteDto.fromJson(response);
     });
   }

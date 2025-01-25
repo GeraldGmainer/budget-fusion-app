@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../utils/utils.dart';
-
 part 'profile_local_dto.freezed.dart';
 
 @freezed
@@ -14,25 +12,28 @@ class ProfileLocalDto with _$ProfileLocalDto {
     String? name,
     required String email,
     String? avatarUrl,
+    required DateTime updatedAt,
   }) = _ProfileLocalDto;
 
   factory ProfileLocalDto.fromMap(Map<String, Object?> row) {
     return ProfileLocalDto(
       id: row['id'] as String,
-      userId: row['userId'] as String,
+      userId: row['user_id'] as String,
       name: row['name'] as String?,
       email: row['email'] as String,
-      avatarUrl: row['avatarUrl'] as String?,
+      avatarUrl: row['avatar_url'] as String?,
+      updatedAt: DateTime.parse(row['updated_at'] as String),
     );
   }
 
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'userId': userId,
+      'user_id': userId,
       'name': name,
       'email': email,
-      'avatarUrl': avatarUrl,
+      'avatar_url': avatarUrl,
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 }

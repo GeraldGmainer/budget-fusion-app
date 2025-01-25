@@ -1,7 +1,8 @@
 CREATE TABLE profiles (
   id TEXT PRIMARY KEY,
-  userId TEXT NOT NULL,
+  user_id TEXT NOT NULL,
   name TEXT,
   email TEXT,
-  avatarUrl TEXT
+  avatar_url TEXT,
+  updated_at TEXT
 );

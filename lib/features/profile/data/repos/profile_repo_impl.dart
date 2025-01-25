@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:budget_fusion_app/features/profile/data/adapters/profile_adapter.dart';
 import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
 import 'package:injectable/injectable.dart';
@@ -8,7 +10,7 @@ import '../data_sources/profile_remote_source.dart';
 
 @LazySingleton(as: ProfileRepo)
 class ProfileRepoImpl implements ProfileRepo {
-  static const String myProfileKey = "myProfileKey";
+  static const String _cacheKey = "myProfileKey";
 
   final ProfileLocalSource _localSource;
   final ProfileRemoteSource _remoteSource;
@@ -16,43 +18,70 @@ class ProfileRepoImpl implements ProfileRepo {
   final QueueManager _queueManager;
   final SyncManager _syncManager;
   final ProfileAdapter _adapter;
+  final StreamController<Profile> _profileController = StreamController.broadcast();
 
   ProfileRepoImpl(this._localSource, this._remoteSource, this._cacheManager, this._queueManager, this._syncManager, this._adapter);
 
   @override
-  Future<Profile> getProfileById(String profileId) async {
-    BudgetLogger.instance.d("getProfileById $profileId");
-    final cachedProfile = _cacheManager.get<Profile>(myProfileKey);
-    if (cachedProfile != null) {
-      BudgetLogger.instance.d("use cache profile $cachedProfile", short: true);
-      return cachedProfile;
+  Stream<Profile> watchProfile() => _profileController.stream;
+
+  @override
+  Future<void> loadProfileById(String profileId) async {
+    final cached = _cacheManager.get<Profile>(_cacheKey);
+    if (cached != null) {
+      BudgetLogger.instance.d("use cached profile $cached");
+      _profileController.add(cached);
+      unawaited(_syncIfNewerExists(cached));
+      return;
     }
 
-    final localProfile = await _localSource.fetchProfileById(profileId);
-    if (localProfile != null) {
-      final profile = _adapter.fromLocalDto(localProfile);
-      _cacheManager.set(myProfileKey, profile);
-      BudgetLogger.instance.d("use local profile $localProfile", short: true);
-      return profile;
+    final local = await _localSource.fetchProfileById(profileId);
+    if (local != null) {
+      final domain = _adapter.fromLocalDto(local);
+      _cacheManager.set(_cacheKey, domain);
+      BudgetLogger.instance.d("use local profile $domain");
+      _profileController.add(domain);
+      unawaited(_syncIfNewerExists(domain));
+      return;
     }
 
-    final remoteProfile = await _remoteSource.fetchProfileById(profileId);
-    final domainProfile = _adapter.fromRemoteDto(remoteProfile);
-    BudgetLogger.instance.d("use remote profile $remoteProfile", short: true);
+    final remote = await _remoteSource.fetchProfileById(profileId);
+    final domain = _adapter.fromRemoteDto(remote);
+    await _localSource.saveProfile(_adapter.toLocalDto(domain));
+    _cacheManager.set(_cacheKey, domain);
+    _profileController.add(domain);
+  }
 
-    await _localSource.saveProfile(_adapter.toLocalDto(domainProfile));
-    _cacheManager.set(myProfileKey, domainProfile);
-    return domainProfile;
+  Future<void> _syncIfNewerExists(Profile current) async {
+    try {
+      // TODO add current.updatedAt in supabase request request and sync the response
+      final remote = await _remoteSource.fetchProfileById(current.id.toJson());
+      final remoteDomain = _adapter.fromRemoteDto(remote);
+      if (remoteDomain.updatedAt.isAfter(current.updatedAt)) {
+        BudgetLogger.instance.d("Remote updatedAt is after local updatedAt -> update Profile //  ${remoteDomain.updatedAt} - ${current.updatedAt}");
+        await _localSource.saveProfile(_adapter.toLocalDto(remoteDomain));
+        _cacheManager.set(_cacheKey, remoteDomain);
+        _profileController.add(remoteDomain);
+      }
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("Profile Background sync failed", e, stackTrace);
+    }
   }
 
   @override
   Future<void> save(Profile profile) async {
-    final localDto = _adapter.toLocalDto(profile);
-    await _localSource.saveProfile(localDto);
+    final newProfile = profile.copyWith(updatedAt: DateTime.now());
 
-    final remoteDto = _adapter.toRemoteDto(profile);
-    await _remoteSource.saveProfile(remoteDto);
+    await _localSource.saveProfile(_adapter.toLocalDto(newProfile));
+    _cacheManager.set(_cacheKey, newProfile);
+    _profileController.add(newProfile);
 
-    _cacheManager.set(myProfileKey, profile);
+    _queueManager.add(() async {
+      try {
+        await _remoteSource.saveProfile(_adapter.toRemoteDto(newProfile));
+      } catch (e, stackTrace) {
+        BudgetLogger.instance.e("Profile Remote save failed", e, stackTrace);
+      }
+    });
   }
 }

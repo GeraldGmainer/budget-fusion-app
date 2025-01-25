@@ -21,6 +21,7 @@ mixin _$Profile {
   String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +35,12 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {Uuid id, String userId, String? name, String email, String? avatarUrl});
+      {Uuid id,
+      String userId,
+      String? name,
+      String email,
+      String? avatarUrl,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -57,6 +63,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,6 +86,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -91,7 +102,12 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {Uuid id, String userId, String? name, String email, String? avatarUrl});
+      {Uuid id,
+      String userId,
+      String? name,
+      String email,
+      String? avatarUrl,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -112,6 +128,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = null,
     Object? avatarUrl = freezed,
+    Object? updatedAt = null,
   }) {
     return _then(_$ProfileImpl(
       id: null == id
@@ -134,6 +151,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -146,7 +167,8 @@ class _$ProfileImpl extends _Profile {
       required this.userId,
       this.name,
       required this.email,
-      this.avatarUrl})
+      this.avatarUrl,
+      required this.updatedAt})
       : super._();
 
   @override
@@ -159,10 +181,12 @@ class _$ProfileImpl extends _Profile {
   final String email;
   @override
   final String? avatarUrl;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
+    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
   }
 
   @override
@@ -175,12 +199,14 @@ class _$ProfileImpl extends _Profile {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, userId, name, email, avatarUrl);
+      Object.hash(runtimeType, id, userId, name, email, avatarUrl, updatedAt);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -197,7 +223,8 @@ abstract class _Profile extends Profile {
       required final String userId,
       final String? name,
       required final String email,
-      final String? avatarUrl}) = _$ProfileImpl;
+      final String? avatarUrl,
+      required final DateTime updatedAt}) = _$ProfileImpl;
   const _Profile._() : super._();
 
   @override
@@ -210,6 +237,8 @@ abstract class _Profile extends Profile {
   String get email;
   @override
   String? get avatarUrl;
+  @override
+  DateTime get updatedAt;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

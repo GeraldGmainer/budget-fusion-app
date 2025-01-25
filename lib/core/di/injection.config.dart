@@ -26,8 +26,10 @@ import 'package:budget_fusion_app/features/profile/application/cubits/profile/pr
     as _i78;
 import 'package:budget_fusion_app/features/profile/application/cubits/profile_settings/profile_settings_cubit.dart'
     as _i819;
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/get_profile.dart'
-    as _i697;
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile.dart'
+    as _i976;
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/watch_profile.dart'
+    as _i694;
 import 'package:budget_fusion_app/features/profile/data/adapters/profile_adapter.dart'
     as _i283;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_local_source.dart'
@@ -63,7 +65,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final databaseModule = _$DatabaseModule();
     final registerModule = _$RegisterModule();
-    gh.factory<_i872.QueueManager>(() => _i872.QueueManager());
     gh.factory<_i283.ProfileAdapter>(() => _i283.ProfileAdapter());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
     await gh.factoryAsync<_i779.Database>(
@@ -73,6 +74,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i251.LanguageCubit>(() => _i251.LanguageCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i1026.CacheManager>(() => _i1026.CacheManager());
+    gh.lazySingleton<_i872.QueueManager>(() => _i872.QueueManager());
     gh.lazySingleton<_i589.SyncManager>(() => _i589.SyncManager());
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
     gh.lazySingleton<_i323.ProfileRemoteSource>(
@@ -102,10 +104,14 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.SyncManager>(),
           gh<_i283.ProfileAdapter>(),
         ));
-    gh.lazySingleton<_i697.GetProfile>(
-        () => _i697.GetProfile(gh<_i714.ProfileRepo>()));
-    gh.factory<_i78.ProfileCubit>(
-        () => _i78.ProfileCubit(gh<_i697.GetProfile>()));
+    gh.lazySingleton<_i694.WatchProfile>(
+        () => _i694.WatchProfile(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i976.LoadProfile>(
+        () => _i976.LoadProfile(gh<_i714.ProfileRepo>()));
+    gh.factory<_i78.ProfileCubit>(() => _i78.ProfileCubit(
+          gh<_i694.WatchProfile>(),
+          gh<_i976.LoadProfile>(),
+        ));
     return this;
   }
 }
