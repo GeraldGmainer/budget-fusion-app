@@ -13,14 +13,12 @@ class Uuid {
     return Uuid(u.Uuid().v4());
   }
 
-  factory Uuid.fromJson(String json) {
-    return Uuid(json);
-  }
+  @override
+  String toString() => "Uuid($value)";
+
+  factory Uuid.fromJson(String json) => Uuid(json);
 
   String toJson() => value;
-
-  @override
-  String toString() => value;
 
   @override
   bool operator ==(Object other) => identical(this, other) || (other is Uuid && other.value == value);

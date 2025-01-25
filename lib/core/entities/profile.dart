@@ -12,7 +12,7 @@ class Profile with _$Profile {
     required Uuid id,
     required String userId,
     String? name,
-    String? email,
+    required String email,
     String? avatarUrl,
   }) = _Profile;
 }

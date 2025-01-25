@@ -68,13 +68,13 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onAuthenticated(Session session) {
     if (mounted) {
       BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
-      context.read<ProfileCubit>().load(session.user);
+      context.read<ProfileCubit>().load();
     }
   }
 
   _onTokenRefreshed(Session session) {
     BudgetLogger.instance.d("onTokenRefreshed: ${session.user.id}");
-    context.read<ProfileCubit>().load(session.user);
+    context.read<ProfileCubit>().load();
   }
 
   _onPasswordRecovery(Session session) {

@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
+
+import 'connectivity_singleton.dart';
 
 @lazySingleton
 class ConnectivityService {
@@ -27,6 +31,7 @@ class ConnectivityService {
 
   void _setResult(List<ConnectivityResult> results) {
     _isConnected = evaluateResult(results);
+    ConnectivitySingleton.instance.setConnected(_isConnected);
   }
 
   Stream<List<ConnectivityResult>> get onConnectivityChanged {

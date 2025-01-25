@@ -60,6 +60,8 @@ dependencies:
   custom_refresh_indicator: ^4.0.1
   go_router: ^14.6.2
   uuid: ^4.5.1
+  sqflite: ^2.4.1
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +97,7 @@ flutter:
     - assets/logo.png
     - assets/translations/
     - assets/icons.json
+    - assets/migrations/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

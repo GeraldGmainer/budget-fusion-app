@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile.dart';
+part of 'profile_remote_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,40 +14,55 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+ProfileRemoteDto _$ProfileRemoteDtoFromJson(Map<String, dynamic> json) {
+  return _ProfileRemoteDto.fromJson(json);
+}
+
 /// @nodoc
-mixin _$Profile {
+mixin _$ProfileRemoteDto {
   Uuid get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
 
-  /// Create a copy of Profile
+  /// Serializes this ProfileRemoteDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
+  $ProfileRemoteDtoCopyWith<ProfileRemoteDto> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProfileCopyWith<$Res> {
-  factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
-      _$ProfileCopyWithImpl<$Res, Profile>;
+abstract class $ProfileRemoteDtoCopyWith<$Res> {
+  factory $ProfileRemoteDtoCopyWith(
+          ProfileRemoteDto value, $Res Function(ProfileRemoteDto) then) =
+      _$ProfileRemoteDtoCopyWithImpl<$Res, ProfileRemoteDto>;
   @useResult
   $Res call(
-      {Uuid id, String userId, String? name, String email, String? avatarUrl});
+      {Uuid id,
+      @JsonKey(name: 'user_id') String userId,
+      String? name,
+      String email,
+      @JsonKey(name: 'avatar_url') String? avatarUrl});
 }
 
 /// @nodoc
-class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
-    implements $ProfileCopyWith<$Res> {
-  _$ProfileCopyWithImpl(this._value, this._then);
+class _$ProfileRemoteDtoCopyWithImpl<$Res, $Val extends ProfileRemoteDto>
+    implements $ProfileRemoteDtoCopyWith<$Res> {
+  _$ProfileRemoteDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Profile
+  /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -84,25 +99,30 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
 }
 
 /// @nodoc
-abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
-  factory _$$ProfileImplCopyWith(
-          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
-      __$$ProfileImplCopyWithImpl<$Res>;
+abstract class _$$ProfileRemoteDtoImplCopyWith<$Res>
+    implements $ProfileRemoteDtoCopyWith<$Res> {
+  factory _$$ProfileRemoteDtoImplCopyWith(_$ProfileRemoteDtoImpl value,
+          $Res Function(_$ProfileRemoteDtoImpl) then) =
+      __$$ProfileRemoteDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {Uuid id, String userId, String? name, String email, String? avatarUrl});
+      {Uuid id,
+      @JsonKey(name: 'user_id') String userId,
+      String? name,
+      String email,
+      @JsonKey(name: 'avatar_url') String? avatarUrl});
 }
 
 /// @nodoc
-class __$$ProfileImplCopyWithImpl<$Res>
-    extends _$ProfileCopyWithImpl<$Res, _$ProfileImpl>
-    implements _$$ProfileImplCopyWith<$Res> {
-  __$$ProfileImplCopyWithImpl(
-      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
+class __$$ProfileRemoteDtoImplCopyWithImpl<$Res>
+    extends _$ProfileRemoteDtoCopyWithImpl<$Res, _$ProfileRemoteDtoImpl>
+    implements _$$ProfileRemoteDtoImplCopyWith<$Res> {
+  __$$ProfileRemoteDtoImplCopyWithImpl(_$ProfileRemoteDtoImpl _value,
+      $Res Function(_$ProfileRemoteDtoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Profile
+  /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -113,7 +133,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? email = null,
     Object? avatarUrl = freezed,
   }) {
-    return _then(_$ProfileImpl(
+    return _then(_$ProfileRemoteDtoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -139,37 +159,42 @@ class __$$ProfileImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$ProfileImpl extends _Profile {
-  const _$ProfileImpl(
+@JsonSerializable()
+class _$ProfileRemoteDtoImpl extends _ProfileRemoteDto {
+  const _$ProfileRemoteDtoImpl(
       {required this.id,
-      required this.userId,
+      @JsonKey(name: 'user_id') required this.userId,
       this.name,
       required this.email,
-      this.avatarUrl})
+      @JsonKey(name: 'avatar_url') this.avatarUrl})
       : super._();
+
+  factory _$ProfileRemoteDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProfileRemoteDtoImplFromJson(json);
 
   @override
   final Uuid id;
   @override
+  @JsonKey(name: 'user_id')
   final String userId;
   @override
   final String? name;
   @override
   final String email;
   @override
+  @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
 
   @override
   String toString() {
-    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
+    return 'ProfileRemoteDto(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProfileImpl &&
+            other is _$ProfileRemoteDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -178,43 +203,58 @@ class _$ProfileImpl extends _Profile {
                 other.avatarUrl == avatarUrl));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, userId, name, email, avatarUrl);
 
-  /// Create a copy of Profile
+  /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
-      __$$ProfileImplCopyWithImpl<_$ProfileImpl>(this, _$identity);
+  _$$ProfileRemoteDtoImplCopyWith<_$ProfileRemoteDtoImpl> get copyWith =>
+      __$$ProfileRemoteDtoImplCopyWithImpl<_$ProfileRemoteDtoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ProfileRemoteDtoImplToJson(
+      this,
+    );
+  }
 }
 
-abstract class _Profile extends Profile {
-  const factory _Profile(
-      {required final Uuid id,
-      required final String userId,
-      final String? name,
-      required final String email,
-      final String? avatarUrl}) = _$ProfileImpl;
-  const _Profile._() : super._();
+abstract class _ProfileRemoteDto extends ProfileRemoteDto {
+  const factory _ProfileRemoteDto(
+          {required final Uuid id,
+          @JsonKey(name: 'user_id') required final String userId,
+          final String? name,
+          required final String email,
+          @JsonKey(name: 'avatar_url') final String? avatarUrl}) =
+      _$ProfileRemoteDtoImpl;
+  const _ProfileRemoteDto._() : super._();
+
+  factory _ProfileRemoteDto.fromJson(Map<String, dynamic> json) =
+      _$ProfileRemoteDtoImpl.fromJson;
 
   @override
   Uuid get id;
   @override
+  @JsonKey(name: 'user_id')
   String get userId;
   @override
   String? get name;
   @override
   String get email;
   @override
+  @JsonKey(name: 'avatar_url')
   String? get avatarUrl;
 
-  /// Create a copy of Profile
+  /// Create a copy of ProfileRemoteDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>
+  _$$ProfileRemoteDtoImplCopyWith<_$ProfileRemoteDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -13,13 +13,15 @@ import 'utils/utils.dart';
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await EasyLocalization.ensureInitialized();
   await dotenv.load(fileName: kReleaseMode ? ".env.prod" : ".env.dev");
   // await dotenv.load(fileName: ".env.prod");
   // await dotenv.load(fileName: ".env.dev");
-  configureInjection();
+  await configureInjection();
   final connectivityService = getIt<ConnectivityService>();
   await connectivityService.start();
+
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? "",
     anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? "",

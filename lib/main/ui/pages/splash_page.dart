@@ -38,9 +38,8 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _loadProfile() {
-    final user = supabase.auth.currentSession?.user;
-    context.read<ProfileCubit>().load(user);
-    context.read<ProfileSettingsCubit>().load(user);
+    context.read<ProfileCubit>().load();
+    context.read<ProfileSettingsCubit>().load();
   }
 
   _onProfileSuccess(Profile profile) {
