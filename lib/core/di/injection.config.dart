@@ -20,12 +20,14 @@ import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_
     as _i478;
 import 'package:budget_fusion_app/features/auth/data/repos/user_repo.dart'
     as _i871;
-import 'package:budget_fusion_app/features/profile/application/language/language_cubit.dart'
-    as _i752;
-import 'package:budget_fusion_app/features/profile/application/profile/profile_cubit.dart'
-    as _i304;
-import 'package:budget_fusion_app/features/profile/application/profile_settings/profile_settings_cubit.dart'
-    as _i877;
+import 'package:budget_fusion_app/features/profile/application/cubits/language/language_cubit.dart'
+    as _i251;
+import 'package:budget_fusion_app/features/profile/application/cubits/profile/profile_cubit.dart'
+    as _i78;
+import 'package:budget_fusion_app/features/profile/application/cubits/profile_settings/profile_settings_cubit.dart'
+    as _i819;
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/get_profile.dart'
+    as _i697;
 import 'package:budget_fusion_app/features/profile/data/adapters/profile_adapter.dart'
     as _i283;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_local_source.dart'
@@ -62,13 +64,13 @@ extension GetItInjectableX on _i174.GetIt {
     final databaseModule = _$DatabaseModule();
     final registerModule = _$RegisterModule();
     gh.factory<_i872.QueueManager>(() => _i872.QueueManager());
-    gh.factory<_i752.LanguageCubit>(() => _i752.LanguageCubit());
     gh.factory<_i283.ProfileAdapter>(() => _i283.ProfileAdapter());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
     await gh.factoryAsync<_i779.Database>(
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
+    gh.factory<_i251.LanguageCubit>(() => _i251.LanguageCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i1026.CacheManager>(() => _i1026.CacheManager());
     gh.lazySingleton<_i589.SyncManager>(() => _i589.SyncManager());
@@ -90,8 +92,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i179.ProfileLocalSource>(
         () => _i179.ProfileLocalSource(gh<_i779.Database>()));
-    gh.factory<_i877.ProfileSettingsCubit>(
-        () => _i877.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
+    gh.factory<_i819.ProfileSettingsCubit>(
+        () => _i819.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
           gh<_i179.ProfileLocalSource>(),
           gh<_i323.ProfileRemoteSource>(),
@@ -100,8 +102,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.SyncManager>(),
           gh<_i283.ProfileAdapter>(),
         ));
-    gh.factory<_i304.ProfileCubit>(
-        () => _i304.ProfileCubit(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i697.GetProfile>(
+        () => _i697.GetProfile(gh<_i714.ProfileRepo>()));
+    gh.factory<_i78.ProfileCubit>(
+        () => _i78.ProfileCubit(gh<_i697.GetProfile>()));
     return this;
   }
 }

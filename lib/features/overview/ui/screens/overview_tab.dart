@@ -1,9 +1,9 @@
-import 'package:budget_fusion_app/features/profile/application/profile/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
+import '../../../profile/profile.dart';
 
 class OverviewTab extends StatelessWidget {
   @override

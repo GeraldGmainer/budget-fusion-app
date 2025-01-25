@@ -1,12 +1,11 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/core.dart';
-import '../../../../utils/utils.dart';
+import '../../../../../core/core.dart';
+import '../../../../../utils/utils.dart';
 
-part 'profile_settings_cubit.freezed.dart';
-part 'profile_settings_state.dart';
+part 'profile_settings_cubit.freezed.dart';part 'profile_settings_state.dart';
 
 @injectable
 class ProfileSettingsCubit extends Cubit<ProfileSettingsState> {
