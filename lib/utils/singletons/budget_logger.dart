@@ -44,7 +44,7 @@ class BudgetLogger {
   }
 
   /// Log a message at level [Level.error].
-  void e(dynamic message, dynamic e, StackTrace stackTrace) {
+  void e(dynamic message, dynamic e, [StackTrace? stackTrace]) {
     _logger.e(message, error: e, stackTrace: stackTrace);
   }
 
