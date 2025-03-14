@@ -4,7 +4,7 @@ import '../../../../core/core.dart';
 import '../dtos/profile_settings_dto.dart';
 
 @lazySingleton
-class ProfileSettingsRemoteSource extends SupabaseClient {
+class ProfileSettingsRemoteDataSource extends SupabaseClient {
   Future<ProfileSettingsDto> fetchProfileSettings(String profileId) async {
     return execute("fetchProfileSettings", () async {
       final response = await supabase

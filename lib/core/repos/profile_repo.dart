@@ -7,5 +7,5 @@ abstract class ProfileRepo {
 
   Future<void> save(Profile profile);
 
-// Future<void> syncProfile();
+  void dispose();
 }

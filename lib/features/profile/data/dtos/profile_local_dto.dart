@@ -1,9 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/core.dart';
+
 part 'profile_local_dto.freezed.dart';
 
 @freezed
-class ProfileLocalDto with _$ProfileLocalDto {
+class ProfileLocalDto with _$ProfileLocalDto implements OfflineFirstLocalDto {
   const ProfileLocalDto._();
 
   const factory ProfileLocalDto({

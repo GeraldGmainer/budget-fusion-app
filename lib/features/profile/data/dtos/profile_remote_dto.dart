@@ -4,11 +4,10 @@ import '../../../../core/core.dart';
 import '../../../../utils/utils.dart';
 
 part 'profile_remote_dto.freezed.dart';
-
 part 'profile_remote_dto.g.dart';
 
 @freezed
-class ProfileRemoteDto with _$ProfileRemoteDto {
+class ProfileRemoteDto with _$ProfileRemoteDto implements OfflineFirstRemoteDto {
   const ProfileRemoteDto._();
 
   const factory ProfileRemoteDto({
@@ -21,4 +20,7 @@ class ProfileRemoteDto with _$ProfileRemoteDto {
   }) = _ProfileRemoteDto;
 
   factory ProfileRemoteDto.fromJson(Map<String, dynamic> json) => _$ProfileRemoteDtoFromJson(json);
+
+// @override
+// Map<String, dynamic> toJson() => _$$ProfileRemoteDtoImplToJson(this as _$ProfileRemoteDtoImpl);
 }

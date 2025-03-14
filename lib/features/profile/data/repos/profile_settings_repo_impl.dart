@@ -1,11 +1,11 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/core.dart';
-import '../data_sources/profile_settings_remote_source.dart';
+import '../data_sources/profile_settings_remote_data_source.dart';
 
 @LazySingleton(as: ProfileSettingsRepo)
 class ProfileSettingsRepoImpl implements ProfileSettingsRepo {
-  final ProfileSettingsRemoteSource _profileSettingsRemoteSource;
+  final ProfileSettingsRemoteDataSource _profileSettingsRemoteSource;
 
   ProfileSettings? _profileSettings;
 
