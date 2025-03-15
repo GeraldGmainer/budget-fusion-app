@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../features/analytics/analytics.dart';
 import '../../../features/budget_book/budget_book.dart';
 import '../../../features/budget_goals/budget_goals.dart';
-import '../../../features/overview/overview.dart';
+import '../../../features/overview/home.dart';
 import '../../../shared/shared.dart';
 import '../../main.dart';
 import '../widgets/main_bottom_navigation_bar.dart';
@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    OverviewTab(),
+    HomeTab(),
     BudgetBookTab(),
     Container(),
     BudgetGoalsTab(),

@@ -1,6 +1,5 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../../core/core.dart';
 
 @lazySingleton
 class LoadProfile {

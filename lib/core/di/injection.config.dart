@@ -33,6 +33,12 @@ import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_
     as _i478;
 import 'package:budget_fusion_app/features/auth/data/repos/user_repo.dart'
     as _i871;
+import 'package:budget_fusion_app/features/budget_book/application/budget_book/cubits/budget_book_cubit.dart'
+    as _i332;
+import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/fetch_and_group_budget_book_data_use_case.dart'
+    as _i443;
+import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_summary_use_case.dart'
+    as _i885;
 import 'package:budget_fusion_app/features/profile/application/cubits/language/language_cubit.dart'
     as _i251;
 import 'package:budget_fusion_app/features/profile/application/cubits/profile/profile_cubit.dart'
@@ -60,6 +66,8 @@ import 'package:budget_fusion_app/features/profile/data/services/profile_queue_i
 import 'package:budget_fusion_app/features/profile/profile.dart' as _i326;
 import 'package:budget_fusion_app/main/application/main/main_cubit.dart'
     as _i642;
+import 'package:budget_fusion_app/shared/application/use_cases/get_currency_use_case.dart'
+    as _i209;
 import 'package:budget_fusion_app/utils/service/connectivity_service.dart'
     as _i702;
 import 'package:budget_fusion_app/utils/utils.dart' as _i428;
@@ -99,6 +107,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
         () => _i371.RealtimeNotifierService());
+    gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
+        () => _i885.GenerateBudgetSummaryUseCase());
+    gh.lazySingleton<_i443.FetchAndGroupBudgetBookDataUseCase>(
+        () => _i443.FetchAndGroupBudgetBookDataUseCase());
     gh.lazySingleton<_i714.ProfileSettingsRepo>(() =>
         _i1002.ProfileSettingsRepoImpl(
             gh<_i576.ProfileSettingsRemoteDataSource>()));
@@ -106,6 +118,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i261.ProfileLocalDataSource>(
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
+    gh.lazySingleton<_i209.GetCurrencyUseCase>(
+        () => _i209.GetCurrencyUseCase(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<_i279.DomainRegistry>(
         () => domainModule.provideDomainDataSourceRegistry(
               gh<_i326.ProfileRemoteDataSource>(),
@@ -129,6 +143,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i819.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<List<_i714.QueueItemProcessor>>(() => queueModule
         .provideQueueProcessors(gh<_i326.ProfileQueueItemProcessor>()));
+    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
+          gh<_i443.FetchAndGroupBudgetBookDataUseCase>(),
+          gh<_i885.GenerateBudgetSummaryUseCase>(),
+          gh<_i209.GetCurrencyUseCase>(),
+        ));
     gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
           localDataSource: gh<_i76.QueueLocalDataSource>(),
           processors: gh<List<_i441.QueueItemProcessor>>(),

@@ -15,7 +15,6 @@ class RealtimeNotifierService {
   Stream<DomainRealtimeEvent> get events => _controller.stream;
 
   void startListeningForDomain(DomainType domain, String table) {
-    BudgetLogger.instance.i("startListeningForDomain $table");
     supabase
         .channel('public:$table')
         .onPostgresChanges(

@@ -18,6 +18,7 @@ export 'entities/profile_settings.dart';
 //
 export 'enums/category_type.dart';
 export 'enums/domain_type.dart';
+export 'enums/transaction_type.dart';
 //
 export 'exceptions/no_internet_exception.dart';
 export 'exceptions/translated_exception.dart';
