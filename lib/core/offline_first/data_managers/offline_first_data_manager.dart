@@ -7,16 +7,16 @@ import 'package:collection/collection.dart';
 import '../../../utils/utils.dart';
 import '../../core.dart';
 
-class OfflineFirstDataManager<Entity extends OfflineFirstEntity, LocalDto extends OfflineFirstLocalDto, RemoteDto extends OfflineFirstRemoteDto> {
+class OfflineFirstDataManager<LocalDto extends OfflineFirstLocalDto, RemoteDto extends OfflineFirstRemoteDto> {
   final DomainType domainType;
-  final OfflineFirstLocalDataSource<Entity, LocalDto> localSource;
-  final OfflineFirstRemoteDataSource<Entity, RemoteDto> remoteSource;
+  final OfflineFirstLocalDataSource<LocalDto> localSource;
+  final OfflineFirstRemoteDataSource<RemoteDto> remoteSource;
   final CacheManager cacheManager;
   final QueueManager queueManager;
-  final OfflineFirstAdapter<Entity, LocalDto, RemoteDto> adapter;
+  final OfflineFirstAdapter<LocalDto, RemoteDto> adapter;
   final RealtimeNotifierService realtimeNotifierService;
 
-  final StreamController<List<Entity>> streamController = StreamController.broadcast();
+  final StreamController<List<LocalDto>> streamController = StreamController.broadcast();
   bool _isRealtimeSubscribed = false;
 
   OfflineFirstDataManager({
@@ -29,103 +29,108 @@ class OfflineFirstDataManager<Entity extends OfflineFirstEntity, LocalDto extend
     required this.realtimeNotifierService,
   });
 
-  Stream<List<Entity>> get stream => streamController.stream;
+  Stream<List<LocalDto>> get stream => streamController.stream;
 
   Future<void> loadAll() async {
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<Entity>>(domainType);
+    final cached = cacheManager.get<List<LocalDto>>(domainType);
     if (cached != null && cached.isNotEmpty) {
-      streamController.add(cached);
+      _emitToStream(cached);
       unawaited(_syncPartial());
       return;
     }
 
     final localDtos = await localSource.fetchAll();
     if (localDtos.isNotEmpty) {
-      final entities = localDtos.map(adapter.fromLocalDto).toList();
-      cacheManager.set(domainType, entities);
-      streamController.add(entities);
+      cacheManager.set(domainType, localDtos);
+      _emitToStream(localDtos);
       unawaited(_syncPartial());
       return;
     }
 
     final remoteDtos = await remoteSource.fetchAll();
-    final entities = remoteDtos.map(adapter.fromRemoteDto).toList();
-    await localSource.saveAll(entities.map(adapter.toLocalDto).toList());
-    cacheManager.set(domainType, entities);
-    streamController.add(entities);
+    await localSource.saveAll(remoteDtos.map((r) => adapter.toLocalDto(r)).toList());
+    final stored = remoteDtos.map((r) => adapter.toLocalDto(r)).toList();
+    cacheManager.set(domainType, stored);
+    _emitToStream(stored);
   }
 
-  Future<void> save(Entity entity) async {
-    await localSource.save(adapter.toLocalDto(entity));
+  Future<void> save(LocalDto localDto) async {
+    await localSource.save(localDto);
     cacheManager.updateList(domainType, (list) {
-      final List<Entity> oldList = list != null ? (list as List<Entity>) : <Entity>[];
-      final existingIndex = oldList.indexWhere((e) => e.id == entity.id);
+      final oldList = list != null ? (list as List<LocalDto>) : <LocalDto>[];
+      final existingIndex = oldList.indexWhere((e) => e.id == localDto.id);
       if (existingIndex >= 0) {
         final mutable = oldList.toList();
-        mutable[existingIndex] = entity;
+        mutable[existingIndex] = localDto;
         return mutable;
       } else {
-        return [...oldList, entity];
+        return [...oldList, localDto];
       }
     });
-    final updatedList = cacheManager.get<List<Entity>>(domainType) ?? [];
-    streamController.add(updatedList);
+    final updatedList = cacheManager.get<List<LocalDto>>(domainType) ?? [];
+    _emitToStream(updatedList);
 
-    final payload = adapter.toRemoteDto(entity);
-    final item = QueueItem(id: entity.id.toJson(), domain: domainType, type: QueueTaskType.upsert, entityPayload: jsonEncode(payload.toJson()));
+    final payload = adapter.toRemoteDto(localDto);
+    final item = QueueItem(
+      id: localDto.id,
+      domain: domainType,
+      type: QueueTaskType.upsert,
+      entityPayload: jsonEncode(payload.toJson()),
+    );
     unawaited(queueManager.add(item));
   }
 
-  Future<void> delete(Entity entity) async {
+  Future<void> delete(LocalDto localDto) async {
     cacheManager.updateList(domainType, (list) {
-      final oldList = list != null ? (list as List<Entity>) : <Entity>[];
-      return oldList.whereNot((e) => e.id == entity.id).toList();
+      final oldList = list != null ? (list as List<LocalDto>) : <LocalDto>[];
+      return oldList.whereNot((e) => e.id == localDto.id).toList();
     });
-    streamController.add(cacheManager.get<List<Entity>>(domainType) ?? []);
+    _emitToStream(cacheManager.get<List<LocalDto>>(domainType) ?? []);
 
-    final item = QueueItem(id: entity.id.toJson(), domain: domainType, type: QueueTaskType.delete, entityPayload: entity.id.toJson());
+    final item = QueueItem(
+      id: localDto.id,
+      domain: domainType,
+      type: QueueTaskType.delete,
+      entityPayload: localDto.id,
+    );
     unawaited(queueManager.add(item));
+  }
+
+  _emitToStream(List<LocalDto> dtos) {
+    streamController.add(dtos);
   }
 
   void _subscribeToRealtime() {
     if (_isRealtimeSubscribed) return;
     _isRealtimeSubscribed = true;
-
     realtimeNotifierService.startListeningForDomain(domainType, remoteSource.table);
   }
 
   Future<void> _syncPartial() async {
     try {
       final localMax = await localSource.fetchMaxUpdatedAt();
-      // TODO maybe store last sync datetime somewhere in local preferences
       final remoteDtos = await remoteSource.fetchAllNewer(localMax);
-
       if (remoteDtos.isEmpty) return;
 
-      final updatedEntities = remoteDtos.map(adapter.fromRemoteDto).toList();
+      final updatedLocalDtos = remoteDtos.map((r) => adapter.toLocalDto(r)).toList();
       final localDtos = await localSource.fetchAll();
-      final localMap = {
-        for (final dto in localDtos) dto.id: dto,
-      };
+      final localMap = {for (final dto in localDtos) dto.id: dto};
 
-      for (final entity in updatedEntities) {
-        final id = entity.id.value;
-        final localDto = localMap[id];
-        if (localDto == null) {
-          localMap[id] = adapter.toLocalDto(entity);
+      for (final dto in updatedLocalDtos) {
+        if (!localMap.containsKey(dto.id)) {
+          localMap[dto.id] = dto;
         } else {
-          if (localDto.updatedAt == null || (localDto.updatedAt!.isBefore(entity.updatedAt))) {
-            localMap[id] = adapter.toLocalDto(entity);
+          final existing = localMap[dto.id]!;
+          if (existing.updatedAt == null || (dto.updatedAt != null && existing.updatedAt!.isBefore(dto.updatedAt!))) {
+            localMap[dto.id] = dto;
           }
         }
       }
       final mergedList = localMap.values.toList();
       await localSource.saveAll(mergedList);
-
-      final entities = mergedList.map(adapter.fromLocalDto).toList();
-      cacheManager.set(domainType, entities);
-      streamController.add(entities);
+      cacheManager.set(domainType, mergedList);
+      _emitToStream(mergedList);
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Sync failed", e, stackTrace);
     }

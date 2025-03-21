@@ -2,7 +2,14 @@ import '../../enums/domain_type.dart';
 
 enum QueueTaskType {
   upsert,
-  delete,
+  delete;
+
+  static QueueTaskType fromString(String value) {
+    return QueueTaskType.values.firstWhere(
+      (e) => e.name == value,
+      orElse: () => throw Exception("Invalid queue task type: $value"),
+    );
+  }
 }
 
 class QueueItem {

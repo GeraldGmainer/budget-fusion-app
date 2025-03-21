@@ -1,11 +1,9 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../../../core/core.dart';
-import '../dtos/profile_local_dto.dart';
-
 @lazySingleton
-class ProfileLocalDataSource implements OfflineFirstLocalDataSource<Profile, ProfileLocalDto> {
+class ProfileLocalDataSource implements OfflineFirstLocalDataSource<ProfileLocalDto> {
   final Database _db;
 
   ProfileLocalDataSource(this._db);

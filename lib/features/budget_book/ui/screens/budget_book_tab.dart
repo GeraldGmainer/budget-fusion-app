@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../application/budget_book/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
 import '../../domain/entities/budget_date_range.dart';
+import '../../domain/entities/summary_view_data.dart';
 import '../../domain/enums/budget_view_mode.dart';
+import '../calendar/calendar_view.dart';
+import '../summary/summary_view.dart';
+import '../transaction/transaction_view.dart';
+import '../widgets/period_selector.dart';
 
 class BudgetBookTab extends StatefulWidget {
   @override
@@ -61,10 +67,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _onPageChanged(int pageIndex) {
-    final items = context.read<BookingPageBloc>().state.viewItems;
+    final items = context.read<BudgetBookCubit>().state.rawItems;
     final reveredIndex = items.length - 1 - pageIndex;
     setState(() {
-      _currentPage = pageIndex;
       if (items.isNotEmpty) {
         _currentDateRange = items[reveredIndex].dateRange;
       } else {
@@ -74,21 +79,19 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _onViewSelected(int index) {
-    final viewMode = BookingViewMode.values[index];
-    context.read<BookingPageBloc>().add(BookingPageEvent.updateView(viewMode: viewMode));
+    final viewMode = BudgetViewMode.values[index];
+    context.read<BudgetBookCubit>().updateView(viewMode: viewMode);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocConsumer<BookingPageBloc, BookingPageState>(
+    return BlocConsumer<BudgetBookCubit, BudgetBookState>(
       listener: (context, state) {
-        if (state.isInitial) {
-          _onLoad();
-        } else if (state.isError) {
-          final error = state.maybeWhen(error: (_, __, message, ___, ____) => message, orElse: () => "unknown error");
-          _onError(error);
-        }
+        state.whenOrNull(
+          loaded: (_, __, ___, ____) => _onLoad(),
+          error: (_, __, ___, ____, message) => _onError(message),
+        );
       },
       builder: (context, state) {
         return Column(
@@ -109,7 +112,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       filter: currentFilter,
       dateRange: _currentDateRange,
       pageController: _pageController,
-      indicatorKey: _indicatorKey,
     );
   }
 
@@ -120,43 +122,45 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     );
   }
 
-  Widget _buildContent(BookingPageState state) {
-    final List<BookingPageViewData> items = state.viewItems;
-    final bool isInitialLoading = state.isLoading && state.isFirstFetch && items.isEmpty;
+  Widget _buildContent(BudgetBookState state) {
+    Widget content;
+
+    // TODO display loading bar while loading list
+    if (state.rawItems.isNotEmpty) {
+      switch (currentViewMode) {
+        case BudgetViewMode.summary:
+          content = _buildSummary(state.summaries);
+          break;
+        case BudgetViewMode.transaction:
+          content = TransactionView();
+          break;
+        case BudgetViewMode.calendar:
+          content = CalendarView();
+          break;
+      }
+    } else {
+      content = Center(child: Text("No data available.".tr()));
+    }
 
     return Expanded(
       child: Stack(
-        children: [
-          if (items.isNotEmpty)
-            PageView.builder(
-              controller: _pageController,
-              itemCount: items.length,
-              onPageChanged: _onPageChanged,
-              reverse: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final item = items.reversed.toList()[index];
-                return _buildView(item);
-              },
-            )
-          else if (isInitialLoading)
-            Center(child: CircularProgressIndicator())
-          else
-            Center(child: Text("No data available.".tr())),
-        ],
+        children: [content],
       ),
     );
   }
 
-  Widget _buildView(BookingPageViewData item) {
-    switch (currentViewMode) {
-      case BookingViewMode.summary:
-        return SummaryView(data: item as SummaryViewData);
-      case BookingViewMode.transaction:
-        return TransactionView();
-      case BookingViewMode.calendar:
-        return CalendarView();
-    }
+  Widget _buildSummary(List<SummaryViewData> summaries) {
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: summaries.length,
+      onPageChanged: _onPageChanged,
+      reverse: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final item = summaries.reversed.toList()[index];
+        return SummaryView(data: item);
+      },
+    );
   }
 
   @override

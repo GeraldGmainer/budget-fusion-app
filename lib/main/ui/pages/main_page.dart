@@ -83,9 +83,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   PreferredSizeWidget? _buildAppBarForIndex(int index) {
-    // if (index == 1) {
-    //   return BudgetBookAppBar();
-    // }
+    if (index == 1) {
+      return BudgetBookAppBar();
+    }
     return null;
   }
 }

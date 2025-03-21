@@ -55,3 +55,15 @@ class BudgetBookState with _$BudgetBookState {
     );
   }
 }
+
+extension BookingPageStateExtensions on BudgetBookState {
+  bool get isLoaded => maybeWhen(
+        loaded: (_, __, ___, ____) => true,
+        orElse: () => false,
+      );
+
+  bool get isError => maybeWhen(
+        error: (_, __, ___, ____, _____) => true,
+        orElse: () => false,
+      );
+}

@@ -5,11 +5,11 @@ import '../enums/period_mode.dart';
 
 part 'budget_book_filter.freezed.dart';
 
-@freezed
+@unfreezed
 class BudgetBookFilter with _$BudgetBookFilter {
   const BudgetBookFilter._();
 
-  const factory BudgetBookFilter({
+  factory BudgetBookFilter({
     required TransactionType transaction,
     required PeriodMode period,
     Account? account,
@@ -17,7 +17,7 @@ class BudgetBookFilter with _$BudgetBookFilter {
   }) = _BudgetBookFilter;
 
   factory BudgetBookFilter.initial() {
-    return const BudgetBookFilter(
+    return BudgetBookFilter(
       transaction: TransactionType.outcome,
       period: PeriodMode.month,
       account: null,

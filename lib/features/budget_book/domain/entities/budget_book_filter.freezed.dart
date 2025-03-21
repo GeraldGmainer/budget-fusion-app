@@ -17,9 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BudgetBookFilter {
   TransactionType get transaction => throw _privateConstructorUsedError;
+  set transaction(TransactionType value) => throw _privateConstructorUsedError;
   PeriodMode get period => throw _privateConstructorUsedError;
+  set period(PeriodMode value) => throw _privateConstructorUsedError;
   Account? get account => throw _privateConstructorUsedError;
+  set account(Account? value) => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  set description(String? value) => throw _privateConstructorUsedError;
 
   /// Create a copy of BudgetBookFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -158,7 +162,7 @@ class __$$BudgetBookFilterImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$BudgetBookFilterImpl extends _BudgetBookFilter {
-  const _$BudgetBookFilterImpl(
+  _$BudgetBookFilterImpl(
       {required this.transaction,
       required this.period,
       this.account,
@@ -166,35 +170,18 @@ class _$BudgetBookFilterImpl extends _BudgetBookFilter {
       : super._();
 
   @override
-  final TransactionType transaction;
+  TransactionType transaction;
   @override
-  final PeriodMode period;
+  PeriodMode period;
   @override
-  final Account? account;
+  Account? account;
   @override
-  final String? description;
+  String? description;
 
   @override
   String toString() {
     return 'BudgetBookFilter(transaction: $transaction, period: $period, account: $account, description: $description)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BudgetBookFilterImpl &&
-            (identical(other.transaction, transaction) ||
-                other.transaction == transaction) &&
-            (identical(other.period, period) || other.period == period) &&
-            (identical(other.account, account) || other.account == account) &&
-            (identical(other.description, description) ||
-                other.description == description));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, transaction, period, account, description);
 
   /// Create a copy of BudgetBookFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -207,21 +194,25 @@ class _$BudgetBookFilterImpl extends _BudgetBookFilter {
 }
 
 abstract class _BudgetBookFilter extends BudgetBookFilter {
-  const factory _BudgetBookFilter(
-      {required final TransactionType transaction,
-      required final PeriodMode period,
-      final Account? account,
-      final String? description}) = _$BudgetBookFilterImpl;
-  const _BudgetBookFilter._() : super._();
+  factory _BudgetBookFilter(
+      {required TransactionType transaction,
+      required PeriodMode period,
+      Account? account,
+      String? description}) = _$BudgetBookFilterImpl;
+  _BudgetBookFilter._() : super._();
 
   @override
   TransactionType get transaction;
+  set transaction(TransactionType value);
   @override
   PeriodMode get period;
+  set period(PeriodMode value);
   @override
   Account? get account;
+  set account(Account? value);
   @override
   String? get description;
+  set description(String? value);
 
   /// Create a copy of BudgetBookFilter
   /// with the given fields replaced by the non-null parameter values.

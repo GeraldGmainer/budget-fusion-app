@@ -1,4 +1,4 @@
-abstract class OfflineFirstLocalDataSource<Entity, LocalDto> {
+abstract class OfflineFirstLocalDataSource<LocalDto> {
   Future<List<LocalDto>> fetchAll();
 
   Future<LocalDto?> fetchById(String id);

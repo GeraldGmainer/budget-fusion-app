@@ -9,12 +9,19 @@ export 'di/database_module.dart';
 export 'di/injection.dart';
 export 'di/registry/domain_registry.dart';
 //
-export 'entities/account.dart';
-export 'entities/booking.dart';
-export 'entities/category.dart';
-export 'entities/currency.dart';
-export 'entities/profile.dart';
-export 'entities/profile_settings.dart';
+export 'dtos/accounts/account_local_dto.dart';
+export 'dtos/bookings/booking_local_dto.dart';
+export 'dtos/categories/category_local_dto.dart';
+export 'dtos/profiles/currency_dto.dart';
+export 'dtos/profiles/profile_local_dto.dart';
+export 'dtos/profiles/profile_settings_dto.dart';
+//
+export 'entities/accounts/account.dart';
+export 'entities/bookings/booking.dart';
+export 'entities/categories/category.dart';
+export 'entities/profiles/currency.dart';
+export 'entities/profiles/profile.dart';
+export 'entities/profiles/profile_settings.dart';
 //
 export 'enums/category_type.dart';
 export 'enums/domain_type.dart';
@@ -34,7 +41,6 @@ export 'offline_first/data_managers/offline_first_data_manager.dart';
 export 'offline_first/interfaces/offline_first_adapter.dart';
 export 'offline_first/interfaces/offline_first_local_data_source.dart';
 export 'offline_first/interfaces/offline_first_remote_data_source.dart';
-export 'offline_first/models/offline_first_entity.dart';
 export 'offline_first/models/offline_first_local_dto.dart';
 export 'offline_first/models/offline_first_remote_dto.dart';
 export 'offline_first/models/queue_item.dart';

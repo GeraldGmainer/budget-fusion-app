@@ -1,14 +1,14 @@
 import 'dart:async';
 
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/core.dart';
 import '../dtos/profile_remote_dto.dart';
 
 // TODO use SupabaseClient.execute?
 
 @lazySingleton
-class ProfileRemoteDataSource implements OfflineFirstRemoteDataSource<Profile, ProfileRemoteDto> {
+class ProfileRemoteDataSource implements OfflineFirstRemoteDataSource<ProfileRemoteDto> {
   @override
   String get table => 'profiles';
 

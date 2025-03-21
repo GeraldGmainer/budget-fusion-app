@@ -54,20 +54,12 @@ class QueueLocalDataSource {
     return rows.map((map) {
       return QueueItem(
         id: map['id'] as String,
-        domain: _domainFromString(map['domain'] as String),
-        type: _typeFromString(map['type'] as String),
+        domain: DomainType.fromString(map['domain'] as String),
+        type: QueueTaskType.fromString(map['type'] as String),
         entityPayload: map['entity_payload'] as String,
         attempts: map['attempts'] as int,
         done: (map['done'] as int) == 1,
       );
     }).toList();
-  }
-
-  QueueTaskType _typeFromString(String value) {
-    return QueueTaskType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid queue task type: $value"));
-  }
-
-  DomainType _domainFromString(String value) {
-    return DomainType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid domain type: $value"));
   }
 }

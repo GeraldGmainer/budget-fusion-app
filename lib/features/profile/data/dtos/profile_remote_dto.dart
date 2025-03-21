@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../core/core.dart';
-import '../../../../utils/utils.dart';
+import '../../../../../../core/core.dart';
+import '../../../../../../utils/utils.dart';
 
 part 'profile_remote_dto.freezed.dart';
 part 'profile_remote_dto.g.dart';

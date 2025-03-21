@@ -1,11 +1,11 @@
 import 'package:budget_fusion_app/core/core.dart';
 
 abstract class ProfileRepo {
-  Stream<Profile> watchProfile();
+  Stream<ProfileLocalDto> watch();
 
-  Future<void> loadProfileById(String profileId);
+  Future<void> loadById(String profileId);
 
-  Future<void> save(Profile profile);
+  Future<void> save(ProfileLocalDto profile);
 
   void dispose();
 }

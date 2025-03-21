@@ -1,21 +1,21 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile.dart';
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../../utils/utils.dart';
-import '../../use_cases/profile/watch_profile.dart';
+import '../../use_cases/profile/watch_profile_use_case.dart';
 
 part 'profile_cubit.freezed.dart';
 part 'profile_state.dart';
 
 @injectable
 class ProfileCubit extends Cubit<ProfileState> {
-  final WatchProfile _watchProfile;
-  final LoadProfile _loadProfile;
+  final WatchProfileUseCase _watchProfile;
+  final LoadProfileUseCase _loadProfile;
   StreamSubscription? _sub;
 
   ProfileCubit(this._watchProfile, this._loadProfile) : super(const ProfileState.initial()) {

@@ -1,5 +1,11 @@
-import '../core.dart';
+import 'package:budget_fusion_app/core/core.dart';
 
 abstract class AccountRepo {
-  Future<List<Account>> getAccounts();
+  Stream<List<AccountLocalDto>> watch();
+
+  Future<void> loadAll();
+
+  Future<void> save(AccountLocalDto dto);
+
+  void dispose();
 }

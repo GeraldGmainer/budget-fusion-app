@@ -1,7 +1,11 @@
-import '../core.dart';
+import 'package:budget_fusion_app/core/core.dart';
 
 abstract class BookingRepo {
-  Future<List<Booking>> getBookings({DateTime? from, DateTime? to});
+  Stream<List<BookingLocalDto>> watch();
 
-  Future<bool> hasBookingsBefore(DateTime date);
+  Future<void> loadAll();
+
+  Future<void> save(BookingLocalDto dto);
+
+  void dispose();
 }

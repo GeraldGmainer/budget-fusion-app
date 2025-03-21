@@ -2,7 +2,7 @@ import 'dart:async';
 
 import '../models/offline_first_remote_dto.dart';
 
-abstract class OfflineFirstRemoteDataSource<Entity, RemoteDto> {
+abstract class OfflineFirstRemoteDataSource<RemoteDto> {
   String get table;
 
   String get columns;

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/auth/auth.dart';
+import '../features/budget_book/budget_book.dart';
 import '../features/profile/profile.dart';
 import '../main/main.dart';
 
@@ -12,7 +13,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<ProfileCubit>(create: (_) => GetIt.I<ProfileCubit>()),
     BlocProvider<ProfileSettingsCubit>(create: (_) => GetIt.I<ProfileSettingsCubit>()),
     BlocProvider<LanguageCubit>(create: (_) => GetIt.I<LanguageCubit>()),
-    // BlocProvider<BookingPageBloc>(create: (_) => GetIt.I<BookingPageBloc>()),
+    BlocProvider<BudgetBookCubit>(create: (_) => GetIt.I<BudgetBookCubit>()),
   ];
 }
 

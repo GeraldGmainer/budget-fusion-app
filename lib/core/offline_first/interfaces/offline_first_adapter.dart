@@ -1,9 +1,5 @@
-abstract class OfflineFirstAdapter<Entity, LocalDto, RemoteDto> {
-  LocalDto toLocalDto(Entity entity);
+abstract class OfflineFirstAdapter<LocalDto, RemoteDto> {
+  LocalDto toLocalDto(RemoteDto remote);
 
-  RemoteDto toRemoteDto(Entity entity);
-
-  Entity fromLocalDto(LocalDto dto);
-
-  Entity fromRemoteDto(RemoteDto dto);
+  RemoteDto toRemoteDto(LocalDto local);
 }

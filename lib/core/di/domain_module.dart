@@ -7,11 +7,11 @@ import 'registry/domain_registry.dart';
 @module
 abstract class DomainModule {
   @LazySingleton()
+  // @formatter:off
   DomainRegistry provideDomainDataSourceRegistry(
-    ProfileRemoteDataSource profileRemoteDataSource,
-    ProfileLocalDataSource profileLocalDataSource,
-    ProfileAdapter profileAdapter,
+    ProfileRemoteDataSource profileRemoteDataSource, ProfileLocalDataSource profileLocalDataSource, ProfileAdapter profileAdapter,
   ) {
+    // @formatter:on
     final registry = DomainRegistry();
     registry.register(DomainType.profile, profileRemoteDataSource, profileLocalDataSource, profileAdapter);
     return registry;
