@@ -1,15 +1,14 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../domain/service/profile_domain_service.dart';
 
 @lazySingleton
 class LoadProfileUseCase {
-  final ProfileDomainService _domainService;
+  final ProfileRepo _profileRepo;
 
-  LoadProfileUseCase(this._domainService);
+  LoadProfileUseCase(this._profileRepo);
 
-  Future<void> call({String? profileId}) async {
-    await _domainService.loadProfile(profileId: profileId);
+  Future<void> call(Uuid profileId) async {
+    await _profileRepo.loadById(profileId);
   }
 }

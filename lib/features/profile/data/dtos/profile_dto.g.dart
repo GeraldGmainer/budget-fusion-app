@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_remote_dto.dart';
+part of 'profile_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProfileRemoteDtoImpl _$$ProfileRemoteDtoImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ProfileRemoteDtoImpl(
+_$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
+    _$ProfileDtoImpl(
       id: Uuid.fromJson(json['id'] as String),
       userId: json['user_id'] as String,
       name: json['name'] as String?,
@@ -17,8 +16,7 @@ _$ProfileRemoteDtoImpl _$$ProfileRemoteDtoImplFromJson(
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ProfileRemoteDtoImplToJson(
-        _$ProfileRemoteDtoImpl instance) =>
+Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,

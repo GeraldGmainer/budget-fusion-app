@@ -1,21 +1,21 @@
 import 'dart:async';
 
-import '../models/offline_first_remote_dto.dart';
+import '../models/offline_first_dto.dart';
 
-abstract class OfflineFirstRemoteDataSource<RemoteDto> {
+abstract class OfflineFirstRemoteDataSource<Dto> {
   String get table;
 
   String get columns;
 
-  Future<List<RemoteDto>> fetchAll();
+  Future<List<Dto>> fetchAll({Map<String, dynamic>? filters});
 
-  Future<List<RemoteDto>> fetchAllNewer(DateTime? updatedAt);
+  Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {Map<String, dynamic>? filters});
 
-  Future<RemoteDto> fetchById(String id);
+  Future<Dto> fetchById(String id);
 
-  Future<OfflineFirstRemoteDto> upsert(RemoteDto dto);
+  Future<OfflineFirstDto> upsert(Dto dto);
 
-  Future<void> upsertAll(List<RemoteDto> dtos);
+  Future<void> upsertAll(List<Dto> dtos);
 
   Future<void> delete(String id);
 }

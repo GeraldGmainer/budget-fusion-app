@@ -18,8 +18,6 @@ class Uuid {
 
   factory Uuid.fromJson(String json) => Uuid(json);
 
-  String toJson() => value;
-
   @override
   bool operator ==(Object other) => identical(this, other) || (other is Uuid && other.value == value);
 

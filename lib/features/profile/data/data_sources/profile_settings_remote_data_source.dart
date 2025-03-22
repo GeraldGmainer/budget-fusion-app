@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/dtos/profiles/profile_settings_dto.dart';
+
 @lazySingleton
 class ProfileSettingsRemoteDataSource extends SupabaseClient {
   Future<ProfileSettingsDto> fetchProfileSettings(String profileId) async {

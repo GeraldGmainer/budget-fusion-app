@@ -1,38 +1,40 @@
-import 'dart:async';
-
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
-import '../dtos/profile_remote_dto.dart';
+import '../dtos/profile_dto.dart';
 
 // TODO rename it to my profile repo or active profile repo? because later, need to load multiple profiles
 @LazySingleton(as: ProfileRepo)
-class ProfileRepoImpl implements ProfileRepo {
-  final OfflineFirstDataManager<ProfileLocalDto, ProfileRemoteDto> _manager;
-
-  String? _currentProfileId;
-
-  ProfileRepoImpl(DataManagerFactory dataManagerFactory)
-      : _manager = dataManagerFactory.createManager<ProfileLocalDto, ProfileRemoteDto>(
-          domainType: DomainType.profile,
-        );
+class ProfileRepoImpl extends OfflineFirstSingleRepoImpl<Profile, ProfileDto> implements ProfileRepo {
+  ProfileRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profile);
 
   @override
-  Stream<ProfileLocalDto> watch() => _manager.stream.map((profiles) => profiles.firstWhere((p) => p.id == _currentProfileId));
-
-  @override
-  Future<void> loadById(String profileId) async {
-    _currentProfileId = profileId;
-    await _manager.loadAll();
+  Future<void> loadById(Uuid profileId) async {
+    manager.loadAll(filters: {'profile_id': profileId.value});
   }
 
   @override
-  Future<void> save(ProfileLocalDto profile) async {
-    await _manager.save(profile);
+  Profile toDomain(ProfileDto dto) {
+    return Profile(
+      id: dto.id,
+      userId: dto.userId,
+      name: dto.name,
+      email: dto.email,
+      avatarUrl: dto.avatarUrl,
+      updatedAt: dto.updatedAt,
+    );
   }
 
   @override
-  void dispose() {
-    _manager.dispose();
+  ProfileDto toDto(Profile entity) {
+    return ProfileDto(
+      id: entity.id,
+      userId: entity.userId,
+      name: entity.name,
+      email: entity.email,
+      avatarUrl: entity.avatarUrl,
+      updatedAt: entity.updatedAt,
+    );
   }
 }

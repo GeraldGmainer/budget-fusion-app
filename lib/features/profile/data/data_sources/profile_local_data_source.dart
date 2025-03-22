@@ -2,35 +2,37 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../dtos/profile_dto.dart';
+
 @lazySingleton
-class ProfileLocalDataSource implements OfflineFirstLocalDataSource<ProfileLocalDto> {
+class ProfileLocalDataSource implements OfflineFirstLocalDataSource<ProfileDto> {
   final Database _db;
 
   ProfileLocalDataSource(this._db);
 
   @override
-  Future<List<ProfileLocalDto>> fetchAll() async {
+  Future<List<ProfileDto>> fetchAll({Map<String, dynamic>? filters}) async {
     final rows = await _db.query("profiles");
-    return rows.map(ProfileLocalDto.fromMap).toList();
+    return rows.map(ProfileDto.fromDB).toList();
   }
 
   @override
-  Future<ProfileLocalDto?> fetchById(String id) async {
+  Future<ProfileDto?> fetchById(String id) async {
     final rows = await _db.query("profiles", where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) return null;
-    return ProfileLocalDto.fromMap(rows.first);
+    return ProfileDto.fromDB(rows.first);
   }
 
   @override
-  Future<void> save(ProfileLocalDto dto) async {
-    await _db.insert("profiles", dto.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  Future<void> save(ProfileDto dto) async {
+    await _db.insert("profiles", dto.toDB(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
-  Future<void> saveAll(List<ProfileLocalDto> dtos) async {
+  Future<void> saveAll(List<ProfileDto> dtos) async {
     final batch = _db.batch();
     for (final dto in dtos) {
-      batch.insert("profiles", dto.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+      batch.insert("profiles", dto.toDB(), conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
   }

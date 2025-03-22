@@ -1,11 +1,11 @@
-abstract class OfflineFirstLocalDataSource<LocalDto> {
-  Future<List<LocalDto>> fetchAll();
+abstract class OfflineFirstLocalDataSource<Dto> {
+  Future<List<Dto>> fetchAll({Map<String, dynamic>? filters});
 
-  Future<LocalDto?> fetchById(String id);
+  Future<Dto?> fetchById(String id);
 
-  Future<void> save(LocalDto dto);
+  Future<void> save(Dto dto);
 
-  Future<void> saveAll(List<LocalDto> dtos);
+  Future<void> saveAll(List<Dto> dtos);
 
   Future<DateTime?> fetchMaxUpdatedAt();
 

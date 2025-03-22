@@ -9,11 +9,11 @@ abstract class DomainModule {
   @LazySingleton()
   // @formatter:off
   DomainRegistry provideDomainDataSourceRegistry(
-    ProfileRemoteDataSource profileRemoteDataSource, ProfileLocalDataSource profileLocalDataSource, ProfileAdapter profileAdapter,
+    ProfileRemoteDataSource profileRemoteDataSource, ProfileLocalDataSource profileLocalDataSource,
   ) {
     // @formatter:on
     final registry = DomainRegistry();
-    registry.register(DomainType.profile, profileRemoteDataSource, profileLocalDataSource, profileAdapter);
+    registry.register(DomainType.profile, profileRemoteDataSource, profileLocalDataSource);
     return registry;
   }
 }

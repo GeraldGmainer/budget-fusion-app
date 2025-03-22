@@ -7,16 +7,15 @@ import 'package:collection/collection.dart';
 import '../../../utils/utils.dart';
 import '../../core.dart';
 
-class OfflineFirstDataManager<LocalDto extends OfflineFirstLocalDto, RemoteDto extends OfflineFirstRemoteDto> {
+class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final DomainType domainType;
-  final OfflineFirstLocalDataSource<LocalDto> localSource;
-  final OfflineFirstRemoteDataSource<RemoteDto> remoteSource;
+  final OfflineFirstLocalDataSource<Dto> localSource;
+  final OfflineFirstRemoteDataSource<Dto> remoteSource;
   final CacheManager cacheManager;
   final QueueManager queueManager;
-  final OfflineFirstAdapter<LocalDto, RemoteDto> adapter;
   final RealtimeNotifierService realtimeNotifierService;
 
-  final StreamController<List<LocalDto>> streamController = StreamController.broadcast();
+  final StreamController<List<Dto>> streamController = StreamController.broadcast();
   bool _isRealtimeSubscribed = false;
 
   OfflineFirstDataManager({
@@ -25,15 +24,14 @@ class OfflineFirstDataManager<LocalDto extends OfflineFirstLocalDto, RemoteDto e
     required this.remoteSource,
     required this.cacheManager,
     required this.queueManager,
-    required this.adapter,
     required this.realtimeNotifierService,
   });
 
-  Stream<List<LocalDto>> get stream => streamController.stream;
+  Stream<List<Dto>> get stream => streamController.stream;
 
-  Future<void> loadAll() async {
+  Future<void> loadAll({Map<String, dynamic>? filters}) async {
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<LocalDto>>(domainType);
+    final cached = cacheManager.get<List<Dto>>(domainType);
     if (cached != null && cached.isNotEmpty) {
       _emitToStream(cached);
       unawaited(_syncPartial());
@@ -48,56 +46,49 @@ class OfflineFirstDataManager<LocalDto extends OfflineFirstLocalDto, RemoteDto e
       return;
     }
 
-    final remoteDtos = await remoteSource.fetchAll();
-    await localSource.saveAll(remoteDtos.map((r) => adapter.toLocalDto(r)).toList());
-    final stored = remoteDtos.map((r) => adapter.toLocalDto(r)).toList();
-    cacheManager.set(domainType, stored);
-    _emitToStream(stored);
+    final dtos = await remoteSource.fetchAll();
+    await localSource.saveAll(dtos);
+    cacheManager.set(domainType, dtos);
+    _emitToStream(dtos);
   }
 
-  Future<void> save(LocalDto localDto) async {
-    await localSource.save(localDto);
+  Future<void> save(Dto dto) async {
+    await localSource.save(dto);
     cacheManager.updateList(domainType, (list) {
-      final oldList = list != null ? (list as List<LocalDto>) : <LocalDto>[];
-      final existingIndex = oldList.indexWhere((e) => e.id == localDto.id);
+      final oldList = list != null ? (list as List<Dto>) : <Dto>[];
+      final existingIndex = oldList.indexWhere((e) => e.id == dto.id);
       if (existingIndex >= 0) {
         final mutable = oldList.toList();
-        mutable[existingIndex] = localDto;
+        mutable[existingIndex] = dto;
         return mutable;
       } else {
-        return [...oldList, localDto];
+        return [...oldList, dto];
       }
     });
-    final updatedList = cacheManager.get<List<LocalDto>>(domainType) ?? [];
+    final updatedList = cacheManager.get<List<Dto>>(domainType) ?? [];
     _emitToStream(updatedList);
 
-    final payload = adapter.toRemoteDto(localDto);
     final item = QueueItem(
-      id: localDto.id,
+      id: dto.id.value,
       domain: domainType,
       type: QueueTaskType.upsert,
-      entityPayload: jsonEncode(payload.toJson()),
+      entityPayload: jsonEncode(dto.toJson()),
     );
     unawaited(queueManager.add(item));
   }
 
-  Future<void> delete(LocalDto localDto) async {
+  Future<void> delete(Dto dto) async {
     cacheManager.updateList(domainType, (list) {
-      final oldList = list != null ? (list as List<LocalDto>) : <LocalDto>[];
-      return oldList.whereNot((e) => e.id == localDto.id).toList();
+      final oldList = list != null ? (list as List<Dto>) : <Dto>[];
+      return oldList.whereNot((e) => e.id == dto.id).toList();
     });
-    _emitToStream(cacheManager.get<List<LocalDto>>(domainType) ?? []);
+    _emitToStream(cacheManager.get<List<Dto>>(domainType) ?? []);
 
-    final item = QueueItem(
-      id: localDto.id,
-      domain: domainType,
-      type: QueueTaskType.delete,
-      entityPayload: localDto.id,
-    );
+    final item = QueueItem(id: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: dto.id.value);
     unawaited(queueManager.add(item));
   }
 
-  _emitToStream(List<LocalDto> dtos) {
+  _emitToStream(List<Dto> dtos) {
     streamController.add(dtos);
   }
 
@@ -113,11 +104,10 @@ class OfflineFirstDataManager<LocalDto extends OfflineFirstLocalDto, RemoteDto e
       final remoteDtos = await remoteSource.fetchAllNewer(localMax);
       if (remoteDtos.isEmpty) return;
 
-      final updatedLocalDtos = remoteDtos.map((r) => adapter.toLocalDto(r)).toList();
       final localDtos = await localSource.fetchAll();
       final localMap = {for (final dto in localDtos) dto.id: dto};
 
-      for (final dto in updatedLocalDtos) {
+      for (final dto in remoteDtos) {
         if (!localMap.containsKey(dto.id)) {
           localMap[dto.id] = dto;
         } else {

@@ -12,14 +12,13 @@ class DataManagerFactory {
 
   DataManagerFactory(this.cacheManager, this.queueManager, this.domainRegistry, this.realtimeNotifierService);
 
-  OfflineFirstDataManager<LocalDto, RemoteDto> createManager<LocalDto extends OfflineFirstLocalDto, RemoteDto extends OfflineFirstRemoteDto>({
+  OfflineFirstDataManager<Dto> createManager<Dto extends OfflineFirstDto>({
     required DomainType domainType,
   }) {
-    return OfflineFirstDataManager<LocalDto, RemoteDto>(
+    return OfflineFirstDataManager<Dto>(
       domainType: domainType,
-      localSource: domainRegistry.getLocal(domainType) as OfflineFirstLocalDataSource<LocalDto>,
-      remoteSource: domainRegistry.getRemote(domainType) as OfflineFirstRemoteDataSource<RemoteDto>,
-      adapter: domainRegistry.getAdapter(domainType) as OfflineFirstAdapter<LocalDto, RemoteDto>,
+      localSource: domainRegistry.getLocal(domainType) as OfflineFirstLocalDataSource<Dto>,
+      remoteSource: domainRegistry.getRemote(domainType) as OfflineFirstRemoteDataSource<Dto>,
       cacheManager: cacheManager,
       queueManager: queueManager,
       realtimeNotifierService: realtimeNotifierService,
