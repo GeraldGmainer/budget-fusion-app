@@ -1,29 +1,24 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../utils/utils.dart';
-import '../models/queue_item.dart';
-import 'queue_item_processor.dart';
 import 'queue_local_data_source.dart';
 
 @lazySingleton
 class QueueManager {
   static const maxAttempts = 3;
   final QueueLocalDataSource localDataSource;
-  final Map<String, QueueItemProcessor> domainProcessors;
+  final DomainRegistry domainRegistry;
   final Queue<QueueItem> _inMemoryQueue = Queue();
 
   bool _isProcessing = false;
   bool _initialized = false;
 
-  QueueManager({
-    required this.localDataSource,
-    required List<QueueItemProcessor> processors,
-  }) : domainProcessors = {
-          for (final p in processors) p.domainKey: p,
-        };
+  QueueManager({required this.localDataSource, required this.domainRegistry});
 
   Future<void> init() async {
     final items = await localDataSource.fetchPendingItems();
@@ -34,7 +29,7 @@ class QueueManager {
 
   Future<void> add(QueueItem item) async {
     if (!_initialized) {
-      throw Exception("GlobalQueueManager not initialized yet!");
+      throw Exception("QueueManager not initialized yet!");
     }
     await localDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
@@ -49,7 +44,6 @@ class QueueManager {
 
     try {
       await _processQueueItem(currentItem);
-
       _inMemoryQueue.removeFirst();
       await localDataSource.removeQueueItem(currentItem.id);
     } on Exception catch (e, stack) {
@@ -75,10 +69,33 @@ class QueueManager {
   }
 
   Future<void> _processQueueItem(QueueItem item) async {
-    final processor = domainProcessors[item.domain];
-    if (processor == null) {
-      throw Exception("No processor found for domain: ${item.domain}");
+    final remoteSource = domainRegistry.getRemote(item.domain);
+    final localSource = domainRegistry.getLocal(item.domain);
+
+    final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
+
+    switch (item.type) {
+      case QueueTaskType.upsert:
+        final updatedDto = await remoteSource.upsert(jsonMap);
+        if (updatedDto.updatedAt == null) {
+          BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
+          BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
+          BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
+          // TODO throw custom exception
+          throw "QueueManager: upserting queue task returned updatedAt as null";
+        }
+        await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+        break;
+      case QueueTaskType.delete:
+        final entityId = jsonMap["id"] as String;
+        await remoteSource.delete(entityId);
+        break;
     }
-    await processor.processItem(item);
   }
+
+  void dispose() {
+    streamController.close();
+  }
+
+  final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 }
