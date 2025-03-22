@@ -12,6 +12,7 @@ import 'package:budget_fusion_app/core/core.dart' as _i714;
 import 'package:budget_fusion_app/core/di/database_module.dart' as _i752;
 import 'package:budget_fusion_app/core/di/domain_module.dart' as _i538;
 import 'package:budget_fusion_app/core/di/injection.dart' as _i87;
+import 'package:budget_fusion_app/core/di/queue_module.dart' as _i284;
 import 'package:budget_fusion_app/core/di/registry/domain_registry.dart'
     as _i279;
 import 'package:budget_fusion_app/core/offline_first/cache/cache_manager.dart'
@@ -56,11 +57,12 @@ import 'package:budget_fusion_app/features/profile/data/data_sources/profile_rem
     as _i594;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_settings_remote_data_source.dart'
     as _i576;
+import 'package:budget_fusion_app/features/profile/data/profile_queue_item_processor.dart'
+    as _i820;
 import 'package:budget_fusion_app/features/profile/data/repos/profile_repo_impl.dart'
     as _i604;
 import 'package:budget_fusion_app/features/profile/data/repos/profile_settings_repo_impl.dart'
     as _i1002;
-import 'package:budget_fusion_app/features/profile/profile.dart' as _i326;
 import 'package:budget_fusion_app/main/application/main/main_cubit.dart'
     as _i642;
 import 'package:budget_fusion_app/shared/application/use_cases/get_currency_use_case.dart'
@@ -89,6 +91,7 @@ extension GetItInjectableX on _i174.GetIt {
     final databaseModule = _$DatabaseModule();
     final registerModule = _$RegisterModule();
     final domainModule = _$DomainModule();
+    final queueModule = _$QueueModule();
     await gh.factoryAsync<_i779.Database>(
       () => databaseModule.provideDatabase(),
       preResolve: true,
@@ -105,12 +108,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i576.ProfileSettingsRemoteDataSource());
     gh.lazySingleton<_i594.ProfileRemoteDataSource>(
         () => _i594.ProfileRemoteDataSource());
-    gh.lazySingleton<_i971.FilterBookingsUseCase>(
-        () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
         () => _i885.GenerateBudgetSummaryUseCase());
     gh.lazySingleton<_i443.FetchAndGroupBudgetBookDataUseCase>(
         () => _i443.FetchAndGroupBudgetBookDataUseCase());
+    gh.lazySingleton<_i971.FilterBookingsUseCase>(
+        () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i714.ProfileSettingsRepo>(() =>
         _i1002.ProfileSettingsRepoImpl(
             gh<_i576.ProfileSettingsRemoteDataSource>()));
@@ -134,13 +137,20 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i209.GetCurrencyUseCase>(),
           gh<_i971.FilterBookingsUseCase>(),
         ));
-    gh.factory<_i819.ProfileSettingsCubit>(
-        () => _i819.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
+    gh.lazySingleton<_i820.ProfileQueueItemProcessor>(
+        () => _i820.ProfileQueueItemProcessor(
+              gh<_i594.ProfileRemoteDataSource>(),
+              gh<_i261.ProfileLocalDataSource>(),
+            ));
     gh.lazySingleton<_i279.DomainRegistry>(
         () => domainModule.provideDomainDataSourceRegistry(
-              gh<_i326.ProfileRemoteDataSource>(),
-              gh<_i326.ProfileLocalDataSource>(),
+              gh<_i594.ProfileRemoteDataSource>(),
+              gh<_i261.ProfileLocalDataSource>(),
             ));
+    gh.factory<_i819.ProfileSettingsCubit>(
+        () => _i819.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
+    gh.lazySingleton<List<_i441.QueueItemProcessor>>(() => queueModule
+        .provideQueueProcessors(gh<_i820.ProfileQueueItemProcessor>()));
     gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
           localDataSource: gh<_i76.QueueLocalDataSource>(),
           processors: gh<List<_i441.QueueItemProcessor>>(),
@@ -170,3 +180,5 @@ class _$DatabaseModule extends _i752.DatabaseModule {}
 class _$RegisterModule extends _i87.RegisterModule {}
 
 class _$DomainModule extends _i538.DomainModule {}
+
+class _$QueueModule extends _i284.QueueModule {}

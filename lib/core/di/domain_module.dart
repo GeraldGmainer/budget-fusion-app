@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
-import '../../features/profile/profile.dart';
+import '../../features/profile/data/data_sources/profile_local_data_source.dart';
+import '../../features/profile/data/data_sources/profile_remote_data_source.dart';
 import '../enums/domain_type.dart';
 import 'registry/domain_registry.dart';
 

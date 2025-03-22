@@ -18,7 +18,7 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
   }) = _ProfileDto;
 
-  factory ProfileDto.fromDB(Map<String, Object?> row) {
+  factory ProfileDto.fromLocal(Map<String, Object?> row) {
     return ProfileDto(
       id: Uuid(row['id'] as String),
       userId: row['user_id'] as String,
@@ -29,7 +29,7 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
     );
   }
 
-  Map<String, Object?> toDB() {
+  Map<String, Object?> toLocal() {
     return {
       'id': id,
       'user_id': userId,

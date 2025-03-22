@@ -13,26 +13,26 @@ class ProfileLocalDataSource implements OfflineFirstLocalDataSource<ProfileDto> 
   @override
   Future<List<ProfileDto>> fetchAll({Map<String, dynamic>? filters}) async {
     final rows = await _db.query("profiles");
-    return rows.map(ProfileDto.fromDB).toList();
+    return rows.map(ProfileDto.fromLocal).toList();
   }
 
   @override
   Future<ProfileDto?> fetchById(String id) async {
     final rows = await _db.query("profiles", where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) return null;
-    return ProfileDto.fromDB(rows.first);
+    return ProfileDto.fromLocal(rows.first);
   }
 
   @override
   Future<void> save(ProfileDto dto) async {
-    await _db.insert("profiles", dto.toDB(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await _db.insert("profiles", dto.toLocal(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
   Future<void> saveAll(List<ProfileDto> dtos) async {
     final batch = _db.batch();
     for (final dto in dtos) {
-      batch.insert("profiles", dto.toDB(), conflictAlgorithm: ConflictAlgorithm.replace);
+      batch.insert("profiles", dto.toLocal(), conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
   }
