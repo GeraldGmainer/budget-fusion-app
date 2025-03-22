@@ -8,20 +8,21 @@ part of 'profile_dto.dart';
 
 _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDtoImpl(
-      id: Uuid.fromJson(json['id'] as String),
+      id: const UuidSerializer().fromJson(json['id'] as String),
       userId: json['user_id'] as String,
       name: json['name'] as String?,
       email: json['email'] as String,
       avatarUrl: json['avatar_url'] as String?,
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      updatedAt:
+          const DateTimeSerializer().fromJson(json['updated_at'] as String),
     );
 
 Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': const UuidSerializer().toJson(instance.id),
       'user_id': instance.userId,
       'name': instance.name,
       'email': instance.email,
       'avatar_url': instance.avatarUrl,
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
     };

@@ -20,6 +20,7 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProfileDto {
+  @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
@@ -28,6 +29,7 @@ mixin _$ProfileDto {
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileDto to a JSON map.
@@ -47,12 +49,12 @@ abstract class $ProfileDtoCopyWith<$Res> {
       _$ProfileDtoCopyWithImpl<$Res, ProfileDto>;
   @useResult
   $Res call(
-      {Uuid id,
+      {@UuidSerializer() Uuid id,
       @JsonKey(name: 'user_id') String userId,
       String? name,
       String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl,
-      @JsonKey(name: 'updated_at') DateTime updatedAt});
+      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
 }
 
 /// @nodoc
@@ -115,12 +117,12 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Uuid id,
+      {@UuidSerializer() Uuid id,
       @JsonKey(name: 'user_id') String userId,
       String? name,
       String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl,
-      @JsonKey(name: 'updated_at') DateTime updatedAt});
+      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
 }
 
 /// @nodoc
@@ -176,18 +178,21 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProfileDtoImpl extends _ProfileDto {
   const _$ProfileDtoImpl(
-      {required this.id,
+      {@UuidSerializer() required this.id,
       @JsonKey(name: 'user_id') required this.userId,
       this.name,
       required this.email,
       @JsonKey(name: 'avatar_url') this.avatarUrl,
-      @JsonKey(name: 'updated_at') required this.updatedAt})
+      @JsonKey(name: 'updated_at')
+      @DateTimeSerializer()
+      required this.updatedAt})
       : super._();
 
   factory _$ProfileDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDtoImplFromJson(json);
 
   @override
+  @UuidSerializer()
   final Uuid id;
   @override
   @JsonKey(name: 'user_id')
@@ -201,6 +206,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
   final String? avatarUrl;
   @override
   @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
   final DateTime updatedAt;
 
   @override
@@ -246,19 +252,21 @@ class _$ProfileDtoImpl extends _ProfileDto {
 
 abstract class _ProfileDto extends ProfileDto {
   const factory _ProfileDto(
-          {required final Uuid id,
-          @JsonKey(name: 'user_id') required final String userId,
-          final String? name,
-          required final String email,
-          @JsonKey(name: 'avatar_url') final String? avatarUrl,
-          @JsonKey(name: 'updated_at') required final DateTime updatedAt}) =
-      _$ProfileDtoImpl;
+      {@UuidSerializer() required final Uuid id,
+      @JsonKey(name: 'user_id') required final String userId,
+      final String? name,
+      required final String email,
+      @JsonKey(name: 'avatar_url') final String? avatarUrl,
+      @JsonKey(name: 'updated_at')
+      @DateTimeSerializer()
+      required final DateTime updatedAt}) = _$ProfileDtoImpl;
   const _ProfileDto._() : super._();
 
   factory _ProfileDto.fromJson(Map<String, dynamic> json) =
       _$ProfileDtoImpl.fromJson;
 
   @override
+  @UuidSerializer()
   Uuid get id;
   @override
   @JsonKey(name: 'user_id')
@@ -272,6 +280,7 @@ abstract class _ProfileDto extends ProfileDto {
   String? get avatarUrl;
   @override
   @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
   DateTime get updatedAt;
 
   /// Create a copy of ProfileDto

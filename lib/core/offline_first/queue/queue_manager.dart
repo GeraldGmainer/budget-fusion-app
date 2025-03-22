@@ -45,7 +45,7 @@ class QueueManager {
     try {
       await _processQueueItem(currentItem);
       _inMemoryQueue.removeFirst();
-      await localDataSource.removeQueueItem(currentItem.id);
+      await localDataSource.removeQueueItem(currentItem.entityId);
     } on Exception catch (e, stack) {
       BudgetLogger.instance.e("Queue task failed", e, stack);
       final updatedAttempts = currentItem.attempts + 1;
@@ -76,7 +76,7 @@ class QueueManager {
 
     switch (item.type) {
       case QueueTaskType.upsert:
-        final updatedDto = await remoteSource.upsert(jsonMap);
+        final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
         if (updatedDto.updatedAt == null) {
           BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
           BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
@@ -87,8 +87,7 @@ class QueueManager {
         await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
         break;
       case QueueTaskType.delete:
-        final entityId = jsonMap["id"] as String;
-        await remoteSource.delete(entityId);
+        await remoteSource.delete(item.entityId);
         break;
     }
   }

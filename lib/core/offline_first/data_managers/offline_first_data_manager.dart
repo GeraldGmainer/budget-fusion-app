@@ -69,7 +69,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _emitToStream(updatedList);
 
     final item = QueueItem(
-      id: dto.id.value,
+      entityId: dto.id.value,
       domain: domainType,
       type: QueueTaskType.upsert,
       entityPayload: jsonEncode(dto.toJson()),
@@ -84,7 +84,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     });
     _emitToStream(cacheManager.get<List<Dto>>(domainType) ?? []);
 
-    final item = QueueItem(id: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: dto.id.value);
+    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: dto.id.value);
     unawaited(queueManager.add(item));
   }
 

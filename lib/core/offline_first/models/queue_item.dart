@@ -13,15 +13,15 @@ enum QueueTaskType {
 }
 
 class QueueItem {
-  final String id;
+  final String entityId;
+  final String entityPayload;
   final DomainType domain;
   final QueueTaskType type;
-  final String entityPayload;
   final int attempts;
   final bool done;
 
   QueueItem({
-    required this.id,
+    required this.entityId,
     required this.domain,
     required this.type,
     required this.entityPayload,
@@ -30,7 +30,7 @@ class QueueItem {
   });
 
   QueueItem copyWith({
-    String? id,
+    String? entityId,
     DomainType? domain,
     QueueTaskType? type,
     String? entityPayload,
@@ -38,7 +38,7 @@ class QueueItem {
     bool? done,
   }) {
     return QueueItem(
-      id: id ?? this.id,
+      entityId: entityId ?? this.entityId,
       domain: domain ?? this.domain,
       type: type ?? this.type,
       entityPayload: entityPayload ?? this.entityPayload,

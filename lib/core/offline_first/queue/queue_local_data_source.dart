@@ -13,7 +13,7 @@ class QueueLocalDataSource {
     await db.insert(
       'queue_items',
       {
-        'id': item.id,
+        'entity_id': item.entityId,
         'type': item.type.toString(),
         'entity_payload': item.entityPayload,
         'attempts': item.attempts,
@@ -32,15 +32,15 @@ class QueueLocalDataSource {
         'attempts': item.attempts,
         'done': item.done ? 1 : 0,
       },
-      where: 'id = ?',
-      whereArgs: [item.id],
+      where: 'entity_id = ?',
+      whereArgs: [item.entityId],
     );
   }
 
   Future<void> removeQueueItem(String id) async {
     await db.delete(
       'queue_items',
-      where: 'id = ?',
+      where: 'entity_id = ?',
       whereArgs: [id],
     );
   }
@@ -49,11 +49,10 @@ class QueueLocalDataSource {
     final rows = await db.query(
       'queue_items',
       where: 'done = 0',
-      orderBy: 'id ASC',
     );
     return rows.map((map) {
       return QueueItem(
-        id: map['id'] as String,
+        entityId: map['entity_id'] as String,
         domain: DomainType.fromString(map['domain'] as String),
         type: QueueTaskType.fromString(map['type'] as String),
         entityPayload: map['entity_payload'] as String,

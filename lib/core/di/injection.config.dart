@@ -113,8 +113,6 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i576.ProfileSettingsRemoteDataSource>()));
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
-    gh.lazySingleton<_i261.ProfileLocalDataSource>(
-        () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i209.GetCurrencyUseCase>(
         () => _i209.GetCurrencyUseCase(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<_i702.ConnectivityService>(
@@ -125,6 +123,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i76.QueueLocalDataSource>(
         () => _i76.QueueLocalDataSource(gh<_i779.Database>()));
+    gh.lazySingleton<_i261.ProfileLocalDataSource>(
+        () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
           gh<_i443.FetchAndGroupBudgetBookDataUseCase>(),
           gh<_i885.GenerateBudgetSummaryUseCase>(),

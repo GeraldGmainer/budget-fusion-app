@@ -2,8 +2,10 @@ export 'constants/app_borders.dart';
 export 'constants/app_colors.dart';
 export 'constants/app_dimensions.dart';
 export 'constants/app_routes.dart';
-//
 export 'database/database_manager.dart';
+//
+export 'database/serializer/datetime_serializer.dart';
+export 'database/serializer/uuid_serializer.dart';
 //
 export 'di/database_module.dart';
 export 'di/injection.dart';

@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS queue_items (
-    id TEXT PRIMARY KEY,
+    entity_id TEXT PRIMARY KEY,
+    entity_payload TEXT NOT NULL,
     domain TEXT NOT NULL,
     type TEXT NOT NULL,
-    entity_payload TEXT NOT NULL,
     attempts INTEGER NOT NULL,
     done INTEGER NOT NULL
 );
