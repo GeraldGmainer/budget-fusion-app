@@ -6,14 +6,13 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   OfflineFirstLocalDataSource(this.db);
 
-  Future<List<Dto>> fetchAll({Map<String, dynamic>? filters}) async {
-    String? whereClause;
-    List<dynamic>? whereArgs;
-    if (filters != null && filters.isNotEmpty) {
-      whereClause = filters.entries.map((entry) => "${entry.key} = ?").join(" AND ");
-      whereArgs = filters.values.toList();
-    }
-    final rows = await db.query(table, where: whereClause, whereArgs: whereArgs);
+  Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
+    final filterClause = _buildWhereClause(filters);
+    final rows = await db.query(
+      table,
+      where: filterClause?.key,
+      whereArgs: filterClause?.value,
+    );
     return rows.map((row) => fromJson(row)).toList();
   }
 
@@ -50,6 +49,30 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
       return null;
     }
     return DateTime.parse(result.first['maxDate'] as String);
+  }
+
+  MapEntry<String, List<dynamic>>? _buildWhereClause(List<QueryFilter>? filters) {
+    if (filters == null || filters.isEmpty) return null;
+    final clauses = <String>[];
+    final whereArgs = <dynamic>[];
+    for (final filter in filters) {
+      switch (filter.operator) {
+        case QueryOperator.equal:
+          clauses.add("${filter.column} = ?");
+          break;
+        case QueryOperator.notEqual:
+          clauses.add("${filter.column} != ?");
+          break;
+        case QueryOperator.greaterThan:
+          clauses.add("${filter.column} > ?");
+          break;
+        case QueryOperator.lessThan:
+          clauses.add("${filter.column} < ?");
+          break;
+      }
+      whereArgs.add(filter.value);
+    }
+    return MapEntry(clauses.join(" AND "), whereArgs);
   }
 
   String get table;

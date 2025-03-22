@@ -10,27 +10,19 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> {
 
   Dto toDto(Map<String, dynamic> json);
 
-  Future<List<Dto>> fetchAll({Map<String, dynamic>? filters}) async {
+  Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
     var query = supabase.from(table).select(columns);
-    if (filters != null) {
-      filters.forEach((key, value) {
-        query = query.eq(key, value);
-      });
-    }
+    query = _applyFilters(query, filters);
     final response = await query;
     return (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
   }
 
-  Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {Map<String, dynamic>? filters}) async {
+  Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
     var query = supabase.from(table).select(columns);
     if (updatedAt != null) {
       query = query.gt('updated_at', updatedAt.toIso8601String());
     }
-    if (filters != null) {
-      filters.forEach((key, value) {
-        query = query.eq(key, value);
-      });
-    }
+    query = _applyFilters(query, filters);
     final response = await query;
     return (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
   }
@@ -52,5 +44,27 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> {
 
   Future<void> delete(String id) async {
     await supabase.from(table).delete().eq('id', id);
+  }
+
+  dynamic _applyFilters(dynamic query, List<QueryFilter>? filters) {
+    if (filters != null && filters.isNotEmpty) {
+      for (final filter in filters) {
+        switch (filter.operator) {
+          case QueryOperator.equal:
+            query = query.eq(filter.column, filter.value);
+            break;
+          case QueryOperator.notEqual:
+            query = query.neq(filter.column, filter.value);
+            break;
+          case QueryOperator.greaterThan:
+            query = query.gt(filter.column, filter.value);
+            break;
+          case QueryOperator.lessThan:
+            query = query.lt(filter.column, filter.value);
+            break;
+        }
+      }
+    }
+    return query;
   }
 }

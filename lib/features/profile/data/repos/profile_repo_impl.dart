@@ -7,7 +7,7 @@ import '../dtos/profile_dto.dart';
 // TODO rename it to my profile repo or active profile repo? because later, need to load multiple profiles
 // TODO or use List<Profile> and MyProfileDomainService stores current profile id
 @LazySingleton(as: ProfileRepo)
-class ProfileRepoImpl extends OfflineFirstSingleRepoImpl<Profile, ProfileDto> implements ProfileRepo {
+class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implements ProfileRepo {
   ProfileRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profile);
 
   @override
