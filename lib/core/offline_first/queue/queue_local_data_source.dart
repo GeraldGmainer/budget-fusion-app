@@ -1,4 +1,6 @@
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../core.dart';
@@ -10,6 +12,7 @@ class QueueLocalDataSource {
   QueueLocalDataSource(this.db);
 
   Future<void> addQueueItem(QueueItem item) async {
+    _log("Adding queue item with entityId '${item.entityId}'");
     await db.insert(
       'queue_items',
       {
@@ -24,6 +27,7 @@ class QueueLocalDataSource {
   }
 
   Future<void> updateQueueItem(QueueItem item) async {
+    _log("Updating queue item with entityId '${item.entityId}'");
     await db.update(
       'queue_items',
       {
@@ -38,6 +42,7 @@ class QueueLocalDataSource {
   }
 
   Future<void> removeQueueItem(String id) async {
+    _log("Removing queue item with entityId '$id'");
     await db.delete(
       'queue_items',
       where: 'entity_id = ?',
@@ -46,6 +51,7 @@ class QueueLocalDataSource {
   }
 
   Future<List<QueueItem>> fetchPendingItems() async {
+    _log("Fetching pending queue items");
     final rows = await db.query(
       'queue_items',
       where: 'done = 0',
@@ -60,5 +66,10 @@ class QueueLocalDataSource {
         done: (map['done'] as int) == 1,
       );
     }).toList();
+  }
+
+  _log(String msg) {
+    final color = AppLogColors.queueLocalDataSource;
+    BudgetLogger.instance.d("${color("QLS: ")} $msg", short: true);
   }
 }

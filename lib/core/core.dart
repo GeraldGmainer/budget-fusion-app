@@ -40,7 +40,6 @@ export 'offline_first/filters/query_filter.dart';
 export 'offline_first/filters/query_operator.dart';
 export 'offline_first/models/offline_first_dto.dart';
 export 'offline_first/models/queue_item.dart';
-export 'offline_first/queue/queue_item_processor.dart';
 //
 export 'offline_first/queue/queue_manager.dart';
 export 'offline_first/repos/offline_first_list_repo.dart';
