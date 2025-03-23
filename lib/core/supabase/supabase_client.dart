@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core.dart';
@@ -73,7 +72,7 @@ abstract class SupabaseClient {
   }
 
   _log(String msg, {bool darkColor = false}) {
-    final color = darkColor ? AnsiColor.fg(34) : AnsiColor.fg(108);
+    final color = darkColor ? AppLogColors.remoteDataSourceEnd : AppLogColors.remoteDataSourceStart;
     BudgetLogger.instance.d("${color("RemoteDataSource: ")} $msg", short: true);
   }
 

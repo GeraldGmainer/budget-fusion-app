@@ -29,7 +29,6 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
     return ProfileSettingDto(
       id: entity.id,
       userId: entity.userId,
-      currencyId: entity.currency.id,
       currency: CurrencyDto(
         id: entity.currency.id,
         name: entity.currency.name,

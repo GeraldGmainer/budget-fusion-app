@@ -11,11 +11,10 @@ class ProfileSettingRemoteDataSource extends OfflineFirstRemoteDataSource<Profil
 
   @override
   String get columns => 'id, user_id, currency_id, updated_at, '
-      'currencies(id, name, decimal_precision, unit_position_front, symbol, ui_order, updated_at)';
+      'currency:currencies(id, name, decimal_precision, unit_position_front, symbol, ui_order, updated_at)';
 
   @override
   ProfileSettingDto toDto(Map<String, dynamic> json) {
-    BudgetLogger.instance.i("toDto $json");
     return ProfileSettingDto.fromJson(json);
   }
 }

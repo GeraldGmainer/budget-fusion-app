@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:logger/logger.dart';
 
 abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
-  static final tableColor = AnsiColor.fg(180);
-
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
-    return execute("fetchAll from ${tableColor(table)}${filters != null ? "with filters: $filters" : ""}", () async {
+    return execute("fetchAll from ${AppLogColors.applyColor(table)}${filters != null ? "with filters: $filters" : ""}", () async {
       var query = supabase.from(table).select(columns);
       query = _applyFilters(query, filters);
       final response = await query;
@@ -16,7 +13,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
-    return execute("fetchAllNewer from ${tableColor(table)}${filters != null ? "with filters: $filters" : ""}", () async {
+    return execute("fetchAllNewer from ${AppLogColors.applyColor(table)}${filters != null ? "with filters: $filters" : ""}", () async {
       var query = supabase.from(table).select(columns);
       if (updatedAt != null) {
         query = query.gt('updated_at', updatedAt.toIso8601String());
@@ -28,7 +25,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   Future<Dto> fetchById(String id) async {
-    return execute("fetchById from ${tableColor(table)}", () async {
+    return execute("fetchById from ${AppLogColors.applyColor(table)}", () async {
       final response = await supabase.from(table).select(columns).eq('id', id).single();
       return toDto(response);
     });
@@ -40,14 +37,14 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   Future<void> upsertAll(List<Dto> dtos) async {
-    return execute("upsertAll from ${tableColor(table)}", () async {
+    return execute("upsertAll from ${AppLogColors.applyColor(table)}", () async {
       final data = dtos.map((dto) => dto.toJson()).toList();
       await supabase.from(table).upsert(data);
     });
   }
 
   Future<void> delete(String id) async {
-    return execute("delete from ${tableColor(table)}", () async {
+    return execute("delete from ${AppLogColors.applyColor(table)}", () async {
       await supabase.from(table).delete().eq('id', id);
     });
   }

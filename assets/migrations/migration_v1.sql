@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS profiles (
 CREATE TABLE IF NOT EXISTS profile_settings (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
-    currency_id TEXT NOT NULL,
+    currency TEXT NOT NULL,
     updated_at TEXT
 );
 
