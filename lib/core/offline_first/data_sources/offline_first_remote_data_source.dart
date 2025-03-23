@@ -19,7 +19,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchAllNewer from ${AppLogColors.applyColor(table)}${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAllNewer from ${AppLogColors.applyColor(table)} than $updatedAt${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
       var query = supabase.from(table).select(columns);
       if (updatedAt != null) {
@@ -35,7 +35,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   Future<Dto> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchById from ${AppLogColors.applyColor(table)}");
+    _log("fetchById '$id' from ${AppLogColors.applyColor(table)}");
     return execute(table, () async {
       final response = await supabase.from(table).select(columns).eq('id', id).single();
       _log("fetchById from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
@@ -45,7 +45,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   Future<Dto> upsert(String id, Map<String, dynamic> json) async {
     final stopwatch = Stopwatch()..start();
-    _log("upsert to ${AppLogColors.applyColor(table)}");
+    _log("upsert by id '$id' to ${AppLogColors.applyColor(table)}");
     return execute(table, () async {
       final response = await supabase.from(table).upsert(json).eq('id', id);
       _log("upsert to ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
@@ -65,7 +65,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   Future<void> delete(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("delete from ${AppLogColors.applyColor(table)}");
+    _log("delete by id '$id' from ${AppLogColors.applyColor(table)}");
     return execute(table, () async {
       await supabase.from(table).delete().eq('id', id);
       _log("delete from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
@@ -96,9 +96,9 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   _log(String msg, {Stopwatch? stopwatch}) {
     if (stopwatch != null) {
-      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceEnd("RemoteDataSource: ")} $msg took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
+      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceEnd("RDS: ")} $msg took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
     } else {
-      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceStart("RemoteDataSource: ")} $msg", short: true);
+      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceStart("RDS: ")} $msg", short: true);
     }
   }
 

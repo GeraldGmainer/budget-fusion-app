@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
@@ -10,18 +9,10 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   OfflineFirstLocalDataSource(this.db);
 
-  String get table;
-
-  Dto fromJson(Map<String, dynamic> json);
-
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
     _log("fetchAll from ${AppLogColors.applyColor(table)} ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
-    final rows = await db.query(
-      table,
-      where: filterClause?.key,
-      whereArgs: filterClause?.value,
-    );
+    final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value);
     _log("fetched ${rows.length} DTOs from ${AppLogColors.applyColor(table)}", darkColor: true);
     final dtos = rows.map((row) {
       final dto = fromJson(row);
@@ -62,24 +53,19 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   Future<void> markAsSynced(String id, DateTime updated) async {
     _log("markAsSynced for id '$id' in ${AppLogColors.applyColor(table)} with updatedAt: $updated");
-    await db.update(
-      table,
-      {'updated_at': updated.toIso8601String()},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    _log("markAsSynced successfully for id '$id' in ${AppLogColors.applyColor(table)}", darkColor: true);
+    await db.update(table, {'updated_at': updated.toIso8601String()}, where: 'id = ?', whereArgs: [id]);
+    _log("markAsSynced success for id '$id' in ${AppLogColors.applyColor(table)}", darkColor: true);
   }
 
   Future<DateTime?> fetchMaxUpdatedAt() async {
     _log("fetchMaxUpdatedAt from ${AppLogColors.applyColor(table)}");
     final result = await db.rawQuery('SELECT MAX(updated_at) AS maxDate FROM $table');
-    if (result.isEmpty || result.first['maxDate'] == null) {
+    if (result.isEmpty) {
       _log("fetchMaxUpdatedAt not found in ${AppLogColors.applyColor(table)}", darkColor: true);
       return null;
     }
     final maxDate = DateTime.parse(result.first['maxDate'] as String);
-    _log("fetchMaxUpdatedAt from ${AppLogColors.applyColor(table)}: $maxDate", darkColor: true);
+    _log("fetchMaxUpdatedAt success from ${AppLogColors.applyColor(table)}: $maxDate", darkColor: true);
     return maxDate;
   }
 
@@ -112,7 +98,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   _log(String msg, {bool darkColor = false}) {
     final color = darkColor ? AppLogColors.localDataSourceEnd : AppLogColors.localDataSourceStart;
-    BudgetLogger.instance.d("${color("LocalDataSource:  ")} $msg", short: true);
+    BudgetLogger.instance.d("${color("LDS: ")} $msg", short: true);
   }
 
   Map<String, dynamic> _convertMapsToString(Map<String, dynamic> input) {
@@ -137,4 +123,8 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
     return output;
   }
+
+  String get table;
+
+  Dto fromJson(Map<String, dynamic> json);
 }
