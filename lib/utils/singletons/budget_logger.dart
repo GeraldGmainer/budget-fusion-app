@@ -17,6 +17,7 @@ class BudgetLogger {
     stackTraceBeginIndex: 0,
     noBoxingByDefault: true,
     methodCount: 0,
+    compactMode: true,
   ));
 
   /// Log a message at level [Level.trace].
@@ -138,6 +139,7 @@ class MyPrinter extends LogPrinter {
   final bool colors;
   final bool printEmojis;
   final bool printTime;
+  final bool compactMode;
 
   /// To prevent ascii 'boxing' of any log [Level] include the level in map for excludeBox,
   /// for budget_fusion to prevent boxing of [Level.trace] and [Level.info] use excludeBox:{Level.verbose:true, Level.info:true}
@@ -163,6 +165,7 @@ class MyPrinter extends LogPrinter {
     this.printTime = false,
     this.excludeBox = const {},
     this.noBoxingByDefault = false,
+    this.compactMode = false,
   }) {
     _startTime ??= DateTime.now();
 
@@ -285,6 +288,9 @@ class MyPrinter extends LogPrinter {
     var min = twoDigits(now.minute);
     var sec = twoDigits(now.second);
     var ms = threeDigits(now.millisecond);
+    if (compactMode) {
+      return '$h:$min:$sec.$ms';
+    }
     var timeSinceStart = now.difference(_startTime!).toString();
     return '$h:$min:$sec.$ms (+$timeSinceStart)';
   }
@@ -339,6 +345,13 @@ class MyPrinter extends LogPrinter {
     String? error,
     String? stacktrace,
   ) {
+    if (compactMode) {
+      var emoji = _getEmoji(level);
+      var timePart = time != null ? '$time  ' : '';
+      var msg = message.replaceAll('\n', ' ');
+      return ['$emoji$timePart${msg.trim()}'];
+    }
+
     // This code is non trivial and a type annotation here helps understanding.
     // ignore: omit_local_variable_types
     List<String> buffer = [];

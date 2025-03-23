@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core.dart';
@@ -17,6 +18,7 @@ abstract class SupabaseClient {
   Future<T> execute<T>(String functionName, Future<T> Function() action, {String? extraInfo}) async {
     final stopwatch = Stopwatch()..start();
     try {
+      _log(functionName);
       await checkToken();
       return await action();
     } on AuthException catch (e, stackTrace) {
@@ -33,9 +35,9 @@ abstract class SupabaseClient {
     } finally {
       stopwatch.stop();
       if (extraInfo != null && extraInfo.isNotEmpty) {
-        BudgetLogger.instance.d("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
+        _log("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
       } else {
-        BudgetLogger.instance.d("$functionName took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
+        _log("$functionName took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
       }
     }
   }
@@ -68,6 +70,11 @@ abstract class SupabaseClient {
       "refreshToken: ${session.refreshToken}",
     ];
     BudgetLogger.instance.d(msg.join("\n"));
+  }
+
+  _log(String msg, {bool darkColor = false}) {
+    final color = darkColor ? AnsiColor.fg(34) : AnsiColor.fg(108);
+    BudgetLogger.instance.d("${color("RemoteDataSource: ")} $msg", short: true);
   }
 
   String getUserId() {
