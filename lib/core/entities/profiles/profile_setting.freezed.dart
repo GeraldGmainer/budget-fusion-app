@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ProfileSetting {
   Uuid get id => throw _privateConstructorUsedError;
-  Uuid get profileId => throw _privateConstructorUsedError;
+  Uuid get userId => throw _privateConstructorUsedError;
   Currency get currency => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
@@ -34,7 +34,7 @@ abstract class $ProfileSettingCopyWith<$Res> {
           ProfileSetting value, $Res Function(ProfileSetting) then) =
       _$ProfileSettingCopyWithImpl<$Res, ProfileSetting>;
   @useResult
-  $Res call({Uuid id, Uuid profileId, Currency currency, DateTime updatedAt});
+  $Res call({Uuid id, Uuid userId, Currency currency, DateTime updatedAt});
 
   $CurrencyCopyWith<$Res> get currency;
 }
@@ -55,7 +55,7 @@ class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
   @override
   $Res call({
     Object? id = null,
-    Object? profileId = null,
+    Object? userId = null,
     Object? currency = null,
     Object? updatedAt = null,
   }) {
@@ -64,9 +64,9 @@ class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as Uuid,
-      profileId: null == profileId
-          ? _value.profileId
-          : profileId // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       currency: null == currency
           ? _value.currency
@@ -98,7 +98,7 @@ abstract class _$$ProfileSettingImplCopyWith<$Res>
       __$$ProfileSettingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Uuid id, Uuid profileId, Currency currency, DateTime updatedAt});
+  $Res call({Uuid id, Uuid userId, Currency currency, DateTime updatedAt});
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -118,7 +118,7 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? profileId = null,
+    Object? userId = null,
     Object? currency = null,
     Object? updatedAt = null,
   }) {
@@ -127,9 +127,9 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as Uuid,
-      profileId: null == profileId
-          ? _value.profileId
-          : profileId // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       currency: null == currency
           ? _value.currency
@@ -148,7 +148,7 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
 class _$ProfileSettingImpl extends _ProfileSetting {
   const _$ProfileSettingImpl(
       {required this.id,
-      required this.profileId,
+      required this.userId,
       required this.currency,
       required this.updatedAt})
       : super._();
@@ -156,7 +156,7 @@ class _$ProfileSettingImpl extends _ProfileSetting {
   @override
   final Uuid id;
   @override
-  final Uuid profileId;
+  final Uuid userId;
   @override
   final Currency currency;
   @override
@@ -164,7 +164,7 @@ class _$ProfileSettingImpl extends _ProfileSetting {
 
   @override
   String toString() {
-    return 'ProfileSetting(id: $id, profileId: $profileId, currency: $currency, updatedAt: $updatedAt)';
+    return 'ProfileSetting(id: $id, userId: $userId, currency: $currency, updatedAt: $updatedAt)';
   }
 
   @override
@@ -173,8 +173,7 @@ class _$ProfileSettingImpl extends _ProfileSetting {
         (other.runtimeType == runtimeType &&
             other is _$ProfileSettingImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.profileId, profileId) ||
-                other.profileId == profileId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -182,8 +181,7 @@ class _$ProfileSettingImpl extends _ProfileSetting {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, profileId, currency, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, userId, currency, updatedAt);
 
   /// Create a copy of ProfileSetting
   /// with the given fields replaced by the non-null parameter values.
@@ -198,7 +196,7 @@ class _$ProfileSettingImpl extends _ProfileSetting {
 abstract class _ProfileSetting extends ProfileSetting {
   const factory _ProfileSetting(
       {required final Uuid id,
-      required final Uuid profileId,
+      required final Uuid userId,
       required final Currency currency,
       required final DateTime updatedAt}) = _$ProfileSettingImpl;
   const _ProfileSetting._() : super._();
@@ -206,7 +204,7 @@ abstract class _ProfileSetting extends ProfileSetting {
   @override
   Uuid get id;
   @override
-  Uuid get profileId;
+  Uuid get userId;
   @override
   Currency get currency;
   @override

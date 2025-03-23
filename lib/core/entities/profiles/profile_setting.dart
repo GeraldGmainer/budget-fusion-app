@@ -11,7 +11,7 @@ class ProfileSetting with _$ProfileSetting {
 
   const factory ProfileSetting({
     required Uuid id,
-    required Uuid profileId,
+    required Uuid userId,
     required Currency currency,
     required DateTime updatedAt,
   }) = _ProfileSetting;

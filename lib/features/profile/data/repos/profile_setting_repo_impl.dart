@@ -10,15 +10,15 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
   ProfileSettingRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profileSetting);
 
   @override
-  Future<void> loadById(Uuid profileId) async {
-    manager.loadAll(filters: {'profile_id': profileId.value});
+  Future<void> loadByUserId(Uuid userId) async {
+    manager.loadAll(filters: {'user_id': userId.value});
   }
 
   @override
   ProfileSetting toDomain(ProfileSettingDto dto) {
     return ProfileSetting(
       id: dto.id,
-      profileId: dto.profileId,
+      userId: dto.userId,
       currency: dto.currency.toDomain(),
       updatedAt: dto.updatedAt,
     );
@@ -28,7 +28,7 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
   ProfileSettingDto toDto(ProfileSetting entity) {
     return ProfileSettingDto(
       id: entity.id,
-      profileId: entity.profileId,
+      userId: entity.userId,
       currencyId: entity.currency.id,
       currency: CurrencyDto(
         id: entity.currency.id,

@@ -18,14 +18,14 @@ CREATE TABLE IF NOT EXISTS profiles (
 
 CREATE TABLE IF NOT EXISTS profile_settings (
     id TEXT PRIMARY KEY,
-    profile_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
     currency_id TEXT NOT NULL,
     updated_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS accounts (
     id TEXT PRIMARY KEY,
-    profile_id TEXT,
+    user_id TEXT,
     name TEXT NOT NULL,
     icon_name TEXT,
     icon_color TEXT,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 
 CREATE TABLE IF NOT EXISTS categories (
     id TEXT PRIMARY KEY,
-    profile_id TEXT,
+    user_id TEXT,
     name TEXT NOT NULL,
     icon_name TEXT,
     icon_color TEXT,
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS categories (
 
 CREATE TABLE IF NOT EXISTS bookings (
     id TEXT PRIMARY KEY,
-    profile_id TEXT,
-    booking_date TEXT NOT NULL,
+    user_id TEXT,
+    date TEXT NOT NULL,
     description TEXT,
     amount REAL NOT NULL DEFAULT 0,
     category_id TEXT NOT NULL,

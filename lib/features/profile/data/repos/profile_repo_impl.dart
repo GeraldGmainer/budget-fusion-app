@@ -11,8 +11,8 @@ class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implem
   ProfileRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profile);
 
   @override
-  Future<void> loadById(Uuid profileId) async {
-    manager.loadAll(filters: {'profile_id': profileId.value});
+  Future<void> loadByUserId(Uuid userId) async {
+    manager.loadAll(filters: {'user_id': userId.value});
   }
 
   @override

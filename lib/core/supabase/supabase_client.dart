@@ -83,15 +83,4 @@ abstract class SupabaseClient {
     }
     return supabase.auth.currentUser!.id;
   }
-
-  String getProfileId() {
-    if (supabase.auth.currentUser == null) {
-      throw UnauthenticatedException();
-    }
-    final profileId = supabase.auth.currentUser?.profileId;
-    if (profileId == null) {
-      throw TranslatedException("error.auth_error");
-    }
-    return profileId;
-  }
 }

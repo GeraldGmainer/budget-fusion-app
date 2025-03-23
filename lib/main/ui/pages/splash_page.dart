@@ -37,8 +37,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _loadProfile() {
-    context.read<ProfileCubit>().load();
-    context.read<ProfileSettingCubit>().load();
+    context.loadUserProfileData();
   }
 
   _onProfileSuccess(Profile profile) {

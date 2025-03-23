@@ -36,10 +36,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     return super.close();
   }
 
-  Future<void> load({String? profileId}) async {
+  Future<void> load({String? userId}) async {
     try {
       emit(const ProfileState.loading());
-      await _loadProfile(Uuid(profileId ?? supabase.auth.currentUser!.id));
+      await _loadProfile(Uuid(userId ?? supabase.auth.currentUser!.id));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("ProfileCubit TranslatedException", e, stackTrace);
       emit(ProfileState.error(e.message));

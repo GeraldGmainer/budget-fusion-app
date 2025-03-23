@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' as prov;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../features/profile/profile.dart';
 import '../../utils/utils.dart';
 import '../core.dart';
 
@@ -68,13 +66,13 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onAuthenticated(Session session) {
     if (mounted) {
       BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
-      context.read<ProfileCubit>().load(profileId: session.user.profileId);
+      context.loadUserProfileData(userId: session.user.id);
     }
   }
 
   _onTokenRefreshed(Session session) {
     BudgetLogger.instance.d("onTokenRefreshed: ${session.user.id}");
-    context.read<ProfileCubit>().load(profileId: session.user.profileId);
+    context.loadUserProfileData(userId: session.user.id);
   }
 
   _onPasswordRecovery(Session session) {

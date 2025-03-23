@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 import '../../use_cases/profile/load_profile_setting_use_case.dart';
 
 part 'profile_setting_cubit.freezed.dart';
+
 part 'profile_setting_state.dart';
 
 @injectable
@@ -30,10 +31,10 @@ class ProfileSettingCubit extends Cubit<ProfileSettingState> {
     );
   }
 
-  Future<void> load({String? profileId}) async {
+  Future<void> load({String? userId}) async {
     try {
       emit(const ProfileSettingState.loading());
-      await _loadProfileSetting(Uuid(profileId ?? supabase.auth.currentUser!.id));
+      await _loadProfileSetting(Uuid(userId ?? supabase.auth.currentUser!.id));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("ProfileSettingsCubit Exception", e, stackTrace);
       emit(ProfileSettingState.error(e.message));
