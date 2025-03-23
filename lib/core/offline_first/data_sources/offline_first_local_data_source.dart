@@ -22,7 +22,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
       where: filterClause?.key,
       whereArgs: filterClause?.value,
     );
-    _log("fetched ${rows.length} rows from ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("fetched ${rows.length} DTOs from ${AppLogColors.applyColor(table)}", darkColor: true);
     final dtos = rows.map((row) {
       final dto = fromJson(row);
       return dto;

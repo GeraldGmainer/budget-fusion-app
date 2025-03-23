@@ -14,30 +14,21 @@ abstract class SupabaseClient {
     return _cachedConnectivityService!;
   }
 
-  Future<T> execute<T>(String functionName, Future<T> Function() action, {String? extraInfo}) async {
-    final stopwatch = Stopwatch()..start();
+  Future<T> execute<T>(String tableName, Future<T> Function() action) async {
     try {
-      _log(functionName);
       await checkToken();
       return await action();
     } on AuthException catch (e, stackTrace) {
-      BudgetLogger.instance.e("AuthException in $functionName: ${e.message}", e, stackTrace);
+      BudgetLogger.instance.e("AuthException in $tableName: ${e.message}", e, stackTrace);
       throw TranslatedException("error.auth_error");
     } on PostgrestException catch (e, stackTrace) {
-      BudgetLogger.instance.e("PostgrestException in $functionName: ${e.message}", e, stackTrace);
+      BudgetLogger.instance.e("PostgrestException in $tableName: ${e.message}", e, stackTrace);
       throw TranslatedException("error.postgrest_error");
     } on NoInternetException {
       throw NoInternetException();
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e("Exception in $functionName", e, stackTrace);
+      BudgetLogger.instance.e("Exception in $tableName", e, stackTrace);
       throw TranslatedException("error.default");
-    } finally {
-      stopwatch.stop();
-      if (extraInfo != null && extraInfo.isNotEmpty) {
-        _log("$functionName $extraInfo took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
-      } else {
-        _log("$functionName took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
-      }
     }
   }
 
@@ -69,11 +60,6 @@ abstract class SupabaseClient {
       "refreshToken: ${session.refreshToken}",
     ];
     BudgetLogger.instance.d(msg.join("\n"));
-  }
-
-  _log(String msg, {bool darkColor = false}) {
-    final color = darkColor ? AppLogColors.remoteDataSourceEnd : AppLogColors.remoteDataSourceStart;
-    BudgetLogger.instance.d("${color("RemoteDataSource: ")} $msg", short: true);
   }
 
   String getUserId() {
