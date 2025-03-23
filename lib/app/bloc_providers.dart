@@ -11,7 +11,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<MainCubit>(create: (_) => GetIt.I<MainCubit>()),
     BlocProvider<LoginCubit>(create: (_) => GetIt.I<LoginCubit>()),
     BlocProvider<ProfileCubit>(create: (_) => GetIt.I<ProfileCubit>()),
-    BlocProvider<ProfileSettingsCubit>(create: (_) => GetIt.I<ProfileSettingsCubit>()),
+    BlocProvider<ProfileSettingCubit>(create: (_) => GetIt.I<ProfileSettingCubit>()),
     BlocProvider<LanguageCubit>(create: (_) => GetIt.I<LanguageCubit>()),
     BlocProvider<BudgetBookCubit>(create: (_) => GetIt.I<BudgetBookCubit>()),
   ];

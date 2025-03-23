@@ -10,7 +10,7 @@ class Profile with _$Profile {
 
   const factory Profile({
     required Uuid id,
-    required String userId,
+    required Uuid userId,
     String? name,
     required String email,
     String? avatarUrl,

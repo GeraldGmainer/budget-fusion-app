@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../utils/utils.dart';
-import '../../core.dart';
+import '../../../../core/core.dart';
+import '../../../../utils/utils.dart';
 
 part 'currency_dto.freezed.dart';
 part 'currency_dto.g.dart';
@@ -11,7 +11,7 @@ class CurrencyDto with _$CurrencyDto {
   const CurrencyDto._();
 
   const factory CurrencyDto({
-    required Uuid id,
+    @UuidSerializer() required Uuid id,
     required String name,
     @JsonKey(name: 'decimal_precision') required int decimalPrecision,
     @JsonKey(name: 'unit_position_front') @Default(true) bool unitPositionFront,

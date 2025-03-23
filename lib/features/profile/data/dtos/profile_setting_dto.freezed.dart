@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile_settings_dto.dart';
+part of 'profile_setting_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,56 +14,66 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ProfileSettingsDto _$ProfileSettingsDtoFromJson(Map<String, dynamic> json) {
-  return _ProfileSettingsDto.fromJson(json);
+ProfileSettingDto _$ProfileSettingDtoFromJson(Map<String, dynamic> json) {
+  return _ProfileSettingDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProfileSettingsDto {
+mixin _$ProfileSettingDto {
+  @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'profile_id')
+  @UuidSerializer()
   Uuid get profileId => throw _privateConstructorUsedError;
   @JsonKey(name: 'currency_id')
+  @UuidSerializer()
   Uuid get currencyId => throw _privateConstructorUsedError;
   @JsonKey(name: 'currencies')
+  @CurrencyDtoSerializer()
   CurrencyDto get currency => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this ProfileSettingsDto to a JSON map.
+  /// Serializes this ProfileSettingDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileSettingsDtoCopyWith<ProfileSettingsDto> get copyWith =>
+  $ProfileSettingDtoCopyWith<ProfileSettingDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProfileSettingsDtoCopyWith<$Res> {
-  factory $ProfileSettingsDtoCopyWith(
-          ProfileSettingsDto value, $Res Function(ProfileSettingsDto) then) =
-      _$ProfileSettingsDtoCopyWithImpl<$Res, ProfileSettingsDto>;
+abstract class $ProfileSettingDtoCopyWith<$Res> {
+  factory $ProfileSettingDtoCopyWith(
+          ProfileSettingDto value, $Res Function(ProfileSettingDto) then) =
+      _$ProfileSettingDtoCopyWithImpl<$Res, ProfileSettingDto>;
   @useResult
   $Res call(
-      {Uuid id,
-      @JsonKey(name: 'profile_id') Uuid profileId,
-      @JsonKey(name: 'currency_id') Uuid currencyId,
-      @JsonKey(name: 'currencies') CurrencyDto currency});
+      {@UuidSerializer() Uuid id,
+      @JsonKey(name: 'profile_id') @UuidSerializer() Uuid profileId,
+      @JsonKey(name: 'currency_id') @UuidSerializer() Uuid currencyId,
+      @JsonKey(name: 'currencies')
+      @CurrencyDtoSerializer()
+      CurrencyDto currency,
+      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
 
   $CurrencyDtoCopyWith<$Res> get currency;
 }
 
 /// @nodoc
-class _$ProfileSettingsDtoCopyWithImpl<$Res, $Val extends ProfileSettingsDto>
-    implements $ProfileSettingsDtoCopyWith<$Res> {
-  _$ProfileSettingsDtoCopyWithImpl(this._value, this._then);
+class _$ProfileSettingDtoCopyWithImpl<$Res, $Val extends ProfileSettingDto>
+    implements $ProfileSettingDtoCopyWith<$Res> {
+  _$ProfileSettingDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -72,6 +82,7 @@ class _$ProfileSettingsDtoCopyWithImpl<$Res, $Val extends ProfileSettingsDto>
     Object? profileId = null,
     Object? currencyId = null,
     Object? currency = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -90,10 +101,14 @@ class _$ProfileSettingsDtoCopyWithImpl<$Res, $Val extends ProfileSettingsDto>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as CurrencyDto,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -105,32 +120,35 @@ class _$ProfileSettingsDtoCopyWithImpl<$Res, $Val extends ProfileSettingsDto>
 }
 
 /// @nodoc
-abstract class _$$ProfileSettingsDtoImplCopyWith<$Res>
-    implements $ProfileSettingsDtoCopyWith<$Res> {
-  factory _$$ProfileSettingsDtoImplCopyWith(_$ProfileSettingsDtoImpl value,
-          $Res Function(_$ProfileSettingsDtoImpl) then) =
-      __$$ProfileSettingsDtoImplCopyWithImpl<$Res>;
+abstract class _$$ProfileSettingDtoImplCopyWith<$Res>
+    implements $ProfileSettingDtoCopyWith<$Res> {
+  factory _$$ProfileSettingDtoImplCopyWith(_$ProfileSettingDtoImpl value,
+          $Res Function(_$ProfileSettingDtoImpl) then) =
+      __$$ProfileSettingDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {Uuid id,
-      @JsonKey(name: 'profile_id') Uuid profileId,
-      @JsonKey(name: 'currency_id') Uuid currencyId,
-      @JsonKey(name: 'currencies') CurrencyDto currency});
+      {@UuidSerializer() Uuid id,
+      @JsonKey(name: 'profile_id') @UuidSerializer() Uuid profileId,
+      @JsonKey(name: 'currency_id') @UuidSerializer() Uuid currencyId,
+      @JsonKey(name: 'currencies')
+      @CurrencyDtoSerializer()
+      CurrencyDto currency,
+      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
 
   @override
   $CurrencyDtoCopyWith<$Res> get currency;
 }
 
 /// @nodoc
-class __$$ProfileSettingsDtoImplCopyWithImpl<$Res>
-    extends _$ProfileSettingsDtoCopyWithImpl<$Res, _$ProfileSettingsDtoImpl>
-    implements _$$ProfileSettingsDtoImplCopyWith<$Res> {
-  __$$ProfileSettingsDtoImplCopyWithImpl(_$ProfileSettingsDtoImpl _value,
-      $Res Function(_$ProfileSettingsDtoImpl) _then)
+class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
+    extends _$ProfileSettingDtoCopyWithImpl<$Res, _$ProfileSettingDtoImpl>
+    implements _$$ProfileSettingDtoImplCopyWith<$Res> {
+  __$$ProfileSettingDtoImplCopyWithImpl(_$ProfileSettingDtoImpl _value,
+      $Res Function(_$ProfileSettingDtoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -139,8 +157,9 @@ class __$$ProfileSettingsDtoImplCopyWithImpl<$Res>
     Object? profileId = null,
     Object? currencyId = null,
     Object? currency = null,
+    Object? updatedAt = null,
   }) {
-    return _then(_$ProfileSettingsDtoImpl(
+    return _then(_$ProfileSettingDtoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -157,104 +176,139 @@ class __$$ProfileSettingsDtoImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as CurrencyDto,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ProfileSettingsDtoImpl extends _ProfileSettingsDto {
-  const _$ProfileSettingsDtoImpl(
-      {required this.id,
-      @JsonKey(name: 'profile_id') required this.profileId,
-      @JsonKey(name: 'currency_id') required this.currencyId,
-      @JsonKey(name: 'currencies') required this.currency})
+class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
+  const _$ProfileSettingDtoImpl(
+      {@UuidSerializer() required this.id,
+      @JsonKey(name: 'profile_id') @UuidSerializer() required this.profileId,
+      @JsonKey(name: 'currency_id') @UuidSerializer() required this.currencyId,
+      @JsonKey(name: 'currencies')
+      @CurrencyDtoSerializer()
+      required this.currency,
+      @JsonKey(name: 'updated_at')
+      @DateTimeSerializer()
+      required this.updatedAt})
       : super._();
 
-  factory _$ProfileSettingsDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProfileSettingsDtoImplFromJson(json);
+  factory _$ProfileSettingDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProfileSettingDtoImplFromJson(json);
 
   @override
+  @UuidSerializer()
   final Uuid id;
   @override
   @JsonKey(name: 'profile_id')
+  @UuidSerializer()
   final Uuid profileId;
   @override
   @JsonKey(name: 'currency_id')
+  @UuidSerializer()
   final Uuid currencyId;
   @override
   @JsonKey(name: 'currencies')
+  @CurrencyDtoSerializer()
   final CurrencyDto currency;
+  @override
+  @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'ProfileSettingsDto(id: $id, profileId: $profileId, currencyId: $currencyId, currency: $currency)';
+    return 'ProfileSettingDto(id: $id, profileId: $profileId, currencyId: $currencyId, currency: $currency, updatedAt: $updatedAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProfileSettingsDtoImpl &&
+            other is _$ProfileSettingDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.profileId, profileId) ||
                 other.profileId == profileId) &&
             (identical(other.currencyId, currencyId) ||
                 other.currencyId == currencyId) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, profileId, currencyId, currency);
+      Object.hash(runtimeType, id, profileId, currencyId, currency, updatedAt);
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProfileSettingsDtoImplCopyWith<_$ProfileSettingsDtoImpl> get copyWith =>
-      __$$ProfileSettingsDtoImplCopyWithImpl<_$ProfileSettingsDtoImpl>(
+  _$$ProfileSettingDtoImplCopyWith<_$ProfileSettingDtoImpl> get copyWith =>
+      __$$ProfileSettingDtoImplCopyWithImpl<_$ProfileSettingDtoImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileSettingsDtoImplToJson(
+    return _$$ProfileSettingDtoImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProfileSettingsDto extends ProfileSettingsDto {
-  const factory _ProfileSettingsDto(
-          {required final Uuid id,
-          @JsonKey(name: 'profile_id') required final Uuid profileId,
-          @JsonKey(name: 'currency_id') required final Uuid currencyId,
-          @JsonKey(name: 'currencies') required final CurrencyDto currency}) =
-      _$ProfileSettingsDtoImpl;
-  const _ProfileSettingsDto._() : super._();
+abstract class _ProfileSettingDto extends ProfileSettingDto {
+  const factory _ProfileSettingDto(
+      {@UuidSerializer() required final Uuid id,
+      @JsonKey(name: 'profile_id')
+      @UuidSerializer()
+      required final Uuid profileId,
+      @JsonKey(name: 'currency_id')
+      @UuidSerializer()
+      required final Uuid currencyId,
+      @JsonKey(name: 'currencies')
+      @CurrencyDtoSerializer()
+      required final CurrencyDto currency,
+      @JsonKey(name: 'updated_at')
+      @DateTimeSerializer()
+      required final DateTime updatedAt}) = _$ProfileSettingDtoImpl;
+  const _ProfileSettingDto._() : super._();
 
-  factory _ProfileSettingsDto.fromJson(Map<String, dynamic> json) =
-      _$ProfileSettingsDtoImpl.fromJson;
+  factory _ProfileSettingDto.fromJson(Map<String, dynamic> json) =
+      _$ProfileSettingDtoImpl.fromJson;
 
   @override
+  @UuidSerializer()
   Uuid get id;
   @override
   @JsonKey(name: 'profile_id')
+  @UuidSerializer()
   Uuid get profileId;
   @override
   @JsonKey(name: 'currency_id')
+  @UuidSerializer()
   Uuid get currencyId;
   @override
   @JsonKey(name: 'currencies')
+  @CurrencyDtoSerializer()
   CurrencyDto get currency;
+  @override
+  @JsonKey(name: 'updated_at')
+  @DateTimeSerializer()
+  DateTime get updatedAt;
 
-  /// Create a copy of ProfileSettingsDto
+  /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileSettingsDtoImplCopyWith<_$ProfileSettingsDtoImpl> get copyWith =>
+  _$$ProfileSettingDtoImplCopyWith<_$ProfileSettingDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

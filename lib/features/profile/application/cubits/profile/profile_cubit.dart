@@ -41,10 +41,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.loading());
       await _loadProfile(Uuid(profileId ?? supabase.auth.currentUser!.id));
     } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e("ProfileBloc Exception", e, stackTrace);
+      BudgetLogger.instance.e("ProfileCubit TranslatedException", e, stackTrace);
       emit(ProfileState.error(e.message));
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e("ProfileBloc Exception", e, stackTrace);
+      BudgetLogger.instance.e("ProfileCubit Exception", e, stackTrace);
       emit(ProfileState.error("error.default"));
     }
   }

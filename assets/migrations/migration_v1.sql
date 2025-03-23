@@ -16,6 +16,13 @@ CREATE TABLE IF NOT EXISTS profiles (
     updated_at TEXT
 );
 
+CREATE TABLE IF NOT EXISTS profile_settings (
+    id TEXT PRIMARY KEY,
+    profile_id TEXT NOT NULL,
+    currency_id TEXT NOT NULL,
+    updated_at TEXT
+);
+
 CREATE TABLE IF NOT EXISTS accounts (
     id TEXT PRIMARY KEY,
     profile_id TEXT,

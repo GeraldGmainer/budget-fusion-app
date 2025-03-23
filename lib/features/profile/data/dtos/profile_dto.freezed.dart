@@ -23,7 +23,8 @@ mixin _$ProfileDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
-  String get userId => throw _privateConstructorUsedError;
+  @UuidSerializer()
+  Uuid get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
@@ -50,7 +51,7 @@ abstract class $ProfileDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String? name,
       String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl,
@@ -87,7 +88,7 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uuid,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -118,7 +119,7 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String? name,
       String email,
       @JsonKey(name: 'avatar_url') String? avatarUrl,
@@ -153,7 +154,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uuid,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -179,7 +180,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
 class _$ProfileDtoImpl extends _ProfileDto {
   const _$ProfileDtoImpl(
       {@UuidSerializer() required this.id,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
       this.name,
       required this.email,
       @JsonKey(name: 'avatar_url') this.avatarUrl,
@@ -196,7 +197,8 @@ class _$ProfileDtoImpl extends _ProfileDto {
   final Uuid id;
   @override
   @JsonKey(name: 'user_id')
-  final String userId;
+  @UuidSerializer()
+  final Uuid userId;
   @override
   final String? name;
   @override
@@ -253,7 +255,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
 abstract class _ProfileDto extends ProfileDto {
   const factory _ProfileDto(
       {@UuidSerializer() required final Uuid id,
-      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
       final String? name,
       required final String email,
       @JsonKey(name: 'avatar_url') final String? avatarUrl,
@@ -270,7 +272,8 @@ abstract class _ProfileDto extends ProfileDto {
   Uuid get id;
   @override
   @JsonKey(name: 'user_id')
-  String get userId;
+  @UuidSerializer()
+  Uuid get userId;
   @override
   String? get name;
   @override

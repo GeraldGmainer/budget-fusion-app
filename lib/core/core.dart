@@ -16,7 +16,7 @@ export 'entities/bookings/booking.dart';
 export 'entities/categories/category.dart';
 export 'entities/profiles/currency.dart';
 export 'entities/profiles/profile.dart';
-export 'entities/profiles/profile_settings.dart';
+export 'entities/profiles/profile_setting.dart';
 //
 export 'enums/category_type.dart';
 export 'enums/domain_type.dart';
@@ -46,7 +46,7 @@ export 'offline_first/repos/offline_first_list_repo.dart';
 export 'offline_first/repos/offline_first_single_repo.dart';
 //
 export 'repos/profile_repo.dart';
-export 'repos/profile_settings_repo.dart';
+export 'repos/profile_setting_repo.dart';
 //
 export 'supabase/supabase.dart';
 export 'supabase/supabase_client.dart';

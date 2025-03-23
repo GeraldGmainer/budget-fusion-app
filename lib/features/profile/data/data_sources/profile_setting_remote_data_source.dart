@@ -1,0 +1,18 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:injectable/injectable.dart';
+
+import '../dtos/profile_setting_dto.dart';
+
+@lazySingleton
+class ProfileSettingRemoteDataSource extends OfflineFirstRemoteDataSource<ProfileSettingDto> {
+  @override
+  String get table => 'profile_settings';
+
+  @override
+  String get columns => 'id, profile_id, currency_id, updated_at';
+
+  @override
+  ProfileSettingDto toDto(Map<String, dynamic> json) {
+    return ProfileSettingDto.fromJson(json);
+  }
+}

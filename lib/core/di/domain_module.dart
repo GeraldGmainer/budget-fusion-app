@@ -1,7 +1,6 @@
+import 'package:budget_fusion_app/features/profile/profile.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../features/profile/data/data_sources/profile_local_data_source.dart';
-import '../../features/profile/data/data_sources/profile_remote_data_source.dart';
 import '../enums/domain_type.dart';
 import 'registry/domain_registry.dart';
 
@@ -10,11 +9,13 @@ abstract class DomainModule {
   @LazySingleton()
   // @formatter:off
   DomainRegistry provideDomainDataSourceRegistry(
-    ProfileRemoteDataSource profileRemoteDataSource, ProfileLocalDataSource profileLocalDataSource,
+    ProfileRemoteDataSource profileRDS, ProfileLocalDataSource profileLDS,
+    ProfileSettingRemoteDataSource profileSettingRDS, ProfileSettingLocalDataSource profileSettingLDS,
   ) {
     // @formatter:on
     final registry = DomainRegistry();
-    registry.register(DomainType.profile, profileRemoteDataSource, profileLocalDataSource);
+    registry.register(DomainType.profile, profileRDS, profileLDS);
+    registry.register(DomainType.profileSetting, profileSettingRDS, profileSettingLDS);
     return registry;
   }
 }

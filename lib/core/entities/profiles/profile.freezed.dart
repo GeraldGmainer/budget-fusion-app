@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Profile {
   Uuid get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
+  Uuid get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      String userId,
+      Uuid userId,
       String? name,
       String email,
       String? avatarUrl,
@@ -73,7 +73,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uuid,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -103,7 +103,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      String userId,
+      Uuid userId,
       String? name,
       String email,
       String? avatarUrl,
@@ -138,7 +138,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uuid,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -174,7 +174,7 @@ class _$ProfileImpl extends _Profile {
   @override
   final Uuid id;
   @override
-  final String userId;
+  final Uuid userId;
   @override
   final String? name;
   @override
@@ -220,7 +220,7 @@ class _$ProfileImpl extends _Profile {
 abstract class _Profile extends Profile {
   const factory _Profile(
       {required final Uuid id,
-      required final String userId,
+      required final Uuid userId,
       final String? name,
       required final String email,
       final String? avatarUrl,
@@ -230,7 +230,7 @@ abstract class _Profile extends Profile {
   @override
   Uuid get id;
   @override
-  String get userId;
+  Uuid get userId;
   @override
   String? get name;
   @override

@@ -42,8 +42,10 @@ import 'package:budget_fusion_app/features/profile/application/cubits/language/l
     as _i251;
 import 'package:budget_fusion_app/features/profile/application/cubits/profile/profile_cubit.dart'
     as _i78;
-import 'package:budget_fusion_app/features/profile/application/cubits/profile_settings/profile_settings_cubit.dart'
-    as _i819;
+import 'package:budget_fusion_app/features/profile/application/cubits/profile_settings/profile_setting_cubit.dart'
+    as _i980;
+import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile_setting_use_case.dart'
+    as _i1036;
 import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile_use_case.dart'
     as _i75;
 import 'package:budget_fusion_app/features/profile/application/use_cases/profile/watch_profile_use_case.dart'
@@ -52,18 +54,28 @@ import 'package:budget_fusion_app/features/profile/data/data_sources/profile_loc
     as _i261;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_remote_data_source.dart'
     as _i594;
-import 'package:budget_fusion_app/features/profile/data/data_sources/profile_settings_remote_data_source.dart'
-    as _i576;
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_local_data_source.dart'
+    as _i652;
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_remote_data_source.dart'
+    as _i146;
 import 'package:budget_fusion_app/features/profile/data/repos/profile_repo_impl.dart'
     as _i604;
-import 'package:budget_fusion_app/features/profile/data/repos/profile_settings_repo_impl.dart'
-    as _i1002;
+import 'package:budget_fusion_app/features/profile/data/repos/profile_setting_repo_impl.dart'
+    as _i52;
+import 'package:budget_fusion_app/features/profile/profile.dart' as _i326;
 import 'package:budget_fusion_app/main/application/main/main_cubit.dart'
     as _i642;
 import 'package:budget_fusion_app/shared/application/use_cases/get_currency_use_case.dart'
     as _i209;
+import 'package:budget_fusion_app/shared/application/use_cases/get_profile_setting_use_case.dart'
+    as _i1015;
 import 'package:budget_fusion_app/shared/application/use_cases/watch_bookings_use_case.dart'
     as _i856;
+import 'package:budget_fusion_app/shared/application/use_cases/watch_profile_setting_use_case.dart'
+    as _i151;
+import 'package:budget_fusion_app/shared/domain/aggregator/profile_setting_aggregator.dart'
+    as _i1029;
+import 'package:budget_fusion_app/shared/shared.dart' as _i332;
 import 'package:budget_fusion_app/utils/service/connectivity_service.dart'
     as _i702;
 import 'package:budget_fusion_app/utils/utils.dart' as _i428;
@@ -98,8 +110,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i371.RealtimeNotifierService>(
         () => _i371.RealtimeNotifierService());
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
-    gh.lazySingleton<_i576.ProfileSettingsRemoteDataSource>(
-        () => _i576.ProfileSettingsRemoteDataSource());
     gh.lazySingleton<_i594.ProfileRemoteDataSource>(
         () => _i594.ProfileRemoteDataSource());
     gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
@@ -108,13 +118,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i443.FetchAndGroupBudgetBookDataUseCase());
     gh.lazySingleton<_i971.FilterBookingsUseCase>(
         () => _i971.FilterBookingsUseCase());
-    gh.lazySingleton<_i714.ProfileSettingsRepo>(() =>
-        _i1002.ProfileSettingsRepoImpl(
-            gh<_i576.ProfileSettingsRemoteDataSource>()));
+    gh.lazySingleton<_i146.ProfileSettingRemoteDataSource>(
+        () => _i146.ProfileSettingRemoteDataSource());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
-    gh.lazySingleton<_i209.GetCurrencyUseCase>(
-        () => _i209.GetCurrencyUseCase(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<_i702.ConnectivityService>(
         () => _i702.ConnectivityService(gh<_i895.Connectivity>()));
     gh.factory<_i991.LoginCubit>(() => _i991.LoginCubit(
@@ -125,19 +132,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i76.QueueLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i261.ProfileLocalDataSource>(
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
-    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
-          gh<_i443.FetchAndGroupBudgetBookDataUseCase>(),
-          gh<_i885.GenerateBudgetSummaryUseCase>(),
-          gh<_i209.GetCurrencyUseCase>(),
-          gh<_i971.FilterBookingsUseCase>(),
-        ));
+    gh.lazySingleton<_i652.ProfileSettingLocalDataSource>(
+        () => _i652.ProfileSettingLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i279.DomainRegistry>(
         () => domainModule.provideDomainDataSourceRegistry(
-              gh<_i594.ProfileRemoteDataSource>(),
-              gh<_i261.ProfileLocalDataSource>(),
+              gh<_i326.ProfileRemoteDataSource>(),
+              gh<_i326.ProfileLocalDataSource>(),
+              gh<_i326.ProfileSettingRemoteDataSource>(),
+              gh<_i326.ProfileSettingLocalDataSource>(),
             ));
-    gh.factory<_i819.ProfileSettingsCubit>(
-        () => _i819.ProfileSettingsCubit(gh<_i714.ProfileSettingsRepo>()));
     gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
           localDataSource: gh<_i76.QueueLocalDataSource>(),
           domainRegistry: gh<_i714.DomainRegistry>(),
@@ -150,13 +153,35 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i714.ProfileRepo>(
         () => _i604.ProfileRepoImpl(gh<_i714.DataManagerFactory>()));
+    gh.lazySingleton<_i714.ProfileSettingRepo>(
+        () => _i52.ProfileSettingRepoImpl(gh<_i714.DataManagerFactory>()));
     gh.lazySingleton<_i373.WatchProfileUseCase>(
         () => _i373.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i75.LoadProfileUseCase>(
         () => _i75.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i1029.ProfileSettingAggregator>(
+        () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
+    gh.lazySingleton<_i1036.LoadProfileSettingUseCase>(
+        () => _i1036.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
+    gh.factory<_i151.WatchProfileSettingUseCase>(
+        () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
+    gh.factory<_i980.ProfileSettingCubit>(() => _i980.ProfileSettingCubit(
+          gh<_i332.WatchProfileSettingUseCase>(),
+          gh<_i1036.LoadProfileSettingUseCase>(),
+        ));
+    gh.lazySingleton<_i209.GetCurrencyUseCase>(
+        () => _i209.GetCurrencyUseCase(gh<_i1029.ProfileSettingAggregator>()));
+    gh.lazySingleton<_i1015.GetProfileSettingUseCase>(() =>
+        _i1015.GetProfileSettingUseCase(gh<_i1029.ProfileSettingAggregator>()));
     gh.factory<_i78.ProfileCubit>(() => _i78.ProfileCubit(
           gh<_i373.WatchProfileUseCase>(),
           gh<_i75.LoadProfileUseCase>(),
+        ));
+    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
+          gh<_i443.FetchAndGroupBudgetBookDataUseCase>(),
+          gh<_i885.GenerateBudgetSummaryUseCase>(),
+          gh<_i209.GetCurrencyUseCase>(),
+          gh<_i971.FilterBookingsUseCase>(),
         ));
     return this;
   }

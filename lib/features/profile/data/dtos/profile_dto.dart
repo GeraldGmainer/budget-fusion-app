@@ -11,7 +11,7 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
 
   const factory ProfileDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'user_id') @UuidSerializer() required Uuid userId,
     String? name,
     required String email,
     @JsonKey(name: 'avatar_url') String? avatarUrl,

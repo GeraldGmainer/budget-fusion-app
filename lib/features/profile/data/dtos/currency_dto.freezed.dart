@@ -20,6 +20,7 @@ CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CurrencyDto {
+  @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'decimal_precision')
@@ -46,7 +47,7 @@ abstract class $CurrencyDtoCopyWith<$Res> {
       _$CurrencyDtoCopyWithImpl<$Res, CurrencyDto>;
   @useResult
   $Res call(
-      {Uuid id,
+      {@UuidSerializer() Uuid id,
       String name,
       @JsonKey(name: 'decimal_precision') int decimalPrecision,
       @JsonKey(name: 'unit_position_front') bool unitPositionFront,
@@ -114,7 +115,7 @@ abstract class _$$CurrencyDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Uuid id,
+      {@UuidSerializer() Uuid id,
       String name,
       @JsonKey(name: 'decimal_precision') int decimalPrecision,
       @JsonKey(name: 'unit_position_front') bool unitPositionFront,
@@ -175,7 +176,7 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CurrencyDtoImpl extends _CurrencyDto {
   const _$CurrencyDtoImpl(
-      {required this.id,
+      {@UuidSerializer() required this.id,
       required this.name,
       @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
       @JsonKey(name: 'unit_position_front') this.unitPositionFront = true,
@@ -187,6 +188,7 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
       _$$CurrencyDtoImplFromJson(json);
 
   @override
+  @UuidSerializer()
   final Uuid id;
   @override
   final String name;
@@ -244,7 +246,7 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
 
 abstract class _CurrencyDto extends CurrencyDto {
   const factory _CurrencyDto(
-      {required final Uuid id,
+      {@UuidSerializer() required final Uuid id,
       required final String name,
       @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
       @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
@@ -256,6 +258,7 @@ abstract class _CurrencyDto extends CurrencyDto {
       _$CurrencyDtoImpl.fromJson;
 
   @override
+  @UuidSerializer()
   Uuid get id;
   @override
   String get name;

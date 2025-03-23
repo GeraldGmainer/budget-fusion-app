@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile_settings_cubit.dart';
+part of 'profile_setting_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ProfileSettingsState {
+mixin _$ProfileSettingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfileSettings profile) loaded,
+    required TResult Function(ProfileSetting profile) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$ProfileSettingsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfileSettings profile)? loaded,
+    TResult? Function(ProfileSetting profile)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$ProfileSettingsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfileSettings profile)? loaded,
+    TResult Function(ProfileSetting profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -69,24 +69,23 @@ mixin _$ProfileSettingsState {
 }
 
 /// @nodoc
-abstract class $ProfileSettingsStateCopyWith<$Res> {
-  factory $ProfileSettingsStateCopyWith(ProfileSettingsState value,
-          $Res Function(ProfileSettingsState) then) =
-      _$ProfileSettingsStateCopyWithImpl<$Res, ProfileSettingsState>;
+abstract class $ProfileSettingStateCopyWith<$Res> {
+  factory $ProfileSettingStateCopyWith(
+          ProfileSettingState value, $Res Function(ProfileSettingState) then) =
+      _$ProfileSettingStateCopyWithImpl<$Res, ProfileSettingState>;
 }
 
 /// @nodoc
-class _$ProfileSettingsStateCopyWithImpl<$Res,
-        $Val extends ProfileSettingsState>
-    implements $ProfileSettingsStateCopyWith<$Res> {
-  _$ProfileSettingsStateCopyWithImpl(this._value, this._then);
+class _$ProfileSettingStateCopyWithImpl<$Res, $Val extends ProfileSettingState>
+    implements $ProfileSettingStateCopyWith<$Res> {
+  _$ProfileSettingStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -99,13 +98,13 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ProfileSettingsStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$ProfileSettingStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -116,7 +115,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'ProfileSettingsState.initial()';
+    return 'ProfileSettingState.initial()';
   }
 
   @override
@@ -133,7 +132,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfileSettings profile) loaded,
+    required TResult Function(ProfileSetting profile) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -144,7 +143,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfileSettings profile)? loaded,
+    TResult? Function(ProfileSetting profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -155,7 +154,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfileSettings profile)? loaded,
+    TResult Function(ProfileSetting profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -203,7 +202,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements ProfileSettingsState {
+abstract class _Initial implements ProfileSettingState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -216,13 +215,13 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ProfileSettingsStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$ProfileSettingStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -233,7 +232,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'ProfileSettingsState.loading()';
+    return 'ProfileSettingState.loading()';
   }
 
   @override
@@ -250,7 +249,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfileSettings profile) loaded,
+    required TResult Function(ProfileSetting profile) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -261,7 +260,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfileSettings profile)? loaded,
+    TResult? Function(ProfileSetting profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -272,7 +271,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfileSettings profile)? loaded,
+    TResult Function(ProfileSetting profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -320,7 +319,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements ProfileSettingsState {
+abstract class _Loading implements ProfileSettingState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -330,20 +329,20 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ProfileSettings profile});
+  $Res call({ProfileSetting profile});
 
-  $ProfileSettingsCopyWith<$Res> get profile;
+  $ProfileSettingCopyWith<$Res> get profile;
 }
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$ProfileSettingsStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$ProfileSettingStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -354,16 +353,16 @@ class __$$LoadedImplCopyWithImpl<$Res>
       null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as ProfileSettings,
+              as ProfileSetting,
     ));
   }
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProfileSettingsCopyWith<$Res> get profile {
-    return $ProfileSettingsCopyWith<$Res>(_value.profile, (value) {
+  $ProfileSettingCopyWith<$Res> get profile {
+    return $ProfileSettingCopyWith<$Res>(_value.profile, (value) {
       return _then(_value.copyWith(profile: value));
     });
   }
@@ -375,11 +374,11 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(this.profile);
 
   @override
-  final ProfileSettings profile;
+  final ProfileSetting profile;
 
   @override
   String toString() {
-    return 'ProfileSettingsState.loaded(profile: $profile)';
+    return 'ProfileSettingState.loaded(profile: $profile)';
   }
 
   @override
@@ -393,7 +392,7 @@ class _$LoadedImpl implements _Loaded {
   @override
   int get hashCode => Object.hash(runtimeType, profile);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -406,7 +405,7 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfileSettings profile) loaded,
+    required TResult Function(ProfileSetting profile) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(profile);
@@ -417,7 +416,7 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfileSettings profile)? loaded,
+    TResult? Function(ProfileSetting profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(profile);
@@ -428,7 +427,7 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfileSettings profile)? loaded,
+    TResult Function(ProfileSetting profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -476,12 +475,12 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements ProfileSettingsState {
-  const factory _Loaded(final ProfileSettings profile) = _$LoadedImpl;
+abstract class _Loaded implements ProfileSettingState {
+  const factory _Loaded(final ProfileSetting profile) = _$LoadedImpl;
 
-  ProfileSettings get profile;
+  ProfileSetting get profile;
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
@@ -499,13 +498,13 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ProfileSettingsStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$ProfileSettingStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -531,7 +530,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'ProfileSettingsState.error(message: $message)';
+    return 'ProfileSettingState.error(message: $message)';
   }
 
   @override
@@ -545,7 +544,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -558,7 +557,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ProfileSettings profile) loaded,
+    required TResult Function(ProfileSetting profile) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -569,7 +568,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ProfileSettings profile)? loaded,
+    TResult? Function(ProfileSetting profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -580,7 +579,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ProfileSettings profile)? loaded,
+    TResult Function(ProfileSetting profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -628,12 +627,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements ProfileSettingsState {
+abstract class _Error implements ProfileSettingState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;
 
-  /// Create a copy of ProfileSettingsState
+  /// Create a copy of ProfileSettingState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

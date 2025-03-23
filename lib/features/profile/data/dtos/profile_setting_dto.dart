@@ -1,0 +1,27 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/profile/data/serializer/currency_serializer.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'currency_dto.dart';
+
+part 'profile_setting_dto.freezed.dart';
+part 'profile_setting_dto.g.dart';
+
+@freezed
+class ProfileSettingDto with _$ProfileSettingDto implements OfflineFirstDto {
+  const ProfileSettingDto._();
+
+  const factory ProfileSettingDto({
+    @UuidSerializer() required Uuid id,
+    @JsonKey(name: 'profile_id') @UuidSerializer() required Uuid profileId,
+    @JsonKey(name: 'currency_id') @UuidSerializer() required Uuid currencyId,
+    @JsonKey(name: 'currencies') @CurrencyDtoSerializer() required CurrencyDto currency,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() required DateTime updatedAt,
+  }) = _ProfileSettingDto;
+
+  factory ProfileSettingDto.fromJson(Map<String, dynamic> json) => _$ProfileSettingDtoFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$$ProfileSettingDtoImplToJson(this as _$ProfileSettingDtoImpl);
+}

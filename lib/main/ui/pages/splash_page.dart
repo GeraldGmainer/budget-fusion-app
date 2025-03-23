@@ -1,12 +1,11 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/auth/auth.dart';
+import 'package:budget_fusion_app/features/profile/profile.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/core.dart';
-import '../../../../utils/utils.dart';
-import '../../../features/auth/auth.dart';
-import '../../../features/profile/profile.dart';
-import '../../../shared/shared.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -39,7 +38,7 @@ class _SplashScreenState extends State<SplashPage> {
 
   _loadProfile() {
     context.read<ProfileCubit>().load();
-    context.read<ProfileSettingsCubit>().load();
+    context.read<ProfileSettingCubit>().load();
   }
 
   _onProfileSuccess(Profile profile) {
