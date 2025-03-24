@@ -7,18 +7,19 @@ import '../../core.dart';
 class DataManagerFactory {
   final CacheManager cacheManager;
   final QueueManager queueManager;
-  final DomainRegistry domainRegistry;
   final RealtimeNotifierService realtimeNotifierService;
 
-  DataManagerFactory(this.cacheManager, this.queueManager, this.domainRegistry, this.realtimeNotifierService);
+  DataManagerFactory(this.cacheManager, this.queueManager, this.realtimeNotifierService);
 
   OfflineFirstDataManager<Dto> createManager<Dto extends OfflineFirstDto>({
     required DomainType domainType,
+    required OfflineFirstLocalDataSource<Dto> localDataSource,
+    required OfflineFirstRemoteDataSource<Dto> remoteDataSource,
   }) {
     return OfflineFirstDataManager<Dto>(
       domainType: domainType,
-      localSource: domainRegistry.getLocal(domainType) as OfflineFirstLocalDataSource<Dto>,
-      remoteSource: domainRegistry.getRemote(domainType) as OfflineFirstRemoteDataSource<Dto>,
+      localSource: localDataSource,
+      remoteSource: remoteDataSource,
       cacheManager: cacheManager,
       queueManager: queueManager,
       realtimeNotifierService: realtimeNotifierService,

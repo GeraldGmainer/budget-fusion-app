@@ -1,4 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_local_data_source.dart';
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +10,11 @@ import '../dtos/profile_dto.dart';
 // TODO or use List<Profile> and MyProfileDomainService stores current profile id
 @LazySingleton(as: ProfileRepo)
 class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implements ProfileRepo {
-  ProfileRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profile);
+  ProfileRepoImpl(
+    DataManagerFactory dmf,
+    ProfileLocalDataSource lds,
+    ProfileRemoteDataSource rds,
+  ) : super(DomainType.profile, dmf, lds, rds);
 
   @override
   Future<void> loadByUserId(Uuid userId) async {

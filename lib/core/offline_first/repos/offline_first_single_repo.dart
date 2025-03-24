@@ -2,8 +2,19 @@ import 'package:budget_fusion_app/core/core.dart';
 
 abstract class OfflineFirstSingleRepo<T, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
+  final OfflineFirstLocalDataSource<U> localDataSource;
+  final OfflineFirstRemoteDataSource<U> remoteDataSource;
 
-  OfflineFirstSingleRepo(DataManagerFactory dataManagerFactory, DomainType domainType) : manager = dataManagerFactory.createManager<U>(domainType: domainType);
+  OfflineFirstSingleRepo(
+    DomainType domainType,
+    DataManagerFactory dataManagerFactory,
+    this.localDataSource,
+    this.remoteDataSource,
+  ) : manager = dataManagerFactory.createManager<U>(
+          domainType: domainType,
+          localDataSource: localDataSource,
+          remoteDataSource: remoteDataSource,
+        );
 
   Stream<T> watch() => manager.stream.map((dtos) => toDomain(dtos.first));
 

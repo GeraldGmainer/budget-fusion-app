@@ -1,4 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_local_data_source.dart';
+import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_remote_data_source.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
@@ -7,7 +9,11 @@ import '../dtos/profile_setting_dto.dart';
 
 @LazySingleton(as: ProfileSettingRepo)
 class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, ProfileSettingDto> implements ProfileSettingRepo {
-  ProfileSettingRepoImpl(DataManagerFactory dataManagerFactory) : super(dataManagerFactory, DomainType.profileSetting);
+  ProfileSettingRepoImpl(
+    DataManagerFactory dmf,
+    ProfileSettingLocalDataSource lds,
+    ProfileSettingRemoteDataSource rds,
+  ) : super(DomainType.profileSetting, dmf, lds, rds);
 
   @override
   Future<void> loadByUserId(Uuid userId) async {

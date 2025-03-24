@@ -10,10 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:budget_fusion_app/core/core.dart' as _i714;
 import 'package:budget_fusion_app/core/di/database_module.dart' as _i752;
-import 'package:budget_fusion_app/core/di/domain_module.dart' as _i538;
 import 'package:budget_fusion_app/core/di/injection.dart' as _i87;
-import 'package:budget_fusion_app/core/di/registry/domain_registry.dart'
-    as _i279;
 import 'package:budget_fusion_app/core/offline_first/cache/cache_manager.dart'
     as _i866;
 import 'package:budget_fusion_app/core/offline_first/data_managers/data_manager_factory.dart'
@@ -62,7 +59,6 @@ import 'package:budget_fusion_app/features/profile/data/repos/profile_repo_impl.
     as _i604;
 import 'package:budget_fusion_app/features/profile/data/repos/profile_setting_repo_impl.dart'
     as _i52;
-import 'package:budget_fusion_app/features/profile/profile.dart' as _i326;
 import 'package:budget_fusion_app/main/application/main/main_cubit.dart'
     as _i642;
 import 'package:budget_fusion_app/shared/application/use_cases/get_currency_use_case.dart'
@@ -97,7 +93,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final databaseModule = _$DatabaseModule();
     final registerModule = _$RegisterModule();
-    final domainModule = _$DomainModule();
     await gh.factoryAsync<_i779.Database>(
       () => databaseModule.provideDatabase(),
       preResolve: true,
@@ -134,31 +129,28 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i652.ProfileSettingLocalDataSource>(
         () => _i652.ProfileSettingLocalDataSource(gh<_i779.Database>()));
-    gh.lazySingleton<_i279.DomainRegistry>(
-        () => domainModule.provideDomainDataSourceRegistry(
-              gh<_i326.ProfileRemoteDataSource>(),
-              gh<_i326.ProfileLocalDataSource>(),
-              gh<_i326.ProfileSettingRemoteDataSource>(),
-              gh<_i326.ProfileSettingLocalDataSource>(),
-            ));
-    gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
-          localDataSource: gh<_i76.QueueLocalDataSource>(),
-          domainRegistry: gh<_i714.DomainRegistry>(),
-        ));
+    gh.lazySingleton<_i327.QueueManager>(
+        () => _i327.QueueManager(gh<_i76.QueueLocalDataSource>()));
     gh.lazySingleton<_i327.DataManagerFactory>(() => _i327.DataManagerFactory(
           gh<_i714.CacheManager>(),
           gh<_i714.QueueManager>(),
-          gh<_i714.DomainRegistry>(),
           gh<_i371.RealtimeNotifierService>(),
         ));
-    gh.lazySingleton<_i714.ProfileRepo>(
-        () => _i604.ProfileRepoImpl(gh<_i714.DataManagerFactory>()));
-    gh.lazySingleton<_i714.ProfileSettingRepo>(
-        () => _i52.ProfileSettingRepoImpl(gh<_i714.DataManagerFactory>()));
+    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
+          gh<_i714.DataManagerFactory>(),
+          gh<_i261.ProfileLocalDataSource>(),
+          gh<_i594.ProfileRemoteDataSource>(),
+        ));
     gh.lazySingleton<_i373.WatchProfileUseCase>(
         () => _i373.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i75.LoadProfileUseCase>(
         () => _i75.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i714.ProfileSettingRepo>(
+        () => _i52.ProfileSettingRepoImpl(
+              gh<_i714.DataManagerFactory>(),
+              gh<_i652.ProfileSettingLocalDataSource>(),
+              gh<_i146.ProfileSettingRemoteDataSource>(),
+            ));
     gh.lazySingleton<_i1029.ProfileSettingAggregator>(
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
     gh.lazySingleton<_i1036.LoadProfileSettingUseCase>(
@@ -190,5 +182,3 @@ extension GetItInjectableX on _i174.GetIt {
 class _$DatabaseModule extends _i752.DatabaseModule {}
 
 class _$RegisterModule extends _i87.RegisterModule {}
-
-class _$DomainModule extends _i538.DomainModule {}

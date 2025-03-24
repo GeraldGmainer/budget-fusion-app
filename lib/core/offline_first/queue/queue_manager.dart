@@ -12,13 +12,22 @@ import 'queue_local_data_source.dart';
 class QueueManager {
   static const maxAttempts = 3;
   final QueueLocalDataSource localDataSource;
-  final DomainRegistry domainRegistry;
   final Queue<QueueItem> _inMemoryQueue = Queue();
-
+  final Map<DomainType, OfflineFirstRemoteDataSource> _remoteSources = {};
+  final Map<DomainType, OfflineFirstLocalDataSource> _localSources = {};
   bool _isProcessing = false;
   bool _initialized = false;
 
-  QueueManager({required this.localDataSource, required this.domainRegistry});
+  QueueManager(this.localDataSource);
+
+  void registerDomainSources(
+    DomainType domain,
+    OfflineFirstRemoteDataSource remoteSource,
+    OfflineFirstLocalDataSource localSource,
+  ) {
+    _remoteSources[domain] = remoteSource;
+    _localSources[domain] = localSource;
+  }
 
   Future<void> init() async {
     final items = await localDataSource.fetchPendingItems();
@@ -69,9 +78,11 @@ class QueueManager {
   }
 
   Future<void> _processQueueItem(QueueItem item) async {
-    final remoteSource = domainRegistry.getRemote(item.domain);
-    final localSource = domainRegistry.getLocal(item.domain);
-
+    final remoteSource = _remoteSources[item.domain];
+    final localSource = _localSources[item.domain];
+    if (remoteSource == null || localSource == null) {
+      throw Exception("Domain sources not registered for domain ${item.domain}");
+    }
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
     switch (item.type) {

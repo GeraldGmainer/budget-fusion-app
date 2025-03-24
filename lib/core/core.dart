@@ -10,7 +10,6 @@ export 'database/serializer/uuid_serializer.dart';
 //
 export 'di/database_module.dart';
 export 'di/injection.dart';
-export 'di/registry/domain_registry.dart';
 //
 export 'entities/accounts/account.dart';
 export 'entities/bookings/booking.dart';
