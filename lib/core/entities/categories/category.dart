@@ -11,20 +11,24 @@ class Category with _$Category {
 
   const factory Category({
     required Uuid id,
+    required Uuid userId,
     required String name,
     required CategoryType categoryType,
     required String iconName,
     required String iconColor,
+    required DateTime updatedAt,
   }) = _Category;
 
   // TODO better detect fallback
   static fallback() {
     return Category(
       id: Uuid.generate(),
-      name: 'Unknown',
+      userId: Uuid.generate(),
       categoryType: CategoryType.outcome,
-      iconName: 'lightbulb-outline',
-      iconColor: '#808080',
+      name: 'Unknown',
+      iconName: "asdf",
+      iconColor: "asdf2",
+      updatedAt: DateTime.now(),
     );
   }
 }

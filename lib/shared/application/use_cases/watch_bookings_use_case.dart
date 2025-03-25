@@ -15,10 +15,10 @@ class WatchBookingsUseCase {
     //   _accountRepo.watch(),
     //   (bookingDtos, categoryDtos, accountDtos) {
     //     final categories = categoryDtos.map((dto) => dto.toDomain()).toList();
-    //     final accounts = accountDtos.map((dto) => dto.toDomain()).toList();
+    //     final account = accountDtos.map((dto) => dto.toDomain()).toList();
     //     final bookings = bookingDtos.map((dto) {
     //       final category = categories.firstWhere((c) => c.id.toJson() == dto.categoryId, orElse: () => Category.fallback());
-    //       final account = accounts.firstWhere((a) => a.id.toJson() == dto.accountId, orElse: () => Account.fallback());
+    //       final account = account.firstWhere((a) => a.id.toJson() == dto.accountId, orElse: () => Account.fallback());
     //       return dto.toDomain(category, account);
     //     }).toList();
     //     return bookings;

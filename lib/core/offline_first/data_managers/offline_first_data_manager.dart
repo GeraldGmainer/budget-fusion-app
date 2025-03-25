@@ -99,7 +99,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   _emitToStream(List<Dto> dtos) {
-    _log("Emitting ${dtos.length} items to stream for ${AppLogColors.applyColor(domainType.name)}", darkColor: true);
+    _log("Emitting ${dtos.length} items to entities for ${AppLogColors.applyColor(domainType.name)}", darkColor: true);
     streamController.add(dtos);
   }
 
@@ -151,6 +151,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   _log(String msg, {bool darkColor = false}) {
     final color = darkColor ? AppLogColors.dataManagerEnd : AppLogColors.dataManagerStart;
-    BudgetLogger.instance.d("${color("ODM: ")} $msg", short: true);
+    BudgetLogger.instance.d("${color("DataManager:".padRight(AppLogColors.serviceCharLength))} $msg", short: true);
   }
 }

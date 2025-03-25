@@ -11,8 +11,8 @@ class Account with _$Account {
     required Uuid id,
     required Uuid userId,
     required String name,
-    String? iconName,
-    String? iconColor,
+    required String iconName,
+    required String iconColor,
     required DateTime updatedAt,
   }) = _Account;
 
@@ -23,6 +23,13 @@ class Account with _$Account {
 
   // TODO better detect fallback
   static fallback() {
-    return Account(id: Uuid.generate(), userId: Uuid.generate(), name: 'Unknown', updatedAt: DateTime.now());
+    return Account(
+      id: Uuid.generate(),
+      userId: Uuid.generate(),
+      name: 'Unknown',
+      iconName: "asdf",
+      iconColor: "asdf2",
+      updatedAt: DateTime.now(),
+    );
   }
 }

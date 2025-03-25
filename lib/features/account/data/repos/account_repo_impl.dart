@@ -31,6 +31,8 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
       id: entity.id,
       userId: entity.userId,
       name: entity.name,
+      iconName: entity.iconName,
+      iconColor: entity.iconColor,
       updatedAt: entity.updatedAt,
     );
   }

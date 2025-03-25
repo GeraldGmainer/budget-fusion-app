@@ -95,10 +95,11 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   _log(String msg, {Stopwatch? stopwatch}) {
+    final start = AppLogColors.remoteDataSourceEnd("RemoteDataSource:".padRight(AppLogColors.serviceCharLength));
     if (stopwatch != null) {
-      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceEnd("RDS: ")} $msg took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
+      BudgetLogger.instance.d("$start $msg took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
     } else {
-      BudgetLogger.instance.d("${AppLogColors.remoteDataSourceStart("RDS: ")} $msg", short: true);
+      BudgetLogger.instance.d("$start $msg", short: true);
     }
   }
 

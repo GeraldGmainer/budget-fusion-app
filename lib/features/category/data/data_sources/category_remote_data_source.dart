@@ -1,0 +1,18 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:injectable/injectable.dart';
+
+import '../dtos/category_dto.dart';
+
+@lazySingleton
+class CategoryRemoteDataSource extends OfflineFirstRemoteDataSource<CategoryDto> {
+  @override
+  String get table => 'categories';
+
+  @override
+  String get columns => 'id, user_id, name, category_type, icon_name, icon_color, updated_at';
+
+  @override
+  CategoryDto toDto(Map<String, dynamic> json) {
+    return CategoryDto.fromJson(json);
+  }
+}

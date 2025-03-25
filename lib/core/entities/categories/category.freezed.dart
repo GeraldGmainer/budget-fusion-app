@@ -17,10 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Category {
   Uuid get id => throw _privateConstructorUsedError;
+  Uuid get userId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -36,10 +38,12 @@ abstract class $CategoryCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
+      Uuid userId,
       String name,
       CategoryType categoryType,
       String iconName,
-      String iconColor});
+      String iconColor,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -58,15 +62,21 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
   @override
   $Res call({
     Object? id = null,
+    Object? userId = null,
     Object? name = null,
     Object? categoryType = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as Uuid,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -84,6 +94,10 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -98,10 +112,12 @@ abstract class _$$CategoryImplCopyWith<$Res>
   @useResult
   $Res call(
       {Uuid id,
+      Uuid userId,
       String name,
       CategoryType categoryType,
       String iconName,
-      String iconColor});
+      String iconColor,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -118,15 +134,21 @@ class __$$CategoryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? userId = null,
     Object? name = null,
     Object? categoryType = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$CategoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as Uuid,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -144,6 +166,10 @@ class __$$CategoryImplCopyWithImpl<$Res>
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -153,14 +179,18 @@ class __$$CategoryImplCopyWithImpl<$Res>
 class _$CategoryImpl extends _Category {
   const _$CategoryImpl(
       {required this.id,
+      required this.userId,
       required this.name,
       required this.categoryType,
       required this.iconName,
-      required this.iconColor})
+      required this.iconColor,
+      required this.updatedAt})
       : super._();
 
   @override
   final Uuid id;
+  @override
+  final Uuid userId;
   @override
   final String name;
   @override
@@ -169,10 +199,12 @@ class _$CategoryImpl extends _Category {
   final String iconName;
   @override
   final String iconColor;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor)';
+    return 'Category(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
   }
 
   @override
@@ -181,18 +213,21 @@ class _$CategoryImpl extends _Category {
         (other.runtimeType == runtimeType &&
             other is _$CategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
-                other.iconColor == iconColor));
+                other.iconColor == iconColor) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, categoryType, iconName, iconColor);
+  int get hashCode => Object.hash(runtimeType, id, userId, name, categoryType,
+      iconName, iconColor, updatedAt);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -206,14 +241,18 @@ class _$CategoryImpl extends _Category {
 abstract class _Category extends Category {
   const factory _Category(
       {required final Uuid id,
+      required final Uuid userId,
       required final String name,
       required final CategoryType categoryType,
       required final String iconName,
-      required final String iconColor}) = _$CategoryImpl;
+      required final String iconColor,
+      required final DateTime updatedAt}) = _$CategoryImpl;
   const _Category._() : super._();
 
   @override
   Uuid get id;
+  @override
+  Uuid get userId;
   @override
   String get name;
   @override
@@ -222,6 +261,8 @@ abstract class _Category extends Category {
   String get iconName;
   @override
   String get iconColor;
+  @override
+  DateTime get updatedAt;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

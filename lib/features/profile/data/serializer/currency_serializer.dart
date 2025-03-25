@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 import '../dtos/currency_dto.dart';
 
 class CurrencyDtoSerializer implements JsonConverter<CurrencyDto, dynamic> {
@@ -18,7 +20,5 @@ class CurrencyDtoSerializer implements JsonConverter<CurrencyDto, dynamic> {
   }
 
   @override
-  dynamic toJson(CurrencyDto object) {
-    return object.toJson();
-  }
+  dynamic toJson(CurrencyDto object) => object.toJson();
 }

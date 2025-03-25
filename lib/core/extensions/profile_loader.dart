@@ -1,4 +1,5 @@
-import 'package:budget_fusion_app/features/accounts/accounts.dart';
+import 'package:budget_fusion_app/features/account/account.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ extension ProfileLoader on BuildContext {
   void loadUserProfileData({String? userId}) {
     read<ProfileCubit>().load(userId: userId);
     read<ProfileSettingCubit>().load(userId: userId);
-    read<AccountsCubit>().load(userId: userId);
+    read<AccountCubit>().load(userId: userId);
+    read<CategoryCubit>().load(userId: userId);
   }
 }

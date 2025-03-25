@@ -37,6 +37,6 @@ class RealtimeNotifierService {
 
   void _log(String msg, {bool darkColor = false}) {
     final color = darkColor ? AppLogColors.realtimeNotifierServiceEnd : AppLogColors.realtimeNotifierServiceStart;
-    BudgetLogger.instance.d("${color("RTS: ")} $msg", short: true);
+    BudgetLogger.instance.d("${color("Realtime Notifier:".padRight(AppLogColors.serviceCharLength))} $msg", short: true);
   }
 }

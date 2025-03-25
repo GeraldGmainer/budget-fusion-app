@@ -22,7 +22,7 @@ class AppDrawer extends StatelessWidget {
     DrawerSection(
       header: 'Financial Management',
       items: [
-        DrawerItem(icon: CommunityMaterialIcons.bank, title: 'Accounts', route: '/accounts'),
+        DrawerItem(icon: CommunityMaterialIcons.bank, title: 'Accounts', route: '/account'),
         DrawerItem(icon: CommunityMaterialIcons.table_large, title: 'Categories', route: '/categories'),
         DrawerItem(icon: CommunityMaterialIcons.repeat, title: 'Recurring Transactions', route: '/recurring-transactions'),
         DrawerItem(icon: CommunityMaterialIcons.flag_variant, title: 'Budget Goals', route: '/budget_book-goals'),

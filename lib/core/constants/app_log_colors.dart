@@ -1,6 +1,8 @@
 import 'package:logger/logger.dart';
 
 class AppLogColors {
+  static const int serviceCharLength = 25;
+
   static final AnsiColor localDataSourceStart = AnsiColor.fg(111);
   static final AnsiColor localDataSourceEnd = AnsiColor.fg(27);
 
@@ -18,7 +20,7 @@ class AppLogColors {
   static final Map<String, AnsiColor> _domainColors = {
     'profiles': AnsiColor.fg(34),
     'profile_settings': AnsiColor.fg(42),
-    'accounts': AnsiColor.fg(32),
+    'account': AnsiColor.fg(32),
     'categories': AnsiColor.fg(33),
     'bookings': AnsiColor.fg(35),
   };

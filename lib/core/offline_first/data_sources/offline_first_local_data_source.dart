@@ -98,7 +98,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   _log(String msg, {bool darkColor = false}) {
     final color = darkColor ? AppLogColors.localDataSourceEnd : AppLogColors.localDataSourceStart;
-    BudgetLogger.instance.d("${color("LDS: ")} $msg", short: true);
+    BudgetLogger.instance.d("${color("LocalDataSource:".padRight(AppLogColors.serviceCharLength))} $msg", short: true);
   }
 
   Map<String, dynamic> _convertMapsToString(Map<String, dynamic> input) {
