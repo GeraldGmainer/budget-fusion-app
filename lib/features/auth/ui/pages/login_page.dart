@@ -1,3 +1,5 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/core.dart';
 import '../../../profile/profile.dart';
 import '../../auth.dart';
 import '../widgets/login_form.dart';
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Builder(builder: (ctx) {
         scaffoldProvider.setScaffoldContext((ctx));
 
-        return BlocConsumer<ProfileCubit, ProfileState>(
+        return BlocConsumer<ProfileCubit, LoadableState<Profile>>(
           listener: (context, state) {
             state.whenOrNull(
               loaded: _onProfileSuccess,

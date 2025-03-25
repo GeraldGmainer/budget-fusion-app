@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../features/accounts/accounts.dart';
 import '../features/auth/auth.dart';
 import '../features/budget_book/budget_book.dart';
 import '../features/profile/profile.dart';
@@ -14,6 +15,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<ProfileSettingCubit>(create: (_) => GetIt.I<ProfileSettingCubit>()),
     BlocProvider<LanguageCubit>(create: (_) => GetIt.I<LanguageCubit>()),
     BlocProvider<BudgetBookCubit>(create: (_) => GetIt.I<BudgetBookCubit>()),
+    BlocProvider<AccountsCubit>(create: (_) => GetIt.I<AccountsCubit>()),
   ];
 }
 

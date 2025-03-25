@@ -9,18 +9,20 @@ class Account with _$Account {
 
   const factory Account({
     required Uuid id,
+    required Uuid userId,
     required String name,
-    required String iconName,
-    required String iconColor,
+    String? iconName,
+    String? iconColor,
+    required DateTime updatedAt,
   }) = _Account;
+
+  // @override
+// Profile copyWithUpdatedAt(DateTime updatedAt) {
+//   return copyWith(updatedAt: updatedAt);
+// }
 
   // TODO better detect fallback
   static fallback() {
-    return Account(
-      id: Uuid.generate(),
-      name: 'Unknown',
-      iconName: 'lightbulb-outline',
-      iconColor: '#808080',
-    );
+    return Account(id: Uuid.generate(), userId: Uuid.generate(), name: 'Unknown', updatedAt: DateTime.now());
   }
 }

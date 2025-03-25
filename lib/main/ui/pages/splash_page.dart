@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<ProfileCubit, ProfileState>(
+      body: BlocConsumer<ProfileCubit, LoadableState<Profile>>(
         listener: (context, state) {
           state.whenOrNull(
             loaded: _onProfileSuccess,

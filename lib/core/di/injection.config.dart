@@ -21,6 +21,18 @@ import 'package:budget_fusion_app/core/offline_first/queue/queue_manager.dart'
     as _i327;
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart'
     as _i371;
+import 'package:budget_fusion_app/features/accounts/application/cubits/accounts_cubit.dart'
+    as _i822;
+import 'package:budget_fusion_app/features/accounts/application/use_cases/load_accounts_use_case.dart'
+    as _i673;
+import 'package:budget_fusion_app/features/accounts/application/use_cases/watch_accounts_use_case.dart'
+    as _i18;
+import 'package:budget_fusion_app/features/accounts/data/data_sources/account_local_data_source.dart'
+    as _i360;
+import 'package:budget_fusion_app/features/accounts/data/data_sources/account_remote_data_source.dart'
+    as _i15;
+import 'package:budget_fusion_app/features/accounts/data/repos/account_repo_impl.dart'
+    as _i352;
 import 'package:budget_fusion_app/features/auth/application/login/login_cubit.dart'
     as _i991;
 import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_source.dart'
@@ -35,18 +47,18 @@ import 'package:budget_fusion_app/features/budget_book/application/budget_book/u
     as _i971;
 import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_summary_use_case.dart'
     as _i885;
-import 'package:budget_fusion_app/features/profile/application/cubits/language/language_cubit.dart'
-    as _i251;
-import 'package:budget_fusion_app/features/profile/application/cubits/profile/profile_cubit.dart'
-    as _i78;
-import 'package:budget_fusion_app/features/profile/application/cubits/profile_settings/profile_setting_cubit.dart'
-    as _i980;
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile_setting_use_case.dart'
-    as _i1036;
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/load_profile_use_case.dart'
-    as _i75;
-import 'package:budget_fusion_app/features/profile/application/use_cases/profile/watch_profile_use_case.dart'
-    as _i373;
+import 'package:budget_fusion_app/features/profile/application/cubits/language_cubit.dart'
+    as _i487;
+import 'package:budget_fusion_app/features/profile/application/cubits/profile_cubit.dart'
+    as _i1071;
+import 'package:budget_fusion_app/features/profile/application/cubits/profile_setting_cubit.dart'
+    as _i1024;
+import 'package:budget_fusion_app/features/profile/application/use_cases/load_profile_setting_use_case.dart'
+    as _i361;
+import 'package:budget_fusion_app/features/profile/application/use_cases/load_profile_use_case.dart'
+    as _i874;
+import 'package:budget_fusion_app/features/profile/application/use_cases/watch_profile_use_case.dart'
+    as _i528;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_local_data_source.dart'
     as _i261;
 import 'package:budget_fusion_app/features/profile/data/data_sources/profile_remote_data_source.dart'
@@ -97,9 +109,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
-    gh.factory<_i251.LanguageCubit>(() => _i251.LanguageCubit());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
     gh.factory<_i856.WatchBookingsUseCase>(() => _i856.WatchBookingsUseCase());
+    gh.factory<_i487.LanguageCubit>(() => _i487.LanguageCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
@@ -115,6 +127,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i146.ProfileSettingRemoteDataSource>(
         () => _i146.ProfileSettingRemoteDataSource());
+    gh.lazySingleton<_i15.AccountRemoteDataSource>(
+        () => _i15.AccountRemoteDataSource());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i702.ConnectivityService>(
@@ -129,6 +143,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i652.ProfileSettingLocalDataSource>(
         () => _i652.ProfileSettingLocalDataSource(gh<_i779.Database>()));
+    gh.lazySingleton<_i360.AccountLocalDataSource>(
+        () => _i360.AccountLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i327.QueueManager>(
         () => _i327.QueueManager(gh<_i76.QueueLocalDataSource>()));
     gh.lazySingleton<_i327.DataManagerFactory>(() => _i327.DataManagerFactory(
@@ -136,39 +152,52 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.QueueManager>(),
           gh<_i371.RealtimeNotifierService>(),
         ));
-    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
+    gh.lazySingleton<_i714.AccountRepo>(() => _i352.AccountRepoImpl(
           gh<_i714.DataManagerFactory>(),
-          gh<_i261.ProfileLocalDataSource>(),
-          gh<_i594.ProfileRemoteDataSource>(),
+          gh<_i360.AccountLocalDataSource>(),
+          gh<_i15.AccountRemoteDataSource>(),
         ));
-    gh.lazySingleton<_i373.WatchProfileUseCase>(
-        () => _i373.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
-    gh.lazySingleton<_i75.LoadProfileUseCase>(
-        () => _i75.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i714.ProfileSettingRepo>(
         () => _i52.ProfileSettingRepoImpl(
               gh<_i714.DataManagerFactory>(),
               gh<_i652.ProfileSettingLocalDataSource>(),
               gh<_i146.ProfileSettingRemoteDataSource>(),
             ));
+    gh.lazySingleton<_i18.WatchAccountsUseCase>(
+        () => _i18.WatchAccountsUseCase(gh<_i714.AccountRepo>()));
+    gh.lazySingleton<_i673.LoadAccountsUseCase>(
+        () => _i673.LoadAccountsUseCase(gh<_i714.AccountRepo>()));
+    gh.factory<_i822.AccountsCubit>(() => _i822.AccountsCubit(
+          gh<_i18.WatchAccountsUseCase>(),
+          gh<_i673.LoadAccountsUseCase>(),
+        ));
+    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
+          gh<_i714.DataManagerFactory>(),
+          gh<_i261.ProfileLocalDataSource>(),
+          gh<_i594.ProfileRemoteDataSource>(),
+        ));
+    gh.lazySingleton<_i874.LoadProfileUseCase>(
+        () => _i874.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i528.WatchProfileUseCase>(
+        () => _i528.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.factory<_i1071.ProfileCubit>(() => _i1071.ProfileCubit(
+          gh<_i528.WatchProfileUseCase>(),
+          gh<_i874.LoadProfileUseCase>(),
+        ));
     gh.lazySingleton<_i1029.ProfileSettingAggregator>(
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
-    gh.lazySingleton<_i1036.LoadProfileSettingUseCase>(
-        () => _i1036.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
+    gh.lazySingleton<_i361.LoadProfileSettingUseCase>(
+        () => _i361.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
-    gh.factory<_i980.ProfileSettingCubit>(() => _i980.ProfileSettingCubit(
+    gh.factory<_i1024.ProfileSettingCubit>(() => _i1024.ProfileSettingCubit(
           gh<_i332.WatchProfileSettingUseCase>(),
-          gh<_i1036.LoadProfileSettingUseCase>(),
+          gh<_i361.LoadProfileSettingUseCase>(),
         ));
     gh.lazySingleton<_i209.GetCurrencyUseCase>(
         () => _i209.GetCurrencyUseCase(gh<_i1029.ProfileSettingAggregator>()));
     gh.lazySingleton<_i1015.GetProfileSettingUseCase>(() =>
         _i1015.GetProfileSettingUseCase(gh<_i1029.ProfileSettingAggregator>()));
-    gh.factory<_i78.ProfileCubit>(() => _i78.ProfileCubit(
-          gh<_i373.WatchProfileUseCase>(),
-          gh<_i75.LoadProfileUseCase>(),
-        ));
     gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
           gh<_i443.FetchAndGroupBudgetBookDataUseCase>(),
           gh<_i885.GenerateBudgetSummaryUseCase>(),

@@ -1,9 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_local_data_source.dart';
-import 'package:budget_fusion_app/features/profile/data/data_sources/profile_setting_remote_data_source.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
+import '../data_sources/profile_setting_local_data_source.dart';
+import '../data_sources/profile_setting_remote_data_source.dart';
 import '../dtos/currency_dto.dart';
 import '../dtos/profile_setting_dto.dart';
 
