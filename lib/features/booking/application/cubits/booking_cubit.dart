@@ -6,23 +6,23 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../use_cases/load_categories_use_case.dart';
-import '../use_cases/watch_categories_use_case.dart';
+import '../use_cases/load_bookings_use_case.dart';
+import '../use_cases/watch_bookings_use_case.dart';
 
 @injectable
-class CategoryCubit extends Cubit<LoadableState<List<Category>>> {
-  final WatchCategoriesUseCase _watchCategories;
-  final LoadCategoriesUseCase _loadCategories;
+class BookingCubit extends Cubit<LoadableState<List<Booking>>> {
+  final WatchBookingsUseCase _watchBookings;
+  final LoadBookingsUseCase _loadBookings;
   StreamSubscription? _sub;
 
-  CategoryCubit(this._watchCategories, this._loadCategories) : super(const LoadableState.initial()) {
+  BookingCubit(this._watchBookings, this._loadBookings) : super(const LoadableState.initial()) {
     _startWatching();
   }
 
   void _startWatching() {
     _sub?.cancel();
-    _sub = _watchCategories().listen(
-      (accounts) => emit(LoadableState.loaded(accounts)),
+    _sub = _watchBookings().listen(
+      (bookings) => emit(LoadableState.loaded(bookings)),
       onError: (error) => emit(LoadableState.error(error is TranslatedException ? error.message : 'error.default')),
     );
   }
@@ -36,7 +36,7 @@ class CategoryCubit extends Cubit<LoadableState<List<Category>>> {
   Future<void> load({String? userId}) async {
     try {
       emit(const LoadableState.loading());
-      await _loadCategories();
+      await _loadBookings();
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
       emit(LoadableState.error(e.message));

@@ -11,11 +11,13 @@ class Booking with _$Booking {
 
   const factory Booking({
     required Uuid id,
-    required DateTime bookingDate,
+    required Uuid userId,
+    required DateTime date,
     required String? description,
     required Decimal amount,
     required Category category,
     required Account account,
+    required DateTime updatedAt,
   }) = _Booking;
 }
 

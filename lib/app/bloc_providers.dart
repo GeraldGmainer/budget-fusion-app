@@ -1,10 +1,11 @@
-import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/account/account.dart';
 import '../features/auth/auth.dart';
+import '../features/booking/booking.dart';
 import '../features/budget_book/budget_book.dart';
+import '../features/category/category.dart';
 import '../features/profile/profile.dart';
 import '../main/main.dart';
 
@@ -18,6 +19,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<BudgetBookCubit>(create: (_) => GetIt.I<BudgetBookCubit>()),
     BlocProvider<AccountCubit>(create: (_) => GetIt.I<AccountCubit>()),
     BlocProvider<CategoryCubit>(create: (_) => GetIt.I<CategoryCubit>()),
+    BlocProvider<BookingCubit>(create: (_) => GetIt.I<BookingCubit>()),
   ];
 }
 

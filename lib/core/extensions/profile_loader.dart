@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/features/account/account.dart';
+import 'package:budget_fusion_app/features/booking/booking.dart';
 import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/features/profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -10,5 +11,6 @@ extension ProfileLoader on BuildContext {
     read<ProfileSettingCubit>().load(userId: userId);
     read<AccountCubit>().load(userId: userId);
     read<CategoryCubit>().load(userId: userId);
+    read<BookingCubit>().load(userId: userId);
   }
 }

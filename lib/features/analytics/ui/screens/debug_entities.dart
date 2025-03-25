@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/account/account.dart';
+import 'package:budget_fusion_app/features/booking/booking.dart';
 import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/features/profile/profile.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
@@ -33,6 +34,10 @@ class DebugEntities extends StatelessWidget {
           Text('Categories', style: Theme.of(context).textTheme.bodyLarge),
           SizedBox(height: 16),
           _buildCategories(),
+          const Divider(height: 66, thickness: 2, color: Colors.white),
+          Text('Bookings', style: Theme.of(context).textTheme.bodyLarge),
+          const SizedBox(height: 16),
+          _buildBookings(),
         ],
       ),
     );
@@ -132,6 +137,32 @@ class DebugEntities extends StatelessWidget {
                     const Divider(),
                   ],
                 );
+              }).toList(),
+            );
+          },
+          error: (message) => Text('Error: $message'),
+        );
+      },
+    );
+  }
+
+  Widget _buildBookings() {
+    return BlocBuilder<BookingCubit, LoadableState<List<Booking>>>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const Text('Initial'),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          loaded: (bookings) {
+            if (bookings.isEmpty) {
+              return const Text('No bookings available');
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: bookings.map((booking) {
+                final formattedDate = DateFormat('dd.MM.yyyy').format(booking.date);
+                final description = booking.description ?? 'No description';
+                final amount = booking.amount.toString();
+                return Text('$formattedDate | $description | $amount');
               }).toList(),
             );
           },

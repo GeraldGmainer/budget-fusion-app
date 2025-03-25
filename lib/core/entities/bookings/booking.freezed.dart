@@ -17,11 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Booking {
   Uuid get id => throw _privateConstructorUsedError;
-  DateTime get bookingDate => throw _privateConstructorUsedError;
+  Uuid get userId => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   Decimal get amount => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -36,11 +38,13 @@ abstract class $BookingCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      DateTime bookingDate,
+      Uuid userId,
+      DateTime date,
       String? description,
       Decimal amount,
       Category category,
-      Account account});
+      Account account,
+      DateTime updatedAt});
 
   $CategoryCopyWith<$Res> get category;
   $AccountCopyWith<$Res> get account;
@@ -62,20 +66,26 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
   @override
   $Res call({
     Object? id = null,
-    Object? bookingDate = null,
+    Object? userId = null,
+    Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? category = null,
     Object? account = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as Uuid,
-      bookingDate: null == bookingDate
-          ? _value.bookingDate
-          : bookingDate // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as Uuid,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
       description: freezed == description
           ? _value.description
@@ -93,6 +103,10 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 
@@ -126,11 +140,13 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      DateTime bookingDate,
+      Uuid userId,
+      DateTime date,
       String? description,
       Decimal amount,
       Category category,
-      Account account});
+      Account account,
+      DateTime updatedAt});
 
   @override
   $CategoryCopyWith<$Res> get category;
@@ -152,20 +168,26 @@ class __$$BookingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? bookingDate = null,
+    Object? userId = null,
+    Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? category = null,
     Object? account = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$BookingImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as Uuid,
-      bookingDate: null == bookingDate
-          ? _value.bookingDate
-          : bookingDate // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as Uuid,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
       description: freezed == description
           ? _value.description
@@ -183,6 +205,10 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -192,17 +218,21 @@ class __$$BookingImplCopyWithImpl<$Res>
 class _$BookingImpl extends _Booking {
   const _$BookingImpl(
       {required this.id,
-      required this.bookingDate,
+      required this.userId,
+      required this.date,
       required this.description,
       required this.amount,
       required this.category,
-      required this.account})
+      required this.account,
+      required this.updatedAt})
       : super._();
 
   @override
   final Uuid id;
   @override
-  final DateTime bookingDate;
+  final Uuid userId;
+  @override
+  final DateTime date;
   @override
   final String? description;
   @override
@@ -211,10 +241,12 @@ class _$BookingImpl extends _Booking {
   final Category category;
   @override
   final Account account;
+  @override
+  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Booking(id: $id, bookingDate: $bookingDate, description: $description, amount: $amount, category: $category, account: $account)';
+    return 'Booking(id: $id, userId: $userId, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt)';
   }
 
   @override
@@ -223,19 +255,21 @@ class _$BookingImpl extends _Booking {
         (other.runtimeType == runtimeType &&
             other is _$BookingImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.bookingDate, bookingDate) ||
-                other.bookingDate == bookingDate) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            (identical(other.account, account) || other.account == account));
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, bookingDate, description, amount, category, account);
+  int get hashCode => Object.hash(runtimeType, id, userId, date, description,
+      amount, category, account, updatedAt);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -249,17 +283,21 @@ class _$BookingImpl extends _Booking {
 abstract class _Booking extends Booking {
   const factory _Booking(
       {required final Uuid id,
-      required final DateTime bookingDate,
+      required final Uuid userId,
+      required final DateTime date,
       required final String? description,
       required final Decimal amount,
       required final Category category,
-      required final Account account}) = _$BookingImpl;
+      required final Account account,
+      required final DateTime updatedAt}) = _$BookingImpl;
   const _Booking._() : super._();
 
   @override
   Uuid get id;
   @override
-  DateTime get bookingDate;
+  Uuid get userId;
+  @override
+  DateTime get date;
   @override
   String? get description;
   @override
@@ -268,6 +306,8 @@ abstract class _Booking extends Booking {
   Category get category;
   @override
   Account get account;
+  @override
+  DateTime get updatedAt;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
