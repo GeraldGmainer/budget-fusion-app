@@ -18,11 +18,11 @@ class AppLogColors {
   static final AnsiColor queueLocalDataSource = AnsiColor.fg(96);
 
   static final Map<String, AnsiColor> _domainColors = {
-    'profiles': AnsiColor.fg(34),
-    'profile_settings': AnsiColor.fg(42),
+    'profile': AnsiColor.fg(34),
+    'profile_setting': AnsiColor.fg(42),
     'account': AnsiColor.fg(32),
-    'categories': AnsiColor.fg(33),
-    'bookings': AnsiColor.fg(35),
+    'category': AnsiColor.fg(33),
+    'booking': AnsiColor.fg(35),
   };
 
   static AnsiColor getDomainColor(String table) {

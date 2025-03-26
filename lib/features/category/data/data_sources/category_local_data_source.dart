@@ -8,7 +8,7 @@ class CategoryLocalDataSource extends OfflineFirstLocalDataSource<CategoryDto> {
   CategoryLocalDataSource(super.db);
 
   @override
-  String get table => "categories";
+  String get table => "category";
 
   @override
   CategoryDto fromJson(Map<String, dynamic> json) => CategoryDto.fromJson(json);

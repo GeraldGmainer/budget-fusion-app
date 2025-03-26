@@ -6,7 +6,7 @@ import '../dtos/category_dto.dart';
 @lazySingleton
 class CategoryRemoteDataSource extends OfflineFirstRemoteDataSource<CategoryDto> {
   @override
-  String get table => 'categories';
+  String get table => 'category';
 
   @override
   String get columns => 'id, user_id, name, category_type, icon_name, icon_color, updated_at';

@@ -8,7 +8,7 @@ class AccountLocalDataSource extends OfflineFirstLocalDataSource<AccountDto> {
   AccountLocalDataSource(super.db);
 
   @override
-  String get table => "accounts";
+  String get table => "account";
 
   @override
   AccountDto fromJson(Map<String, dynamic> json) => AccountDto.fromJson(json);

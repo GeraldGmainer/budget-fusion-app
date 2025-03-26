@@ -6,7 +6,7 @@ import '../dtos/profile_dto.dart';
 @lazySingleton
 class ProfileRemoteDataSource extends OfflineFirstRemoteDataSource<ProfileDto> {
   @override
-  String get table => 'profiles';
+  String get table => 'profile';
 
   @override
   String get columns => 'id, user_id, name, email, avatar_url, updated_at';

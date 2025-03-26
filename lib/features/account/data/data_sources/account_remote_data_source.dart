@@ -6,7 +6,7 @@ import '../dtos/account_dto.dart';
 @lazySingleton
 class AccountRemoteDataSource extends OfflineFirstRemoteDataSource<AccountDto> {
   @override
-  String get table => 'accounts';
+  String get table => 'account';
 
   @override
   String get columns => 'id, user_id, name, icon_name, icon_color, updated_at';

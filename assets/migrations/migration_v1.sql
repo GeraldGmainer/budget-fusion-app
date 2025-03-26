@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS queue_items (
     done INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS profiles (
+CREATE TABLE IF NOT EXISTS profile (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
     name TEXT,
@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS profiles (
     updated_at TEXT
 );
 
-CREATE TABLE IF NOT EXISTS profile_settings (
+CREATE TABLE IF NOT EXISTS profile_setting (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
     currency TEXT NOT NULL,
     updated_at TEXT
 );
 
-CREATE TABLE IF NOT EXISTS accounts (
+CREATE TABLE IF NOT EXISTS account (
     id TEXT PRIMARY KEY,
     user_id TEXT,
     name TEXT NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS accounts (
     updated_at TEXT DEFAULT (datetime('now'))
 );
 
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE IF NOT EXISTS category (
     id TEXT PRIMARY KEY,
     user_id TEXT,
     name TEXT NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS categories (
     updated_at TEXT DEFAULT (datetime('now'))
 );
 
-CREATE TABLE IF NOT EXISTS bookings (
+CREATE TABLE IF NOT EXISTS booking (
     id TEXT PRIMARY KEY,
     user_id TEXT,
     date TEXT NOT NULL,
