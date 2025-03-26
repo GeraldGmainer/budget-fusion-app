@@ -25,7 +25,9 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     required this.cacheManager,
     required this.queueManager,
     required this.realtimeNotifierService,
-  });
+  }) {
+    queueManager.registerDomainSources(domainType, localSource, remoteSource);
+  }
 
   Stream<List<Dto>> get stream => streamController.stream;
 

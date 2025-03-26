@@ -12,11 +12,8 @@ class CurrencyDtoSerializer implements JsonConverter<CurrencyDto, dynamic> {
     if (json is String) {
       final Map<String, dynamic> map = jsonDecode(json) as Map<String, dynamic>;
       return CurrencyDto.fromJson(map);
-    } else if (json is Map<String, dynamic>) {
-      return CurrencyDto.fromJson(json);
-    } else {
-      throw Exception("Unexpected type: ${json.runtimeType}");
     }
+    return CurrencyDto.fromJson(json);
   }
 
   @override

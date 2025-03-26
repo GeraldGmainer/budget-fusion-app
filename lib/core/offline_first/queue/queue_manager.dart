@@ -22,8 +22,8 @@ class QueueManager {
 
   void registerDomainSources(
     DomainType domain,
-    OfflineFirstRemoteDataSource remoteSource,
     OfflineFirstLocalDataSource localSource,
+    OfflineFirstRemoteDataSource remoteSource,
   ) {
     _remoteSources[domain] = remoteSource;
     _localSources[domain] = localSource;
