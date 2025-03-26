@@ -35,6 +35,7 @@ class CategoryCubit extends Cubit<LoadableState<List<Category>>> {
 
   Future<void> load({String? userId}) async {
     try {
+      DomainLogger.instance.d(runtimeType.toString(), "initiate load for ${DomainLogger.applyColor('category')}");
       emit(const LoadableState.loading());
       await _loadCategories();
     } on TranslatedException catch (e, stackTrace) {

@@ -26,12 +26,12 @@ class DomainLogger {
   static DomainLogger get instance => _instance;
 
   void d(String service, String msg, {bool? darkColor}) {
-    final color = _determineDomainColor(service, darkColor ?? false);
+    final color = _determineServiceColor(service, darkColor ?? false);
     final domainText = color("$service:".padRight(serviceCharLength));
     BudgetLogger.instance.d("$domainText $msg", short: true);
   }
 
-  AnsiColor _determineDomainColor(String service, bool darkColor) {
+  AnsiColor _determineServiceColor(String service, bool darkColor) {
     if (service == "LocalDataSource") {
       return darkColor ? AnsiColor.fg(27) : AnsiColor.fg(111);
     }
@@ -49,6 +49,9 @@ class DomainLogger {
     }
     if (service == "QueueManager") {
       return AnsiColor.fg(51);
+    }
+    if (service.contains("Cubit")) {
+      return darkColor ? AnsiColor.fg(208) : AnsiColor.fg(136);
     }
 
     BudgetLogger.instance.d("unknown service name for logging: $service");

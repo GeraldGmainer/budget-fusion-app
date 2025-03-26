@@ -35,6 +35,7 @@ class ProfileCubit extends Cubit<LoadableState<Profile>> {
 
   Future<void> load({String? userId}) async {
     try {
+      DomainLogger.instance.d(runtimeType.toString(), "initiate load for ${DomainLogger.applyColor('profile')}");
       emit(const LoadableState.loading());
       await _loadProfile(Uuid(userId ?? supabase.auth.currentUser!.id));
     } on TranslatedException catch (e, stackTrace) {
