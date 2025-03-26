@@ -18,17 +18,4 @@ class Category with _$Category {
     required String iconColor,
     required DateTime updatedAt,
   }) = _Category;
-
-  // TODO better detect fallback
-  static fallback() {
-    return Category(
-      id: Uuid.generate(),
-      userId: Uuid.generate(),
-      categoryType: CategoryType.outcome,
-      name: 'Unknown',
-      iconName: "asdf",
-      iconColor: "asdf2",
-      updatedAt: DateTime.now(),
-    );
-  }
 }

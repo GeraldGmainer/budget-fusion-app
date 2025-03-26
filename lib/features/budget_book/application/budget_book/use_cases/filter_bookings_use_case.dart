@@ -19,11 +19,11 @@ class FilterBookingsUseCase {
   }
 
   Booking? _filterBooking(Booking booking, BudgetBookFilter filter) {
-    if (filter.account?.id != booking.account.id) {
+    if (filter.account?.id != booking.account?.id) {
       return null;
     }
     final requiredCategoryType = (filter.transaction == TransactionType.income) ? CategoryType.income : CategoryType.outcome;
-    if (requiredCategoryType != booking.category.categoryType) {
+    if (requiredCategoryType != booking.category?.categoryType) {
       return null;
     }
     final hasDescription = filter.description != null && filter.description!.isNotEmpty;

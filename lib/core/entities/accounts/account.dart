@@ -16,20 +16,8 @@ class Account with _$Account {
     required DateTime updatedAt,
   }) = _Account;
 
-  // @override
+// @override
 // Profile copyWithUpdatedAt(DateTime updatedAt) {
 //   return copyWith(updatedAt: updatedAt);
 // }
-
-  // TODO better detect fallback
-  static fallback() {
-    return Account(
-      id: Uuid.generate(),
-      userId: Uuid.generate(),
-      name: 'Unknown',
-      iconName: "asdf",
-      iconColor: "asdf2",
-      updatedAt: DateTime.now(),
-    );
-  }
 }

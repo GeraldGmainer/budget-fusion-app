@@ -15,8 +15,8 @@ class Booking with _$Booking {
     required DateTime date,
     required String? description,
     required Decimal amount,
-    required Category category,
-    required Account account,
+    required Category? category,
+    required Account? account,
     required DateTime updatedAt,
   }) = _Booking;
 }
@@ -24,7 +24,7 @@ class Booking with _$Booking {
 extension BookingListExtension on Iterable<Booking> {
   Decimal get totalAmount => fold(Decimal.zero, (sum, booking) => sum + booking.amount);
 
-  List<Booking> get outcomeBookings => where((booking) => booking.category.categoryType == CategoryType.outcome).toList();
+  List<Booking> get outcomeBookings => where((booking) => booking.category?.categoryType == CategoryType.outcome).toList();
 
-  List<Booking> get incomeBookings => where((booking) => booking.category.categoryType == CategoryType.income).toList();
+  List<Booking> get incomeBookings => where((booking) => booking.category?.categoryType == CategoryType.income).toList();
 }

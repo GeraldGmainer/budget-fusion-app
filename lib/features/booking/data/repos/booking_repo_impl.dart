@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -29,15 +30,15 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       _categoryRepo.watch(),
       (bookingDtos, accounts, categories) {
         return bookingDtos.map((dto) {
-          final account = accounts.firstWhere((acc) => acc.id == dto.accountId);
-          final category = categories.firstWhere((cat) => cat.id == dto.categoryId);
+          final account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
+          final category = categories.firstWhereOrNull((cat) => cat.id == dto.categoryId);
           return _toDomain(dto, account, category);
         }).toList();
       },
     ).shareReplay(maxSize: 1);
   }
 
-  Booking _toDomain(BookingDto dto, Account account, Category category) {
+  Booking _toDomain(BookingDto dto, Account? account, Category? category) {
     return Booking(
       id: dto.id,
       userId: dto.userId,
@@ -63,8 +64,8 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       date: entity.date,
       description: entity.description,
       amount: entity.amount,
-      accountId: entity.account.id,
-      categoryId: entity.category.id,
+      accountId: entity.account!.id,
+      categoryId: entity.category!.id,
       updatedAt: entity.updatedAt,
     );
   }

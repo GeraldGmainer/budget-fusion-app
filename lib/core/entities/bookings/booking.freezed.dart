@@ -21,8 +21,8 @@ mixin _$Booking {
   DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   Decimal get amount => throw _privateConstructorUsedError;
-  Category get category => throw _privateConstructorUsedError;
-  Account get account => throw _privateConstructorUsedError;
+  Category? get category => throw _privateConstructorUsedError;
+  Account? get account => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
@@ -42,12 +42,12 @@ abstract class $BookingCopyWith<$Res> {
       DateTime date,
       String? description,
       Decimal amount,
-      Category category,
-      Account account,
+      Category? category,
+      Account? account,
       DateTime updatedAt});
 
-  $CategoryCopyWith<$Res> get category;
-  $AccountCopyWith<$Res> get account;
+  $CategoryCopyWith<$Res>? get category;
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -70,8 +70,8 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
-    Object? category = null,
-    Object? account = null,
+    Object? category = freezed,
+    Object? account = freezed,
     Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -95,14 +95,14 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as Decimal,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      account: null == account
+              as Category?,
+      account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as Account?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -114,8 +114,12 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -124,8 +128,12 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccountCopyWith<$Res> get account {
-    return $AccountCopyWith<$Res>(_value.account, (value) {
+  $AccountCopyWith<$Res>? get account {
+    if (_value.account == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.account!, (value) {
       return _then(_value.copyWith(account: value) as $Val);
     });
   }
@@ -144,14 +152,14 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       DateTime date,
       String? description,
       Decimal amount,
-      Category category,
-      Account account,
+      Category? category,
+      Account? account,
       DateTime updatedAt});
 
   @override
-  $CategoryCopyWith<$Res> get category;
+  $CategoryCopyWith<$Res>? get category;
   @override
-  $AccountCopyWith<$Res> get account;
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -172,8 +180,8 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
-    Object? category = null,
-    Object? account = null,
+    Object? category = freezed,
+    Object? account = freezed,
     Object? updatedAt = null,
   }) {
     return _then(_$BookingImpl(
@@ -197,14 +205,14 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as Decimal,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      account: null == account
+              as Category?,
+      account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
-              as Account,
+              as Account?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -238,9 +246,9 @@ class _$BookingImpl extends _Booking {
   @override
   final Decimal amount;
   @override
-  final Category category;
+  final Category? category;
   @override
-  final Account account;
+  final Account? account;
   @override
   final DateTime updatedAt;
 
@@ -287,8 +295,8 @@ abstract class _Booking extends Booking {
       required final DateTime date,
       required final String? description,
       required final Decimal amount,
-      required final Category category,
-      required final Account account,
+      required final Category? category,
+      required final Account? account,
       required final DateTime updatedAt}) = _$BookingImpl;
   const _Booking._() : super._();
 
@@ -303,9 +311,9 @@ abstract class _Booking extends Booking {
   @override
   Decimal get amount;
   @override
-  Category get category;
+  Category? get category;
   @override
-  Account get account;
+  Account? get account;
   @override
   DateTime get updatedAt;
 

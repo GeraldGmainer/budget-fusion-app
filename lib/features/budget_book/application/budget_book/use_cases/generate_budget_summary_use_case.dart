@@ -30,8 +30,10 @@ class GenerateBudgetSummaryUseCase {
   List<CategoryViewSummary> _mapSummaries(BudgetPageData pageData) {
     final Map<Category, Decimal> categoryTotals = {};
     for (final booking in pageData.bookings) {
-      final currentSum = categoryTotals[booking.category] ?? Decimal.zero;
-      categoryTotals[booking.category] = currentSum + booking.amount;
+      if (booking.category != null) {
+        final currentSum = categoryTotals[booking.category] ?? Decimal.zero;
+        categoryTotals[booking.category!] = currentSum + booking.amount;
+      }
     }
 
     final List<CategoryViewSummary> summaries = [];
