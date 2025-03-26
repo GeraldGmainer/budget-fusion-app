@@ -22,7 +22,11 @@ class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implem
   }
 
   @override
-  Profile toDomain(ProfileDto dto) {
+  Stream<Profile> watch() {
+    return manager.stream.map((dtos) => _toDomain(dtos.single));
+  }
+
+  Profile _toDomain(ProfileDto dto) {
     return Profile(
       id: dto.id,
       userId: dto.userId,

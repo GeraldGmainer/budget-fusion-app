@@ -14,7 +14,11 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
   ) : super(DomainType.account, dmf, lds, rds);
 
   @override
-  Account toDomain(AccountDto dto) {
+  Stream<List<Account>> watch() {
+    return manager.stream.map((dtos) => dtos.map((dto) => _toDomain(dto)).toList());
+  }
+
+  Account _toDomain(AccountDto dto) {
     return Account(
       id: dto.id,
       userId: dto.userId,

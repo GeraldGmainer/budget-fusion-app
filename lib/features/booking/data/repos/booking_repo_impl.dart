@@ -10,6 +10,7 @@ import '../dtos/booking_dto.dart';
 class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implements BookingRepo {
   final AccountRepo _accountRepo;
   final CategoryRepo _categoryRepo;
+  late final Stream<List<Booking>> _sharedBookingsStream;
 
   BookingRepoImpl(
     DataManagerFactory dmf,
@@ -17,11 +18,12 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
     BookingRemoteDataSource rds,
     this._accountRepo,
     this._categoryRepo,
-  ) : super(DomainType.booking, dmf, lds, rds);
+  ) : super(DomainType.booking, dmf, lds, rds) {
+    _setupStream();
+  }
 
-  @override
-  Stream<List<Booking>> watch() {
-    return Rx.combineLatest3<List<BookingDto>, List<Account>, List<Category>, List<Booking>>(
+  void _setupStream() {
+    _sharedBookingsStream = Rx.combineLatest3<List<BookingDto>, List<Account>, List<Category>, List<Booking>>(
       manager.stream,
       _accountRepo.watch(),
       _categoryRepo.watch(),
@@ -29,19 +31,28 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
         return bookingDtos.map((dto) {
           final account = accounts.firstWhere((acc) => acc.id == dto.accountId);
           final category = categories.firstWhere((cat) => cat.id == dto.categoryId);
-          return Booking(
-            id: dto.id,
-            userId: dto.userId,
-            date: dto.date,
-            description: dto.description,
-            amount: dto.amount,
-            account: account,
-            category: category,
-            updatedAt: dto.updatedAt,
-          );
+          return _toDomain(dto, account, category);
         }).toList();
       },
+    ).shareReplay(maxSize: 1);
+  }
+
+  Booking _toDomain(BookingDto dto, Account account, Category category) {
+    return Booking(
+      id: dto.id,
+      userId: dto.userId,
+      date: dto.date,
+      description: dto.description,
+      amount: dto.amount,
+      account: account,
+      category: category,
+      updatedAt: dto.updatedAt,
     );
+  }
+
+  @override
+  Stream<List<Booking>> watch() {
+    return _sharedBookingsStream;
   }
 
   @override
@@ -56,10 +67,5 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       categoryId: entity.category.id,
       updatedAt: entity.updatedAt,
     );
-  }
-
-  @override
-  Booking toDomain(BookingDto dto) {
-    throw UnimplementedError('Use the watch() method for aggregated bookings.');
   }
 }

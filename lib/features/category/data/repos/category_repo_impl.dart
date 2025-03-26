@@ -14,7 +14,11 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
   ) : super(DomainType.category, dmf, lds, rds);
 
   @override
-  Category toDomain(CategoryDto dto) {
+  Stream<List<Category>> watch() {
+    return manager.stream.map((dtos) => dtos.map((dto) => _toDomain(dto)).toList());
+  }
+
+  Category _toDomain(CategoryDto dto) {
     return Category(
       id: dto.id,
       userId: dto.userId,

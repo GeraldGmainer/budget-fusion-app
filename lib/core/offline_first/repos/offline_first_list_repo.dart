@@ -16,7 +16,7 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
           remoteDataSource: remoteDataSource,
         );
 
-  Stream<List<T>> watch() => manager.stream.map((List<U> dtos) => dtos.map((dto) => toDomain(dto)).toList());
+  // Stream<List<T>> watch() => manager.stream.map((List<U> dtos) => dtos.map((dto) => toDomain(dto)).toList());
 
   Future<void> loadAll() => manager.loadAll();
 
@@ -26,7 +26,7 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
 
   void dispose() => manager.dispose();
 
-  T toDomain(U dto);
+  Stream<List<T>> watch();
 
   U toDto(T entity);
 }

@@ -21,7 +21,11 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
   }
 
   @override
-  ProfileSetting toDomain(ProfileSettingDto dto) {
+  Stream<ProfileSetting> watch() {
+    return manager.stream.map((dtos) => _toDomain(dtos.first));
+  }
+
+  ProfileSetting _toDomain(ProfileSettingDto dto) {
     return ProfileSetting(
       id: dto.id,
       userId: dto.userId,

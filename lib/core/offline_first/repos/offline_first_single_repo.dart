@@ -16,15 +16,13 @@ abstract class OfflineFirstSingleRepo<T, U extends OfflineFirstDto> {
           remoteDataSource: remoteDataSource,
         );
 
-  Stream<T> watch() => manager.stream.map((dtos) => toDomain(dtos.first));
-
   Future<void> load({Map<String, dynamic>? filters}) => manager.loadAll(filters: filters);
 
   Future<void> save(T entity) => manager.save(toDto(entity));
 
   void dispose() => manager.dispose();
 
-  T toDomain(U dto);
+  Stream<T> watch();
 
   U toDto(T entity);
 }
