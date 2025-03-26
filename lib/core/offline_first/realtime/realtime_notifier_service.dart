@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/core/constants/app_log_colors.dart';
-import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,7 +15,7 @@ class RealtimeNotifierService {
   Stream<DomainRealtimeEvent> get events => _controller.stream;
 
   void startListeningForDomain(DomainType domain, String table) {
-    _log("Starting realtime listener for domain ${AppLogColors.applyColor(domain.name)}");
+    _log("Starting realtime listener for domain ${DomainLogger.applyColor(table)}");
     supabase
         .channel('public:$table')
         .onPostgresChanges(
@@ -36,7 +35,6 @@ class RealtimeNotifierService {
   }
 
   void _log(String msg, {bool darkColor = false}) {
-    final color = darkColor ? AppLogColors.realtimeNotifierServiceEnd : AppLogColors.realtimeNotifierServiceStart;
-    BudgetLogger.instance.d("${color("Realtime Notifier:".padRight(AppLogColors.serviceCharLength))} $msg", short: true);
+    DomainLogger.instance.d("RealtimeNotifier", msg, darkColor: darkColor);
   }
 }

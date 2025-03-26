@@ -78,6 +78,8 @@ class QueueManager {
   }
 
   Future<void> _processQueueItem(QueueItem item) async {
+    _log("Processing queue item: $item");
+
     final remoteSource = _remoteSources[item.domain];
     final localSource = _localSources[item.domain];
     if (remoteSource == null || localSource == null) {
@@ -85,21 +87,26 @@ class QueueManager {
     }
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
-    switch (item.type) {
-      case QueueTaskType.upsert:
-        final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
-        if (updatedDto.updatedAt == null) {
-          BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
-          BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
-          BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
-          // TODO throw custom exception
-          throw "QueueManager: upserting queue task returned updatedAt as null";
-        }
-        await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
-        break;
-      case QueueTaskType.delete:
-        await remoteSource.delete(item.entityId);
-        break;
+    try {
+      switch (item.type) {
+        case QueueTaskType.upsert:
+          final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
+          if (updatedDto.updatedAt == null) {
+            BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
+            BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
+            BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
+            // TODO throw custom exception
+            throw "QueueManager: upserting queue task returned updatedAt as null";
+          }
+          await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+          break;
+        case QueueTaskType.delete:
+          await remoteSource.delete(item.entityId);
+          break;
+      }
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("Queue processing error", e, stackTrace);
+      rethrow;
     }
   }
 
@@ -108,4 +115,8 @@ class QueueManager {
   }
 
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
+
+  _log(String msg) {
+    DomainLogger.instance.d("QueueManager", msg);
+  }
 }

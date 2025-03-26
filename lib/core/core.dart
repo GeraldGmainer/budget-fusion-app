@@ -1,7 +1,6 @@
 export 'constants/app_borders.dart';
 export 'constants/app_colors.dart';
 export 'constants/app_dimensions.dart';
-export 'constants/app_log_colors.dart';
 export 'constants/app_routes.dart';
 
 //

@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../core.dart';
@@ -12,7 +11,7 @@ class QueueLocalDataSource {
   QueueLocalDataSource(this.db);
 
   Future<void> addQueueItem(QueueItem item) async {
-    _log("Adding queue item with entityId '${item.entityId}'");
+    _log("Adding queue item with entityId '${item.entityId}' in ${DomainLogger.applyColor(item.domain.name)}");
     await db.insert(
       'queue_items',
       {
@@ -27,7 +26,7 @@ class QueueLocalDataSource {
   }
 
   Future<void> updateQueueItem(QueueItem item) async {
-    _log("Updating queue item with entityId '${item.entityId}'");
+    _log("Updating queue item with entityId '${item.entityId}' in ${DomainLogger.applyColor(item.domain.name)}");
     await db.update(
       'queue_items',
       {
@@ -69,7 +68,6 @@ class QueueLocalDataSource {
   }
 
   _log(String msg) {
-    final color = AppLogColors.queueLocalDataSource;
-    BudgetLogger.instance.d("${color("QLS: ")} $msg", short: true);
+    DomainLogger.instance.d("QueueDataSource", msg);
   }
 }

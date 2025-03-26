@@ -10,10 +10,10 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   OfflineFirstLocalDataSource(this.db);
 
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
-    _log("fetchAll from ${AppLogColors.applyColor(table)} ${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAll from $coloredDomain ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
     final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value);
-    _log("fetched ${rows.length} DTOs from ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("fetched ${rows.length} DTOs from $coloredDomain", darkColor: true);
     final dtos = rows.map((row) {
       final dto = fromJson(row);
       return dto;
@@ -22,50 +22,50 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   Future<Dto?> fetchById(String id) async {
-    _log("fetchById '$id' from ${AppLogColors.applyColor(table)}");
+    _log("fetchById '$id' from $coloredDomain");
     final rows = await db.query(table, where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) {
-      _log("no row found with id: '$id' for ${AppLogColors.applyColor(table)}", darkColor: true);
+      _log("no row found with id: '$id' for $coloredDomain", darkColor: true);
       return null;
     }
     final dto = fromJson(rows.first);
-    _log("fetched row for id '$id' from ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("fetched row for id '$id' from $coloredDomain", darkColor: true);
     return dto;
   }
 
   Future<void> save(Dto dto) async {
-    _log("save for id '${dto.id.value}' to ${AppLogColors.applyColor(table)}");
+    _log("save for id '${dto.id.value}' to $coloredDomain");
     final stringifiedFields = _convertMapsToString(dto.toJson());
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
-    _log("save success for id '${dto.id.value}' to ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("save success for id '${dto.id.value}' to $coloredDomain", darkColor: true);
   }
 
   Future<void> saveAll(List<Dto> dtos) async {
-    _log("saveAll ${dtos.length} DTOs to ${AppLogColors.applyColor(table)}");
+    _log("saveAll ${dtos.length} DTOs to $coloredDomain");
     final batch = db.batch();
     for (final dto in dtos) {
       final stringifiedFields = _convertMapsToString(dto.toJson());
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
-    _log("saveAll success to ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("saveAll success to $coloredDomain", darkColor: true);
   }
 
   Future<void> markAsSynced(String id, DateTime updated) async {
-    _log("markAsSynced for id '$id' in ${AppLogColors.applyColor(table)} with updatedAt: $updated");
+    _log("markAsSynced for id '$id' in $coloredDomain with updatedAt: $updated");
     await db.update(table, {'updated_at': updated.toIso8601String()}, where: 'id = ?', whereArgs: [id]);
-    _log("markAsSynced success for id '$id' in ${AppLogColors.applyColor(table)}", darkColor: true);
+    _log("markAsSynced success for id '$id' in $coloredDomain", darkColor: true);
   }
 
   Future<DateTime?> fetchMaxUpdatedAt() async {
-    _log("fetchMaxUpdatedAt from ${AppLogColors.applyColor(table)}");
+    _log("fetchMaxUpdatedAt from $coloredDomain");
     final result = await db.rawQuery('SELECT MAX(updated_at) AS maxDate FROM $table');
     if (result.isEmpty) {
-      _log("fetchMaxUpdatedAt not found in ${AppLogColors.applyColor(table)}", darkColor: true);
+      _log("fetchMaxUpdatedAt not found in $coloredDomain", darkColor: true);
       return null;
     }
     final maxDate = DateTime.parse(result.first['maxDate'] as String);
-    _log("fetchMaxUpdatedAt success from ${AppLogColors.applyColor(table)}: $maxDate", darkColor: true);
+    _log("fetchMaxUpdatedAt success from $coloredDomain: $maxDate", darkColor: true);
     return maxDate;
   }
 
@@ -97,9 +97,10 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   _log(String msg, {bool darkColor = false}) {
-    final color = darkColor ? AppLogColors.localDataSourceEnd : AppLogColors.localDataSourceStart;
-    BudgetLogger.instance.d("${color("LocalDataSource:".padRight(AppLogColors.serviceCharLength))} $msg", short: true);
+    DomainLogger.instance.d("LocalDataSource", msg, darkColor: darkColor);
   }
+
+  String get coloredDomain => DomainLogger.applyColor(table);
 
   Map<String, dynamic> _convertMapsToString(Map<String, dynamic> input) {
     final output = <String, dynamic>{};

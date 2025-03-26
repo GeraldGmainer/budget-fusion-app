@@ -10,3 +10,4 @@ export 'models/uuid.dart';
 export 'service/connectivity_service.dart';
 //
 export 'singletons/budget_logger.dart';
+export 'singletons/domain_logger.dart';

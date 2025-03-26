@@ -6,20 +6,20 @@ import 'package:budget_fusion_app/utils/utils.dart';
 abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchAll from ${AppLogColors.applyColor(table)}${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAll from $coloredDomain${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
       var query = supabase.from(table).select(columns);
       query = _applyFilters(query, filters);
       final response = await query;
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAll ${result.length} Dtos from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("fetchAll ${result.length} Dtos from $coloredDomain", stopwatch: stopwatch);
       return result;
     });
   }
 
   Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchAllNewer from ${AppLogColors.applyColor(table)} than $updatedAt${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAllNewer from $coloredDomain than $updatedAt${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
       var query = supabase.from(table).select(columns);
       if (updatedAt != null) {
@@ -28,47 +28,47 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       query = _applyFilters(query, filters);
       final response = await query;
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAllNewer ${result.length} Dtos from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("fetchAllNewer ${result.length} Dtos from $coloredDomain", stopwatch: stopwatch);
       return result;
     });
   }
 
   Future<Dto> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchById '$id' from ${AppLogColors.applyColor(table)}");
+    _log("fetchById '$id' from $coloredDomain");
     return execute(table, () async {
       final response = await supabase.from(table).select(columns).eq('id', id).single();
-      _log("fetchById from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("fetchById from $coloredDomain", stopwatch: stopwatch);
       return toDto(response);
     });
   }
 
   Future<Dto> upsert(String id, Map<String, dynamic> json) async {
     final stopwatch = Stopwatch()..start();
-    _log("upsert by id '$id' to ${AppLogColors.applyColor(table)}");
+    _log("upsert by id '$id' to $coloredDomain");
     return execute(table, () async {
       final response = await supabase.from(table).upsert(json).eq('id', id);
-      _log("upsert to ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("upsert to $coloredDomain", stopwatch: stopwatch);
       return toDto(response as Map<String, dynamic>);
     });
   }
 
   Future<void> upsertAll(List<Dto> dtos) async {
     final stopwatch = Stopwatch()..start();
-    _log("upsertAll ${dtos.length} DTOs to ${AppLogColors.applyColor(table)}");
+    _log("upsertAll ${dtos.length} DTOs to $coloredDomain");
     return execute(table, () async {
       final data = dtos.map((dto) => dto.toJson()).toList();
       await supabase.from(table).upsert(data);
-      _log("upsertAll to ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("upsertAll to $coloredDomain", stopwatch: stopwatch);
     });
   }
 
   Future<void> delete(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("delete by id '$id' from ${AppLogColors.applyColor(table)}");
+    _log("delete by id '$id' from $coloredDomain");
     return execute(table, () async {
       await supabase.from(table).delete().eq('id', id);
-      _log("delete from ${AppLogColors.applyColor(table)}", stopwatch: stopwatch);
+      _log("delete from $coloredDomain", stopwatch: stopwatch);
     });
   }
 
@@ -95,13 +95,14 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   _log(String msg, {Stopwatch? stopwatch}) {
-    final start = AppLogColors.remoteDataSourceEnd("RemoteDataSource:".padRight(AppLogColors.serviceCharLength));
     if (stopwatch != null) {
-      BudgetLogger.instance.d("$start $msg took ${stopwatch.elapsed.inMilliseconds} ms", short: true);
+      DomainLogger.instance.d("RemoteDataSource", "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
     } else {
-      BudgetLogger.instance.d("$start $msg", short: true);
+      DomainLogger.instance.d("RemoteDataSource", msg, darkColor: true);
     }
   }
+
+  String get coloredDomain => DomainLogger.applyColor(table);
 
   String get table;
 
