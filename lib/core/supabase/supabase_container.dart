@@ -59,7 +59,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   void _onUnauthenticated() {
     if (mounted) {
       BudgetLogger.instance.d("onUnauthenticated");
-      context.go("/login");
+      context.go(AppRoutes.login);
     }
   }
 
@@ -77,6 +77,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
 
   _onPasswordRecovery(Session session) {
     BudgetLogger.instance.d("onPasswordRecovery: ${session.user}");
+    // TODO reset password page
     context.go("/reset-password");
   }
 

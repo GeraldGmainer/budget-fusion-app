@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart';
 import 'package:collection/collection.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../utils/utils.dart';
 import '../../core.dart';
@@ -15,7 +16,8 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final QueueManager queueManager;
   final RealtimeNotifierService realtimeNotifierService;
 
-  final StreamController<List<Dto>> streamController = StreamController.broadcast();
+  // final StreamController<List<Dto>> streamController = StreamController.broadcast();
+  final ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
 
   OfflineFirstDataManager({

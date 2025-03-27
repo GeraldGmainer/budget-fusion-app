@@ -28,13 +28,16 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
 
   Future<void> load(BudgetBookFilter filter, BudgetViewMode viewMode) async {
     try {
+      DomainLogger.instance.d(runtimeType.toString(), "initiate load for budget book");
       emit(BudgetBookState.loading(rawItems: state.rawItems, summaries: state.summaries, currentFilter: filter, currentViewMode: viewMode));
       final results = await Future.wait([_fetchAndGroupBudgetBookDataUseCase(), _getCurrencyUseCase()]);
       final rawItems = results[0] as List<BudgetPageData>;
       final currency = results[1] as Currency;
+
       final filteredItems = _filterBookingsUseCase.execute(rawItems, filter);
       final summaries = _generateBudgetSummaryUseCase(filteredItems, currency);
       emit(BudgetBookState.loaded(rawItems: rawItems, summaries: summaries, currentFilter: filter, currentViewMode: viewMode));
+      DomainLogger.instance.d(runtimeType.toString(), "loading budget book done");
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("BudgetBookCubit Exception", e, stackTrace);
       emit(BudgetBookState.fromError(message: e.message, state: state));
