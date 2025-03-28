@@ -31,8 +31,8 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
 
   Future<void> load() async {
     try {
-      DomainLogger.instance.d(runtimeType.toString(), "initiate load for budget book");
       final filter = state.filter;
+      DomainLogger.instance.d(runtimeType.toString(), "initiate load for budget book: ${state.viewMode} / $filter");
       emit(BudgetBookState.loading(items: state.items, filter: filter, viewMode: state.viewMode, dateRange: state.dateRange));
       final results = await Future.wait([_watchBookingsUseCase().first, _getCurrencyUseCase()]);
       final rawItems = results[0] as List<Booking>;

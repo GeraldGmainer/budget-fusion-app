@@ -178,11 +178,6 @@ class _$BudgetBookFilterImpl extends _BudgetBookFilter {
   @override
   String? description;
 
-  @override
-  String toString() {
-    return 'BudgetBookFilter(transaction: $transaction, period: $period, account: $account, description: $description)';
-  }
-
   /// Create a copy of BudgetBookFilter
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)

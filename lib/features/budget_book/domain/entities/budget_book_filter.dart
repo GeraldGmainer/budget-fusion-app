@@ -24,4 +24,27 @@ class BudgetBookFilter with _$BudgetBookFilter {
       description: null,
     );
   }
+
+  @override
+  String toString() {
+    return "BudgetBookFilter(transaction: ${_formatTransaction()}, period: ${_formatPeriod()}, account: $account, description: $description";
+  }
+
+  String _formatTransaction() => transaction == TransactionType.income ? "INCOME" : "OUTCOME";
+
+  String _formatPeriod() {
+    switch (period) {
+      case PeriodMode.month:
+        return "MONTH";
+
+      case PeriodMode.year:
+        return "YEAR";
+
+      case PeriodMode.all:
+        return "ALL";
+
+      case PeriodMode.day:
+        return "DAY";
+    }
+  }
 }
