@@ -12,7 +12,7 @@ class PeriodSelector extends StatelessWidget {
   final BudgetDateRange dateRange;
   final PageController pageController;
 
-  const PeriodSelector({super.key, required this.filter, required this.dateRange, required this.pageController});
+  const PeriodSelector({super.key, required this.filter, required this.pageController, required this.dateRange});
 
   void _onPrevious(BuildContext context) {
     if (pageController.hasClients) {
@@ -68,7 +68,7 @@ class PeriodSelector extends StatelessWidget {
 
   Widget _buildPeriod(BuildContext context) {
     return Text(
-      _formatDateRange(context, filter.period, dateRange),
+      _formatDateRange(context, filter.period),
       style: TextStyle(
         fontSize: 18,
         color: AppColors.primaryTextColor,
@@ -76,7 +76,7 @@ class PeriodSelector extends StatelessWidget {
     );
   }
 
-  String _formatDateRange(BuildContext context, PeriodMode periodMode, BudgetDateRange dateRange) {
+  String _formatDateRange(BuildContext context, PeriodMode periodMode) {
     switch (periodMode) {
       case PeriodMode.all:
         return tr('all');

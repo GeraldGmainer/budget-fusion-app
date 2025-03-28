@@ -8,8 +8,5 @@ class GetCurrencyUseCase {
 
   GetCurrencyUseCase(this._aggregator);
 
-  Future<Currency> call() async {
-    final profileSetting = await _aggregator.getProfileSetting();
-    return profileSetting.currency;
-  }
+  Future<Currency> call() async => (await _aggregator.getProfileSetting()).currency;
 }

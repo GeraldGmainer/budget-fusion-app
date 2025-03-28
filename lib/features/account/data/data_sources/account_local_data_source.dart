@@ -11,5 +11,8 @@ class AccountLocalDataSource extends OfflineFirstLocalDataSource<AccountDto> {
   String get table => "account";
 
   @override
+  String? get defaultOrderBy => "name ASC";
+
+  @override
   AccountDto fromJson(Map<String, dynamic> json) => AccountDto.fromJson(json);
 }

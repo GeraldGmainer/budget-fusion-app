@@ -9,10 +9,16 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   OfflineFirstLocalDataSource(this.db);
 
-  Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
+  Future<List<Dto>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
+    final effectiveOrderBy = orderBy ?? defaultOrderBy;
     _log("fetchAll from $coloredDomain ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
-    final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value);
+    final rows = await db.query(
+      table,
+      where: filterClause?.key,
+      whereArgs: filterClause?.value,
+      orderBy: effectiveOrderBy,
+    );
     _log("fetched ${rows.length} DTOs from $coloredDomain", darkColor: true);
     final dtos = rows.map((row) {
       final dto = fromJson(row);
@@ -126,6 +132,8 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   String get table;
+
+  String? get defaultOrderBy;
 
   Dto fromJson(Map<String, dynamic> json);
 }

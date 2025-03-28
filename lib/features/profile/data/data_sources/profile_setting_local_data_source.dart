@@ -11,5 +11,8 @@ class ProfileSettingLocalDataSource extends OfflineFirstLocalDataSource<ProfileS
   String get table => "profile_setting";
 
   @override
+  String? get defaultOrderBy => "id ASC";
+
+  @override
   ProfileSettingDto fromJson(Map<String, dynamic> json) => ProfileSettingDto.fromJson(json);
 }

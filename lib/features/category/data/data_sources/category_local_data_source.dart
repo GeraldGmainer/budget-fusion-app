@@ -11,5 +11,8 @@ class CategoryLocalDataSource extends OfflineFirstLocalDataSource<CategoryDto> {
   String get table => "category";
 
   @override
+  String? get defaultOrderBy => "name ASC";
+
+  @override
   CategoryDto fromJson(Map<String, dynamic> json) => CategoryDto.fromJson(json);
 }

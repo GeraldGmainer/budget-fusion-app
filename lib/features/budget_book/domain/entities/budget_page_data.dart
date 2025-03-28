@@ -1,8 +1,9 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../enums/period_mode.dart';
 import 'budget_date_range.dart';
+import 'category_group.dart';
 
 part 'budget_page_data.freezed.dart';
 
@@ -14,8 +15,15 @@ class BudgetPageData with _$BudgetPageData {
     required BudgetDateRange dateRange,
     required Decimal income,
     required Decimal outcome,
-    required List<Booking> bookings,
+    required List<CategoryGroup> categoryGroups,
   }) = _BudgetPageData;
+
+  factory BudgetPageData.empty(PeriodMode periodMode) => BudgetPageData(
+        dateRange: BudgetDateRange(period: periodMode, from: DateTime.now(), to: DateTime.now()),
+        income: Decimal.zero,
+        outcome: Decimal.zero,
+        categoryGroups: [],
+      );
 
   Decimal get balance {
     return income - outcome;

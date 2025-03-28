@@ -11,5 +11,8 @@ class BookingLocalDataSource extends OfflineFirstLocalDataSource<BookingDto> {
   String get table => "booking";
 
   @override
+  String? get defaultOrderBy => "date DESC";
+
+  @override
   BookingDto fromJson(Map<String, dynamic> json) => BookingDto.fromJson(json);
 }

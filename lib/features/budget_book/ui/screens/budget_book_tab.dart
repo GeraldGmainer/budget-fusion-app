@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/features/budget_book/domain/entities/budget_date_range.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/budget_book/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
-import '../../domain/entities/budget_date_range.dart';
 import '../../domain/entities/summary_view_data.dart';
 import '../../domain/enums/budget_view_mode.dart';
 import '../calendar/calendar_view.dart';
@@ -22,16 +22,10 @@ class BudgetBookTab extends StatefulWidget {
 class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveClientMixin {
   final List<String> _viewModes = ['Summary', 'Transactions', 'Calendar'];
   final PageController _pageController = PageController();
-  late BudgetDateRange _currentDateRange;
-
-  BudgetViewMode get currentViewMode => context.read<BudgetBookCubit>().state.currentViewMode;
-
-  BudgetBookFilter get currentFilter => context.read<BudgetBookCubit>().state.currentFilter;
 
   @override
   void initState() {
     super.initState();
-    _initializeDateRange();
     _load();
   }
 
@@ -41,15 +35,11 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     super.dispose();
   }
 
-  void _initializeDateRange() {
-    _currentDateRange = BudgetDateRange(period: currentFilter.period, from: DateTime.now(), to: DateTime.now());
-  }
-
   void _load() {
-    context.read<BudgetBookCubit>().load(currentFilter, currentViewMode);
+    context.read<BudgetBookCubit>().load();
   }
 
-  void _onLoad() {
+  void _onLoaded() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_pageController.hasClients) {
         _pageController.animateToPage(
@@ -67,15 +57,15 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _onPageChanged(int pageIndex) {
-    final items = context.read<BudgetBookCubit>().state.rawItems;
-    final reveredIndex = items.length - 1 - pageIndex;
-    setState(() {
-      if (items.isNotEmpty) {
-        _currentDateRange = items[reveredIndex].dateRange;
-      } else {
-        BudgetLogger.instance.w("items are empty");
-      }
-    });
+    // TODO dont use List<SummaryViewData> to get current date range
+    final items = context.read<BudgetBookCubit>().state.items;
+    if (items.isNotEmpty) {
+      final reveredIndex = items.length - 1 - pageIndex;
+      final newDateRange = items[reveredIndex].dateRange;
+      context.read<BudgetBookCubit>().updateDateRange(newDateRange);
+    } else {
+      BudgetLogger.instance.w("items are empty");
+    }
   }
 
   void _onViewSelected(int index) {
@@ -87,30 +77,33 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
+      listenWhen: (previous, current) {
+        return previous.items != current.items;
+      },
       listener: (context, state) {
         state.whenOrNull(
-          loaded: (_, __, ___, ____) => _onLoad(),
+          loaded: (_, __, ___, ____) => _onLoaded(),
           error: (_, __, ___, ____, message) => _onError(message),
         );
       },
       builder: (context, state) {
         return Column(
           children: [
-            _buildPeriodSelector(),
+            _buildPeriodSelector(state.filter, state.dateRange),
             const SizedBox(height: 8),
             _buildNavbar(),
             const SizedBox(height: 8),
-            _buildContent(state),
+            _buildContent(state, state.viewMode),
           ],
         );
       },
     );
   }
 
-  Widget _buildPeriodSelector() {
+  Widget _buildPeriodSelector(BudgetBookFilter filter, BudgetDateRange dateRange) {
     return PeriodSelector(
-      filter: currentFilter,
-      dateRange: _currentDateRange,
+      filter: filter,
+      dateRange: dateRange,
       pageController: _pageController,
     );
   }
@@ -122,14 +115,14 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     );
   }
 
-  Widget _buildContent(BudgetBookState state) {
+  Widget _buildContent(BudgetBookState state, BudgetViewMode viewMode) {
     Widget content;
 
     // TODO display loading bar while loading list
-    if (state.rawItems.isNotEmpty) {
-      switch (currentViewMode) {
+    if (state.items.isNotEmpty) {
+      switch (viewMode) {
         case BudgetViewMode.summary:
-          content = _buildSummary(state.summaries);
+          content = _buildSummary(state.items);
           break;
         case BudgetViewMode.transaction:
           content = TransactionView();

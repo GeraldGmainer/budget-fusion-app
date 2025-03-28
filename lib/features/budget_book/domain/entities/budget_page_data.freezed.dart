@@ -19,7 +19,7 @@ mixin _$BudgetPageData {
   BudgetDateRange get dateRange => throw _privateConstructorUsedError;
   Decimal get income => throw _privateConstructorUsedError;
   Decimal get outcome => throw _privateConstructorUsedError;
-  List<Booking> get bookings => throw _privateConstructorUsedError;
+  List<CategoryGroup> get categoryGroups => throw _privateConstructorUsedError;
 
   /// Create a copy of BudgetPageData
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +38,7 @@ abstract class $BudgetPageDataCopyWith<$Res> {
       {BudgetDateRange dateRange,
       Decimal income,
       Decimal outcome,
-      List<Booking> bookings});
+      List<CategoryGroup> categoryGroups});
 
   $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
@@ -61,7 +61,7 @@ class _$BudgetPageDataCopyWithImpl<$Res, $Val extends BudgetPageData>
     Object? dateRange = null,
     Object? income = null,
     Object? outcome = null,
-    Object? bookings = null,
+    Object? categoryGroups = null,
   }) {
     return _then(_value.copyWith(
       dateRange: null == dateRange
@@ -76,10 +76,10 @@ class _$BudgetPageDataCopyWithImpl<$Res, $Val extends BudgetPageData>
           ? _value.outcome
           : outcome // ignore: cast_nullable_to_non_nullable
               as Decimal,
-      bookings: null == bookings
-          ? _value.bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
+      categoryGroups: null == categoryGroups
+          ? _value.categoryGroups
+          : categoryGroups // ignore: cast_nullable_to_non_nullable
+              as List<CategoryGroup>,
     ) as $Val);
   }
 
@@ -106,7 +106,7 @@ abstract class _$$BudgetPageDataImplCopyWith<$Res>
       {BudgetDateRange dateRange,
       Decimal income,
       Decimal outcome,
-      List<Booking> bookings});
+      List<CategoryGroup> categoryGroups});
 
   @override
   $BudgetDateRangeCopyWith<$Res> get dateRange;
@@ -128,7 +128,7 @@ class __$$BudgetPageDataImplCopyWithImpl<$Res>
     Object? dateRange = null,
     Object? income = null,
     Object? outcome = null,
-    Object? bookings = null,
+    Object? categoryGroups = null,
   }) {
     return _then(_$BudgetPageDataImpl(
       dateRange: null == dateRange
@@ -143,10 +143,10 @@ class __$$BudgetPageDataImplCopyWithImpl<$Res>
           ? _value.outcome
           : outcome // ignore: cast_nullable_to_non_nullable
               as Decimal,
-      bookings: null == bookings
-          ? _value._bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
+      categoryGroups: null == categoryGroups
+          ? _value._categoryGroups
+          : categoryGroups // ignore: cast_nullable_to_non_nullable
+              as List<CategoryGroup>,
     ));
   }
 }
@@ -158,8 +158,8 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
       {required this.dateRange,
       required this.income,
       required this.outcome,
-      required final List<Booking> bookings})
-      : _bookings = bookings,
+      required final List<CategoryGroup> categoryGroups})
+      : _categoryGroups = categoryGroups,
         super._();
 
   @override
@@ -168,17 +168,17 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
   final Decimal income;
   @override
   final Decimal outcome;
-  final List<Booking> _bookings;
+  final List<CategoryGroup> _categoryGroups;
   @override
-  List<Booking> get bookings {
-    if (_bookings is EqualUnmodifiableListView) return _bookings;
+  List<CategoryGroup> get categoryGroups {
+    if (_categoryGroups is EqualUnmodifiableListView) return _categoryGroups;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_bookings);
+    return EqualUnmodifiableListView(_categoryGroups);
   }
 
   @override
   String toString() {
-    return 'BudgetPageData(dateRange: $dateRange, income: $income, outcome: $outcome, bookings: $bookings)';
+    return 'BudgetPageData(dateRange: $dateRange, income: $income, outcome: $outcome, categoryGroups: $categoryGroups)';
   }
 
   @override
@@ -190,12 +190,13 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
                 other.dateRange == dateRange) &&
             (identical(other.income, income) || other.income == income) &&
             (identical(other.outcome, outcome) || other.outcome == outcome) &&
-            const DeepCollectionEquality().equals(other._bookings, _bookings));
+            const DeepCollectionEquality()
+                .equals(other._categoryGroups, _categoryGroups));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, dateRange, income, outcome,
-      const DeepCollectionEquality().hash(_bookings));
+      const DeepCollectionEquality().hash(_categoryGroups));
 
   /// Create a copy of BudgetPageData
   /// with the given fields replaced by the non-null parameter values.
@@ -209,10 +210,11 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
 
 abstract class _BudgetPageData extends BudgetPageData {
   const factory _BudgetPageData(
-      {required final BudgetDateRange dateRange,
-      required final Decimal income,
-      required final Decimal outcome,
-      required final List<Booking> bookings}) = _$BudgetPageDataImpl;
+          {required final BudgetDateRange dateRange,
+          required final Decimal income,
+          required final Decimal outcome,
+          required final List<CategoryGroup> categoryGroups}) =
+      _$BudgetPageDataImpl;
   const _BudgetPageData._() : super._();
 
   @override
@@ -222,7 +224,7 @@ abstract class _BudgetPageData extends BudgetPageData {
   @override
   Decimal get outcome;
   @override
-  List<Booking> get bookings;
+  List<CategoryGroup> get categoryGroups;
 
   /// Create a copy of BudgetPageData
   /// with the given fields replaced by the non-null parameter values.

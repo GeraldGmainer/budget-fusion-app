@@ -2,32 +2,32 @@ part of 'budget_book_cubit.dart';
 
 @freezed
 class BudgetBookState with _$BudgetBookState {
-  const factory BudgetBookState.initial({
-    @Default([]) List<BudgetPageData> rawItems,
-    @Default([]) List<SummaryViewData> summaries,
-    required BudgetBookFilter currentFilter,
-    required BudgetViewMode currentViewMode,
+  factory BudgetBookState.initial({
+    @Default([]) List<SummaryViewData> items,
+    required BudgetBookFilter filter,
+    @Default(BudgetViewMode.summary) BudgetViewMode viewMode,
+    required BudgetDateRange dateRange,
   }) = _Initial;
 
   const factory BudgetBookState.loading({
-    required List<BudgetPageData> rawItems,
-    required List<SummaryViewData> summaries,
-    required BudgetBookFilter currentFilter,
-    required BudgetViewMode currentViewMode,
+    required List<SummaryViewData> items,
+    required BudgetBookFilter filter,
+    required BudgetViewMode viewMode,
+    required BudgetDateRange dateRange,
   }) = _Loading;
 
   const factory BudgetBookState.loaded({
-    required List<BudgetPageData> rawItems,
-    required List<SummaryViewData> summaries,
-    required BudgetBookFilter currentFilter,
-    required BudgetViewMode currentViewMode,
+    required List<SummaryViewData> items,
+    required BudgetBookFilter filter,
+    required BudgetViewMode viewMode,
+    required BudgetDateRange dateRange,
   }) = _Loaded;
 
   const factory BudgetBookState.error({
-    required List<BudgetPageData> rawItems,
-    required List<SummaryViewData> summaries,
-    required BudgetBookFilter currentFilter,
-    required BudgetViewMode currentViewMode,
+    required List<SummaryViewData> items,
+    required BudgetBookFilter filter,
+    required BudgetViewMode viewMode,
+    required BudgetDateRange dateRange,
     required String message,
   }) = _Error;
 
@@ -36,10 +36,10 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookState state,
   }) {
     return BudgetBookState.error(
-      rawItems: state.rawItems,
-      summaries: state.summaries,
-      currentFilter: state.currentFilter,
-      currentViewMode: state.currentViewMode,
+      items: state.items,
+      filter: state.filter,
+      viewMode: state.viewMode,
+      dateRange: state.dateRange,
       message: message,
     );
   }
@@ -47,11 +47,11 @@ class BudgetBookState with _$BudgetBookState {
   @override
   String toString() {
     return when(
-      initial: (rawItems, summaries, currentFilter, currentViewMode) => 'BookingPageState Initial:\n- Filter: $currentFilter\n- View: $currentViewMode',
-      loading: (rawItems, summaries, currentFilter, currentViewMode) => 'BookingPageState Loading:\n- Filter: $currentFilter\n- View: $currentViewMode',
-      loaded: (rawItems, summaries, currentFilter, currentViewMode) => 'BookingPageState Loaded:\n- Filter: $currentFilter\n- View: $currentViewMode',
-      error: (rawItems, summaries, message, currentFilter, currentViewMode) =>
-          'BookingPageState Error:\n- Message: $message\n- Filter: $currentFilter\n- View: $currentViewMode',
+      initial: (_, filter, viewMode, dateRange) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      loading: (_, filter, viewMode, dateRange) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      loaded: (_, filter, viewMode, dateRange) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      error: (_, filter, viewMode, dateRange, message) =>
+          'BookingPageState Error:\n- Message: $message\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
     );
   }
 }

@@ -6,7 +6,7 @@ import '../modal/filter_modal.dart';
 
 class BudgetFilterButton extends StatelessWidget {
   void _showFilterDialog(BuildContext context) {
-    final filter = context.read<BudgetBookCubit>().state.currentFilter;
+    final filter = context.read<BudgetBookCubit>().state.filter;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
