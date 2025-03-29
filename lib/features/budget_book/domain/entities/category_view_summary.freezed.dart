@@ -21,6 +21,8 @@ mixin _$CategoryViewSummary {
   String get iconColor => throw _privateConstructorUsedError;
   int get percentage => throw _privateConstructorUsedError;
   Decimal get value => throw _privateConstructorUsedError;
+  List<CategoryViewSummary> get subSummaries =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryViewSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +42,8 @@ abstract class $CategoryViewSummaryCopyWith<$Res> {
       String iconName,
       String iconColor,
       int percentage,
-      Decimal value});
+      Decimal value,
+      List<CategoryViewSummary> subSummaries});
 }
 
 /// @nodoc
@@ -63,6 +66,7 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
     Object? iconColor = null,
     Object? percentage = null,
     Object? value = null,
+    Object? subSummaries = null,
   }) {
     return _then(_value.copyWith(
       categoryName: null == categoryName
@@ -85,6 +89,10 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as Decimal,
+      subSummaries: null == subSummaries
+          ? _value.subSummaries
+          : subSummaries // ignore: cast_nullable_to_non_nullable
+              as List<CategoryViewSummary>,
     ) as $Val);
   }
 }
@@ -102,7 +110,8 @@ abstract class _$$CategoryViewSummaryImplCopyWith<$Res>
       String iconName,
       String iconColor,
       int percentage,
-      Decimal value});
+      Decimal value,
+      List<CategoryViewSummary> subSummaries});
 }
 
 /// @nodoc
@@ -123,6 +132,7 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? percentage = null,
     Object? value = null,
+    Object? subSummaries = null,
   }) {
     return _then(_$CategoryViewSummaryImpl(
       categoryName: null == categoryName
@@ -145,6 +155,10 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as Decimal,
+      subSummaries: null == subSummaries
+          ? _value._subSummaries
+          : subSummaries // ignore: cast_nullable_to_non_nullable
+              as List<CategoryViewSummary>,
     ));
   }
 }
@@ -157,8 +171,10 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
       required this.iconName,
       required this.iconColor,
       required this.percentage,
-      required this.value})
-      : super._();
+      required this.value,
+      final List<CategoryViewSummary> subSummaries = const []})
+      : _subSummaries = subSummaries,
+        super._();
 
   @override
   final String categoryName;
@@ -170,10 +186,18 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   final int percentage;
   @override
   final Decimal value;
+  final List<CategoryViewSummary> _subSummaries;
+  @override
+  @JsonKey()
+  List<CategoryViewSummary> get subSummaries {
+    if (_subSummaries is EqualUnmodifiableListView) return _subSummaries;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_subSummaries);
+  }
 
   @override
   String toString() {
-    return 'CategoryViewSummary(categoryName: $categoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value)';
+    return 'CategoryViewSummary(categoryName: $categoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
   }
 
   @override
@@ -189,12 +213,20 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
                 other.iconColor == iconColor) &&
             (identical(other.percentage, percentage) ||
                 other.percentage == percentage) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.value, value) || other.value == value) &&
+            const DeepCollectionEquality()
+                .equals(other._subSummaries, _subSummaries));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, categoryName, iconName, iconColor, percentage, value);
+      runtimeType,
+      categoryName,
+      iconName,
+      iconColor,
+      percentage,
+      value,
+      const DeepCollectionEquality().hash(_subSummaries));
 
   /// Create a copy of CategoryViewSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -208,11 +240,13 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
 abstract class _CategoryViewSummary extends CategoryViewSummary {
   const factory _CategoryViewSummary(
-      {required final String categoryName,
-      required final String iconName,
-      required final String iconColor,
-      required final int percentage,
-      required final Decimal value}) = _$CategoryViewSummaryImpl;
+          {required final String categoryName,
+          required final String iconName,
+          required final String iconColor,
+          required final int percentage,
+          required final Decimal value,
+          final List<CategoryViewSummary> subSummaries}) =
+      _$CategoryViewSummaryImpl;
   const _CategoryViewSummary._() : super._();
 
   @override
@@ -225,6 +259,8 @@ abstract class _CategoryViewSummary extends CategoryViewSummary {
   int get percentage;
   @override
   Decimal get value;
+  @override
+  List<CategoryViewSummary> get subSummaries;
 
   /// Create a copy of CategoryViewSummary
   /// with the given fields replaced by the non-null parameter values.

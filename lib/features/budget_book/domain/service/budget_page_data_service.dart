@@ -11,6 +11,10 @@ import '../enums/period_mode.dart';
 
 @lazySingleton
 class BudgetPageDataService {
+  final CategoryRepo _categoryRepo;
+
+  BudgetPageDataService(this._categoryRepo);
+
   Future<List<BudgetPageData>> load(List<Booking> bookings, BudgetBookFilter filter) async {
     if (bookings.isEmpty) {
       return [BudgetPageData.empty(filter.period)];
@@ -20,7 +24,7 @@ class BudgetPageDataService {
       case PeriodMode.day:
         return _convertToDay(bookings);
       case PeriodMode.month:
-        return _convertToMonth(bookings);
+        return await _convertToMonth(bookings);
       case PeriodMode.year:
         return _convertToYear(bookings);
       case PeriodMode.all:
@@ -28,11 +32,11 @@ class BudgetPageDataService {
     }
   }
 
-  List<BudgetPageData> _convertToMonth(List<Booking> bookings) {
+  Future<List<BudgetPageData>> _convertToMonth(List<Booking> bookings) async {
     final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
     DateTime fromDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isBefore(b) ? a : b);
     DateTime endDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isAfter(b) ? a : b);
-    return _generateMonthlyPeriods(fromDate, endDate, bookingsByMonthAndCategory);
+    return await _generateMonthlyPeriods(fromDate, endDate, bookingsByMonthAndCategory);
   }
 
   Map<int, Map<String, List<Booking>>> _groupBookingsByMonthAndCategory(List<Booking> bookings) {
@@ -48,11 +52,10 @@ class BudgetPageDataService {
       grouped[monthKey]!.putIfAbsent(booking.category!.id.toString(), () => []);
       grouped[monthKey]![booking.category!.id.toString()]!.add(booking);
     }
-
     return grouped;
   }
 
-  List<BudgetPageData> _generateMonthlyPeriods(DateTime from, DateTime end, Map<int, Map<String, List<Booking>>> bookingsByMonthAndCategory) {
+  Future<List<BudgetPageData>> _generateMonthlyPeriods(DateTime from, DateTime end, Map<int, Map<String, List<Booking>>> bookingsByMonthAndCategory) async {
     final periods = <BudgetPageData>[];
     DateTime currentMonth = from.startOfMonth;
 
@@ -63,14 +66,11 @@ class BudgetPageDataService {
       if (!bookingsByMonthAndCategory.containsKey(monthKey)) {
         periods.add(BudgetPageData.empty(PeriodMode.month));
       } else {
-        final categoryGroups = _createCategoryGroups(bookingsByMonthAndCategory[monthKey]!);
-        final income = _calculateTotalIncome(categoryGroups);
-        final outcome = _calculateTotalOutcome(categoryGroups);
-
+        final categoryGroups = await _createCategoryGroups(bookingsByMonthAndCategory[monthKey]!);
         periods.add(BudgetPageData(
           dateRange: BudgetDateRange(period: PeriodMode.month, from: currentMonth, to: toDate),
-          income: income,
-          outcome: outcome,
+          income: categoryGroups.totalIncomeAmount(),
+          outcome: categoryGroups.totalOutcomeAmount(),
           categoryGroups: categoryGroups,
         ));
       }
@@ -81,21 +81,55 @@ class BudgetPageDataService {
     return periods;
   }
 
-  List<CategoryGroup> _createCategoryGroups(Map<String, List<Booking>> bookingsByCategory) {
-    return bookingsByCategory.entries.map((entry) {
+  Future<List<CategoryGroup>> _createCategoryGroups(Map<String, List<Booking>> bookingsByCategory) async {
+    final flatCategories = await _categoryRepo.watch().first;
+    final Map<String, Category> flatMap = {for (var cat in flatCategories) cat.id.toString(): cat};
+
+    final Map<String, CategoryGroup> groupMap = {};
+    for (final entry in bookingsByCategory.entries) {
       final category = entry.value.first.category;
+      if (category == null) continue;
       final amount = entry.value.fold(Decimal.zero, (sum, booking) => sum + booking.amount);
-      return CategoryGroup(category: category!, bookings: entry.value, amount: amount);
-    }).toList()
-      ..sort(_compareCategoryGroups);
-  }
+      groupMap[category.id.toString()] = CategoryGroup(
+        category: category,
+        bookings: entry.value,
+        amount: amount,
+        subGroups: [],
+      );
+    }
 
-  Decimal _calculateTotalIncome(List<CategoryGroup> groups) {
-    return groups.incomeCategories().totalAmount;
-  }
+    final Set<String> nestedGroupIds = {};
 
-  Decimal _calculateTotalOutcome(List<CategoryGroup> groups) {
-    return groups.outcomeCategories().totalAmount;
+    for (final entry in groupMap.entries.toList()) {
+      final id = entry.key;
+      final group = entry.value;
+      if (group.category.parent != null) {
+        final parentId = group.category.parent!.id.toString();
+        final parentFromRepo = flatMap[parentId];
+        if (parentFromRepo == null) {
+          BudgetLogger.instance.e("No group found for ID $parentId / ${group.category}", "Parent category not found");
+          continue;
+        }
+        if (!groupMap.containsKey(parentId)) {
+          groupMap[parentId] = CategoryGroup(
+            category: parentFromRepo,
+            bookings: [],
+            amount: Decimal.zero,
+            subGroups: [],
+          );
+        }
+        final parentGroup = groupMap[parentId]!;
+        final updatedSubGroups = List<CategoryGroup>.from(parentGroup.subGroups)..add(group);
+        groupMap[parentId] = parentGroup.copyWith(subGroups: updatedSubGroups);
+        nestedGroupIds.add(id);
+      }
+    }
+
+    // Build top-level groups (i.e. those not nested).
+    final List<CategoryGroup> topLevelGroups = groupMap.entries.where((entry) => !nestedGroupIds.contains(entry.key)).map((entry) => entry.value).toList();
+
+    topLevelGroups.sort(_compareCategoryGroups);
+    return topLevelGroups;
   }
 
   int _compareCategoryGroups(CategoryGroup a, CategoryGroup b) {

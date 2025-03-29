@@ -150,8 +150,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
         () => _i371.RealtimeNotifierService());
-    gh.lazySingleton<_i198.BudgetPageDataService>(
-        () => _i198.BudgetPageDataService());
     gh.lazySingleton<_i971.FilterBookingsUseCase>(
         () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
@@ -160,8 +158,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i870.CategoryRemoteDataSource());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
-    gh.lazySingleton<_i548.FilterAndGroupBookingsUseCase>(() =>
-        _i548.FilterAndGroupBookingsUseCase(gh<_i198.BudgetPageDataService>()));
     gh.lazySingleton<_i702.ConnectivityService>(
         () => _i702.ConnectivityService(gh<_i895.Connectivity>()));
     gh.factory<_i991.LoginCubit>(() => _i991.LoginCubit(
@@ -216,6 +212,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i528.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i874.LoadProfileUseCase>(
         () => _i874.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i198.BudgetPageDataService>(
+        () => _i198.BudgetPageDataService(gh<_i714.CategoryRepo>()));
     gh.factory<_i1071.ProfileCubit>(() => _i1071.ProfileCubit(
           gh<_i528.WatchProfileUseCase>(),
           gh<_i874.LoadProfileUseCase>(),
@@ -257,6 +255,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i1015.GetProfileSettingUseCase(gh<_i1029.ProfileSettingAggregator>()));
     gh.lazySingleton<_i209.GetCurrencyUseCase>(
         () => _i209.GetCurrencyUseCase(gh<_i1029.ProfileSettingAggregator>()));
+    gh.lazySingleton<_i548.FilterAndGroupBookingsUseCase>(() =>
+        _i548.FilterAndGroupBookingsUseCase(gh<_i198.BudgetPageDataService>()));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(

@@ -15,14 +15,13 @@ class BudgetPageData with _$BudgetPageData {
     required BudgetDateRange dateRange,
     required Decimal income,
     required Decimal outcome,
-    required List<CategoryGroup> categoryGroups,
+    @Default([]) List<CategoryGroup> categoryGroups,
   }) = _BudgetPageData;
 
   factory BudgetPageData.empty(PeriodMode periodMode) => BudgetPageData(
         dateRange: BudgetDateRange(period: periodMode, from: DateTime.now(), to: DateTime.now()),
         income: Decimal.zero,
         outcome: Decimal.zero,
-        categoryGroups: [],
       );
 
   Decimal get balance {

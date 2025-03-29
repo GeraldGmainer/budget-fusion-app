@@ -3,6 +3,7 @@ import 'package:decimal/decimal.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/budget_page_data.dart';
+import '../../../domain/entities/category_group.dart';
 import '../../../domain/entities/category_view_summary.dart';
 import '../../../domain/entities/pie_data.dart';
 import '../../../domain/entities/summary_view_data.dart';
@@ -28,41 +29,56 @@ class GenerateBudgetSummaryUseCase {
   }
 
   List<CategoryViewSummary> _mapSummaries(BudgetPageData pageData) {
-    final Map<Category, Decimal> categoryTotals = {};
-    for (final categoryGroup in pageData.categoryGroups) {
-      for (final booking in categoryGroup.bookings) {
-        if (booking.category != null) {
-          final currentSum = categoryTotals[booking.category] ?? Decimal.zero;
-          categoryTotals[booking.category!] = currentSum + booking.amount;
-        }
-      }
-    }
-
     final List<CategoryViewSummary> summaries = [];
-    categoryTotals.forEach((category, totalForCategory) {
-      final totalPool = category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
-      final percentage = totalPool == Decimal.zero ? 0 : ((totalForCategory / totalPool).toDouble() * 100.0).round();
+    final List<CategoryGroup> sortedGroups = List.from(pageData.categoryGroups);
 
-      summaries.add(
-        CategoryViewSummary(
-          categoryName: category.name,
-          iconName: category.iconName,
-          iconColor: category.iconColor,
-          percentage: percentage,
-          value: totalForCategory,
-        ),
-      );
+    sortedGroups.sort((a, b) {
+      if (a.category.categoryType != b.category.categoryType) {
+        return a.category.categoryType.index.compareTo(b.category.categoryType.index);
+      } else {
+        return b.totalGroupAmount.compareTo(a.totalGroupAmount);
+      }
     });
 
+    for (final group in sortedGroups) {
+      final Decimal overallTotal = group.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
+      summaries.add(_convertGroup(group, overallTotal));
+    }
     return summaries;
+  }
+
+  CategoryViewSummary _convertGroup(CategoryGroup group, Decimal overallTotal) {
+    if (group.subGroups.isEmpty) {
+      int percentage = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
+      return CategoryViewSummary(
+        categoryName: group.category.name,
+        iconName: group.category.iconName,
+        iconColor: group.category.iconColor,
+        percentage: percentage,
+        value: group.amount,
+      );
+    } else {
+      int parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
+      List<CategoryViewSummary> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal)).toList();
+      Decimal childrenTotal = subSummaries.fold(Decimal.zero, (prev, child) => prev + child.value);
+      int childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
+      int totalPercentage = parentPerc + childrenPerc;
+      Decimal combinedValue = group.amount + childrenTotal;
+      return CategoryViewSummary(
+        categoryName: group.category.name,
+        iconName: group.category.iconName,
+        iconColor: group.category.iconColor,
+        percentage: totalPercentage,
+        value: combinedValue,
+        subSummaries: subSummaries,
+      );
+    }
   }
 
   List<PieData> _generatePieData(List<CategoryViewSummary> summaries) {
     List<PieData> pieDataList = [];
-
     for (final summary in summaries) {
       final hideIcon = summary.percentage < 5;
-
       pieDataList.add(
         PieData(
           xData: summary.categoryName,
@@ -74,7 +90,6 @@ class GenerateBudgetSummaryUseCase {
         ),
       );
     }
-
     return pieDataList;
   }
 }

@@ -13,5 +13,6 @@ class CategoryViewSummary with _$CategoryViewSummary {
     required String iconColor,
     required int percentage,
     required Decimal value,
+    @Default([]) List<CategoryViewSummary> subSummaries,
   }) = _CategoryViewSummary;
 }

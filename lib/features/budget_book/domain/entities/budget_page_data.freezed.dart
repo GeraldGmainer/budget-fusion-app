@@ -158,7 +158,7 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
       {required this.dateRange,
       required this.income,
       required this.outcome,
-      required final List<CategoryGroup> categoryGroups})
+      final List<CategoryGroup> categoryGroups = const []})
       : _categoryGroups = categoryGroups,
         super._();
 
@@ -170,6 +170,7 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
   final Decimal outcome;
   final List<CategoryGroup> _categoryGroups;
   @override
+  @JsonKey()
   List<CategoryGroup> get categoryGroups {
     if (_categoryGroups is EqualUnmodifiableListView) return _categoryGroups;
     // ignore: implicit_dynamic_type
@@ -210,11 +211,10 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
 
 abstract class _BudgetPageData extends BudgetPageData {
   const factory _BudgetPageData(
-          {required final BudgetDateRange dateRange,
-          required final Decimal income,
-          required final Decimal outcome,
-          required final List<CategoryGroup> categoryGroups}) =
-      _$BudgetPageDataImpl;
+      {required final BudgetDateRange dateRange,
+      required final Decimal income,
+      required final Decimal outcome,
+      final List<CategoryGroup> categoryGroups}) = _$BudgetPageDataImpl;
   const _BudgetPageData._() : super._();
 
   @override

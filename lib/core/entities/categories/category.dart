@@ -16,6 +16,9 @@ class Category with _$Category {
     required CategoryType categoryType,
     required String iconName,
     required String iconColor,
+    required Category? parent,
     required DateTime updatedAt,
   }) = _Category;
+
+  bool get isParent => parent == null;
 }

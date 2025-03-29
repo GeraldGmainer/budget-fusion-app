@@ -36,6 +36,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       emit(BudgetBookState.loading(items: state.items, filter: filter, viewMode: state.viewMode, dateRange: state.dateRange));
       final results = await Future.wait([_watchBookingsUseCase().first, _getCurrencyUseCase()]);
       final rawItems = results[0] as List<Booking>;
+      // TODO load currency in domain service
       final currency = results[1] as Currency;
 
       final items = await _filterAndGroupBookingsUseCase(rawItems, filter);
