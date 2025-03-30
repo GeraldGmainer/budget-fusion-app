@@ -1,6 +1,7 @@
-export 'converters/datetime_converter.dart';
-export 'converters/remote_converter.dart';
-export 'converters/uuid_converter.dart';
+export 'converters/data/remote_converter.dart';
+export 'converters/data/uuid_converter.dart';
+export 'converters/ui/color_converter.dart';
+export 'converters/ui/datetime_converter.dart';
 //
 export 'extensions/snackbar.dart';
 export 'extensions/validator.dart';

@@ -1,10 +1,10 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/category_view_summary.dart';
 import '../../domain/entities/summary_view_data.dart';
+import 'category_line_view.dart';
 
 // TODO refactoring
 class SummaryView extends StatelessWidget {
@@ -46,9 +46,9 @@ class SummaryView extends StatelessWidget {
     List<Widget> tiles = [];
     for (var summary in summaries) {
       if (summary.subSummaries.isNotEmpty) {
-        tiles.addAll(summary.subSummaries.map((child) => _buildCategoryTile(child)).toList());
+        tiles.addAll(summary.subSummaries.map((child) => CategoryLineView(summary: child)).toList());
       } else {
-        tiles.add(_buildCategoryTile(summary));
+        tiles.add(CategoryLineView(summary: summary));
       }
     }
     return TransactionList(
@@ -56,27 +56,6 @@ class SummaryView extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return tiles[index];
       },
-    );
-  }
-
-  Widget _buildCategoryTile(CategoryViewSummary summary) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      dense: true,
-      leading: Icon(Icons.category, color: Colors.blue, size: 26),
-      title: Text(summary.categoryName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      subtitle: summary.parentCategoryName == null
-          ? null
-          : Text(summary.parentCategoryName!, style: const TextStyle(fontSize: 14, color: AppColors.secondaryTextColor)),
-      // subtitle: Text(summary.parentCategoryName ?? "", style: const TextStyle(fontSize: 14, color: AppColors.secondaryTextColor)),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text("${summary.value.toStringAsFixed(2)} €", textAlign: TextAlign.end, style: TextStyle(fontSize: 13)),
-          Text("${summary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13)),
-        ],
-      ),
     );
   }
 
