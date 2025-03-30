@@ -8,6 +8,7 @@ import '../../../domain/entities/category_view_summary.dart';
 import '../../../domain/entities/pie_data.dart';
 import '../../../domain/entities/summary_view_data.dart';
 
+// TODO refactoring
 @lazySingleton
 class GenerateBudgetSummaryUseCase {
   List<SummaryViewData> call(List<BudgetPageData> datas, Currency currency) {
@@ -52,6 +53,7 @@ class GenerateBudgetSummaryUseCase {
       int percentage = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
       return CategoryViewSummary(
         categoryName: group.category.name,
+        parentCategoryName: group.category.parent?.name,
         iconName: group.category.iconName,
         iconColor: group.category.iconColor,
         percentage: percentage,
@@ -66,6 +68,7 @@ class GenerateBudgetSummaryUseCase {
       Decimal combinedValue = group.amount + childrenTotal;
       return CategoryViewSummary(
         categoryName: group.category.name,
+        parentCategoryName: group.category.parent?.name,
         iconName: group.category.iconName,
         iconColor: group.category.iconColor,
         percentage: totalPercentage,

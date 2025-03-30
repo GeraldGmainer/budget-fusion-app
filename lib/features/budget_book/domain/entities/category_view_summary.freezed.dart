@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CategoryViewSummary {
   String get categoryName => throw _privateConstructorUsedError;
+  String? get parentCategoryName => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
   int get percentage => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $CategoryViewSummaryCopyWith<$Res> {
   @useResult
   $Res call(
       {String categoryName,
+      String? parentCategoryName,
       String iconName,
       String iconColor,
       int percentage,
@@ -62,6 +64,7 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
   @override
   $Res call({
     Object? categoryName = null,
+    Object? parentCategoryName = freezed,
     Object? iconName = null,
     Object? iconColor = null,
     Object? percentage = null,
@@ -73,6 +76,10 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
+      parentCategoryName: freezed == parentCategoryName
+          ? _value.parentCategoryName
+          : parentCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       iconName: null == iconName
           ? _value.iconName
           : iconName // ignore: cast_nullable_to_non_nullable
@@ -107,6 +114,7 @@ abstract class _$$CategoryViewSummaryImplCopyWith<$Res>
   @useResult
   $Res call(
       {String categoryName,
+      String? parentCategoryName,
       String iconName,
       String iconColor,
       int percentage,
@@ -128,6 +136,7 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categoryName = null,
+    Object? parentCategoryName = freezed,
     Object? iconName = null,
     Object? iconColor = null,
     Object? percentage = null,
@@ -139,6 +148,10 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
+      parentCategoryName: freezed == parentCategoryName
+          ? _value.parentCategoryName
+          : parentCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       iconName: null == iconName
           ? _value.iconName
           : iconName // ignore: cast_nullable_to_non_nullable
@@ -168,6 +181,7 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
 class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   const _$CategoryViewSummaryImpl(
       {required this.categoryName,
+      required this.parentCategoryName,
       required this.iconName,
       required this.iconColor,
       required this.percentage,
@@ -178,6 +192,8 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
   @override
   final String categoryName;
+  @override
+  final String? parentCategoryName;
   @override
   final String iconName;
   @override
@@ -197,7 +213,7 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
   @override
   String toString() {
-    return 'CategoryViewSummary(categoryName: $categoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
+    return 'CategoryViewSummary(categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
   }
 
   @override
@@ -207,6 +223,8 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
             other is _$CategoryViewSummaryImpl &&
             (identical(other.categoryName, categoryName) ||
                 other.categoryName == categoryName) &&
+            (identical(other.parentCategoryName, parentCategoryName) ||
+                other.parentCategoryName == parentCategoryName) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
@@ -222,6 +240,7 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   int get hashCode => Object.hash(
       runtimeType,
       categoryName,
+      parentCategoryName,
       iconName,
       iconColor,
       percentage,
@@ -241,6 +260,7 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 abstract class _CategoryViewSummary extends CategoryViewSummary {
   const factory _CategoryViewSummary(
           {required final String categoryName,
+          required final String? parentCategoryName,
           required final String iconName,
           required final String iconColor,
           required final int percentage,
@@ -251,6 +271,8 @@ abstract class _CategoryViewSummary extends CategoryViewSummary {
 
   @override
   String get categoryName;
+  @override
+  String? get parentCategoryName;
   @override
   String get iconName;
   @override

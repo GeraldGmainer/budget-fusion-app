@@ -9,6 +9,7 @@ class CategoryViewSummary with _$CategoryViewSummary {
 
   const factory CategoryViewSummary({
     required String categoryName,
+    required String? parentCategoryName,
     required String iconName,
     required String iconColor,
     required int percentage,
