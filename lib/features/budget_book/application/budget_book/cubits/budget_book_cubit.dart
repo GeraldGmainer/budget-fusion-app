@@ -16,14 +16,14 @@ import '../../../domain/enums/period_mode.dart';
 part 'budget_book_cubit.freezed.dart';
 part 'budget_book_state.dart';
 
+// TODO refactoring
 @injectable
 class BudgetBookCubit extends Cubit<BudgetBookState> {
   final GenerateBudgetSummaryUseCase _generateBudgetSummaryUseCase;
-  final GetCurrencyUseCase _getCurrencyUseCase;
   final FilterAndGroupBookingsUseCase _filterAndGroupBookingsUseCase;
   final WatchBookingsUseCase _watchBookingsUseCase;
 
-  BudgetBookCubit(this._generateBudgetSummaryUseCase, this._getCurrencyUseCase, this._filterAndGroupBookingsUseCase, this._watchBookingsUseCase)
+  BudgetBookCubit(this._generateBudgetSummaryUseCase, this._filterAndGroupBookingsUseCase, this._watchBookingsUseCase)
       : super(BudgetBookState.initial(
           filter: BudgetBookFilter.initial(),
           dateRange: BudgetDateRange(period: PeriodMode.month, from: DateTime.now(), to: DateTime.now()),
@@ -34,13 +34,9 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final filter = state.filter;
       DomainLogger.instance.d(runtimeType.toString(), "initiate load for budget book: ${state.viewMode} / $filter");
       emit(BudgetBookState.loading(items: state.items, filter: filter, viewMode: state.viewMode, dateRange: state.dateRange));
-      final results = await Future.wait([_watchBookingsUseCase().first, _getCurrencyUseCase()]);
-      final rawItems = results[0] as List<Booking>;
-      // TODO load currency in domain service
-      final currency = results[1] as Currency;
-
+      final rawItems = await _watchBookingsUseCase().first;
       final items = await _filterAndGroupBookingsUseCase(rawItems, filter);
-      final summaries = _generateBudgetSummaryUseCase(items, currency);
+      final summaries = await _generateBudgetSummaryUseCase(items);
       emit(BudgetBookState.loaded(items: summaries, filter: filter, viewMode: state.viewMode, dateRange: state.dateRange));
       DomainLogger.instance.d(runtimeType.toString(), "loading budget book done");
     } on TranslatedException catch (e, stackTrace) {
@@ -59,12 +55,10 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final newViewMode = viewMode ?? state.viewMode;
       emit(BudgetBookState.loading(items: state.items, filter: newFilter, viewMode: newViewMode, dateRange: state.dateRange));
 
-      final results = await Future.wait([_watchBookingsUseCase().first, _getCurrencyUseCase()]);
-      final rawItems = results[0] as List<Booking>;
-      final currency = results[1] as Currency;
+      final rawItems = await _watchBookingsUseCase().first;
 
       final items = await _filterAndGroupBookingsUseCase(rawItems, newFilter);
-      final summaries = _generateBudgetSummaryUseCase(items, currency);
+      final summaries = await _generateBudgetSummaryUseCase(items);
       emit(BudgetBookState.loaded(items: summaries, filter: newFilter, viewMode: newViewMode, dateRange: state.dateRange));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);

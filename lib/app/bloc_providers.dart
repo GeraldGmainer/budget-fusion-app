@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 

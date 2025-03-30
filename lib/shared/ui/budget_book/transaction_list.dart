@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 
 class TransactionList extends StatelessWidget {
@@ -27,7 +28,7 @@ class TransactionList extends StatelessWidget {
       separatorBuilder: (context, index) =>
           separator ??
           const Divider(
-            color: Colors.grey,
+            color: AppColors.disabledTextColor,
             thickness: 1,
             // indent: 16,
             // endIndent: 16,

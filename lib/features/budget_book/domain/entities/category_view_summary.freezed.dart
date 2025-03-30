@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CategoryViewSummary {
+  Currency get currency => throw _privateConstructorUsedError;
+  CategoryType get categoryType => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
   String? get parentCategoryName => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
@@ -39,13 +41,17 @@ abstract class $CategoryViewSummaryCopyWith<$Res> {
       _$CategoryViewSummaryCopyWithImpl<$Res, CategoryViewSummary>;
   @useResult
   $Res call(
-      {String categoryName,
+      {Currency currency,
+      CategoryType categoryType,
+      String categoryName,
       String? parentCategoryName,
       String iconName,
       String iconColor,
       int percentage,
       Decimal value,
       List<CategoryViewSummary> subSummaries});
+
+  $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
@@ -63,6 +69,8 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currency = null,
+    Object? categoryType = null,
     Object? categoryName = null,
     Object? parentCategoryName = freezed,
     Object? iconName = null,
@@ -72,6 +80,14 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
     Object? subSummaries = null,
   }) {
     return _then(_value.copyWith(
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+      categoryType: null == categoryType
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
       categoryName: null == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
@@ -102,6 +118,16 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
               as List<CategoryViewSummary>,
     ) as $Val);
   }
+
+  /// Create a copy of CategoryViewSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CurrencyCopyWith<$Res> get currency {
+    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
+      return _then(_value.copyWith(currency: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -113,13 +139,18 @@ abstract class _$$CategoryViewSummaryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String categoryName,
+      {Currency currency,
+      CategoryType categoryType,
+      String categoryName,
       String? parentCategoryName,
       String iconName,
       String iconColor,
       int percentage,
       Decimal value,
       List<CategoryViewSummary> subSummaries});
+
+  @override
+  $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
@@ -135,6 +166,8 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currency = null,
+    Object? categoryType = null,
     Object? categoryName = null,
     Object? parentCategoryName = freezed,
     Object? iconName = null,
@@ -144,6 +177,14 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
     Object? subSummaries = null,
   }) {
     return _then(_$CategoryViewSummaryImpl(
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as Currency,
+      categoryType: null == categoryType
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as CategoryType,
       categoryName: null == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
@@ -180,7 +221,9 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
 
 class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   const _$CategoryViewSummaryImpl(
-      {required this.categoryName,
+      {required this.currency,
+      required this.categoryType,
+      required this.categoryName,
       required this.parentCategoryName,
       required this.iconName,
       required this.iconColor,
@@ -190,6 +233,10 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
       : _subSummaries = subSummaries,
         super._();
 
+  @override
+  final Currency currency;
+  @override
+  final CategoryType categoryType;
   @override
   final String categoryName;
   @override
@@ -213,7 +260,7 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
   @override
   String toString() {
-    return 'CategoryViewSummary(categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
+    return 'CategoryViewSummary(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
   }
 
   @override
@@ -221,6 +268,10 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryViewSummaryImpl &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.categoryType, categoryType) ||
+                other.categoryType == categoryType) &&
             (identical(other.categoryName, categoryName) ||
                 other.categoryName == categoryName) &&
             (identical(other.parentCategoryName, parentCategoryName) ||
@@ -239,6 +290,8 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      currency,
+      categoryType,
       categoryName,
       parentCategoryName,
       iconName,
@@ -259,7 +312,9 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
 abstract class _CategoryViewSummary extends CategoryViewSummary {
   const factory _CategoryViewSummary(
-          {required final String categoryName,
+          {required final Currency currency,
+          required final CategoryType categoryType,
+          required final String categoryName,
           required final String? parentCategoryName,
           required final String iconName,
           required final String iconColor,
@@ -269,6 +324,10 @@ abstract class _CategoryViewSummary extends CategoryViewSummary {
       _$CategoryViewSummaryImpl;
   const _CategoryViewSummary._() : super._();
 
+  @override
+  Currency get currency;
+  @override
+  CategoryType get categoryType;
   @override
   String get categoryName;
   @override

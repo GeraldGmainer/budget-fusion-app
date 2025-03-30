@@ -30,8 +30,8 @@ class CategoryLineView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text("${summary.value.toStringAsFixed(2)} €", textAlign: TextAlign.end, style: TextStyle(fontSize: 14)),
-          Text("${summary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13)),
+          CurrencyText(value: summary.value, currency: summary.currency, color: summary.categoryType.color),
+          Text("${summary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor)),
         ],
       ),
     );

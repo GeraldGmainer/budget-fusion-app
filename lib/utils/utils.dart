@@ -3,6 +3,7 @@ export 'converters/data/uuid_converter.dart';
 export 'converters/ui/color_converter.dart';
 export 'converters/ui/datetime_converter.dart';
 //
+export 'extensions/decimal_extensions.dart';
 export 'extensions/snackbar.dart';
 export 'extensions/validator.dart';
 //

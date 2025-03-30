@@ -11,16 +11,22 @@ import '../../../domain/entities/summary_view_data.dart';
 // TODO refactoring
 @lazySingleton
 class GenerateBudgetSummaryUseCase {
-  List<SummaryViewData> call(List<BudgetPageData> datas, Currency currency) {
+  final ProfileSettingRepo _profileSettingRepo;
+
+  GenerateBudgetSummaryUseCase(this._profileSettingRepo);
+
+  Future<List<SummaryViewData>> call(List<BudgetPageData> datas) async {
+    final currency = (await _profileSettingRepo.watch().first).currency;
     return datas.map((data) => _convert(data, currency)).toList();
   }
 
   SummaryViewData _convert(BudgetPageData pageData, Currency currency) {
-    List<CategoryViewSummary> summaries = _mapSummaries(pageData);
+    List<CategoryViewSummary> summaries = _mapSummaries(pageData, currency);
     List<PieData> pieData = _generatePieData(summaries);
 
     return SummaryViewData(
       currency: currency,
+      categoryType: pageData.categoryGroups.first.category.categoryType,
       dateRange: pageData.dateRange,
       pieData: pieData,
       summaries: summaries,
@@ -29,7 +35,7 @@ class GenerateBudgetSummaryUseCase {
     );
   }
 
-  List<CategoryViewSummary> _mapSummaries(BudgetPageData pageData) {
+  List<CategoryViewSummary> _mapSummaries(BudgetPageData pageData, Currency currency) {
     final List<CategoryViewSummary> summaries = [];
     final List<CategoryGroup> sortedGroups = List.from(pageData.categoryGroups);
 
@@ -43,15 +49,17 @@ class GenerateBudgetSummaryUseCase {
 
     for (final group in sortedGroups) {
       final Decimal overallTotal = group.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
-      summaries.add(_convertGroup(group, overallTotal));
+      summaries.add(_convertGroup(group, overallTotal, currency));
     }
     return summaries;
   }
 
-  CategoryViewSummary _convertGroup(CategoryGroup group, Decimal overallTotal) {
+  CategoryViewSummary _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
     if (group.subGroups.isEmpty) {
       int percentage = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
       return CategoryViewSummary(
+        currency: currency,
+        categoryType: group.category.categoryType,
         categoryName: group.category.name,
         parentCategoryName: group.category.parent?.name,
         iconName: group.category.iconName,
@@ -61,12 +69,14 @@ class GenerateBudgetSummaryUseCase {
       );
     } else {
       int parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
-      List<CategoryViewSummary> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal)).toList();
+      List<CategoryViewSummary> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal, currency)).toList();
       Decimal childrenTotal = subSummaries.fold(Decimal.zero, (prev, child) => prev + child.value);
       int childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
       int totalPercentage = parentPerc + childrenPerc;
       Decimal combinedValue = group.amount + childrenTotal;
       return CategoryViewSummary(
+        currency: currency,
+        categoryType: group.category.categoryType,
         categoryName: group.category.name,
         parentCategoryName: group.category.parent?.name,
         iconName: group.category.iconName,
