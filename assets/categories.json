@@ -23,12 +23,12 @@
   {
     "name": "Housing",
     "type": "outcome",
-    "icon_name": "home_outline",
+    "icon_name": "home",
     "icon_color": "#FF9800",
     "sub_categories": [
       {
         "name": "Rent",
-        "icon_name": "key_outline",
+        "icon_name": "key",
         "icon_color": "#FFA726",
         "type": "outcome"
       },
@@ -40,13 +40,13 @@
       },
       {
         "name": "Repairs & Maintenance",
-        "icon_name": "wrench_outline",
+        "icon_name": "wrench",
         "icon_color": "#FB8C00",
         "type": "outcome"
       },
       {
         "name": "Home Insurance",
-        "icon_name": "shield_outline",
+        "icon_name": "shield",
         "icon_color": "#F57C00",
         "type": "outcome"
       },
@@ -125,7 +125,7 @@
   {
     "name": "Health & Wellness",
     "type": "outcome",
-    "icon_name": "heart_outline",
+    "icon_name": "heart",
     "icon_color": "#E91E63",
     "sub_categories": [
       {
