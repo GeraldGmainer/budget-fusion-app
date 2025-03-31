@@ -5,13 +5,24 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/category_view_summary_data.dart';
 
 class CategorySummaryList extends StatelessWidget {
-  final CategoryViewSummaryData parentSummary;
+  final List<CategoryViewSummaryData> summaries;
 
-  const CategorySummaryList({super.key, required this.parentSummary});
+  const CategorySummaryList({super.key, required this.summaries});
 
   @override
   Widget build(BuildContext context) {
-    final parentRow = _buildParent();
+    return CardWithAction(
+      child: TransactionList(
+        itemCount: summaries.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildRows(summaries[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _buildRows(CategoryViewSummaryData parentSummary) {
+    final parentRow = _buildParent(parentSummary);
 
     if (parentSummary.subSummaries.isEmpty) {
       return parentRow;
@@ -27,7 +38,7 @@ class CategorySummaryList extends StatelessWidget {
     );
   }
 
-  Widget _buildParent() {
+  Widget _buildParent(CategoryViewSummaryData parentSummary) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,

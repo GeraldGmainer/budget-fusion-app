@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entities/pie_data.dart';
 import '../../domain/entities/summary_view_data.dart';
+import 'income_outcome_balance_text.dart';
 
 class SummaryGraph extends StatelessWidget {
   final SummaryViewData data;
@@ -22,20 +22,11 @@ class SummaryGraph extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            PieChart(
-              PieChartData(
-                sections: _buildSections(pieData),
-                centerSpaceRadius: 70,
-                sectionsSpace: 3,
-                startDegreeOffset: 270,
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CurrencyText(value: data.income, currency: data.currency, color: AppColors.incomeColor, fontSize: 16),
-                CurrencyText(value: data.outcome, currency: data.currency, color: AppColors.outcomeColor, fontSize: 16),
-              ],
+            PieChart(PieChartData(sections: _buildSections(pieData), centerSpaceRadius: 70, sectionsSpace: 3, startDegreeOffset: 270)),
+            IncomeOutcomeBalanceText(
+              income: data.income,
+              outcome: data.outcome,
+              currency: data.currency,
             ),
           ],
         ),
