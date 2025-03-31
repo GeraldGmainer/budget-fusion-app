@@ -45,9 +45,10 @@ class SummaryGraph extends StatelessWidget {
   List<PieChartSectionData> _buildSections(List<PieData> data) {
     return data.map((pieData) {
       final sliceColor = ColorConverter.stringToColor(pieData.iconColor);
+      final darkerColor = ColorConverter.darken(sliceColor, 0.08);
       return PieChartSectionData(
         value: pieData.yData.toDouble(),
-        color: sliceColor,
+        gradient: LinearGradient(colors: [sliceColor, darkerColor], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         showTitle: false,
         titleStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
         badgeWidget: (!pieData.hideIcon && pieData.iconName.isNotEmpty) ? BudgetIcon(name: pieData.iconName, color: '#FFFFFF', size: 24) : null,
