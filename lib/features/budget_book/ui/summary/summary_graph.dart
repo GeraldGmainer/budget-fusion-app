@@ -22,7 +22,15 @@ class SummaryGraph extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            PieChart(PieChartData(sections: _buildSections(pieData), centerSpaceRadius: 70, sectionsSpace: 3, startDegreeOffset: 270)),
+            PieChart(
+                swapAnimationDuration: Duration(milliseconds: 300),
+                swapAnimationCurve: Curves.linear,
+                PieChartData(
+                  sections: _buildSections(pieData),
+                  centerSpaceRadius: 70,
+                  sectionsSpace: 3,
+                  startDegreeOffset: 270,
+                )),
             IncomeOutcomeBalanceText(
               income: data.income,
               outcome: data.outcome,

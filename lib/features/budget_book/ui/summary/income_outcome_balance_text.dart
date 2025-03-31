@@ -8,12 +8,7 @@ class IncomeOutcomeBalanceText extends StatefulWidget {
   final Decimal outcome;
   final Currency currency;
 
-  const IncomeOutcomeBalanceText({
-    Key? key,
-    required this.income,
-    required this.outcome,
-    required this.currency,
-  }) : super(key: key);
+  const IncomeOutcomeBalanceText({super.key, required this.income, required this.outcome, required this.currency});
 
   @override
   State<IncomeOutcomeBalanceText> createState() => _IncomeOutcomeBalanceTextState();
@@ -24,44 +19,57 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
 
   @override
   Widget build(BuildContext context) {
-    final balance = widget.income - widget.outcome;
-
     return GestureDetector(
       onTap: () {
         setState(() {
           _showBalance = !_showBalance;
         });
       },
-      child: _showBalance
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Balance:"),
-                CurrencyText(
-                  value: balance,
-                  currency: widget.currency,
-                  color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor,
-                  fontSize: 16,
-                ),
-              ],
-            )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CurrencyText(
-                  value: widget.income,
-                  currency: widget.currency,
-                  color: AppColors.incomeColor,
-                  fontSize: 16,
-                ),
-                CurrencyText(
-                  value: widget.outcome,
-                  currency: widget.currency,
-                  color: AppColors.outcomeColor,
-                  fontSize: 16,
-                ),
-              ],
-            ),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        child: _showBalance ? _buildBalance() : _buildIncomeOutcome(),
+      ),
+    );
+  }
+
+  Widget _buildBalance() {
+    final balance = widget.income - widget.outcome;
+    return Column(
+      key: const ValueKey<String>('balance'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text("Balance", style: TextStyle(fontSize: 14)),
+        CurrencyText(
+          value: balance,
+          currency: widget.currency,
+          color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor,
+          fontSize: 16,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIncomeOutcome() {
+    return Column(
+      key: const ValueKey<String>('incomeOutcome'),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CurrencyText(
+          value: widget.income,
+          currency: widget.currency,
+          color: AppColors.incomeColor,
+          fontSize: 16,
+        ),
+        CurrencyText(
+          value: widget.outcome,
+          currency: widget.currency,
+          color: AppColors.outcomeColor,
+          fontSize: 16,
+        ),
+      ],
     );
   }
 }
