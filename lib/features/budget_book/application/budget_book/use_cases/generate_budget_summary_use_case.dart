@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/budget_page_data.dart';
 import '../../../domain/entities/category_group.dart';
-import '../../../domain/entities/category_view_summary.dart';
+import '../../../domain/entities/category_view_summary_data.dart';
 import '../../../domain/entities/pie_data.dart';
 import '../../../domain/entities/summary_view_data.dart';
 
@@ -21,7 +21,7 @@ class GenerateBudgetSummaryUseCase {
   }
 
   SummaryViewData _convert(BudgetPageData pageData, Currency currency) {
-    List<CategoryViewSummary> summaries = _mapSummaries(pageData, currency);
+    List<CategoryViewSummaryData> summaries = _mapSummaries(pageData, currency);
     List<PieData> pieData = _generatePieData(summaries);
 
     return SummaryViewData(
@@ -35,8 +35,8 @@ class GenerateBudgetSummaryUseCase {
     );
   }
 
-  List<CategoryViewSummary> _mapSummaries(BudgetPageData pageData, Currency currency) {
-    final List<CategoryViewSummary> summaries = [];
+  List<CategoryViewSummaryData> _mapSummaries(BudgetPageData pageData, Currency currency) {
+    final List<CategoryViewSummaryData> summaries = [];
     final List<CategoryGroup> sortedGroups = List.from(pageData.categoryGroups);
 
     sortedGroups.sort((a, b) {
@@ -54,10 +54,10 @@ class GenerateBudgetSummaryUseCase {
     return summaries;
   }
 
-  CategoryViewSummary _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
+  CategoryViewSummaryData _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
     if (group.subGroups.isEmpty) {
       int percentage = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
-      return CategoryViewSummary(
+      return CategoryViewSummaryData(
         currency: currency,
         categoryType: group.category.categoryType,
         categoryName: group.category.name,
@@ -69,12 +69,12 @@ class GenerateBudgetSummaryUseCase {
       );
     } else {
       int parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
-      List<CategoryViewSummary> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal, currency)).toList();
+      List<CategoryViewSummaryData> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal, currency)).toList();
       Decimal childrenTotal = subSummaries.fold(Decimal.zero, (prev, child) => prev + child.value);
       int childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
       int totalPercentage = parentPerc + childrenPerc;
       Decimal combinedValue = group.amount + childrenTotal;
-      return CategoryViewSummary(
+      return CategoryViewSummaryData(
         currency: currency,
         categoryType: group.category.categoryType,
         categoryName: group.category.name,
@@ -88,7 +88,7 @@ class GenerateBudgetSummaryUseCase {
     }
   }
 
-  List<PieData> _generatePieData(List<CategoryViewSummary> summaries) {
+  List<PieData> _generatePieData(List<CategoryViewSummaryData> summaries) {
     List<PieData> pieDataList = [];
     for (final summary in summaries) {
       final hideIcon = summary.percentage < 5;

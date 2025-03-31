@@ -2,10 +2,10 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/category_view_summary.dart';
+import '../../domain/entities/category_view_summary_data.dart';
 
 class CategoryLineView extends StatelessWidget {
-  final CategoryViewSummary summary;
+  final CategoryViewSummaryData summary;
 
   const CategoryLineView({super.key, required this.summary});
 

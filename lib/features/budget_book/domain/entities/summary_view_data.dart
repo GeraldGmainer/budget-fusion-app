@@ -4,7 +4,7 @@ import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'budget_date_range.dart';
-import 'category_view_summary.dart';
+import 'category_view_summary_data.dart';
 
 part 'summary_view_data.freezed.dart';
 
@@ -17,7 +17,7 @@ class SummaryViewData with _$SummaryViewData {
     required CategoryType categoryType,
     required BudgetDateRange dateRange,
     required List<PieData> pieData,
-    required List<CategoryViewSummary> summaries,
+    required List<CategoryViewSummaryData> summaries,
     required Decimal income,
     required Decimal outcome,
   }) = _SummaryViewData;

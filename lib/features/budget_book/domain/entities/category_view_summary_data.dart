@@ -2,13 +2,13 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'category_view_summary.freezed.dart';
+part 'category_view_summary_data.freezed.dart';
 
 @freezed
-class CategoryViewSummary with _$CategoryViewSummary {
-  const CategoryViewSummary._();
+class CategoryViewSummaryData with _$CategoryViewSummaryData {
+  const CategoryViewSummaryData._();
 
-  const factory CategoryViewSummary({
+  const factory CategoryViewSummaryData({
     required Currency currency,
     required CategoryType categoryType,
     required String categoryName,
@@ -17,6 +17,6 @@ class CategoryViewSummary with _$CategoryViewSummary {
     required String iconColor,
     required int percentage,
     required Decimal value,
-    @Default([]) List<CategoryViewSummary> subSummaries,
-  }) = _CategoryViewSummary;
+    @Default([]) List<CategoryViewSummaryData> subSummaries,
+  }) = _CategoryViewSummaryData;
 }

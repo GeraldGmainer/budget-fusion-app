@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/category_view_summary.dart';
+import '../../domain/entities/category_view_summary_data.dart';
 import '../../domain/entities/summary_view_data.dart';
 import 'category_line_view.dart';
 
@@ -42,7 +42,7 @@ class SummaryView extends StatelessWidget {
     );
   }
 
-  Widget _buildList(List<CategoryViewSummary> summaries) {
+  Widget _buildList(List<CategoryViewSummaryData> summaries) {
     List<Widget> tiles = [];
     for (var summary in summaries) {
       if (summary.subSummaries.isNotEmpty) {

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'category_view_summary.dart';
+part of 'category_view_summary_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$CategoryViewSummary {
+mixin _$CategoryViewSummaryData {
   Currency get currency => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
@@ -24,21 +24,21 @@ mixin _$CategoryViewSummary {
   String get iconColor => throw _privateConstructorUsedError;
   int get percentage => throw _privateConstructorUsedError;
   Decimal get value => throw _privateConstructorUsedError;
-  List<CategoryViewSummary> get subSummaries =>
+  List<CategoryViewSummaryData> get subSummaries =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CategoryViewSummaryCopyWith<CategoryViewSummary> get copyWith =>
+  $CategoryViewSummaryDataCopyWith<CategoryViewSummaryData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoryViewSummaryCopyWith<$Res> {
-  factory $CategoryViewSummaryCopyWith(
-          CategoryViewSummary value, $Res Function(CategoryViewSummary) then) =
-      _$CategoryViewSummaryCopyWithImpl<$Res, CategoryViewSummary>;
+abstract class $CategoryViewSummaryDataCopyWith<$Res> {
+  factory $CategoryViewSummaryDataCopyWith(CategoryViewSummaryData value,
+          $Res Function(CategoryViewSummaryData) then) =
+      _$CategoryViewSummaryDataCopyWithImpl<$Res, CategoryViewSummaryData>;
   @useResult
   $Res call(
       {Currency currency,
@@ -49,22 +49,23 @@ abstract class $CategoryViewSummaryCopyWith<$Res> {
       String iconColor,
       int percentage,
       Decimal value,
-      List<CategoryViewSummary> subSummaries});
+      List<CategoryViewSummaryData> subSummaries});
 
   $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
-class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
-    implements $CategoryViewSummaryCopyWith<$Res> {
-  _$CategoryViewSummaryCopyWithImpl(this._value, this._then);
+class _$CategoryViewSummaryDataCopyWithImpl<$Res,
+        $Val extends CategoryViewSummaryData>
+    implements $CategoryViewSummaryDataCopyWith<$Res> {
+  _$CategoryViewSummaryDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -115,11 +116,11 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
       subSummaries: null == subSummaries
           ? _value.subSummaries
           : subSummaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummary>,
+              as List<CategoryViewSummaryData>,
     ) as $Val);
   }
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -131,11 +132,12 @@ class _$CategoryViewSummaryCopyWithImpl<$Res, $Val extends CategoryViewSummary>
 }
 
 /// @nodoc
-abstract class _$$CategoryViewSummaryImplCopyWith<$Res>
-    implements $CategoryViewSummaryCopyWith<$Res> {
-  factory _$$CategoryViewSummaryImplCopyWith(_$CategoryViewSummaryImpl value,
-          $Res Function(_$CategoryViewSummaryImpl) then) =
-      __$$CategoryViewSummaryImplCopyWithImpl<$Res>;
+abstract class _$$CategoryViewSummaryDataImplCopyWith<$Res>
+    implements $CategoryViewSummaryDataCopyWith<$Res> {
+  factory _$$CategoryViewSummaryDataImplCopyWith(
+          _$CategoryViewSummaryDataImpl value,
+          $Res Function(_$CategoryViewSummaryDataImpl) then) =
+      __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -147,21 +149,23 @@ abstract class _$$CategoryViewSummaryImplCopyWith<$Res>
       String iconColor,
       int percentage,
       Decimal value,
-      List<CategoryViewSummary> subSummaries});
+      List<CategoryViewSummaryData> subSummaries});
 
   @override
   $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
-class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
-    extends _$CategoryViewSummaryCopyWithImpl<$Res, _$CategoryViewSummaryImpl>
-    implements _$$CategoryViewSummaryImplCopyWith<$Res> {
-  __$$CategoryViewSummaryImplCopyWithImpl(_$CategoryViewSummaryImpl _value,
-      $Res Function(_$CategoryViewSummaryImpl) _then)
+class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
+    extends _$CategoryViewSummaryDataCopyWithImpl<$Res,
+        _$CategoryViewSummaryDataImpl>
+    implements _$$CategoryViewSummaryDataImplCopyWith<$Res> {
+  __$$CategoryViewSummaryDataImplCopyWithImpl(
+      _$CategoryViewSummaryDataImpl _value,
+      $Res Function(_$CategoryViewSummaryDataImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -176,7 +180,7 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
     Object? value = null,
     Object? subSummaries = null,
   }) {
-    return _then(_$CategoryViewSummaryImpl(
+    return _then(_$CategoryViewSummaryDataImpl(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -212,15 +216,15 @@ class __$$CategoryViewSummaryImplCopyWithImpl<$Res>
       subSummaries: null == subSummaries
           ? _value._subSummaries
           : subSummaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummary>,
+              as List<CategoryViewSummaryData>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
-  const _$CategoryViewSummaryImpl(
+class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
+  const _$CategoryViewSummaryDataImpl(
       {required this.currency,
       required this.categoryType,
       required this.categoryName,
@@ -229,7 +233,7 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
       required this.iconColor,
       required this.percentage,
       required this.value,
-      final List<CategoryViewSummary> subSummaries = const []})
+      final List<CategoryViewSummaryData> subSummaries = const []})
       : _subSummaries = subSummaries,
         super._();
 
@@ -249,10 +253,10 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
   final int percentage;
   @override
   final Decimal value;
-  final List<CategoryViewSummary> _subSummaries;
+  final List<CategoryViewSummaryData> _subSummaries;
   @override
   @JsonKey()
-  List<CategoryViewSummary> get subSummaries {
+  List<CategoryViewSummaryData> get subSummaries {
     if (_subSummaries is EqualUnmodifiableListView) return _subSummaries;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_subSummaries);
@@ -260,14 +264,14 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
 
   @override
   String toString() {
-    return 'CategoryViewSummary(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
+    return 'CategoryViewSummaryData(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryViewSummaryImpl &&
+            other is _$CategoryViewSummaryDataImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.categoryType, categoryType) ||
@@ -300,18 +304,18 @@ class _$CategoryViewSummaryImpl extends _CategoryViewSummary {
       value,
       const DeepCollectionEquality().hash(_subSummaries));
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CategoryViewSummaryImplCopyWith<_$CategoryViewSummaryImpl> get copyWith =>
-      __$$CategoryViewSummaryImplCopyWithImpl<_$CategoryViewSummaryImpl>(
-          this, _$identity);
+  _$$CategoryViewSummaryDataImplCopyWith<_$CategoryViewSummaryDataImpl>
+      get copyWith => __$$CategoryViewSummaryDataImplCopyWithImpl<
+          _$CategoryViewSummaryDataImpl>(this, _$identity);
 }
 
-abstract class _CategoryViewSummary extends CategoryViewSummary {
-  const factory _CategoryViewSummary(
+abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
+  const factory _CategoryViewSummaryData(
           {required final Currency currency,
           required final CategoryType categoryType,
           required final String categoryName,
@@ -320,9 +324,9 @@ abstract class _CategoryViewSummary extends CategoryViewSummary {
           required final String iconColor,
           required final int percentage,
           required final Decimal value,
-          final List<CategoryViewSummary> subSummaries}) =
-      _$CategoryViewSummaryImpl;
-  const _CategoryViewSummary._() : super._();
+          final List<CategoryViewSummaryData> subSummaries}) =
+      _$CategoryViewSummaryDataImpl;
+  const _CategoryViewSummaryData._() : super._();
 
   @override
   Currency get currency;
@@ -341,12 +345,12 @@ abstract class _CategoryViewSummary extends CategoryViewSummary {
   @override
   Decimal get value;
   @override
-  List<CategoryViewSummary> get subSummaries;
+  List<CategoryViewSummaryData> get subSummaries;
 
-  /// Create a copy of CategoryViewSummary
+  /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryViewSummaryImplCopyWith<_$CategoryViewSummaryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CategoryViewSummaryDataImplCopyWith<_$CategoryViewSummaryDataImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
