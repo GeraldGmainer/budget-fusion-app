@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class BudgetGoalsTab extends StatefulWidget {
   @override
@@ -29,47 +29,51 @@ class _BudgetGoalsTabState extends State<BudgetGoalsTab> {
     return Color(int.parse(hex.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
-  IconData getHugeIcon(String iconName) {
+  IconData getIcon(String iconName) {
     var mapping = {
-      "strokeRoundedHome01": HugeIcons.strokeRoundedHome01,
-      "strokeRoundedKey01": HugeIcons.strokeRoundedKey01,
-      "strokeRoundedBank": HugeIcons.strokeRoundedBank,
-      "strokeRoundedWrench01": HugeIcons.strokeRoundedWrench01,
-      "strokeRoundedShield01": HugeIcons.strokeRoundedShield01,
-      "strokeRoundedRestaurant01": HugeIcons.strokeRoundedRestaurant01,
-      "strokeRoundedShoppingBasket01": HugeIcons.strokeRoundedShoppingBasket01,
-      "strokeRoundedPlate": HugeIcons.strokeRoundedPlate,
-      "strokeRoundedCookie": HugeIcons.strokeRoundedCookie,
-      "strokeRoundedBus01": HugeIcons.strokeRoundedBus01,
-      "strokeRoundedFuelStation": HugeIcons.strokeRoundedFuelStation,
-      "strokeRoundedDumbbell01": HugeIcons.strokeRoundedDumbbell01,
-      "strokeRoundedWellness": HugeIcons.strokeRoundedWellness,
-      "strokeRoundedShoppingBag02": HugeIcons.strokeRoundedShoppingBag02,
-      "strokeRoundedShirt01": HugeIcons.strokeRoundedShirt01,
-      "strokeRoundedSmartPhone01": HugeIcons.strokeRoundedSmartPhone01,
-      "strokeRoundedPerfume": HugeIcons.strokeRoundedPerfume,
-      "strokeRoundedShoppingBag01": HugeIcons.strokeRoundedShoppingBag01,
-      "strokeRoundedFilm01": HugeIcons.strokeRoundedFilm01,
-      "strokeRoundedMusicNote01": HugeIcons.strokeRoundedMusicNote01,
-      "strokeRoundedGameController03": HugeIcons.strokeRoundedGameController03,
-      "strokeRoundedAirplane01": HugeIcons.strokeRoundedAirplane01,
-      "strokeRoundedTv01": HugeIcons.strokeRoundedTv01,
-      "strokeRoundedBook01": HugeIcons.strokeRoundedBook01,
-      "strokeRoundedMortarboard01": HugeIcons.strokeRoundedMortarboard01,
-      "strokeRoundedBookOpen01": HugeIcons.strokeRoundedBookOpen01,
-      "strokeRoundedLaptop": HugeIcons.strokeRoundedLaptop,
-      "strokeRoundedPresentation01": HugeIcons.strokeRoundedPresentation01,
-      "strokeRoundedRobot01": HugeIcons.strokeRoundedRobot01,
-      "strokeRoundedPiggyBank": HugeIcons.strokeRoundedPiggyBank,
-      "strokeRoundedChart01": HugeIcons.strokeRoundedChart01,
-      "strokeRoundedClock01": HugeIcons.strokeRoundedClock01,
-      "strokeRoundedMore01": HugeIcons.strokeRoundedMore01,
-      "strokeRoundedMoneyBag02": HugeIcons.strokeRoundedMoneyBag02,
-      "strokeRoundedSofa01": HugeIcons.strokeRoundedSofa01,
-      "strokeRoundedTruck": HugeIcons.strokeRoundedTruck,
-      "strokeRoundedHealth": HugeIcons.strokeRoundedHealth,
-      "strokeRoundedDoctor01": HugeIcons.strokeRoundedDoctor01,
-      "strokeRoundedCar01": HugeIcons.strokeRoundedCar01,
+      "home_outline": CommunityMaterialIcons.home_outline,
+      "key_outline": CommunityMaterialIcons.key_outline,
+      "bank_outline": CommunityMaterialIcons.bank_outline,
+      "wrench_outline": CommunityMaterialIcons.wrench_outline,
+      "shield_outline": CommunityMaterialIcons.shield_outline,
+      "silverware_fork_knife": CommunityMaterialIcons.silverware_fork_knife,
+      "shopping": CommunityMaterialIcons.shopping,
+      "food_fork_drink": CommunityMaterialIcons.food_fork_drink,
+      "cookie": CommunityMaterialIcons.cookie,
+      "bus": CommunityMaterialIcons.bus,
+      "gas_station": CommunityMaterialIcons.gas_station,
+      "dumbbell": CommunityMaterialIcons.dumbbell,
+      "leaf": CommunityMaterialIcons.leaf,
+      "tshirt_crew_outline": CommunityMaterialIcons.tshirt_crew_outline,
+      "cellphone": CommunityMaterialIcons.cellphone,
+      "flower": CommunityMaterialIcons.flower,
+      "shopping_outline": CommunityMaterialIcons.shopping_outline,
+      "filmstrip": CommunityMaterialIcons.filmstrip,
+      "music_note": CommunityMaterialIcons.music_note,
+      "gamepad_variant": CommunityMaterialIcons.gamepad_variant,
+      "airplane": CommunityMaterialIcons.airplane,
+      "television_classic": CommunityMaterialIcons.television_classic,
+      "book_outline": CommunityMaterialIcons.book_outline,
+      "school_outline": CommunityMaterialIcons.school_outline,
+      "book_open_outline": CommunityMaterialIcons.book_open_outline,
+      "laptop": CommunityMaterialIcons.laptop,
+      "presentation": CommunityMaterialIcons.presentation,
+      "robot": CommunityMaterialIcons.robot,
+      "piggy_bank": CommunityMaterialIcons.piggy_bank,
+      "chart_line": CommunityMaterialIcons.chart_line,
+      "clock_outline": CommunityMaterialIcons.clock_outline,
+      "dots_horizontal": CommunityMaterialIcons.dots_horizontal,
+      "cash": CommunityMaterialIcons.cash,
+      "sofa": CommunityMaterialIcons.sofa,
+      "truck": CommunityMaterialIcons.truck,
+      "heart_outline": CommunityMaterialIcons.heart_outline,
+      "doctor": CommunityMaterialIcons.doctor,
+      "beer": CommunityMaterialIcons.beer,
+      "car": CommunityMaterialIcons.car,
+      "pill": CommunityMaterialIcons.pill,
+      "briefcase_outline": CommunityMaterialIcons.briefcase_outline,
+      "gift_outline": CommunityMaterialIcons.gift_outline,
+      "cash_multiple": CommunityMaterialIcons.cash_multiple,
     };
     return mapping[iconName] ?? Icons.help;
   }
@@ -78,11 +82,11 @@ class _BudgetGoalsTabState extends State<BudgetGoalsTab> {
     return Card(
       child: ExpansionTile(
         initiallyExpanded: true,
-        leading: Icon(getHugeIcon(category['icon_name']), color: hexToColor(category['icon_color'])),
+        leading: Icon(getIcon(category['icon_name']), color: hexToColor(category['icon_color'])),
         title: Text(category['name']),
         children: (category['sub_categories'] as List<dynamic>).map((subCat) {
           return ListTile(
-            leading: Icon(getHugeIcon(subCat['icon_name']), color: hexToColor(subCat['icon_color'])),
+            leading: Icon(getIcon(subCat['icon_name']), color: hexToColor(subCat['icon_color'])),
             title: Text(subCat['name']),
           );
         }).toList(),

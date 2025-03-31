@@ -69,6 +69,9 @@ class GenerateBudgetSummaryUseCase {
     } else {
       int parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
       List<CategoryViewSummaryData> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal, currency)).toList();
+      subSummaries.sort((a, b) {
+        return b.value.compareTo(a.value);
+      });
       Decimal childrenTotal = subSummaries.fold(Decimal.zero, (prev, child) => prev + child.value);
       int childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
       int totalPercentage = parentPerc + childrenPerc;
@@ -93,7 +96,6 @@ class GenerateBudgetSummaryUseCase {
       if (summary.categoryType == CategoryType.income) {
         continue;
       }
-      print(summary.categoryName);
       final hideIcon = summary.percentage < 5;
       pieDataList.add(
         PieData(
