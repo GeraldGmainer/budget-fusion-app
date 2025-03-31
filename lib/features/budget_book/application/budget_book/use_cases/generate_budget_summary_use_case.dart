@@ -26,7 +26,6 @@ class GenerateBudgetSummaryUseCase {
 
     return SummaryViewData(
       currency: currency,
-      categoryType: pageData.categoryGroups.first.category.categoryType,
       dateRange: pageData.dateRange,
       pieData: pieData,
       summaries: summaries,
@@ -91,6 +90,10 @@ class GenerateBudgetSummaryUseCase {
   List<PieData> _generatePieData(List<CategoryViewSummaryData> summaries) {
     List<PieData> pieDataList = [];
     for (final summary in summaries) {
+      if (summary.categoryType == CategoryType.income) {
+        continue;
+      }
+      print(summary.categoryName);
       final hideIcon = summary.percentage < 5;
       pieDataList.add(
         PieData(

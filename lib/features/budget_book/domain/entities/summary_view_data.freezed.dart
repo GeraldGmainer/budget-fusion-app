@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SummaryViewData {
   Currency get currency => throw _privateConstructorUsedError;
-  CategoryType get categoryType => throw _privateConstructorUsedError;
   BudgetDateRange get dateRange => throw _privateConstructorUsedError;
   List<PieData> get pieData => throw _privateConstructorUsedError;
   List<CategoryViewSummaryData> get summaries =>
@@ -40,7 +39,6 @@ abstract class $SummaryViewDataCopyWith<$Res> {
   @useResult
   $Res call(
       {Currency currency,
-      CategoryType categoryType,
       BudgetDateRange dateRange,
       List<PieData> pieData,
       List<CategoryViewSummaryData> summaries,
@@ -67,7 +65,6 @@ class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
   @override
   $Res call({
     Object? currency = null,
-    Object? categoryType = null,
     Object? dateRange = null,
     Object? pieData = null,
     Object? summaries = null,
@@ -79,10 +76,6 @@ class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
       dateRange: null == dateRange
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
@@ -137,7 +130,6 @@ abstract class _$$SummaryViewDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {Currency currency,
-      CategoryType categoryType,
       BudgetDateRange dateRange,
       List<PieData> pieData,
       List<CategoryViewSummaryData> summaries,
@@ -164,7 +156,6 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currency = null,
-    Object? categoryType = null,
     Object? dateRange = null,
     Object? pieData = null,
     Object? summaries = null,
@@ -176,10 +167,6 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
       dateRange: null == dateRange
           ? _value.dateRange
           : dateRange // ignore: cast_nullable_to_non_nullable
@@ -209,7 +196,6 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
 class _$SummaryViewDataImpl extends _SummaryViewData {
   const _$SummaryViewDataImpl(
       {required this.currency,
-      required this.categoryType,
       required this.dateRange,
       required final List<PieData> pieData,
       required final List<CategoryViewSummaryData> summaries,
@@ -221,8 +207,6 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
 
   @override
   final Currency currency;
-  @override
-  final CategoryType categoryType;
   @override
   final BudgetDateRange dateRange;
   final List<PieData> _pieData;
@@ -248,7 +232,7 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
 
   @override
   String toString() {
-    return 'SummaryViewData(currency: $currency, categoryType: $categoryType, dateRange: $dateRange, pieData: $pieData, summaries: $summaries, income: $income, outcome: $outcome)';
+    return 'SummaryViewData(currency: $currency, dateRange: $dateRange, pieData: $pieData, summaries: $summaries, income: $income, outcome: $outcome)';
   }
 
   @override
@@ -258,8 +242,6 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
             other is _$SummaryViewDataImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
-            (identical(other.categoryType, categoryType) ||
-                other.categoryType == categoryType) &&
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange) &&
             const DeepCollectionEquality().equals(other._pieData, _pieData) &&
@@ -273,7 +255,6 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
   int get hashCode => Object.hash(
       runtimeType,
       currency,
-      categoryType,
       dateRange,
       const DeepCollectionEquality().hash(_pieData),
       const DeepCollectionEquality().hash(_summaries),
@@ -293,7 +274,6 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
 abstract class _SummaryViewData extends SummaryViewData {
   const factory _SummaryViewData(
       {required final Currency currency,
-      required final CategoryType categoryType,
       required final BudgetDateRange dateRange,
       required final List<PieData> pieData,
       required final List<CategoryViewSummaryData> summaries,
@@ -303,8 +283,6 @@ abstract class _SummaryViewData extends SummaryViewData {
 
   @override
   Currency get currency;
-  @override
-  CategoryType get categoryType;
   @override
   BudgetDateRange get dateRange;
   @override

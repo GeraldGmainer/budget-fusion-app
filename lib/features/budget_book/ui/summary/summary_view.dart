@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/category_view_summary_data.dart';
 import '../../domain/entities/summary_view_data.dart';
 import 'category_line_view.dart';
+import 'summary_graph.dart';
 
 // TODO refactoring
 class SummaryView extends StatelessWidget {
@@ -19,23 +20,17 @@ class SummaryView extends StatelessWidget {
     );
   }
 
-  Widget _buildChartCard(SummaryViewData chart, Decimal balance, DateTime date) {
+  Widget _buildChartCard(SummaryViewData summaryData, Decimal balance, DateTime date) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${date.year}.${date.month.toString().padLeft(2, '0')}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8.0),
-          _buildRow("Income:", "${chart.currency.symbol}${chart.income.toDouble().toStringAsFixed(2)}", Colors.green),
-          const SizedBox(height: 4.0),
-          _buildRow("Outcome:", "${chart.currency.symbol}${chart.outcome.toDouble().toStringAsFixed(2)}", Colors.red),
-          const SizedBox(height: 4.0),
-          _buildRow("Balance:", "${chart.currency.symbol}${balance.toDouble().toStringAsFixed(2)}", balance >= Decimal.zero ? Colors.green : Colors.red),
+          // Text("${date.year}.${date.month.toString().padLeft(2, '0')}", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12.0),
-          Text("Categories:", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8.0),
-          CardWithAction(child: _buildList(chart.summaries)),
+          SummaryGraph(data: summaryData),
+          const SizedBox(height: 22.0),
+          CardWithAction(child: _buildList(summaryData.summaries)),
           const SizedBox(height: 8.0),
         ],
       ),

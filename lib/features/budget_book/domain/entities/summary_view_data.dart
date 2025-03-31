@@ -14,7 +14,6 @@ class SummaryViewData with _$SummaryViewData {
 
   const factory SummaryViewData({
     required Currency currency,
-    required CategoryType categoryType,
     required BudgetDateRange dateRange,
     required List<PieData> pieData,
     required List<CategoryViewSummaryData> summaries,
