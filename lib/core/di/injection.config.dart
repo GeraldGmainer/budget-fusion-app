@@ -61,6 +61,8 @@ import 'package:budget_fusion_app/features/budget_book/application/budget_book/u
     as _i885;
 import 'package:budget_fusion_app/features/budget_book/domain/service/budget_page_data_service.dart'
     as _i198;
+import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart'
+    as _i811;
 import 'package:budget_fusion_app/features/category/application/cubits/category_cubit.dart'
     as _i367;
 import 'package:budget_fusion_app/features/category/application/use_cases/load_categories_use_case.dart'
@@ -150,6 +152,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i870.CategoryRemoteDataSource>(
         () => _i870.CategoryRemoteDataSource());
+    gh.lazySingleton<_i811.SummaryDataGenerator>(
+        () => _i811.SummaryDataGenerator());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i702.ConnectivityService>(
@@ -188,8 +192,11 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i652.ProfileSettingLocalDataSource>(),
               gh<_i146.ProfileSettingRemoteDataSource>(),
             ));
-    gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(() =>
-        _i885.GenerateBudgetSummaryUseCase(gh<_i714.ProfileSettingRepo>()));
+    gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
+        () => _i885.GenerateBudgetSummaryUseCase(
+              gh<_i714.ProfileSettingRepo>(),
+              gh<_i811.SummaryDataGenerator>(),
+            ));
     gh.lazySingleton<_i311.LoadAccountsUseCase>(
         () => _i311.LoadAccountsUseCase(gh<_i714.AccountRepo>()));
     gh.lazySingleton<_i1001.WatchAccountsUseCase>(
