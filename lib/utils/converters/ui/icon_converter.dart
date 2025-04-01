@@ -21,6 +21,7 @@ class IconConverter {
     "flower": CommunityMaterialIcons.flower,
     "shopping_outline": CommunityMaterialIcons.shopping_outline,
     "filmstrip": CommunityMaterialIcons.filmstrip,
+    "party_popper": CommunityMaterialIcons.party_popper,
     "music_note": CommunityMaterialIcons.music_note,
     "gamepad_variant": CommunityMaterialIcons.gamepad_variant,
     "airplane": CommunityMaterialIcons.airplane,
