@@ -213,10 +213,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i261.ProfileLocalDataSource>(),
           gh<_i594.ProfileRemoteDataSource>(),
         ));
-    gh.lazySingleton<_i712.WatchProfileUseCase>(
-        () => _i712.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i324.LoadProfileUseCase>(
         () => _i324.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i712.WatchProfileUseCase>(
+        () => _i712.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.factory<_i783.AccountCubit>(() => _i783.AccountCubit(
           gh<_i1001.WatchAccountsUseCase>(),
           gh<_i311.LoadAccountsUseCase>(),
@@ -228,10 +228,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i714.AccountRepo>(),
           gh<_i714.CategoryRepo>(),
         ));
-    gh.lazySingleton<_i757.LoadProfileSettingUseCase>(
-        () => _i757.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.lazySingleton<_i1029.ProfileSettingAggregator>(
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
+    gh.lazySingleton<_i757.LoadProfileSettingUseCase>(
+        () => _i757.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.lazySingleton<_i47.WatchCategoriesUseCase>(
