@@ -6,8 +6,6 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../use_cases/load_profile_setting_use_case.dart';
-
 @injectable
 class ProfileSettingCubit extends Cubit<LoadableState<ProfileSetting>> {
   final WatchProfileSettingUseCase _watchProfileSetting;

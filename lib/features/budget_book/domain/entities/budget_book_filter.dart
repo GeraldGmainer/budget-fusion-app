@@ -10,7 +10,7 @@ class BudgetBookFilter with _$BudgetBookFilter {
   const BudgetBookFilter._();
 
   factory BudgetBookFilter({
-    required TransactionType transaction,
+    TransactionType? transaction,
     required PeriodMode period,
     Account? account,
     String? description,
@@ -18,10 +18,33 @@ class BudgetBookFilter with _$BudgetBookFilter {
 
   factory BudgetBookFilter.initial() {
     return BudgetBookFilter(
-      transaction: TransactionType.outcome,
+      transaction: null,
       period: PeriodMode.month,
       account: null,
       description: null,
     );
+  }
+
+  @override
+  String toString() {
+    return "BudgetBookFilter(${_formatTransaction()}, ${_formatPeriod()}, account: ${account?.name}, description: $description)";
+  }
+
+  String _formatTransaction() => transaction == TransactionType.income ? "INCOME" : "OUTCOME";
+
+  String _formatPeriod() {
+    switch (period) {
+      case PeriodMode.month:
+        return "MONTH";
+
+      case PeriodMode.year:
+        return "YEAR";
+
+      case PeriodMode.all:
+        return "ALL";
+
+      case PeriodMode.day:
+        return "DAY";
+    }
   }
 }

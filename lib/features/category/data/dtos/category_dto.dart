@@ -18,6 +18,7 @@ class CategoryDto with _$CategoryDto implements OfflineFirstDto {
     @JsonKey(name: 'category_type') @CategoryTypeSerializer() required CategoryType categoryType,
     @JsonKey(name: 'icon_name') required String iconName,
     @JsonKey(name: 'icon_color') required String iconColor,
+    @JsonKey(name: 'parent_id') @UuidSerializer() required Uuid? parentId,
     @JsonKey(name: 'updated_at') @DateTimeSerializer() required DateTime updatedAt,
   }) = _CategoryDto;
 

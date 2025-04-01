@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS category (
     icon_name TEXT,
     icon_color TEXT,
     category_type TEXT NOT NULL,
+    parent_id TEXT,
     updated_at TEXT DEFAULT (datetime('now'))
 );
 

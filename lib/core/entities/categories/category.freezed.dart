@@ -22,6 +22,7 @@ mixin _$Category {
   CategoryType get categoryType => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
+  Category? get parent => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
@@ -43,7 +44,10 @@ abstract class $CategoryCopyWith<$Res> {
       CategoryType categoryType,
       String iconName,
       String iconColor,
+      Category? parent,
       DateTime updatedAt});
+
+  $CategoryCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
@@ -67,6 +71,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? categoryType = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? parent = freezed,
     Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -94,11 +99,29 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as Category?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
+  }
+
+  /// Create a copy of Category
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get parent {
+    if (_value.parent == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.parent!, (value) {
+      return _then(_value.copyWith(parent: value) as $Val);
+    });
   }
 }
 
@@ -117,7 +140,11 @@ abstract class _$$CategoryImplCopyWith<$Res>
       CategoryType categoryType,
       String iconName,
       String iconColor,
+      Category? parent,
       DateTime updatedAt});
+
+  @override
+  $CategoryCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
@@ -139,6 +166,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? categoryType = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? parent = freezed,
     Object? updatedAt = null,
   }) {
     return _then(_$CategoryImpl(
@@ -166,6 +194,10 @@ class __$$CategoryImplCopyWithImpl<$Res>
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String,
+      parent: freezed == parent
+          ? _value.parent
+          : parent // ignore: cast_nullable_to_non_nullable
+              as Category?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -184,6 +216,7 @@ class _$CategoryImpl extends _Category {
       required this.categoryType,
       required this.iconName,
       required this.iconColor,
+      required this.parent,
       required this.updatedAt})
       : super._();
 
@@ -200,11 +233,13 @@ class _$CategoryImpl extends _Category {
   @override
   final String iconColor;
   @override
+  final Category? parent;
+  @override
   final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
+    return 'Category(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, updatedAt: $updatedAt)';
   }
 
   @override
@@ -221,13 +256,14 @@ class _$CategoryImpl extends _Category {
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, name, categoryType,
-      iconName, iconColor, updatedAt);
+      iconName, iconColor, parent, updatedAt);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -246,6 +282,7 @@ abstract class _Category extends Category {
       required final CategoryType categoryType,
       required final String iconName,
       required final String iconColor,
+      required final Category? parent,
       required final DateTime updatedAt}) = _$CategoryImpl;
   const _Category._() : super._();
 
@@ -261,6 +298,8 @@ abstract class _Category extends Category {
   String get iconName;
   @override
   String get iconColor;
+  @override
+  Category? get parent;
   @override
   DateTime get updatedAt;
 

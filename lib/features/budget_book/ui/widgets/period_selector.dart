@@ -26,14 +26,18 @@ class PeriodSelector extends StatelessWidget {
   }
 
   void _onNext(BuildContext context) {
-    if (pageController.hasClients && pageController.page! > 0) {
-      pageController.previousPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
+    if (!pageController.hasClients && pageController.page! > 0) {
       BudgetLogger.instance.w("PeriodSelector cannot navigate to next page: has no clients ?");
+      return;
     }
+    if (pageController.page! <= 0) {
+      BudgetLogger.instance.w("PeriodSelector cannot navigate to next page: page <= 0");
+      return;
+    }
+    pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override

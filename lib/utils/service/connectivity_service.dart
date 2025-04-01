@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
-import 'connectivity_singleton.dart';
+import '../singletons/connectivity_singleton.dart';
 
 @lazySingleton
 class ConnectivityService {

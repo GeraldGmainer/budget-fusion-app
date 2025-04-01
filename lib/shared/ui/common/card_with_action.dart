@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 
+// TODO rename widget
 class CardWithAction extends StatelessWidget {
   final IconData icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color backgroundColor;
   final Widget child;
 
   const CardWithAction({
     super.key,
     this.icon = Icons.more_vert,
-    required this.onTap,
+    this.onTap,
     this.backgroundColor = AppColors.cardColor,
     required this.child,
   });
@@ -25,17 +26,18 @@ class CardWithAction extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: child,
           ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: IconButton(
-              icon: Icon(icon),
-              onPressed: onTap,
+          if (onTap != null)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: IconButton(
+                icon: Icon(icon),
+                onPressed: onTap,
+              ),
             ),
-          ),
         ],
       ),
     );

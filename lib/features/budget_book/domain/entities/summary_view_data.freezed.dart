@@ -19,7 +19,8 @@ mixin _$SummaryViewData {
   Currency get currency => throw _privateConstructorUsedError;
   BudgetDateRange get dateRange => throw _privateConstructorUsedError;
   List<PieData> get pieData => throw _privateConstructorUsedError;
-  List<CategoryViewSummary> get summaries => throw _privateConstructorUsedError;
+  List<CategoryViewSummaryData> get summaries =>
+      throw _privateConstructorUsedError;
   Decimal get income => throw _privateConstructorUsedError;
   Decimal get outcome => throw _privateConstructorUsedError;
 
@@ -40,7 +41,7 @@ abstract class $SummaryViewDataCopyWith<$Res> {
       {Currency currency,
       BudgetDateRange dateRange,
       List<PieData> pieData,
-      List<CategoryViewSummary> summaries,
+      List<CategoryViewSummaryData> summaries,
       Decimal income,
       Decimal outcome});
 
@@ -86,7 +87,7 @@ class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
       summaries: null == summaries
           ? _value.summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummary>,
+              as List<CategoryViewSummaryData>,
       income: null == income
           ? _value.income
           : income // ignore: cast_nullable_to_non_nullable
@@ -131,7 +132,7 @@ abstract class _$$SummaryViewDataImplCopyWith<$Res>
       {Currency currency,
       BudgetDateRange dateRange,
       List<PieData> pieData,
-      List<CategoryViewSummary> summaries,
+      List<CategoryViewSummaryData> summaries,
       Decimal income,
       Decimal outcome});
 
@@ -177,7 +178,7 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
       summaries: null == summaries
           ? _value._summaries
           : summaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummary>,
+              as List<CategoryViewSummaryData>,
       income: null == income
           ? _value.income
           : income // ignore: cast_nullable_to_non_nullable
@@ -197,7 +198,7 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
       {required this.currency,
       required this.dateRange,
       required final List<PieData> pieData,
-      required final List<CategoryViewSummary> summaries,
+      required final List<CategoryViewSummaryData> summaries,
       required this.income,
       required this.outcome})
       : _pieData = pieData,
@@ -216,9 +217,9 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
     return EqualUnmodifiableListView(_pieData);
   }
 
-  final List<CategoryViewSummary> _summaries;
+  final List<CategoryViewSummaryData> _summaries;
   @override
-  List<CategoryViewSummary> get summaries {
+  List<CategoryViewSummaryData> get summaries {
     if (_summaries is EqualUnmodifiableListView) return _summaries;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_summaries);
@@ -275,7 +276,7 @@ abstract class _SummaryViewData extends SummaryViewData {
       {required final Currency currency,
       required final BudgetDateRange dateRange,
       required final List<PieData> pieData,
-      required final List<CategoryViewSummary> summaries,
+      required final List<CategoryViewSummaryData> summaries,
       required final Decimal income,
       required final Decimal outcome}) = _$SummaryViewDataImpl;
   const _SummaryViewData._() : super._();
@@ -287,7 +288,7 @@ abstract class _SummaryViewData extends SummaryViewData {
   @override
   List<PieData> get pieData;
   @override
-  List<CategoryViewSummary> get summaries;
+  List<CategoryViewSummaryData> get summaries;
   @override
   Decimal get income;
   @override

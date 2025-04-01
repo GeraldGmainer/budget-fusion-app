@@ -1,7 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../enums/period_mode.dart';
 import 'budget_date_range.dart';
 import 'category_group.dart';
 
@@ -15,14 +14,13 @@ class BudgetPageData with _$BudgetPageData {
     required BudgetDateRange dateRange,
     required Decimal income,
     required Decimal outcome,
-    required List<CategoryGroup> categoryGroups,
+    @Default([]) List<CategoryGroup> categoryGroups,
   }) = _BudgetPageData;
 
-  factory BudgetPageData.empty(PeriodMode periodMode) => BudgetPageData(
-        dateRange: BudgetDateRange(period: periodMode, from: DateTime.now(), to: DateTime.now()),
+  factory BudgetPageData.empty(BudgetDateRange dateRange) => BudgetPageData(
+        dateRange: dateRange,
         income: Decimal.zero,
         outcome: Decimal.zero,
-        categoryGroups: [],
       );
 
   Decimal get balance {
