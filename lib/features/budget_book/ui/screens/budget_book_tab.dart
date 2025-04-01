@@ -57,7 +57,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _onPageChanged(int pageIndex) {
-    // TODO dont use List<SummaryViewData> to get current date range
     final items = context.read<BudgetBookCubit>().state.items;
     if (items.isNotEmpty) {
       final reveredIndex = items.length - 1 - pageIndex;
@@ -93,7 +92,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
             const SizedBox(height: 8),
             _buildNavbar(),
             const SizedBox(height: 8),
-            _buildContent(state, state.viewMode),
+            Expanded(
+              child: _buildContent(state),
+            ),
           ],
         );
       },
@@ -115,31 +116,21 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     );
   }
 
-  Widget _buildContent(BudgetBookState state, BudgetViewMode viewMode) {
-    Widget content;
-
-    // TODO display loading bar while loading list
+  Widget _buildContent(BudgetBookState state) {
     if (state.items.isNotEmpty) {
-      switch (viewMode) {
+      switch (state.viewMode) {
         case BudgetViewMode.summary:
-          content = _buildSummary(state.items);
-          break;
+          return _buildSummary(state.items);
         case BudgetViewMode.transaction:
-          content = TransactionView();
-          break;
+          return TransactionView();
         case BudgetViewMode.calendar:
-          content = CalendarView();
-          break;
+          return CalendarView();
       }
-    } else {
-      content = Center(child: Text("No data available.".tr()));
     }
-
-    return Expanded(
-      child: Stack(
-        children: [content],
-      ),
-    );
+    if (state.isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Center(child: Text("No data available.".tr()));
   }
 
   Widget _buildSummary(List<SummaryViewData> summaries) {

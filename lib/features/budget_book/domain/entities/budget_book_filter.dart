@@ -27,7 +27,7 @@ class BudgetBookFilter with _$BudgetBookFilter {
 
   @override
   String toString() {
-    return "BudgetBookFilter(transaction: ${_formatTransaction()}, period: ${_formatPeriod()}, account: $account, description: $description";
+    return "BudgetBookFilter(${_formatTransaction()}, ${_formatPeriod()}, account: ${account?.name}, description: $description)";
   }
 
   String _formatTransaction() => transaction == TransactionType.income ? "INCOME" : "OUTCOME";

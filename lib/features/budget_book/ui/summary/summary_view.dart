@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/summary_view_data.dart';
@@ -13,21 +12,17 @@ class SummaryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: _buildChartCard(data, Decimal.zero, data.dateRange.from),
-    );
-  }
-
-  Widget _buildChartCard(SummaryViewData summaryData, Decimal balance, DateTime date) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SummaryGraph(data: summaryData),
-          const SizedBox(height: 12.0),
-          CategorySummaryList(summaries: summaryData.summaries),
-          const SizedBox(height: 8.0),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SummaryGraph(data: data),
+            const SizedBox(height: 12.0),
+            if (data.summaries.isNotEmpty) CategorySummaryList(summaries: data.summaries),
+            const SizedBox(height: 8.0),
+          ],
+        ),
       ),
     );
   }

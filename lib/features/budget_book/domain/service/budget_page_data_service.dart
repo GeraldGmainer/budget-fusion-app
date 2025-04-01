@@ -11,13 +11,14 @@ import '../enums/period_mode.dart';
 
 @lazySingleton
 class BudgetPageDataService {
+  final DatetimeService _datetimeService;
   final CategoryRepo _categoryRepo;
 
-  BudgetPageDataService(this._categoryRepo);
+  BudgetPageDataService(this._categoryRepo, this._datetimeService);
 
   Future<List<BudgetPageData>> load(List<Booking> bookings, BudgetBookFilter filter) async {
     if (bookings.isEmpty) {
-      return [BudgetPageData.empty(filter.period)];
+      return [BudgetPageData.empty(BudgetDateRange(period: filter.period, from: _datetimeService.now(), to: _datetimeService.now()))];
     }
 
     switch (filter.period) {
@@ -34,8 +35,10 @@ class BudgetPageDataService {
 
   Future<List<BudgetPageData>> _convertToMonth(List<Booking> bookings) async {
     final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
-    DateTime fromDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isBefore(b) ? a : b);
+    final now = _datetimeService.now();
+    final DateTime fromDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isBefore(b) ? a : b);
     DateTime endDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isAfter(b) ? a : b);
+    endDate = endDate.isBefore(now) ? now : endDate;
     return await _generateMonthlyPeriods(fromDate, endDate, bookingsByMonthAndCategory);
   }
 
@@ -62,13 +65,14 @@ class BudgetPageDataService {
     while (!currentMonth.isAfter(end)) {
       final monthKey = currentMonth.millisecondsSinceEpoch;
       final toDate = currentMonth.endOfMonth;
+      final dateRange = BudgetDateRange(period: PeriodMode.month, from: currentMonth, to: toDate);
 
       if (!bookingsByMonthAndCategory.containsKey(monthKey)) {
-        periods.add(BudgetPageData.empty(PeriodMode.month));
+        periods.add(BudgetPageData.empty(dateRange));
       } else {
         final categoryGroups = await _createCategoryGroups(bookingsByMonthAndCategory[monthKey]!);
         periods.add(BudgetPageData(
-          dateRange: BudgetDateRange(period: PeriodMode.month, from: currentMonth, to: toDate),
+          dateRange: dateRange,
           income: categoryGroups.totalIncomeAmount(),
           outcome: categoryGroups.totalOutcomeAmount(),
           categoryGroups: categoryGroups,
@@ -125,7 +129,6 @@ class BudgetPageDataService {
       }
     }
 
-    // Build top-level groups (i.e. those not nested).
     final List<CategoryGroup> topLevelGroups = groupMap.entries.where((entry) => !nestedGroupIds.contains(entry.key)).map((entry) => entry.value).toList();
 
     topLevelGroups.sort(_compareCategoryGroups);
@@ -143,6 +146,6 @@ class BudgetPageDataService {
   List<BudgetPageData> _convertToYear(List<Booking> bookings) => _convertToAll(bookings);
 
   List<BudgetPageData> _convertToAll(List<Booking> bookings) {
-    return [BudgetPageData.empty(PeriodMode.all)];
+    return [BudgetPageData.empty(BudgetDateRange(period: PeriodMode.all, from: _datetimeService.now(), to: _datetimeService.now()))];
   }
 }
