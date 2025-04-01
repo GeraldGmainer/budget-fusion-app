@@ -80,9 +80,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       listenWhen: (previous, current) {
         return previous.items != current.items;
       },
-      buildWhen: (previous, current) {
-        return previous.items != current.items;
-      },
       listener: (context, state) {
         state.whenOrNull(
           loaded: (_, __, ___, ____) => _onLoaded(),
@@ -90,7 +87,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         );
       },
       builder: (context, state) {
-        print("####### refresh");
         return Column(
           children: [
             _buildPeriodSelector(state.filter, state.dateRange),

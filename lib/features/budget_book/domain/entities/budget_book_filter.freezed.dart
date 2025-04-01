@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BudgetBookFilter {
-  TransactionType get transaction => throw _privateConstructorUsedError;
-  set transaction(TransactionType value) => throw _privateConstructorUsedError;
+  TransactionType? get transaction => throw _privateConstructorUsedError;
+  set transaction(TransactionType? value) => throw _privateConstructorUsedError;
   PeriodMode get period => throw _privateConstructorUsedError;
   set period(PeriodMode value) => throw _privateConstructorUsedError;
   Account? get account => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $BudgetBookFilterCopyWith<$Res> {
       _$BudgetBookFilterCopyWithImpl<$Res, BudgetBookFilter>;
   @useResult
   $Res call(
-      {TransactionType transaction,
+      {TransactionType? transaction,
       PeriodMode period,
       Account? account,
       String? description});
@@ -62,16 +62,16 @@ class _$BudgetBookFilterCopyWithImpl<$Res, $Val extends BudgetBookFilter>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transaction = null,
+    Object? transaction = freezed,
     Object? period = null,
     Object? account = freezed,
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
-      transaction: null == transaction
+      transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
-              as TransactionType,
+              as TransactionType?,
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -111,7 +111,7 @@ abstract class _$$BudgetBookFilterImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {TransactionType transaction,
+      {TransactionType? transaction,
       PeriodMode period,
       Account? account,
       String? description});
@@ -133,16 +133,16 @@ class __$$BudgetBookFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transaction = null,
+    Object? transaction = freezed,
     Object? period = null,
     Object? account = freezed,
     Object? description = freezed,
   }) {
     return _then(_$BudgetBookFilterImpl(
-      transaction: null == transaction
+      transaction: freezed == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
-              as TransactionType,
+              as TransactionType?,
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -163,14 +163,11 @@ class __$$BudgetBookFilterImplCopyWithImpl<$Res>
 
 class _$BudgetBookFilterImpl extends _BudgetBookFilter {
   _$BudgetBookFilterImpl(
-      {required this.transaction,
-      required this.period,
-      this.account,
-      this.description})
+      {this.transaction, required this.period, this.account, this.description})
       : super._();
 
   @override
-  TransactionType transaction;
+  TransactionType? transaction;
   @override
   PeriodMode period;
   @override
@@ -190,15 +187,15 @@ class _$BudgetBookFilterImpl extends _BudgetBookFilter {
 
 abstract class _BudgetBookFilter extends BudgetBookFilter {
   factory _BudgetBookFilter(
-      {required TransactionType transaction,
+      {TransactionType? transaction,
       required PeriodMode period,
       Account? account,
       String? description}) = _$BudgetBookFilterImpl;
   _BudgetBookFilter._() : super._();
 
   @override
-  TransactionType get transaction;
-  set transaction(TransactionType value);
+  TransactionType? get transaction;
+  set transaction(TransactionType? value);
   @override
   PeriodMode get period;
   set period(PeriodMode value);

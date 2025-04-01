@@ -15,7 +15,7 @@ class TransactionFilter extends StatefulWidget {
 }
 
 class _TransactionFilterState extends State<TransactionFilter> {
-  final List<TransactionType> _transactions = [TransactionType.income, TransactionType.outcome];
+  final List<TransactionType?> _transactions = [null, TransactionType.income, TransactionType.outcome];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _TransactionFilterState extends State<TransactionFilter> {
           widget.filter.transaction = value;
         });
       },
-      valueToString: (value) => value.label.tr(),
+      valueToString: (value) => value == null ? "All" : value.label.tr(),
     );
   }
 }

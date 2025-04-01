@@ -10,7 +10,7 @@ class BudgetBookFilter with _$BudgetBookFilter {
   const BudgetBookFilter._();
 
   factory BudgetBookFilter({
-    required TransactionType transaction,
+    TransactionType? transaction,
     required PeriodMode period,
     Account? account,
     String? description,
@@ -18,7 +18,7 @@ class BudgetBookFilter with _$BudgetBookFilter {
 
   factory BudgetBookFilter.initial() {
     return BudgetBookFilter(
-      transaction: TransactionType.outcome,
+      transaction: null,
       period: PeriodMode.month,
       account: null,
       description: null,
