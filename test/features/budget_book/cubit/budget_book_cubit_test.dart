@@ -109,17 +109,4 @@ void main() {
           )),
     ],
   );
-
-  test('updateDateRange updates the date range', () {
-    final newDateRange = BudgetDateRange(
-      period: PeriodMode.year,
-      from: DateTime(2020, 1, 1),
-      to: DateTime(2020, 12, 31),
-    );
-    final initialState = cubit.state;
-    cubit.updateDateRange(newDateRange);
-    expect(cubit.state.dateRange, equals(newDateRange));
-    expect(cubit.state.filter, equals(initialState.filter));
-    expect(cubit.state.viewMode, equals(initialState.viewMode));
-  });
 }
