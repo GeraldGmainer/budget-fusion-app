@@ -17,9 +17,14 @@ class SummaryView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SummaryGraph(data: data),
+            RepaintBoundary(
+              child: SummaryGraph(data: data),
+            ),
             const SizedBox(height: 12.0),
-            if (data.summaries.isNotEmpty) CategorySummaryList(summaries: data.summaries),
+            if (data.summaries.isNotEmpty)
+              RepaintBoundary(
+                child: CategorySummaryList(summaries: data.summaries),
+              ),
             const SizedBox(height: 8.0),
           ],
         ),

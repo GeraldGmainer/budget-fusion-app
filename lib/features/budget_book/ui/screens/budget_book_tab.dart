@@ -99,9 +99,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
             const SizedBox(height: 8),
             _buildNavbar(),
             const SizedBox(height: 8),
-            Expanded(
-              child: _buildContent(state),
-            ),
+            Expanded(child: _buildContent(state)),
           ],
         );
       },
@@ -141,6 +139,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   Widget _buildSummary(List<SummaryViewData> summaries) {
+    final reversedSummaries = summaries.reversed.toList();
     return PageView.builder(
       controller: _pageController,
       itemCount: summaries.length,
@@ -148,8 +147,10 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final item = summaries.reversed.toList()[index];
-        return SummaryView(data: item);
+        final item = reversedSummaries[index];
+        return RepaintBoundary(
+          child: SummaryView(data: item),
+        );
       },
     );
   }

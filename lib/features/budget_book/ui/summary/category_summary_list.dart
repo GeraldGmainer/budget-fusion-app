@@ -11,12 +11,23 @@ class CategorySummaryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardWithAction(
-      child: TransactionList(
-        itemCount: summaries.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildRows(summaries[index]);
-        },
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: summaries.length,
+          itemBuilder: (BuildContext context, int index) {
+            return _buildRows(summaries[index]);
+          },
+          separatorBuilder: (context, index) => const Divider(
+            color: AppColors.disabledTextColor,
+            thickness: 1,
+            // indent: 16,
+            // endIndent: 16,
+          ),
+        ),
       ),
     );
   }

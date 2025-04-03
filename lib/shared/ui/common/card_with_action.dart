@@ -1,6 +1,5 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/core.dart';
 
 // TODO rename widget
 class CardWithAction extends StatelessWidget {
