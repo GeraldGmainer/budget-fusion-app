@@ -15,28 +15,37 @@ import '../widgets/main_bottom_navigation_tab_item.dart';
 class MainPage extends StatefulWidget {
   static const String route = "MainPage";
 
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   final PageController _pageController = PageController();
+  late final List<Widget> _tabs;
+  late final List<MainBottomNavigationBarItem> _items;
   int _currentIndex = 0;
 
-  final List<Widget> _tabs = [
-    HomeTab(),
-    BudgetBookTab(),
-    Container(),
-    BudgetGoalsTab(),
-    AnalyticsTab(),
-  ];
-  late final List<MainBottomNavigationBarItem> _items = [
-    MainBottomNavigationTabItem(icon: Icons.home, label: 'Home', tabIndex: 0),
-    MainBottomNavigationTabItem(icon: Icons.book, label: 'Budget', tabIndex: 1),
-    MainBottomNavigationCreateItem(onTap: _createBooking),
-    MainBottomNavigationTabItem(icon: Icons.golf_course, label: 'Goals', tabIndex: 3),
-    MainBottomNavigationTabItem(icon: Icons.analytics, label: 'Analytics', tabIndex: 4),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _tabs = [
+      HomeTab(),
+      BudgetBookTab(),
+      Container(),
+      BudgetGoalsTab(),
+      AnalyticsTab(),
+    ];
+
+    _items = [
+      MainBottomNavigationTabItem(icon: Icons.home, label: 'Home', tabIndex: 0),
+      MainBottomNavigationTabItem(icon: Icons.book, label: 'Budget', tabIndex: 1),
+      MainBottomNavigationCreateItem(onTap: _createBooking),
+      MainBottomNavigationTabItem(icon: Icons.golf_course, label: 'Goals', tabIndex: 3),
+      MainBottomNavigationTabItem(icon: Icons.analytics, label: 'Analytics', tabIndex: 4),
+    ];
+  }
 
   void _createBooking() {
     showDialog(
@@ -55,6 +64,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onTabChange(int index) {
+    if (_currentIndex == index) return;
+
     setState(() => _currentIndex = index);
     _pageController.animateToPage(
       index,
@@ -71,7 +82,8 @@ class _MainPageState extends State<MainPage> {
       },
       child: Scaffold(
         appBar: _buildAppBarForIndex(_currentIndex),
-        drawer: AppDrawer(),
+        // Use const for the drawer if possible.
+        drawer: const AppDrawer(),
         bottomNavigationBar: MainBottomNavigationBar(items: _items),
         body: PageView(
           controller: _pageController,
