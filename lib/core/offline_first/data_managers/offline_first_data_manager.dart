@@ -16,8 +16,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final QueueManager queueManager;
   final RealtimeNotifierService realtimeNotifierService;
 
-  // final StreamController<List<Dto>> streamController = StreamController.broadcast();
-  final ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
+  ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
 
   OfflineFirstDataManager({
@@ -147,6 +146,15 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Sync failed", e, stackTrace);
     }
+  }
+
+  Future<void> reset() async {
+    _log("Resetting OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
+    cacheManager.invalidateCache(domainType);
+    await localSource.deleteAll();
+    // await streamController.close();
+    // streamController = ReplaySubject<List<Dto>>(maxSize: 1);
+    streamController.add([]);
   }
 
   void dispose() {

@@ -59,6 +59,8 @@ import 'package:budget_fusion_app/features/budget_book/application/budget_book/u
     as _i971;
 import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_summary_use_case.dart'
     as _i885;
+import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/reset_budget_book_use_case.dart'
+    as _i601;
 import 'package:budget_fusion_app/features/budget_book/domain/service/budget_page_data_service.dart'
     as _i198;
 import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart'
@@ -240,6 +242,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i87.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i7.WatchCategoriesUseCase>(
         () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i601.ResetBudgetBookUseCase>(
+        () => _i601.ResetBudgetBookUseCase(
+              gh<_i714.BookingRepo>(),
+              gh<_i714.CategoryRepo>(),
+              gh<_i714.AccountRepo>(),
+            ));
     gh.factory<_i837.ProfileCubit>(() => _i837.ProfileCubit(
           gh<_i332.WatchProfileUseCase>(),
           gh<_i332.LoadProfileUseCase>(),
@@ -271,6 +279,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i885.GenerateBudgetSummaryUseCase>(),
           gh<_i548.FilterAndGroupBookingsUseCase>(),
           gh<_i332.WatchBookingsUseCase>(),
+          gh<_i601.ResetBudgetBookUseCase>(),
         ));
     return this;
   }

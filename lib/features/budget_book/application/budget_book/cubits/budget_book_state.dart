@@ -3,28 +3,28 @@ part of 'budget_book_cubit.dart';
 @freezed
 class BudgetBookState with _$BudgetBookState {
   factory BudgetBookState.initial({
-    @Default([]) List<SummaryViewData> items,
+    @Default([]) List<BudgetViewData> items,
     required BudgetBookFilter filter,
     @Default(BudgetViewMode.summary) BudgetViewMode viewMode,
     required PeriodMode period,
   }) = _Initial;
 
   const factory BudgetBookState.loading({
-    required List<SummaryViewData> items,
+    required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
   }) = _Loading;
 
   const factory BudgetBookState.loaded({
-    required List<SummaryViewData> items,
+    required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
   }) = _Loaded;
 
   const factory BudgetBookState.error({
-    required List<SummaryViewData> items,
+    required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,

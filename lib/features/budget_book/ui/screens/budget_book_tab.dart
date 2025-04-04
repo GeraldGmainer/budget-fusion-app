@@ -125,7 +125,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     if (state.items.isNotEmpty) {
       switch (state.viewMode) {
         case BudgetViewMode.summary:
-          return _buildSummary(state.items);
+          return _buildSummary(state.items.cast<SummaryViewData>().toList());
         case BudgetViewMode.transaction:
           return TransactionView();
         case BudgetViewMode.calendar:
@@ -155,6 +155,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     );
   }
 
+  // @override
+  // bool get wantKeepAlive => true;
+  // TODO reenable wantKeepAlive
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }

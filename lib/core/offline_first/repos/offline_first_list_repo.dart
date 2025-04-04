@@ -22,6 +22,8 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
 
   Future<void> delete(T entity) => manager.delete(toDto(entity));
 
+  Future<void> reset() => manager.reset();
+
   void dispose() => manager.dispose();
 
   Stream<List<T>> watch();

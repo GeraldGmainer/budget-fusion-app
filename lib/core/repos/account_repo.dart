@@ -7,5 +7,7 @@ abstract class AccountRepo {
 
   Future<void> save(Account entity);
 
+  Future<void> reset();
+
   void dispose();
 }

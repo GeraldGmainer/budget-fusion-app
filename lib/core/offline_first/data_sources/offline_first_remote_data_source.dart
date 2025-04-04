@@ -27,6 +27,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       }
       query = _applyFilters(query, filters);
       final response = await query;
+      print("$table result: ${response.length}");
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
       _log("fetchAllNewer ${result.length} Dtos from $coloredDomain", stopwatch: stopwatch);
       return result;
