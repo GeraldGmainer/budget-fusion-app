@@ -28,7 +28,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   void initState() {
     super.initState();
     _initPagination();
-    _load();
   }
 
   void _initPagination() {
@@ -39,10 +38,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _load() {
-    context.read<BudgetBookCubit>().load();
   }
 
   void _onLoaded() {

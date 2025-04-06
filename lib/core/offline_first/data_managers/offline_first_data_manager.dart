@@ -32,7 +32,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Stream<List<Dto>> get stream => streamController.stream;
 
-  Future<void> loadAll({Map<String, dynamic>? filters}) async {
+  Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll for $coloredDomain");
     _subscribeToRealtime();
     final cached = cacheManager.get<List<Dto>>(domainType);
@@ -40,7 +40,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       _log("Using cached data with ${cached.length} items for domain $coloredDomain");
       _emitToStream(cached);
       unawaited(_syncPartial());
-      return;
+      return cached;
     }
 
     _log("Fetching local data for domain $coloredDomain...");
@@ -50,7 +50,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       cacheManager.set(domainType, localDtos);
       _emitToStream(localDtos);
       unawaited(_syncPartial());
-      return;
+      return localDtos;
     }
 
     _log("No local data found. Fetching remote data for domain $coloredDomain...");
@@ -59,6 +59,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     cacheManager.set(domainType, dtos);
     _emitToStream(dtos);
     _log("loadAll completed for domain $coloredDomain");
+    return dtos;
   }
 
   Future<void> save(Dto dto) async {
@@ -154,7 +155,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     await localSource.deleteAll();
     // await streamController.close();
     // streamController = ReplaySubject<List<Dto>>(maxSize: 1);
-    streamController.add([]);
+    // streamController.add([]);
   }
 
   void dispose() {

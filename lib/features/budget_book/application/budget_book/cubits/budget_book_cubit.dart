@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
@@ -23,50 +25,58 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
   final WatchBookingsUseCase _watchBookingsUseCase;
   final ResetBudgetBookUseCase _resetBudgetBookUseCase;
 
+  StreamSubscription<List<Booking>>? _bookingSub;
+
   BudgetBookCubit(
     this._generateBudgetSummaryUseCase,
     this._filterAndGroupBookingsUseCase,
     this._watchBookingsUseCase,
     this._resetBudgetBookUseCase,
-  ) : super(BudgetBookState.initial(filter: BudgetBookFilter.initial(), period: PeriodMode.month));
+  ) : super(BudgetBookState.initial(
+          filter: BudgetBookFilter.initial(),
+          period: PeriodMode.month,
+        )) {
+    _subscribeToBookings();
+  }
 
-  Future<void> load() async {
-    DomainLogger.instance.d(runtimeType.toString(), "initiate load for budget book: ${state.viewMode} / ${state.filter}");
-    await _reload(state.filter, state.viewMode);
+  void _subscribeToBookings() {
+    _bookingSub?.cancel();
+    _bookingSub = _watchBookingsUseCase().listen(_onBookings);
+  }
+
+  Future<void> _onBookings(List<Booking> rawBookingList) async {
+    print("#### rawBookingList ${rawBookingList.length}");
+    try {
+      final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
+      final summaries = await _generateBudgetSummaryUseCase(filtered);
+
+      emit(BudgetBookState.loaded(items: summaries, filter: state.filter, viewMode: state.viewMode, period: state.period));
+    } on TranslatedException catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stack);
+      emit(BudgetBookState.fromError(message: e.message, state: state));
+    } catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stack);
+      emit(BudgetBookState.fromError(message: 'error.default', state: state));
+    }
   }
 
   Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode}) async {
     final newViewMode = viewMode ?? state.viewMode;
     final newFilter = filter ?? state.filter;
     DomainLogger.instance.d(runtimeType.toString(), "update view for budget book: $newViewMode / $newFilter");
-    await _reload(newFilter, newViewMode);
+
+    emit(state.copyWith(filter: newFilter, viewMode: newViewMode));
   }
 
   Future<void> resetAndLoad() async {
-    DomainLogger.instance.d(runtimeType.toString(), "reset and load load for budget book: ${state.viewMode} / ${state.filter}");
+    DomainLogger.instance.d(runtimeType.toString(), "reset and load for budget book: ${state.viewMode} / ${state.filter}");
     emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, period: state.period));
     await _resetBudgetBookUseCase();
-    await _reload(state.filter, state.viewMode);
   }
 
-  Future<void> _reload(BudgetBookFilter newFilter, BudgetViewMode newViewMode, {bool emitLoading = true}) async {
-    try {
-      if (emitLoading) {
-        emit(BudgetBookState.loading(items: state.items, filter: newFilter, viewMode: newViewMode, period: state.period));
-      }
-      final rawItems = await _watchBookingsUseCase().first;
-      print("rawItems ${rawItems.length}");
-      print(rawItems.last);
-      final items = await _filterAndGroupBookingsUseCase(rawItems, newFilter);
-      final summaries = await _generateBudgetSummaryUseCase(items);
-      emit(BudgetBookState.loaded(items: summaries, filter: newFilter, viewMode: newViewMode, period: state.period));
-      DomainLogger.instance.d(runtimeType.toString(), "loading budget book done");
-    } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
-      emit(BudgetBookState.fromError(message: e.message, state: state));
-    } catch (e, stackTrace) {
-      BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stackTrace);
-      emit(BudgetBookState.fromError(message: 'error.default', state: state));
-    }
+  @override
+  Future<void> close() async {
+    await _bookingSub?.cancel();
+    return super.close();
   }
 }

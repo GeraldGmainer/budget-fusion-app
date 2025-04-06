@@ -13,8 +13,10 @@ class ResetBudgetBookUseCase {
     await _bookingRepo.reset();
     await _categoryRepo.reset();
     await _accountRepo.reset();
-    await _accountRepo.loadAll();
-    await _categoryRepo.loadAll();
-    await _bookingRepo.loadAll();
+    await Future.wait([
+      _accountRepo.loadAll(),
+      _categoryRepo.loadAll(),
+      _bookingRepo.loadAll(),
+    ]);
   }
 }
