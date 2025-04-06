@@ -55,13 +55,12 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     super.dispose();
   }
 
-  _openCategories() {
-    //TODO
-    // if (_bookingDraft.amount.toDouble() > 0) {
-    //   _animateToPage(1);
-    // } else {
-    //   _amountDisplayKey.currentState?.triggerShakeAnimation();
-    // }
+  _openCategories(BookingDraft draft) {
+    if (draft.amount.toDouble() > 0) {
+      _animateToPage(1);
+    } else {
+      _amountDisplayKey.currentState?.triggerShakeAnimation();
+    }
   }
 
   _animateToPage(int page) {
@@ -95,14 +94,6 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
 
   _onError(String error) {
     showSnackBar(context, error);
-  }
-
-  _onCategoryTypePressed(CategoryType categoryType) {
-    // TODO
-    // setState(() {
-    //   _bookingDraft.categoryType = categoryType;
-    //   _bookingDraft.category = null;
-    // });
   }
 
   _onDelete() {
@@ -189,7 +180,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            SaveBookingTab1(model: draft, onCategoryTap: _openCategories, amountDisplayKey: _amountDisplayKey),
+            SaveBookingTab1(model: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
             // SaveBookingTab2(model: _bookingDraft, onUpload: _upload),
           ],
         ),

@@ -13,7 +13,7 @@ class CategoryTypeButton extends StatelessWidget {
   const CategoryTypeButton({required this.draft, required this.categoryType});
 
   _onPressed(BuildContext context) {
-    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(categoryType: categoryType));
+    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(categoryType: categoryType, category: null));
   }
 
   @override

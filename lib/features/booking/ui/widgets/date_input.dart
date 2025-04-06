@@ -2,7 +2,9 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/cubits/save_booking_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DateInput extends StatefulWidget {
@@ -37,8 +39,9 @@ class _DateInputState extends State<DateInput> {
       setState(() {
         _selectedDate = picked;
       });
-      // TODO
-      // widget.model.date = picked;
+      if (context.mounted) {
+        context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(date: picked));
+      }
     }
   }
 
@@ -46,8 +49,7 @@ class _DateInputState extends State<DateInput> {
     setState(() {
       _selectedDate = date;
     });
-    // TODO
-    // widget.model.date = date;
+    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(date: date));
   }
 
   @override
@@ -102,18 +104,13 @@ class _DateInputState extends State<DateInput> {
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
+          backgroundColor: AppColors.secondaryColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              DateTimeConverter.toMMdd(date),
-              style: const TextStyle(fontSize: 16.0),
-            ),
-            Text(
-              subtext,
-              style: const TextStyle(color: AppColors.secondaryTextColor),
-            ).tr(),
+            Text(DateTimeConverter.toMMdd(date), style: const TextStyle(fontSize: 16.0)),
+            Text(subtext, style: const TextStyle(color: AppColors.secondaryTextColor)).tr(),
           ],
         ),
       ),
