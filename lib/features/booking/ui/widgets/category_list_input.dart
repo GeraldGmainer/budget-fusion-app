@@ -21,28 +21,24 @@ class CategoryListInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              error: (message) => ErrorText(
-                message: message,
-                onReload: () {
-                  _reload(context);
-                },
-              ),
-              loaded: (categories) => CategoryList(
-                categories: categories,
-                categoryType: draft.categoryType,
-                onCategoryTap: (category) => _onCategoryTap(context, category),
-                selectedCategory: draft.category,
-              ),
-              orElse: () => const Center(child: CircularProgressIndicator()),
-            );
-          },
-        ),
-      ),
+    return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          error: (message) => ErrorText(
+            message: message,
+            onReload: () {
+              _reload(context);
+            },
+          ),
+          loaded: (categories) => CategoryList(
+            categories: categories,
+            categoryType: draft.categoryType,
+            onCategoryTap: (category) => _onCategoryTap(context, category),
+            selectedCategory: draft.category,
+          ),
+          orElse: () => const Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 }

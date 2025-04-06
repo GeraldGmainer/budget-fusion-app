@@ -13,6 +13,7 @@ class CategoryIcon extends StatelessWidget {
   final bool isSelected;
 
   const CategoryIcon({
+    super.key,
     required this.onTap,
     required this.icon,
     required this.color,
