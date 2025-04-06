@@ -39,6 +39,8 @@ import 'package:budget_fusion_app/features/booking/application/cubits/calculator
     as _i967;
 import 'package:budget_fusion_app/features/booking/application/cubits/save_booking_cubit.dart'
     as _i416;
+import 'package:budget_fusion_app/features/booking/application/use_cases/default_account_use_case.dart'
+    as _i638;
 import 'package:budget_fusion_app/features/booking/application/use_cases/load_bookings_use_case.dart'
     as _i624;
 import 'package:budget_fusion_app/features/booking/application/use_cases/save_booking_use_case.dart'
@@ -175,8 +177,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i871.UserRepo>(),
           gh<_i428.ConnectivityService>(),
         ));
-    gh.factory<_i416.SaveBookingCubit>(
-        () => _i416.SaveBookingCubit(gh<_i144.SaveBookingUseCase>()));
     gh.lazySingleton<_i76.QueueLocalDataSource>(
         () => _i76.QueueLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i342.CategoryLocalDataSource>(
@@ -226,6 +226,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i261.ProfileLocalDataSource>(),
           gh<_i594.ProfileRemoteDataSource>(),
         ));
+    gh.lazySingleton<_i638.DefaultAccountUseCase>(
+        () => _i638.DefaultAccountUseCase(gh<_i714.AccountRepo>()));
     gh.lazySingleton<_i324.LoadProfileUseCase>(
         () => _i324.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i712.WatchProfileUseCase>(
@@ -264,6 +266,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i8.AccountCubit>(() => _i8.AccountCubit(
           gh<_i515.WatchAccountsUseCase>(),
           gh<_i565.LoadAccountsUseCase>(),
+        ));
+    gh.factory<_i416.SaveBookingCubit>(() => _i416.SaveBookingCubit(
+          gh<_i144.SaveBookingUseCase>(),
+          gh<_i638.DefaultAccountUseCase>(),
         ));
     gh.factory<_i110.ProfileSettingCubit>(() => _i110.ProfileSettingCubit(
           gh<_i332.WatchProfileSettingUseCase>(),

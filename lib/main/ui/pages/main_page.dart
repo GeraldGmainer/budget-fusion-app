@@ -50,7 +50,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _createBooking() {
-    context.go(AppRoutes.saveBooking);
+    context.push(AppRoutes.saveBooking);
   }
 
   void _onTabChange(int index) {

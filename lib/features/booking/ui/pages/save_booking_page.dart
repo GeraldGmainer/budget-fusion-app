@@ -3,6 +3,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/save_booking_cubit.dart';
@@ -31,24 +32,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     super.initState();
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
     BlocProvider.of<SaveBookingCubit>(context).init(widget.model);
-    // BlocProvider.of<CategoryListBloc>(context).add(LoadCategoryListEvent());
     // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent());
-    // TODO
-    // if (_isCreating()) {
-    //   _setDefaultAccount();
-    // }
-  }
-
-  _setDefaultAccount() {
-    // TODO
-    // final state = BlocProvider.of<GraphViewBloc>(context).state;
-    // if (state is GraphViewLoadedState && state.bookModel.accounts.isNotEmpty) {
-    //   setState(() {
-    //     _bookingDraft.account = state.bookModel.accounts[0];
-    //   });
-    // } else {
-    //   BudgetLogger.instance.i("could not set default account");
-    // }
   }
 
   @override
@@ -75,15 +59,6 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-  }
-
-  _upload() {
-    // TODO
-    // if (_bookingDraft.category == null) {
-    //   showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
-    //   return;
-    // }
-    // BlocProvider.of<SaveBookingCubit>(context).save(_bookingDraft);
   }
 
   _onUploadSuccess(BookingDraft draft) {
@@ -124,12 +99,9 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) {
-          return;
-        }
-        if (_currentPage > 0) {
+      canPop: _currentPage == 0,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
           _animateToPage(0);
         }
       },
@@ -155,6 +127,16 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            if (_currentPage != 0) {
+              _animateToPage(0);
+            } else {
+              context.pop();
+            }
+          },
+        ),
         actions: [
           CategoryTypeButton(draft: draft, categoryType: CategoryType.outcome),
           CategoryTypeButton(draft: draft, categoryType: CategoryType.income),

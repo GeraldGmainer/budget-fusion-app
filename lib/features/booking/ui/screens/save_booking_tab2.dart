@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,10 @@ class SaveBookingTab2 extends StatelessWidget {
   const SaveBookingTab2({required this.draft});
 
   _upload(BuildContext context) {
+    if (draft.category == null) {
+      showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
+      return;
+    }
     context.read<SaveBookingCubit>().save();
   }
 
