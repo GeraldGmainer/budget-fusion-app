@@ -148,20 +148,16 @@ class _CategoryListState extends State<CategoryList> {
       children: [
         Row(
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
+            TextButton.icon(
+              icon: const Icon(Icons.arrow_back, color: AppColors.primaryTextColor),
               onPressed: () {
                 _pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                 setState(() {
                   selectedParent = null;
                 });
               },
-            ),
-            if (selectedParent != null)
-              Text(
-                selectedParent!.name,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              label: Text(selectedParent?.name ?? "unknown", style: TextStyle(color: AppColors.primaryTextColor, fontSize: 15)),
+            )
           ],
         ),
         const Divider(),
