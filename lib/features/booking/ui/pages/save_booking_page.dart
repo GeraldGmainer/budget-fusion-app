@@ -1,0 +1,206 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../application/cubits/save_booking_cubit.dart';
+import '../../domain/entities/booking_draft.dart';
+import '../screens/save_booking_tab1.dart';
+import '../widgets/amount_display.dart';
+import '../widgets/category_type_button.dart';
+
+class SaveBookingPage extends StatefulWidget {
+  final Booking? model;
+
+  const SaveBookingPage({super.key, required this.model});
+
+  @override
+  State<SaveBookingPage> createState() => _SaveBookingPageState();
+}
+
+class _SaveBookingPageState extends State<SaveBookingPage> {
+  final PageController _pageController = PageController(initialPage: 0);
+  final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // BlocProvider.of<CalculatorBloc>(context).add(InitCalculatorEvent(_bookingDraft.amount));
+    BlocProvider.of<SaveBookingCubit>(context).init(widget.model);
+    // BlocProvider.of<CategoryListBloc>(context).add(LoadCategoryListEvent());
+    // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent());
+    // TODO
+    // if (_isCreating()) {
+    //   _setDefaultAccount();
+    // }
+  }
+
+  _setDefaultAccount() {
+    // TODO
+    // final state = BlocProvider.of<GraphViewBloc>(context).state;
+    // if (state is GraphViewLoadedState && state.bookModel.accounts.isNotEmpty) {
+    //   setState(() {
+    //     _bookingDraft.account = state.bookModel.accounts[0];
+    //   });
+    // } else {
+    //   BudgetLogger.instance.i("could not set default account");
+    // }
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  _openCategories() {
+    //TODO
+    // if (_bookingDraft.amount.toDouble() > 0) {
+    //   _animateToPage(1);
+    // } else {
+    //   _amountDisplayKey.currentState?.triggerShakeAnimation();
+    // }
+  }
+
+  _animateToPage(int page) {
+    setState(() {
+      _currentPage = page;
+    });
+
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  _upload() {
+    // TODO
+    // if (_bookingDraft.category == null) {
+    //   showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
+    //   return;
+    // }
+    // BlocProvider.of<SaveBookingCubit>(context).save(_bookingDraft);
+  }
+
+  _onUploadSuccess(BookingDraft draft) {
+    // TODO
+    // showSnackBar(context, _isCreating() ? "booking.create_success" : "booking.edit_success");
+    // BlocProvider.of<GraphViewBloc>(context).add(RefreshGraphViewEvent());
+    // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent(forceReload: true));
+    // Navigator.of(context).pop();
+  }
+
+  _onError(String error) {
+    showSnackBar(context, error);
+  }
+
+  _onCategoryTypePressed(CategoryType categoryType) {
+    // TODO
+    // setState(() {
+    //   _bookingDraft.categoryType = categoryType;
+    //   _bookingDraft.category = null;
+    // });
+  }
+
+  _onDelete() {
+    // TODO delete
+    // ConfirmDialog.show(
+    //   context,
+    //   headerText: "booking.dialog.delete_title",
+    //   bodyText: "booking.dialog.delete_body",
+    //   onOK: _deleteBooking,
+    // );
+  }
+
+  _deleteBooking() {
+    // TODO delete
+    // BlocProvider.of<BookingCrudBloc>(context).add(DeleteBookingCrudEvent(_bookingDraft));
+  }
+
+  _onDeleteSuccess() {
+    // TODO delete
+    // showSnackBar(context, "booking.delete_success");
+    // BlocProvider.of<GraphViewBloc>(context).add(RefreshGraphViewEvent());
+    // Navigator.of(context).pop();
+    // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent(forceReload: true));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
+        if (_currentPage > 0) {
+          _animateToPage(0);
+        }
+      },
+      child: BlocConsumer<SaveBookingCubit, SaveBookingState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            loaded: (draft) => _onUploadSuccess(draft),
+            error: (draft, error) => _onError(error),
+          );
+          // TODO delete
+          // if (state is BookingCrudDeletedState) {
+          //   _onDeleteSuccess();
+          // }
+        },
+        builder: (context, state) {
+          return _buildView(state.draft);
+        },
+      ),
+    );
+  }
+
+  Widget _buildView(BookingDraft draft) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
+        actions: [
+          CategoryTypeButton(draft: draft, categoryType: CategoryType.outcome),
+          CategoryTypeButton(draft: draft, categoryType: CategoryType.income),
+          if (!draft.isCreating) _buildDeleteButton(),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
+      body: BlocConsumer<SaveBookingCubit, SaveBookingState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return state.maybeWhen(
+            loading: (draft) => Center(child: CircularProgressIndicator()),
+            orElse: () => _buildContent(draft),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildContent(BookingDraft draft) {
+    return SafeArea(
+      child: Padding(
+        padding: AppDimensions.pagePadding,
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            SaveBookingTab1(model: draft, onCategoryTap: _openCategories, amountDisplayKey: _amountDisplayKey),
+            // SaveBookingTab2(model: _bookingDraft, onUpload: _upload),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeleteButton() {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: _onDelete,
+    );
+  }
+}

@@ -3,4 +3,5 @@ class AppRoutes {
   static const forgotPassword = "/forgotPassword";
   static const signUp = "/signUp";
   static const main = "/main";
+  static const saveBooking = "/saveBooking";
 }

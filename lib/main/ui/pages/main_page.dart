@@ -1,5 +1,7 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../features/analytics/analytics.dart';
 import '../../../features/budget_book/budget_book.dart';
@@ -48,19 +50,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _createBooking() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Create Booking'),
-        content: const Text('Booking creation functionality goes here.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
+    context.go(AppRoutes.saveBooking);
   }
 
   void _onTabChange(int index) {

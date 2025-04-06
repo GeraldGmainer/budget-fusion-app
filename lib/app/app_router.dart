@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/core.dart';
 import '../features/auth/auth.dart';
+import '../features/booking/booking.dart';
 import '../main/main.dart';
 
 final GoRouter router = GoRouter(
@@ -15,6 +16,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.login,
       builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.saveBooking,
+      builder: (context, state) => SaveBookingPage(model: state.extra as Booking?),
     ),
     // GoRoute(
     //   path: '/sign-up',
