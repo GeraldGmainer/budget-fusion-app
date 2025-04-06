@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/save_booking_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../screens/save_booking_tab1.dart';
@@ -27,7 +28,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
   @override
   void initState() {
     super.initState();
-    // BlocProvider.of<CalculatorBloc>(context).add(InitCalculatorEvent(_bookingDraft.amount));
+    BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
     BlocProvider.of<SaveBookingCubit>(context).init(widget.model);
     // BlocProvider.of<CategoryListBloc>(context).add(LoadCategoryListEvent());
     // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent());

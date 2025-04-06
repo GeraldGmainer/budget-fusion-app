@@ -1,9 +1,13 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 
+import '../../application/cubits/calculator_cubit.dart';
+
 class AmountDisplay extends StatefulWidget {
-  const AmountDisplay({Key? key}) : super(key: key);
+  const AmountDisplay({super.key});
 
   @override
   State<AmountDisplay> createState() => AmountDisplayState();
@@ -40,50 +44,42 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
         shakeConstant: ShakeHorizontalConstant2(),
         autoPlay: _shake,
         enableWebMouseHover: true,
-        // child: _buildView(),
-        child: Text("Amount Display"),
+        child: _buildView(),
       ),
     );
   }
 
-  // TODO
-  // Widget _buildView() {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-  //     child: BlocBuilder<CalculatorBloc, CalculatorState>(
-  //       builder: (context, state) {
-  //         final List<String> history = state is CalculatorUpdateState ? state.history : [];
-  //         final double result = state is CalculatorUpdateState ? state.result : 0;
-  //
-  //         return Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             _buildCurrency(context),
-  //             Column(
-  //               crossAxisAlignment: CrossAxisAlignment.end,
-  //               children: [
-  //                 _buildHistory(history),
-  //                 _buildResult(result),
-  //               ],
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
-  //
-  // Widget _buildCurrency(BuildContext context) {
-  //   return BlocBuilder<ProfileBloc, ProfileState>(
-  //     builder: (context, state) {
-  //       String value = "";
-  //       if (state is ProfileLoadedState) {
-  //         value = state.profile.currency.symbol;
-  //       }
-  //       return Text(value, style: TextStyle(fontSize: 24, color: AppColors.primaryTextColor));
-  //     },
-  //   );
-  // }
+  Widget _buildView() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      child: BlocBuilder<CalculatorCubit, CalculatorState>(
+        builder: (context, state) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildCurrency(context),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildHistory(state.history),
+                  _buildResult(state.result),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCurrency(BuildContext context) {
+    return BlocBuilder<ProfileSettingCubit, LoadableState<ProfileSetting>>(
+      builder: (context, state) {
+        final value = state.whenOrNull(loaded: (setting) => setting.currency.symbol);
+        return Text(value ?? "", style: TextStyle(fontSize: 24, color: AppColors.primaryTextColor));
+      },
+    );
+  }
 
   Widget _buildHistory(List<String> history) {
     return Text(history.join(), style: const TextStyle(fontSize: 18, color: AppColors.primaryTextColor));

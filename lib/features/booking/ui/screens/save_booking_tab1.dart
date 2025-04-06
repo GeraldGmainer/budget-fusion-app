@@ -26,7 +26,7 @@ class SaveBookingTab1 extends StatelessWidget {
         children: [
           DateInput(model: model, hideQuickButtons: hideQuickButtons),
           const SizedBox(height: AppDimensions.verticalPadding * 2),
-          // AmountDisplay(key: amountDisplayKey),
+          AmountDisplay(key: amountDisplayKey),
           const Spacer(),
           Calculator(model: model),
           const SizedBox(height: AppDimensions.verticalPadding * 2),

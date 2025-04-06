@@ -1,7 +1,12 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/cubits/calculator_cubit.dart';
+import '../../application/cubits/save_booking_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import 'calculator_key.dart';
+import 'calculator_keyboard.dart';
 
 export 'calculator_key.dart';
 
@@ -16,39 +21,35 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   _onPressed(CalculatorKey key) {
-    // TODO
-    // switch (key) {
-    //   case CalculatorKey.clear:
-    //     BlocProvider.of<CalculatorBloc>(context).add(ClearCalculatorEvent());
-    //     break;
-    //
-    //   case CalculatorKey.back:
-    //     BlocProvider.of<CalculatorBloc>(context).add(BackCalculatorEvent());
-    //     break;
-    //
-    //   case CalculatorKey.equal:
-    //     BlocProvider.of<CalculatorBloc>(context).add(EqualCalculatorEvent());
-    //     break;
-    //
-    //   default:
-    //     BlocProvider.of<CalculatorBloc>(context).add(KeyCalculatorEvent(key));
-    // }
+    switch (key) {
+      case CalculatorKey.clear:
+        BlocProvider.of<CalculatorCubit>(context).clear();
+        break;
+
+      case CalculatorKey.back:
+        BlocProvider.of<CalculatorCubit>(context).back();
+        break;
+
+      case CalculatorKey.equal:
+        BlocProvider.of<CalculatorCubit>(context).equal();
+        break;
+
+      default:
+        BlocProvider.of<CalculatorCubit>(context).key(key);
+    }
   }
 
   _onValueChange(double value) {
-    // widget.model.amount = value;
+    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
   }
 
   @override
   Widget build(BuildContext context) {
-    // return BlocListener<CalculatorBloc, CalculatorState>(
-    //   listener: (context, state) {
-    //     if (state is CalculatorUpdateState) {
-    //       _onValueChange(state.result);
-    //     }
-    //   },
-    //   child: CalculatorKeyboard(onPressed: _onPressed),
-    // );
-    return Text("Calculator");
+    return BlocListener<CalculatorCubit, CalculatorState>(
+      listener: (context, state) {
+        state.whenOrNull(updated: (_, result) => _onValueChange(result));
+      },
+      child: CalculatorKeyboard(onPressed: _onPressed),
+    );
   }
 }

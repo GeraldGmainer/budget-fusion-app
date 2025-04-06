@@ -35,6 +35,8 @@ import 'package:budget_fusion_app/features/auth/data/repos/user_repo.dart'
     as _i871;
 import 'package:budget_fusion_app/features/booking/application/cubits/booking_cubit.dart'
     as _i190;
+import 'package:budget_fusion_app/features/booking/application/cubits/calculator_cubit.dart'
+    as _i967;
 import 'package:budget_fusion_app/features/booking/application/cubits/save_booking_cubit.dart'
     as _i416;
 import 'package:budget_fusion_app/features/booking/application/use_cases/load_bookings_use_case.dart'
@@ -142,6 +144,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i487.LanguageCubit>(() => _i487.LanguageCubit());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
+    gh.factory<_i967.CalculatorCubit>(() => _i967.CalculatorCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
