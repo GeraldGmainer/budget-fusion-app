@@ -31,7 +31,8 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
     emit(state.copyWith(draft: update(state.draft)));
   }
 
-  Future<void> save(BookingDraft draft) async {
+  Future<void> save() async {
+    final draft = state.draft;
     emit(SaveBookingState.loading(draft: draft));
     try {
       await _saveBookingUseCase();

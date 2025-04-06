@@ -8,6 +8,7 @@ import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/save_booking_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../screens/save_booking_tab1.dart';
+import '../screens/save_booking_tab2.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/category_type_button.dart';
 
@@ -181,8 +182,8 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            SaveBookingTab1(model: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
-            // SaveBookingTab2(model: _bookingDraft, onUpload: _upload),
+            SaveBookingTab1(draft: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
+            SaveBookingTab2(draft: draft),
           ],
         ),
       ),

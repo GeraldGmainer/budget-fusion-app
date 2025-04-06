@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/budget_book/budget_book.dart';
-import '../features/category/category.dart';
 import '../features/profile/profile.dart';
 import '../main/main.dart';
 

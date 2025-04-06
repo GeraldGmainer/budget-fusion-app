@@ -65,12 +65,6 @@ import 'package:budget_fusion_app/features/budget_book/domain/service/budget_pag
     as _i198;
 import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart'
     as _i811;
-import 'package:budget_fusion_app/features/category/application/cubits/category_cubit.dart'
-    as _i367;
-import 'package:budget_fusion_app/features/category/application/use_cases/load_categories_use_case.dart'
-    as _i87;
-import 'package:budget_fusion_app/features/category/application/use_cases/watch_categories_use_case.dart'
-    as _i47;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_local_data_source.dart'
     as _i342;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_remote_data_source.dart'
@@ -95,12 +89,16 @@ import 'package:budget_fusion_app/main/application/main/main_cubit.dart'
     as _i642;
 import 'package:budget_fusion_app/shared/application/cubits/account_cubit.dart'
     as _i8;
+import 'package:budget_fusion_app/shared/application/cubits/category_cubit.dart'
+    as _i976;
 import 'package:budget_fusion_app/shared/application/cubits/profile_cubit.dart'
     as _i837;
 import 'package:budget_fusion_app/shared/application/cubits/profile_setting_cubit.dart'
     as _i110;
 import 'package:budget_fusion_app/shared/application/use_cases/load_accounts_use_case.dart'
     as _i565;
+import 'package:budget_fusion_app/shared/application/use_cases/load_categories_use_case.dart'
+    as _i686;
 import 'package:budget_fusion_app/shared/application/use_cases/load_profile_setting_use_case.dart'
     as _i757;
 import 'package:budget_fusion_app/shared/application/use_cases/load_profile_use_case.dart'
@@ -109,6 +107,8 @@ import 'package:budget_fusion_app/shared/application/use_cases/watch_accounts_us
     as _i515;
 import 'package:budget_fusion_app/shared/application/use_cases/watch_bookings_use_case.dart'
     as _i856;
+import 'package:budget_fusion_app/shared/application/use_cases/watch_categories_use_case.dart'
+    as _i876;
 import 'package:budget_fusion_app/shared/application/use_cases/watch_profile_setting_use_case.dart'
     as _i151;
 import 'package:budget_fusion_app/shared/application/use_cases/watch_profile_use_case.dart'
@@ -243,12 +243,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i757.LoadProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
-    gh.lazySingleton<_i47.WatchCategoriesUseCase>(
-        () => _i47.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i87.LoadCategoriesUseCase>(
-        () => _i87.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i7.WatchCategoriesUseCase>(
         () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i876.WatchCategoriesUseCase>(
+        () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i686.LoadCategoriesUseCase>(
+        () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i601.ResetBudgetBookUseCase>(
         () => _i601.ResetBudgetBookUseCase(
               gh<_i714.BookingRepo>(),
@@ -261,10 +261,6 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i624.LoadBookingsUseCase>(
         () => _i624.LoadBookingsUseCase(gh<_i714.BookingRepo>()));
-    gh.factory<_i367.CategoryCubit>(() => _i367.CategoryCubit(
-          gh<_i47.WatchCategoriesUseCase>(),
-          gh<_i87.LoadCategoriesUseCase>(),
-        ));
     gh.factory<_i8.AccountCubit>(() => _i8.AccountCubit(
           gh<_i515.WatchAccountsUseCase>(),
           gh<_i565.LoadAccountsUseCase>(),
@@ -278,6 +274,10 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i714.CategoryRepo>(),
               gh<_i428.DatetimeService>(),
             ));
+    gh.factory<_i976.CategoryCubit>(() => _i976.CategoryCubit(
+          gh<_i876.WatchCategoriesUseCase>(),
+          gh<_i686.LoadCategoriesUseCase>(),
+        ));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i190.BookingCubit>(() => _i190.BookingCubit(

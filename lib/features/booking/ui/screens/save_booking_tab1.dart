@@ -8,11 +8,11 @@ import '../widgets/amount_display.dart';
 import '../widgets/date_input.dart';
 
 class SaveBookingTab1 extends StatelessWidget {
-  final BookingDraft model;
+  final BookingDraft draft;
   final VoidCallback onCategoryTap;
   final GlobalKey<AmountDisplayState> amountDisplayKey;
 
-  const SaveBookingTab1({required this.model, required this.onCategoryTap, required this.amountDisplayKey});
+  const SaveBookingTab1({required this.draft, required this.onCategoryTap, required this.amountDisplayKey});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class SaveBookingTab1 extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          DateInput(model: model, hideQuickButtons: hideQuickButtons),
+          DateInput(model: draft, hideQuickButtons: hideQuickButtons),
           const SizedBox(height: AppDimensions.verticalPadding * 2),
           AmountDisplay(key: amountDisplayKey),
           const Spacer(),
-          Calculator(model: model),
+          Calculator(model: draft),
           const SizedBox(height: AppDimensions.verticalPadding * 2),
           SaveButton(text: "booking.choose_category_button", onTap: onCategoryTap, backgroundColor: AppColors.secondaryColor),
           const SizedBox(height: AppDimensions.verticalPadding),
