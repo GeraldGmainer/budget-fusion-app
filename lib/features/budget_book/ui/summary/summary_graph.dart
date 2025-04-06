@@ -14,7 +14,7 @@ class SummaryGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#FFFFFF", hideIcon: true)] : data.pieData;
+    final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)] : data.pieData;
 
     return Center(
       child: SizedBox(

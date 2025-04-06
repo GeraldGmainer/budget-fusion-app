@@ -16,8 +16,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final QueueManager queueManager;
   final RealtimeNotifierService realtimeNotifierService;
 
-  // final StreamController<List<Dto>> streamController = StreamController.broadcast();
-  final ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
+  ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
 
   OfflineFirstDataManager({
@@ -33,7 +32,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Stream<List<Dto>> get stream => streamController.stream;
 
-  Future<void> loadAll({Map<String, dynamic>? filters}) async {
+  Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll for $coloredDomain");
     _subscribeToRealtime();
     final cached = cacheManager.get<List<Dto>>(domainType);
@@ -41,7 +40,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       _log("Using cached data with ${cached.length} items for domain $coloredDomain");
       _emitToStream(cached);
       unawaited(_syncPartial());
-      return;
+      return cached;
     }
 
     _log("Fetching local data for domain $coloredDomain...");
@@ -51,7 +50,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       cacheManager.set(domainType, localDtos);
       _emitToStream(localDtos);
       unawaited(_syncPartial());
-      return;
+      return localDtos;
     }
 
     _log("No local data found. Fetching remote data for domain $coloredDomain...");
@@ -60,6 +59,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     cacheManager.set(domainType, dtos);
     _emitToStream(dtos);
     _log("loadAll completed for domain $coloredDomain");
+    return dtos;
   }
 
   Future<void> save(Dto dto) async {
@@ -147,6 +147,15 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Sync failed", e, stackTrace);
     }
+  }
+
+  Future<void> reset() async {
+    _log("Resetting OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
+    cacheManager.invalidateCache(domainType);
+    await localSource.deleteAll();
+    // await streamController.close();
+    // streamController = ReplaySubject<List<Dto>>(maxSize: 1);
+    // streamController.add([]);
   }
 
   void dispose() {

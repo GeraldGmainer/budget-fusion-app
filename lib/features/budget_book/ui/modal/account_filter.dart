@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/account/account.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,6 @@ class AccountFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO dont use account cubit because of DDD ? or used shared AccountCubit
     return BlocBuilder<AccountCubit, LoadableState>(
       builder: (context, state) {
         return state.maybeWhen(

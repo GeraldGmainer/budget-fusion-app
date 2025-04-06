@@ -10,10 +10,6 @@ import 'refresh_button.dart';
 class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BudgetBookAppBar({super.key});
 
-  void _load(BuildContext context) {
-    context.read<BudgetBookCubit>().load();
-  }
-
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
@@ -26,9 +22,7 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           title: BudgetTabTitle(filter: currentFilter),
           leading: AppDrawerButton(),
           actions: [
-            RefreshButton(onTap: () {
-              _load(context);
-            }),
+            RefreshButton(),
             BudgetFilterButton(),
           ],
         );

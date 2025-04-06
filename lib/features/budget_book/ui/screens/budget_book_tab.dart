@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/features/budget_book/domain/entities/budget_date_range.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/budget_book/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
+import '../../domain/entities/budget_date_range.dart';
 import '../../domain/entities/summary_view_data.dart';
 import '../../domain/enums/budget_view_mode.dart';
 import '../calendar/calendar_view.dart';
@@ -22,21 +22,22 @@ class BudgetBookTab extends StatefulWidget {
 class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveClientMixin {
   final List<String> _viewModes = ['Summary', 'Transactions', 'Calendar'];
   final PageController _pageController = PageController();
+  late BudgetDateRange _currentDateRange;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _initPagination();
+  }
+
+  void _initPagination() {
+    _currentDateRange = BudgetDateRange(period: context.read<BudgetBookCubit>().state.filter.period, from: DateTime.now(), to: DateTime.now());
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _load() {
-    context.read<BudgetBookCubit>().load();
   }
 
   void _onLoaded() {
@@ -60,8 +61,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     final items = context.read<BudgetBookCubit>().state.items;
     if (items.isNotEmpty) {
       final reveredIndex = items.length - 1 - pageIndex;
-      final newDateRange = items[reveredIndex].dateRange;
-      context.read<BudgetBookCubit>().updateDateRange(newDateRange);
+      setState(() {
+        _currentDateRange = items[reveredIndex].dateRange;
+      });
     } else {
       BudgetLogger.instance.w("items are empty");
     }
@@ -88,23 +90,21 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       builder: (context, state) {
         return Column(
           children: [
-            _buildPeriodSelector(state.filter, state.dateRange),
+            _buildPeriodSelector(state.filter),
             const SizedBox(height: 8),
             _buildNavbar(),
             const SizedBox(height: 8),
-            Expanded(
-              child: _buildContent(state),
-            ),
+            Expanded(child: _buildContent(state)),
           ],
         );
       },
     );
   }
 
-  Widget _buildPeriodSelector(BudgetBookFilter filter, BudgetDateRange dateRange) {
+  Widget _buildPeriodSelector(BudgetBookFilter filter) {
     return PeriodSelector(
       filter: filter,
-      dateRange: dateRange,
+      dateRange: _currentDateRange,
       pageController: _pageController,
     );
   }
@@ -120,7 +120,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     if (state.items.isNotEmpty) {
       switch (state.viewMode) {
         case BudgetViewMode.summary:
-          return _buildSummary(state.items);
+          return _buildSummary(state.items.cast<SummaryViewData>().toList());
         case BudgetViewMode.transaction:
           return TransactionView();
         case BudgetViewMode.calendar:
@@ -134,6 +134,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   Widget _buildSummary(List<SummaryViewData> summaries) {
+    final reversedSummaries = summaries.reversed.toList();
     return PageView.builder(
       controller: _pageController,
       itemCount: summaries.length,
@@ -141,8 +142,10 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final item = summaries.reversed.toList()[index];
-        return SummaryView(data: item);
+        final item = reversedSummaries[index];
+        return RepaintBoundary(
+          child: SummaryView(data: item),
+        );
       },
     );
   }

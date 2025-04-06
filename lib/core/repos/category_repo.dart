@@ -7,5 +7,7 @@ abstract class CategoryRepo {
 
   Future<void> save(Category entity);
 
+  Future<void> reset();
+
   void dispose();
 }

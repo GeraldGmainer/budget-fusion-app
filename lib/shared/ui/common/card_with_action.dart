@@ -1,18 +1,18 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
-
-// TODO rename widget
 class CardWithAction extends StatelessWidget {
   final IconData icon;
-  final VoidCallback? onTap;
+  final VoidCallback? onOptionTap;
+  final VoidCallback? onShowMoreTap;
   final Color backgroundColor;
   final Widget child;
 
   const CardWithAction({
     super.key,
     this.icon = Icons.more_vert,
-    this.onTap,
+    this.onOptionTap,
+    this.onShowMoreTap,
     this.backgroundColor = AppColors.cardColor,
     required this.child,
   });
@@ -26,18 +26,19 @@ class CardWithAction extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: onShowMoreTap != null ? const EdgeInsets.fromLTRB(8, 8, 8, 38) : const EdgeInsets.all(8.0),
             child: child,
           ),
-          if (onTap != null)
+          if (onOptionTap != null) Positioned(top: 8, right: 8, child: IconButton(icon: Icon(icon), onPressed: onOptionTap)),
+          if (onShowMoreTap != null)
             Positioned(
-              top: 8,
-              right: 8,
-              child: IconButton(
-                icon: Icon(icon),
-                onPressed: onTap,
+              bottom: 0,
+              right: 0,
+              child: TextButton(
+                onPressed: onShowMoreTap,
+                child: Text('Show More', style: TextStyle(color: AppColors.accentColor, fontWeight: FontWeight.bold, fontSize: 13)),
               ),
-            ),
+            )
         ],
       ),
     );

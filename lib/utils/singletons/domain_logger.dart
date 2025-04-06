@@ -5,10 +5,10 @@ class DomainLogger {
   static const int serviceCharLength = 25;
   static final Map<String, AnsiColor> _domainColors = {
     'profile': AnsiColor.fg(34),
-    'profile_setting': AnsiColor.fg(42),
+    'profile_setting': AnsiColor.fg(35),
     'account': AnsiColor.fg(32),
-    'category': AnsiColor.fg(33),
-    'booking': AnsiColor.fg(35),
+    'category': AnsiColor.fg(214),
+    'booking': AnsiColor.fg(133),
   };
 
   static AnsiColor getDomainColor(String table) {
@@ -39,7 +39,7 @@ class DomainLogger {
       return darkColor ? AnsiColor.fg(46) : AnsiColor.fg(108);
     }
     if (service == "DataManager") {
-      return darkColor ? AnsiColor.fg(54) : AnsiColor.fg(140);
+      return darkColor ? AnsiColor.fg(92) : AnsiColor.fg(140);
     }
     if (service == "RealtimeNotifier") {
       return darkColor ? AnsiColor.fg(35) : AnsiColor.fg(95);

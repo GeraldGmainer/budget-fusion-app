@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RefreshButton extends StatefulWidget {
-  final VoidCallback onTap;
-
-  const RefreshButton({super.key, required this.onTap});
-
   @override
   State<RefreshButton> createState() => _RefreshButtonState();
 }
@@ -18,7 +14,7 @@ class _RefreshButtonState extends State<RefreshButton> {
     setState(() {
       _isLoading = true;
     });
-    widget.onTap();
+    context.read<BudgetBookCubit>().resetAndLoad();
   }
 
   @override

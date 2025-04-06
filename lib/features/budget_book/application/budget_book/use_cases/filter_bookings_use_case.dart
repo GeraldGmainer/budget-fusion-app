@@ -1,6 +1,6 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../core/core.dart';
 import '../../../domain/entities/budget_book_filter.dart';
 
 @lazySingleton

@@ -3,13 +3,14 @@ import 'package:budget_fusion_app/features/budget_book/domain/entities/pie_data.
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'base/budget_view_data.dart';
 import 'budget_date_range.dart';
 import 'category_view_summary_data.dart';
 
 part 'summary_view_data.freezed.dart';
 
 @freezed
-class SummaryViewData with _$SummaryViewData {
+class SummaryViewData with _$SummaryViewData implements BudgetViewData {
   const SummaryViewData._();
 
   const factory SummaryViewData({

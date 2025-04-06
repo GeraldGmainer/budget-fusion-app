@@ -8,5 +8,7 @@ abstract class ProfileSettingRepo {
 
   Future<void> save(ProfileSetting entity);
 
+  Future<void> reset();
+
   void dispose();
 }

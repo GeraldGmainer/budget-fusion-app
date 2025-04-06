@@ -23,13 +23,17 @@ class RecentTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardWithAction(
-      onTap: () {},
+      onOptionTap: () {
+        print("on option tap");
+      },
+      onShowMoreTap: () {
+        print("on show more tap");
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTitle(context),
           _buildList(context),
-          _buildShowMore(context),
         ],
       ),
     );

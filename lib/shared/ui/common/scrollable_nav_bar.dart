@@ -28,13 +28,23 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
   }
 
   @override
+  void didUpdateWidget(covariant ScrollableNavBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.items.length != widget.items.length) {
+      _itemKeys = List.generate(widget.items.length, (index) => GlobalKey());
+    }
+  }
+
+  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
 
   void _onItemTap(int index) {
-    _selectedIndex = index;
+    setState(() {
+      _selectedIndex = index;
+    });
     widget.onTabSelect(index);
     final key = _itemKeys[index];
     if (key.currentContext != null) {
@@ -58,32 +68,53 @@ class _ScrollableNavBarState extends State<ScrollableNavBar> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: List.generate(widget.items.length, (index) {
-              final isSelected = _selectedIndex == index;
-              return GestureDetector(
+              return NavBarItem(
+                key: _itemKeys[index],
+                text: widget.items[index],
+                isSelected: _selectedIndex == index,
                 onTap: () => _onItemTap(index),
-                child: Container(
-                  key: _itemKeys[index],
-                  padding: EdgeInsets.fromLTRB(4, 4, 4, 8),
-                  margin: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: isSelected ? AppColors.primaryTextColor : Colors.transparent,
-                        width: 3.0,
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    widget.items[index],
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: isSelected ? AppColors.primaryTextColor : Colors.grey,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                ),
               );
             }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NavBarItem extends StatelessWidget {
+  final String text;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const NavBarItem({
+    required Key key,
+    required this.text,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(4, 4, 4, 8),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: isSelected ? AppColors.primaryTextColor : Colors.transparent,
+              width: 3.0,
+            ),
+          ),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 14,
+            color: isSelected ? AppColors.primaryTextColor : Colors.grey,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ),

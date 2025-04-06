@@ -131,6 +131,12 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     return output;
   }
 
+  Future<void> deleteAll() async {
+    _log("deleteAll for $coloredDomain");
+    await db.delete(table);
+    _log("deleteAll success for $coloredDomain", darkColor: true);
+  }
+
   String get table;
 
   String? get defaultOrderBy;
