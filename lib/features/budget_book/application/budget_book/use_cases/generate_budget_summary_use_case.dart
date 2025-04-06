@@ -1,9 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/budget_page_data.dart';
 import '../../../domain/entities/summary_view_data.dart';
+import '../../../domain/service/summary_data_generator.dart';
 
 @lazySingleton
 class GenerateBudgetSummaryUseCase {

@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/features/budget_book/domain/entities/budget_date_range.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/budget_book/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
+import '../../domain/entities/budget_date_range.dart';
 import '../../domain/entities/summary_view_data.dart';
 import '../../domain/enums/budget_view_mode.dart';
 import '../calendar/calendar_view.dart';
@@ -150,9 +150,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     );
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
-  // TODO reenable wantKeepAlive
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 }

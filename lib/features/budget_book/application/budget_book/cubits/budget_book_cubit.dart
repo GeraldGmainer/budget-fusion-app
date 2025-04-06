@@ -45,7 +45,6 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
   }
 
   Future<void> _onBookings(List<Booking> rawBookingList) async {
-    print("#### rawBookingList ${rawBookingList.length}");
     try {
       final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
       final summaries = await _generateBudgetSummaryUseCase(filtered);

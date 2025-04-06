@@ -29,7 +29,7 @@ class BudgetOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardWithAction(
       backgroundColor: AppColors.primaryColor,
-      onTap: () {
+      onOptionTap: () {
         // You might navigate or open options here
         print('More options tapped');
       },
