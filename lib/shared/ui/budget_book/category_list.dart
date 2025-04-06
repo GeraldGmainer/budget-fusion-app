@@ -28,29 +28,80 @@ class CategoryList extends StatelessWidget {
     var trimmedList = [...categories];
     trimmedList.removeWhere((category) => category.categoryType != categoryType);
 
-    return Wrap(
+    List<Category> standalone = [];
+    Map<Category, List<Category>> grouped = {};
+
+    for (var category in trimmedList) {
+      if (category.parent != null) {
+        grouped[category.parent!] = [...(grouped[category.parent!] ?? []), category];
+      } else {
+        standalone.add(category);
+      }
+    }
+    standalone.removeWhere((cat) => grouped.containsKey(cat));
+
+    var groupedEntries = grouped.entries.toList();
+    groupedEntries.sort((a, b) => a.key.name.compareTo(b.key.name));
+    for (var entry in groupedEntries) {
+      entry.value.sort((a, b) => a.name.compareTo(b.name));
+    }
+    standalone.sort((a, b) => a.name.compareTo(b.name));
+
+    List<Widget> widgets = [];
+    for (int i = 0; i < groupedEntries.length; i++) {
+      var entry = groupedEntries[i];
+      widgets.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(entry.key.name, style: Theme.of(context).textTheme.bodyMedium),
+      ));
+      widgets.add(Wrap(
+        runSpacing: CategoryIcon.verticalPadding,
+        spacing: CategoryIcon.horizontalPadding,
+        children: entry.value
+            .map((category) => CategoryIcon(
+                  icon: IconConverter.getIcon(category.iconName),
+                  text: category.name,
+                  color: ColorConverter.stringToColor(category.iconColor),
+                  isSelected: selectedCategory == category,
+                  onTap: () => onCategoryTap(category),
+                ))
+            .toList(),
+      ));
+      if (i < groupedEntries.length - 1) {
+        widgets.add(const Divider());
+      }
+    }
+    if (standalone.isNotEmpty) {
+      widgets.add(const Divider());
+    }
+    List<Widget> standaloneWidgets = standalone
+        .map((category) => CategoryIcon(
+              icon: IconConverter.getIcon(category.iconName),
+              text: category.name,
+              color: ColorConverter.stringToColor(category.iconColor),
+              isSelected: selectedCategory == category,
+              onTap: () => onCategoryTap(category),
+            ))
+        .toList();
+
+    standaloneWidgets.add(CategoryIcon(
+      icon: CommunityMaterialIcons.plus,
+      color: AppColors.accentColor,
+      text: "New",
+      onTap: () => _createCategory(context),
+    ));
+
+    widgets.add(Wrap(
       runSpacing: CategoryIcon.verticalPadding,
       spacing: CategoryIcon.horizontalPadding,
-      children: [
-        for (int index = 0; index < trimmedList.length; index++)
-          CategoryIcon(
-            icon: IconConverter.getIcon(trimmedList[index].iconName),
-            text: trimmedList[index].name,
-            color: ColorConverter.stringToColor(trimmedList[index].iconColor),
-            isSelected: selectedCategory == trimmedList[index],
-            onTap: () {
-              onCategoryTap.call(trimmedList[index]);
-            },
-          ),
-        CategoryIcon(
-          icon: CommunityMaterialIcons.plus,
-          color: AppColors.accentColor,
-          text: "New",
-          onTap: () {
-            _createCategory(context);
-          },
-        ),
-      ],
+      children: standaloneWidgets,
+    ));
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widgets,
+      ),
     );
   }
 }
