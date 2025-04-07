@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
@@ -46,11 +45,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _forgotPassword() {
-    context.go(AppRoutes.forgotPassword);
+    Navigator.of(context).pushNamed(AppRoutes.forgotPassword);
   }
 
   _signUp() {
-    context.go(AppRoutes.signUp);
+    Navigator.of(context).pushNamed(AppRoutes.signUp);
   }
 
   @override

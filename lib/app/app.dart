@@ -10,6 +10,8 @@ import 'app_router.dart';
 import 'bloc_providers.dart';
 
 class MyApp extends StatelessWidget {
+  final AppRouter _appRouter = AppRouter();
+
   MyApp({super.key}) {
     if (!kReleaseMode) {
       KeepScreenOn.turnOn();
@@ -23,10 +25,10 @@ class MyApp extends StatelessWidget {
         ...getBlocProviders(),
       ],
       child: SupabaseContainer(
-        child: MaterialApp.router(
+        child: MaterialApp(
           title: 'Budget book',
           theme: createTheme(context),
-          routerConfig: router,
+          onGenerateRoute: _appRouter.onGenerateRoute,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,

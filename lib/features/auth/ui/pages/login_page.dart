@@ -4,16 +4,12 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../profile/profile.dart';
 import '../../auth.dart';
 import '../widgets/login_form.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String route = "LoginPage";
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -26,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onProfileSuccess(Profile profile) {
-    context.go(AppRoutes.main);
+    Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 
   _onError(String message) {
