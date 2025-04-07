@@ -44,6 +44,40 @@ class _CategoryListState extends State<CategoryList> {
     // Navigator.of(context).pushNamed(CategoryCrudPage.route, arguments: CategoryModel.empty(categoryType: widget.categoryType));
   }
 
+  Widget _buildIconGrid(List<Widget> icons) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const int numColumns = 4;
+        const double spacing = 8.0;
+        const double totalSpacing = spacing * (numColumns - 1);
+        final double itemWidth = (constraints.maxWidth - totalSpacing) / numColumns;
+        List<Widget> rows = [];
+        for (int i = 0; i < icons.length; i += numColumns) {
+          final List<Widget> rowIcons = List<Widget>.from(
+            icons.sublist(i, i + numColumns > icons.length ? icons.length : i + numColumns),
+          );
+          if (rowIcons.length < numColumns) {
+            int missing = numColumns - rowIcons.length;
+            rowIcons.addAll(
+              List.generate(missing, (_) => SizedBox(width: itemWidth)),
+            );
+          }
+          rows.add(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: rowIcons.map((icon) => SizedBox(width: itemWidth, child: icon)).toList(),
+            ),
+          );
+          if (i + numColumns < icons.length) {
+            rows.add(const SizedBox(height: spacing));
+          }
+        }
+        return Column(children: rows);
+      },
+    );
+  }
+
   Widget _buildParentView() {
     var trimmedList = [...widget.categories];
     trimmedList.removeWhere((cat) => cat.categoryType != widget.categoryType);
@@ -76,7 +110,6 @@ class _CategoryListState extends State<CategoryList> {
               backgroundColor: ColorConverter.stringToColor(entry.key.iconColor),
               child: Icon(IconConverter.getIcon(entry.key.iconName), color: Colors.white),
             ),
-            visualDensity: VisualDensity(),
             title: Text(entry.key.name, style: Theme.of(context).textTheme.bodyMedium),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
@@ -93,27 +126,23 @@ class _CategoryListState extends State<CategoryList> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text("Other Categories", style: Theme.of(context).textTheme.bodyMedium),
           ),
-          Wrap(
-            runSpacing: CategoryIcon.verticalPadding,
-            spacing: CategoryIcon.horizontalPadding,
-            children: [
-              ...standalone.map((category) => CategoryIcon(
-                    key: ValueKey(category.id),
-                    icon: IconConverter.getIcon(category.iconName),
-                    text: category.name,
-                    color: ColorConverter.stringToColor(category.iconColor),
-                    isSelected: widget.selectedCategory == category,
-                    onTap: () => widget.onCategoryTap(category),
-                  )),
-              CategoryIcon(
-                key: const ValueKey('new'),
-                icon: CommunityMaterialIcons.plus,
-                color: AppColors.accentColor,
-                text: "New",
-                onTap: () => _createCategory(context),
-              ),
-            ],
-          ),
+          _buildIconGrid([
+            ...standalone.map((category) => CategoryIcon(
+                  key: ValueKey(category.id),
+                  icon: IconConverter.getIcon(category.iconName),
+                  text: category.name,
+                  color: ColorConverter.stringToColor(category.iconColor),
+                  isSelected: widget.selectedCategory == category,
+                  onTap: () => widget.onCategoryTap(category),
+                )),
+            CategoryIcon(
+              key: const ValueKey('new'),
+              icon: CommunityMaterialIcons.plus,
+              color: AppColors.accentColor,
+              text: "New",
+              onTap: () => _createCategory(context),
+            ),
+          ]),
         ],
       ],
     );
@@ -129,9 +158,9 @@ class _CategoryListState extends State<CategoryList> {
         grouped[category.parent!] = [...(grouped[category.parent!] ?? []), category];
       }
     }
-    List<Widget> childItems = [];
+    List<Widget> childIcons = [];
     if (selectedParent != null && grouped[selectedParent] != null) {
-      childItems = grouped[selectedParent]!
+      childIcons = grouped[selectedParent]!
           .map((category) => CategoryIcon(
                 key: ValueKey(category.id),
                 icon: IconConverter.getIcon(category.iconName),
@@ -144,7 +173,6 @@ class _CategoryListState extends State<CategoryList> {
     }
     return Column(
       key: const ValueKey('childView'),
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
           children: [
@@ -156,16 +184,12 @@ class _CategoryListState extends State<CategoryList> {
                   selectedParent = null;
                 });
               },
-              label: Text(selectedParent?.name ?? "unknown", style: TextStyle(color: AppColors.primaryTextColor, fontSize: 15)),
+              label: Text(selectedParent?.name ?? "unknown", style: const TextStyle(color: AppColors.primaryTextColor, fontSize: 15)),
             )
           ],
         ),
         const Divider(),
-        Wrap(
-          runSpacing: CategoryIcon.verticalPadding,
-          spacing: CategoryIcon.horizontalPadding,
-          children: childItems,
-        ),
+        _buildIconGrid(childIcons),
       ],
     );
   }

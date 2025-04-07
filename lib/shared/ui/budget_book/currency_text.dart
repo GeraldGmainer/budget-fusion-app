@@ -60,7 +60,7 @@ class CurrencyText extends StatelessWidget {
           TextSpan(text: integerPart, style: style),
           TextSpan(
             text: decimalPart,
-            style: style.copyWith(fontSize: fontSize - 4.0),
+            style: style.copyWith(fontSize: fontSize - (fontSize * 0.3)),
           ),
           if (showSymbol && !isUnitPositionFront) TextSpan(text: " $symbol", style: style),
         ],

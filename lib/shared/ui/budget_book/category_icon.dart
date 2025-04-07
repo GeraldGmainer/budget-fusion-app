@@ -2,8 +2,6 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 
 class CategoryIcon extends StatelessWidget {
-  static const double circleSize = 60;
-  static const double iconSize = 30;
   static const double horizontalPadding = AppDimensions.horizontalPadding;
   static const double verticalPadding = 8;
   final IconData icon;
@@ -25,47 +23,50 @@ class CategoryIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: LayoutBuilder(builder: (context, constraints) {
-        double buttonWidth = constraints.maxWidth / 3 - 2 - horizontalPadding;
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          double buttonWidth = constraints.maxWidth * 0.9;
+          double computedCircleSize = buttonWidth * 0.85;
+          double computedIconSize = computedCircleSize * 0.5;
 
-        return Container(
-          width: buttonWidth,
-          padding: EdgeInsets.symmetric(vertical: verticalPadding),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(12),
-            border: isSelected ? Border.all(color: AppColors.primaryTextColor, width: 1) : null,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: circleSize,
-                height: circleSize,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: color,
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: iconSize,
+          return Container(
+            width: buttonWidth,
+            padding: EdgeInsets.symmetric(vertical: verticalPadding),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: isSelected ? Border.all(color: AppColors.primaryTextColor, width: 1) : null,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: computedCircleSize,
+                  height: computedCircleSize,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: color,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
+                      size: computedIconSize,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                child: Text(
-                  text ?? "",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 12, color: AppColors.primaryTextColor),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  child: Text(
+                    text ?? "",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 12, color: AppColors.primaryTextColor),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      }),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
