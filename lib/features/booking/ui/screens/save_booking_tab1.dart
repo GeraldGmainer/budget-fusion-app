@@ -6,6 +6,7 @@ import '../../domain/entities/booking_draft.dart';
 import '../calculator/calculator.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/date_input.dart';
+import '../widgets/description_input.dart';
 
 class SaveBookingTab1 extends StatelessWidget {
   final BookingDraft draft;
@@ -27,6 +28,8 @@ class SaveBookingTab1 extends StatelessWidget {
           DateInput(model: draft, hideQuickButtons: hideQuickButtons),
           const SizedBox(height: AppDimensions.verticalPadding * 2),
           AmountDisplay(key: amountDisplayKey),
+          const SizedBox(height: AppDimensions.verticalPadding),
+          DescriptionInput(draft: draft),
           const Spacer(),
           Calculator(model: draft),
           const SizedBox(height: AppDimensions.verticalPadding * 2),

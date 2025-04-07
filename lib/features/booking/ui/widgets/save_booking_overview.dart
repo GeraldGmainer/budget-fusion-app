@@ -13,37 +13,30 @@ class SaveBookingOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    final showDescription = draft.description?.isNotEmpty ?? false;
 
-    return AnimatedSize(
-      duration: Duration(milliseconds: 100),
-      child: SizedBox(
-        height: keyboardIsOpen ? 0.0 : null,
-        child: SizedBox(
-          width: double.infinity,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.horizontalPadding,
-                vertical: AppDimensions.verticalPadding,
-              ),
-              child: Row(
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.horizontalPadding,
+          vertical: AppDimensions.verticalPadding,
+        ),
+        child: Row(
+          children: [
+            AccountSelectInput(draft: draft),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
                 children: [
-                  AccountSelectInput(draft: draft),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(DateTimeConverter.toEEEEdMMMM(draft.date), style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: AppDimensions.verticalPadding),
-                        CurrencyText(value: draft.amount, fontSize: 38, color: AppColors.primaryTextColor),
-                      ],
-                    ),
-                  ),
+                  Text(DateTimeConverter.toEEEEdMMMM(draft.date), style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: AppDimensions.verticalPadding),
+                  CurrencyText(value: draft.amount, fontSize: 38, color: AppColors.primaryTextColor),
+                  if (showDescription) const SizedBox(height: AppDimensions.verticalPadding),
+                  if (showDescription) Text("${draft.description}"),
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

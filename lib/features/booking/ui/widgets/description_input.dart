@@ -102,6 +102,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.edit),
               labelText: "booking.note".tr(),
+              counterText: "",
             ),
           ),
         );

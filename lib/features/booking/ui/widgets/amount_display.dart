@@ -36,7 +36,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
       curve: Curves.fastOutSlowIn,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(10),
         color: _backgroundColor,
       ),
       child: ShakeWidget(

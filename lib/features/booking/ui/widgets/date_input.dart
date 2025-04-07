@@ -109,8 +109,9 @@ class _DateInputState extends State<DateInput> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(DateTimeConverter.toMMdd(date), style: const TextStyle(fontSize: 16.0)),
-            Text(subtext, style: const TextStyle(color: AppColors.secondaryTextColor)).tr(),
+            // Text(DateTimeConverter.toMMdd(date), style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
+            // Text(subtext, style: const TextStyle(color: AppColors.secondaryTextColor, fontSize: 13.0)).tr(),
+            Text(subtext, style: const TextStyle(fontSize: 14.0)).tr(),
           ],
         ),
       ),
