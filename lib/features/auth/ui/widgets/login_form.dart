@@ -1,8 +1,8 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../../../../core/core.dart';
@@ -83,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        icon: const FaIcon(FontAwesomeIcons.google),
+        icon: const Icon(CommunityMaterialIcons.google),
         label: const Text("Google"),
         onPressed: isLoading ? null : _googleLogin,
       ),

@@ -39,24 +39,18 @@ class CalculatorButton extends StatelessWidget {
   }
 
   Widget _buildKey() {
-    if (icon != null) {
-      return _buildIcon();
-    }
     return OverflowBox(
       alignment: Alignment.center,
       maxWidth: double.infinity,
-      child: Text(
-        calculatorKey.displayText,
-        maxLines: 1,
-        textAlign: TextAlign.left,
-        softWrap: false,
-        overflow: TextOverflow.visible,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: fontColor),
-      ),
+      child: icon ??
+          Text(
+            calculatorKey.displayText,
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            softWrap: false,
+            overflow: TextOverflow.visible,
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: fontColor),
+          ),
     );
-  }
-
-  Widget _buildIcon() {
-    return icon!;
   }
 }

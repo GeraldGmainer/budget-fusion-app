@@ -1,5 +1,5 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'calculator_button.dart';
 import 'calculator_key.dart';
@@ -27,13 +27,12 @@ class CalculatorKeyboard extends StatelessWidget {
           calculatorKey: CalculatorKey.division,
           onPressed: onPressed,
           backgroundColor: operatorColor,
-          icon: const FaIcon(FontAwesomeIcons.divide, size: 20),
+          icon: const Icon(CommunityMaterialIcons.division, size: 26),
         ),
         CalculatorButton(
           calculatorKey: CalculatorKey.clear,
           onPressed: onPressed,
           backgroundColor: const Color(0xFFB36565),
-          // fontColor: Colors.black,
         ),
         CalculatorButton(calculatorKey: CalculatorKey.digit4, onPressed: onPressed),
         CalculatorButton(calculatorKey: CalculatorKey.digit5, onPressed: onPressed),
@@ -42,7 +41,7 @@ class CalculatorKeyboard extends StatelessWidget {
           calculatorKey: CalculatorKey.multiplication,
           onPressed: onPressed,
           backgroundColor: operatorColor,
-          icon: const FaIcon(FontAwesomeIcons.xmark, size: 20),
+          icon: const Icon(CommunityMaterialIcons.close_thick, size: 18),
         ),
         const SizedBox.shrink(),
         CalculatorButton(calculatorKey: CalculatorKey.digit1, onPressed: onPressed),
@@ -52,31 +51,31 @@ class CalculatorKeyboard extends StatelessWidget {
           calculatorKey: CalculatorKey.subtraction,
           onPressed: onPressed,
           backgroundColor: operatorColor,
-          icon: const FaIcon(FontAwesomeIcons.minus, size: 20),
+          icon: const Icon(CommunityMaterialIcons.minus, size: 24),
         ),
         const SizedBox.shrink(),
         CalculatorButton(calculatorKey: CalculatorKey.digit0, onPressed: onPressed),
         CalculatorButton(
           calculatorKey: CalculatorKey.dot,
           onPressed: onPressed,
-          icon: const FaIcon(FontAwesomeIcons.solidCircle, size: 5),
+          icon: const Icon(CommunityMaterialIcons.circle_small, size: 30),
         ),
         CalculatorButton(
           calculatorKey: CalculatorKey.back,
           onPressed: onPressed,
-          icon: const FaIcon(FontAwesomeIcons.deleteLeft, size: 20),
+          icon: const Icon(CommunityMaterialIcons.backspace_outline, size: 22),
         ),
         CalculatorButton(
           calculatorKey: CalculatorKey.addition,
           onPressed: onPressed,
           backgroundColor: operatorColor,
-          icon: const FaIcon(FontAwesomeIcons.plus, size: 20),
+          icon: const Icon(CommunityMaterialIcons.plus, size: 24),
         ),
         CalculatorButton(
           calculatorKey: CalculatorKey.equal,
           onPressed: onPressed,
           backgroundColor: const Color(0xFF4875C9),
-          icon: const FaIcon(FontAwesomeIcons.equals, size: 20),
+          icon: const Icon(CommunityMaterialIcons.equal, size: 24),
         ),
       ],
     );
