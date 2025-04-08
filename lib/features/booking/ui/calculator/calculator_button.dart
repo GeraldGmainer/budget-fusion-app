@@ -23,11 +23,7 @@ class CalculatorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Haptics.canVibrate().then((canVibrate) {
-          if (canVibrate) {
-            Haptics.vibrate(HapticsType.selection);
-          }
-        });
+        Haptics.vibrate(HapticsType.selection);
         onPressed.call(calculatorKey);
       },
       style: ElevatedButton.styleFrom(

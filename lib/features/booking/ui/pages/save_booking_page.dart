@@ -3,6 +3,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/save_booking_cubit.dart';
@@ -44,6 +45,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     if (draft.amount.toDouble() > 0) {
       _animateToPage(1);
     } else {
+      Haptics.vibrate(HapticsType.error);
       _amountDisplayKey.currentState?.triggerShakeAnimation();
     }
   }
