@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../utils.dart';
 
@@ -16,7 +17,7 @@ void showSnackBar(BuildContext? context, String message) {
   );
 }
 
-void showErrorSnackBar(BuildContext? context, String message, {Duration? duration}) {
+void showErrorSnackBar(BuildContext? context, String message, {Duration? duration, bool vibrate = true}) {
   if (context == null) {
     BudgetLogger.instance.w("showSnackBar: context is NULL");
     return;
@@ -28,6 +29,9 @@ void showErrorSnackBar(BuildContext? context, String message, {Duration? duratio
       duration: duration ?? Duration(seconds: 4),
     ),
   );
+  if (vibrate) {
+    Haptics.vibrate(HapticsType.error);
+  }
 }
 
 class ScaffoldProvider extends ChangeNotifier {

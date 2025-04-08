@@ -2,10 +2,11 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends StatefulWidget {
+// TODO refactoring
+class CategoryList extends StatelessWidget {
   final List<Category> categories;
   final CategoryType categoryType;
-  final Function(Category category) onCategoryTap;
+  final Function(Category) onCategoryTap;
   final Category? selectedCategory;
 
   const CategoryList({
@@ -17,84 +18,122 @@ class CategoryList extends StatefulWidget {
   });
 
   @override
-  State<CategoryList> createState() => _CategoryListState();
-}
-
-class _CategoryListState extends State<CategoryList> {
-  Category? _selectedParent;
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  List<Category> _sortByName(List<Category> cats) {
-    cats.sort((a, b) => a.name.compareTo(b.name));
-    return cats;
-  }
-
-  void _createCategory(BuildContext context, [Category? parent]) {}
-
-  @override
   Widget build(BuildContext context) {
-    final physics = _selectedParent != null ? const PageScrollPhysics() : const NeverScrollableScrollPhysics();
-
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: PageView(
-        controller: _pageController,
-        physics: physics,
-        onPageChanged: (index) {
-          if (index == 0) setState(() => _selectedParent = null);
-        },
-        children: [
-          _ParentList(
-            categories: widget.categories,
-            categoryType: widget.categoryType,
-            selectedCategory: widget.selectedCategory,
-            onCategoryTap: widget.onCategoryTap,
-            onParentSelected: (parent) {
-              setState(() => _selectedParent = parent);
-              _pageController.animateToPage(
-                1,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
-            createCategory: _createCategory,
-            sortByName: _sortByName,
-          ),
-          _SubcategoryList(
-            parent: _selectedParent,
-            categories: widget.categories,
-            selectedCategory: widget.selectedCategory,
-            onCategoryTap: widget.onCategoryTap,
-            onBack: () {
-              _pageController.animateToPage(
-                0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-              setState(() => _selectedParent = null);
-            },
-            createCategory: _createCategory,
-            sortByName: _sortByName,
-          ),
-        ],
+    return Scaffold(
+      body: CategoryNavigator(
+        categories: categories,
+        categoryType: categoryType,
+        onCategoryTap: onCategoryTap,
+        selectedCategory: selectedCategory,
       ),
     );
   }
 }
 
-class _ParentList extends StatelessWidget {
+class CategoryNavigator extends StatefulWidget {
+  final List<Category> categories;
+  final CategoryType categoryType;
+  final Function(Category) onCategoryTap;
+  final Category? selectedCategory;
+
+  const CategoryNavigator({
+    super.key,
+    required this.categories,
+    required this.categoryType,
+    required this.onCategoryTap,
+    this.selectedCategory,
+  });
+
+  @override
+  _CategoryNavigatorState createState() => _CategoryNavigatorState();
+}
+
+class _CategoryNavigatorState extends State<CategoryNavigator> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  Future<bool> _onWillPop() async {
+    if (_navigatorKey.currentState?.canPop() ?? false) {
+      _navigatorKey.currentState!.pop();
+      return false;
+    }
+    return true;
+  }
+
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (_, animation, secondaryAnimation) => page,
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (_, animation, secondaryAnimation, child) {
+        final tween = Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).chain(CurveTween(curve: Curves.easeInOut));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Navigator(
+        key: _navigatorKey,
+        initialRoute: 'parent',
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case 'parent':
+              return _createRoute(ParentCategoryList(
+                categories: widget.categories,
+                categoryType: widget.categoryType,
+                selectedCategory: widget.selectedCategory,
+                onCategoryTap: widget.onCategoryTap,
+                onParentSelected: (Category parent) {
+                  _navigatorKey.currentState?.pushNamed('subcategories', arguments: parent);
+                },
+                createCategory: (context, [parent]) {},
+                sortByName: (cats) {
+                  cats.sort((a, b) => a.name.compareTo(b.name));
+                  return cats;
+                },
+              ));
+            case 'subcategories':
+              final Category parent = settings.arguments as Category;
+              return _createRoute(SubcategoryListScreen(
+                parent: parent,
+                categories: widget.categories,
+                selectedCategory: widget.selectedCategory,
+                onCategoryTap: widget.onCategoryTap,
+                onBack: () => _navigatorKey.currentState!.pop(),
+                createCategory: (context, [parent]) {},
+                sortByName: (cats) {
+                  cats.sort((a, b) => a.name.compareTo(b.name));
+                  return cats;
+                },
+              ));
+            default:
+              return _createRoute(ParentCategoryList(
+                categories: widget.categories,
+                categoryType: widget.categoryType,
+                selectedCategory: widget.selectedCategory,
+                onCategoryTap: widget.onCategoryTap,
+                onParentSelected: (Category parent) {
+                  _navigatorKey.currentState?.pushNamed('subcategories', arguments: parent);
+                },
+                createCategory: (context, [parent]) {},
+                sortByName: (cats) {
+                  cats.sort((a, b) => a.name.compareTo(b.name));
+                  return cats;
+                },
+              ));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class ParentCategoryList extends StatelessWidget {
   final List<Category> categories;
   final CategoryType categoryType;
   final Category? selectedCategory;
@@ -103,7 +142,8 @@ class _ParentList extends StatelessWidget {
   final void Function(BuildContext, [Category?]) createCategory;
   final List<Category> Function(List<Category>) sortByName;
 
-  const _ParentList({
+  const ParentCategoryList({
+    super.key,
     required this.categories,
     required this.categoryType,
     required this.selectedCategory,
@@ -117,7 +157,6 @@ class _ParentList extends StatelessWidget {
   Widget build(BuildContext context) {
     final parents = categories.where((c) => c.parent == null && c.categoryType == categoryType).toList();
     sortByName(parents);
-
     return ListView.builder(
       itemCount: parents.length + 1,
       itemBuilder: (context, index) {
@@ -142,8 +181,8 @@ class _ParentList extends StatelessWidget {
   }
 }
 
-class _SubcategoryList extends StatelessWidget {
-  final Category? parent;
+class SubcategoryListScreen extends StatelessWidget {
+  final Category parent;
   final List<Category> categories;
   final Category? selectedCategory;
   final void Function(Category) onCategoryTap;
@@ -151,7 +190,8 @@ class _SubcategoryList extends StatelessWidget {
   final void Function(BuildContext, [Category?]) createCategory;
   final List<Category> Function(List<Category>) sortByName;
 
-  const _SubcategoryList({
+  const SubcategoryListScreen({
+    super.key,
     required this.parent,
     required this.categories,
     required this.selectedCategory,
@@ -163,48 +203,48 @@ class _SubcategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (parent == null) return const SizedBox.shrink();
-    final subs = categories.where((c) => c.parent == parent && c.categoryType == parent!.categoryType).toList();
+    final subs = categories.where((c) => c.parent == parent && c.categoryType == parent.categoryType).toList();
     sortByName(subs);
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextButton.icon(
-          onPressed: onBack,
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          label: Text(
-            parent!.name,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
-            overflow: TextOverflow.ellipsis,
+    return Container(
+      color: AppColors.primaryColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            color: Theme.of(context).primaryColor,
+            child: Row(
+              children: [
+                IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: onBack),
+                Expanded(
+                  child: Text(parent.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white)),
+                ),
+              ],
+            ),
           ),
-        ),
-        const Divider(height: 1),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: ListView.builder(
-            itemCount: subs.length + 1,
-            itemBuilder: (context, index) {
-              if (index < subs.length) {
-                return CategoryTile(
-                  category: subs[index],
-                  allCategories: categories,
-                  selectedCategory: selectedCategory,
-                  onTap: onCategoryTap,
-                  onParentSelected: (_) {},
-                );
-              } else {
-                return ListTile(
-                  leading: CircleAvatar(backgroundColor: AppColors.accentColor, child: const Icon(Icons.add, color: Colors.white)),
-                  title: const Text("New Subcategory"),
-                  onTap: () => createCategory(context, parent),
-                );
-              }
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: subs.length + 1,
+              itemBuilder: (context, index) {
+                if (index < subs.length) {
+                  return CategoryTile(
+                    category: subs[index],
+                    allCategories: categories,
+                    selectedCategory: selectedCategory,
+                    onTap: onCategoryTap,
+                    onParentSelected: (_) {},
+                  );
+                } else {
+                  return ListTile(
+                    leading: CircleAvatar(backgroundColor: AppColors.accentColor, child: const Icon(Icons.add, color: Colors.white)),
+                    title: const Text("New Subcategory"),
+                    onTap: () => createCategory(context, parent),
+                  );
+                }
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -230,16 +270,12 @@ class CategoryTile extends StatelessWidget {
     final bool isSelected = selectedCategory == category;
     final bool hasSubcategories = allCategories.any((c) => c.parent == category);
     final bool isSubSelected = selectedCategory?.parent == category;
-
     return ListTile(
       tileColor: isSelected ? AppColors.accentColor : null,
       shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,
       leading: CircleAvatar(
         backgroundColor: ColorConverter.stringToColor(category.iconColor),
-        child: Icon(
-          IconConverter.getIcon(category.iconName),
-          color: Colors.white,
-        ),
+        child: Icon(IconConverter.getIcon(category.iconName), color: Colors.white),
       ),
       title: Text(category.name),
       trailing: isSubSelected ? const Icon(Icons.check, color: Colors.green) : (hasSubcategories ? const Icon(Icons.arrow_forward) : null),
