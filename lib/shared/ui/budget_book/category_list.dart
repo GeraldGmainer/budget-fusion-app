@@ -168,18 +168,17 @@ class _SubcategoryList extends StatelessWidget {
     sortByName(subs);
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            IconButton(icon: const Icon(Icons.arrow_back), onPressed: onBack),
-            Expanded(
-              child: Text(
-                parent!.name,
-                style: Theme.of(context).textTheme.titleMedium,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
+        TextButton.icon(
+          onPressed: onBack,
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          label: Text(
+            parent!.name,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         const Divider(height: 1),
         SizedBox(height: 8.0),
@@ -234,11 +233,7 @@ class CategoryTile extends StatelessWidget {
 
     return ListTile(
       tileColor: isSelected ? AppColors.accentColor : null,
-      shape: isSelected
-          ? RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            )
-          : null,
+      shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,
       leading: CircleAvatar(
         backgroundColor: ColorConverter.stringToColor(category.iconColor),
         child: Icon(

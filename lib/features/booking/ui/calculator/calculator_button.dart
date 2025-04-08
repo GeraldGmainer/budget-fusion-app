@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 
 import 'calculator_key.dart';
 
@@ -22,6 +23,11 @@ class CalculatorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
+        Haptics.canVibrate().then((canVibrate) {
+          if (canVibrate) {
+            Haptics.vibrate(HapticsType.selection);
+          }
+        });
         onPressed.call(calculatorKey);
       },
       style: ElevatedButton.styleFrom(

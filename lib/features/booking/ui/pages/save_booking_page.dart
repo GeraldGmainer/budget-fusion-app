@@ -137,8 +137,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
         //   },
         // ),
         actions: [
-          CategoryTypeButton(draft: draft, categoryType: CategoryType.outcome),
-          CategoryTypeButton(draft: draft, categoryType: CategoryType.income),
+          TransactionTypeButton(draft: draft),
           if (!draft.isCreating) _buildDeleteButton(),
         ],
       ),

@@ -87,5 +87,11 @@ ThemeData createTheme(BuildContext context) {
       titleTextStyle: TextStyle(fontSize: 16.0),
       subtitleTextStyle: TextStyle(fontSize: 12.0),
     ),
+    dialogTheme: DialogTheme(
+      backgroundColor: AppColors.cardColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    ),
   );
 }
