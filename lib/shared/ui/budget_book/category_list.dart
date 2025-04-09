@@ -210,16 +210,10 @@ class SubcategoryListScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Theme.of(context).primaryColor,
-            child: Row(
-              children: [
-                IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: onBack),
-                Expanded(
-                  child: Text(parent.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white)),
-                ),
-              ],
-            ),
+          TextButton.icon(
+            onPressed: onBack,
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            label: Text(parent.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white)),
           ),
           Expanded(
             child: ListView.builder(
