@@ -128,16 +128,6 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   onPressed: () {
-        //     if (_currentPage != 0) {
-        //       _animateToPage(0);
-        //     } else {
-        //       context.pop();
-        //     }
-        //   },
-        // ),
         actions: [
           TransactionTypeButton(draft: draft),
           if (!draft.isCreating) _buildDeleteButton(),

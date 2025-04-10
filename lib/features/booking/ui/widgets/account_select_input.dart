@@ -15,7 +15,7 @@ class AccountSelectInput extends StatelessWidget {
   _onTap(BuildContext context) async {
     final accounts = context.read<AccountCubit>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
 
-    final Account? selectedAccount = await showSelectionDialog<Account?>(
+    final Account? selectedAccount = await showSelectionBottomSheet<Account?>(
       context: context,
       title: "booking.select_account",
       items: accounts,

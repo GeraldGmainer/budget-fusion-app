@@ -12,15 +12,13 @@ class TransactionTypeButton extends StatelessWidget {
 
   const TransactionTypeButton({super.key, required this.draft});
 
-  Future<void> _showTypeDialog(BuildContext context) async {
-    final selectedType = await showSelectionDialog<CategoryType?>(
+  Future<void> _showTypeBottomSheet(BuildContext context) async {
+    final selectedType = await showSelectionBottomSheet<CategoryType?>(
       context: context,
       title: "Transaction Type",
       items: CategoryType.values,
       selectedItem: draft.categoryType,
-      itemLabelBuilder: (type) {
-        return Text(type!.text.tr());
-      },
+      itemLabelBuilder: (type) => Text(type!.text.tr()),
     );
 
     if (selectedType != null && context.mounted) {
@@ -31,7 +29,7 @@ class TransactionTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => _showTypeDialog(context),
+      onPressed: () => _showTypeBottomSheet(context),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(
