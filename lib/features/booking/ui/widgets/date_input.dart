@@ -72,9 +72,16 @@ class _DateInputState extends State<DateInput> {
         children: [
           const Icon(Icons.edit_calendar, color: AppColors.primaryTextColor),
           const SizedBox(width: 8),
-          Text(
-            DateTimeConverter.toEEEEdMMMM(_selectedDate),
-            style: const TextStyle(color: AppColors.primaryTextColor, fontSize: 16),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            child: Text(
+              key: ValueKey(_selectedDate),
+              DateTimeConverter.toEEEEdMMMM(_selectedDate),
+              style: const TextStyle(color: AppColors.primaryTextColor, fontSize: 16),
+            ),
           ),
         ],
       ),

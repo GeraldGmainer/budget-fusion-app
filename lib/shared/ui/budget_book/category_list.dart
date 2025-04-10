@@ -319,9 +319,23 @@ class CategoryTile extends StatelessWidget {
     return ListTile(
       tileColor: isSelected ? AppColors.accentColor : null,
       shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,
-      leading: CircleAvatar(
-        backgroundColor: ColorConverter.stringToColor(category.iconColor),
-        child: Icon(IconConverter.getIcon(category.iconName), color: Colors.white),
+      leading: TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0.0, end: 1.0),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+        builder: (context, value, child) {
+          return Transform.scale(
+            scale: value,
+            child: Opacity(
+              opacity: value,
+              child: child,
+            ),
+          );
+        },
+        child: CircleAvatar(
+          backgroundColor: ColorConverter.stringToColor(category.iconColor),
+          child: Icon(IconConverter.getIcon(category.iconName), color: Colors.white),
+        ),
       ),
       title: Text(category.name),
       trailing: isSubSelected ? const Icon(Icons.check, color: Colors.green) : (hasSubcategories ? const Icon(Icons.arrow_forward) : null),
