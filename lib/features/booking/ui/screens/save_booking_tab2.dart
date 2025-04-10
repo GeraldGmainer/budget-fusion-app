@@ -28,7 +28,9 @@ class SaveBookingTab2 extends StatelessWidget {
       children: [
         SaveBookingOverview(draft: draft),
         const SizedBox(height: AppDimensions.verticalPadding),
-        Expanded(child: CategoryListInput(draft: draft)),
+        Expanded(
+          child: CategoryListInput(draft: draft),
+        ),
         const SizedBox(height: AppDimensions.verticalPadding * 2),
         SaveButton(onTap: () => _upload(context)),
         const SizedBox(height: AppDimensions.verticalPadding),
