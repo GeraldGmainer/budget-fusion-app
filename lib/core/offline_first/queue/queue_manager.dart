@@ -46,7 +46,14 @@ class QueueManager {
   }
 
   void _processNext() async {
-    if (_isProcessing || _inMemoryQueue.isEmpty) return;
+    if (_inMemoryQueue.isEmpty) {
+      _log("Queue is empty");
+      return;
+    }
+    if (_isProcessing) {
+      _log("Queue is busy");
+      return;
+    }
 
     _isProcessing = true;
     final currentItem = _inMemoryQueue.first;
@@ -78,7 +85,7 @@ class QueueManager {
   }
 
   Future<void> _processQueueItem(QueueItem item) async {
-    _log("Processing queue item: $item");
+    _log("Processing queue item with entityId: ${item.entityId}");
 
     final remoteSource = _remoteSources[item.domain];
     final localSource = _localSources[item.domain];

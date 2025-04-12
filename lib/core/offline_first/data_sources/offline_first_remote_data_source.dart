@@ -50,9 +50,9 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     final stopwatch = Stopwatch()..start();
     _log("upsert by id '$id' to $coloredDomain");
     return execute(table, () async {
-      final response = await supabase.from(table).upsert(json).eq('id', id);
-      _log("upsert to $coloredDomain", stopwatch: stopwatch);
-      return toDto(response as Map<String, dynamic>);
+      final response = await supabase.from(table).upsert(json).eq('id', id).select();
+      _log("upsert success to $coloredDomain", stopwatch: stopwatch);
+      return toDto((response[0]));
     });
   }
 

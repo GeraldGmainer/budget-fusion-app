@@ -50,7 +50,7 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
     final draft = state.draft;
     emit(SaveBookingState.loading(draft: draft));
     try {
-      await _saveBookingUseCase();
+      await _saveBookingUseCase(draft);
       emit(SaveBookingState.loaded(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stack);

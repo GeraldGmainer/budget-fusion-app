@@ -32,6 +32,7 @@ export 'extensions/date_time_extension.dart';
 export 'extensions/profile_loader.dart';
 //
 export 'offline_first/cache/cache_manager.dart';
+export 'offline_first/cubits/offline_first_queue_cubit.dart';
 export 'offline_first/data_managers/data_manager_factory.dart';
 export 'offline_first/data_managers/offline_first_data_manager.dart';
 export 'offline_first/data_sources/offline_first_local_data_source.dart';
