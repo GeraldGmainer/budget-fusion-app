@@ -66,11 +66,8 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
   }
 
   _onUploadSuccess(BookingDraft draft) {
-    // TODO
-    // showSnackBar(context, _isCreating() ? "booking.create_success" : "booking.edit_success");
-    // BlocProvider.of<GraphViewBloc>(context).add(RefreshGraphViewEvent());
-    // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent(forceReload: true));
-    // Navigator.of(context).pop();
+    showSnackBar(context, draft.isCreating ? "booking.create_success" : "booking.edit_success");
+    Navigator.of(context).pop();
   }
 
   _onError(String error) {
@@ -147,6 +144,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
             builder: (context, state) {
               return state.maybeWhen(
                 loading: (draft) => Center(child: CircularProgressIndicator()),
+                loaded: (draft) => Center(child: CircularProgressIndicator()),
                 orElse: () => _buildContent(state.draft),
               );
             },
