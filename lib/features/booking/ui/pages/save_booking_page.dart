@@ -27,10 +27,12 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
   final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
   int _currentPage = 0;
+  late Future _cubitInitialized;
 
   @override
   void initState() {
     super.initState();
+    _cubitInitialized = context.read<SaveBookingCubit>().stream.firstWhere((state) => state.maybeWhen(initial: (_) => true, orElse: () => false));
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
     BlocProvider.of<SaveBookingCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
@@ -107,43 +109,50 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
           _animateToPage(0);
         }
       },
-      child: BlocConsumer<SaveBookingCubit, SaveBookingState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            loaded: (draft) => _onUploadSuccess(draft),
-            error: (draft, error) => _onError(error),
-          );
-          // TODO delete
-          // if (state is BookingCrudDeletedState) {
-          //   _onDeleteSuccess();
-          // }
-        },
-        builder: (context, state) {
-          return _buildView(state.draft);
-        },
-      ),
+      child: FutureBuilder(
+          future: _cubitInitialized,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return _buildPage();
+            }
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }),
     );
   }
 
-  Widget _buildView(BookingDraft draft) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
-        actions: [
-          TransactionTypeButton(draft: draft),
-          if (!draft.isCreating) _buildDeleteButton(),
-        ],
-      ),
-      resizeToAvoidBottomInset: false,
-      body: BlocConsumer<SaveBookingCubit, SaveBookingState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return state.maybeWhen(
-            loading: (draft) => Center(child: CircularProgressIndicator()),
-            orElse: () => _buildContent(draft),
-          );
-        },
-      ),
+  Widget _buildPage() {
+    return BlocConsumer<SaveBookingCubit, SaveBookingState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loaded: (draft) => _onUploadSuccess(draft),
+          error: (draft, error) => _onError(error),
+        );
+        // TODO delete
+        // if (state is BookingCrudDeletedState) {
+        //   _onDeleteSuccess();
+        // }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
+            actions: [
+              TransactionTypeButton(draft: state.draft),
+              if (!state.draft.isCreating) _buildDeleteButton(),
+            ],
+          ),
+          resizeToAvoidBottomInset: false,
+          body: BlocConsumer<SaveBookingCubit, SaveBookingState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return state.maybeWhen(
+                loading: (draft) => Center(child: CircularProgressIndicator()),
+                orElse: () => _buildContent(state.draft),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 

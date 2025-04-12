@@ -35,6 +35,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
   _onSelect(String value) {
     _controller.text = value;
     context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(description: value));
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -59,7 +60,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
         return Material(
           elevation: 6,
           child: Container(
-            constraints: const BoxConstraints(maxHeight: 250),
+            // constraints: const BoxConstraints(maxHeight: 250),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: AppColors.cardColor,
@@ -73,7 +74,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Text(
             suggestion,
-            style: TextStyle(fontSize: 15, color: AppColors.primaryTextColor, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor, fontWeight: FontWeight.w400),
           ),
         );
       },
@@ -87,10 +88,12 @@ class _DescriptionInputState extends State<DescriptionInput> {
             controller: controller,
             focusNode: focusNode,
             onChanged: _onChanged,
+            style: TextStyle(fontSize: 12),
             maxLength: FeatureConstants.descriptionMaxLength,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.edit),
+              prefixIcon: const Icon(Icons.edit, size: 22),
               labelText: "booking.note".tr(),
+              labelStyle: TextStyle(fontSize: 14),
               counterText: "",
             ),
           ),

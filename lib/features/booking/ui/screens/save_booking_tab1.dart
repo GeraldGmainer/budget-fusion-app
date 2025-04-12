@@ -41,14 +41,8 @@ class SaveBookingTab1 extends StatelessWidget {
           ),
           const SizedBox(height: AppDimensions.verticalPadding),
           DescriptionInput(draft: draft),
-          const Spacer(),
-          AnimatedSize(
-            duration: Duration(milliseconds: 300),
-            child: SizedBox(
-              height: keyboardIsOpen ? 0.0 : null,
-              child: Calculator(model: draft),
-            ),
-          ),
+          if (!keyboardIsOpen) const Spacer(),
+          Calculator(model: draft),
           const SizedBox(height: AppDimensions.verticalPadding * 2),
           SaveButton(text: "booking.choose_category_button", onTap: onCategoryTap, backgroundColor: AppColors.secondaryColor),
           const SizedBox(height: AppDimensions.verticalPadding),
