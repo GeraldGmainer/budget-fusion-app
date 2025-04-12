@@ -1,5 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/application/cubits/base/loadable_state.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,46 +47,35 @@ class _DescriptionInputState extends State<DescriptionInput> {
     );
   }
 
-  // Widget _buildInput(List<String> suggestions) {
-  //   return TypeAheadField<String>(
-  //     debounceDuration: const Duration(milliseconds: 0),
-  //     minCharsForSuggestions: 1,
-  //     hideOnEmpty: true,
-  //     textFieldConfiguration: TextFieldConfiguration(
-  //       _controller: _controller,
-  //       onChanged: _onChanged,
-  //       maxLength: 20,
-  //       decoration: InputDecoration(
-  //         prefixIcon: Icon(Icons.edit),
-  //         labelText: "booking.note".tr(),
-  //       ),
-  //     ),
-  //     suggestionsCallback: (pattern) async {
-  //       return suggestions.where((suggestion) => suggestion.toLowerCase().contains(pattern.toLowerCase()));
-  //     },
-  //     itemBuilder: (context, suggestion) {
-  //       return ListTile(
-  //         title: Text(suggestion),
-  //       );
-  //     },
-  //     transitionBuilder: (context, suggestionsBox, controller) {
-  //       return suggestionsBox;
-  //     },
-  //     onSuggestionSelected: (String suggestion) {
-  //       _onSelect(suggestion);
-  //     },
-  //   );
-  // }
-
   Widget _buildInput(List<String> suggestions) {
     return TypeAheadField<String>(
       controller: _controller,
       debounceDuration: Duration.zero,
+      hideOnEmpty: true,
       suggestionsCallback: (pattern) async {
         return suggestions.where((s) => s.toLowerCase().contains(pattern.toLowerCase())).toList();
       },
+      decorationBuilder: (context, child) {
+        return Material(
+          elevation: 6,
+          child: Container(
+            constraints: const BoxConstraints(maxHeight: 250),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: AppColors.cardColor,
+            ),
+            child: child,
+          ),
+        );
+      },
       itemBuilder: (context, suggestion) {
-        return ListTile(title: Text(suggestion));
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Text(
+            suggestion,
+            style: TextStyle(fontSize: 15, color: AppColors.primaryTextColor, fontWeight: FontWeight.w400),
+          ),
+        );
       },
       onSelected: (suggestion) {
         _onSelect(suggestion);
