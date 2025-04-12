@@ -1,9 +1,13 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/application/cubits/base/loadable_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/suggestion_cubit.dart';
+import '../../data/dtos/booking_suggestion_dto.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DescriptionInput extends StatefulWidget {
@@ -35,16 +39,12 @@ class _DescriptionInputState extends State<DescriptionInput> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO suggestions
-    // return BlocBuilder<SuggestionBloc, SuggestionState>(
-    //   builder: (context, state) {
-    //     if (state is SuggestionLoadedState) {
-    //       return _buildInput(state.suggestions);
-    //     }
-    //     return _buildInput([]);
-    //   },
-    // );
-    return _buildInput([]);
+    return BlocBuilder<SuggestionCubit, LoadableState>(
+      builder: (context, state) {
+        final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
+        return _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList());
+      },
+    );
   }
 
   // Widget _buildInput(List<String> suggestions) {
@@ -98,7 +98,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
             controller: controller,
             focusNode: focusNode,
             onChanged: _onChanged,
-            maxLength: 20,
+            maxLength: FeatureConstants.descriptionMaxLength,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.edit),
               labelText: "booking.note".tr(),

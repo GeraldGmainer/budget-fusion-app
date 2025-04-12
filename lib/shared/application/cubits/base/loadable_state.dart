@@ -6,7 +6,7 @@ part 'loadable_state.freezed.dart';
 class LoadableState<T> with _$LoadableState<T> {
   const factory LoadableState.initial() = _Initial<T>;
 
-  const factory LoadableState.loading() = _Loading<T>;
+  const factory LoadableState.loading({T? data}) = _Loading<T>;
 
   const factory LoadableState.loaded(T data) = _Loaded<T>;
 
@@ -15,7 +15,7 @@ class LoadableState<T> with _$LoadableState<T> {
 
 extension AsyncStateX<T> on LoadableState<T> {
   bool get isLoading => maybeWhen(
-        loading: () => true,
+        loading: (_) => true,
         orElse: () => false,
       );
 }

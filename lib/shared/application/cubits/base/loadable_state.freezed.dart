@@ -19,7 +19,7 @@ mixin _$LoadableState<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(T? data) loading,
     required TResult Function(T data) loaded,
     required TResult Function(String message) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$LoadableState<T> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(T? data)? loading,
     TResult? Function(T data)? loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$LoadableState<T> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(T? data)? loading,
     TResult Function(T data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -131,7 +131,7 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(T? data) loading,
     required TResult Function(T data) loaded,
     required TResult Function(String message) error,
   }) {
@@ -142,7 +142,7 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(T? data)? loading,
     TResult? Function(T data)? loaded,
     TResult? Function(String message)? error,
   }) {
@@ -153,7 +153,7 @@ class _$InitialImpl<T> implements _Initial<T> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(T? data)? loading,
     TResult Function(T data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -211,6 +211,8 @@ abstract class _$$LoadingImplCopyWith<T, $Res> {
   factory _$$LoadingImplCopyWith(
           _$LoadingImpl<T> value, $Res Function(_$LoadingImpl<T>) then) =
       __$$LoadingImplCopyWithImpl<T, $Res>;
+  @useResult
+  $Res call({T? data});
 }
 
 /// @nodoc
@@ -223,60 +225,86 @@ class __$$LoadingImplCopyWithImpl<T, $Res>
 
   /// Create a copy of LoadableState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$LoadingImpl<T>(
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadingImpl<T> implements _Loading<T> {
-  const _$LoadingImpl();
+  const _$LoadingImpl({this.data});
+
+  @override
+  final T? data;
 
   @override
   String toString() {
-    return 'LoadableState<$T>.loading()';
+    return 'LoadableState<$T>.loading(data: $data)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl<T>);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingImpl<T> &&
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  /// Create a copy of LoadableState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadingImplCopyWith<T, _$LoadingImpl<T>> get copyWith =>
+      __$$LoadingImplCopyWithImpl<T, _$LoadingImpl<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(T? data) loading,
     required TResult Function(T data) loaded,
     required TResult Function(String message) error,
   }) {
-    return loading();
+    return loading(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(T? data)? loading,
     TResult? Function(T data)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loading?.call();
+    return loading?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(T? data)? loading,
     TResult Function(T data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(data);
     }
     return orElse();
   }
@@ -320,7 +348,15 @@ class _$LoadingImpl<T> implements _Loading<T> {
 }
 
 abstract class _Loading<T> implements LoadableState<T> {
-  const factory _Loading() = _$LoadingImpl<T>;
+  const factory _Loading({final T? data}) = _$LoadingImpl<T>;
+
+  T? get data;
+
+  /// Create a copy of LoadableState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadingImplCopyWith<T, _$LoadingImpl<T>> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -393,7 +429,7 @@ class _$LoadedImpl<T> implements _Loaded<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(T? data) loading,
     required TResult Function(T data) loaded,
     required TResult Function(String message) error,
   }) {
@@ -404,7 +440,7 @@ class _$LoadedImpl<T> implements _Loaded<T> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(T? data)? loading,
     TResult? Function(T data)? loaded,
     TResult? Function(String message)? error,
   }) {
@@ -415,7 +451,7 @@ class _$LoadedImpl<T> implements _Loaded<T> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(T? data)? loading,
     TResult Function(T data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -545,7 +581,7 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(T? data) loading,
     required TResult Function(T data) loaded,
     required TResult Function(String message) error,
   }) {
@@ -556,7 +592,7 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(T? data)? loading,
     TResult? Function(T data)? loaded,
     TResult? Function(String message)? error,
   }) {
@@ -567,7 +603,7 @@ class _$ErrorImpl<T> implements _Error<T> {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(T? data)? loading,
     TResult Function(T data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

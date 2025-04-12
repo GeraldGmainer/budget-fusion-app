@@ -1,8 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/account/account.dart';
 import 'package:budget_fusion_app/features/booking/booking.dart';
-import 'package:budget_fusion_app/features/category/category.dart';
-import 'package:budget_fusion_app/features/profile/profile.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +45,7 @@ class DebugEntities extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const Text('Initial'),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (profile) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -69,7 +66,7 @@ class DebugEntities extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const Text('Initial'),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (setting) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,7 +85,7 @@ class DebugEntities extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const Text('Initial'),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (accounts) {
             if (accounts.isEmpty) {
               return const Text('No account available');
@@ -119,7 +116,7 @@ class DebugEntities extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const Text('Initial'),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (categories) {
             if (categories.isEmpty) {
               return const Text('No categories available');
@@ -151,7 +148,7 @@ class DebugEntities extends StatelessWidget {
       builder: (context, state) {
         return state.when(
           initial: () => const Text('Initial'),
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
           loaded: (bookings) {
             if (bookings.isEmpty) {
               return const Text('No bookings available');

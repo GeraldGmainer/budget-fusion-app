@@ -21,6 +21,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<BookingCubit>(create: (_) => GetIt.I<BookingCubit>()),
     BlocProvider<SaveBookingCubit>(create: (_) => GetIt.I<SaveBookingCubit>()),
     BlocProvider<CalculatorCubit>(create: (_) => GetIt.I<CalculatorCubit>()),
+    BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
   ];
 }
 

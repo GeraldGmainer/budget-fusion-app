@@ -9,6 +9,8 @@ export 'application/use_cases/watch_bookings_use_case.dart';
 export 'application/use_cases/watch_profile_setting_use_case.dart';
 export 'application/use_cases/watch_profile_use_case.dart';
 //
+export 'data/serializer/category_type_serializer.dart';
+//
 export 'domain/aggregator/profile_setting_aggregator.dart';
 //
 export 'ui/budget_book/budget_icon.dart';

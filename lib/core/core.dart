@@ -2,6 +2,7 @@ export 'constants/app_borders.dart';
 export 'constants/app_colors.dart';
 export 'constants/app_dimensions.dart';
 export 'constants/app_routes.dart';
+export 'constants/feature_constants.dart';
 //
 export 'database/database_manager.dart';
 export 'database/serializer/datetime_serializer.dart';

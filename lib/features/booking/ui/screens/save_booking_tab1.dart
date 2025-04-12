@@ -18,16 +18,27 @@ class SaveBookingTab1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, BoxConstraints constraints) {
-      double appBarHeight = AppBar().preferredSize.height;
-      double screenHeight = MediaQuery.of(context).size.height - appBarHeight;
+      final double appBarHeight = AppBar().preferredSize.height;
+      final double screenHeight = MediaQuery.of(context).size.height - appBarHeight;
+      final bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
       final hideQuickButtons = screenHeight < 600;
 
       return Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          DateInput(model: draft, hideQuickButtons: hideQuickButtons),
-          const SizedBox(height: AppDimensions.verticalPadding * 2),
-          AmountDisplay(key: amountDisplayKey),
+          AnimatedSize(
+            duration: Duration(milliseconds: 300),
+            child: SizedBox(
+              height: keyboardIsOpen ? 0.0 : null,
+              child: Column(
+                children: [
+                  DateInput(model: draft, hideQuickButtons: hideQuickButtons),
+                  const SizedBox(height: AppDimensions.verticalPadding * 2),
+                  AmountDisplay(key: amountDisplayKey),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: AppDimensions.verticalPadding),
           DescriptionInput(draft: draft),
           const Spacer(),

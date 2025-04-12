@@ -6,10 +6,10 @@ class CategoryTypeSerializer implements JsonConverter<CategoryType, String> {
 
   @override
   CategoryType fromJson(String json) {
-    if (json.toUpperCase() == "OUTCOME") {
+    if (json == "OUTCOME") {
       return CategoryType.outcome;
     }
-    if (json.toUpperCase() == "INCOME") {
+    if (json == "INCOME") {
       return CategoryType.income;
     }
     throw Exception("CategoryTypeSerializer: unknown CategoryType: $json");

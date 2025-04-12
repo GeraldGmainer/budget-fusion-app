@@ -7,6 +7,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../screens/save_booking_tab1.dart';
 import '../screens/save_booking_tab2.dart';
@@ -32,7 +33,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
     super.initState();
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
     BlocProvider.of<SaveBookingCubit>(context).init(widget.model);
-    // BlocProvider.of<SuggestionBloc>(context).add(LoadSuggestionEvent());
+    BlocProvider.of<SuggestionCubit>(context).load();
   }
 
   @override
