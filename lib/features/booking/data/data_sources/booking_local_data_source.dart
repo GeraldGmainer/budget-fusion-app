@@ -19,16 +19,20 @@ class BookingLocalDataSource extends OfflineFirstLocalDataSource<BookingDto> {
 
   Future<List<BookingSuggestionDto>> getSuggestions() async {
     final rows = await db.rawQuery('''
-      SELECT b.description AS suggestion, c.category_type
-      FROM $table AS b
-      JOIN category AS c ON b.category_id = c.id
-      INNER JOIN (
-        SELECT description, MAX(updated_at) as max_updated
-        FROM $table
-        WHERE description IS NOT NULL AND LENGTH(description) > 0
-        GROUP BY description
-      ) latest ON b.description = latest.description AND b.updated_at = latest.max_updated
-      ORDER BY b.updated_at DESC
+      WITH ranked AS (
+        SELECT 
+          b.description AS suggestion,
+          c.category_type,
+          b.updated_at AS max_updated,
+          ROW_NUMBER() OVER (PARTITION BY b.description ORDER BY b.updated_at DESC) AS rn
+        FROM $table AS b
+        JOIN category AS c ON b.category_id = c.id
+        WHERE b.description IS NOT NULL AND LENGTH(b.description) > 0
+      )
+      SELECT suggestion, category_type, max_updated
+      FROM ranked
+      WHERE rn = 1
+      ORDER BY max_updated DESC
     ''');
 
     return rows.map((json) => BookingSuggestionDto.fromJson(json)).toList();

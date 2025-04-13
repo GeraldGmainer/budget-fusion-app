@@ -10,8 +10,10 @@ class SaveBookingUseCase {
   SaveBookingUseCase(this.bookingRepo);
 
   Future<void> call(BookingDraft draft) async {
-    // final userId = getUserId();
     final userId = Uuid(supabase.auth.currentUser!.id);
+    if (draft.description != null) {
+      draft = draft.copyWith(description: draft.description!.trim());
+    }
     await bookingRepo.save(draft.toBooking(userId));
   }
 }
