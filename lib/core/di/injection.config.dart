@@ -152,9 +152,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
-    gh.factory<_i967.CalculatorCubit>(() => _i967.CalculatorCubit());
     gh.factory<_i487.LanguageCubit>(() => _i487.LanguageCubit());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
+    gh.factory<_i967.CalculatorCubit>(() => _i967.CalculatorCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
@@ -261,10 +261,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
     gh.lazySingleton<_i7.WatchCategoriesUseCase>(
         () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i876.WatchCategoriesUseCase>(
-        () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i686.LoadCategoriesUseCase>(
         () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i876.WatchCategoriesUseCase>(
+        () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i601.ResetBudgetBookUseCase>(
         () => _i601.ResetBudgetBookUseCase(
               gh<_i714.BookingRepo>(),
