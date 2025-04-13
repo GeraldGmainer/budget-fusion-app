@@ -18,7 +18,7 @@ class TransactionView extends StatelessWidget {
           children: [
             if (data.transactionGroups.isNotEmpty)
               RepaintBoundary(
-                child: TransactionList(summaries: data.transactionGroups),
+                child: TransactionList(data: data),
               ),
             const SizedBox(height: 8.0),
           ],

@@ -1,10 +1,12 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class TransactionItem extends StatelessWidget {
   final Booking booking;
+  final Currency currency;
 
-  const TransactionItem({super.key, required this.booking});
+  const TransactionItem({super.key, required this.booking, required this.currency});
 
   _onTap(BuildContext context) {
     // TODO
@@ -12,37 +14,14 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
       onTap: () => _onTap(context),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-        child: Row(
-          children: [
-            booking.category != null ? Icon(Icons.category, color: Colors.blue) : const Icon(Icons.help_outline),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    booking.category?.name ?? 'Uncategorized',
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    booking.description ?? '',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              booking.amount.toString(),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
+      visualDensity: const VisualDensity(vertical: 0),
+      leading: SizedBox(width: 40, child: BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor)),
+      title: Text(booking.category?.name ?? "", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      trailing: CurrencyText(value: booking.amount, currency: currency, color: booking.category!.categoryType.color, fontSize: 15),
     );
   }
 }

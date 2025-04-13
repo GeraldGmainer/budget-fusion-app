@@ -33,7 +33,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   equal() async {
     if (state.history.isNotEmpty) {
-      // TODO uniform calculation with amount display
       final value = state.result == state.result.truncate() ? state.result.toStringAsFixed(0) : state.result.toStringAsFixed(2);
       _calculateResult([value]);
     }

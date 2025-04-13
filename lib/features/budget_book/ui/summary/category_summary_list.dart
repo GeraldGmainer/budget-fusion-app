@@ -21,12 +21,7 @@ class CategorySummaryList extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return _buildRows(summaries[index]);
           },
-          separatorBuilder: (context, index) => const Divider(
-            color: AppColors.disabledTextColor,
-            thickness: 1,
-            // indent: 16,
-            // endIndent: 16,
-          ),
+          separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
         ),
       ),
     );
