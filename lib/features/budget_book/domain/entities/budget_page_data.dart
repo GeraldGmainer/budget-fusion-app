@@ -1,8 +1,8 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'budget_date_range.dart';
-import 'category_group.dart';
 
 part 'budget_page_data.freezed.dart';
 
@@ -14,7 +14,7 @@ class BudgetPageData with _$BudgetPageData {
     required BudgetDateRange dateRange,
     required Decimal income,
     required Decimal outcome,
-    @Default([]) List<CategoryGroup> categoryGroups,
+    @Default([]) List<Booking> bookings,
   }) = _BudgetPageData;
 
   factory BudgetPageData.empty(BudgetDateRange dateRange) => BudgetPageData(
