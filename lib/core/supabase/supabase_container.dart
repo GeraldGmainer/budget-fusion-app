@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' as prov;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -59,7 +58,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   void _onUnauthenticated() {
     if (mounted) {
       BudgetLogger.instance.d("onUnauthenticated");
-      context.go(AppRoutes.login);
+      Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false);
     }
   }
 
@@ -78,7 +77,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onPasswordRecovery(Session session) {
     BudgetLogger.instance.d("onPasswordRecovery: ${session.user}");
     // TODO reset password page
-    context.go("/reset-password");
+    Navigator.of(context).pushNamed(AppRoutes.resetPassword);
   }
 
   _onErrorAuthenticating(String message) {
@@ -138,7 +137,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
         }
         BudgetLogger.instance.d("_recoverSessionFromDeeplink success!");
         _showMessage("sign_up.success");
-        context.go("/main");
+        Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
       }
     } on Exception catch (e) {
       _onErrorAuthenticating(e.toString());

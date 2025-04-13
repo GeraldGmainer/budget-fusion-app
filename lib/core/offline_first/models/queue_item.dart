@@ -46,4 +46,9 @@ class QueueItem {
       done: done ?? this.done,
     );
   }
+
+  @override
+  String toString() {
+    return "QueueItem(entityId: $entityId, entityPayload: $entityPayload, domain: $domain, type: $type, attempts: $attempts, done: $done)";
+  }
 }

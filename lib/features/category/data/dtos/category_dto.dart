@@ -1,8 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../serializer/category_type_serializer.dart';
 
 part 'category_dto.freezed.dart';
 part 'category_dto.g.dart';

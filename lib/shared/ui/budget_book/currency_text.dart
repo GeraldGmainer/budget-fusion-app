@@ -52,18 +52,21 @@ class CurrencyText extends StatelessWidget {
 
     final style = TextStyle(fontSize: fontSize, color: color);
 
-    return RichText(
-      text: TextSpan(
-        style: DefaultTextStyle.of(context).style,
-        children: [
-          if (showSymbol && isUnitPositionFront) TextSpan(text: "$symbol ", style: style),
-          TextSpan(text: integerPart, style: style),
-          TextSpan(
-            text: decimalPart,
-            style: style.copyWith(fontSize: fontSize - 4.0),
-          ),
-          if (showSymbol && !isUnitPositionFront) TextSpan(text: " $symbol", style: style),
-        ],
+    return FittedBox(
+      fit: BoxFit.fitWidth,
+      child: RichText(
+        text: TextSpan(
+          style: DefaultTextStyle.of(context).style,
+          children: [
+            if (showSymbol && isUnitPositionFront) TextSpan(text: "$symbol ", style: style),
+            TextSpan(text: integerPart, style: style),
+            TextSpan(
+              text: decimalPart,
+              style: style.copyWith(fontSize: fontSize - (fontSize * 0.3)),
+            ),
+            if (showSymbol && !isUnitPositionFront) TextSpan(text: " $symbol", style: style),
+          ],
+        ),
       ),
     );
   }

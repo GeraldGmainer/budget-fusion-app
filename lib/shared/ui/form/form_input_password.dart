@@ -1,5 +1,5 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FormInputPassword extends StatefulWidget {
   final TextEditingController controller;
@@ -32,9 +32,8 @@ class _FormInputPasswordState extends State<FormInputPassword> {
       autovalidateMode: widget.autovalidateMode,
       decoration: InputDecoration(
         errorMaxLines: 4,
-        labelText: widget.label,
         suffixIcon: IconButton(
-          icon: Icon(_showPassword ? FontAwesomeIcons.solidEye : FontAwesomeIcons.solidEyeSlash, size: 14),
+          icon: Icon(_showPassword ? CommunityMaterialIcons.eye : CommunityMaterialIcons.eye_off, size: 14),
           onPressed: () {
             setState(() {
               _showPassword = !_showPassword;

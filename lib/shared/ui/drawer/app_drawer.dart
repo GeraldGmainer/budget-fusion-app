@@ -1,6 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'drawer_header.dart';
 import 'drawer_item.dart';
@@ -50,12 +49,13 @@ class AppDrawer extends StatelessWidget {
     final currentRoute = _getCurrentRoute(context);
     Navigator.pop(context);
     if (currentRoute != route) {
-      context.push(route);
+      Navigator.of(context).pushNamed(route);
     }
   }
 
   String _getCurrentRoute(BuildContext context) {
-    return GoRouter.of(context).routerDelegate.currentConfiguration.uri.toString();
+    // TODO will that return that correct route ?
+    return ModalRoute.of(context)?.settings.name ?? "";
   }
 
   @override

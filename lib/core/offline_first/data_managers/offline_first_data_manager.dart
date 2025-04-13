@@ -64,7 +64,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Future<void> save(Dto dto) async {
     _log("Saving DTO with id '${dto.id.value}' for domain $coloredDomain");
-    _log("DTO Payload: ${dto.toJson()}");
 
     await localSource.save(dto);
     cacheManager.updateList(domainType, (list) {

@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,10 +14,6 @@ import '../widgets/main_bottom_navigation_create_item.dart';
 import '../widgets/main_bottom_navigation_tab_item.dart';
 
 class MainPage extends StatefulWidget {
-  static const String route = "MainPage";
-
-  const MainPage({Key? key}) : super(key: key);
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -48,19 +45,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _createBooking() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Create Booking'),
-        content: const Text('Booking creation functionality goes here.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
+    Navigator.of(context).pushNamed(AppRoutes.saveBooking);
   }
 
   void _onTabChange(int index) {
