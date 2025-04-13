@@ -18,6 +18,12 @@ class TransactionDataGenerator {
   }
 
   List<TransactionGroup> _mapTransactionGroups(BudgetPageData pageData, Currency currency) {
-    return [];
+    final Map<DateTime, List<Booking>> groups = {};
+    for (final booking in pageData.bookings) {
+      final day = DateTime(booking.date.year, booking.date.month, booking.date.day);
+      groups.putIfAbsent(day, () => []).add(booking);
+    }
+    final sortedDates = groups.keys.toList()..sort((a, b) => b.compareTo(a));
+    return sortedDates.map((day) => TransactionGroup(date: day, bookings: groups[day]!, currency: currency)).toList();
   }
 }

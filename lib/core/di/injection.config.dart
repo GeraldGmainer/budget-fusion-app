@@ -69,6 +69,8 @@ import 'package:budget_fusion_app/features/budget_book/application/budget_book/u
     as _i971;
 import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_summary_use_case.dart'
     as _i885;
+import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_transaction_use_case.dart'
+    as _i867;
 import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/reset_budget_book_use_case.dart'
     as _i601;
 import 'package:budget_fusion_app/features/budget_book/domain/service/budget_page_data_service.dart'
@@ -229,6 +231,11 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i652.ProfileSettingLocalDataSource>(),
               gh<_i146.ProfileSettingRemoteDataSource>(),
             ));
+    gh.lazySingleton<_i867.GenerateBudgetTransactionUseCase>(
+        () => _i867.GenerateBudgetTransactionUseCase(
+              gh<_i714.ProfileSettingRepo>(),
+              gh<_i558.TransactionDataGenerator>(),
+            ));
     gh.lazySingleton<_i565.LoadAccountsUseCase>(
         () => _i565.LoadAccountsUseCase(gh<_i714.AccountRepo>()));
     gh.lazySingleton<_i515.WatchAccountsUseCase>(
@@ -302,12 +309,6 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
-    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
-          gh<_i885.GenerateBudgetSummaryUseCase>(),
-          gh<_i548.FilterAndGroupBookingsUseCase>(),
-          gh<_i332.WatchBookingsUseCase>(),
-          gh<_i601.ResetBudgetBookUseCase>(),
-        ));
     gh.factory<_i190.BookingCubit>(() => _i190.BookingCubit(
           gh<_i332.WatchBookingsUseCase>(),
           gh<_i624.LoadBookingsUseCase>(),
@@ -315,6 +316,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i416.SaveBookingCubit>(() => _i416.SaveBookingCubit(
           gh<_i144.SaveBookingUseCase>(),
           gh<_i638.DefaultAccountUseCase>(),
+        ));
+    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
+          gh<_i885.GenerateBudgetSummaryUseCase>(),
+          gh<_i548.FilterAndGroupBookingsUseCase>(),
+          gh<_i332.WatchBookingsUseCase>(),
+          gh<_i601.ResetBudgetBookUseCase>(),
+          gh<_i867.GenerateBudgetTransactionUseCase>(),
         ));
     return this;
   }

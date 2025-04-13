@@ -8,6 +8,7 @@ import '../../application/budget_book/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
 import '../../domain/entities/budget_date_range.dart';
 import '../../domain/entities/summary_view_data.dart';
+import '../../domain/entities/transaction_view_data.dart';
 import '../../domain/enums/budget_view_mode.dart';
 import '../calendar/calendar_view.dart';
 import '../summary/summary_view.dart';
@@ -122,7 +123,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         case BudgetViewMode.summary:
           return _buildSummary(state.items.cast<SummaryViewData>().toList());
         case BudgetViewMode.transaction:
-          return TransactionView();
+          return _buildTransaction(state.items.cast<TransactionViewData>().toList());
         case BudgetViewMode.calendar:
           return CalendarView();
       }
@@ -133,18 +134,35 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     return Center(child: Text("No data available.".tr()));
   }
 
-  Widget _buildSummary(List<SummaryViewData> summaries) {
-    final reversedSummaries = summaries.reversed.toList();
+  Widget _buildSummary(List<SummaryViewData> items) {
+    final reversedList = items.reversed.toList();
     return PageView.builder(
       controller: _pageController,
-      itemCount: summaries.length,
+      itemCount: items.length,
       onPageChanged: _onPageChanged,
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final item = reversedSummaries[index];
+        final item = reversedList[index];
         return RepaintBoundary(
           child: SummaryView(data: item),
+        );
+      },
+    );
+  }
+
+  Widget _buildTransaction(List<TransactionViewData> items) {
+    final reversedList = items.reversed.toList();
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: items.length,
+      onPageChanged: _onPageChanged,
+      reverse: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final item = reversedList[index];
+        return RepaintBoundary(
+          child: TransactionView(data: item),
         );
       },
     );

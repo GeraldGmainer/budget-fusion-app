@@ -9,6 +9,7 @@ class TransactionGroup with _$TransactionGroup {
 
   const factory TransactionGroup({
     required DateTime date,
+    required Currency currency,
     required List<Booking> bookings,
   }) = _TransactionGroup;
 }
