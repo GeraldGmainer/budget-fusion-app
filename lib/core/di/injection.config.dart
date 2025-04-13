@@ -75,6 +75,8 @@ import 'package:budget_fusion_app/features/budget_book/domain/service/budget_pag
     as _i198;
 import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart'
     as _i811;
+import 'package:budget_fusion_app/features/budget_book/domain/service/transaction_data_generator.dart'
+    as _i558;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_local_data_source.dart'
     as _i342;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_remote_data_source.dart'
@@ -175,6 +177,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i811.SummaryDataGenerator>(
         () => _i811.SummaryDataGenerator());
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
+    gh.lazySingleton<_i558.TransactionDataGenerator>(
+        () => _i558.TransactionDataGenerator());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i702.ConnectivityService>(
