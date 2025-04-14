@@ -9,9 +9,6 @@ import '../../../features/overview/home.dart';
 import '../../../shared/shared.dart';
 import '../../main.dart';
 import '../widgets/main_bottom_navigation_bar.dart';
-import '../widgets/main_bottom_navigation_bar_item.dart';
-import '../widgets/main_bottom_navigation_create_item.dart';
-import '../widgets/main_bottom_navigation_tab_item.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -67,13 +64,17 @@ class _MainPageState extends State<MainPage> {
       },
       child: Scaffold(
         appBar: _buildAppBarForIndex(_currentIndex),
-        // Use const for the drawer if possible.
         drawer: const AppDrawer(),
         bottomNavigationBar: MainBottomNavigationBar(items: _items),
-        body: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: _tabs,
+        body: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _tabs,
+            ),
+            RemoteLoadingIndicator(),
+          ],
         ),
       ),
     );

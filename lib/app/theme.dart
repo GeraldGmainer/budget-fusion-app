@@ -9,6 +9,17 @@ ThemeData createTheme(BuildContext context) {
     fontFamily: GoogleFonts.poppins().fontFamily,
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.primaryColor,
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark,
+      primary: AppColors.accentColor,
+      onPrimary: AppColors.primaryTextColor,
+      secondary: AppColors.accentColor,
+      onSecondary: AppColors.secondaryTextColor,
+      error: AppColors.errorColor,
+      onError: Colors.white,
+      surface: AppColors.primaryColor,
+      onSurface: AppColors.primaryTextColor,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.secondaryColor,
       titleTextStyle: TextStyle(
@@ -85,7 +96,7 @@ ThemeData createTheme(BuildContext context) {
     ),
     listTileTheme: ListTileThemeData(
       titleTextStyle: TextStyle(fontSize: 16.0),
-      subtitleTextStyle: TextStyle(fontSize: 12.0),
+      subtitleTextStyle: TextStyle(fontSize: 12.0, color: AppColors.secondaryTextColor),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: AppColors.cardColor,

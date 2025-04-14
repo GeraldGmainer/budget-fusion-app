@@ -28,8 +28,12 @@ mixin _$BudgetBookState {
     required TResult Function(List<BudgetViewData> items,
             BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
         loading,
-    required TResult Function(List<BudgetViewData> items,
-            BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
+    required TResult Function(
+            List<BudgetViewData> items,
+            BudgetBookFilter filter,
+            BudgetViewMode viewMode,
+            PeriodMode period,
+            bool initialLoaded)
         loaded,
     required TResult Function(
             List<BudgetViewData> items,
@@ -49,7 +53,7 @@ mixin _$BudgetBookState {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -65,7 +69,7 @@ mixin _$BudgetBookState {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -289,8 +293,12 @@ class _$InitialImpl implements _Initial {
     required TResult Function(List<BudgetViewData> items,
             BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
         loading,
-    required TResult Function(List<BudgetViewData> items,
-            BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
+    required TResult Function(
+            List<BudgetViewData> items,
+            BudgetBookFilter filter,
+            BudgetViewMode viewMode,
+            PeriodMode period,
+            bool initialLoaded)
         loaded,
     required TResult Function(
             List<BudgetViewData> items,
@@ -313,7 +321,7 @@ class _$InitialImpl implements _Initial {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -332,7 +340,7 @@ class _$InitialImpl implements _Initial {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -522,8 +530,12 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(List<BudgetViewData> items,
             BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
         loading,
-    required TResult Function(List<BudgetViewData> items,
-            BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
+    required TResult Function(
+            List<BudgetViewData> items,
+            BudgetBookFilter filter,
+            BudgetViewMode viewMode,
+            PeriodMode period,
+            bool initialLoaded)
         loaded,
     required TResult Function(
             List<BudgetViewData> items,
@@ -546,7 +558,7 @@ class _$LoadingImpl implements _Loading {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -565,7 +577,7 @@ class _$LoadingImpl implements _Loading {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -652,7 +664,8 @@ abstract class _$$LoadedImplCopyWith<$Res>
       {List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period});
+      PeriodMode period,
+      bool initialLoaded});
 
   @override
   $BudgetBookFilterCopyWith<$Res> get filter;
@@ -675,6 +688,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? filter = null,
     Object? viewMode = null,
     Object? period = null,
+    Object? initialLoaded = null,
   }) {
     return _then(_$LoadedImpl(
       items: null == items
@@ -693,6 +707,10 @@ class __$$LoadedImplCopyWithImpl<$Res>
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
               as PeriodMode,
+      initialLoaded: null == initialLoaded
+          ? _value.initialLoaded
+          : initialLoaded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -704,7 +722,8 @@ class _$LoadedImpl implements _Loaded {
       {required final List<BudgetViewData> items,
       required this.filter,
       required this.viewMode,
-      required this.period})
+      required this.period,
+      required this.initialLoaded})
       : _items = items;
 
   final List<BudgetViewData> _items;
@@ -721,6 +740,8 @@ class _$LoadedImpl implements _Loaded {
   final BudgetViewMode viewMode;
   @override
   final PeriodMode period;
+  @override
+  final bool initialLoaded;
 
   @override
   bool operator ==(Object other) {
@@ -731,12 +752,19 @@ class _$LoadedImpl implements _Loaded {
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
-            (identical(other.period, period) || other.period == period));
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.initialLoaded, initialLoaded) ||
+                other.initialLoaded == initialLoaded));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_items), filter, viewMode, period);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_items),
+      filter,
+      viewMode,
+      period,
+      initialLoaded);
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -755,8 +783,12 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(List<BudgetViewData> items,
             BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
         loading,
-    required TResult Function(List<BudgetViewData> items,
-            BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
+    required TResult Function(
+            List<BudgetViewData> items,
+            BudgetBookFilter filter,
+            BudgetViewMode viewMode,
+            PeriodMode period,
+            bool initialLoaded)
         loaded,
     required TResult Function(
             List<BudgetViewData> items,
@@ -766,7 +798,7 @@ class _$LoadedImpl implements _Loaded {
             String message)
         error,
   }) {
-    return loaded(items, filter, viewMode, period);
+    return loaded(items, filter, viewMode, period, initialLoaded);
   }
 
   @override
@@ -779,13 +811,13 @@ class _$LoadedImpl implements _Loaded {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
         error,
   }) {
-    return loaded?.call(items, filter, viewMode, period);
+    return loaded?.call(items, filter, viewMode, period, initialLoaded);
   }
 
   @override
@@ -798,7 +830,7 @@ class _$LoadedImpl implements _Loaded {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -806,7 +838,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, filter, viewMode, period);
+      return loaded(items, filter, viewMode, period, initialLoaded);
     }
     return orElse();
   }
@@ -854,7 +886,8 @@ abstract class _Loaded implements BudgetBookState {
       {required final List<BudgetViewData> items,
       required final BudgetBookFilter filter,
       required final BudgetViewMode viewMode,
-      required final PeriodMode period}) = _$LoadedImpl;
+      required final PeriodMode period,
+      required final bool initialLoaded}) = _$LoadedImpl;
 
   @override
   List<BudgetViewData> get items;
@@ -864,6 +897,7 @@ abstract class _Loaded implements BudgetBookState {
   BudgetViewMode get viewMode;
   @override
   PeriodMode get period;
+  bool get initialLoaded;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -1003,8 +1037,12 @@ class _$ErrorImpl implements _Error {
     required TResult Function(List<BudgetViewData> items,
             BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
         loading,
-    required TResult Function(List<BudgetViewData> items,
-            BudgetBookFilter filter, BudgetViewMode viewMode, PeriodMode period)
+    required TResult Function(
+            List<BudgetViewData> items,
+            BudgetBookFilter filter,
+            BudgetViewMode viewMode,
+            PeriodMode period,
+            bool initialLoaded)
         loaded,
     required TResult Function(
             List<BudgetViewData> items,
@@ -1027,7 +1065,7 @@ class _$ErrorImpl implements _Error {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult? Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?
@@ -1046,7 +1084,7 @@ class _$ErrorImpl implements _Error {
             BudgetViewMode viewMode, PeriodMode period)?
         loading,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
-            BudgetViewMode viewMode, PeriodMode period)?
+            BudgetViewMode viewMode, PeriodMode period, bool initialLoaded)?
         loaded,
     TResult Function(List<BudgetViewData> items, BudgetBookFilter filter,
             BudgetViewMode viewMode, PeriodMode period, String message)?

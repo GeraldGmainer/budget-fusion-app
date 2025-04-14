@@ -2,15 +2,17 @@ import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:postgrest/src/postgrest_builder.dart';
+import 'package:postgrest/src/types.dart';
 
 abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchAll from $coloredDomain${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
-      var query = supabase.from(table).select(columns);
+      PostgrestFilterBuilder<PostgrestList> query = supabase.from(table).select(columns);
       query = _applyFilters(query, filters);
-      final response = await query;
+      final response = await query.order('updated_at', ascending: false);
       // Random random = Random();
       // int randomNumber = random.nextInt(2000) + 3000;
       // await Future.delayed(Duration(milliseconds: randomNumber));

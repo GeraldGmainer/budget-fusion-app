@@ -12,13 +12,14 @@ import 'queue_local_data_source.dart';
 class QueueManager {
   static const maxAttempts = 3;
   final QueueLocalDataSource localDataSource;
+  final RemoteLoadingService remoteLoadingService;
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<DomainType, OfflineFirstRemoteDataSource> _remoteSources = {};
   final Map<DomainType, OfflineFirstLocalDataSource> _localSources = {};
   bool _isProcessing = false;
   bool _initialized = false;
 
-  QueueManager(this.localDataSource);
+  QueueManager(this.localDataSource, this.remoteLoadingService);
 
   void registerDomainSources(
     DomainType domain,
@@ -95,22 +96,24 @@ class QueueManager {
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
     try {
-      switch (item.type) {
-        case QueueTaskType.upsert:
-          final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
-          if (updatedDto.updatedAt == null) {
-            BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
-            BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
-            BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
-            // TODO throw custom exception
-            throw "QueueManager: upserting queue task returned updatedAt as null";
-          }
-          await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
-          break;
-        case QueueTaskType.delete:
-          await remoteSource.delete(item.entityId);
-          break;
-      }
+      await remoteLoadingService.wrap(() async {
+        switch (item.type) {
+          case QueueTaskType.upsert:
+            final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
+            if (updatedDto.updatedAt == null) {
+              BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
+              BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
+              BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
+              // TODO throw custom exception
+              throw "QueueManager: upserting queue task returned updatedAt as null";
+            }
+            await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+            break;
+          case QueueTaskType.delete:
+            await remoteSource.delete(item.entityId);
+            break;
+        }
+      });
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Queue processing error", e, stackTrace);
       rethrow;

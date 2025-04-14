@@ -1,20 +1,17 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:decimal/decimal.dart';
 import 'package:injectable/injectable.dart';
 
 import '../entities/budget_book_filter.dart';
 import '../entities/budget_date_range.dart';
 import '../entities/budget_page_data.dart';
-import '../entities/category_group.dart';
 import '../enums/period_mode.dart';
 
 @lazySingleton
 class BudgetPageDataService {
   final DatetimeService _datetimeService;
-  final CategoryRepo _categoryRepo;
 
-  BudgetPageDataService(this._categoryRepo, this._datetimeService);
+  BudgetPageDataService(this._datetimeService);
 
   Future<List<BudgetPageData>> load(List<Booking> bookings, BudgetBookFilter filter) async {
     if (bookings.isEmpty) {
@@ -32,6 +29,55 @@ class BudgetPageDataService {
         return _convertToAll(bookings);
     }
   }
+
+  Future<List<BudgetPageData>> _convertToMonth(List<Booking> bookings) async {
+    final bookingsByMonthAndCategory = _groupBookingsByMonth(bookings);
+    final now = _datetimeService.now();
+    final DateTime fromDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isBefore(b) ? a : b);
+    DateTime endDate = bookings.map((booking) => booking.date).reduce((a, b) => a.isAfter(b) ? a : b);
+    endDate = endDate.isBefore(now) ? now : endDate;
+    return await _generateMonthlyPeriods(fromDate, endDate, bookingsByMonthAndCategory);
+  }
+
+  Map<int, List<Booking>> _groupBookingsByMonth(List<Booking> bookings) {
+    final grouped = <int, List<Booking>>{};
+
+    for (var booking in bookings) {
+      final monthKey = DateTime(booking.date.year, booking.date.month).millisecondsSinceEpoch;
+      grouped.putIfAbsent(monthKey, () => []);
+      grouped[monthKey]!.add(booking);
+    }
+    return grouped;
+  }
+
+  Future<List<BudgetPageData>> _generateMonthlyPeriods(DateTime from, DateTime end, Map<int, List<Booking>> bookingsByMonthAndCategory) async {
+    final periods = <BudgetPageData>[];
+    DateTime currentMonth = from.startOfMonth;
+
+    while (!currentMonth.isAfter(end)) {
+      final monthKey = currentMonth.millisecondsSinceEpoch;
+      final toDate = currentMonth.endOfMonth;
+      final dateRange = BudgetDateRange(period: PeriodMode.month, from: currentMonth, to: toDate);
+
+      if (!bookingsByMonthAndCategory.containsKey(monthKey)) {
+        periods.add(BudgetPageData.empty(dateRange));
+      } else {
+        final bookings = bookingsByMonthAndCategory[monthKey]!;
+        periods.add(BudgetPageData(
+          dateRange: dateRange,
+          income: bookings.totalIncomeAmount(),
+          outcome: bookings.totalOutcomeAmount(),
+          bookings: bookings,
+        ));
+      }
+
+      currentMonth = DateTime(currentMonth.year, currentMonth.month + 1);
+    }
+
+    return periods;
+  }
+
+  /*
 
   Future<List<BudgetPageData>> _convertToMonth(List<Booking> bookings) async {
     final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
@@ -140,6 +186,7 @@ class BudgetPageDataService {
     final amountComparison = b.amount.compareTo(a.amount);
     return typeComparison != 0 ? typeComparison : amountComparison;
   }
+  */
 
   List<BudgetPageData> _convertToDay(List<Booking> bookings) => _convertToAll(bookings);
 

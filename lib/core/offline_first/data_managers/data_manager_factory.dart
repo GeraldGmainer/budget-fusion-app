@@ -8,8 +8,9 @@ class DataManagerFactory {
   final CacheManager cacheManager;
   final QueueManager queueManager;
   final RealtimeNotifierService realtimeNotifierService;
+  final RemoteLoadingService remoteLoadingService;
 
-  DataManagerFactory(this.cacheManager, this.queueManager, this.realtimeNotifierService);
+  DataManagerFactory(this.cacheManager, this.queueManager, this.realtimeNotifierService, this.remoteLoadingService);
 
   OfflineFirstDataManager<Dto> createManager<Dto extends OfflineFirstDto>({
     required DomainType domainType,
@@ -23,6 +24,7 @@ class DataManagerFactory {
       cacheManager: cacheManager,
       queueManager: queueManager,
       realtimeNotifierService: realtimeNotifierService,
+      remoteLoadingService: remoteLoadingService,
     );
   }
 }

@@ -21,6 +21,7 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
+    required bool initialLoaded,
   }) = _Loaded;
 
   const factory BudgetBookState.error({
@@ -49,7 +50,7 @@ class BudgetBookState with _$BudgetBookState {
     return when(
       initial: (_, filter, viewMode, period) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
       loading: (_, filter, viewMode, period) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
-      loaded: (_, filter, viewMode, period) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
+      loaded: (_, filter, viewMode, period, __) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
       error: (_, filter, viewMode, period, message) =>
           'BookingPageState Error:\n- Message: $message\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
     );
@@ -63,7 +64,7 @@ extension BookingPageStateExtensions on BudgetBookState {
       );
 
   bool get isLoaded => maybeWhen(
-        loaded: (_, __, ___, ____) => true,
+        loaded: (_, __, ___, ____, _____) => true,
         orElse: () => false,
       );
 

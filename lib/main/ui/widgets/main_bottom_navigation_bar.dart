@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/core.dart';
 import '../../main.dart';
-import 'main_bottom_navigation_bar_item.dart';
+
+abstract class MainBottomNavigationBarItem {
+  BottomNavigationBarItem build(int selectedIndex);
+}
 
 class MainBottomNavigationBar extends StatelessWidget {
   final List<MainBottomNavigationBarItem> items;
@@ -41,6 +44,70 @@ class MainBottomNavigationBar extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class MainBottomNavigationCreateItem extends MainBottomNavigationBarItem {
+  final VoidCallback onTap;
+
+  MainBottomNavigationCreateItem({
+    required this.onTap,
+  });
+
+  @override
+  BottomNavigationBarItem build(int selectedIndex) {
+    return BottomNavigationBarItem(
+      label: '',
+      icon: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.accentColor, // Replace with AppColors.accentColor if defined
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.add, color: Colors.white, size: 22),
+        ),
+      ),
+    );
+  }
+}
+
+class MainBottomNavigationTabItem extends MainBottomNavigationBarItem {
+  final int tabIndex;
+  final IconData icon;
+  final String label;
+
+  MainBottomNavigationTabItem({
+    required this.tabIndex,
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  BottomNavigationBarItem build(int selectedIndex) {
+    final isSelected = selectedIndex == tabIndex;
+    return BottomNavigationBarItem(
+      label: '',
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 22,
+            color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
+            ),
+          ),
+        ],
       ),
     );
   }
