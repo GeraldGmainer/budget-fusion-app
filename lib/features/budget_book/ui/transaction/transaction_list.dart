@@ -16,20 +16,21 @@ class TransactionList extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-          itemBuilder: (BuildContext context, int index) {
-            final group = data.transactionGroups[index];
-            return _buildDay(group);
-          },
-          itemCount: data.transactionGroups.length,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) => const Divider(
-            color: AppColors.disabledTextColor,
-            thickness: 1,
-          ),
-        ),
+        child: _buildList(),
       ),
+    );
+  }
+
+  Widget _buildList() {
+    return ListView.separated(
+      itemBuilder: (BuildContext context, int index) {
+        final group = data.transactionGroups[index];
+        return _buildDay(group);
+      },
+      itemCount: data.transactionGroups.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
     );
   }
 

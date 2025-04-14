@@ -32,7 +32,8 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _initPagination() {
-    _currentDateRange = BudgetDateRange(period: context.read<BudgetBookCubit>().state.filter.period, from: DateTime.now(), to: DateTime.now());
+    final now = DateTime.now();
+    _currentDateRange = BudgetDateRange(period: context.read<BudgetBookCubit>().state.filter.period, from: now, to: now);
   }
 
   @override
@@ -41,7 +42,10 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     super.dispose();
   }
 
-  void _onLoaded() {
+  void _onLoaded(bool initialLoaded) {
+    if (!initialLoaded) {
+      return;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_pageController.hasClients) {
         _pageController.animateToPage(
@@ -72,7 +76,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
 
   void _onViewSelected(int index) {
     final viewMode = BudgetViewMode.values[index];
-    context.read<BudgetBookCubit>().updateView(viewMode: viewMode);
+    context.read<BudgetBookCubit>().updateView(viewMode: viewMode, initialLoad: false);
   }
 
   @override
@@ -84,7 +88,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       },
       listener: (context, state) {
         state.whenOrNull(
-          loaded: (_, __, ___, ____) => _onLoaded(),
+          loaded: (_, __, ___, ____, initialLoaded) => _onLoaded(initialLoaded),
           error: (_, __, ___, ____, message) => _onError(message),
         );
       },

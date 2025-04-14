@@ -20,8 +20,21 @@ class TransactionView extends StatelessWidget {
               RepaintBoundary(
                 child: TransactionList(data: data),
               ),
+            if (data.transactionGroups.isEmpty) _buildEmpty(),
             const SizedBox(height: 8.0),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmpty() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: Text("no transactions"),
         ),
       ),
     );

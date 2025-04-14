@@ -53,7 +53,13 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
 
-      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period));
+      emit(BudgetBookState.loaded(
+        items: items,
+        filter: state.filter,
+        viewMode: state.viewMode,
+        period: state.period,
+        initialLoaded: true,
+      ));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} onBookings TranslatedException", e, stack);
       emit(BudgetBookState.fromError(message: e.message, state: state));
@@ -74,7 +80,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     }
   }
 
-  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode}) async {
+  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, bool initialLoad = true}) async {
     try {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
@@ -84,7 +90,21 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final filtered = await _filterAndGroupBookingsUseCase(bookings, newFilter);
       final items = await _generateViewData(filtered, newViewMode);
 
-      emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode));
+      state.maybeWhen(loaded: (_, __, ___, ____, _____) {
+        emit(BudgetBookState.loaded(
+          items: items,
+          filter: newFilter,
+          viewMode: newViewMode,
+          period: state.period,
+          initialLoaded: initialLoad,
+        ));
+      }, orElse: () {
+        emit(state.copyWith(
+          items: items,
+          filter: newFilter,
+          viewMode: newViewMode,
+        ));
+      });
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} updateView TranslatedException", e, stack);
       emit(BudgetBookState.fromError(message: e.message, state: state));
