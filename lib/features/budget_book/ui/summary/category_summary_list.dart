@@ -46,6 +46,30 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: _toggleExpanded,
+          child: _buildParent(),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: _isExpanded && widget.summary.subSummaries.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Column(
+                    children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList(),
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
+  }
+
   Widget _buildParent() {
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -109,30 +133,6 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: _toggleExpanded,
-          child: _buildParent(),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          child: _isExpanded && widget.summary.subSummaries.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Column(
-                    children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList(),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-      ],
     );
   }
 }
