@@ -11,13 +11,13 @@ ThemeData createTheme(BuildContext context) {
     scaffoldBackgroundColor: AppColors.primaryColor,
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
-      primary: AppColors.primaryColor,
+      primary: AppColors.accentColor,
       onPrimary: AppColors.primaryTextColor,
       secondary: AppColors.accentColor,
       onSecondary: AppColors.secondaryTextColor,
       error: AppColors.errorColor,
       onError: Colors.white,
-      surface: AppColors.cardColor,
+      surface: AppColors.primaryColor,
       onSurface: AppColors.primaryTextColor,
     ),
     appBarTheme: AppBarTheme(
