@@ -119,6 +119,9 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
 
   Widget _buildPage() {
     return BlocConsumer<SaveBookingCubit, SaveBookingState>(
+      buildWhen: (previous, current) {
+        return previous.draft != current.draft;
+      },
       listener: (context, state) {
         state.whenOrNull(
           loaded: (draft) => _onUploadSuccess(draft),
@@ -139,15 +142,10 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
             ],
           ),
           resizeToAvoidBottomInset: false,
-          body: BlocConsumer<SaveBookingCubit, SaveBookingState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              return state.maybeWhen(
-                loading: (draft) => Center(child: CircularProgressIndicator()),
-                loaded: (draft) => Center(child: CircularProgressIndicator()),
-                orElse: () => _buildContent(state.draft),
-              );
-            },
+          body: state.maybeWhen(
+            loading: (draft) => Center(child: CircularProgressIndicator()),
+            loaded: (draft) => Center(child: CircularProgressIndicator()),
+            orElse: () => _buildContent(state.draft),
           ),
         );
       },
