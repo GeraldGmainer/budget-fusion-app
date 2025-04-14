@@ -15,6 +15,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final CacheManager cacheManager;
   final QueueManager queueManager;
   final RealtimeNotifierService realtimeNotifierService;
+  final RemoteLoadingService remoteLoadingService;
 
   ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
@@ -26,6 +27,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     required this.cacheManager,
     required this.queueManager,
     required this.realtimeNotifierService,
+    required this.remoteLoadingService,
   }) {
     queueManager.registerDomainSources(domainType, localSource, remoteSource);
   }
@@ -54,7 +56,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     }
 
     _log("No local data found. Fetching remote data for domain $coloredDomain...");
-    final dtos = await remoteSource.fetchAll();
+    final dtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
     await localSource.saveAll(dtos);
     cacheManager.set(domainType, dtos);
     _emitToStream(dtos);
@@ -118,7 +120,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("Starting partial sync for domain $coloredDomain");
     try {
       final localMax = await localSource.fetchMaxUpdatedAt();
-      final remoteDtos = await remoteSource.fetchAllNewer(localMax);
+      final remoteDtos = await remoteLoadingService.wrap(() => remoteSource.fetchAllNewer(localMax));
       if (remoteDtos.isEmpty) {
         _log("No new remote data found during sync for domain $coloredDomain", darkColor: true);
         return;

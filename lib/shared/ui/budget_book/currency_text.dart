@@ -28,9 +28,16 @@ class CurrencyText extends StatelessWidget {
     if (currency != null) {
       _buildText(context, currency!);
     }
-    return BlocBuilder<ProfileSettingCubit, LoadableState>(
-      builder: (context, state) {
-        return state.maybeWhen(loaded: (profileSetting) => _buildText(context, profileSetting.currency), orElse: () => _buildDefaultText(context));
+    return BlocSelector<ProfileSettingCubit, LoadableState, Currency?>(
+      selector: (state) => state.maybeWhen(
+        loaded: (profileSetting) => profileSetting.currency,
+        orElse: () => null,
+      ),
+      builder: (context, selectedCurrency) {
+        if (selectedCurrency != null) {
+          return _buildText(context, selectedCurrency);
+        }
+        return _buildDefaultText(context);
       },
     );
   }

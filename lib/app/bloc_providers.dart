@@ -24,6 +24,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<CalculatorCubit>(create: (_) => GetIt.I<CalculatorCubit>()),
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),
+    BlocProvider<RemoteLoadingCubit>(create: (_) => GetIt.I<RemoteLoadingCubit>()),
   ];
 }
 

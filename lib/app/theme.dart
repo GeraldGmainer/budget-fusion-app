@@ -9,6 +9,17 @@ ThemeData createTheme(BuildContext context) {
     fontFamily: GoogleFonts.poppins().fontFamily,
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.primaryColor,
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark,
+      primary: AppColors.primaryColor,
+      onPrimary: AppColors.primaryTextColor,
+      secondary: AppColors.accentColor,
+      onSecondary: AppColors.secondaryTextColor,
+      error: AppColors.errorColor,
+      onError: Colors.white,
+      surface: AppColors.cardColor,
+      onSurface: AppColors.primaryTextColor,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.secondaryColor,
       titleTextStyle: TextStyle(

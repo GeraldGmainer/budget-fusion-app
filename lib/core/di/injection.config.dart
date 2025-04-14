@@ -23,6 +23,10 @@ import 'package:budget_fusion_app/core/offline_first/queue/queue_manager.dart'
     as _i327;
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart'
     as _i371;
+import 'package:budget_fusion_app/core/remote_loading/cubits/remote_loading_cubit.dart'
+    as _i314;
+import 'package:budget_fusion_app/core/remote_loading/service/remote_loading_service.dart'
+    as _i247;
 import 'package:budget_fusion_app/features/account/data/data_sources/account_local_data_source.dart'
     as _i431;
 import 'package:budget_fusion_app/features/account/data/data_sources/account_remote_data_source.dart'
@@ -181,10 +185,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
     gh.lazySingleton<_i558.TransactionDataGenerator>(
         () => _i558.TransactionDataGenerator());
+    gh.lazySingleton<_i247.RemoteLoadingService>(
+        () => _i247.RemoteLoadingService());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i198.BudgetPageDataService>(
         () => _i198.BudgetPageDataService(gh<_i428.DatetimeService>()));
+    gh.factory<_i314.RemoteLoadingCubit>(
+        () => _i314.RemoteLoadingCubit(gh<_i247.RemoteLoadingService>()));
     gh.lazySingleton<_i702.ConnectivityService>(
         () => _i702.ConnectivityService(gh<_i895.Connectivity>()));
     gh.factory<_i991.LoginCubit>(() => _i991.LoginCubit(
@@ -203,27 +211,54 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i431.AccountLocalDataSource>(
         () => _i431.AccountLocalDataSource(gh<_i779.Database>()));
-    gh.lazySingleton<_i327.QueueManager>(
-        () => _i327.QueueManager(gh<_i76.QueueLocalDataSource>()));
-    gh.factory<_i810.OfflineFirstQueueCubit>(
-        () => _i810.OfflineFirstQueueCubit(gh<_i714.QueueManager>()));
     gh.lazySingleton<_i548.FilterAndGroupBookingsUseCase>(() =>
         _i548.FilterAndGroupBookingsUseCase(gh<_i198.BudgetPageDataService>()));
     gh.lazySingleton<_i448.SuggestionRepo>(
         () => _i448.SuggestionRepo(gh<_i423.BookingLocalDataSource>()));
+    gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
+          gh<_i76.QueueLocalDataSource>(),
+          gh<_i714.RemoteLoadingService>(),
+        ));
     gh.lazySingleton<_i968.LoadSuggestionsUseCase>(
         () => _i968.LoadSuggestionsUseCase(gh<_i448.SuggestionRepo>()));
     gh.factory<_i772.SuggestionCubit>(
         () => _i772.SuggestionCubit(gh<_i968.LoadSuggestionsUseCase>()));
+    gh.factory<_i810.OfflineFirstQueueCubit>(
+        () => _i810.OfflineFirstQueueCubit(gh<_i714.QueueManager>()));
     gh.lazySingleton<_i327.DataManagerFactory>(() => _i327.DataManagerFactory(
           gh<_i714.CacheManager>(),
           gh<_i714.QueueManager>(),
           gh<_i371.RealtimeNotifierService>(),
+          gh<_i714.RemoteLoadingService>(),
         ));
+    gh.lazySingleton<_i714.CategoryRepo>(() => _i1056.CategoryRepoImpl(
+          gh<_i714.DataManagerFactory>(),
+          gh<_i342.CategoryLocalDataSource>(),
+          gh<_i870.CategoryRemoteDataSource>(),
+        ));
+    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
+          gh<_i714.DataManagerFactory>(),
+          gh<_i261.ProfileLocalDataSource>(),
+          gh<_i594.ProfileRemoteDataSource>(),
+        ));
+    gh.lazySingleton<_i712.WatchProfileUseCase>(
+        () => _i712.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
+    gh.lazySingleton<_i324.LoadProfileUseCase>(
+        () => _i324.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i714.AccountRepo>(() => _i518.AccountRepoImpl(
           gh<_i714.DataManagerFactory>(),
           gh<_i431.AccountLocalDataSource>(),
           gh<_i990.AccountRemoteDataSource>(),
+        ));
+    gh.lazySingleton<_i7.WatchCategoriesUseCase>(
+        () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i686.LoadCategoriesUseCase>(
+        () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i876.WatchCategoriesUseCase>(
+        () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.factory<_i837.ProfileCubit>(() => _i837.ProfileCubit(
+          gh<_i332.WatchProfileUseCase>(),
+          gh<_i332.LoadProfileUseCase>(),
         ));
     gh.lazySingleton<_i714.ProfileSettingRepo>(
         () => _i52.ProfileSettingRepoImpl(
@@ -236,26 +271,16 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i714.ProfileSettingRepo>(),
               gh<_i558.TransactionDataGenerator>(),
             ));
+    gh.factory<_i976.CategoryCubit>(() => _i976.CategoryCubit(
+          gh<_i876.WatchCategoriesUseCase>(),
+          gh<_i686.LoadCategoriesUseCase>(),
+        ));
     gh.lazySingleton<_i565.LoadAccountsUseCase>(
         () => _i565.LoadAccountsUseCase(gh<_i714.AccountRepo>()));
     gh.lazySingleton<_i515.WatchAccountsUseCase>(
         () => _i515.WatchAccountsUseCase(gh<_i714.AccountRepo>()));
-    gh.lazySingleton<_i714.CategoryRepo>(() => _i1056.CategoryRepoImpl(
-          gh<_i714.DataManagerFactory>(),
-          gh<_i342.CategoryLocalDataSource>(),
-          gh<_i870.CategoryRemoteDataSource>(),
-        ));
-    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
-          gh<_i714.DataManagerFactory>(),
-          gh<_i261.ProfileLocalDataSource>(),
-          gh<_i594.ProfileRemoteDataSource>(),
-        ));
     gh.lazySingleton<_i638.DefaultAccountUseCase>(
         () => _i638.DefaultAccountUseCase(gh<_i714.AccountRepo>()));
-    gh.lazySingleton<_i712.WatchProfileUseCase>(
-        () => _i712.WatchProfileUseCase(gh<_i714.ProfileRepo>()));
-    gh.lazySingleton<_i324.LoadProfileUseCase>(
-        () => _i324.LoadProfileUseCase(gh<_i714.ProfileRepo>()));
     gh.lazySingleton<_i714.BookingRepo>(() => _i830.BookingRepoImpl(
           gh<_i714.DataManagerFactory>(),
           gh<_i423.BookingLocalDataSource>(),
@@ -269,22 +294,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
-    gh.lazySingleton<_i7.WatchCategoriesUseCase>(
-        () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i686.LoadCategoriesUseCase>(
-        () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i876.WatchCategoriesUseCase>(
-        () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i601.ResetBudgetBookUseCase>(
         () => _i601.ResetBudgetBookUseCase(
               gh<_i714.BookingRepo>(),
               gh<_i714.CategoryRepo>(),
               gh<_i714.AccountRepo>(),
             ));
-    gh.factory<_i837.ProfileCubit>(() => _i837.ProfileCubit(
-          gh<_i332.WatchProfileUseCase>(),
-          gh<_i332.LoadProfileUseCase>(),
-        ));
     gh.lazySingleton<_i624.LoadBookingsUseCase>(
         () => _i624.LoadBookingsUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i8.AccountCubit>(() => _i8.AccountCubit(
@@ -303,10 +318,6 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i144.SaveBookingUseCase>(
         () => _i144.SaveBookingUseCase(gh<_i714.BookingRepo>()));
-    gh.factory<_i976.CategoryCubit>(() => _i976.CategoryCubit(
-          gh<_i876.WatchCategoriesUseCase>(),
-          gh<_i686.LoadCategoriesUseCase>(),
-        ));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i190.BookingCubit>(() => _i190.BookingCubit(
