@@ -16,71 +16,123 @@ class CategorySummaryList extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: summaries.length,
           itemBuilder: (BuildContext context, int index) {
-            return _buildRows(summaries[index]);
+            return CollapsibleCategoryTile(summary: summaries[index]);
           },
           separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
         ),
       ),
     );
   }
+}
 
-  Widget _buildRows(CategoryViewSummaryData parentSummary) {
-    final parentRow = _buildParent(parentSummary);
+class CollapsibleCategoryTile extends StatefulWidget {
+  final CategoryViewSummaryData summary;
 
-    if (parentSummary.subSummaries.isEmpty) {
-      return parentRow;
-    }
+  const CollapsibleCategoryTile({super.key, required this.summary});
 
-    final subcategoryRows = parentSummary.subSummaries.map((sub) => _buildSub(sub)).toList();
+  @override
+  State<CollapsibleCategoryTile> createState() => _CollapsibleCategoryTileState();
+}
 
-    return Column(
-      children: [
-        parentRow,
-        ...subcategoryRows,
-      ],
-    );
+class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with SingleTickerProviderStateMixin {
+  bool _isExpanded = false;
+
+  void _toggleExpanded() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
   }
 
-  Widget _buildParent(CategoryViewSummaryData parentSummary) {
+  Widget _buildParent() {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
       visualDensity: const VisualDensity(vertical: 0),
-      leading: SizedBox(width: 40, child: BudgetIcon(name: parentSummary.iconName, color: parentSummary.iconColor)),
-      title: Text(parentSummary.categoryName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      leading: SizedBox(
+        width: 40,
+        child: BudgetIcon(name: widget.summary.iconName, color: widget.summary.iconColor),
+      ),
+      title: Text(widget.summary.categoryName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      subtitle: _buildParentSubtitle(),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(value: parentSummary.value, currency: parentSummary.currency, color: parentSummary.categoryType.color, fontSize: 15),
-          Text("${parentSummary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor)),
+          CurrencyText(
+            value: widget.summary.value,
+            currency: widget.summary.currency,
+            color: widget.summary.categoryType.color,
+            fontSize: 15,
+          ),
+          Text(
+            "${widget.summary.percentage} %",
+            textAlign: TextAlign.end,
+            style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor),
+          ),
         ],
       ),
     );
+  }
+
+  Widget? _buildParentSubtitle() {
+    if (widget.summary.subSummaries.isEmpty) {
+      return null;
+    }
+    return Text("${widget.summary.subSummaries.length} sub-categories");
   }
 
   Widget _buildSub(CategoryViewSummaryData sub) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: SizedBox(
-        width: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [BudgetIcon(name: sub.iconName, color: sub.iconColor, size: 20)],
-        ),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: BudgetIcon(name: sub.iconName, color: sub.iconColor, size: 20),
       ),
-      title: Text(sub.categoryName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+      title: Text(sub.categoryName, style: const TextStyle(fontSize: 15)),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(value: sub.value, currency: sub.currency, color: sub.categoryType.color, fontSize: 14),
-          Text("${sub.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor)),
+          CurrencyText(
+            value: sub.value,
+            currency: sub.currency,
+            color: sub.categoryType.color,
+            fontSize: 14,
+          ),
+          Text(
+            "${sub.percentage} %",
+            textAlign: TextAlign.end,
+            style: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
+          ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: _toggleExpanded,
+          child: _buildParent(),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: _isExpanded && widget.summary.subSummaries.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Column(
+                    children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList(),
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 }

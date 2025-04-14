@@ -85,7 +85,7 @@ ThemeData createTheme(BuildContext context) {
     ),
     listTileTheme: ListTileThemeData(
       titleTextStyle: TextStyle(fontSize: 16.0),
-      subtitleTextStyle: TextStyle(fontSize: 12.0),
+      subtitleTextStyle: TextStyle(fontSize: 12.0, color: AppColors.secondaryTextColor),
     ),
     dialogTheme: DialogTheme(
       backgroundColor: AppColors.cardColor,
