@@ -68,7 +68,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<void> delete(String id) async {
+  Future<void> deleteById(String id) async {
     final stopwatch = Stopwatch()..start();
     _log("delete by id '$id' from $coloredDomain");
     return execute(table, () async {

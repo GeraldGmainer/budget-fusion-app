@@ -12,7 +12,10 @@ class QueueLocalDataSource {
 
   Future<void> addQueueItem(QueueItem item) async {
     _log("Adding queue item with entityId '${item.entityId}' in ${DomainLogger.applyColor(item.domain.name)}");
-    BudgetLogger.instance.d("add queue item: ${item.domain} / ${item.entityPayload}");
+    BudgetLogger.instance.d("add queue item:\n"
+        "   taskType: ${item.type}\n"
+        "   entityPayload: ${item.entityPayload}\n"
+        "   attempts: ${item.attempts} / done: ${item.done}");
     await db.insert(
       'queue_items',
       {

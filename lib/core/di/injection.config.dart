@@ -49,6 +49,8 @@ import 'package:budget_fusion_app/features/booking/application/cubits/suggestion
     as _i772;
 import 'package:budget_fusion_app/features/booking/application/use_cases/default_account_use_case.dart'
     as _i638;
+import 'package:budget_fusion_app/features/booking/application/use_cases/delete_booking_use_case.dart'
+    as _i383;
 import 'package:budget_fusion_app/features/booking/application/use_cases/load_bookings_use_case.dart'
     as _i624;
 import 'package:budget_fusion_app/features/booking/application/use_cases/load_suggestions_use_case.dart'
@@ -318,6 +320,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i144.SaveBookingUseCase>(
         () => _i144.SaveBookingUseCase(gh<_i714.BookingRepo>()));
+    gh.lazySingleton<_i383.DeleteBookingUseCase>(
+        () => _i383.DeleteBookingUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i190.BookingCubit>(() => _i190.BookingCubit(
@@ -327,6 +331,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i416.SaveBookingCubit>(() => _i416.SaveBookingCubit(
           gh<_i144.SaveBookingUseCase>(),
           gh<_i638.DefaultAccountUseCase>(),
+          gh<_i383.DeleteBookingUseCase>(),
         ));
     gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
           gh<_i885.GenerateBudgetSummaryUseCase>(),

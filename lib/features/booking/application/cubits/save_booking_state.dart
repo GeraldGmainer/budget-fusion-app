@@ -18,6 +18,11 @@ class SaveBookingState with _$SaveBookingState {
     required BookingDraft draft,
   }) = _Loaded;
 
+  const factory SaveBookingState.deleted({
+    required BookingDraft draft,
+    required Booking booking,
+  }) = _Deleted;
+
   const factory SaveBookingState.error({
     required BookingDraft draft,
     required String message,

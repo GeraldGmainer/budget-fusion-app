@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/booking/application/use_cases/delete_booking_use_case.dart';
 import 'package:budget_fusion_app/features/booking/domain/entities/booking_draft.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
@@ -18,8 +19,13 @@ part 'save_booking_state.dart';
 class SaveBookingCubit extends Cubit<SaveBookingState> {
   final DefaultAccountUseCase _defaultAccountUseCase;
   final SaveBookingUseCase _saveBookingUseCase;
+  final DeleteBookingUseCase _deleteBookingUseCase;
 
-  SaveBookingCubit(this._saveBookingUseCase, this._defaultAccountUseCase) : super(SaveBookingState.initial(draft: _initialDraft()));
+  SaveBookingCubit(
+    this._saveBookingUseCase,
+    this._defaultAccountUseCase,
+    this._deleteBookingUseCase,
+  ) : super(SaveBookingState.initial(draft: _initialDraft()));
 
   static BookingDraft _initialDraft({Account? account}) {
     return BookingDraft(date: DateTime.now(), amount: Decimal.zero, account: account);
@@ -34,10 +40,10 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
         emit(SaveBookingState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
       }
     } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stack);
+      BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
       emit(SaveBookingState.error(draft: state.draft, message: e.message));
     } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stack);
+      BudgetLogger.instance.e("${runtimeType.toString()} init Exception", e, stack);
       emit(SaveBookingState.error(draft: state.draft, message: 'error.default'));
     }
   }
@@ -53,10 +59,24 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
       await _saveBookingUseCase(draft);
       emit(SaveBookingState.loaded(draft: draft));
     } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stack);
+      BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
       emit(SaveBookingState.error(draft: draft, message: e.message));
     } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stack);
+      BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stack);
+      emit(SaveBookingState.error(draft: draft, message: 'error.default'));
+    }
+  }
+
+  Future<void> delete(Booking? booking) async {
+    final draft = state.draft;
+    try {
+      await _deleteBookingUseCase(booking!);
+      emit(SaveBookingState.deleted(draft: draft, booking: booking));
+    } on TranslatedException catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
+      emit(SaveBookingState.error(draft: draft, message: e.message));
+    } catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stack);
       emit(SaveBookingState.error(draft: draft, message: 'error.default'));
     }
   }

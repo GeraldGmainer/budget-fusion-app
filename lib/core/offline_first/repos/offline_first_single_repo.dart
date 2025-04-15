@@ -20,6 +20,8 @@ abstract class OfflineFirstSingleRepo<T, U extends OfflineFirstDto> {
 
   Future<void> save(T entity) => manager.save(toDto(entity));
 
+  Future<void> delete(T entity) => manager.delete(toDto(entity));
+
   Future<void> reset() => manager.reset();
 
   void dispose() => manager.dispose();

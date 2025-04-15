@@ -23,6 +23,7 @@ mixin _$SaveBookingState {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -32,6 +33,7 @@ mixin _$SaveBookingState {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -41,6 +43,7 @@ mixin _$SaveBookingState {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) =>
@@ -51,6 +54,7 @@ mixin _$SaveBookingState {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -60,6 +64,7 @@ mixin _$SaveBookingState {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +74,7 @@ mixin _$SaveBookingState {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -205,6 +211,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) {
     return initial(draft);
@@ -217,6 +224,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) {
     return initial?.call(draft);
@@ -229,6 +237,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -245,6 +254,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -257,6 +267,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -269,6 +280,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -370,6 +382,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) {
     return draftUpdate(draft);
@@ -382,6 +395,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) {
     return draftUpdate?.call(draft);
@@ -394,6 +408,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -410,6 +425,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
     return draftUpdate(this);
@@ -422,6 +438,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
     return draftUpdate?.call(this);
@@ -434,6 +451,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -535,6 +553,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) {
     return loading(draft);
@@ -547,6 +566,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) {
     return loading?.call(draft);
@@ -559,6 +579,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -575,6 +596,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -587,6 +609,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -599,6 +622,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -700,6 +724,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) {
     return loaded(draft);
@@ -712,6 +737,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) {
     return loaded?.call(draft);
@@ -724,6 +750,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -740,6 +767,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
     return loaded(this);
@@ -752,6 +780,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
     return loaded?.call(this);
@@ -764,6 +793,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -785,6 +815,199 @@ abstract class _Loaded implements SaveBookingState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DeletedImplCopyWith<$Res>
+    implements $SaveBookingStateCopyWith<$Res> {
+  factory _$$DeletedImplCopyWith(
+          _$DeletedImpl value, $Res Function(_$DeletedImpl) then) =
+      __$$DeletedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({BookingDraft draft, Booking booking});
+
+  @override
+  $BookingDraftCopyWith<$Res> get draft;
+  $BookingCopyWith<$Res> get booking;
+}
+
+/// @nodoc
+class __$$DeletedImplCopyWithImpl<$Res>
+    extends _$SaveBookingStateCopyWithImpl<$Res, _$DeletedImpl>
+    implements _$$DeletedImplCopyWith<$Res> {
+  __$$DeletedImplCopyWithImpl(
+      _$DeletedImpl _value, $Res Function(_$DeletedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? draft = null,
+    Object? booking = null,
+  }) {
+    return _then(_$DeletedImpl(
+      draft: null == draft
+          ? _value.draft
+          : draft // ignore: cast_nullable_to_non_nullable
+              as BookingDraft,
+      booking: null == booking
+          ? _value.booking
+          : booking // ignore: cast_nullable_to_non_nullable
+              as Booking,
+    ));
+  }
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookingCopyWith<$Res> get booking {
+    return $BookingCopyWith<$Res>(_value.booking, (value) {
+      return _then(_value.copyWith(booking: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$DeletedImpl implements _Deleted {
+  const _$DeletedImpl({required this.draft, required this.booking});
+
+  @override
+  final BookingDraft draft;
+  @override
+  final Booking booking;
+
+  @override
+  String toString() {
+    return 'SaveBookingState.deleted(draft: $draft, booking: $booking)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeletedImpl &&
+            (identical(other.draft, draft) || other.draft == draft) &&
+            (identical(other.booking, booking) || other.booking == booking));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, draft, booking);
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
+      __$$DeletedImplCopyWithImpl<_$DeletedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft) loading,
+    required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
+    required TResult Function(BookingDraft draft, String message) error,
+  }) {
+    return deleted(draft, booking);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft)? loading,
+    TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
+    TResult? Function(BookingDraft draft, String message)? error,
+  }) {
+    return deleted?.call(draft, booking);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft)? loading,
+    TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
+    TResult Function(BookingDraft draft, String message)? error,
+    required TResult orElse(),
+  }) {
+    if (deleted != null) {
+      return deleted(draft, booking);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
+    required TResult Function(_Error value) error,
+  }) {
+    return deleted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
+    TResult? Function(_Error value)? error,
+  }) {
+    return deleted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (deleted != null) {
+      return deleted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Deleted implements SaveBookingState {
+  const factory _Deleted(
+      {required final BookingDraft draft,
+      required final Booking booking}) = _$DeletedImpl;
+
+  @override
+  BookingDraft get draft;
+  Booking get booking;
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -873,6 +1096,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, String message) error,
   }) {
     return error(draft, message);
@@ -885,6 +1109,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, String message)? error,
   }) {
     return error?.call(draft, message);
@@ -897,6 +1122,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, Booking booking)? deleted,
     TResult Function(BookingDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -913,6 +1139,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -925,6 +1152,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -937,6 +1165,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
