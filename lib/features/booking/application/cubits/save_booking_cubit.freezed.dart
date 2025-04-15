@@ -20,6 +20,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, String message) error,
@@ -28,6 +29,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, String message)? error,
@@ -36,6 +38,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, String message)? error,
@@ -45,6 +48,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
@@ -53,6 +57,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
@@ -61,6 +66,7 @@ mixin _$SaveBookingState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
@@ -196,6 +202,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, String message) error,
@@ -207,6 +214,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, String message)? error,
@@ -218,6 +226,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, String message)? error,
@@ -233,6 +242,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
@@ -244,6 +254,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
@@ -255,6 +266,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
@@ -278,6 +290,171 @@ abstract class _Initial implements SaveBookingState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DraftUpdateImplCopyWith<$Res>
+    implements $SaveBookingStateCopyWith<$Res> {
+  factory _$$DraftUpdateImplCopyWith(
+          _$DraftUpdateImpl value, $Res Function(_$DraftUpdateImpl) then) =
+      __$$DraftUpdateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({BookingDraft draft});
+
+  @override
+  $BookingDraftCopyWith<$Res> get draft;
+}
+
+/// @nodoc
+class __$$DraftUpdateImplCopyWithImpl<$Res>
+    extends _$SaveBookingStateCopyWithImpl<$Res, _$DraftUpdateImpl>
+    implements _$$DraftUpdateImplCopyWith<$Res> {
+  __$$DraftUpdateImplCopyWithImpl(
+      _$DraftUpdateImpl _value, $Res Function(_$DraftUpdateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? draft = null,
+  }) {
+    return _then(_$DraftUpdateImpl(
+      draft: null == draft
+          ? _value.draft
+          : draft // ignore: cast_nullable_to_non_nullable
+              as BookingDraft,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DraftUpdateImpl implements _DraftUpdate {
+  _$DraftUpdateImpl({required this.draft});
+
+  @override
+  final BookingDraft draft;
+
+  @override
+  String toString() {
+    return 'SaveBookingState.draftUpdate(draft: $draft)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DraftUpdateImpl &&
+            (identical(other.draft, draft) || other.draft == draft));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, draft);
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DraftUpdateImplCopyWith<_$DraftUpdateImpl> get copyWith =>
+      __$$DraftUpdateImplCopyWithImpl<_$DraftUpdateImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft) loading,
+    required TResult Function(BookingDraft draft) loaded,
+    required TResult Function(BookingDraft draft, String message) error,
+  }) {
+    return draftUpdate(draft);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft)? loading,
+    TResult? Function(BookingDraft draft)? loaded,
+    TResult? Function(BookingDraft draft, String message)? error,
+  }) {
+    return draftUpdate?.call(draft);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft)? loading,
+    TResult Function(BookingDraft draft)? loaded,
+    TResult Function(BookingDraft draft, String message)? error,
+    required TResult orElse(),
+  }) {
+    if (draftUpdate != null) {
+      return draftUpdate(draft);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return draftUpdate(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return draftUpdate?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (draftUpdate != null) {
+      return draftUpdate(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DraftUpdate implements SaveBookingState {
+  factory _DraftUpdate({required final BookingDraft draft}) = _$DraftUpdateImpl;
+
+  @override
+  BookingDraft get draft;
+
+  /// Create a copy of SaveBookingState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DraftUpdateImplCopyWith<_$DraftUpdateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -355,6 +532,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, String message) error,
@@ -366,6 +544,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, String message)? error,
@@ -377,6 +556,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, String message)? error,
@@ -392,6 +572,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
@@ -403,6 +584,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
@@ -414,6 +596,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
@@ -514,6 +697,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, String message) error,
@@ -525,6 +709,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, String message)? error,
@@ -536,6 +721,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, String message)? error,
@@ -551,6 +737,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
@@ -562,6 +749,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
@@ -573,6 +761,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
@@ -681,6 +870,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
+    required TResult Function(BookingDraft draft) draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, String message) error,
@@ -692,6 +882,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
+    TResult? Function(BookingDraft draft)? draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, String message)? error,
@@ -703,6 +894,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
+    TResult Function(BookingDraft draft)? draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, String message)? error,
@@ -718,6 +910,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
@@ -729,6 +922,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
@@ -740,6 +934,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,

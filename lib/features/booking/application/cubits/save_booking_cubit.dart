@@ -29,9 +29,9 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
     try {
       if (booking == null) {
         final defaultAccount = await _defaultAccountUseCase();
-        emit(SaveBookingState.initial(draft: _initialDraft(account: defaultAccount)));
+        emit(SaveBookingState.draftUpdate(draft: _initialDraft(account: defaultAccount)));
       } else {
-        emit(SaveBookingState.initial(draft: BookingDraft.fromBooking(booking)));
+        emit(SaveBookingState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
       }
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stack);
@@ -59,5 +59,9 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
       BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stack);
       emit(SaveBookingState.error(draft: draft, message: 'error.default'));
     }
+  }
+
+  void dispose() {
+    emit(SaveBookingState.initial(draft: _initialDraft()));
   }
 }
