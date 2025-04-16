@@ -181,7 +181,7 @@ class ParentCategoryList extends StatelessWidget {
         return ValueListenableBuilder<Category?>(
           valueListenable: SelectedCategoryNotifierProvider.of(context),
           builder: (context, selectedCat, _) {
-            final parents = categories.where((c) => c.parent == null && c.categoryType == categoryType).toList();
+            final parents = categories.where((c) => c.isParent && c.categoryType == categoryType).toList();
             sortByName(parents);
             return ListView.builder(
               itemCount: parents.length + 1,

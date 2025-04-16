@@ -85,7 +85,7 @@ class SummaryDataGenerator {
     for (final entry in groupMap.entries.toList()) {
       final id = entry.key;
       final group = entry.value;
-      if (group.category.parent != null) {
+      if (group.category.isSub) {
         final parentId = group.category.parent!.id.toString();
         final parentFromRepo = flatMap[parentId];
         if (parentFromRepo == null) {
