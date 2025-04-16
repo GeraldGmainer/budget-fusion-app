@@ -8,6 +8,8 @@ abstract class ProfileRepo {
 
   Future<void> save(Profile entity);
 
+  Future<void> delete(Profile entity);
+
   Future<void> reset();
 
   void dispose();

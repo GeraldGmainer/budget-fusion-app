@@ -9,7 +9,7 @@ class TransactionItem extends StatelessWidget {
   const TransactionItem({super.key, required this.booking, required this.currency});
 
   _onTap(BuildContext context) {
-    // TODO
+    Navigator.of(context).pushNamed(AppRoutes.saveBooking, arguments: booking);
   }
 
   @override

@@ -88,7 +88,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
             controller: controller,
             focusNode: focusNode,
             onChanged: _onChanged,
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 13),
             maxLength: FeatureConstants.descriptionMaxLength,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.edit, size: 22),

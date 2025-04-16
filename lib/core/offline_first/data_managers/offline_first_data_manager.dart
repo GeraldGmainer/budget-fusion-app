@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart';
-import 'package:collection/collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../utils/utils.dart';
@@ -94,13 +93,18 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Future<void> delete(Dto dto) async {
     _log("Deleting DTO with id '${dto.id.value}' for domain $coloredDomain");
-    cacheManager.updateList(domainType, (list) {
-      final oldList = list != null ? (list as List<Dto>) : <Dto>[];
-      return oldList.whereNot((e) => e.id == dto.id).toList();
-    });
-    _emitToStream(cacheManager.get<List<Dto>>(domainType) ?? []);
+    await localSource.deleteById(dto.id.value);
 
-    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: dto.id.value);
+    final dtos = await localSource.fetchAll();
+    cacheManager.set(domainType, dtos);
+    _emitToStream(dtos);
+
+    final item = QueueItem(
+      entityId: dto.id.value,
+      domain: domainType,
+      type: QueueTaskType.delete,
+      entityPayload: jsonEncode(dto.toJson()),
+    );
     _log("Queuing delete for id '${dto.id.value}' for domain $coloredDomain");
     unawaited(queueManager.add(item));
   }
@@ -154,9 +158,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("Resetting OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
     cacheManager.invalidateCache(domainType);
     await localSource.deleteAll();
-    // await streamController.close();
-    // streamController = ReplaySubject<List<Dto>>(maxSize: 1);
-    // streamController.add([]);
   }
 
   void dispose() {

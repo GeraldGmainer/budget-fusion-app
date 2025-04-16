@@ -20,6 +20,7 @@ export 'ui/budget_book/transaction_item.dart';
 export 'ui/budget_book/transaction_list.dart';
 //
 export 'ui/common/card_with_action.dart';
+export 'ui/common/confirm_dialog.dart';
 export 'ui/common/dynamic_sliver_app_bar.dart';
 export 'ui/common/error_text.dart';
 export 'ui/common/filter_chip_group.dart';

@@ -7,6 +7,8 @@ abstract class BookingRepo {
 
   Future<void> save(Booking entity);
 
+  Future<void> delete(Booking entity);
+
   Future<void> reset();
 
   void dispose();

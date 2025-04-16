@@ -6,6 +6,10 @@ class SaveBookingState with _$SaveBookingState {
     required BookingDraft draft,
   }) = _Initial;
 
+  factory SaveBookingState.draftUpdate({
+    required BookingDraft draft,
+  }) = _DraftUpdate;
+
   const factory SaveBookingState.loading({
     required BookingDraft draft,
   }) = _Loading;
@@ -13,6 +17,11 @@ class SaveBookingState with _$SaveBookingState {
   const factory SaveBookingState.loaded({
     required BookingDraft draft,
   }) = _Loaded;
+
+  const factory SaveBookingState.deleted({
+    required BookingDraft draft,
+    required Booking booking,
+  }) = _Deleted;
 
   const factory SaveBookingState.error({
     required BookingDraft draft,

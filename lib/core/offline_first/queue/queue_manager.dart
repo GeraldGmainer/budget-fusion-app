@@ -110,7 +110,7 @@ class QueueManager {
             await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
             break;
           case QueueTaskType.delete:
-            await remoteSource.delete(item.entityId);
+            await remoteSource.deleteById(item.entityId);
             break;
         }
       });
