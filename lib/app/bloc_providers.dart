@@ -20,7 +20,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<AccountCubit>(create: (_) => GetIt.I<AccountCubit>()),
     BlocProvider<CategoryCubit>(create: (_) => GetIt.I<CategoryCubit>()),
     BlocProvider<BookingCubit>(create: (_) => GetIt.I<BookingCubit>()),
-    BlocProvider<SaveBookingCubit>(create: (_) => GetIt.I<SaveBookingCubit>()),
+    BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>()),
     BlocProvider<CalculatorCubit>(create: (_) => GetIt.I<CalculatorCubit>()),
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),

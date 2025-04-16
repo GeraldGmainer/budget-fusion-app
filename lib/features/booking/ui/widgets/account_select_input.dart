@@ -1,5 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/booking/application/cubits/save_booking_cubit.dart';
+import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class AccountSelectInput extends StatelessWidget {
     );
 
     if (selectedAccount != null && context.mounted) {
-      context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(account: selectedAccount));
+      context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: selectedAccount));
     }
   }
 

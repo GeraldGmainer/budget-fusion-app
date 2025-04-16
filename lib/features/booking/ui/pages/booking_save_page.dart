@@ -6,44 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
-import '../../application/cubits/save_booking_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
-import '../screens/save_booking_tab1.dart';
-import '../screens/save_booking_tab2.dart';
+import '../screens/booking_save_tab1.dart';
+import '../screens/booking_save_tab2.dart';
 import '../widgets/amount_display.dart';
 
-class SaveBookingPage extends StatefulWidget {
+class BookingSavePage extends StatefulWidget {
   final Booking? model;
 
-  const SaveBookingPage({super.key, required this.model});
+  const BookingSavePage({super.key, required this.model});
 
   @override
-  State<SaveBookingPage> createState() => _SaveBookingPageState();
+  State<BookingSavePage> createState() => _BookingSavePageState();
 }
 
-class _SaveBookingPageState extends State<SaveBookingPage> {
+class _BookingSavePageState extends State<BookingSavePage> {
   final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
   int _currentPage = 0;
-  late SaveBookingCubit _saveBookingCubit;
+  late BookingSaveCubit _bookingSaveCubit;
   late Future _cubitInitialized;
 
   @override
   void initState() {
     super.initState();
-    _saveBookingCubit = BlocProvider.of<SaveBookingCubit>(context);
-    _cubitInitialized = context.read<SaveBookingCubit>().stream.firstWhere((state) => state.maybeWhen(draftUpdate: (_) => true, orElse: () => false));
+    _bookingSaveCubit = BlocProvider.of<BookingSaveCubit>(context);
+    _cubitInitialized = context.read<BookingSaveCubit>().stream.firstWhere((state) => state.maybeWhen(draftUpdate: (_) => true, orElse: () => false));
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
-    _saveBookingCubit.init(widget.model);
+    _bookingSaveCubit.init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-    _saveBookingCubit.dispose();
+    _bookingSaveCubit.dispose();
     super.dispose();
   }
 
@@ -83,7 +83,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
       headerText: "booking.dialog.delete_title",
       bodyText: "booking.dialog.delete_body",
       onOK: () {
-        BlocProvider.of<SaveBookingCubit>(context).delete(widget.model);
+        BlocProvider.of<BookingSaveCubit>(context).delete(widget.model);
       },
     );
   }
@@ -114,7 +114,7 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
   }
 
   Widget _buildPage() {
-    return BlocConsumer<SaveBookingCubit, SaveBookingState>(
+    return BlocConsumer<BookingSaveCubit, BookingSaveState>(
       buildWhen: (previous, current) {
         return previous.draft != current.draft;
       },
@@ -152,8 +152,8 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            SaveBookingTab1(draft: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
-            SaveBookingTab2(draft: draft),
+            BookingSaveTab1(draft: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
+            BookingSaveTab2(draft: draft),
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/booking_save_cubit.dart';
 
 class TransactionTypeInput extends StatelessWidget {
   final BookingDraft draft;
@@ -29,7 +29,7 @@ class TransactionTypeInput extends StatelessWidget {
     );
 
     if (selectedValue != null && context.mounted) {
-      context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedValue));
+      context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedValue));
     }
   }
 

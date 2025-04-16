@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _forgotPassword() {
-    Navigator.of(context).pushNamed(AppRoutes.forgotPassword);
+    Navigator.of(context).pushNamed(AppRoutes.passwordForgot);
   }
 
   _signUp() {

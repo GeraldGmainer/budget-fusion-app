@@ -12,20 +12,20 @@ import 'package:injectable/injectable.dart';
 import '../use_cases/default_account_use_case.dart';
 import '../use_cases/save_booking_use_case.dart';
 
-part 'save_booking_cubit.freezed.dart';
-part 'save_booking_state.dart';
+part 'booking_save_cubit.freezed.dart';
+part 'booking_save_state.dart';
 
 @injectable
-class SaveBookingCubit extends Cubit<SaveBookingState> {
+class BookingSaveCubit extends Cubit<BookingSaveState> {
   final DefaultAccountUseCase _defaultAccountUseCase;
   final SaveBookingUseCase _saveBookingUseCase;
   final DeleteBookingUseCase _deleteBookingUseCase;
 
-  SaveBookingCubit(
+  BookingSaveCubit(
     this._saveBookingUseCase,
     this._defaultAccountUseCase,
     this._deleteBookingUseCase,
-  ) : super(SaveBookingState.initial(draft: _initialDraft()));
+  ) : super(BookingSaveState.initial(draft: _initialDraft()));
 
   static BookingDraft _initialDraft({Account? account}) {
     return BookingDraft(date: DateTime.now(), amount: Decimal.zero, account: account);
@@ -35,16 +35,16 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
     try {
       if (booking == null) {
         final defaultAccount = await _defaultAccountUseCase();
-        emit(SaveBookingState.draftUpdate(draft: _initialDraft(account: defaultAccount)));
+        emit(BookingSaveState.draftUpdate(draft: _initialDraft(account: defaultAccount)));
       } else {
-        emit(SaveBookingState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
+        emit(BookingSaveState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
       }
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
-      emit(SaveBookingState.error(draft: state.draft, message: e.message));
+      emit(BookingSaveState.error(draft: state.draft, message: e.message));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init Exception", e, stack);
-      emit(SaveBookingState.error(draft: state.draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: state.draft, message: 'error.default'));
     }
   }
 
@@ -54,16 +54,16 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
 
   Future<void> save() async {
     final draft = state.draft;
-    emit(SaveBookingState.loading(draft: draft));
+    emit(BookingSaveState.loading(draft: draft));
     try {
       await _saveBookingUseCase(draft);
-      emit(SaveBookingState.loaded(draft: draft));
+      emit(BookingSaveState.loaded(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
-      emit(SaveBookingState.error(draft: draft, message: e.message));
+      emit(BookingSaveState.error(draft: draft, message: e.message));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stack);
-      emit(SaveBookingState.error(draft: draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: draft, message: 'error.default'));
     }
   }
 
@@ -71,17 +71,17 @@ class SaveBookingCubit extends Cubit<SaveBookingState> {
     final draft = state.draft;
     try {
       await _deleteBookingUseCase(booking!);
-      emit(SaveBookingState.deleted(draft: draft, booking: booking));
+      emit(BookingSaveState.deleted(draft: draft, booking: booking));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
-      emit(SaveBookingState.error(draft: draft, message: e.message));
+      emit(BookingSaveState.error(draft: draft, message: e.message));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stack);
-      emit(SaveBookingState.error(draft: draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: draft, message: 'error.default'));
     }
   }
 
   void dispose() {
-    emit(SaveBookingState.initial(draft: _initialDraft()));
+    emit(BookingSaveState.initial(draft: _initialDraft()));
   }
 }

@@ -1,8 +1,9 @@
 class AppRoutes {
   static const login = "/login";
-  static const forgotPassword = "/forgotPassword";
-  static const resetPassword = "resetPassword";
+  static const passwordForgot = "/passwordForgot";
+  static const passwordReset = "/passwordReset";
   static const signUp = "/signUp";
   static const main = "/main";
-  static const saveBooking = "/saveBooking";
+  static const bookingSave = "/bookingSave";
+  static const categoryList = "/categoryList";
 }

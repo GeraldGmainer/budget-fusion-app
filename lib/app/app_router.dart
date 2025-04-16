@@ -1,9 +1,10 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/booking/booking.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+import '../features/account/account.dart';
 import '../features/auth/auth.dart';
+import '../features/booking/booking.dart';
 import '../main/main.dart';
 
 class AppRouter {
@@ -14,14 +15,22 @@ class AppRouter {
       case AppRoutes.login:
         return MyCustomRoute(
           builder: (context) => LoginPage(),
+          settings: RouteSettings(name: AppRoutes.login),
         );
       case AppRoutes.main:
         return MyCustomRoute(
           builder: (context) => MainPage(),
+          settings: RouteSettings(name: AppRoutes.main),
         );
-      case AppRoutes.saveBooking:
+      case AppRoutes.bookingSave:
         return MyCustomRoute(
-          builder: (context) => SaveBookingPage(model: settings.arguments as Booking?),
+          builder: (context) => BookingSavePage(model: settings.arguments as Booking?),
+          settings: RouteSettings(name: AppRoutes.bookingSave),
+        );
+      case AppRoutes.categoryList:
+        return MyCustomRoute(
+          builder: (context) => CategoryListPage(),
+          settings: RouteSettings(name: AppRoutes.categoryList),
         );
 
       // case SignUpPage.route:
@@ -52,10 +61,6 @@ class AppRouter {
       //   return MyCustomRoute(
       //     builder: (context) => BookingListPage(pageModel: settings.arguments as BookingListPageModel),
       //   );
-      // case CategoryListPage.route:
-      //   return MyCustomRoute(
-      //     builder: (context) => CategoryListPage(),
-      //   );
       default:
         return MaterialPageRoute(
           builder: (context) => SplashPage(),
@@ -65,5 +70,8 @@ class AppRouter {
 }
 
 class MyCustomRoute<T> extends MaterialPageRoute<T> {
-  MyCustomRoute({required super.builder, super.settings});
+  MyCustomRoute({
+    required super.builder,
+    super.settings,
+  });
 }

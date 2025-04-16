@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../data/dtos/booking_suggestion_dto.dart';
 import '../../domain/entities/booking_draft.dart';
@@ -29,12 +29,12 @@ class _DescriptionInputState extends State<DescriptionInput> {
   }
 
   _onChanged(String value) {
-    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(description: value));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
   }
 
   _onSelect(String value) {
     _controller.text = value;
-    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(description: value));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
     FocusScope.of(context).unfocus();
   }
 

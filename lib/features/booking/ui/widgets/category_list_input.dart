@@ -1,5 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/booking/application/cubits/save_booking_cubit.dart';
+import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +12,7 @@ class CategoryListInput extends StatelessWidget {
   const CategoryListInput({required this.draft});
 
   _onCategoryTap(BuildContext context, Category category) {
-    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(category: category));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
   }
 
   _reload(BuildContext context) {

@@ -41,10 +41,10 @@ import 'package:budget_fusion_app/features/auth/data/repos/user_repo.dart'
     as _i871;
 import 'package:budget_fusion_app/features/booking/application/cubits/booking_cubit.dart'
     as _i190;
+import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart'
+    as _i664;
 import 'package:budget_fusion_app/features/booking/application/cubits/calculator_cubit.dart'
     as _i967;
-import 'package:budget_fusion_app/features/booking/application/cubits/save_booking_cubit.dart'
-    as _i416;
 import 'package:budget_fusion_app/features/booking/application/cubits/suggestion_cubit.dart'
     as _i772;
 import 'package:budget_fusion_app/features/booking/application/use_cases/default_account_use_case.dart'
@@ -328,7 +328,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i332.WatchBookingsUseCase>(),
           gh<_i624.LoadBookingsUseCase>(),
         ));
-    gh.factory<_i416.SaveBookingCubit>(() => _i416.SaveBookingCubit(
+    gh.factory<_i664.BookingSaveCubit>(() => _i664.BookingSaveCubit(
           gh<_i144.SaveBookingUseCase>(),
           gh<_i638.DefaultAccountUseCase>(),
           gh<_i383.DeleteBookingUseCase>(),

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'save_booking_cubit.dart';
+part of 'booking_save_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$SaveBookingState {
+mixin _$BookingSaveState {
   BookingDraft get draft => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -80,18 +80,18 @@ mixin _$SaveBookingState {
   }) =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SaveBookingStateCopyWith<SaveBookingState> get copyWith =>
+  $BookingSaveStateCopyWith<BookingSaveState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SaveBookingStateCopyWith<$Res> {
-  factory $SaveBookingStateCopyWith(
-          SaveBookingState value, $Res Function(SaveBookingState) then) =
-      _$SaveBookingStateCopyWithImpl<$Res, SaveBookingState>;
+abstract class $BookingSaveStateCopyWith<$Res> {
+  factory $BookingSaveStateCopyWith(
+          BookingSaveState value, $Res Function(BookingSaveState) then) =
+      _$BookingSaveStateCopyWithImpl<$Res, BookingSaveState>;
   @useResult
   $Res call({BookingDraft draft});
 
@@ -99,16 +99,16 @@ abstract class $SaveBookingStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SaveBookingStateCopyWithImpl<$Res, $Val extends SaveBookingState>
-    implements $SaveBookingStateCopyWith<$Res> {
-  _$SaveBookingStateCopyWithImpl(this._value, this._then);
+class _$BookingSaveStateCopyWithImpl<$Res, $Val extends BookingSaveState>
+    implements $BookingSaveStateCopyWith<$Res> {
+  _$BookingSaveStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -123,7 +123,7 @@ class _$SaveBookingStateCopyWithImpl<$Res, $Val extends SaveBookingState>
     ) as $Val);
   }
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -136,7 +136,7 @@ class _$SaveBookingStateCopyWithImpl<$Res, $Val extends SaveBookingState>
 
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
           _$InitialImpl value, $Res Function(_$InitialImpl) then) =
       __$$InitialImplCopyWithImpl<$Res>;
@@ -150,13 +150,13 @@ abstract class _$$InitialImplCopyWith<$Res>
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -182,7 +182,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'SaveBookingState.initial(draft: $draft)';
+    return 'BookingSaveState.initial(draft: $draft)';
   }
 
   @override
@@ -196,7 +196,7 @@ class _$InitialImpl implements _Initial {
   @override
   int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -291,13 +291,13 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements SaveBookingState {
+abstract class _Initial implements BookingSaveState {
   factory _Initial({required final BookingDraft draft}) = _$InitialImpl;
 
   @override
   BookingDraft get draft;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -307,7 +307,7 @@ abstract class _Initial implements SaveBookingState {
 
 /// @nodoc
 abstract class _$$DraftUpdateImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$DraftUpdateImplCopyWith(
           _$DraftUpdateImpl value, $Res Function(_$DraftUpdateImpl) then) =
       __$$DraftUpdateImplCopyWithImpl<$Res>;
@@ -321,13 +321,13 @@ abstract class _$$DraftUpdateImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DraftUpdateImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$DraftUpdateImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$DraftUpdateImpl>
     implements _$$DraftUpdateImplCopyWith<$Res> {
   __$$DraftUpdateImplCopyWithImpl(
       _$DraftUpdateImpl _value, $Res Function(_$DraftUpdateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -353,7 +353,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
 
   @override
   String toString() {
-    return 'SaveBookingState.draftUpdate(draft: $draft)';
+    return 'BookingSaveState.draftUpdate(draft: $draft)';
   }
 
   @override
@@ -367,7 +367,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   @override
   int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -462,13 +462,13 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   }
 }
 
-abstract class _DraftUpdate implements SaveBookingState {
+abstract class _DraftUpdate implements BookingSaveState {
   factory _DraftUpdate({required final BookingDraft draft}) = _$DraftUpdateImpl;
 
   @override
   BookingDraft get draft;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -478,7 +478,7 @@ abstract class _DraftUpdate implements SaveBookingState {
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
           _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
@@ -492,13 +492,13 @@ abstract class _$$LoadingImplCopyWith<$Res>
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -524,7 +524,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'SaveBookingState.loading(draft: $draft)';
+    return 'BookingSaveState.loading(draft: $draft)';
   }
 
   @override
@@ -538,7 +538,7 @@ class _$LoadingImpl implements _Loading {
   @override
   int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -633,13 +633,13 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements SaveBookingState {
+abstract class _Loading implements BookingSaveState {
   const factory _Loading({required final BookingDraft draft}) = _$LoadingImpl;
 
   @override
   BookingDraft get draft;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -649,7 +649,7 @@ abstract class _Loading implements SaveBookingState {
 
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
@@ -663,13 +663,13 @@ abstract class _$$LoadedImplCopyWith<$Res>
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -695,7 +695,7 @@ class _$LoadedImpl implements _Loaded {
 
   @override
   String toString() {
-    return 'SaveBookingState.loaded(draft: $draft)';
+    return 'BookingSaveState.loaded(draft: $draft)';
   }
 
   @override
@@ -709,7 +709,7 @@ class _$LoadedImpl implements _Loaded {
   @override
   int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -804,13 +804,13 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements SaveBookingState {
+abstract class _Loaded implements BookingSaveState {
   const factory _Loaded({required final BookingDraft draft}) = _$LoadedImpl;
 
   @override
   BookingDraft get draft;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -820,7 +820,7 @@ abstract class _Loaded implements SaveBookingState {
 
 /// @nodoc
 abstract class _$$DeletedImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$DeletedImplCopyWith(
           _$DeletedImpl value, $Res Function(_$DeletedImpl) then) =
       __$$DeletedImplCopyWithImpl<$Res>;
@@ -835,13 +835,13 @@ abstract class _$$DeletedImplCopyWith<$Res>
 
 /// @nodoc
 class __$$DeletedImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$DeletedImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$DeletedImpl>
     implements _$$DeletedImplCopyWith<$Res> {
   __$$DeletedImplCopyWithImpl(
       _$DeletedImpl _value, $Res Function(_$DeletedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -861,7 +861,7 @@ class __$$DeletedImplCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -884,7 +884,7 @@ class _$DeletedImpl implements _Deleted {
 
   @override
   String toString() {
-    return 'SaveBookingState.deleted(draft: $draft, booking: $booking)';
+    return 'BookingSaveState.deleted(draft: $draft, booking: $booking)';
   }
 
   @override
@@ -899,7 +899,7 @@ class _$DeletedImpl implements _Deleted {
   @override
   int get hashCode => Object.hash(runtimeType, draft, booking);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -994,7 +994,7 @@ class _$DeletedImpl implements _Deleted {
   }
 }
 
-abstract class _Deleted implements SaveBookingState {
+abstract class _Deleted implements BookingSaveState {
   const factory _Deleted(
       {required final BookingDraft draft,
       required final Booking booking}) = _$DeletedImpl;
@@ -1003,7 +1003,7 @@ abstract class _Deleted implements SaveBookingState {
   BookingDraft get draft;
   Booking get booking;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1013,7 +1013,7 @@ abstract class _Deleted implements SaveBookingState {
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res>
-    implements $SaveBookingStateCopyWith<$Res> {
+    implements $BookingSaveStateCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
@@ -1027,13 +1027,13 @@ abstract class _$$ErrorImplCopyWith<$Res>
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$SaveBookingStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$BookingSaveStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1066,7 +1066,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'SaveBookingState.error(draft: $draft, message: $message)';
+    return 'BookingSaveState.error(draft: $draft, message: $message)';
   }
 
   @override
@@ -1081,7 +1081,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, draft, message);
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -1176,7 +1176,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements SaveBookingState {
+abstract class _Error implements BookingSaveState {
   const factory _Error(
       {required final BookingDraft draft,
       required final String message}) = _$ErrorImpl;
@@ -1185,7 +1185,7 @@ abstract class _Error implements SaveBookingState {
   BookingDraft get draft;
   String get message;
 
-  /// Create a copy of SaveBookingState
+  /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
