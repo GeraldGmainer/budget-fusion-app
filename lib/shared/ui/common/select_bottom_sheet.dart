@@ -35,20 +35,6 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
     this.itemLabelBuilder,
   });
 
-  Widget _buildTile(BuildContext context, T item) {
-    return ListTile(
-      leading: Radio<T>(
-        value: item,
-        groupValue: selectedItem,
-        onChanged: (T? value) {
-          Navigator.pop(context, value);
-        },
-      ),
-      title: itemLabelBuilder != null ? itemLabelBuilder!(item) : Text(item.toString()),
-      onTap: () => Navigator.pop(context, item),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,6 +59,21 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTile(BuildContext context, T item) {
+    return ListTile(
+      leading: Radio<T>(
+        visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity, vertical: VisualDensity.minimumDensity),
+        value: item,
+        groupValue: selectedItem,
+        onChanged: (T? value) {
+          Navigator.pop(context, value);
+        },
+      ),
+      title: itemLabelBuilder != null ? itemLabelBuilder!(item) : Text(item.toString()),
+      onTap: () => Navigator.pop(context, item),
     );
   }
 

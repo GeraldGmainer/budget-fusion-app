@@ -13,7 +13,6 @@ import '../../domain/entities/booking_draft.dart';
 import '../screens/save_booking_tab1.dart';
 import '../screens/save_booking_tab2.dart';
 import '../widgets/amount_display.dart';
-import '../widgets/category_type_button.dart';
 
 class SaveBookingPage extends StatefulWidget {
   final Booking? model;
@@ -131,7 +130,6 @@ class _SaveBookingPageState extends State<SaveBookingPage> {
           appBar: AppBar(
             title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
             actions: [
-              TransactionTypeButton(draft: state.draft),
               if (!state.draft.isCreating) _buildDeleteButton(),
             ],
           ),

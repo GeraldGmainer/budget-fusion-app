@@ -4,7 +4,6 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/booking_draft.dart';
-import 'account_select_input.dart';
 
 class SaveBookingOverview extends StatelessWidget {
   final BookingDraft draft;
@@ -21,22 +20,17 @@ class SaveBookingOverview extends StatelessWidget {
           horizontal: AppDimensions.horizontalPadding,
           vertical: AppDimensions.verticalPadding,
         ),
-        child: Row(
-          children: [
-            AccountSelectInput(draft: draft),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                children: [
-                  Text(DateTimeConverter.toEEEEdMMMM(draft.date), style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: AppDimensions.verticalPadding),
-                  CurrencyText(value: draft.amount, fontSize: 38, color: AppColors.primaryTextColor),
-                  if (showDescription) const SizedBox(height: AppDimensions.verticalPadding),
-                  if (showDescription) Text("${draft.description}"),
-                ],
-              ),
-            ),
-          ],
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Text(DateTimeConverter.toEEEEdMMMM(draft.date), style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: AppDimensions.verticalPadding),
+              CurrencyText(value: draft.amount, fontSize: 38, color: AppColors.primaryTextColor),
+              if (showDescription) const SizedBox(height: AppDimensions.verticalPadding),
+              if (showDescription) Text("${draft.description}"),
+            ],
+          ),
         ),
       ),
     );

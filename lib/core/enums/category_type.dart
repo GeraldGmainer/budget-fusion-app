@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
 enum CategoryType {
@@ -29,6 +30,15 @@ extension CategoryTypeExtensions on CategoryType {
         return AppColors.incomeColor;
       case CategoryType.outcome:
         return AppColors.outcomeColor;
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case CategoryType.income:
+        return CommunityMaterialIcons.cash_plus;
+      case CategoryType.outcome:
+        return CommunityMaterialIcons.cash_minus;
     }
   }
 }

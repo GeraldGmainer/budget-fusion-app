@@ -15,13 +15,21 @@ class AccountSelectInput extends StatelessWidget {
   _onTap(BuildContext context) async {
     final accounts = context.read<AccountCubit>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
 
-    final Account? selectedAccount = await showSelectionBottomSheet<Account?>(
+    final Account? selectedAccount = await showSelectionBottomSheet<Account>(
       context: context,
       title: "booking.select_account",
       items: accounts,
       selectedItem: draft.account,
       itemLabelBuilder: (account) {
-        return Text(account?.name ?? "unknonwn");
+        return Row(
+          children: [
+            SizedBox(
+              width: 45,
+              child: Icon(IconConverter.getIcon(account.iconName), color: ColorConverter.stringToColor(account.iconColor)),
+            ),
+            Text(account.name),
+          ],
+        );
       },
     );
 
@@ -32,14 +40,24 @@ class AccountSelectInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         _onTap(context);
       },
-      child: Container(
-        padding: EdgeInsets.all(8),
-        // color: Colors.red,
-        child: Icon(IconConverter.getIcon(draft.account?.iconName), size: 28),
+      child: InputDecorator(
+        decoration: InputDecoration(
+          labelText: "Account",
+          labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
+          // prefixIcon: CircleAvatar(
+          //   backgroundColor: Colors.transparent,
+          //   child: Icon(Icons.account_balance_wallet, size: 18),
+          // ),
+          suffixIcon: Icon(Icons.arrow_drop_down),
+        ),
+        child: Text(
+          draft.account?.name ?? "Select Account",
+          style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
+        ),
       ),
     );
   }

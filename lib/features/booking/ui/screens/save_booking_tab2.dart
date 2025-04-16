@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/cubits/save_booking_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
+import '../widgets/account_select_input.dart';
 import '../widgets/category_list_input.dart';
 import '../widgets/save_booking_overview.dart';
+import '../widgets/transaction_type_input.dart';
 
 class SaveBookingTab2 extends StatelessWidget {
   final BookingDraft draft;
@@ -28,6 +30,16 @@ class SaveBookingTab2 extends StatelessWidget {
       children: [
         SaveBookingOverview(draft: draft),
         const SizedBox(height: AppDimensions.verticalPadding),
+        Row(
+          children: [
+            SizedBox(width: 8.0),
+            Expanded(child: TransactionTypeInput(draft: draft)),
+            SizedBox(width: 8.0),
+            Expanded(child: AccountSelectInput(draft: draft)),
+            SizedBox(width: 8.0),
+          ],
+        ),
+        const SizedBox(height: AppDimensions.verticalPadding * 2),
         Expanded(
           child: CategoryListInput(draft: draft),
         ),
