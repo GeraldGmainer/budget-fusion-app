@@ -44,7 +44,20 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
       categoryMap[dto.parentId!] = updatedParent;
     }
 
-    return categoryMap.values.toList();
+    return _sortCategories(categoryMap.values.toList());
+  }
+
+  List<Category> _sortCategories(List<Category> categories) {
+    final sorted = List<Category>.from(categories)
+      ..sort((a, b) {
+        final aKey = a.parent?.name ?? a.name;
+        final bKey = b.parent?.name ?? b.name;
+        final parentCmp = aKey.compareTo(bKey);
+        if (parentCmp != 0) return parentCmp;
+
+        return a.name.compareTo(b.name);
+      });
+    return sorted;
   }
 
   @override
