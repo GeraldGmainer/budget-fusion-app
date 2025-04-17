@@ -23,6 +23,7 @@ mixin _$Category {
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
   Category? get parent => throw _privateConstructorUsedError;
+  List<Category> get subcategories => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
@@ -45,6 +46,7 @@ abstract class $CategoryCopyWith<$Res> {
       String iconName,
       String iconColor,
       Category? parent,
+      List<Category> subcategories,
       DateTime updatedAt});
 
   $CategoryCopyWith<$Res>? get parent;
@@ -72,6 +74,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parent = freezed,
+    Object? subcategories = null,
     Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -103,6 +106,10 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as Category?,
+      subcategories: null == subcategories
+          ? _value.subcategories
+          : subcategories // ignore: cast_nullable_to_non_nullable
+              as List<Category>,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -141,6 +148,7 @@ abstract class _$$CategoryImplCopyWith<$Res>
       String iconName,
       String iconColor,
       Category? parent,
+      List<Category> subcategories,
       DateTime updatedAt});
 
   @override
@@ -167,6 +175,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parent = freezed,
+    Object? subcategories = null,
     Object? updatedAt = null,
   }) {
     return _then(_$CategoryImpl(
@@ -198,6 +207,10 @@ class __$$CategoryImplCopyWithImpl<$Res>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as Category?,
+      subcategories: null == subcategories
+          ? _value._subcategories
+          : subcategories // ignore: cast_nullable_to_non_nullable
+              as List<Category>,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -217,8 +230,10 @@ class _$CategoryImpl extends _Category {
       required this.iconName,
       required this.iconColor,
       required this.parent,
+      required final List<Category> subcategories,
       required this.updatedAt})
-      : super._();
+      : _subcategories = subcategories,
+        super._();
 
   @override
   final Uuid id;
@@ -234,12 +249,20 @@ class _$CategoryImpl extends _Category {
   final String iconColor;
   @override
   final Category? parent;
+  final List<Category> _subcategories;
+  @override
+  List<Category> get subcategories {
+    if (_subcategories is EqualUnmodifiableListView) return _subcategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_subcategories);
+  }
+
   @override
   final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, updatedAt: $updatedAt)';
+    return 'Category(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, updatedAt: $updatedAt)';
   }
 
   @override
@@ -257,13 +280,24 @@ class _$CategoryImpl extends _Category {
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
             (identical(other.parent, parent) || other.parent == parent) &&
+            const DeepCollectionEquality()
+                .equals(other._subcategories, _subcategories) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, name, categoryType,
-      iconName, iconColor, parent, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      name,
+      categoryType,
+      iconName,
+      iconColor,
+      parent,
+      const DeepCollectionEquality().hash(_subcategories),
+      updatedAt);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -283,6 +317,7 @@ abstract class _Category extends Category {
       required final String iconName,
       required final String iconColor,
       required final Category? parent,
+      required final List<Category> subcategories,
       required final DateTime updatedAt}) = _$CategoryImpl;
   const _Category._() : super._();
 
@@ -300,6 +335,8 @@ abstract class _Category extends Category {
   String get iconColor;
   @override
   Category? get parent;
+  @override
+  List<Category> get subcategories;
   @override
   DateTime get updatedAt;
 

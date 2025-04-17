@@ -17,6 +17,7 @@ class Category with _$Category {
     required String iconName,
     required String iconColor,
     required Category? parent,
+    required List<Category> subcategories,
     required DateTime updatedAt,
   }) = _Category;
 

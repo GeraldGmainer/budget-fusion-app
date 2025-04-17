@@ -11,12 +11,9 @@ class CategoryListPage extends StatefulWidget {
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
-  final List<String> _tabs = [
-    CategoryType.outcome.text.tr(),
-    CategoryType.income.text.tr(),
-  ];
-  int _selectedIndex = 0;
+  final List<String> _tabs = [CategoryType.outcome.text.tr(), CategoryType.income.text.tr()];
   late final PageController _pageController;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -87,22 +84,24 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   Widget _buildCategoryList(CategoryType type) {
-    return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          loaded: (categories) {
-            final filtered = type == CategoryType.outcome ? categories.parentOutcomeCategories : categories.parentIncomeCategories;
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _buildCategories(filtered),
-              ),
-            );
-          },
-          // TODO display error with reload button
-          orElse: () => const Center(child: CircularProgressIndicator()),
-        );
-      },
+    return SingleChildScrollView(
+      child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            loaded: (categories) {
+              final filtered = type == CategoryType.outcome ? categories.parentOutcomeCategories : categories.parentIncomeCategories;
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _buildCategories(filtered),
+                ),
+              );
+            },
+            // TODO display error with reload button
+            orElse: () => const Center(child: CircularProgressIndicator()),
+          );
+        },
+      ),
     );
   }
 
@@ -135,11 +134,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
   }
 
   Widget? _buildSubtitle(Category category) {
-    // TODO display subcategories
-    // if (category.hasSubcategories) {
-    //   return null;
-    // }
-    // return Text(booking.description!);
-    return null;
+    if (category.subcategories.isEmpty) {
+      return null;
+    }
+    return Text(category.subcategories.map((x) => x.name).join(", "));
   }
 }

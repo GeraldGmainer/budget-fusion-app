@@ -15,9 +15,4 @@ class Account with _$Account {
     required String iconColor,
     required DateTime updatedAt,
   }) = _Account;
-
-// @override
-// Profile copyWithUpdatedAt(DateTime updatedAt) {
-//   return copyWith(updatedAt: updatedAt);
-// }
 }

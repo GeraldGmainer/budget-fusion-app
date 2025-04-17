@@ -2,9 +2,9 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-import '../features/account/account.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
+import '../features/category/category.dart';
 import '../main/main.dart';
 
 class AppRouter {
