@@ -10,20 +10,22 @@ class CategoryListPage extends StatefulWidget {
   State<CategoryListPage> createState() => _CategoryListPageState();
 }
 
-class _CategoryListPageState extends State<CategoryListPage> {
-  final List<String> _tabs = [CategoryType.outcome.text.tr(), CategoryType.income.text.tr()];
-  late final PageController _pageController;
-  int _selectedIndex = 0;
+class _CategoryListPageState extends State<CategoryListPage> with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  final tabs = [
+    Tab(text: CategoryType.outcome.text.tr()),
+    Tab(text: CategoryType.income.text.tr()),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _selectedIndex);
+    _tabController = TabController(length: tabs.length, vsync: this);
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -33,91 +35,72 @@ class _CategoryListPageState extends State<CategoryListPage> {
 
   void _onTap(Category category) {}
 
-  void _onTabSelected(int index) {
-    setState(() => _selectedIndex = index);
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Categories').tr(),
-        actions: [_buildCreateCategory()],
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          ScrollableNavBar(
-            items: _tabs,
-            onTabSelect: _onTabSelected,
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: _onTabSelected,
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-                  _buildCategoryList(CategoryType.outcome),
-                  _buildCategoryList(CategoryType.income),
-                ],
-              ),
+        actions: [
+          IconButton(
+            icon: const Icon(CommunityMaterialIcons.plus),
+            onPressed: () {},
+          )
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: Container(
+            color: AppColors.primaryColor,
+            child: TabBar(
+              controller: _tabController,
+              tabs: tabs,
+              isScrollable: true,
             ),
           ),
-        ],
+        ),
       ),
-    );
-  }
-
-  Widget _buildCreateCategory() {
-    return IconButton(
-      onPressed: _onCreateCategory,
-      icon: const Icon(CommunityMaterialIcons.plus),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            _buildCategoryList(CategoryType.outcome),
+            _buildCategoryList(CategoryType.income),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildCategoryList(CategoryType type) {
     return SingleChildScrollView(
-      child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            loaded: (categories) {
-              final filtered = type == CategoryType.outcome ? categories.parentOutcomeCategories : categories.parentIncomeCategories;
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _buildCategories(filtered),
-                ),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                loaded: (cats) {
+                  final filtered = (type == CategoryType.outcome) ? cats.parentOutcomeCategories : cats.parentIncomeCategories;
+                  if (filtered.isEmpty) {
+                    return Center(child: Text('No categories found').tr());
+                  }
+                  return ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      final category = filtered[index];
+                      return _buildCategory(category);
+                    },
+                    itemCount: filtered.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
+                  );
+                },
+                orElse: () => const Center(child: CircularProgressIndicator()),
               );
             },
-            // TODO display error with reload button
-            orElse: () => const Center(child: CircularProgressIndicator()),
-          );
-        },
+          ),
+        ),
       ),
-    );
-  }
-
-  Widget _buildCategories(List<Category> categories) {
-    if (categories.isEmpty) {
-      return Center(child: Text('No categories found').tr());
-    }
-    return ListView.separated(
-      itemBuilder: (BuildContext context, int index) {
-        final category = categories[index];
-        return _buildCategory(category);
-      },
-      itemCount: categories.length,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
     );
   }
 

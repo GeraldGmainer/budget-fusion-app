@@ -29,14 +29,14 @@ ThemeData createTheme(BuildContext context) {
       ),
       iconTheme: IconThemeData(color: AppColors.primaryTextColor),
     ),
-    tabBarTheme: TabBarTheme(
-      labelPadding: EdgeInsets.symmetric(vertical: 8),
-      labelColor: AppColors.accentColor,
-      unselectedLabelColor: AppColors.secondaryTextColor,
-      indicator: BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.accentColor, width: 4.0)),
-      ),
-    ),
+    // tabBarTheme: TabBarTheme(
+    //   labelPadding: EdgeInsets.symmetric(vertical: 8),
+    //   labelColor: AppColors.accentColor,
+    //   unselectedLabelColor: AppColors.secondaryTextColor,
+    //   indicator: BoxDecoration(
+    //     border: Border(bottom: BorderSide(color: AppColors.accentColor, width: 4.0)),
+    //   ),
+    // ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.primaryColor,
       selectedItemColor: AppColors.accentColor,
@@ -103,6 +103,16 @@ ThemeData createTheme(BuildContext context) {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
+    ),
+    tabBarTheme: TabBarTheme(
+      indicator: UnderlineTabIndicator(borderSide: BorderSide(width: 3.0, color: AppColors.primaryTextColor)),
+      dividerColor: AppColors.secondaryTextColor,
+      dividerHeight: 0.4,
+      labelColor: AppColors.primaryTextColor,
+      labelStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      unselectedLabelStyle: TextStyle(fontSize: 14, color: Colors.grey),
+      indicatorSize: TabBarIndicatorSize.label,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 12),
     ),
   );
 }
