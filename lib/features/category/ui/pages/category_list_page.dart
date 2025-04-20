@@ -33,7 +33,9 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     // TODO: navigate to category creation screen
   }
 
-  void _onTap(Category category) {}
+  void _onCategoryTap(Category category) {
+    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave, arguments: category);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +114,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
-      onTap: () => _onTap(category),
+      onTap: () => _onCategoryTap(category),
       visualDensity: const VisualDensity(vertical: 0),
       leading: SizedBox(width: 40, child: BudgetIcon(name: category.iconName, color: category.iconColor)),
       title: Text(category.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),

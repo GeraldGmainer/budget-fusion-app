@@ -43,10 +43,6 @@ class TransactionTypeInput extends StatelessWidget {
         decoration: InputDecoration(
           labelText: "Category Type",
           labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-          // prefixIcon: CircleAvatar(
-          //   backgroundColor: Colors.transparent,
-          //   child: Icon(draft.categoryType.icon, size: 18),
-          // ),
           suffixIcon: Icon(Icons.arrow_drop_down),
         ),
         child: Text(

@@ -32,6 +32,11 @@ class AppRouter {
           builder: (context) => CategoryListPage(),
           settings: RouteSettings(name: AppRoutes.categoryList),
         );
+      case AppRoutes.categoryParentSave:
+        return MyCustomRoute(
+          builder: (context) => CategoryParentSavePage(category: settings.arguments as Category),
+          settings: RouteSettings(name: AppRoutes.categoryParentSave),
+        );
 
       // case SignUpPage.route:
       //   return MyCustomRoute(
