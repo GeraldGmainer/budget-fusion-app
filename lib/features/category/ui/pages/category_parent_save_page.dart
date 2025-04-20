@@ -47,6 +47,8 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     }
   }
 
+  _onIconTap() {}
+
   _onDelete() {}
 
   _onSave() {}
@@ -93,19 +95,17 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
 
   Widget _buildIcon() {
     return GestureDetector(
-      onTap: () {},
+      onTap: _onIconTap,
       child: SizedBox(
         width: 80,
         height: 80,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            // Wrap CircleAvatar in Material to get elevation/shadow
             Positioned.fill(
               child: Material(
                 type: MaterialType.circle,
                 elevation: 4,
-                // match your Card’s elevation
                 shadowColor: Colors.black45,
                 color: AppColors.cardColor,
                 child: Center(
@@ -117,8 +117,6 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
                 ),
               ),
             ),
-
-            // Edit badge
             Positioned(
               bottom: 0,
               right: 0,
@@ -165,9 +163,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
           ),
           const SizedBox(height: 8),
           GestureDetector(
-            onTap: () {
-              _onTransactionTypeTap();
-            },
+            onTap: _onTransactionTypeTap,
             child: InputDecorator(
               decoration: InputDecoration(
                 labelText: "Category Type",
@@ -216,6 +212,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
           itemBuilder: (context, index) {
             final sub = subs[index];
             return ListTile(
+              dense: true,
               title: Text(sub.name),
               leading: BudgetIcon(name: sub.iconName, color: sub.iconColor),
               onTap: () => _onEditSubcategory(sub),
