@@ -18,7 +18,7 @@ class TransactionTypeButton extends StatelessWidget {
       title: "Transaction Type",
       items: CategoryType.values,
       selectedItem: draft.categoryType,
-      itemLabelBuilder: (type) => Text(type!.text.tr()),
+      itemLabelBuilder: (type) => Text(type!.label.tr()),
     );
 
     if (selectedType != null && context.mounted) {
@@ -33,7 +33,7 @@ class TransactionTypeButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(
-          draft.categoryType.text.tr(),
+          draft.categoryType.label.tr(),
           style: TextStyle(color: AppColors.primaryTextColor),
         ),
       ),

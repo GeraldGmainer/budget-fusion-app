@@ -12,15 +12,11 @@ class CategoryListPage extends StatefulWidget {
 
 class _CategoryListPageState extends State<CategoryListPage> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  final tabs = [
-    Tab(text: CategoryType.outcome.text.tr()),
-    Tab(text: CategoryType.income.text.tr()),
-  ];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
+    _tabController = TabController(length: CategoryType.values.length, vsync: this);
   }
 
   @override
@@ -52,8 +48,11 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
             color: AppColors.primaryColor,
             child: TabBar(
               controller: _tabController,
-              tabs: tabs,
+              tabs: CategoryType.values.map((vm) {
+                return Tab(text: vm.label.tr());
+              }).toList(),
               isScrollable: true,
+              tabAlignment: TabAlignment.center,
             ),
           ),
         ),

@@ -22,7 +22,7 @@ class TransactionTypeInput extends StatelessWidget {
         return Row(
           children: [
             SizedBox(width: 45, child: Icon(categoryType.icon, color: categoryType.color)),
-            Text(categoryType.text.tr()),
+            Text(categoryType.label.tr()),
           ],
         );
       },
@@ -50,7 +50,7 @@ class TransactionTypeInput extends StatelessWidget {
           suffixIcon: Icon(Icons.arrow_drop_down),
         ),
         child: Text(
-          draft.categoryType.text.tr(),
+          draft.categoryType.label.tr(),
           style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
         ),
       ),

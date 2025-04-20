@@ -15,7 +15,7 @@ enum CategoryType {
 }
 
 extension CategoryTypeExtensions on CategoryType {
-  String get text {
+  String get label {
     switch (this) {
       case CategoryType.income:
         return "booking.income_type";
