@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class TransactionTypeButton extends StatelessWidget {
@@ -18,11 +18,11 @@ class TransactionTypeButton extends StatelessWidget {
       title: "Transaction Type",
       items: CategoryType.values,
       selectedItem: draft.categoryType,
-      itemLabelBuilder: (type) => Text(type!.text.tr()),
+      itemLabelBuilder: (type) => Text(type!.label.tr()),
     );
 
     if (selectedType != null && context.mounted) {
-      context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedType, category: null));
+      context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedType, category: null));
     }
   }
 
@@ -33,7 +33,7 @@ class TransactionTypeButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(
-          draft.categoryType.text.tr(),
+          draft.categoryType.label.tr(),
           style: TextStyle(color: AppColors.primaryTextColor),
         ),
       ),

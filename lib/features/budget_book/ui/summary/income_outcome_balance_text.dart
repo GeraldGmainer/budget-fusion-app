@@ -30,46 +30,56 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
         transitionBuilder: (Widget child, Animation<double> animation) {
           return ScaleTransition(scale: animation, child: child);
         },
-        child: _showBalance ? _buildBalance() : _buildIncomeOutcome(),
+        // child: Container(
+        //   color: Colors.yellow,
+        //   child: (_showBalance ? _buildBalance() : _buildIncomeOutcome()),
+        // ),
+        child: (_showBalance ? _buildBalance() : _buildIncomeOutcome()),
       ),
     );
   }
 
   Widget _buildBalance() {
     final balance = widget.income - widget.outcome;
-    return Column(
+    return Padding(
       key: const ValueKey<String>('balance'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text("Balance", style: TextStyle(fontSize: 14)),
-        CurrencyText(
-          value: balance,
-          currency: widget.currency,
-          color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor,
-          fontSize: 16,
-        ),
-      ],
+      padding: EdgeInsets.all(12.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Balance", style: TextStyle(fontSize: 14)),
+          CurrencyText(
+            value: balance,
+            currency: widget.currency,
+            color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor,
+            fontSize: 16,
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildIncomeOutcome() {
-    return Column(
+    return Padding(
       key: const ValueKey<String>('incomeOutcome'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CurrencyText(
-          value: widget.income,
-          currency: widget.currency,
-          color: AppColors.incomeColor,
-          fontSize: 16,
-        ),
-        CurrencyText(
-          value: widget.outcome,
-          currency: widget.currency,
-          color: AppColors.outcomeColor,
-          fontSize: 16,
-        ),
-      ],
+      padding: EdgeInsets.all(12.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CurrencyText(
+            value: widget.income,
+            currency: widget.currency,
+            color: AppColors.incomeColor,
+            fontSize: 16,
+          ),
+          CurrencyText(
+            value: widget.outcome,
+            currency: widget.currency,
+            color: AppColors.outcomeColor,
+            fontSize: 16,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -30,24 +30,34 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
           iconName: dto.iconName,
           iconColor: dto.iconColor,
           parent: null,
+          subcategories: const [],
           updatedAt: dto.updatedAt,
         )
     };
 
-    final List<Category> result = [];
-    for (final dto in dtos) {
-      var category = categoryMap[dto.id]!;
-      if (dto.parentId != null) {
-        final parent = categoryMap[dto.parentId];
-        if (parent == null) {
-          BudgetLogger.instance.e("Parent category not found", "Parent category not found for category ${dto.id}. Expected parentId: ${dto.parentId}");
-        }
-        category = category.copyWith(parent: parent);
-        categoryMap[dto.id] = category;
-      }
-      result.add(category);
+    for (final dto in dtos.where((d) => d.parentId != null)) {
+      final child = categoryMap[dto.id]!;
+      final parent = categoryMap[dto.parentId]!;
+      final updatedChild = child.copyWith(parent: parent);
+      final updatedParent = parent.copyWith(subcategories: [...parent.subcategories, updatedChild]);
+      categoryMap[dto.id] = updatedChild;
+      categoryMap[dto.parentId!] = updatedParent;
     }
-    return result;
+
+    return _sortCategories(categoryMap.values.toList());
+  }
+
+  List<Category> _sortCategories(List<Category> categories) {
+    final sorted = List<Category>.from(categories)
+      ..sort((a, b) {
+        final aKey = a.parent?.name ?? a.name;
+        final bKey = b.parent?.name ?? b.name;
+        final parentCmp = aKey.compareTo(bKey);
+        if (parentCmp != 0) return parentCmp;
+
+        return a.name.compareTo(b.name);
+      });
+    return sorted;
   }
 
   @override

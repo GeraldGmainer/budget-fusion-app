@@ -1,15 +1,32 @@
+import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/core.dart';
 
 class AppDrawerItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  final String route;
+  final String? route;
   final bool isSelected;
-  final Function(BuildContext, String) onTap;
 
-  const AppDrawerItem({super.key, required this.icon, required this.title, required this.isSelected, required this.onTap, required this.route});
+  const AppDrawerItem({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.isSelected,
+    required this.route,
+  });
+
+  void _onTap(BuildContext context) {
+    Scaffold.of(context).closeDrawer();
+    if (route != null) {
+      final currentRoute = ModalRoute.of(context)?.settings.name;
+      if (currentRoute != route) {
+        Navigator.of(context).pushNamed(route!);
+      }
+    } else {
+      showSnackBar(context, "Feature not implemented yet");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +43,7 @@ class AppDrawerItem extends StatelessWidget {
         ),
       ),
       selected: isSelected,
-      onTap: () => onTap.call(context, route),
+      onTap: () => _onTap(context),
     );
   }
 }

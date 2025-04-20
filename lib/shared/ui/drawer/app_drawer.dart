@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -12,51 +13,38 @@ class AppDrawer extends StatelessWidget {
     DrawerSection(
       header: 'Main',
       items: [
-        DrawerItem(icon: CommunityMaterialIcons.home_variant, title: 'Home', route: '/main'),
-        DrawerItem(icon: CommunityMaterialIcons.chart_line, title: 'Investments', route: '/investments'),
-        DrawerItem(icon: CommunityMaterialIcons.chart_bar, title: 'Predictions', route: '/predictions'),
-        DrawerItem(icon: CommunityMaterialIcons.shopping, title: 'Shopping List', route: '/shopping-list'),
+        DrawerItem(icon: CommunityMaterialIcons.home_variant, title: 'Home', route: AppRoutes.main),
+        DrawerItem(icon: CommunityMaterialIcons.chart_line, title: 'Investments'),
+        DrawerItem(icon: CommunityMaterialIcons.chart_bar, title: 'Predictions'),
+        DrawerItem(icon: CommunityMaterialIcons.shopping, title: 'Shopping List'),
       ],
     ),
     DrawerSection(
       header: 'Financial Management',
       items: [
-        DrawerItem(icon: CommunityMaterialIcons.bank, title: 'Accounts', route: '/account'),
-        DrawerItem(icon: CommunityMaterialIcons.table_large, title: 'Categories', route: '/categories'),
-        DrawerItem(icon: CommunityMaterialIcons.repeat, title: 'Recurring Transactions', route: '/recurring-transactions'),
-        DrawerItem(icon: CommunityMaterialIcons.flag_variant, title: 'Budget Goals', route: '/budget_book-goals'),
-        DrawerItem(icon: CommunityMaterialIcons.death_star, title: 'Debts', route: '/debts'),
+        DrawerItem(icon: CommunityMaterialIcons.bank, title: 'Accounts'),
+        DrawerItem(icon: CommunityMaterialIcons.table_large, title: 'Categories', route: AppRoutes.categoryList),
+        DrawerItem(icon: CommunityMaterialIcons.repeat, title: 'Recurring Transactions'),
+        DrawerItem(icon: CommunityMaterialIcons.flag_variant, title: 'Budget Goals'),
+        DrawerItem(icon: CommunityMaterialIcons.death_star, title: 'Debts'),
       ],
     ),
     DrawerSection(
       header: 'Collaboration',
       items: [
-        DrawerItem(icon: CommunityMaterialIcons.account_group, title: 'Workspace', route: '/workspace'),
+        DrawerItem(icon: CommunityMaterialIcons.account_group, title: 'Workspace'),
       ],
     ),
     DrawerSection(
       header: 'Other',
       items: [
-        DrawerItem(icon: CommunityMaterialIcons.crown, title: 'Get Pro', route: '/get-pro'),
-        DrawerItem(icon: CommunityMaterialIcons.web, title: 'Open Webpage', route: '/open-webpage'),
+        DrawerItem(icon: CommunityMaterialIcons.crown, title: 'Get Pro'),
+        DrawerItem(icon: CommunityMaterialIcons.web, title: 'Open Webpage'),
         DrawerItem(icon: CommunityMaterialIcons.cog_outline, title: 'Settings', route: '/settings'),
-        DrawerItem(icon: CommunityMaterialIcons.help_circle, title: 'Support', route: '/support'),
+        DrawerItem(icon: CommunityMaterialIcons.help_circle, title: 'Support'),
       ],
     ),
   ];
-
-  void _onTap(BuildContext context, String route) {
-    final currentRoute = _getCurrentRoute(context);
-    Navigator.pop(context);
-    if (currentRoute != route) {
-      Navigator.of(context).pushNamed(route);
-    }
-  }
-
-  String _getCurrentRoute(BuildContext context) {
-    // TODO will that return that correct route ?
-    return ModalRoute.of(context)?.settings.name ?? "";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +60,7 @@ class AppDrawer extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    final currentRoute = _getCurrentRoute(context);
+    final currentRoute = ModalRoute.of(context)?.settings.name;
 
     return ListView.builder(
       padding: EdgeInsets.zero,
@@ -90,7 +78,6 @@ class AppDrawer extends StatelessWidget {
                 title: item.title,
                 route: item.route,
                 isSelected: isSelected,
-                onTap: _onTap,
               );
             }),
             if (sectionIndex < _sections.length - 1) const Divider(height: 1, thickness: 1),
@@ -114,11 +101,11 @@ class DrawerSection {
 class DrawerItem {
   final IconData icon;
   final String title;
-  final String route;
+  final String? route;
 
   const DrawerItem({
     required this.icon,
     required this.title,
-    required this.route,
+    this.route,
   });
 }

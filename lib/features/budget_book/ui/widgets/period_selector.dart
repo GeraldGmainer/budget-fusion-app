@@ -62,11 +62,14 @@ class PeriodSelector extends StatelessWidget {
   }
 
   Widget _buildNext(BuildContext context) {
+    final isEnd = pageController.page! < 0.5;
     return IconButton(
-      icon: Icon(Icons.chevron_right, color: AppColors.secondaryTextColor),
-      onPressed: () {
-        _onNext(context);
-      },
+      icon: Icon(Icons.chevron_right, color: isEnd ? AppColors.disabledTextColor : AppColors.secondaryTextColor),
+      onPressed: isEnd
+          ? null
+          : () {
+              _onNext(context);
+            },
     );
   }
 

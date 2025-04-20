@@ -12,8 +12,8 @@ import '../entities/summary_view_data.dart';
 @lazySingleton
 class SummaryDataGenerator {
   SummaryViewData generate(BudgetPageData pageData, Currency currency, List<Category> flatCategories) {
-    List<CategoryViewSummaryData> summaries = _mapSummaries(pageData, currency, flatCategories);
-    List<PieData> pieData = _generatePieData(summaries);
+    final summaries = _mapSummaries(pageData, currency, flatCategories);
+    final pieData = _generatePieData(summaries);
 
     return SummaryViewData(
       currency: currency,
@@ -26,102 +26,66 @@ class SummaryDataGenerator {
   }
 
   List<CategoryViewSummaryData> _mapSummaries(BudgetPageData pageData, Currency currency, List<Category> flatCategories) {
-    final List<CategoryViewSummaryData> summaries = [];
-    final List<CategoryGroup> categoryGroups = _generateCategoryGroups(pageData.bookings, flatCategories);
-    final List<CategoryGroup> sortedGroups = List.from(categoryGroups);
+    final categoryGroups = _generateCategoryGroups(pageData.bookings, flatCategories);
 
-    sortedGroups.sort((a, b) {
+    categoryGroups.sort((a, b) {
       if (a.category.categoryType != b.category.categoryType) {
         return a.category.categoryType.index.compareTo(b.category.categoryType.index);
-      } else {
-        return b.totalGroupAmount.compareTo(a.totalGroupAmount);
       }
+      return b.totalGroupAmount.compareTo(a.totalGroupAmount);
     });
 
-    for (final group in sortedGroups) {
-      final Decimal overallTotal = group.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
-      summaries.add(_convertGroup(group, overallTotal, currency));
-    }
-    return summaries;
+    return categoryGroups.map((group) {
+      final overall = group.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
+      return _convertGroup(group, overall, currency);
+    }).toList();
   }
 
   List<CategoryGroup> _generateCategoryGroups(List<Booking> bookings, List<Category> flatCategories) {
-    final bookingsByMonthAndCategory = _groupBookingsByMonthAndCategory(bookings);
-    return _createCategoryGroups(bookingsByMonthAndCategory, flatCategories);
-  }
-
-  Map<String, List<Booking>> _groupBookingsByMonthAndCategory(List<Booking> bookings) {
-    final Map<String, List<Booking>> grouped = {};
-
-    for (var booking in bookings) {
-      if (booking.category == null) {
-        BudgetLogger.instance.e("Null Category", "Category is NULL for booking: $booking");
+    final Map<Uuid, List<Booking>> bookingsByCat = {};
+    for (final b in bookings) {
+      final cat = b.category;
+      if (cat == null) {
+        BudgetLogger.instance.e('Null Category', 'Booking has no category: $b');
         continue;
       }
-      grouped.putIfAbsent(booking.category!.id.toString(), () => []);
-      grouped[booking.category!.id.toString()]!.add(booking);
-    }
-    return grouped;
-  }
-
-  List<CategoryGroup> _createCategoryGroups(Map<String, List<Booking>> bookingsByCategory, List<Category> flatCategories) {
-    final Map<String, Category> flatMap = {for (var cat in flatCategories) cat.id.toString(): cat};
-
-    final Map<String, CategoryGroup> groupMap = {};
-    for (final entry in bookingsByCategory.entries) {
-      final category = entry.value.first.category;
-      if (category == null) continue;
-      final amount = entry.value.fold(Decimal.zero, (sum, booking) => sum + booking.amount);
-      groupMap[category.id.toString()] = CategoryGroup(
-        category: category,
-        bookings: entry.value,
-        amount: amount,
-        subGroups: [],
-      );
+      bookingsByCat.putIfAbsent(cat.id, () => []).add(b);
     }
 
-    final Set<String> nestedGroupIds = {};
+    final Map<Uuid, Decimal> amountByCat = {
+      for (var e in bookingsByCat.entries) e.key: e.value.fold(Decimal.zero, (sum, b) => sum + b.amount),
+    };
 
-    for (final entry in groupMap.entries.toList()) {
-      final id = entry.key;
-      final group = entry.value;
-      if (group.category.parent != null) {
-        final parentId = group.category.parent!.id.toString();
-        final parentFromRepo = flatMap[parentId];
-        if (parentFromRepo == null) {
-          BudgetLogger.instance.e("No group found for ID $parentId / ${group.category}", "Parent category not found");
-          continue;
-        }
-        if (!groupMap.containsKey(parentId)) {
-          groupMap[parentId] = CategoryGroup(
-            category: parentFromRepo,
-            bookings: [],
-            amount: Decimal.zero,
-            subGroups: [],
-          );
-        }
-        final parentGroup = groupMap[parentId]!;
-        final updatedSubGroups = List<CategoryGroup>.from(parentGroup.subGroups)..add(group);
-        groupMap[parentId] = parentGroup.copyWith(subGroups: updatedSubGroups);
-        nestedGroupIds.add(id);
-      }
+    final List<CategoryGroup> topGroups = [];
+    for (final parent in flatCategories.where((c) => c.isParent)) {
+      final parentBookings = bookingsByCat[parent.id] ?? [];
+      final parentAmount = amountByCat[parent.id] ?? Decimal.zero;
+
+      final List<CategoryGroup> subGroups = parent.subcategories.map((child) {
+        final childBookings = bookingsByCat[child.id] ?? [];
+        final childAmount = amountByCat[child.id] ?? Decimal.zero;
+        return CategoryGroup(category: child, bookings: childBookings, amount: childAmount);
+      }).toList()
+        ..sort(_compareCategoryGroups);
+
+      if (parentBookings.isEmpty && subGroups.isEmpty) continue;
+
+      topGroups.add(CategoryGroup(category: parent, bookings: parentBookings, amount: parentAmount, subGroups: subGroups));
     }
 
-    final List<CategoryGroup> topLevelGroups = groupMap.entries.where((entry) => !nestedGroupIds.contains(entry.key)).map((entry) => entry.value).toList();
-
-    topLevelGroups.sort(_compareCategoryGroups);
-    return topLevelGroups;
+    topGroups.sort(_compareCategoryGroups);
+    return topGroups;
   }
 
   int _compareCategoryGroups(CategoryGroup a, CategoryGroup b) {
-    final typeComparison = a.category.categoryType.index.compareTo(b.category.categoryType.index);
-    final amountComparison = b.amount.compareTo(a.amount);
-    return typeComparison != 0 ? typeComparison : amountComparison;
+    final typeCmp = a.category.categoryType.index.compareTo(b.category.categoryType.index);
+    if (typeCmp != 0) return typeCmp;
+    return b.amount.compareTo(a.amount);
   }
 
   CategoryViewSummaryData _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
     if (group.subGroups.isEmpty) {
-      int percentage = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
+      final perc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
       return CategoryViewSummaryData(
         currency: currency,
         categoryType: group.category.categoryType,
@@ -129,51 +93,42 @@ class SummaryDataGenerator {
         parentCategoryName: group.category.parent?.name,
         iconName: group.category.iconName,
         iconColor: group.category.iconColor,
-        percentage: percentage,
+        percentage: perc,
         value: group.amount,
       );
-    } else {
-      int parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
-      List<CategoryViewSummaryData> subSummaries = group.subGroups.map((child) => _convertGroup(child, overallTotal, currency)).toList();
-      subSummaries.sort((a, b) {
-        return b.value.compareTo(a.value);
-      });
-      Decimal childrenTotal = subSummaries.fold(Decimal.zero, (prev, child) => prev + child.value);
-      int childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
-      int totalPercentage = parentPerc + childrenPerc;
-      Decimal combinedValue = group.amount + childrenTotal;
-      return CategoryViewSummaryData(
-        currency: currency,
-        categoryType: group.category.categoryType,
-        categoryName: group.category.name,
-        parentCategoryName: group.category.parent?.name,
-        iconName: group.category.iconName,
-        iconColor: group.category.iconColor,
-        percentage: totalPercentage,
-        value: combinedValue,
-        subSummaries: subSummaries,
-      );
     }
+
+    final parentPerc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
+    final subSummaries = group.subGroups.map((sub) => _convertGroup(sub, overallTotal, currency)).toList()..sort((a, b) => b.value.compareTo(a.value));
+    final childrenTotal = subSummaries.fold<Decimal>(Decimal.zero, (sum, c) => sum + c.value);
+    final childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
+    final combinedValue = group.amount + childrenTotal;
+    final combinedPerc = parentPerc + childrenPerc;
+
+    return CategoryViewSummaryData(
+      currency: currency,
+      categoryType: group.category.categoryType,
+      categoryName: group.category.name,
+      parentCategoryName: group.category.parent?.name,
+      iconName: group.category.iconName,
+      iconColor: group.category.iconColor,
+      percentage: combinedPerc,
+      value: combinedValue,
+      subSummaries: subSummaries,
+    );
   }
 
   List<PieData> _generatePieData(List<CategoryViewSummaryData> summaries) {
-    List<PieData> pieDataList = [];
-    for (final summary in summaries) {
-      if (summary.categoryType == CategoryType.income) {
-        continue;
-      }
-      final hideIcon = summary.percentage < 5;
-      pieDataList.add(
-        PieData(
-          xData: summary.categoryName,
-          yData: summary.value.toDouble(),
-          text: hideIcon ? null : summary.categoryName,
-          iconName: summary.iconName,
-          iconColor: summary.iconColor,
-          hideIcon: hideIcon,
-        ),
+    return summaries.where((s) => s.categoryType == CategoryType.outcome).map((s) {
+      final hideIcon = s.percentage < 5;
+      return PieData(
+        xData: s.categoryName,
+        yData: s.value.toDouble(),
+        text: hideIcon ? null : s.categoryName,
+        iconName: s.iconName,
+        iconColor: s.iconColor,
+        hideIcon: hideIcon,
       );
-    }
-    return pieDataList;
+    }).toList();
   }
 }

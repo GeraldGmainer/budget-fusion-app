@@ -1,29 +1,29 @@
-part of 'save_booking_cubit.dart';
+part of 'booking_save_cubit.dart';
 
 @freezed
-class SaveBookingState with _$SaveBookingState {
-  factory SaveBookingState.initial({
+class BookingSaveState with _$BookingSaveState {
+  factory BookingSaveState.initial({
     required BookingDraft draft,
   }) = _Initial;
 
-  factory SaveBookingState.draftUpdate({
+  factory BookingSaveState.draftUpdate({
     required BookingDraft draft,
   }) = _DraftUpdate;
 
-  const factory SaveBookingState.loading({
+  const factory BookingSaveState.loading({
     required BookingDraft draft,
   }) = _Loading;
 
-  const factory SaveBookingState.loaded({
+  const factory BookingSaveState.loaded({
     required BookingDraft draft,
   }) = _Loaded;
 
-  const factory SaveBookingState.deleted({
+  const factory BookingSaveState.deleted({
     required BookingDraft draft,
     required Booking booking,
   }) = _Deleted;
 
-  const factory SaveBookingState.error({
+  const factory BookingSaveState.error({
     required BookingDraft draft,
     required String message,
   }) = _Error;

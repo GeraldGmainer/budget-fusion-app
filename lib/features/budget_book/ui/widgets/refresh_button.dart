@@ -2,63 +2,22 @@ import 'package:budget_fusion_app/features/budget_book/application/budget_book/c
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RefreshButton extends StatefulWidget {
-  @override
-  State<RefreshButton> createState() => _RefreshButtonState();
-}
-
-class _RefreshButtonState extends State<RefreshButton> {
-  bool _isLoading = false;
-
-  void _handleRefresh() {
-    setState(() {
-      _isLoading = true;
-    });
-    context.read<BudgetBookCubit>().resetAndLoad();
-  }
-
+class RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<BudgetBookCubit, BudgetBookState>(
-      listener: (context, state) {
-        if (_isLoading) {
-          if (state.isLoaded) {
-            setState(() {
-              _isLoading = false;
-            });
-          }
-          if (state.isError) {
-            setState(() {
-              _isLoading = false;
-            });
-          }
-        }
+    return BlocBuilder<BudgetBookCubit, BudgetBookState>(
+      builder: (context, state) {
+        final isLoading = state.isLoading;
+        return IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: isLoading
+              ? null
+              : () {
+                  context.read<BudgetBookCubit>().resetAndLoad();
+                },
+          tooltip: isLoading ? 'Refreshing...' : 'Refresh',
+        );
       },
-      child: IconButton(
-        icon: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (child, animation) => FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-          child: _isLoading
-              ? SizedBox(
-                  key: const ValueKey('loading'),
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
-              : const Icon(
-                  Icons.refresh,
-                  key: ValueKey('refresh'),
-                ),
-        ),
-        onPressed: _isLoading ? null : _handleRefresh,
-        tooltip: _isLoading ? 'Refreshing...' : 'Refresh',
-      ),
     );
   }
 }

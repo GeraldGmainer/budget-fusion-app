@@ -4,24 +4,24 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../widgets/account_select_input.dart';
 import '../widgets/category_list_input.dart';
 import '../widgets/save_booking_overview.dart';
 import '../widgets/transaction_type_input.dart';
 
-class SaveBookingTab2 extends StatelessWidget {
+class BookingSaveTab2 extends StatelessWidget {
   final BookingDraft draft;
 
-  const SaveBookingTab2({required this.draft});
+  const BookingSaveTab2({required this.draft});
 
   _upload(BuildContext context) {
     if (draft.category == null) {
       showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
       return;
     }
-    context.read<SaveBookingCubit>().save();
+    context.read<BookingSaveCubit>().save();
   }
 
   @override

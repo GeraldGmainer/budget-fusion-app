@@ -181,7 +181,7 @@ class ParentCategoryList extends StatelessWidget {
         return ValueListenableBuilder<Category?>(
           valueListenable: SelectedCategoryNotifierProvider.of(context),
           builder: (context, selectedCat, _) {
-            final parents = categories.where((c) => c.parent == null && c.categoryType == categoryType).toList();
+            final parents = categories.where((c) => c.isParent && c.categoryType == categoryType).toList();
             sortByName(parents);
             return ListView.builder(
               itemCount: parents.length + 1,
@@ -241,8 +241,8 @@ class SubcategoryListScreen extends StatelessWidget {
         return ValueListenableBuilder<Category?>(
           valueListenable: SelectedCategoryNotifierProvider.of(context),
           builder: (context, selectedCat, _) {
-            final subs = categories.where((c) => c.parent == parent && c.categoryType == categoryType).toList();
-            sortByName(subs);
+            final subs = parent.subcategories;
+            // sortByName(subs);
             return Material(
               color: AppColors.primaryColor,
               child: Column(
@@ -314,8 +314,8 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isSelected = selectedCategory == category;
-    final bool hasSubcategories = allCategories.any((c) => c.parent == category);
-    final bool isSubSelected = selectedCategory?.parent == category;
+    final bool hasSubcategories = category.subcategories.isNotEmpty;
+    final bool isSubSelected = selectedCategory?.parent?.id == category.id;
     return ListTile(
       tileColor: isSelected ? AppColors.accentColor : null,
       shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,

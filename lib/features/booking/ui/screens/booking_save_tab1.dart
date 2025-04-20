@@ -8,12 +8,12 @@ import '../widgets/amount_display.dart';
 import '../widgets/date_input.dart';
 import '../widgets/description_input.dart';
 
-class SaveBookingTab1 extends StatelessWidget {
+class BookingSaveTab1 extends StatelessWidget {
   final BookingDraft draft;
   final VoidCallback onCategoryTap;
   final GlobalKey<AmountDisplayState> amountDisplayKey;
 
-  const SaveBookingTab1({required this.draft, required this.onCategoryTap, required this.amountDisplayKey});
+  const BookingSaveTab1({required this.draft, required this.onCategoryTap, required this.amountDisplayKey});
 
   @override
   Widget build(BuildContext context) {

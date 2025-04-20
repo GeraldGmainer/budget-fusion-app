@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,6 @@ import '../../../features/analytics/analytics.dart';
 import '../../../features/budget_book/budget_book.dart';
 import '../../../features/budget_goals/budget_goals.dart';
 import '../../../features/overview/home.dart';
-import '../../../shared/shared.dart';
 import '../../main.dart';
 import '../widgets/main_bottom_navigation_bar.dart';
 
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _createBooking() {
-    Navigator.of(context).pushNamed(AppRoutes.saveBooking);
+    Navigator.of(context).pushNamed(AppRoutes.bookingSave);
   }
 
   void _onTabChange(int index) {

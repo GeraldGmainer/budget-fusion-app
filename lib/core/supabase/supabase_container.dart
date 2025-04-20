@@ -77,7 +77,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onPasswordRecovery(Session session) {
     BudgetLogger.instance.d("onPasswordRecovery: ${session.user}");
     // TODO reset password page
-    Navigator.of(context).pushNamed(AppRoutes.resetPassword);
+    Navigator.of(context).pushNamed(AppRoutes.passwordReset);
   }
 
   _onErrorAuthenticating(String message) {

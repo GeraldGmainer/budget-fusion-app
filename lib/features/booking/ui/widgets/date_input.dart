@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/save_booking_cubit.dart';
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DateInput extends StatefulWidget {
@@ -40,7 +40,7 @@ class _DateInputState extends State<DateInput> {
         _selectedDate = picked;
       });
       if (context.mounted) {
-        context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(date: picked));
+        context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: picked));
       }
     }
   }
@@ -49,7 +49,7 @@ class _DateInputState extends State<DateInput> {
     setState(() {
       _selectedDate = date;
     });
-    context.read<SaveBookingCubit>().updateDraft((draft) => draft.copyWith(date: date));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: date));
   }
 
   @override
