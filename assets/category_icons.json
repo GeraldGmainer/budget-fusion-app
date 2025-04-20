@@ -1,0 +1,292 @@
+[
+  {
+    "name": "Salary",
+    "icon_name": "briefcase_outline",
+    "icon_color": "#66BB6A",
+    "type": "income",
+    "sub_categories": []
+  },
+  {
+    "name": "Gifts & Bonuses",
+    "icon_name": "gift_outline",
+    "icon_color": "#8BC34A",
+    "type": "income",
+    "sub_categories": []
+  },
+  {
+    "name": "Other Income",
+    "icon_name": "cash_multiple",
+    "icon_color": "#43A047",
+    "type": "income",
+    "sub_categories": []
+  },
+  {
+    "name": "Housing",
+    "type": "outcome",
+    "icon_name": "home",
+    "icon_color": "#FF9800",
+    "sub_categories": [
+      {
+        "name": "Rent",
+        "icon_name": "key",
+        "icon_color": "#FFA726",
+        "type": "outcome"
+      },
+      {
+        "name": "Mortgage",
+        "icon_name": "bank_outline",
+        "icon_color": "#E53935",
+        "type": "outcome"
+      },
+      {
+        "name": "Repairs & Maintenance",
+        "icon_name": "wrench",
+        "icon_color": "#FB8C00",
+        "type": "outcome"
+      },
+      {
+        "name": "Home Insurance",
+        "icon_name": "shield",
+        "icon_color": "#F57C00",
+        "type": "outcome"
+      },
+      {
+        "name": "Furniture & Furnishings",
+        "icon_name": "sofa",
+        "icon_color": "#D32F2F",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Food & Drink",
+    "type": "outcome",
+    "icon_name": "silverware_fork_knife",
+    "icon_color": "#F44336",
+    "sub_categories": [
+      {
+        "name": "Groceries",
+        "icon_name": "shopping",
+        "icon_color": "#E57373",
+        "type": "outcome"
+      },
+      {
+        "name": "Dining Out",
+        "icon_name": "food_fork_drink",
+        "icon_color": "#EF5350",
+        "type": "outcome"
+      },
+      {
+        "name": "Snacks",
+        "icon_name": "cookie",
+        "icon_color": "#FF8A65",
+        "type": "outcome"
+      },
+      {
+        "name": "Delivery & Takeout",
+        "icon_name": "truck",
+        "icon_color": "#FFAB91",
+        "type": "outcome"
+      },
+      {
+        "name": "Alcohol & Bars",
+        "icon_name": "beer",
+        "icon_color": "#FF5252",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Transportation",
+    "type": "outcome",
+    "icon_name": "car",
+    "icon_color": "#3F51B5",
+    "sub_categories": [
+      {
+        "name": "Fuel",
+        "icon_name": "gas_station",
+        "icon_color": "#5C6BC0",
+        "type": "outcome"
+      },
+      {
+        "name": "Public Transit",
+        "icon_name": "bus",
+        "icon_color": "#7986CB",
+        "type": "outcome"
+      },
+      {
+        "name": "Vehicle Maintenance",
+        "icon_name": "wrench_outline",
+        "icon_color": "#7986CB",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Health & Wellness",
+    "type": "outcome",
+    "icon_name": "heart",
+    "icon_color": "#E91E63",
+    "sub_categories": [
+      {
+        "name": "Doctor Visits",
+        "icon_name": "doctor",
+        "icon_color": "#E91E63",
+        "type": "outcome"
+      },
+      {
+        "name": "Pharmacy",
+        "icon_name": "pill",
+        "icon_color": "#F06292",
+        "type": "outcome"
+      },
+      {
+        "name": "Fitness & Gym",
+        "icon_name": "dumbbell",
+        "icon_color": "#4CAF50",
+        "type": "outcome"
+      },
+      {
+        "name": "Wellness & Spa",
+        "icon_name": "leaf",
+        "icon_color": "#81C784",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Personal & Shopping",
+    "type": "outcome",
+    "icon_name": "shopping_outline",
+    "icon_color": "#FF5722",
+    "sub_categories": [
+      {
+        "name": "Clothing",
+        "icon_name": "tshirt_crew_outline",
+        "icon_color": "#AB47BC",
+        "type": "outcome"
+      },
+      {
+        "name": "Electronics",
+        "icon_name": "cellphone",
+        "icon_color": "#8E24AA",
+        "type": "outcome"
+      },
+      {
+        "name": "Hygiene",
+        "icon_name": "flower",
+        "icon_color": "#BA68C8",
+        "type": "outcome"
+      },
+      {
+        "name": "General Shopping",
+        "icon_name": "shopping_outline",
+        "icon_color": "#CE93D8",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Entertainment & Leisure",
+    "type": "outcome",
+    "icon_name": "party_popper",
+    "icon_color": "#9C27B0",
+    "sub_categories": [
+      {
+        "name": "Movies & Shows",
+        "icon_name": "filmstrip",
+        "icon_color": "#BA68C8",
+        "type": "outcome"
+      },
+      {
+        "name": "Games",
+        "icon_name": "gamepad_variant",
+        "icon_color": "#4CAF50",
+        "type": "outcome"
+      },
+      {
+        "name": "Travel & Tourism",
+        "icon_name": "airplane",
+        "icon_color": "#03A9F4",
+        "type": "outcome"
+      },
+      {
+        "name": "Streaming Services",
+        "icon_name": "television_classic",
+        "icon_color": "#FF5722",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Education",
+    "type": "outcome",
+    "icon_name": "book_outline",
+    "icon_color": "#FFC107",
+    "sub_categories": [
+      {
+        "name": "Tuition & Fees",
+        "icon_name": "school_outline",
+        "icon_color": "#FF9800",
+        "type": "outcome"
+      },
+      {
+        "name": "Books",
+        "icon_name": "book_open_outline",
+        "icon_color": "#FFEB3B",
+        "type": "outcome"
+      },
+      {
+        "name": "Online Courses",
+        "icon_name": "laptop",
+        "icon_color": "#8BC34A",
+        "type": "outcome"
+      },
+      {
+        "name": "Workshops & Seminars",
+        "icon_name": "presentation",
+        "icon_color": "#9C27B0",
+        "type": "outcome"
+      },
+      {
+        "name": "AI Subscriptions",
+        "icon_name": "robot",
+        "icon_color": "#607D8B",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Savings & Investments",
+    "type": "outcome",
+    "icon_name": "cash",
+    "icon_color": "#4CAF50",
+    "sub_categories": [
+      {
+        "name": "Savings",
+        "icon_name": "piggy_bank",
+        "icon_color": "#66BB6A",
+        "type": "outcome"
+      },
+      {
+        "name": "Investments",
+        "icon_name": "chart_line",
+        "icon_color": "#43A047",
+        "type": "outcome"
+      },
+      {
+        "name": "Retirement",
+        "icon_name": "clock_outline",
+        "icon_color": "#2E7D32",
+        "type": "outcome"
+      }
+    ]
+  },
+  {
+    "name": "Other",
+    "type": "outcome",
+    "icon_name": "dots_horizontal",
+    "icon_color": "#9E9E9E",
+    "sub_categories": []
+  }
+]

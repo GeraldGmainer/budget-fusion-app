@@ -4,6 +4,8 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/icon_color_picker_dialog.dart';
+
 class CategoryParentSavePage extends StatefulWidget {
   final Category category;
 
@@ -47,7 +49,33 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     }
   }
 
-  _onIconTap() {}
+  _onIconTap() async {
+    final result = await showModalBottomSheet<Map<String, String>>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => FractionallySizedBox(
+        heightFactor: 1.0,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: IconColorPickerDialog(
+            initialIconName: _category.iconName,
+            initialIconColor: _category.iconColor,
+          ),
+        ),
+      ),
+    );
+    if (result != null) {
+      setState(() {
+        _category = _category.copyWith(
+          iconName: result['iconName']!,
+          iconColor: result['iconColor']!,
+        );
+      });
+    }
+  }
 
   _onDelete() {}
 
