@@ -25,6 +25,10 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     super.dispose();
   }
 
+  _loadCategories() {
+    context.read<CategoryCubit>().load();
+  }
+
   void _onCreateCategory() {
     // TODO: navigate to category creation screen
   }
@@ -94,6 +98,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
                     separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
                   );
                 },
+                error: (message) => ErrorText(message: message, onReload: _loadCategories),
                 orElse: () => const Center(child: CircularProgressIndicator()),
               );
             },
