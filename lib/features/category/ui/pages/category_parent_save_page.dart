@@ -65,74 +65,123 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: _buildBody(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                _buildIcon(),
+                const SizedBox(width: 16),
+                _buildCategoryForm(),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _buildSubcategoryHeader(),
+            const SizedBox(height: 8),
+            Expanded(
+              child: SingleChildScrollView(
+                child: _buildSubcategories(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildSaveButton(),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _buildCategory(),
-        const SizedBox(height: 24),
-        _buildSubcategoryHeader(),
-        const SizedBox(height: 8),
-        _buildSubcategories(),
-        const SizedBox(height: 8),
-        _buildSaveButton(),
-      ],
+  Widget _buildIcon() {
+    return GestureDetector(
+      onTap: () {},
+      child: SizedBox(
+        width: 80,
+        height: 80,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Wrap CircleAvatar in Material to get elevation/shadow
+            Positioned.fill(
+              child: Material(
+                type: MaterialType.circle,
+                elevation: 4,
+                // match your Card’s elevation
+                shadowColor: Colors.black45,
+                color: AppColors.cardColor,
+                child: Center(
+                  child: BudgetIcon(
+                    name: _category.iconName,
+                    color: _category.iconColor,
+                    size: 44,
+                  ),
+                ),
+              ),
+            ),
+
+            // Edit badge
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.accentColor,
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black26, blurRadius: 4),
+                  ],
+                ),
+                child: Icon(
+                  Icons.edit,
+                  size: 12,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildCategory() {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: () {},
-          child: CircleAvatar(
-            radius: 40,
-            child: BudgetIcon(name: _category.iconName, color: _category.iconColor),
+  Widget _buildCategoryForm() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            initialValue: _category.name,
+            style: TextStyle(fontSize: 13),
+            maxLength: FeatureConstants.descriptionMaxLength,
+            decoration: InputDecoration(
+              labelText: 'Name'.tr(),
+              labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
+              counterText: "",
+            ),
+            onChanged: (v) {
+              setState(() => _category.copyWith(name: v));
+            },
           ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                initialValue: _category.name,
-                style: TextStyle(fontSize: 13),
-                maxLength: FeatureConstants.descriptionMaxLength,
-                decoration: InputDecoration(
-                  labelText: 'Name'.tr(),
-                  labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-                ),
-                onChanged: (v) {
-                  setState(() => _category.copyWith(name: v));
-                },
+          const SizedBox(height: 8),
+          GestureDetector(
+            onTap: () {
+              _onTransactionTypeTap();
+            },
+            child: InputDecorator(
+              decoration: InputDecoration(
+                labelText: "Category Type",
+                labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
+                suffixIcon: Icon(Icons.arrow_drop_down),
               ),
-              const SizedBox(height: 8),
-              GestureDetector(
-                onTap: () {
-                  _onTransactionTypeTap();
-                },
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: "Category Type",
-                    labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-                    suffixIcon: Icon(Icons.arrow_drop_down),
-                  ),
-                  child: Text(
-                    _category.categoryType.label.tr(),
-                    style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ],
+              child: Text(
+                _category.categoryType.label.tr(),
+                style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -143,7 +192,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
         Text('Subcategories'.tr(), style: Theme.of(context).textTheme.titleMedium),
         IconButton(
           onPressed: _onAddSubcategory,
-          icon: Icon(Icons.add, color: AppColors.accentColor),
+          icon: Icon(Icons.add, color: AppColors.primaryTextColor),
         ),
       ],
     );
@@ -154,19 +203,25 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
       return Text('No subcategories'.tr());
     }
 
-    return Expanded(
-      child: ListView.separated(
-        itemCount: _category.subcategories.length,
-        // physics: NeverScrollableScrollPhysics(),
-        separatorBuilder: (_, __) => Divider(),
-        itemBuilder: (ctx, i) {
-          final sub = _category.subcategories[i];
-          return ListTile(
-            title: Text(sub.name),
-            leading: BudgetIcon(name: sub.iconName, color: sub.iconColor),
-            onTap: () => _onEditSubcategory(sub),
-          );
-        },
+    final subs = _category.subcategories;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.separated(
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: subs.length,
+          separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
+          itemBuilder: (context, index) {
+            final sub = subs[index];
+            return ListTile(
+              title: Text(sub.name),
+              leading: BudgetIcon(name: sub.iconName, color: sub.iconColor),
+              onTap: () => _onEditSubcategory(sub),
+            );
+          },
+        ),
       ),
     );
   }
