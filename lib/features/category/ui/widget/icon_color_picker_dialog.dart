@@ -16,6 +16,8 @@ class IconColorPickerDialog extends StatefulWidget {
 }
 
 class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
+  final ScrollController _scrollController = ScrollController();
+  final Map<String, GlobalKey> _iconKeys = {};
   List<_IconGroup> _groups = [];
   List<String> _colors = [];
   bool _loading = true;
@@ -48,7 +50,10 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
       return _IconGroup(
         name: rawGroup['name'] as String,
         icons: [
-          _IconOption(name: parentIcon, color: parentColor),
+          _IconOption(
+            name: parentIcon,
+            color: parentColor,
+          ),
           ...subs,
         ],
       );
@@ -56,13 +61,26 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
 
     final allColors = <String>{};
     for (var g in groups) {
-      for (var opt in g.icons) allColors.add(opt.color);
+      for (var opt in g.icons) {
+        allColors.add(opt.color);
+      }
     }
 
     setState(() {
       _groups = groups;
       _colors = allColors.toList();
       _loading = false;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final key = _iconKeys[_selectedIconName];
+      if (key?.currentContext != null) {
+        Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: Duration(milliseconds: 300),
+          alignment: 0.5,
+        );
+      }
     });
   }
 
@@ -114,6 +132,7 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
             Expanded(
               child: TabBarView(children: [
                 SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: _groups.map((group) {
@@ -136,6 +155,7 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
                               physics: const NeverScrollableScrollPhysics(),
                               children: group.icons.map((opt) {
                                 final isSel = opt.name == _selectedIconName;
+                                final key = _iconKeys.putIfAbsent(opt.name, () => GlobalKey());
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -143,6 +163,7 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
                                     });
                                   },
                                   child: Container(
+                                    key: key,
                                     margin: const EdgeInsets.all(4),
                                     decoration: isSel
                                         ? BoxDecoration(
@@ -168,8 +189,6 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
                     }).toList(),
                   ),
                 ),
-
-                // COLOR GRID
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: GridView.count(
@@ -205,16 +224,19 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
             ),
 
             // OK button
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop({
-                    'iconName': _selectedIconName,
-                    'iconColor': _selectedColor,
-                  });
-                },
-                child: const Text('OK'),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop({
+                      'iconName': _selectedIconName,
+                      'iconColor': _selectedColor,
+                    });
+                  },
+                  child: const Text('OK'),
+                ),
               ),
             ),
           ],
