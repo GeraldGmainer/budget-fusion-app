@@ -1,106 +1,149 @@
-[
-  {
-    "name": "Salary",
-    "icons": [
-      "briefcase_outline"
+{
+  "colors": [
+    [
+      "#EF5350",
+      "#FF5252",
+      "#F44336",
+      "#E53935",
+      "#D32F2F"
+    ],
+    [
+      "#FFAB00",
+      "#FF9800",
+      "#FB8C00",
+      "#F57C00",
+      "#FF5722"
+    ],
+    [
+      "#81C784",
+      "#66BB6A",
+      "#8BC34A",
+      "#4CAF50",
+      "#43A047"
+    ],
+    [
+      "#2196F3",
+      "#03A9F4",
+      "#7986CB",
+      "#5C6BC0",
+      "#3F51B5"
+    ],
+    [
+      "#80DEEA",
+      "#4DD0E1",
+      "#26C6DA",
+      "#00BCD4",
+      "#00ACC1"
+    ],
+    [
+      "#BA68C8",
+      "#AB47BC",
+      "#9C27B0",
+      "#CE93D8",
+      "#E91E63"
+    ],
+    [
+      "#FFF176",
+      "#FFEB3B",
+      "#FFC107",
+      "#BDBDBD",
+      "#9E9E9E"
     ]
-  },
-  {
-    "name": "Gifts & Bonuses",
-    "icons": [
-      "gift_outline"
-    ]
-  },
-  {
-    "name": "Other Income",
-    "icons": [
-      "cash_multiple"
-    ]
-  },
-  {
-    "name": "Housing",
-    "icons": [
-      "home",
-      "key",
-      "bank_outline",
-      "wrench",
-      "shield",
-      "sofa"
-    ]
-  },
-  {
-    "name": "Food & Drink",
-    "icons": [
-      "silverware_fork_knife",
-      "shopping",
-      "food_fork_drink",
-      "cookie",
-      "truck",
-      "beer"
-    ]
-  },
-  {
-    "name": "Transportation",
-    "icons": [
-      "car",
-      "gas_station",
-      "bus",
-      "wrench_outline"
-    ]
-  },
-  {
-    "name": "Health & Wellness",
-    "icons": [
-      "heart",
-      "doctor",
-      "pill",
-      "dumbbell",
-      "leaf"
-    ]
-  },
-  {
-    "name": "Personal & Shopping",
-    "icons": [
-      "shopping_outline",
-      "tshirt_crew_outline",
-      "cellphone",
-      "flower"
-    ]
-  },
-  {
-    "name": "Entertainment & Leisure",
-    "icons": [
-      "party_popper",
-      "filmstrip",
-      "gamepad_variant",
-      "airplane",
-      "television_classic"
-    ]
-  },
-  {
-    "name": "Education",
-    "icons": [
-      "book_outline",
-      "school_outline",
-      "book_open_outline",
-      "laptop",
-      "presentation",
-      "robot"
-    ]
-  },
-  {
-    "name": "Savings & Investments",
-    "icons": [
-      "cash",
-      "piggy_bank",
-      "chart_line",
-      "clock_outline"
-    ]
-  },
-  {
-    "name": "Other",
-    "icons": [
-      "dots_horizontal"
-    ]
-  }
-]
+  ],
+  "icons": [
+    {
+      "name": "Income",
+      "icons": [
+        "briefcase_outline",
+        "gift_outline",
+        "cash_multiple"
+      ]
+    },
+    {
+      "name": "Housing",
+      "icons": [
+        "home",
+        "key",
+        "bank_outline",
+        "wrench",
+        "shield",
+        "sofa"
+      ]
+    },
+    {
+      "name": "Food & Drink",
+      "icons": [
+        "silverware_fork_knife",
+        "shopping",
+        "food_fork_drink",
+        "cookie",
+        "truck",
+        "beer"
+      ]
+    },
+    {
+      "name": "Transportation",
+      "icons": [
+        "car",
+        "gas_station",
+        "bus",
+        "wrench_outline"
+      ]
+    },
+    {
+      "name": "Health & Wellness",
+      "icons": [
+        "heart",
+        "doctor",
+        "pill",
+        "dumbbell",
+        "leaf"
+      ]
+    },
+    {
+      "name": "Personal & Shopping",
+      "icons": [
+        "shopping_outline",
+        "tshirt_crew_outline",
+        "cellphone",
+        "flower"
+      ]
+    },
+    {
+      "name": "Entertainment & Leisure",
+      "icons": [
+        "party_popper",
+        "filmstrip",
+        "gamepad_variant",
+        "airplane",
+        "television_classic"
+      ]
+    },
+    {
+      "name": "Education",
+      "icons": [
+        "book_outline",
+        "school_outline",
+        "book_open_outline",
+        "laptop",
+        "presentation",
+        "robot"
+      ]
+    },
+    {
+      "name": "Savings & Investments",
+      "icons": [
+        "cash",
+        "piggy_bank",
+        "chart_line",
+        "clock_outline"
+      ]
+    },
+    {
+      "name": "Other",
+      "icons": [
+        "dots_horizontal"
+      ]
+    }
+  ]
+}
