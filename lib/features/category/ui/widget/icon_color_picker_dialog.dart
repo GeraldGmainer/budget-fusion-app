@@ -20,10 +20,6 @@ class IconColorPickerDialog extends StatefulWidget {
 }
 
 class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
-  final ScrollController _iconScrollContainer = ScrollController();
-  final ScrollController _colorScrollController = ScrollController();
-  final Map<String, GlobalKey> _iconKeys = {};
-  final Map<String, GlobalKey> _colorKeys = {};
   List<_IconGroup> _groups = [];
   List<String> _colors = [];
   bool _loading = true;
@@ -62,26 +58,6 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
       _colors = colors;
       _loading = false;
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final key = _iconKeys[_selectedIconName];
-      if (key?.currentContext != null) {
-        Scrollable.ensureVisible(
-          key!.currentContext!,
-          duration: const Duration(milliseconds: 500),
-          alignment: 0.5,
-        );
-      }
-
-      final colorKey = _colorKeys[_selectedColor];
-      if (colorKey?.currentContext != null) {
-        Scrollable.ensureVisible(
-          colorKey!.currentContext!,
-          duration: const Duration(milliseconds: 500),
-          alignment: 0.5,
-        );
-      }
-    });
   }
 
   @override
@@ -105,63 +81,79 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(height: 8.0),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Material(
-                type: MaterialType.circle,
-                elevation: 4,
-                color: AppColors.cardColor,
-                child: SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: Center(
-                    child: BudgetIcon(
-                      name: _selectedIconName,
-                      color: _selectedColor,
-                      size: 44,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const TabBar(
-              isScrollable: true,
-              tabAlignment: TabAlignment.center,
-              tabs: [
-                Tab(text: 'Icon'),
-                Tab(text: 'Color'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  IconSelectionTab(
-                    groups: _groups,
-                    selectedIconName: _selectedIconName,
-                    onIconSelected: (name) => setState(() => _selectedIconName = name),
-                  ),
-                  ColorSelectionTab(
-                    colors: _colors,
-                    selectedColor: _selectedColor,
-                    onColorSelected: (color) => setState(() => _selectedColor = color),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop({
-                    'iconName': _selectedIconName,
-                    'iconColor': _selectedColor,
-                  }),
-                  child: const Text('OK'),
-                ),
-              ),
-            ),
+            _buildPreview(),
+            _buildTabs(),
+            _buildTabViews(),
+            _buildOkButton(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Material(
+        type: MaterialType.circle,
+        elevation: 4,
+        color: AppColors.cardColor,
+        child: SizedBox(
+          width: 80,
+          height: 80,
+          child: Center(
+            child: BudgetIcon(
+              name: _selectedIconName,
+              color: _selectedColor,
+              size: 44,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabs() {
+    return const TabBar(
+      isScrollable: true,
+      tabAlignment: TabAlignment.center,
+      tabs: [
+        Tab(text: 'Icon'),
+        Tab(text: 'Color'),
+      ],
+    );
+  }
+
+  Widget _buildTabViews() {
+    return Expanded(
+      child: TabBarView(
+        children: [
+          IconSelectionTab(
+            groups: _groups,
+            selectedIconName: _selectedIconName,
+            onIconSelected: (name) => setState(() => _selectedIconName = name),
+          ),
+          ColorSelectionTab(
+            colors: _colors,
+            selectedColor: _selectedColor,
+            onColorSelected: (color) => setState(() => _selectedColor = color),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOkButton() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context).pop({
+            'iconName': _selectedIconName,
+            'iconColor': _selectedColor,
+          }),
+          child: const Text('OK'),
         ),
       ),
     );
