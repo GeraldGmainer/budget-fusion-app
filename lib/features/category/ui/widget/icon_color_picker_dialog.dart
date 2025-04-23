@@ -10,18 +10,20 @@ class IconColorPickerDialog extends StatefulWidget {
   final String initialIconColor;
 
   const IconColorPickerDialog({
-    Key? key,
+    super.key,
     required this.initialIconName,
     required this.initialIconColor,
-  }) : super(key: key);
+  });
 
   @override
   _IconColorPickerDialogState createState() => _IconColorPickerDialogState();
 }
 
 class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _iconScrollContainer = ScrollController();
+  final ScrollController _colorScrollController = ScrollController();
   final Map<String, GlobalKey> _iconKeys = {};
+  final Map<String, GlobalKey> _colorKeys = {};
   List<_IconGroup> _groups = [];
   List<String> _colors = [];
   bool _loading = true;
@@ -66,6 +68,15 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
       if (key?.currentContext != null) {
         Scrollable.ensureVisible(
           key!.currentContext!,
+          duration: const Duration(milliseconds: 500),
+          alignment: 0.5,
+        );
+      }
+
+      final colorKey = _colorKeys[_selectedColor];
+      if (colorKey?.currentContext != null) {
+        Scrollable.ensureVisible(
+          colorKey!.currentContext!,
           duration: const Duration(milliseconds: 500),
           alignment: 0.5,
         );
@@ -125,7 +136,7 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
               child: TabBarView(
                 children: [
                   SingleChildScrollView(
-                    controller: _scrollController,
+                    controller: _iconScrollContainer,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: _groups.map((group) {
@@ -172,15 +183,18 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: GridView.count(
+                      controller: _colorScrollController,
                       crossAxisCount: 5,
                       children: _colors.map((hex) {
                         final isSel = hex == _selectedColor;
+                        final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
                         return GestureDetector(
                           onTap: () => setState(() => _selectedColor = hex),
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
                               Container(
+                                key: key,
                                 margin: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
                                   color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000),
