@@ -135,82 +135,15 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
             Expanded(
               child: TabBarView(
                 children: [
-                  SingleChildScrollView(
-                    controller: _iconScrollContainer,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _groups.map((group) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(group.name, style: Theme.of(context).textTheme.titleSmall),
-                              const SizedBox(height: 8),
-                              GridView.count(
-                                crossAxisCount: 5,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: group.icons.map((opt) {
-                                  final isSel = opt.name == _selectedIconName;
-                                  final key = _iconKeys.putIfAbsent(opt.name, () => GlobalKey());
-                                  return GestureDetector(
-                                    onTap: () => setState(() => _selectedIconName = opt.name),
-                                    child: Container(
-                                      key: key,
-                                      margin: const EdgeInsets.all(4),
-                                      decoration: isSel
-                                          ? BoxDecoration(
-                                              border: Border.all(color: AppColors.primaryTextColor, width: 2),
-                                              borderRadius: BorderRadius.circular(8),
-                                            )
-                                          : null,
-                                      child: BudgetIcon(
-                                        name: opt.name,
-                                        color: isSel ? "#E0E0E0" : "#7F7F7F",
-                                        size: 32,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                  IconSelectionTab(
+                    groups: _groups,
+                    selectedIconName: _selectedIconName,
+                    onIconSelected: (name) => setState(() => _selectedIconName = name),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: GridView.count(
-                      controller: _colorScrollController,
-                      crossAxisCount: 5,
-                      children: _colors.map((hex) {
-                        final isSel = hex == _selectedColor;
-                        final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
-                        return GestureDetector(
-                          onTap: () => setState(() => _selectedColor = hex),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                key: key,
-                                margin: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              if (isSel)
-                                Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                  ColorSelectionTab(
+                    colors: _colors,
+                    selectedColor: _selectedColor,
+                    onColorSelected: (color) => setState(() => _selectedColor = color),
                   ),
                 ],
               ),
@@ -246,4 +179,161 @@ class _IconOption {
   final String name;
 
   _IconOption({required this.name});
+}
+
+class ColorSelectionTab extends StatefulWidget {
+  final List<String> colors;
+  final String selectedColor;
+  final Function(String) onColorSelected;
+
+  const ColorSelectionTab({
+    super.key,
+    required this.colors,
+    required this.selectedColor,
+    required this.onColorSelected,
+  });
+
+  @override
+  State<ColorSelectionTab> createState() => _ColorSelectionTabState();
+}
+
+class _ColorSelectionTabState extends State<ColorSelectionTab> {
+  final Map<String, GlobalKey> _colorKeys = {};
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final key = _colorKeys[widget.selectedColor];
+      if (key?.currentContext != null) {
+        Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: Duration(milliseconds: 500),
+          alignment: 0.5,
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: GridView.count(
+        controller: _scrollController,
+        crossAxisCount: 5,
+        children: widget.colors.map((hex) {
+          final isSel = hex == widget.selectedColor;
+          final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
+          return GestureDetector(
+            onTap: () => widget.onColorSelected(hex),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  key: key,
+                  margin: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                if (isSel)
+                  Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class IconSelectionTab extends StatefulWidget {
+  final List<_IconGroup> groups;
+  final String selectedIconName;
+  final Function(String) onIconSelected;
+
+  const IconSelectionTab({
+    super.key,
+    required this.groups,
+    required this.selectedIconName,
+    required this.onIconSelected,
+  });
+
+  @override
+  State<IconSelectionTab> createState() => _IconSelectionTabState();
+}
+
+class _IconSelectionTabState extends State<IconSelectionTab> {
+  final Map<String, GlobalKey> _iconKeys = {};
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final key = _iconKeys[widget.selectedIconName];
+      if (key?.currentContext != null) {
+        Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: Duration(milliseconds: 500),
+          alignment: 0.5,
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      controller: _scrollController,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.groups.map((group) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(group.name, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: 8),
+                GridView.count(
+                  crossAxisCount: 5,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: group.icons.map((opt) {
+                    final isSel = opt.name == widget.selectedIconName;
+                    final key = _iconKeys.putIfAbsent(opt.name, () => GlobalKey());
+                    return GestureDetector(
+                      onTap: () => widget.onIconSelected(opt.name),
+                      child: Container(
+                        key: key,
+                        margin: const EdgeInsets.all(4),
+                        decoration: isSel
+                            ? BoxDecoration(
+                                border: Border.all(color: AppColors.primaryTextColor, width: 2),
+                                borderRadius: BorderRadius.circular(8),
+                              )
+                            : null,
+                        child: BudgetIcon(
+                          name: opt.name,
+                          color: isSel ? "#E0E0E0" : "#7F7F7F",
+                          size: 32,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
 }
