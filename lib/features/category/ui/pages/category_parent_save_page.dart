@@ -16,7 +16,7 @@ class CategoryParentSavePage extends StatefulWidget {
 }
 
 class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
-  late final Category _category;
+  late Category _category;
 
   @override
   void initState() {
@@ -24,9 +24,36 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     _category = widget.category.copyWith();
   }
 
+  bool get _hasChanged => _category != widget.category;
+
+  Future<bool> _confirmDiscardChanges() async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Unsaved changes').tr(),
+        content: Text('You have unsaved changes. Are you sure you want to leave?').tr(),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Cancel').tr(),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text('OK').tr(),
+          ),
+        ],
+      ),
+    );
+    return result == true;
+  }
+
   _onAddSubcategory() {}
 
   _onEditSubcategory(Category category) {}
+
+  _onNameChange(String value) {
+    setState(() => _category = _category.copyWith(name: value));
+  }
 
   _onTransactionTypeTap() async {
     final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
@@ -83,39 +110,51 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Category').tr(),
-        actions: [
-          IconButton(
-            icon: const Icon(CommunityMaterialIcons.delete),
-            onPressed: _onDelete,
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                _buildIcon(),
-                const SizedBox(width: 16),
-                _buildCategoryForm(),
-              ],
-            ),
-            const SizedBox(height: 24),
-            _buildSubcategoryHeader(),
-            const SizedBox(height: 8),
-            Expanded(
-              child: SingleChildScrollView(
-                child: _buildSubcategories(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildSaveButton(),
+    return PopScope(
+      canPop: !_hasChanged,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
+        final bool shouldPop = await _confirmDiscardChanges();
+        if (context.mounted && shouldPop) {
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Category').tr(),
+          actions: [
+            IconButton(
+              icon: const Icon(CommunityMaterialIcons.delete),
+              onPressed: _onDelete,
+            )
           ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  _buildIcon(),
+                  const SizedBox(width: 16),
+                  _buildCategoryForm(),
+                ],
+              ),
+              const SizedBox(height: 24),
+              _buildSubcategoryHeader(),
+              const SizedBox(height: 8),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: _buildSubcategories(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildSaveButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -185,9 +224,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
               labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
               counterText: "",
             ),
-            onChanged: (v) {
-              setState(() => _category.copyWith(name: v));
-            },
+            onChanged: _onNameChange,
           ),
           const SizedBox(height: 8),
           GestureDetector(
