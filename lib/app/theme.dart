@@ -71,6 +71,11 @@ ThemeData createTheme(BuildContext context) {
         fontWeight: FontWeight.normal,
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(fontSize: 13),
+      floatingLabelStyle: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor),
+      hintStyle: TextStyle(fontSize: 13),
+    ),
     cardTheme: CardTheme(
       color: AppColors.cardColor,
       // shadowColor: AppColors.accentColor.withOpacity(0.3),

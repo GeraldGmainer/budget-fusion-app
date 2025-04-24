@@ -95,6 +95,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         );
       },
       builder: (context, state) {
+        if (state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false)) {
+          return Center(child: CircularProgressIndicator());
+        }
         return Column(
           children: [
             PeriodSelector(

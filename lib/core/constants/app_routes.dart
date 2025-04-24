@@ -6,4 +6,5 @@ class AppRoutes {
   static const main = "/main";
   static const bookingSave = "/bookingSave";
   static const categoryList = "/categoryList";
+  static const categoryParentSave = "/categoryParentSave";
 }

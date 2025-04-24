@@ -62,7 +62,10 @@ class PeriodSelector extends StatelessWidget {
   }
 
   Widget _buildNext(BuildContext context) {
-    final isEnd = pageController.page! < 0.5;
+    final pc = pageController;
+    final page = pc.hasClients && pc.positions.isNotEmpty ? pc.page ?? pc.initialPage.toDouble() : pc.initialPage.toDouble();
+    final isEnd = page < 0.5;
+
     return IconButton(
       icon: Icon(Icons.chevron_right, color: isEnd ? AppColors.disabledTextColor : AppColors.secondaryTextColor),
       onPressed: isEnd
