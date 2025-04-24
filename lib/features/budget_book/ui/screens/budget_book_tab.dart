@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/budget_book/cubits/budget_book_cubit.dart';
+import '../../application/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_date_range.dart';
 import '../../domain/entities/summary_view_data.dart';
 import '../../domain/entities/transaction_view_data.dart';

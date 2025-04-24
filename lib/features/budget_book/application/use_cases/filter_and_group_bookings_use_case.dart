@@ -1,9 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/entities/budget_book_filter.dart';
-import '../../../domain/entities/budget_page_data.dart';
-import '../../../domain/service/budget_page_data_service.dart';
+import '../../domain/entities/budget_book_filter.dart';
+import '../../domain/entities/budget_page_data.dart';
+import '../../domain/service/budget_page_data_service.dart';
 
 @lazySingleton
 class FilterAndGroupBookingsUseCase {
