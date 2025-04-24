@@ -67,24 +67,30 @@ import 'package:budget_fusion_app/features/booking/data/repos/booking_repo_impl.
     as _i830;
 import 'package:budget_fusion_app/features/booking/data/repos/suggestion_repo.dart'
     as _i448;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/cubits/budget_book_cubit.dart'
-    as _i332;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/filter_and_group_bookings_use_case.dart'
-    as _i548;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/filter_bookings_use_case.dart'
-    as _i971;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_summary_use_case.dart'
-    as _i885;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/generate_budget_transaction_use_case.dart'
-    as _i867;
-import 'package:budget_fusion_app/features/budget_book/application/budget_book/use_cases/reset_budget_book_use_case.dart'
-    as _i601;
+import 'package:budget_fusion_app/features/budget_book/application/cubits/budget_book_cubit.dart'
+    as _i81;
+import 'package:budget_fusion_app/features/budget_book/application/use_cases/filter_and_group_bookings_use_case.dart'
+    as _i710;
+import 'package:budget_fusion_app/features/budget_book/application/use_cases/filter_bookings_use_case.dart'
+    as _i674;
+import 'package:budget_fusion_app/features/budget_book/application/use_cases/generate_budget_summary_use_case.dart'
+    as _i393;
+import 'package:budget_fusion_app/features/budget_book/application/use_cases/generate_budget_transaction_use_case.dart'
+    as _i119;
+import 'package:budget_fusion_app/features/budget_book/application/use_cases/reset_budget_book_use_case.dart'
+    as _i129;
 import 'package:budget_fusion_app/features/budget_book/domain/service/budget_page_data_service.dart'
     as _i198;
 import 'package:budget_fusion_app/features/budget_book/domain/service/summary_data_generator.dart'
     as _i811;
 import 'package:budget_fusion_app/features/budget_book/domain/service/transaction_data_generator.dart'
     as _i558;
+import 'package:budget_fusion_app/features/category/application/cubits/category_save_cubit.dart'
+    as _i89;
+import 'package:budget_fusion_app/features/category/application/use_cases/delete_category_use_case.dart'
+    as _i1071;
+import 'package:budget_fusion_app/features/category/application/use_cases/save_category_use_case.dart'
+    as _i600;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_local_data_source.dart'
     as _i342;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_remote_data_source.dart'
@@ -180,8 +186,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i594.ProfileRemoteDataSource());
     gh.lazySingleton<_i990.AccountRemoteDataSource>(
         () => _i990.AccountRemoteDataSource());
-    gh.lazySingleton<_i971.FilterBookingsUseCase>(
-        () => _i971.FilterBookingsUseCase());
     gh.lazySingleton<_i811.SummaryDataGenerator>(
         () => _i811.SummaryDataGenerator());
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
@@ -189,6 +193,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.TransactionDataGenerator());
     gh.lazySingleton<_i247.RemoteLoadingService>(
         () => _i247.RemoteLoadingService());
+    gh.lazySingleton<_i674.FilterBookingsUseCase>(
+        () => _i674.FilterBookingsUseCase());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i198.BudgetPageDataService>(
@@ -213,8 +219,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i261.ProfileLocalDataSource(gh<_i779.Database>()));
     gh.lazySingleton<_i431.AccountLocalDataSource>(
         () => _i431.AccountLocalDataSource(gh<_i779.Database>()));
-    gh.lazySingleton<_i548.FilterAndGroupBookingsUseCase>(() =>
-        _i548.FilterAndGroupBookingsUseCase(gh<_i198.BudgetPageDataService>()));
+    gh.lazySingleton<_i710.FilterAndGroupBookingsUseCase>(() =>
+        _i710.FilterAndGroupBookingsUseCase(gh<_i198.BudgetPageDataService>()));
     gh.lazySingleton<_i448.SuggestionRepo>(
         () => _i448.SuggestionRepo(gh<_i423.BookingLocalDataSource>()));
     gh.lazySingleton<_i327.QueueManager>(() => _i327.QueueManager(
@@ -268,8 +274,12 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i652.ProfileSettingLocalDataSource>(),
               gh<_i146.ProfileSettingRemoteDataSource>(),
             ));
-    gh.lazySingleton<_i867.GenerateBudgetTransactionUseCase>(
-        () => _i867.GenerateBudgetTransactionUseCase(
+    gh.lazySingleton<_i600.SaveCategoryUseCase>(
+        () => _i600.SaveCategoryUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i1071.DeleteCategoryUseCase>(
+        () => _i1071.DeleteCategoryUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i119.GenerateBudgetTransactionUseCase>(
+        () => _i119.GenerateBudgetTransactionUseCase(
               gh<_i714.ProfileSettingRepo>(),
               gh<_i558.TransactionDataGenerator>(),
             ));
@@ -296,8 +306,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
-    gh.lazySingleton<_i601.ResetBudgetBookUseCase>(
-        () => _i601.ResetBudgetBookUseCase(
+    gh.factory<_i89.CategorySaveCubit>(() => _i89.CategorySaveCubit(
+          gh<_i600.SaveCategoryUseCase>(),
+          gh<_i1071.DeleteCategoryUseCase>(),
+        ));
+    gh.lazySingleton<_i129.ResetBudgetBookUseCase>(
+        () => _i129.ResetBudgetBookUseCase(
               gh<_i714.BookingRepo>(),
               gh<_i714.CategoryRepo>(),
               gh<_i714.AccountRepo>(),
@@ -308,8 +322,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i515.WatchAccountsUseCase>(),
           gh<_i565.LoadAccountsUseCase>(),
         ));
-    gh.lazySingleton<_i885.GenerateBudgetSummaryUseCase>(
-        () => _i885.GenerateBudgetSummaryUseCase(
+    gh.lazySingleton<_i393.GenerateBudgetSummaryUseCase>(
+        () => _i393.GenerateBudgetSummaryUseCase(
               gh<_i714.ProfileSettingRepo>(),
               gh<_i811.SummaryDataGenerator>(),
               gh<_i714.CategoryRepo>(),
@@ -324,6 +338,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i383.DeleteBookingUseCase(gh<_i714.BookingRepo>()));
     gh.factory<_i856.WatchBookingsUseCase>(
         () => _i856.WatchBookingsUseCase(gh<_i714.BookingRepo>()));
+    gh.factory<_i81.BudgetBookCubit>(() => _i81.BudgetBookCubit(
+          gh<_i393.GenerateBudgetSummaryUseCase>(),
+          gh<_i710.FilterAndGroupBookingsUseCase>(),
+          gh<_i332.WatchBookingsUseCase>(),
+          gh<_i129.ResetBudgetBookUseCase>(),
+          gh<_i119.GenerateBudgetTransactionUseCase>(),
+        ));
     gh.factory<_i190.BookingCubit>(() => _i190.BookingCubit(
           gh<_i332.WatchBookingsUseCase>(),
           gh<_i624.LoadBookingsUseCase>(),
@@ -332,13 +353,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i144.SaveBookingUseCase>(),
           gh<_i638.DefaultAccountUseCase>(),
           gh<_i383.DeleteBookingUseCase>(),
-        ));
-    gh.factory<_i332.BudgetBookCubit>(() => _i332.BudgetBookCubit(
-          gh<_i885.GenerateBudgetSummaryUseCase>(),
-          gh<_i548.FilterAndGroupBookingsUseCase>(),
-          gh<_i332.WatchBookingsUseCase>(),
-          gh<_i601.ResetBudgetBookUseCase>(),
-          gh<_i867.GenerateBudgetTransactionUseCase>(),
         ));
     return this;
   }
