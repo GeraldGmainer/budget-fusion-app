@@ -80,8 +80,4 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
       emit(BookingSaveState.error(draft: draft, message: 'error.default'));
     }
   }
-
-  void dispose() {
-    emit(BookingSaveState.initial(draft: _initialDraft()));
-  }
 }

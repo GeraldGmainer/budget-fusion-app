@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
@@ -24,7 +26,10 @@ class AppRouter {
         );
       case AppRoutes.bookingSave:
         return MyCustomRoute(
-          builder: (context) => BookingSavePage(model: settings.arguments as Booking?),
+          builder: (context) => BlocProvider<BookingSaveCubit>(
+            create: (_) => GetIt.I<BookingSaveCubit>(),
+            child: BookingSavePage(model: settings.arguments as Booking?),
+          ),
           settings: RouteSettings(name: AppRoutes.bookingSave),
         );
       case AppRoutes.categoryList:
