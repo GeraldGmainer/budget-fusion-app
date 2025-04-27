@@ -111,18 +111,8 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
         );
       },
       builder: (context, state) {
-        return PopScope(
-          canPop: state.draft.equalsCategory(widget.model),
-          onPopInvokedWithResult: (didPop, result) async {
-            if (didPop) {
-              return;
-            }
-
-            final bool shouldPop = await _confirmDiscardChanges();
-            if (context.mounted && shouldPop) {
-              Navigator.pop(context);
-            }
-          },
+        return UnsavedChangesGuard(
+          hasChange: !state.draft.equalsCategory(widget.model),
           child: Scaffold(
             appBar: AppBar(
               title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),

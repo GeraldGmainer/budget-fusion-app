@@ -14,7 +14,12 @@ class SubcategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (draft.subcategories.isEmpty) {
-      return Text('No subcategories'.tr());
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: Text('No subcategories'.tr()),
+        ),
+      );
     }
 
     final subs = draft.subcategories;
@@ -33,9 +38,7 @@ class SubcategoryList extends StatelessWidget {
               dense: true,
               title: Text(sub.name),
               leading: BudgetIcon(name: sub.iconName, color: sub.iconColor),
-              onTap: () {
-                onTap(sub);
-              },
+              onTap: () => onTap(sub),
             );
           },
         ),
