@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/features/category/domain/entities/category_draft.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -64,15 +66,49 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
   }
 
-  _onDelete() {}
+  _onSave() {
+    final draft = context.read<CategorySaveCubit>().state.draft;
+    if (draft.name.isNullOrEmpty) {
+      showErrorSnackBar(context, "category.validation.required_name", duration: Duration(seconds: 2));
+      return;
+    }
+    context.read<CategorySaveCubit>().save();
+  }
 
-  _onSave() {}
+  _onUploadSuccess(CategoryDraft draft) {
+    showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
+    Navigator.of(context).pop();
+  }
+
+  _onDelete() {
+    ConfirmDialog.show(
+      context,
+      headerText: "booking.dialog.delete_title",
+      bodyText: "booking.dialog.delete_body",
+      onOK: () {
+        BlocProvider.of<CategorySaveCubit>(context).delete(widget.model);
+      },
+    );
+  }
+
+  _onDeleteSuccess(Category model) {
+    showSnackBar(context, "booking.delete_success");
+    Navigator.of(context).pop();
+  }
+
+  _onError(String error) {
+    showSnackBar(context, error);
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CategorySaveCubit, CategorySaveState>(
       listener: (context, state) {
-        // TODO: implement listener
+        state.whenOrNull(
+          loaded: (draft) => _onUploadSuccess(draft),
+          deleted: (_, model) => _onDeleteSuccess(model),
+          error: (draft, error) => _onError(error),
+        );
       },
       builder: (context, state) {
         return PopScope(

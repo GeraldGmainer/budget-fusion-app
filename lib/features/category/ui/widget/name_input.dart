@@ -16,6 +16,10 @@ class NameInput extends StatelessWidget {
       initialValue: draft.name,
       style: TextStyle(fontSize: 13),
       maxLength: FeatureConstants.descriptionMaxLength,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        return (value?.trim().isEmpty ?? true) ? '' : null;
+      },
       decoration: InputDecoration(
         labelText: 'Name'.tr(),
         labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
