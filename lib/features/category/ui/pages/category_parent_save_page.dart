@@ -14,7 +14,7 @@ import '../widget/name_input.dart';
 import '../widget/subcategory_list.dart';
 
 class CategoryParentSavePage extends StatefulWidget {
-  final Category model;
+  final Category? model;
 
   const CategoryParentSavePage({super.key, required this.model});
 
@@ -27,27 +27,6 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
   void initState() {
     super.initState();
     BlocProvider.of<CategorySaveCubit>(context).init(widget.model);
-  }
-
-  Future<bool> _confirmDiscardChanges() async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Unsaved changes').tr(),
-        content: Text('You have unsaved changes. Are you sure you want to leave?').tr(),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancel').tr(),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text('OK').tr(),
-          ),
-        ],
-      ),
-    );
-    return result == true;
   }
 
   _onAddSubcategory() {}
@@ -112,7 +91,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
       },
       builder: (context, state) {
         return UnsavedChangesGuard(
-          hasChange: !state.draft.equalsCategory(widget.model),
+          hasChange: state.draft != state.initialDraft,
           child: Scaffold(
             appBar: AppBar(
               title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
@@ -125,7 +104,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
               ],
             ),
             body: state.maybeWhen(
-              draftUpdate: (draft) => _buildContent(draft),
+              draftUpdate: (draft, _) => _buildContent(draft),
               error: (draft, __) => _buildContent(draft),
               orElse: () => Center(child: CircularProgressIndicator()),
             ),
