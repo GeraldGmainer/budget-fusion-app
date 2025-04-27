@@ -3,19 +3,21 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/category_draft.dart';
+
 class SubcategoryList extends StatelessWidget {
-  final Category category;
+  final CategoryDraft draft;
   final Function(Category subcategory) onTap;
 
-  const SubcategoryList({super.key, required this.category, required this.onTap});
+  const SubcategoryList({super.key, required this.draft, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    if (category.subcategories.isEmpty) {
+    if (draft.subcategories.isEmpty) {
       return Text('No subcategories'.tr());
     }
 
-    final subs = category.subcategories;
+    final subs = draft.subcategories;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

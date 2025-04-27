@@ -27,14 +27,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
   final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
   int _currentPage = 0;
-  late BookingSaveCubit _bookingSaveCubit;
 
   @override
   void initState() {
     super.initState();
-    _bookingSaveCubit = BlocProvider.of<BookingSaveCubit>(context);
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
-    _bookingSaveCubit.init(widget.model);
+    BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
   }
 

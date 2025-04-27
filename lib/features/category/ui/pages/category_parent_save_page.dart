@@ -12,24 +12,20 @@ import '../widget/name_input.dart';
 import '../widget/subcategory_list.dart';
 
 class CategoryParentSavePage extends StatefulWidget {
-  final Category category;
+  final Category model;
 
-  const CategoryParentSavePage({super.key, required this.category});
+  const CategoryParentSavePage({super.key, required this.model});
 
   @override
   State<CategoryParentSavePage> createState() => _CategoryParentSavePageState();
 }
 
 class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
-  late Category _category;
-
   @override
   void initState() {
     super.initState();
-    _category = widget.category.copyWith();
+    BlocProvider.of<CategorySaveCubit>(context).init(widget.model);
   }
-
-  bool get _hasChanged => _category != widget.category;
 
   Future<bool> _confirmDiscardChanges() async {
     final result = await showDialog<bool>(
@@ -74,23 +70,24 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: !_hasChanged,
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) {
-          return;
-        }
-        final bool shouldPop = await _confirmDiscardChanges();
-        if (context.mounted && shouldPop) {
-          Navigator.pop(context);
-        }
+    return BlocConsumer<CategorySaveCubit, CategorySaveState>(
+      listener: (context, state) {
+        // TODO: implement listener
       },
-      child: BlocConsumer<CategorySaveCubit, CategorySaveState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          return Scaffold(
+      builder: (context, state) {
+        return PopScope(
+          canPop: state.draft.equalsCategory(widget.model),
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) {
+              return;
+            }
+
+            final bool shouldPop = await _confirmDiscardChanges();
+            if (context.mounted && shouldPop) {
+              Navigator.pop(context);
+            }
+          },
+          child: Scaffold(
             appBar: AppBar(
               title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
               actions: [
@@ -102,17 +99,16 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
               ],
             ),
             body: state.maybeWhen(
-              loading: (draft) => Center(child: CircularProgressIndicator()),
-              loaded: (draft) => Center(child: CircularProgressIndicator()),
-              orElse: () => _buildContent(state.draft),
+              draftUpdate: (draft) => _buildContent(draft),
+              error: (draft, __) => _buildContent(draft),
+              orElse: () => Center(child: CircularProgressIndicator()),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
-  // TODO use draft
   Widget _buildContent(CategoryDraft draft) {
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -121,7 +117,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
         children: [
           Row(
             children: [
-              IconInput(category: _category, onIconChange: _onIconChange),
+              IconInput(draft: draft, onIconChange: _onIconChange),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -129,7 +125,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
                   children: [
                     NameInput(draft: draft, onNameChange: _onNameChange),
                     const SizedBox(height: 8),
-                    CategoryTypeInput(category: _category, onCategoryTypeChange: _onCategoryTypeChange),
+                    CategoryTypeInput(draft: draft, onCategoryTypeChange: _onCategoryTypeChange),
                   ],
                 ),
               ),
@@ -140,7 +136,7 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
           const SizedBox(height: 8),
           Expanded(
             child: SingleChildScrollView(
-              child: SubcategoryList(category: _category, onTap: _onEditSubcategory),
+              child: SubcategoryList(draft: draft, onTap: _onEditSubcategory),
             ),
           ),
           const SizedBox(height: 16),

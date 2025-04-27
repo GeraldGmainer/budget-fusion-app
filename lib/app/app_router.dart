@@ -39,7 +39,10 @@ class AppRouter {
         );
       case AppRoutes.categoryParentSave:
         return MyCustomRoute(
-          builder: (context) => CategoryParentSavePage(category: settings.arguments as Category),
+          builder: (context) => BlocProvider<CategorySaveCubit>(
+            create: (_) => GetIt.I<CategorySaveCubit>(),
+            child: CategoryParentSavePage(model: settings.arguments as Category),
+          ),
           settings: RouteSettings(name: AppRoutes.categoryParentSave),
         );
 

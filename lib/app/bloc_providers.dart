@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +24,6 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),
     BlocProvider<RemoteLoadingCubit>(create: (_) => GetIt.I<RemoteLoadingCubit>()),
-    BlocProvider<CategorySaveCubit>(create: (_) => GetIt.I<CategorySaveCubit>()),
   ];
 }
 

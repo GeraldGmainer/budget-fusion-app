@@ -1,14 +1,15 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../shared/ui/budget_book/budget_icon.dart';
+import '../../domain/entities/category_draft.dart';
 import 'icon_color_picker_dialog.dart';
 
 class IconInput extends StatelessWidget {
-  final Category category;
+  final CategoryDraft draft;
   final Function(String iconName, String iconColor) onIconChange;
 
-  const IconInput({super.key, required this.category, required this.onIconChange});
+  const IconInput({super.key, required this.draft, required this.onIconChange});
 
   _onIconTap(BuildContext context) async {
     final result = await showModalBottomSheet<Map<String, String>>(
@@ -22,8 +23,8 @@ class IconInput extends StatelessWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: IconColorPickerDialog(
-            initialIconName: category.iconName,
-            initialIconColor: category.iconColor,
+            initialIconName: draft.iconName,
+            initialIconColor: draft.iconColor,
           ),
         ),
       ),
@@ -60,8 +61,8 @@ class IconInput extends StatelessWidget {
         color: AppColors.cardColor,
         child: Center(
           child: BudgetIcon(
-            name: category.iconName,
-            color: category.iconColor,
+            name: draft.iconName,
+            color: draft.iconColor,
             size: 44,
           ),
         ),

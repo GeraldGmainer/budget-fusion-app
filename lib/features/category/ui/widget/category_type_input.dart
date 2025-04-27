@@ -4,18 +4,20 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/category_draft.dart';
+
 class CategoryTypeInput extends StatelessWidget {
-  final Category category;
+  final CategoryDraft draft;
   final Function(CategoryType categoryType) onCategoryTypeChange;
 
-  const CategoryTypeInput({super.key, required this.category, required this.onCategoryTypeChange});
+  const CategoryTypeInput({super.key, required this.draft, required this.onCategoryTypeChange});
 
   _onTransactionTypeTap(BuildContext context) async {
     final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
       context: context,
       title: "booking.select_transaction_type",
       items: [CategoryType.outcome, CategoryType.income],
-      selectedItem: category.categoryType,
+      selectedItem: draft.categoryType,
       itemLabelBuilder: (categoryType) {
         return Row(
           children: [
@@ -42,7 +44,7 @@ class CategoryTypeInput extends StatelessWidget {
           suffixIcon: Icon(Icons.arrow_drop_down),
         ),
         child: Text(
-          category.categoryType.label.tr(),
+          draft.categoryType.label.tr(),
           style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
         ),
       ),
