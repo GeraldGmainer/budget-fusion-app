@@ -20,7 +20,6 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<AccountCubit>(create: (_) => GetIt.I<AccountCubit>()),
     BlocProvider<CategoryCubit>(create: (_) => GetIt.I<CategoryCubit>()),
     BlocProvider<BookingCubit>(create: (_) => GetIt.I<BookingCubit>()),
-    BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>()),
     BlocProvider<CalculatorCubit>(create: (_) => GetIt.I<CalculatorCubit>()),
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),
@@ -29,10 +28,3 @@ List<BlocProvider> getBlocProviders() {
 }
 
 // BlocProvider<SignUpBloc>(create: (context) => SignUpBloc(_userRepo)),
-// // --
-// BlocProvider<BookingCrudBloc>(create: (context) => BookingCrudBloc(_bookingRepo)),
-// BlocProvider<CalculatorBloc>(create: (context) => CalculatorBloc()),
-// BlocProvider<CategoryListBloc>(create: (context) => CategoryListBloc(_bookingRepo)),
-// BlocProvider<CategoryIconBloc>(create: (context) => CategoryIconBloc(_bookingRepo)),
-// BlocProvider<CategoryCrudBloc>(create: (context) => CategoryCrudBloc(_bookingRepo)),
-// BlocProvider<SuggestionBloc>(create: (context) => SuggestionBloc(_bookingRepo, _userRepo)),

@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../use_cases/load_bookings_use_case.dart';
-import '../use_cases/watch_bookings_use_case.dart';
 
 @injectable
 class BookingCubit extends Cubit<LoadableState<List<Booking>>> {

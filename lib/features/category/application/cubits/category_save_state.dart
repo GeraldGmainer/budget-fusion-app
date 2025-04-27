@@ -1,0 +1,30 @@
+part of 'category_save_cubit.dart';
+
+@freezed
+class CategorySaveState with _$CategorySaveState {
+  factory CategorySaveState.initial({
+    required CategoryDraft draft,
+  }) = _Initial;
+
+  factory CategorySaveState.draftUpdate({
+    required CategoryDraft draft,
+  }) = _DraftUpdate;
+
+  const factory CategorySaveState.loading({
+    required CategoryDraft draft,
+  }) = _Loading;
+
+  const factory CategorySaveState.loaded({
+    required CategoryDraft draft,
+  }) = _Loaded;
+
+  const factory CategorySaveState.deleted({
+    required CategoryDraft draft,
+    required Category category,
+  }) = _Deleted;
+
+  const factory CategorySaveState.error({
+    required CategoryDraft draft,
+    required String message,
+  }) = _Error;
+}

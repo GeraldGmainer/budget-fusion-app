@@ -1,9 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/entities/budget_page_data.dart';
-import '../../../domain/entities/transaction_view_data.dart';
-import '../../../domain/service/transaction_data_generator.dart';
+import '../../domain/entities/budget_page_data.dart';
+import '../../domain/entities/transaction_view_data.dart';
+import '../../domain/service/transaction_data_generator.dart';
 
 @lazySingleton
 class GenerateBudgetTransactionUseCase {

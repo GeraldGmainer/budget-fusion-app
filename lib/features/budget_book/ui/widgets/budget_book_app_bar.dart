@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/budget_book/cubits/budget_book_cubit.dart';
+import '../../application/cubits/budget_book_cubit.dart';
 import 'budget_filter_button.dart';
 import 'budget_tab_title.dart';
 import 'refresh_button.dart';

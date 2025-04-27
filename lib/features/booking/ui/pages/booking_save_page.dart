@@ -27,23 +27,18 @@ class _BookingSavePageState extends State<BookingSavePage> {
   final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
   int _currentPage = 0;
-  late BookingSaveCubit _bookingSaveCubit;
-  late Future _cubitInitialized;
 
   @override
   void initState() {
     super.initState();
-    _bookingSaveCubit = BlocProvider.of<BookingSaveCubit>(context);
-    _cubitInitialized = context.read<BookingSaveCubit>().stream.firstWhere((state) => state.maybeWhen(draftUpdate: (_) => true, orElse: () => false));
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
-    _bookingSaveCubit.init(widget.model);
+    BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-    _bookingSaveCubit.dispose();
     super.dispose();
   }
 
@@ -102,14 +97,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
           _animateToPage(0);
         }
       },
-      child: FutureBuilder(
-          future: _cubitInitialized,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return _buildPage();
-            }
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }),
+      child: _buildPage(),
     );
   }
 
@@ -135,9 +123,9 @@ class _BookingSavePageState extends State<BookingSavePage> {
           ),
           resizeToAvoidBottomInset: false,
           body: state.maybeWhen(
-            loading: (draft) => Center(child: CircularProgressIndicator()),
-            loaded: (draft) => Center(child: CircularProgressIndicator()),
-            orElse: () => _buildContent(state.draft),
+            draftUpdate: (draft) => _buildContent(draft),
+            error: (draft, __) => _buildContent(draft),
+            orElse: () => Center(child: CircularProgressIndicator()),
           ),
         );
       },

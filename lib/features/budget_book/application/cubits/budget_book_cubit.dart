@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/entities/base/budget_view_data.dart';
-import '../../../domain/entities/budget_book_filter.dart';
-import '../../../domain/enums/budget_view_mode.dart';
-import '../../../domain/enums/period_mode.dart';
+import '../../domain/entities/base/budget_view_data.dart';
+import '../../domain/entities/budget_book_filter.dart';
+import '../../domain/enums/budget_view_mode.dart';
+import '../../domain/enums/period_mode.dart';
 import '../use_cases/filter_and_group_bookings_use_case.dart';
 import '../use_cases/generate_budget_summary_use_case.dart';
 import '../use_cases/generate_budget_transaction_use_case.dart';

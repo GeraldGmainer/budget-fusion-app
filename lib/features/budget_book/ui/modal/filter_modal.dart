@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/budget_book/cubits/budget_book_cubit.dart';
+import '../../application/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
 import 'account_filter.dart';
 import 'description_filter.dart';

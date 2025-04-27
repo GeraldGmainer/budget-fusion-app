@@ -28,6 +28,7 @@ export 'ui/common/loading_indicator.dart';
 export 'ui/common/scrollable_nav_bar.dart';
 export 'ui/common/select_bottom_sheet.dart';
 export 'ui/common/select_dialog.dart';
+export 'ui/common/unsaved_changes_guard.dart';
 //
 export 'ui/drawer/app_drawer.dart';
 export 'ui/drawer/app_drawer_button.dart';

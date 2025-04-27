@@ -6,6 +6,7 @@ export 'converters/ui/icon_converter.dart';
 //
 export 'extensions/decimal_extensions.dart';
 export 'extensions/snackbar.dart';
+export 'extensions/string_extensions.dart';
 export 'extensions/validator.dart';
 //
 export 'models/uuid.dart';

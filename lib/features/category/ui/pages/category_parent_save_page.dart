@@ -1,30 +1,33 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
+import 'package:budget_fusion_app/features/category/domain/entities/category_draft.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widget/icon_color_picker_dialog.dart';
+import '../widget/category_type_input.dart';
+import '../widget/icon_input.dart';
+import '../widget/name_input.dart';
+import '../widget/subcategory_list.dart';
 
 class CategoryParentSavePage extends StatefulWidget {
-  final Category category;
+  final Category model;
 
-  const CategoryParentSavePage({super.key, required this.category});
+  const CategoryParentSavePage({super.key, required this.model});
 
   @override
   State<CategoryParentSavePage> createState() => _CategoryParentSavePageState();
 }
 
 class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
-  late Category _category;
-
   @override
   void initState() {
     super.initState();
-    _category = widget.category.copyWith();
+    BlocProvider.of<CategorySaveCubit>(context).init(widget.model);
   }
-
-  bool get _hasChanged => _category != widget.category;
 
   Future<bool> _confirmDiscardChanges() async {
     final result = await showDialog<bool>(
@@ -52,195 +55,118 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
   _onEditSubcategory(Category category) {}
 
   _onNameChange(String value) {
-    setState(() => _category = _category.copyWith(name: value));
+    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(name: value));
   }
 
-  _onTransactionTypeTap() async {
-    final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
-      context: context,
-      title: "booking.select_transaction_type",
-      items: [CategoryType.outcome, CategoryType.income],
-      selectedItem: _category.categoryType,
-      itemLabelBuilder: (categoryType) {
-        return Row(
-          children: [
-            SizedBox(width: 45, child: Icon(categoryType.icon, color: categoryType.color)),
-            Text(categoryType.label.tr()),
-          ],
-        );
+  _onIconChange(String iconName, String iconColor) {
+    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(iconName: iconName, iconColor: iconColor));
+  }
+
+  _onCategoryTypeChange(CategoryType value) {
+    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
+  }
+
+  _onSave() {
+    final draft = context.read<CategorySaveCubit>().state.draft;
+    if (draft.name.isNullOrEmpty) {
+      showErrorSnackBar(context, "category.validation.required_name", duration: Duration(seconds: 2));
+      return;
+    }
+    context.read<CategorySaveCubit>().save();
+  }
+
+  _onUploadSuccess(CategoryDraft draft) {
+    showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
+    Navigator.of(context).pop();
+  }
+
+  _onDelete() {
+    ConfirmDialog.show(
+      context,
+      headerText: "booking.dialog.delete_title",
+      bodyText: "booking.dialog.delete_body",
+      onOK: () {
+        BlocProvider.of<CategorySaveCubit>(context).delete(widget.model);
       },
     );
-
-    if (selectedValue != null && context.mounted) {
-      // context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedValue));
-    }
   }
 
-  _onIconTap() async {
-    final result = await showModalBottomSheet<Map<String, String>>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => FractionallySizedBox(
-        heightFactor: 1.0,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: IconColorPickerDialog(
-            initialIconName: _category.iconName,
-            initialIconColor: _category.iconColor,
-          ),
-        ),
-      ),
-    );
-    if (result != null) {
-      setState(() {
-        _category = _category.copyWith(
-          iconName: result['iconName']!,
-          iconColor: result['iconColor']!,
-        );
-      });
-    }
+  _onDeleteSuccess(Category model) {
+    showSnackBar(context, "booking.delete_success");
+    Navigator.of(context).pop();
   }
 
-  _onDelete() {}
-
-  _onSave() {}
+  _onError(String error) {
+    showSnackBar(context, error);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: !_hasChanged,
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) {
-          return;
-        }
-        final bool shouldPop = await _confirmDiscardChanges();
-        if (context.mounted && shouldPop) {
-          Navigator.pop(context);
-        }
+    return BlocConsumer<CategorySaveCubit, CategorySaveState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loaded: (draft) => _onUploadSuccess(draft),
+          deleted: (_, model) => _onDeleteSuccess(model),
+          error: (draft, error) => _onError(error),
+        );
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Category').tr(),
-          actions: [
-            IconButton(
-              icon: const Icon(CommunityMaterialIcons.delete),
-              onPressed: _onDelete,
-            )
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  _buildIcon(),
-                  const SizedBox(width: 16),
-                  _buildCategoryForm(),
-                ],
-              ),
-              const SizedBox(height: 24),
-              _buildSubcategoryHeader(),
-              const SizedBox(height: 8),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: _buildSubcategories(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildSaveButton(),
-            ],
+      builder: (context, state) {
+        return UnsavedChangesGuard(
+          hasChange: !state.draft.equalsCategory(widget.model),
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
+              actions: [
+                if (!state.draft.isCreating)
+                  IconButton(
+                    icon: const Icon(CommunityMaterialIcons.delete),
+                    onPressed: _onDelete,
+                  )
+              ],
+            ),
+            body: state.maybeWhen(
+              draftUpdate: (draft) => _buildContent(draft),
+              error: (draft, __) => _buildContent(draft),
+              orElse: () => Center(child: CircularProgressIndicator()),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildIcon() {
-    return GestureDetector(
-      onTap: _onIconTap,
-      child: SizedBox(
-        width: 80,
-        height: 80,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned.fill(
-              child: Material(
-                type: MaterialType.circle,
-                elevation: 4,
-                shadowColor: Colors.black45,
-                color: AppColors.cardColor,
-                child: Center(
-                  child: BudgetIcon(
-                    name: _category.iconName,
-                    color: _category.iconColor,
-                    size: 44,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.accentColor,
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black26, blurRadius: 4),
+  Widget _buildContent(CategoryDraft draft) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              IconInput(draft: draft, onIconChange: _onIconChange),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NameInput(draft: draft, onNameChange: _onNameChange),
+                    const SizedBox(height: 8),
+                    CategoryTypeInput(draft: draft, onCategoryTypeChange: _onCategoryTypeChange),
                   ],
                 ),
-                child: Icon(
-                  Icons.edit,
-                  size: 12,
-                  color: Colors.white,
-                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCategoryForm() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            initialValue: _category.name,
-            style: TextStyle(fontSize: 13),
-            maxLength: FeatureConstants.descriptionMaxLength,
-            decoration: InputDecoration(
-              labelText: 'Name'.tr(),
-              labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-              counterText: "",
-            ),
-            onChanged: _onNameChange,
+            ],
           ),
+          const SizedBox(height: 24),
+          _buildSubcategoryHeader(),
           const SizedBox(height: 8),
-          GestureDetector(
-            onTap: _onTransactionTypeTap,
-            child: InputDecorator(
-              decoration: InputDecoration(
-                labelText: "Category Type",
-                labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-                suffixIcon: Icon(Icons.arrow_drop_down),
-              ),
-              child: Text(
-                _category.categoryType.label.tr(),
-                style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
-              ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: SubcategoryList(draft: draft, onTap: _onEditSubcategory),
             ),
-          )
+          ),
+          const SizedBox(height: 16),
+          _buildSaveButton(),
         ],
       ),
     );
@@ -256,35 +182,6 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
           icon: Icon(Icons.add, color: AppColors.primaryTextColor),
         ),
       ],
-    );
-  }
-
-  Widget _buildSubcategories() {
-    if (_category.subcategories.isEmpty) {
-      return Text('No subcategories'.tr());
-    }
-
-    final subs = _category.subcategories;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-          padding: const EdgeInsets.symmetric(vertical: 0),
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: subs.length,
-          separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
-          itemBuilder: (context, index) {
-            final sub = subs[index];
-            return ListTile(
-              dense: true,
-              title: Text(sub.name),
-              leading: BudgetIcon(name: sub.iconName, color: sub.iconColor),
-              onTap: () => _onEditSubcategory(sub),
-            );
-          },
-        ),
-      ),
     );
   }
 
