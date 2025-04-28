@@ -168,10 +168,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
+    gh.factory<_i967.CalculatorCubit>(() => _i967.CalculatorCubit());
     gh.factory<_i487.LanguageCubit>(() => _i487.LanguageCubit());
     gh.factory<_i642.MainCubit>(() => _i642.MainCubit());
-    gh.factory<_i967.CalculatorCubit>(() => _i967.CalculatorCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
+    gh.lazySingleton<_i247.RemoteLoadingService>(
+        () => _i247.RemoteLoadingService());
     gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
     gh.lazySingleton<_i371.RealtimeNotifierService>(
         () => _i371.RealtimeNotifierService());
@@ -186,15 +188,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i594.ProfileRemoteDataSource());
     gh.lazySingleton<_i990.AccountRemoteDataSource>(
         () => _i990.AccountRemoteDataSource());
+    gh.lazySingleton<_i674.FilterBookingsUseCase>(
+        () => _i674.FilterBookingsUseCase());
+    gh.lazySingleton<_i558.TransactionDataGenerator>(
+        () => _i558.TransactionDataGenerator());
     gh.lazySingleton<_i811.SummaryDataGenerator>(
         () => _i811.SummaryDataGenerator());
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i558.TransactionDataGenerator>(
-        () => _i558.TransactionDataGenerator());
-    gh.lazySingleton<_i247.RemoteLoadingService>(
-        () => _i247.RemoteLoadingService());
-    gh.lazySingleton<_i674.FilterBookingsUseCase>(
-        () => _i674.FilterBookingsUseCase());
     gh.lazySingleton<_i871.UserRepo>(
         () => _i871.UserRepo(gh<_i478.UserRemoteSource>()));
     gh.lazySingleton<_i198.BudgetPageDataService>(
@@ -260,10 +260,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i7.WatchCategoriesUseCase>(
         () => _i7.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i686.LoadCategoriesUseCase>(
-        () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i876.WatchCategoriesUseCase>(
         () => _i876.WatchCategoriesUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i686.LoadCategoriesUseCase>(
+        () => _i686.LoadCategoriesUseCase(gh<_i714.CategoryRepo>()));
     gh.factory<_i837.ProfileCubit>(() => _i837.ProfileCubit(
           gh<_i332.WatchProfileUseCase>(),
           gh<_i332.LoadProfileUseCase>(),

@@ -48,31 +48,31 @@ class AppRouter {
 
       // case SignUpPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => SignUpPage(),
+      //     builders: (context) => SignUpPage(),
       //   );
       // case ForgotPasswordPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => ForgotPasswordPage(),
+      //     builders: (context) => ForgotPasswordPage(),
       //   );
       // case ResetPasswordPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => ResetPasswordPage(),
+      //     builders: (context) => ResetPasswordPage(),
       //   );
       // case SettingsPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => SettingsPage(),
+      //     builders: (context) => SettingsPage(),
       //   );
       // case BookingCrudPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => BookingCrudPage(model: settings.arguments as BookingModel),
+      //     builders: (context) => BookingCrudPage(model: settings.arguments as BookingModel),
       //   );
       // case CategoryCrudPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => CategoryCrudPage(model: settings.arguments as CategoryModel),
+      //     builders: (context) => CategoryCrudPage(model: settings.arguments as CategoryModel),
       //   );
       // case BookingListPage.route:
       //   return MyCustomRoute(
-      //     builder: (context) => BookingListPage(pageModel: settings.arguments as BookingListPageModel),
+      //     builders: (context) => BookingListPage(pageModel: settings.arguments as BookingListPageModel),
       //   );
       default:
         return MaterialPageRoute(
