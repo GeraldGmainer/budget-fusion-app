@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,9 +20,9 @@ class CacheManager {
     _caches[key]!.set(value);
   }
 
-  void updateList<T>(DomainType key, List<T> Function(List<T>?) update) {
+  Future<void> updateList<T>(DomainType key, FutureOr<List<T>> Function(List<T>?) update) async {
     final currentList = get<List<T>>(key) ?? [];
-    final updatedList = update(currentList);
+    final updatedList = await update(currentList);
     set<List<T>>(key, updatedList);
   }
 
