@@ -8,6 +8,7 @@ class CategorySaveState with _$CategorySaveState {
 
   factory CategorySaveState.draftUpdate({
     required CategoryDraft draft,
+    required CategoryDraft initialDraft,
   }) = _DraftUpdate;
 
   const factory CategorySaveState.loading({
@@ -27,4 +28,10 @@ class CategorySaveState with _$CategorySaveState {
     required CategoryDraft draft,
     required String message,
   }) = _Error;
+}
+
+extension CategorySaveStateX on CategorySaveState {
+  CategoryDraft? get initialDraft => whenOrNull(
+        draftUpdate: (_, CategoryDraft initialDraft) => initialDraft,
+      );
 }

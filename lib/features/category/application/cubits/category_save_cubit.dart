@@ -24,11 +24,8 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
 
   Future<void> init(Category? category) async {
     try {
-      if (category == null) {
-        emit(CategorySaveState.draftUpdate(draft: _initialDraft()));
-      } else {
-        emit(CategorySaveState.draftUpdate(draft: CategoryDraft.fromCategory(category)));
-      }
+      final draft = category == null ? _initialDraft() : CategoryDraft.fromCategory(category);
+      emit(CategorySaveState.draftUpdate(draft: draft, initialDraft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
       emit(CategorySaveState.error(draft: state.draft, message: e.message));

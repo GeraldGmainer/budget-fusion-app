@@ -30,7 +30,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   }
 
   void _onCreateCategory() {
-    // TODO: navigate to category creation screen
+    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave);
   }
 
   void _onCategoryTap(Category category) {
@@ -45,7 +45,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
         actions: [
           IconButton(
             icon: const Icon(CommunityMaterialIcons.plus),
-            onPressed: () {},
+            onPressed: _onCreateCategory,
           )
         ],
         bottom: PreferredSize(

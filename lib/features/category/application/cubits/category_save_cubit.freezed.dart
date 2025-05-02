@@ -20,7 +20,8 @@ mixin _$CategorySaveState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -30,7 +31,8 @@ mixin _$CategorySaveState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -40,7 +42,8 @@ mixin _$CategorySaveState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -208,7 +211,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -221,7 +225,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -234,7 +239,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -313,10 +319,11 @@ abstract class _$$DraftUpdateImplCopyWith<$Res>
       __$$DraftUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CategoryDraft draft});
+  $Res call({CategoryDraft draft, CategoryDraft initialDraft});
 
   @override
   $CategoryDraftCopyWith<$Res> get draft;
+  $CategoryDraftCopyWith<$Res> get initialDraft;
 }
 
 /// @nodoc
@@ -333,27 +340,44 @@ class __$$DraftUpdateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? draft = null,
+    Object? initialDraft = null,
   }) {
     return _then(_$DraftUpdateImpl(
       draft: null == draft
           ? _value.draft
           : draft // ignore: cast_nullable_to_non_nullable
               as CategoryDraft,
+      initialDraft: null == initialDraft
+          ? _value.initialDraft
+          : initialDraft // ignore: cast_nullable_to_non_nullable
+              as CategoryDraft,
     ));
+  }
+
+  /// Create a copy of CategorySaveState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryDraftCopyWith<$Res> get initialDraft {
+    return $CategoryDraftCopyWith<$Res>(_value.initialDraft, (value) {
+      return _then(_value.copyWith(initialDraft: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$DraftUpdateImpl implements _DraftUpdate {
-  _$DraftUpdateImpl({required this.draft});
+  _$DraftUpdateImpl({required this.draft, required this.initialDraft});
 
   @override
   final CategoryDraft draft;
+  @override
+  final CategoryDraft initialDraft;
 
   @override
   String toString() {
-    return 'CategorySaveState.draftUpdate(draft: $draft)';
+    return 'CategorySaveState.draftUpdate(draft: $draft, initialDraft: $initialDraft)';
   }
 
   @override
@@ -361,11 +385,13 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DraftUpdateImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
+            (identical(other.draft, draft) || other.draft == draft) &&
+            (identical(other.initialDraft, initialDraft) ||
+                other.initialDraft == initialDraft));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, draft);
+  int get hashCode => Object.hash(runtimeType, draft, initialDraft);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -379,33 +405,36 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
-    return draftUpdate(draft);
+    return draftUpdate(draft, initialDraft);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
-    return draftUpdate?.call(draft);
+    return draftUpdate?.call(draft, initialDraft);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -413,7 +442,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult orElse(),
   }) {
     if (draftUpdate != null) {
-      return draftUpdate(draft);
+      return draftUpdate(draft, initialDraft);
     }
     return orElse();
   }
@@ -463,11 +492,13 @@ class _$DraftUpdateImpl implements _DraftUpdate {
 }
 
 abstract class _DraftUpdate implements CategorySaveState {
-  factory _DraftUpdate({required final CategoryDraft draft}) =
-      _$DraftUpdateImpl;
+  factory _DraftUpdate(
+      {required final CategoryDraft draft,
+      required final CategoryDraft initialDraft}) = _$DraftUpdateImpl;
 
   @override
   CategoryDraft get draft;
+  CategoryDraft get initialDraft;
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -551,7 +582,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -564,7 +596,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -577,7 +610,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -722,7 +756,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -735,7 +770,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -748,7 +784,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -913,7 +950,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -926,7 +964,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -939,7 +978,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,
@@ -1095,7 +1135,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft) draftUpdate,
+    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
+        draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) loaded,
     required TResult Function(CategoryDraft draft, Category category) deleted,
@@ -1108,7 +1149,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft)? draftUpdate,
+    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? loaded,
     TResult? Function(CategoryDraft draft, Category category)? deleted,
@@ -1121,7 +1163,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft)? draftUpdate,
+    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
+        draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? loaded,
     TResult Function(CategoryDraft draft, Category category)? deleted,

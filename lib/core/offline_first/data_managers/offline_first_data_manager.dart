@@ -67,16 +67,16 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("Saving DTO with id '${dto.id.value}' for domain $coloredDomain");
 
     await localSource.save(dto);
-    cacheManager.updateList(domainType, (list) {
-      final oldList = list != null ? (list as List<Dto>) : <Dto>[];
-      final existingIndex = oldList.indexWhere((e) => e.id == dto.id);
-      if (existingIndex >= 0) {
-        final mutable = oldList.toList();
-        mutable[existingIndex] = dto;
-        return mutable;
+    await cacheManager.updateList<Dto>(domainType, (list) async {
+      List<Dto> base = list ?? await _getCachedOrLoad();
+      final idx = base.indexWhere((e) => e.id == dto.id);
+      final newList = [...base];
+      if (idx >= 0) {
+        newList[idx] = dto;
       } else {
-        return [...oldList, dto];
+        newList.add(dto);
       }
+      return newList;
     });
     final updatedList = cacheManager.get<List<Dto>>(domainType) ?? [];
     _emitToStream(updatedList);
@@ -89,6 +89,26 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     );
     _log("Queuing upsert for id '${dto.id.value}' for domain $coloredDomain");
     unawaited(queueManager.add(item));
+  }
+
+  Future<List<Dto>> _getCachedOrLoad() async {
+    var list = cacheManager.get<List<Dto>>(domainType);
+    if (list != null && list.isNotEmpty) {
+      return list;
+    }
+    _log("Fetching local data for domain $coloredDomain...");
+    var local = await localSource.fetchAll();
+    _log("Local ${local.length} items found for domain $coloredDomain");
+    if (local.isNotEmpty) {
+      cacheManager.set(domainType, local);
+      return local;
+    }
+    _log("No local data found. Fetching remote data for domain $coloredDomain...");
+    var remote = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
+    _log("Remote ${local.length} items found for domain $coloredDomain");
+    await localSource.saveAll(remote);
+    cacheManager.set(domainType, remote);
+    return remote;
   }
 
   Future<void> delete(Dto dto) async {
