@@ -9,76 +9,45 @@ import '../features/booking/booking.dart';
 import '../features/category/category.dart';
 import '../main/main.dart';
 
+// TODO SignUpPage, ForgotPasswordPage, ResetPasswordPage
 class AppRouter {
+  final Map<String, Widget Function(RouteSettings)> _builders = {
+    // core
+    AppRoutes.login: (_) => LoginPage(),
+    AppRoutes.main: (_) => MainPage(),
+    // booking
+    AppRoutes.bookingSave: (settings) => BlocProvider<BookingSaveCubit>(
+          create: (_) => GetIt.I<BookingSaveCubit>(),
+          child: BookingSavePage(model: settings.arguments as Booking?),
+        ),
+    // category
+    AppRoutes.categoryList: (_) => CategoryListPage(),
+    AppRoutes.categoryParentSave: (settings) => BlocProvider<CategorySaveCubit>(
+          create: (_) => GetIt.I<CategorySaveCubit>(),
+          child: CategoryParentSavePage(model: settings.arguments as Category?),
+        ),
+    AppRoutes.categorySubSave: (settings) => BlocProvider<CategorySaveCubit>(
+          create: (_) => GetIt.I<CategorySaveCubit>(),
+          child: CategorySubSavePage(model: settings.arguments as Category),
+        ),
+    //
+  };
+
   Route onGenerateRoute(RouteSettings settings) {
     BudgetLogger.instance.d("AppRouter, go to ${settings.name}");
 
-    switch (settings.name) {
-      case AppRoutes.login:
-        return MyCustomRoute(
-          builder: (context) => LoginPage(),
-          settings: RouteSettings(name: AppRoutes.login),
-        );
-      case AppRoutes.main:
-        return MyCustomRoute(
-          builder: (context) => MainPage(),
-          settings: RouteSettings(name: AppRoutes.main),
-        );
-      case AppRoutes.bookingSave:
-        return MyCustomRoute(
-          builder: (context) => BlocProvider<BookingSaveCubit>(
-            create: (_) => GetIt.I<BookingSaveCubit>(),
-            child: BookingSavePage(model: settings.arguments as Booking?),
-          ),
-          settings: RouteSettings(name: AppRoutes.bookingSave),
-        );
-      case AppRoutes.categoryList:
-        return MyCustomRoute(
-          builder: (context) => CategoryListPage(),
-          settings: RouteSettings(name: AppRoutes.categoryList),
-        );
-      case AppRoutes.categoryParentSave:
-        return MyCustomRoute(
-          builder: (context) => BlocProvider<CategorySaveCubit>(
-            create: (_) => GetIt.I<CategorySaveCubit>(),
-            child: CategoryParentSavePage(model: settings.arguments as Category?),
-          ),
-          settings: RouteSettings(name: AppRoutes.categoryParentSave),
-        );
-
-      // case SignUpPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => SignUpPage(),
-      //   );
-      // case ForgotPasswordPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => ForgotPasswordPage(),
-      //   );
-      // case ResetPasswordPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => ResetPasswordPage(),
-      //   );
-      // case SettingsPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => SettingsPage(),
-      //   );
-      // case BookingCrudPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => BookingCrudPage(model: settings.arguments as BookingModel),
-      //   );
-      // case CategoryCrudPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => CategoryCrudPage(model: settings.arguments as CategoryModel),
-      //   );
-      // case BookingListPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => BookingListPage(pageModel: settings.arguments as BookingListPageModel),
-      //   );
-      default:
-        return MaterialPageRoute(
-          builder: (context) => SplashPage(),
-        );
+    final builder = _builders[settings.name];
+    if (builder != null) {
+      return MyCustomRoute(
+        builder: (_) => builder(settings),
+        settings: settings,
+      );
     }
+
+    return MaterialPageRoute(
+      builder: (_) => SplashPage(),
+      settings: settings,
+    );
   }
 }
 

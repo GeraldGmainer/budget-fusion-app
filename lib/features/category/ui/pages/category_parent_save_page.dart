@@ -1,13 +1,11 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/features/category/domain/entities/category_draft.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../containers/category_save_container.dart';
 import '../widget/category_type_input.dart';
 import '../widget/icon_input.dart';
 import '../widget/name_input.dart';
@@ -32,22 +30,6 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     BlocProvider.of<CategorySaveCubit>(context).init(widget.model);
   }
 
-  _onAddSubcategory() {}
-
-  _onEditSubcategory(Category category) {}
-
-  _onNameChange(String value) {
-    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(name: value));
-  }
-
-  _onIconChange(String iconName, String iconColor) {
-    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(iconName: iconName, iconColor: iconColor));
-  }
-
-  _onCategoryTypeChange(CategoryType value) {
-    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
-  }
-
   _onSave() {
     setState(() => _submitted = true);
     if (!_formKey.currentState!.validate()) {
@@ -56,67 +38,17 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
     context.read<CategorySaveCubit>().save();
   }
 
-  _onUploadSuccess(CategoryDraft draft) {
-    showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
-    Navigator.of(context).pop();
-  }
+  _onAddSubcategory() {}
 
-  _onDelete() {
-    ConfirmDialog.show(
-      context,
-      headerText: "booking.dialog.delete_title",
-      bodyText: "booking.dialog.delete_body",
-      onOK: () {
-        BlocProvider.of<CategorySaveCubit>(context).delete(widget.model);
-      },
-    );
-  }
-
-  _onDeleteSuccess(Category model) {
-    showSnackBar(context, "booking.delete_success");
-    Navigator.of(context).pop();
-  }
-
-  _onError(String error) {
-    showSnackBar(context, error);
-  }
+  _onEditSubcategory(Category category) {}
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategorySaveCubit, CategorySaveState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          loaded: (draft) => _onUploadSuccess(draft),
-          deleted: (_, model) => _onDeleteSuccess(model),
-          error: (draft, error) => _onError(error),
-        );
-      },
-      builder: (context, state) {
-        return UnsavedChangesGuard(
-          hasChange: state.draft != state.initialDraft,
-          child: Form(
-            key: _formKey,
-            autovalidateMode: _submitted ? AutovalidateMode.always : AutovalidateMode.onUserInteraction,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
-                actions: [
-                  if (!state.draft.isCreating)
-                    IconButton(
-                      icon: const Icon(CommunityMaterialIcons.delete),
-                      onPressed: _onDelete,
-                    )
-                ],
-              ),
-              body: state.maybeWhen(
-                draftUpdate: (draft, _) => _buildContent(draft),
-                error: (draft, __) => _buildContent(draft),
-                orElse: () => Center(child: CircularProgressIndicator()),
-              ),
-            ),
-          ),
-        );
-      },
+    return CategorySaveContainer(
+      builder: (BuildContext context, CategoryDraft draft) => _buildContent(draft),
+      formKey: _formKey,
+      submitted: _submitted,
+      model: widget.model,
     );
   }
 
@@ -128,15 +60,15 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
         children: [
           Row(
             children: [
-              IconInput(draft: draft, onIconChange: _onIconChange),
+              IconInput(draft: draft),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    NameInput(draft: draft, onNameChange: _onNameChange),
+                    NameInput(draft: draft),
                     const SizedBox(height: 8),
-                    CategoryTypeInput(draft: draft, onCategoryTypeChange: _onCategoryTypeChange),
+                    CategoryTypeInput(draft: draft),
                   ],
                 ),
               ),
