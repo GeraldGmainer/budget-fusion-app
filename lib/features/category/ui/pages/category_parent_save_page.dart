@@ -23,6 +23,9 @@ class CategoryParentSavePage extends StatefulWidget {
 }
 
 class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
+  final _formKey = GlobalKey<FormState>();
+  bool _submitted = false;
+
   @override
   void initState() {
     super.initState();
@@ -46,9 +49,8 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
   }
 
   _onSave() {
-    final draft = context.read<CategorySaveCubit>().state.draft;
-    if (draft.name.isNullOrEmpty) {
-      showErrorSnackBar(context, "category.validation.required_name", duration: Duration(seconds: 2));
+    setState(() => _submitted = true);
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     context.read<CategorySaveCubit>().save();
@@ -92,21 +94,25 @@ class _CategoryParentSavePageState extends State<CategoryParentSavePage> {
       builder: (context, state) {
         return UnsavedChangesGuard(
           hasChange: state.draft != state.initialDraft,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
-              actions: [
-                if (!state.draft.isCreating)
-                  IconButton(
-                    icon: const Icon(CommunityMaterialIcons.delete),
-                    onPressed: _onDelete,
-                  )
-              ],
-            ),
-            body: state.maybeWhen(
-              draftUpdate: (draft, _) => _buildContent(draft),
-              error: (draft, __) => _buildContent(draft),
-              orElse: () => Center(child: CircularProgressIndicator()),
+          child: Form(
+            key: _formKey,
+            autovalidateMode: _submitted ? AutovalidateMode.always : AutovalidateMode.onUserInteraction,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(state.draft.isCreating ? "category.new_title" : "category.edit_title").tr(),
+                actions: [
+                  if (!state.draft.isCreating)
+                    IconButton(
+                      icon: const Icon(CommunityMaterialIcons.delete),
+                      onPressed: _onDelete,
+                    )
+                ],
+              ),
+              body: state.maybeWhen(
+                draftUpdate: (draft, _) => _buildContent(draft),
+                error: (draft, __) => _buildContent(draft),
+                orElse: () => Center(child: CircularProgressIndicator()),
+              ),
             ),
           ),
         );
