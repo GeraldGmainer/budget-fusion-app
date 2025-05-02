@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/entities/category_draft.dart';
+
 class CategoryListPage extends StatefulWidget {
   @override
   State<CategoryListPage> createState() => _CategoryListPageState();
@@ -30,11 +32,11 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   }
 
   void _onCreateCategory() {
-    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave);
+    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave, arguments: CategoryDraft.initial());
   }
 
   void _onCategoryTap(Category category) {
-    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave, arguments: category);
+    Navigator.of(context).pushNamed(AppRoutes.categoryParentSave, arguments: CategoryDraft.fromCategory(category));
   }
 
   @override

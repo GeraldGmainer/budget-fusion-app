@@ -35,6 +35,10 @@ class CategoryDraft with _$CategoryDraft {
     );
   }
 
+  factory CategoryDraft.initial({Category? parent}) {
+    return CategoryDraft(parent: parent);
+  }
+
   factory CategoryDraft.fromCategory(Category category) {
     return CategoryDraft(
       id: category.id,

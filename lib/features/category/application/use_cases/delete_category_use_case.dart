@@ -1,4 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -7,7 +9,8 @@ class DeleteCategoryUseCase {
 
   DeleteCategoryUseCase(this.categoryRepo);
 
-  Future<void> call(Category category) async {
-    await categoryRepo.delete(category);
+  Future<void> call(CategoryDraft draft) async {
+    final userId = Uuid(supabase.auth.currentUser!.id);
+    await categoryRepo.delete(draft.toCategory(userId));
   }
 }

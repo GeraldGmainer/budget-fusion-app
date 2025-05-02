@@ -16,15 +16,10 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
   final SaveCategoryUseCase _saveCategoryUseCase;
   final DeleteCategoryUseCase _deleteCategoryUseCase;
 
-  CategorySaveCubit(this._saveCategoryUseCase, this._deleteCategoryUseCase) : super(CategorySaveState.initial(draft: _initialDraft()));
+  CategorySaveCubit(this._saveCategoryUseCase, this._deleteCategoryUseCase) : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
 
-  static CategoryDraft _initialDraft() {
-    return CategoryDraft();
-  }
-
-  Future<void> init(Category? category) async {
+  Future<void> init(CategoryDraft draft) async {
     try {
-      final draft = category == null ? _initialDraft() : CategoryDraft.fromCategory(category);
       emit(CategorySaveState.draftUpdate(draft: draft, initialDraft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
@@ -44,7 +39,7 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     emit(CategorySaveState.loading(draft: draft));
     try {
       await _saveCategoryUseCase(draft);
-      emit(CategorySaveState.loaded(draft: draft));
+      emit(CategorySaveState.saved(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
       emit(CategorySaveState.error(draft: draft, message: e.message));
@@ -54,11 +49,11 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     }
   }
 
-  Future<void> delete(Category? category) async {
+  Future<void> delete() async {
     final draft = state.draft;
     try {
-      await _deleteCategoryUseCase(category!);
-      emit(CategorySaveState.deleted(draft: draft, category: category));
+      await _deleteCategoryUseCase(draft);
+      emit(CategorySaveState.deleted(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
       emit(CategorySaveState.error(draft: draft, message: e.message));
@@ -68,7 +63,7 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     }
   }
 
-  void dispose() {
-    emit(CategorySaveState.initial(draft: _initialDraft()));
-  }
+// void dispose() {
+//   emit(CategorySaveState.initial(draft: _initialDraft()));
+// }
 }

@@ -24,11 +24,11 @@ class AppRouter {
     AppRoutes.categoryList: (_) => CategoryListPage(),
     AppRoutes.categoryParentSave: (settings) => BlocProvider<CategorySaveCubit>(
           create: (_) => GetIt.I<CategorySaveCubit>(),
-          child: CategoryParentSavePage(model: settings.arguments as Category?),
+          child: CategoryParentSavePage(draft: settings.arguments as CategoryDraft),
         ),
     AppRoutes.categorySubSave: (settings) => BlocProvider<CategorySaveCubit>(
           create: (_) => GetIt.I<CategorySaveCubit>(),
-          child: CategorySubSavePage(model: settings.arguments as Category),
+          child: CategorySubSavePage(draft: settings.arguments as CategoryDraft),
         ),
     //
   };
