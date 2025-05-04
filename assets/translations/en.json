@@ -47,8 +47,8 @@
     "delete_success": "Booking deleted"
   },
   "category": {
-    "new_title_parent": "New",
-    "edit_title_parent": "Edit",
+    "new_title_parent": "New Category",
+    "edit_title_parent": "Edit Category",
     "new_title_sub": "New Sub-Category",
     "edit_title_sub": "Edit Sub-Category",
     "list_title": "Categories",

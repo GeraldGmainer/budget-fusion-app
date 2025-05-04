@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../application/cubits/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
-import '../widget/category_type_input.dart';
 import '../widget/icon_input.dart';
 import '../widget/name_input.dart';
 
@@ -58,25 +57,15 @@ class CategorySubSavePage extends StatelessWidget {
                 children: [
                   NameInput(draft: draft),
                   const SizedBox(height: 8),
-                  CategoryTypeInput(draft: draft),
+                  DisabledField(label: 'Category Type'.tr(), value: draft.categoryType.label.tr()),
                   const SizedBox(height: 8),
-                  _buildParentName(),
+                  DisabledField(label: 'Parent Category'.tr(), value: draft.parent?.name ?? "unknown"),
                 ],
               ),
             ),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildParentName() {
-    return InputDecorator(
-      decoration: InputDecoration(
-        labelText: 'Parent Category'.tr(),
-        labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-      ),
-      child: Text(draft.parent?.name ?? "unknown"),
     );
   }
 }
