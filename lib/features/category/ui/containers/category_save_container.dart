@@ -43,12 +43,12 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
 
   _onSavedSuccess(CategoryDraft draft) {
     showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
-    Navigator.of(context).pop(draft);
+    Navigator.of(context).pop(true);
   }
 
   _onDeleteSuccess() {
     showSnackBar(context, "booking.delete_success");
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   _onError(String error) {

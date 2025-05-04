@@ -31,8 +31,8 @@ class CategoryParentSavePage extends StatelessWidget {
 
   _handleSave(BuildContext context, CategoryDraft saveDraft) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
-    final CategoryDraft? newDraft = result as CategoryDraft?;
-    if (context.mounted && newDraft != null) {
+    final bool? shouldRefresh = result as bool?;
+    if (context.mounted && shouldRefresh == true) {
       context.read<CategorySaveCubit>().refresh();
     }
   }
