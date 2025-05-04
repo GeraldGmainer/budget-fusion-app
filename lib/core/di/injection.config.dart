@@ -278,10 +278,10 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.lazySingleton<_i600.SaveCategoryUseCase>(
         () => _i600.SaveCategoryUseCase(gh<_i714.CategoryRepo>()));
-    gh.lazySingleton<_i1071.DeleteCategoryUseCase>(
-        () => _i1071.DeleteCategoryUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i803.LoadCategoryUseCase>(
         () => _i803.LoadCategoryUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i1071.DeleteCategoryUseCase>(
+        () => _i1071.DeleteCategoryUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i119.GenerateBudgetTransactionUseCase>(
         () => _i119.GenerateBudgetTransactionUseCase(
               gh<_i714.ProfileSettingRepo>(),

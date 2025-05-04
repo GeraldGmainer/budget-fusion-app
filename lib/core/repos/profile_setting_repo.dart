@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
+
+import '../entities/base/uuid.dart';
 
 abstract class ProfileSettingRepo {
   Stream<ProfileSetting> watch();

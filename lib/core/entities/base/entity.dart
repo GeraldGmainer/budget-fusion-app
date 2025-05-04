@@ -1,4 +1,4 @@
-import 'package:budget_fusion_app/utils/utils.dart';
+import 'uuid.dart';
 
 abstract class Entity {
   Uuid get id;

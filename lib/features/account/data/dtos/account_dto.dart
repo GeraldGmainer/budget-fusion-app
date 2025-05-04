@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'account_dto.freezed.dart';

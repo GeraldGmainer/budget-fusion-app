@@ -1,7 +1,7 @@
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../base/entity.dart';
+import '../base/uuid.dart';
 
 part 'account.freezed.dart';
 

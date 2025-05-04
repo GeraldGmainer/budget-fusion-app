@@ -13,6 +13,7 @@ export 'di/injection.dart';
 export 'entities/accounts/account.dart';
 //
 export 'entities/base/entity.dart';
+export 'entities/base/uuid.dart';
 export 'entities/bookings/booking.dart';
 export 'entities/categories/category.dart';
 export 'entities/profiles/currency.dart';

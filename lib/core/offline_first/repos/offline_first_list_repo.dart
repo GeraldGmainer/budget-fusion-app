@@ -1,5 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/models/uuid.dart';
+import 'package:budget_fusion_app/core/entities/base/uuid.dart';
 
 abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;

@@ -1,5 +1,6 @@
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../entities/base/uuid.dart';
 
 class UuidSerializer extends JsonConverter<Uuid, String> {
   const UuidSerializer();

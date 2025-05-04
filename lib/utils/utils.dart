@@ -9,8 +9,6 @@ export 'extensions/snackbar.dart';
 export 'extensions/string_extensions.dart';
 export 'extensions/validator.dart';
 //
-export 'models/uuid.dart';
-//
 export 'service/connectivity_service.dart';
 export 'service/datetime_service.dart';
 //
