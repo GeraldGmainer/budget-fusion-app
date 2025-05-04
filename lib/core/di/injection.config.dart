@@ -89,6 +89,8 @@ import 'package:budget_fusion_app/features/category/application/cubits/category_
     as _i89;
 import 'package:budget_fusion_app/features/category/application/use_cases/delete_category_use_case.dart'
     as _i1071;
+import 'package:budget_fusion_app/features/category/application/use_cases/load_category_use_case.dart'
+    as _i803;
 import 'package:budget_fusion_app/features/category/application/use_cases/save_category_use_case.dart'
     as _i600;
 import 'package:budget_fusion_app/features/category/data/data_sources/category_local_data_source.dart'
@@ -278,6 +280,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i600.SaveCategoryUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i1071.DeleteCategoryUseCase>(
         () => _i1071.DeleteCategoryUseCase(gh<_i714.CategoryRepo>()));
+    gh.lazySingleton<_i803.LoadCategoryUseCase>(
+        () => _i803.LoadCategoryUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i119.GenerateBudgetTransactionUseCase>(
         () => _i119.GenerateBudgetTransactionUseCase(
               gh<_i714.ProfileSettingRepo>(),
@@ -293,6 +297,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i515.WatchAccountsUseCase(gh<_i714.AccountRepo>()));
     gh.lazySingleton<_i638.DefaultAccountUseCase>(
         () => _i638.DefaultAccountUseCase(gh<_i714.AccountRepo>()));
+    gh.factory<_i89.CategorySaveCubit>(() => _i89.CategorySaveCubit(
+          gh<_i600.SaveCategoryUseCase>(),
+          gh<_i1071.DeleteCategoryUseCase>(),
+          gh<_i803.LoadCategoryUseCase>(),
+        ));
     gh.lazySingleton<_i714.BookingRepo>(() => _i830.BookingRepoImpl(
           gh<_i714.DataManagerFactory>(),
           gh<_i423.BookingLocalDataSource>(),
@@ -306,10 +315,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1029.ProfileSettingAggregator(gh<_i714.ProfileSettingRepo>()));
     gh.factory<_i151.WatchProfileSettingUseCase>(
         () => _i151.WatchProfileSettingUseCase(gh<_i714.ProfileSettingRepo>()));
-    gh.factory<_i89.CategorySaveCubit>(() => _i89.CategorySaveCubit(
-          gh<_i600.SaveCategoryUseCase>(),
-          gh<_i1071.DeleteCategoryUseCase>(),
-        ));
     gh.lazySingleton<_i129.ResetBudgetBookUseCase>(
         () => _i129.ResetBudgetBookUseCase(
               gh<_i714.BookingRepo>(),

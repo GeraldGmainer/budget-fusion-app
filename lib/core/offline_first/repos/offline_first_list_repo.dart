@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/models/uuid.dart';
 
-abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
+abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
   final OfflineFirstLocalDataSource<U> localDataSource;
   final OfflineFirstRemoteDataSource<U> remoteDataSource;
@@ -18,7 +19,17 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
 
   Future<void> loadAll() => manager.loadAll();
 
-  Future<void> save(T entity) => manager.save(toDto(entity));
+  Future<T?> loadById(Uuid id) async {
+    final dto = await manager.loadById(id.value);
+    return dto != null ? toEntity(dto) : null;
+  }
+
+  Future<T> save(T entity) async {
+    // TODO use new dto from save method? and use toEntity() ?
+    await manager.save(toDto(entity));
+    final list = await watch().firstWhere((l) => l.any((e) => e.id == entity.id));
+    return list.firstWhere((e) => e.id == entity.id);
+  }
 
   Future<void> delete(T entity) => manager.delete(toDto(entity));
 
@@ -29,4 +40,6 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
   Stream<List<T>> watch();
 
   U toDto(T entity);
+
+  Future<T> toEntity(U dto);
 }

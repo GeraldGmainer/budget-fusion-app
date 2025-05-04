@@ -38,7 +38,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<Dto> fetchById(String id) async {
+  Future<Dto?> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchById '$id' from $coloredDomain");
     return execute(table, () async {

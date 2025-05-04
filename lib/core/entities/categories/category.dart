@@ -6,7 +6,7 @@ import '../../core.dart';
 part 'category.freezed.dart';
 
 @freezed
-class Category with _$Category {
+class Category with _$Category implements Entity {
   const Category._();
 
   const factory Category({

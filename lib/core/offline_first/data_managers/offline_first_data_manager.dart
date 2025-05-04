@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart';
+import 'package:collection/collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../utils/utils.dart';
@@ -61,6 +62,57 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _emitToStream(dtos);
     _log("loadAll completed for domain $coloredDomain");
     return dtos;
+  }
+
+  Future<Dto?> loadById(String id) async {
+    _log("start loadById '$id' for $coloredDomain");
+    _subscribeToRealtime();
+    final cached = cacheManager.get<List<Dto>>(domainType);
+    if (cached != null) {
+      final found = cached.firstWhereOrNull((e) => e.id.value == id);
+      if (found != null) {
+        _log("Using cached data with ID '${found.id}' for domain $coloredDomain");
+        return found;
+      }
+    }
+    _log("Fetching local data by id for domain $coloredDomain...");
+    final local = await localSource.fetchById(id);
+    if (local != null) {
+      _log("Local data by id '${local.id}' found for domain $coloredDomain");
+      final updated = await _updateCacheWith(local);
+      _emitToStream(updated);
+      return local;
+    }
+    _log("No local data found. Fetching remote data by id '$id' for domain $coloredDomain...");
+    final remote = await remoteLoadingService.wrap(() => remoteSource.fetchById(id));
+    if (remote != null) {
+      _log("Remote data by id '${remote.id}' found for domain $coloredDomain");
+      await localSource.save(remote);
+      final updated = await _updateCacheWith(remote);
+      _emitToStream(updated);
+      return remote;
+    }
+    return null;
+  }
+
+  Future<List<Dto>> _updateCacheWith(Dto dto) async {
+    await cacheManager.updateList<Dto>(domainType, (existing) async {
+      final base = existing ?? await _getCachedOrLoad();
+      final idx = base.indexWhere((e) => e.id == dto.id);
+      final merged = List<Dto>.from(base);
+      if (idx >= 0) {
+        merged[idx] = dto;
+      } else {
+        merged.add(dto);
+      }
+      return merged;
+    });
+
+    final updated = cacheManager.get<List<Dto>>(domainType);
+    if (updated != null) {
+      return updated;
+    }
+    return await _getCachedOrLoad();
   }
 
   Future<void> save(Dto dto) async {

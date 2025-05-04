@@ -19,6 +19,20 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
     return manager.stream.map((dtos) => _mapDtosToDomain(dtos));
   }
 
+  @override
+  Future<Category?> loadById(Uuid id) async {
+    final dto = await manager.loadById(id.value);
+    if (dto == null) return null;
+    return await toEntity(dto);
+  }
+
+  @override
+  Future<Category> toEntity(CategoryDto dto) async {
+    final dtos = await manager.loadAll();
+    final all = _mapDtosToDomain(dtos);
+    return all.firstWhere((c) => c.id == dto.id);
+  }
+
   List<Category> _mapDtosToDomain(List<CategoryDto> dtos) {
     final Map<Uuid, Category> categoryMap = {
       for (final dto in dtos)
@@ -39,7 +53,10 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
       final child = categoryMap[dto.id]!;
       final parent = categoryMap[dto.parentId]!;
       final updatedChild = child.copyWith(parent: parent);
-      final updatedParent = parent.copyWith(subcategories: [...parent.subcategories, updatedChild]);
+      final updatedParent = parent.copyWith(
+        subcategories: [...parent.subcategories, updatedChild].sortedByName(),
+      );
+
       categoryMap[dto.id] = updatedChild;
       categoryMap[dto.parentId!] = updatedParent;
     }

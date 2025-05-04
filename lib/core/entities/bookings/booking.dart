@@ -1,12 +1,16 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../enums/category_type.dart';
+import '../accounts/account.dart';
+import '../base/entity.dart';
+import '../categories/category.dart';
+
 part 'booking.freezed.dart';
 
 @freezed
-class Booking with _$Booking {
+class Booking with _$Booking implements Entity {
   const Booking._();
 
   const factory Booking({

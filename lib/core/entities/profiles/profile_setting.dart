@@ -1,12 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../utils/utils.dart';
+import '../base/entity.dart';
 import 'currency.dart';
 
 part 'profile_setting.freezed.dart';
 
 @freezed
-class ProfileSetting with _$ProfileSetting {
+class ProfileSetting with _$ProfileSetting implements Entity {
   const ProfileSetting._();
 
   const factory ProfileSetting({
@@ -15,9 +16,4 @@ class ProfileSetting with _$ProfileSetting {
     required Currency currency,
     required DateTime updatedAt,
   }) = _ProfileSetting;
-
-// @override
-// Profile copyWithUpdatedAt(DateTime updatedAt) {
-//   return copyWith(updatedAt: updatedAt);
-// }
 }

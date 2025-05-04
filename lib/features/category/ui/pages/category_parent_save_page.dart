@@ -1,13 +1,13 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/category/domain/entities/category_draft.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/models/uuid.dart';
 import '../../application/cubits/category_save_cubit.dart';
+import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
 import '../widget/category_type_input.dart';
 import '../widget/icon_input.dart';
@@ -20,12 +20,21 @@ class CategoryParentSavePage extends StatelessWidget {
   const CategoryParentSavePage({super.key, required this.draft});
 
   _onAddSubcategory(BuildContext context) {
+    // TODO get rid of userId call
     final userId = Uuid(supabase.auth.currentUser!.id);
-    Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: CategoryDraft.initial(parent: draft.toCategory(userId)));
+    _handleSave(context, CategoryDraft.initial(parent: draft.toCategory(userId)));
   }
 
   _onEditSubcategory(BuildContext context, Category category) {
-    Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: CategoryDraft.fromCategory(category));
+    _handleSave(context, CategoryDraft.fromCategory(category));
+  }
+
+  _handleSave(BuildContext context, CategoryDraft saveDraft) async {
+    final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
+    final CategoryDraft? newDraft = result as CategoryDraft?;
+    if (context.mounted && newDraft != null) {
+      context.read<CategorySaveCubit>().refresh();
+    }
   }
 
   _onDelete(BuildContext context) {

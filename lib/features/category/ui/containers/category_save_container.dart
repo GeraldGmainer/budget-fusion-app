@@ -41,9 +41,9 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     context.read<CategorySaveCubit>().save();
   }
 
-  _onUploadSuccess(CategoryDraft draft) {
+  _onSavedSuccess(CategoryDraft draft) {
     showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(draft);
   }
 
   _onDeleteSuccess() {
@@ -60,7 +60,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     return BlocConsumer<CategorySaveCubit, CategorySaveState>(
       listener: (context, state) {
         state.whenOrNull(
-          saved: _onUploadSuccess,
+          saved: _onSavedSuccess,
           deleted: (_) => _onDeleteSuccess(),
           error: (_, error) => _onError(error),
         );

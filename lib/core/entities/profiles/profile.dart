@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../utils/utils.dart';
+import '../base/entity.dart';
 
 part 'profile.freezed.dart';
 
 @freezed
-class Profile with _$Profile {
+class Profile with _$Profile implements Entity {
   const Profile._();
 
   const factory Profile({
@@ -16,9 +17,4 @@ class Profile with _$Profile {
     String? avatarUrl,
     required DateTime updatedAt,
   }) = _Profile;
-
-// @override
-// Profile copyWithUpdatedAt(DateTime updatedAt) {
-//   return copyWith(updatedAt: updatedAt);
-// }
 }
