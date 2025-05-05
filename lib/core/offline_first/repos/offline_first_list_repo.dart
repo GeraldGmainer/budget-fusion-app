@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/core/entities/base/uuid.dart';
 
 abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
@@ -25,10 +24,14 @@ abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto>
   }
 
   Future<T> save(T entity) async {
-    // TODO use new dto from save method? and use toEntity() ?
-    await manager.save(toDto(entity));
-    final list = await watch().firstWhere((l) => l.any((e) => e.id == entity.id));
-    return list.firstWhere((e) => e.id == entity.id);
+    final dto = toDto(entity);
+    await manager.save(dto);
+
+    final savedDto = await manager.loadById(dto.id.value);
+    if (savedDto == null) {
+      throw StateError('Entity ${dto.id.value} was not found after save');
+    }
+    return await toEntity(savedDto);
   }
 
   Future<void> delete(T entity) => manager.delete(toDto(entity));
