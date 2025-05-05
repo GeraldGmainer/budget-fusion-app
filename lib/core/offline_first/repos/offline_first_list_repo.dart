@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 
 abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
@@ -29,7 +30,8 @@ abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto>
 
     final savedDto = await manager.loadById(dto.id.value);
     if (savedDto == null) {
-      throw StateError('Entity ${dto.id.value} was not found after save');
+      BudgetLogger.instance.e("${runtimeType.toString()} SaveException", "Could not find DTO by ID after saving");
+      return entity;
     }
     return await toEntity(savedDto);
   }
