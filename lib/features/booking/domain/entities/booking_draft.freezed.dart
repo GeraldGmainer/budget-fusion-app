@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BookingDraft {
   Uuid? get id => throw _privateConstructorUsedError;
-  Uuid? get userId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   Decimal get amount => throw _privateConstructorUsedError;
@@ -40,7 +39,6 @@ abstract class $BookingDraftCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid? id,
-      Uuid? userId,
       DateTime date,
       String? description,
       Decimal amount,
@@ -68,7 +66,6 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
@@ -80,10 +77,6 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid?,
       date: null == date
           ? _value.date
@@ -151,7 +144,6 @@ abstract class _$$BookingDraftImplCopyWith<$Res>
   @useResult
   $Res call(
       {Uuid? id,
-      Uuid? userId,
       DateTime date,
       String? description,
       Decimal amount,
@@ -179,7 +171,6 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
@@ -191,10 +182,6 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid?,
       date: null == date
           ? _value.date
@@ -229,7 +216,6 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
 class _$BookingDraftImpl extends _BookingDraft {
   _$BookingDraftImpl(
       {this.id,
-      this.userId,
       required this.date,
       this.description,
       required this.amount,
@@ -240,8 +226,6 @@ class _$BookingDraftImpl extends _BookingDraft {
 
   @override
   final Uuid? id;
-  @override
-  final Uuid? userId;
   @override
   final DateTime date;
   @override
@@ -258,7 +242,7 @@ class _$BookingDraftImpl extends _BookingDraft {
 
   @override
   String toString() {
-    return 'BookingDraft(id: $id, userId: $userId, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType)';
+    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType)';
   }
 
   @override
@@ -267,7 +251,6 @@ class _$BookingDraftImpl extends _BookingDraft {
         (other.runtimeType == runtimeType &&
             other is _$BookingDraftImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -280,8 +263,8 @@ class _$BookingDraftImpl extends _BookingDraft {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, date, description,
-      amount, category, account, categoryType);
+  int get hashCode => Object.hash(runtimeType, id, date, description, amount,
+      category, account, categoryType);
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -295,7 +278,6 @@ class _$BookingDraftImpl extends _BookingDraft {
 abstract class _BookingDraft extends BookingDraft {
   factory _BookingDraft(
       {final Uuid? id,
-      final Uuid? userId,
       required final DateTime date,
       final String? description,
       required final Decimal amount,
@@ -306,8 +288,6 @@ abstract class _BookingDraft extends BookingDraft {
 
   @override
   Uuid? get id;
-  @override
-  Uuid? get userId;
   @override
   DateTime get date;
   @override

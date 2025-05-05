@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,7 +10,6 @@ class BookingDraft with _$BookingDraft {
 
   factory BookingDraft({
     Uuid? id,
-    Uuid? userId,
     required DateTime date,
     String? description,
     required Decimal amount,
@@ -22,10 +20,9 @@ class BookingDraft with _$BookingDraft {
 
   bool get isCreating => id == null;
 
-  Booking toBooking(Uuid userId) {
+  Booking toBooking() {
     return Booking(
       id: id ?? Uuid.generate(),
-      userId: userId,
       date: date,
       description: description,
       amount: amount,
@@ -38,7 +35,6 @@ class BookingDraft with _$BookingDraft {
   factory BookingDraft.fromBooking(Booking booking) {
     return BookingDraft(
       id: booking.id,
-      userId: booking.userId,
       date: booking.date,
       description: booking.description,
       amount: booking.amount,

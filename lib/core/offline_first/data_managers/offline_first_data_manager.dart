@@ -198,7 +198,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   void dispose() {
     _log("Disposing OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
     streamController.close();
-    realtimeNotifierService.stopListeningForDomain(domainType);
+    realtimeNotifierService.stopListeningForDomain(domainType, remoteSource.table);
   }
 
   _log(String msg, {bool darkColor = false}) {

@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data_sources/category_local_data_source.dart';
@@ -38,7 +37,6 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
       for (final dto in dtos)
         dto.id: Category(
           id: dto.id,
-          userId: dto.userId,
           name: dto.name,
           categoryType: dto.categoryType,
           iconName: dto.iconName,
@@ -81,7 +79,6 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
   CategoryDto toDto(Category entity) {
     return CategoryDto(
       id: entity.id,
-      userId: entity.userId,
       name: entity.name,
       categoryType: entity.categoryType,
       iconName: entity.iconName,

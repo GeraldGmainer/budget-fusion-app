@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CategoryDraft {
   Uuid? get id => throw _privateConstructorUsedError;
-  Uuid? get userId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
@@ -40,7 +39,6 @@ abstract class $CategoryDraftCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid? id,
-      Uuid? userId,
       String? name,
       CategoryType categoryType,
       String iconName,
@@ -67,7 +65,6 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
     Object? name = freezed,
     Object? categoryType = null,
     Object? iconName = null,
@@ -79,10 +76,6 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid?,
       name: freezed == name
           ? _value.name
@@ -136,7 +129,6 @@ abstract class _$$CategoryDraftImplCopyWith<$Res>
   @useResult
   $Res call(
       {Uuid? id,
-      Uuid? userId,
       String? name,
       CategoryType categoryType,
       String iconName,
@@ -162,7 +154,6 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
     Object? name = freezed,
     Object? categoryType = null,
     Object? iconName = null,
@@ -174,10 +165,6 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid?,
       name: freezed == name
           ? _value.name
@@ -212,7 +199,6 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
 class _$CategoryDraftImpl extends _CategoryDraft {
   _$CategoryDraftImpl(
       {this.id,
-      this.userId,
       this.name,
       this.categoryType = CategoryType.outcome,
       this.iconName = "book_open_outline",
@@ -224,8 +210,6 @@ class _$CategoryDraftImpl extends _CategoryDraft {
 
   @override
   final Uuid? id;
-  @override
-  final Uuid? userId;
   @override
   final String? name;
   @override
@@ -250,7 +234,7 @@ class _$CategoryDraftImpl extends _CategoryDraft {
 
   @override
   String toString() {
-    return 'CategoryDraft(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories)';
+    return 'CategoryDraft(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories)';
   }
 
   @override
@@ -259,7 +243,6 @@ class _$CategoryDraftImpl extends _CategoryDraft {
         (other.runtimeType == runtimeType &&
             other is _$CategoryDraftImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
@@ -273,16 +256,8 @@ class _$CategoryDraftImpl extends _CategoryDraft {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userId,
-      name,
-      categoryType,
-      iconName,
-      iconColor,
-      parent,
-      const DeepCollectionEquality().hash(_subcategories));
+  int get hashCode => Object.hash(runtimeType, id, name, categoryType, iconName,
+      iconColor, parent, const DeepCollectionEquality().hash(_subcategories));
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -296,7 +271,6 @@ class _$CategoryDraftImpl extends _CategoryDraft {
 abstract class _CategoryDraft extends CategoryDraft {
   factory _CategoryDraft(
       {final Uuid? id,
-      final Uuid? userId,
       final String? name,
       final CategoryType categoryType,
       final String iconName,
@@ -307,8 +281,6 @@ abstract class _CategoryDraft extends CategoryDraft {
 
   @override
   Uuid? get id;
-  @override
-  Uuid? get userId;
   @override
   String? get name;
   @override

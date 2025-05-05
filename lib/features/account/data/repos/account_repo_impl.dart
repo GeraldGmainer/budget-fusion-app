@@ -24,7 +24,6 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
   Future<Account> toEntity(AccountDto dto) async {
     return Account(
       id: dto.id,
-      userId: dto.userId,
       name: dto.name,
       iconName: dto.iconName,
       iconColor: dto.iconColor,
@@ -36,7 +35,6 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
   AccountDto toDto(Account entity) {
     return AccountDto(
       id: entity.id,
-      userId: entity.userId,
       name: entity.name,
       iconName: entity.iconName,
       iconColor: entity.iconColor,

@@ -15,7 +15,6 @@ class Booking with _$Booking implements Entity {
 
   const factory Booking({
     required Uuid id,
-    required Uuid userId,
     required DateTime date,
     required String? description,
     required Decimal amount,

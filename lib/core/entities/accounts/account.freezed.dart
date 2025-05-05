@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Account {
   Uuid get id => throw _privateConstructorUsedError;
-  Uuid get userId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
@@ -36,7 +35,6 @@ abstract class $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      Uuid userId,
       String name,
       String iconName,
       String iconColor,
@@ -59,7 +57,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -69,10 +66,6 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -103,7 +96,6 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      Uuid userId,
       String name,
       String iconName,
       String iconColor,
@@ -124,7 +116,6 @@ class __$$AccountImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -134,10 +125,6 @@ class __$$AccountImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -164,7 +151,6 @@ class __$$AccountImplCopyWithImpl<$Res>
 class _$AccountImpl extends _Account {
   const _$AccountImpl(
       {required this.id,
-      required this.userId,
       required this.name,
       required this.iconName,
       required this.iconColor,
@@ -173,8 +159,6 @@ class _$AccountImpl extends _Account {
 
   @override
   final Uuid id;
-  @override
-  final Uuid userId;
   @override
   final String name;
   @override
@@ -186,7 +170,7 @@ class _$AccountImpl extends _Account {
 
   @override
   String toString() {
-    return 'Account(id: $id, userId: $userId, name: $name, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
+    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
   }
 
   @override
@@ -195,7 +179,6 @@ class _$AccountImpl extends _Account {
         (other.runtimeType == runtimeType &&
             other is _$AccountImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
@@ -206,8 +189,8 @@ class _$AccountImpl extends _Account {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, userId, name, iconName, iconColor, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, iconName, iconColor, updatedAt);
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -221,7 +204,6 @@ class _$AccountImpl extends _Account {
 abstract class _Account extends Account {
   const factory _Account(
       {required final Uuid id,
-      required final Uuid userId,
       required final String name,
       required final String iconName,
       required final String iconColor,
@@ -230,8 +212,6 @@ abstract class _Account extends Account {
 
   @override
   Uuid get id;
-  @override
-  Uuid get userId;
   @override
   String get name;
   @override

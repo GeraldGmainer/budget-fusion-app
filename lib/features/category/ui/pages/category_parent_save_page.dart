@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,7 @@ class CategoryParentSavePage extends StatelessWidget {
   const CategoryParentSavePage({super.key, required this.draft});
 
   _onAddSubcategory(BuildContext context) {
-    // TODO get rid of userId call
-    final userId = Uuid(supabase.auth.currentUser!.id);
-    _handleSave(context, CategoryDraft.initial(parent: draft.toCategory(userId)));
+    _handleSave(context, CategoryDraft.initial(parent: draft.toCategory()));
   }
 
   _onEditSubcategory(BuildContext context, Category category) {

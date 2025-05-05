@@ -1,11 +1,10 @@
 import 'package:budget_fusion_app/core/core.dart';
 
-import '../entities/base/uuid.dart';
-
 abstract class ProfileSettingRepo {
   Stream<ProfileSetting> watch();
 
-  Future<void> loadByUserId(Uuid profileId);
+  // TODO rename method by profileID?? rename parameter??
+  Future<void> loadByUserId(Uuid userId);
 
   Future<void> save(ProfileSetting entity);
 

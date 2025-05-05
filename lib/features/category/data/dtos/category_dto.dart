@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category_dto.freezed.dart';
@@ -12,7 +11,6 @@ class CategoryDto with _$CategoryDto implements OfflineFirstDto {
 
   const factory CategoryDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'user_id') @UuidSerializer() required Uuid userId,
     required String name,
     @JsonKey(name: 'category_type') @CategoryTypeSerializer() required CategoryType categoryType,
     @JsonKey(name: 'icon_name') required String iconName,

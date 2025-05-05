@@ -10,7 +10,6 @@ class AccountDto with _$AccountDto implements OfflineFirstDto {
 
   const factory AccountDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'user_id') @UuidSerializer() required Uuid userId,
     required String name,
     @JsonKey(name: 'icon_name') required String iconName,
     @JsonKey(name: 'icon_color') required String iconColor,

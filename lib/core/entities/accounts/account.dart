@@ -11,7 +11,6 @@ class Account with _$Account implements Entity {
 
   const factory Account({
     required Uuid id,
-    required Uuid userId,
     required String name,
     required String iconName,
     required String iconColor,
