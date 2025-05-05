@@ -19,6 +19,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
+  Future<List<Dto>>? _refreshing;
 
   OfflineFirstDataManager({
     required this.domainType,
@@ -79,8 +80,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final local = await localSource.fetchById(id);
     if (local != null) {
       _log("Local data by id '${local.id}' found for domain $coloredDomain");
-      final updated = await _updateCacheWith(local);
-      _emitToStream(updated);
       return local;
     }
     _log("No local data found. Fetching remote data by id '$id' for domain $coloredDomain...");
@@ -88,50 +87,19 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     if (remote != null) {
       _log("Remote data by id '${remote.id}' found for domain $coloredDomain");
       await localSource.save(remote);
-      final updated = await _updateCacheWith(remote);
-      _emitToStream(updated);
+      final refreshedDtos = await _refreshCacheFromLocalSource();
+      _emitToStream(refreshedDtos);
       return remote;
     }
     return null;
-  }
-
-  Future<List<Dto>> _updateCacheWith(Dto dto) async {
-    await cacheManager.updateList<Dto>(domainType, (existing) async {
-      final base = existing ?? await _getCachedOrLoad();
-      final idx = base.indexWhere((e) => e.id == dto.id);
-      final merged = List<Dto>.from(base);
-      if (idx >= 0) {
-        merged[idx] = dto;
-      } else {
-        merged.add(dto);
-      }
-      return merged;
-    });
-
-    final updated = cacheManager.get<List<Dto>>(domainType);
-    if (updated != null) {
-      return updated;
-    }
-    return await _getCachedOrLoad();
   }
 
   Future<void> save(Dto dto) async {
     _log("Saving DTO with id '${dto.id.value}' for domain $coloredDomain");
 
     await localSource.save(dto);
-    await cacheManager.updateList<Dto>(domainType, (list) async {
-      List<Dto> base = list ?? await _getCachedOrLoad();
-      final idx = base.indexWhere((e) => e.id == dto.id);
-      final newList = [...base];
-      if (idx >= 0) {
-        newList[idx] = dto;
-      } else {
-        newList.add(dto);
-      }
-      return newList;
-    });
-    final updatedList = cacheManager.get<List<Dto>>(domainType) ?? [];
-    _emitToStream(updatedList);
+    final refreshedDtos = await _refreshCacheFromLocalSource();
+    _emitToStream(refreshedDtos);
 
     final item = QueueItem(
       entityId: dto.id.value,
@@ -143,32 +111,27 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     unawaited(queueManager.add(item));
   }
 
-  Future<List<Dto>> _getCachedOrLoad() async {
-    var list = cacheManager.get<List<Dto>>(domainType);
-    if (list != null && list.isNotEmpty) {
-      return list;
+  Future<List<Dto>> _refreshCacheFromLocalSource() async {
+    if (_refreshing != null) {
+      return await _refreshing!;
     }
-    _log("Fetching local data for domain $coloredDomain...");
-    var local = await localSource.fetchAll();
-    _log("Local ${local.length} items found for domain $coloredDomain");
-    if (local.isNotEmpty) {
-      cacheManager.set(domainType, local);
-      return local;
+    _refreshing = (() async {
+      final dtos = await localSource.fetchAll();
+      cacheManager.set(domainType, dtos);
+      return dtos;
+    })();
+    try {
+      return await _refreshing!;
+    } finally {
+      _refreshing = null;
     }
-    _log("No local data found. Fetching remote data for domain $coloredDomain...");
-    var remote = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
-    _log("Remote ${local.length} items found for domain $coloredDomain");
-    await localSource.saveAll(remote);
-    cacheManager.set(domainType, remote);
-    return remote;
   }
 
   Future<void> delete(Dto dto) async {
     _log("Deleting DTO with id '${dto.id.value}' for domain $coloredDomain");
     await localSource.deleteById(dto.id.value);
 
-    final dtos = await localSource.fetchAll();
-    cacheManager.set(domainType, dtos);
+    final dtos = await _refreshCacheFromLocalSource();
     _emitToStream(dtos);
 
     final item = QueueItem(
@@ -218,8 +181,8 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       }
       final mergedList = localMap.values.toList();
       await localSource.saveAll(mergedList);
-      cacheManager.set(domainType, mergedList);
-      _emitToStream(mergedList);
+      final refreshedDtos = await _refreshCacheFromLocalSource();
+      _emitToStream(refreshedDtos);
       _log("Partial sync completed successfully for domain $coloredDomain");
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Sync failed", e, stackTrace);
@@ -235,6 +198,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   void dispose() {
     _log("Disposing OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
     streamController.close();
+    realtimeNotifierService.stopListeningForDomain(domainType);
   }
 
   _log(String msg, {bool darkColor = false}) {
