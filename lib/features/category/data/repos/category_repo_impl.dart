@@ -33,6 +33,8 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
   }
 
   List<Category> _mapDtosToDomain(List<CategoryDto> dtos) {
+    print("length: ${dtos.length}");
+    print("###############################################################################");
     final Map<Uuid, Category> categoryMap = {
       for (final dto in dtos)
         dto.id: Category(
@@ -47,8 +49,14 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
         )
     };
 
+    for (final item in categoryMap.entries) {
+      print(item);
+    }
+    print("###############################################################################");
+
     for (final dto in dtos.where((d) => d.parentId != null)) {
       final child = categoryMap[dto.id]!;
+      print(dto);
       final parent = categoryMap[dto.parentId]!;
       final updatedChild = child.copyWith(parent: parent);
       final updatedParent = parent.copyWith(

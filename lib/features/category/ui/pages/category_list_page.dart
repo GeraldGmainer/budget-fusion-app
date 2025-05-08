@@ -27,8 +27,8 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     super.dispose();
   }
 
-  _loadCategories() {
-    context.read<CategoryCubit>().load();
+  _reloadCategories() {
+    context.read<CategoryCubit>().load(clearCache: true);
   }
 
   void _onCreateCategory() {
@@ -80,35 +80,39 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
 
   Widget _buildCategoryList(CategoryType type) {
     return SingleChildScrollView(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                loaded: (cats) {
-                  final filtered = (type == CategoryType.outcome) ? cats.parentOutcomeCategories : cats.parentIncomeCategories;
-                  if (filtered.isEmpty) {
-                    return Center(child: Text('No categories found').tr());
-                  }
-                  return ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      final category = filtered[index];
-                      return _buildCategory(category);
-                    },
-                    itemCount: filtered.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
-                  );
-                },
-                error: (message) => ErrorText(message: message, onReload: _loadCategories),
-                orElse: () => const Center(child: CircularProgressIndicator()),
+      child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            loaded: (cats) {
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _buildContent(type, cats),
+                ),
               );
             },
-          ),
-        ),
+            error: (message) => ErrorText(message: message, onReload: _reloadCategories),
+            orElse: () => const Center(child: CircularProgressIndicator()),
+          );
+        },
       ),
+    );
+  }
+
+  Widget _buildContent(CategoryType type, List<Category> cats) {
+    final filtered = (type == CategoryType.outcome) ? cats.parentOutcomeCategories : cats.parentIncomeCategories;
+    if (filtered.isEmpty) {
+      return Center(child: Text('No categories found').tr());
+    }
+    return ListView.separated(
+      itemBuilder: (BuildContext context, int index) {
+        final category = filtered[index];
+        return _buildCategory(category);
+      },
+      itemCount: filtered.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
     );
   }
 
