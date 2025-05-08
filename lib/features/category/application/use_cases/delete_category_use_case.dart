@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -7,7 +8,7 @@ class DeleteCategoryUseCase {
 
   DeleteCategoryUseCase(this.categoryRepo);
 
-  Future<void> call(Category category) async {
-    await categoryRepo.delete(category);
+  Future<void> call(CategoryDraft draft) async {
+    await categoryRepo.delete(draft.toCategory());
   }
 }

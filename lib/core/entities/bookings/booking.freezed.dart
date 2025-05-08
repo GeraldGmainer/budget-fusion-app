@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Booking {
   Uuid get id => throw _privateConstructorUsedError;
-  Uuid get userId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   Decimal get amount => throw _privateConstructorUsedError;
@@ -38,7 +37,6 @@ abstract class $BookingCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      Uuid userId,
       DateTime date,
       String? description,
       Decimal amount,
@@ -66,7 +64,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
@@ -78,10 +75,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       date: null == date
           ? _value.date
@@ -148,7 +141,6 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
   @useResult
   $Res call(
       {Uuid id,
-      Uuid userId,
       DateTime date,
       String? description,
       Decimal amount,
@@ -176,7 +168,6 @@ class __$$BookingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
@@ -188,10 +179,6 @@ class __$$BookingImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       date: null == date
           ? _value.date
@@ -226,7 +213,6 @@ class __$$BookingImplCopyWithImpl<$Res>
 class _$BookingImpl extends _Booking {
   const _$BookingImpl(
       {required this.id,
-      required this.userId,
       required this.date,
       required this.description,
       required this.amount,
@@ -237,8 +223,6 @@ class _$BookingImpl extends _Booking {
 
   @override
   final Uuid id;
-  @override
-  final Uuid userId;
   @override
   final DateTime date;
   @override
@@ -254,7 +238,7 @@ class _$BookingImpl extends _Booking {
 
   @override
   String toString() {
-    return 'Booking(id: $id, userId: $userId, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt)';
+    return 'Booking(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt)';
   }
 
   @override
@@ -263,7 +247,6 @@ class _$BookingImpl extends _Booking {
         (other.runtimeType == runtimeType &&
             other is _$BookingImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -276,8 +259,8 @@ class _$BookingImpl extends _Booking {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, date, description,
-      amount, category, account, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, date, description, amount, category, account, updatedAt);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -291,7 +274,6 @@ class _$BookingImpl extends _Booking {
 abstract class _Booking extends Booking {
   const factory _Booking(
       {required final Uuid id,
-      required final Uuid userId,
       required final DateTime date,
       required final String? description,
       required final Decimal amount,
@@ -302,8 +284,6 @@ abstract class _Booking extends Booking {
 
   @override
   Uuid get id;
-  @override
-  Uuid get userId;
   @override
   DateTime get date;
   @override

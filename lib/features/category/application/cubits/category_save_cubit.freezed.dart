@@ -23,8 +23,8 @@ mixin _$CategorySaveState {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,8 +34,8 @@ mixin _$CategorySaveState {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -45,8 +45,8 @@ mixin _$CategorySaveState {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) =>
@@ -56,7 +56,7 @@ mixin _$CategorySaveState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) =>
@@ -66,7 +66,7 @@ mixin _$CategorySaveState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) =>
@@ -76,7 +76,7 @@ mixin _$CategorySaveState {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -214,8 +214,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
     return initial(draft);
@@ -228,8 +228,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
     return initial?.call(draft);
@@ -242,8 +242,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -259,7 +259,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
@@ -272,7 +272,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
@@ -285,7 +285,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -408,8 +408,8 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
     return draftUpdate(draft, initialDraft);
@@ -422,8 +422,8 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
     return draftUpdate?.call(draft, initialDraft);
@@ -436,8 +436,8 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -453,7 +453,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
@@ -466,7 +466,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
@@ -479,7 +479,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -585,8 +585,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
     return loading(draft);
@@ -599,8 +599,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
     return loading?.call(draft);
@@ -613,8 +613,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -630,7 +630,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
@@ -643,7 +643,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
@@ -656,7 +656,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -730,7 +730,7 @@ class _$LoadedImpl implements _Loaded {
 
   @override
   String toString() {
-    return 'CategorySaveState.loaded(draft: $draft)';
+    return 'CategorySaveState.saved(draft: $draft)';
   }
 
   @override
@@ -759,11 +759,11 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
-    return loaded(draft);
+    return saved(draft);
   }
 
   @override
@@ -773,11 +773,11 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
-    return loaded?.call(draft);
+    return saved?.call(draft);
   }
 
   @override
@@ -787,13 +787,13 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(draft);
+    if (saved != null) {
+      return saved(draft);
     }
     return orElse();
   }
@@ -804,11 +804,11 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
-    return loaded(this);
+    return saved(this);
   }
 
   @override
@@ -817,11 +817,11 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
-    return loaded?.call(this);
+    return saved?.call(this);
   }
 
   @override
@@ -830,13 +830,13 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(this);
+    if (saved != null) {
+      return saved(this);
     }
     return orElse();
   }
@@ -864,11 +864,10 @@ abstract class _$$DeletedImplCopyWith<$Res>
       __$$DeletedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CategoryDraft draft, Category category});
+  $Res call({CategoryDraft draft});
 
   @override
   $CategoryDraftCopyWith<$Res> get draft;
-  $CategoryCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -885,44 +884,27 @@ class __$$DeletedImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? draft = null,
-    Object? category = null,
   }) {
     return _then(_$DeletedImpl(
       draft: null == draft
           ? _value.draft
           : draft // ignore: cast_nullable_to_non_nullable
               as CategoryDraft,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category,
     ));
-  }
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res> get category {
-    return $CategoryCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$DeletedImpl implements _Deleted {
-  const _$DeletedImpl({required this.draft, required this.category});
+  const _$DeletedImpl({required this.draft});
 
   @override
   final CategoryDraft draft;
-  @override
-  final Category category;
 
   @override
   String toString() {
-    return 'CategorySaveState.deleted(draft: $draft, category: $category)';
+    return 'CategorySaveState.deleted(draft: $draft)';
   }
 
   @override
@@ -930,13 +912,11 @@ class _$DeletedImpl implements _Deleted {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeletedImpl &&
-            (identical(other.draft, draft) || other.draft == draft) &&
-            (identical(other.category, category) ||
-                other.category == category));
+            (identical(other.draft, draft) || other.draft == draft));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, draft, category);
+  int get hashCode => Object.hash(runtimeType, draft);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -953,11 +933,11 @@ class _$DeletedImpl implements _Deleted {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
-    return deleted(draft, category);
+    return deleted(draft);
   }
 
   @override
@@ -967,11 +947,11 @@ class _$DeletedImpl implements _Deleted {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
-    return deleted?.call(draft, category);
+    return deleted?.call(draft);
   }
 
   @override
@@ -981,13 +961,13 @@ class _$DeletedImpl implements _Deleted {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
     if (deleted != null) {
-      return deleted(draft, category);
+      return deleted(draft);
     }
     return orElse();
   }
@@ -998,7 +978,7 @@ class _$DeletedImpl implements _Deleted {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
@@ -1011,7 +991,7 @@ class _$DeletedImpl implements _Deleted {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
@@ -1024,7 +1004,7 @@ class _$DeletedImpl implements _Deleted {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -1037,13 +1017,10 @@ class _$DeletedImpl implements _Deleted {
 }
 
 abstract class _Deleted implements CategorySaveState {
-  const factory _Deleted(
-      {required final CategoryDraft draft,
-      required final Category category}) = _$DeletedImpl;
+  const factory _Deleted({required final CategoryDraft draft}) = _$DeletedImpl;
 
   @override
   CategoryDraft get draft;
-  Category get category;
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -1138,8 +1115,8 @@ class _$ErrorImpl implements _Error {
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
         draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) loaded,
-    required TResult Function(CategoryDraft draft, Category category) deleted,
+    required TResult Function(CategoryDraft draft) saved,
+    required TResult Function(CategoryDraft draft) deleted,
     required TResult Function(CategoryDraft draft, String message) error,
   }) {
     return error(draft, message);
@@ -1152,8 +1129,8 @@ class _$ErrorImpl implements _Error {
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? loaded,
-    TResult? Function(CategoryDraft draft, Category category)? deleted,
+    TResult? Function(CategoryDraft draft)? saved,
+    TResult? Function(CategoryDraft draft)? deleted,
     TResult? Function(CategoryDraft draft, String message)? error,
   }) {
     return error?.call(draft, message);
@@ -1166,8 +1143,8 @@ class _$ErrorImpl implements _Error {
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
         draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? loaded,
-    TResult Function(CategoryDraft draft, Category category)? deleted,
+    TResult Function(CategoryDraft draft)? saved,
+    TResult Function(CategoryDraft draft)? deleted,
     TResult Function(CategoryDraft draft, String message)? error,
     required TResult orElse(),
   }) {
@@ -1183,7 +1160,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Initial value) initial,
     required TResult Function(_DraftUpdate value) draftUpdate,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
   }) {
@@ -1196,7 +1173,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_DraftUpdate value)? draftUpdate,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
   }) {
@@ -1209,7 +1186,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Initial value)? initial,
     TResult Function(_DraftUpdate value)? draftUpdate,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Loaded value)? saved,
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),

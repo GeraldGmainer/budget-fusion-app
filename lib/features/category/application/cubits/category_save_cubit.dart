@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/entities/category_draft.dart';
 import '../use_cases/delete_category_use_case.dart';
+import '../use_cases/load_category_use_case.dart';
 import '../use_cases/save_category_use_case.dart';
 
 part 'category_save_cubit.freezed.dart';
@@ -15,16 +16,16 @@ part 'category_save_state.dart';
 class CategorySaveCubit extends Cubit<CategorySaveState> {
   final SaveCategoryUseCase _saveCategoryUseCase;
   final DeleteCategoryUseCase _deleteCategoryUseCase;
+  final LoadCategoryUseCase _loadCategoryUseCase;
 
-  CategorySaveCubit(this._saveCategoryUseCase, this._deleteCategoryUseCase) : super(CategorySaveState.initial(draft: _initialDraft()));
+  CategorySaveCubit(
+    this._saveCategoryUseCase,
+    this._deleteCategoryUseCase,
+    this._loadCategoryUseCase,
+  ) : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
 
-  static CategoryDraft _initialDraft() {
-    return CategoryDraft();
-  }
-
-  Future<void> init(Category? category) async {
+  Future<void> init(CategoryDraft draft) async {
     try {
-      final draft = category == null ? _initialDraft() : CategoryDraft.fromCategory(category);
       emit(CategorySaveState.draftUpdate(draft: draft, initialDraft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
@@ -39,12 +40,35 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     emit(state.copyWith(draft: update(state.draft)));
   }
 
+  Future<void> refresh() async {
+    try {
+      final id = state.draft.id;
+      if (id == null) {
+        BudgetLogger.instance.e("${runtimeType.toString()} RefreshException", "CategoryDraft ID is NULL");
+        return;
+      }
+      final category = await _loadCategoryUseCase(id);
+      if (category == null) {
+        BudgetLogger.instance.e("${runtimeType.toString()} RefreshException", "found Category by ID is NULL");
+        return;
+      }
+      final newDraft = CategoryDraft.fromCategory(category);
+      emit(CategorySaveState.draftUpdate(draft: newDraft, initialDraft: newDraft));
+    } on TranslatedException catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} refresh TranslatedException", e, stack);
+      emit(CategorySaveState.error(draft: state.draft, message: e.message));
+    } catch (e, stack) {
+      BudgetLogger.instance.e("${runtimeType.toString()} refresh Exception", e, stack);
+      emit(CategorySaveState.error(draft: state.draft, message: 'error.default'));
+    }
+  }
+
   Future<void> save() async {
     final draft = state.draft;
     emit(CategorySaveState.loading(draft: draft));
     try {
       await _saveCategoryUseCase(draft);
-      emit(CategorySaveState.loaded(draft: draft));
+      emit(CategorySaveState.saved(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
       emit(CategorySaveState.error(draft: draft, message: e.message));
@@ -54,11 +78,11 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     }
   }
 
-  Future<void> delete(Category? category) async {
+  Future<void> delete() async {
     final draft = state.draft;
     try {
-      await _deleteCategoryUseCase(category!);
-      emit(CategorySaveState.deleted(draft: draft, category: category));
+      await _deleteCategoryUseCase(draft);
+      emit(CategorySaveState.deleted(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
       emit(CategorySaveState.error(draft: draft, message: e.message));
@@ -68,7 +92,7 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
     }
   }
 
-  void dispose() {
-    emit(CategorySaveState.initial(draft: _initialDraft()));
-  }
+// void dispose() {
+//   emit(CategorySaveState.initial(draft: _initialDraft()));
+// }
 }

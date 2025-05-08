@@ -1,12 +1,12 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 class UuidConverter extends JsonConverter<List<int>, String> {
   const UuidConverter();
 
   @override
   List<int> fromJson(String json) {
-    return Uuid.parse(json);
+    return Uuid.parseJson(json);
   }
 
   @override

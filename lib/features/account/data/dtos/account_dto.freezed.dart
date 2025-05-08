@@ -22,9 +22,6 @@ AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
 mixin _$AccountDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  Uuid get userId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'icon_name')
   String get iconName => throw _privateConstructorUsedError;
@@ -52,7 +49,6 @@ abstract class $AccountDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String name,
       @JsonKey(name: 'icon_name') String iconName,
       @JsonKey(name: 'icon_color') String iconColor,
@@ -75,7 +71,6 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -85,10 +80,6 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -120,7 +111,6 @@ abstract class _$$AccountDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String name,
       @JsonKey(name: 'icon_name') String iconName,
       @JsonKey(name: 'icon_color') String iconColor,
@@ -141,7 +131,6 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -151,10 +140,6 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -181,7 +166,6 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
 class _$AccountDtoImpl extends _AccountDto {
   const _$AccountDtoImpl(
       {@UuidSerializer() required this.id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
       required this.name,
       @JsonKey(name: 'icon_name') required this.iconName,
       @JsonKey(name: 'icon_color') required this.iconColor,
@@ -197,10 +181,6 @@ class _$AccountDtoImpl extends _AccountDto {
   @UuidSerializer()
   final Uuid id;
   @override
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  final Uuid userId;
-  @override
   final String name;
   @override
   @JsonKey(name: 'icon_name')
@@ -215,7 +195,7 @@ class _$AccountDtoImpl extends _AccountDto {
 
   @override
   String toString() {
-    return 'AccountDto(id: $id, userId: $userId, name: $name, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
+    return 'AccountDto(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, updatedAt: $updatedAt)';
   }
 
   @override
@@ -224,7 +204,6 @@ class _$AccountDtoImpl extends _AccountDto {
         (other.runtimeType == runtimeType &&
             other is _$AccountDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
@@ -236,8 +215,8 @@ class _$AccountDtoImpl extends _AccountDto {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, userId, name, iconName, iconColor, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, iconName, iconColor, updatedAt);
 
   /// Create a copy of AccountDto
   /// with the given fields replaced by the non-null parameter values.
@@ -258,7 +237,6 @@ class _$AccountDtoImpl extends _AccountDto {
 abstract class _AccountDto extends AccountDto {
   const factory _AccountDto(
       {@UuidSerializer() required final Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
       required final String name,
       @JsonKey(name: 'icon_name') required final String iconName,
       @JsonKey(name: 'icon_color') required final String iconColor,
@@ -273,10 +251,6 @@ abstract class _AccountDto extends AccountDto {
   @override
   @UuidSerializer()
   Uuid get id;
-  @override
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  Uuid get userId;
   @override
   String get name;
   @override

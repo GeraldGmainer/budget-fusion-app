@@ -68,24 +68,25 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
         child: Center(child: CircularProgressIndicator()),
       );
     }
-    return Scaffold(
-      appBar: AppBar(
-        leading: CloseButton(),
-        title: Text('Select Icon & Color'),
-        elevation: 0,
-        // backgroundColor: AppColors.surface,
-      ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 8.0),
-            _buildPreview(),
-            _buildTabs(),
-            _buildTabViews(),
-            _buildOkButton(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        appBar: AppBar(
+          leading: CloseButton(),
+          title: Text('Select Icon & Color'),
+        ),
+        body: DefaultTabController(
+          length: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 8.0),
+              _buildPreview(),
+              _buildTabs(),
+              _buildTabViews(),
+              _buildOkButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -144,17 +145,14 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
   }
 
   Widget _buildOkButton() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: ElevatedButton(
-          onPressed: () => Navigator.of(context).pop({
-            'iconName': _selectedIconName,
-            'iconColor': _selectedColor,
-          }),
-          child: const Text('OK'),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ElevatedButton(
+        onPressed: () => Navigator.of(context).pop({
+          'iconName': _selectedIconName,
+          'iconColor': _selectedColor,
+        }),
+        child: const Text('OK'),
       ),
     );
   }

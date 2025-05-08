@@ -38,10 +38,16 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
     ).shareReplay(maxSize: 1);
   }
 
+  @override
+  Future<Booking> toEntity(BookingDto dto) async {
+    final account = await _accountRepo.loadById(dto.accountId);
+    final category = await _categoryRepo.loadById(dto.categoryId);
+    return _toDomain(dto, account, category);
+  }
+
   Booking _toDomain(BookingDto dto, Account? account, Category? category) {
     return Booking(
       id: dto.id,
-      userId: dto.userId,
       date: dto.date,
       description: dto.description,
       amount: dto.amount,
@@ -60,7 +66,6 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
   BookingDto toDto(Booking entity) {
     return BookingDto(
       id: entity.id,
-      userId: entity.userId,
       date: entity.date,
       description: entity.description,
       amount: entity.amount,

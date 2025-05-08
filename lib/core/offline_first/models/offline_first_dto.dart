@@ -1,4 +1,4 @@
-import 'package:budget_fusion_app/utils/utils.dart';
+import '../../entities/base/uuid.dart';
 
 abstract class OfflineFirstDto {
   Uuid get id;

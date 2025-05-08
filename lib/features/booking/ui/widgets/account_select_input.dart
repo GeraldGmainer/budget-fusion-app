@@ -48,10 +48,6 @@ class AccountSelectInput extends StatelessWidget {
         decoration: InputDecoration(
           labelText: "Account",
           labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-          // prefixIcon: CircleAvatar(
-          //   backgroundColor: Colors.transparent,
-          //   child: Icon(Icons.account_balance_wallet, size: 18),
-          // ),
           suffixIcon: Icon(Icons.arrow_drop_down),
         ),
         child: Text(

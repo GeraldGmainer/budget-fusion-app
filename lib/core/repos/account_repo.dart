@@ -1,9 +1,13 @@
 import 'package:budget_fusion_app/core/core.dart';
 
+import '../entities/base/uuid.dart';
+
 abstract class AccountRepo {
   Stream<List<Account>> watch();
 
   Future<void> loadAll();
+
+  Future<Account?> loadById(Uuid id);
 
   Future<void> save(Account entity);
 

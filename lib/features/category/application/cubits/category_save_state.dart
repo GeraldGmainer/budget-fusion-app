@@ -15,13 +15,12 @@ class CategorySaveState with _$CategorySaveState {
     required CategoryDraft draft,
   }) = _Loading;
 
-  const factory CategorySaveState.loaded({
+  const factory CategorySaveState.saved({
     required CategoryDraft draft,
   }) = _Loaded;
 
   const factory CategorySaveState.deleted({
     required CategoryDraft draft,
-    required Category category,
   }) = _Deleted;
 
   const factory CategorySaveState.error({

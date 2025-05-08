@@ -9,82 +9,96 @@ import '../features/booking/booking.dart';
 import '../features/category/category.dart';
 import '../main/main.dart';
 
+// TODO SignUpPage, ForgotPasswordPage, ResetPasswordPage
 class AppRouter {
-  Route onGenerateRoute(RouteSettings settings) {
-    BudgetLogger.instance.d("AppRouter, go to ${settings.name}");
-
-    switch (settings.name) {
-      case AppRoutes.login:
-        return MyCustomRoute(
-          builder: (context) => LoginPage(),
-          settings: RouteSettings(name: AppRoutes.login),
-        );
-      case AppRoutes.main:
-        return MyCustomRoute(
-          builder: (context) => MainPage(),
-          settings: RouteSettings(name: AppRoutes.main),
-        );
-      case AppRoutes.bookingSave:
-        return MyCustomRoute(
-          builder: (context) => BlocProvider<BookingSaveCubit>(
+  final Map<String, RouteFactory> _routes = {
+    AppRoutes.login: (settings) => DefaultRoute(
+          builder: (_) => LoginPage(),
+          settings: settings,
+        ),
+    AppRoutes.main: (settings) => DefaultRoute(
+          builder: (_) => MainPage(),
+          settings: settings,
+        ),
+    AppRoutes.bookingSave: (settings) => DefaultRoute(
+          builder: (_) => BlocProvider<BookingSaveCubit>(
             create: (_) => GetIt.I<BookingSaveCubit>(),
             child: BookingSavePage(model: settings.arguments as Booking?),
           ),
-          settings: RouteSettings(name: AppRoutes.bookingSave),
-        );
-      case AppRoutes.categoryList:
-        return MyCustomRoute(
-          builder: (context) => CategoryListPage(),
-          settings: RouteSettings(name: AppRoutes.categoryList),
-        );
-      case AppRoutes.categoryParentSave:
-        return MyCustomRoute(
-          builder: (context) => BlocProvider<CategorySaveCubit>(
+          settings: settings,
+        ),
+    AppRoutes.categoryList: (settings) => DefaultRoute(
+          builder: (_) => CategoryListPage(),
+          settings: settings,
+        ),
+    AppRoutes.categoryParentSave: (settings) => SlideRightRoute(
+          builder: (_) => BlocProvider<CategorySaveCubit>(
             create: (_) => GetIt.I<CategorySaveCubit>(),
-            child: CategoryParentSavePage(model: settings.arguments as Category?),
+            child: CategoryParentSavePage(draft: settings.arguments as CategoryDraft),
           ),
-          settings: RouteSettings(name: AppRoutes.categoryParentSave),
-        );
+          settings: settings,
+        ),
+    AppRoutes.categorySubSave: (settings) => SlideRightRoute(
+          builder: (_) => BlocProvider<CategorySaveCubit>(
+            create: (_) => GetIt.I<CategorySaveCubit>(),
+            child: CategorySubSavePage(draft: settings.arguments as CategoryDraft),
+          ),
+          settings: settings,
+        ),
+    AppRoutes.categoryIconColorPicker: (settings) => SlideUpRoute(
+          builder: (_) {
+            final draft = settings.arguments as CategoryDraft;
+            return IconColorPickerDialog(initialIconName: draft.iconName, initialIconColor: draft.iconColor);
+          },
+          settings: settings,
+        ),
+  };
 
-      // case SignUpPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => SignUpPage(),
-      //   );
-      // case ForgotPasswordPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => ForgotPasswordPage(),
-      //   );
-      // case ResetPasswordPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => ResetPasswordPage(),
-      //   );
-      // case SettingsPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => SettingsPage(),
-      //   );
-      // case BookingCrudPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => BookingCrudPage(model: settings.arguments as BookingModel),
-      //   );
-      // case CategoryCrudPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => CategoryCrudPage(model: settings.arguments as CategoryModel),
-      //   );
-      // case BookingListPage.route:
-      //   return MyCustomRoute(
-      //     builders: (context) => BookingListPage(pageModel: settings.arguments as BookingListPageModel),
-      //   );
-      default:
-        return MaterialPageRoute(
-          builder: (context) => SplashPage(),
-        );
+  Route onGenerateRoute(RouteSettings settings) {
+    BudgetLogger.instance.d("AppRouter, go to ${settings.name}");
+    final routeFactory = _routes[settings.name];
+    if (routeFactory != null) {
+      return routeFactory(settings)!;
     }
+    return MaterialPageRoute(
+      builder: (_) => SplashPage(),
+      settings: settings,
+    );
   }
 }
 
-class MyCustomRoute<T> extends MaterialPageRoute<T> {
-  MyCustomRoute({
-    required super.builder,
-    super.settings,
-  });
+class DefaultRoute<T> extends MaterialPageRoute<T> {
+  DefaultRoute({required super.builder, super.settings});
+}
+
+class SlideUpRoute<T> extends MaterialPageRoute<T> {
+  SlideUpRoute({required super.builder, super.settings});
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    if (isFirst) return child;
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0, 1),
+        end: Offset.zero,
+      ).chain(CurveTween(curve: Curves.ease)).animate(animation),
+      child: child,
+    );
+  }
+}
+
+class SlideRightRoute<T> extends MaterialPageRoute<T> {
+  SlideRightRoute({required super.builder, super.settings});
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+    if (isFirst) return child;
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(1, 0),
+        end: Offset.zero,
+      ).chain(CurveTween(curve: Curves.ease)).animate(animation),
+      child: child,
+    );
+  }
 }

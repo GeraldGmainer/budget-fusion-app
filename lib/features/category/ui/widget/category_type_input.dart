@@ -1,16 +1,22 @@
 // TODO common widget
+// TODO idea: keep this widget to call the cubit. but still use common widget
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/category_draft.dart';
 
 class CategoryTypeInput extends StatelessWidget {
   final CategoryDraft draft;
-  final Function(CategoryType categoryType) onCategoryTypeChange;
 
-  const CategoryTypeInput({super.key, required this.draft, required this.onCategoryTypeChange});
+  const CategoryTypeInput({super.key, required this.draft});
+
+  _onCategoryTypeChange(BuildContext context, CategoryType value) {
+    context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
+  }
 
   _onTransactionTypeTap(BuildContext context) async {
     final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
@@ -29,7 +35,7 @@ class CategoryTypeInput extends StatelessWidget {
     );
 
     if (context.mounted && selectedValue != null) {
-      onCategoryTypeChange(selectedValue);
+      _onCategoryTypeChange(context, selectedValue);
     }
   }
 

@@ -34,7 +34,7 @@ class BookingCubit extends Cubit<LoadableState<List<Booking>>> {
 
   Future<void> load({String? userId}) async {
     try {
-      DomainLogger.instance.d(runtimeType.toString(), "initiate load for ${DomainLogger.applyColor('booking')}");
+      DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "initiate load");
       emit(const LoadableState.loading());
       await _loadBookings();
     } on TranslatedException catch (e, stackTrace) {

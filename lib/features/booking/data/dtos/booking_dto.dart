@@ -12,7 +12,6 @@ class BookingDto with _$BookingDto implements OfflineFirstDto {
 
   const factory BookingDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'user_id') @UuidSerializer() required Uuid userId,
     @JsonKey(name: 'date') @DateTimeSerializer() required DateTime date,
     String? description,
     @DecimalConverter() required Decimal amount,

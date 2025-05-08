@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 
-abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
+abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
   final OfflineFirstLocalDataSource<U> localDataSource;
   final OfflineFirstRemoteDataSource<U> remoteDataSource;
@@ -18,7 +19,22 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
 
   Future<void> loadAll() => manager.loadAll();
 
-  Future<void> save(T entity) => manager.save(toDto(entity));
+  Future<T?> loadById(Uuid id) async {
+    final dto = await manager.loadById(id.value);
+    return dto != null ? toEntity(dto) : null;
+  }
+
+  Future<T> save(T entity) async {
+    final dto = toDto(entity);
+    await manager.save(dto);
+
+    final savedDto = await manager.loadById(dto.id.value);
+    if (savedDto == null) {
+      BudgetLogger.instance.e("${runtimeType.toString()} SaveException", "Could not find DTO by ID after saving");
+      return entity;
+    }
+    return await toEntity(savedDto);
+  }
 
   Future<void> delete(T entity) => manager.delete(toDto(entity));
 
@@ -29,4 +45,6 @@ abstract class OfflineFirstListRepo<T, U extends OfflineFirstDto> {
   Stream<List<T>> watch();
 
   U toDto(T entity);
+
+  Future<T> toEntity(U dto);
 }

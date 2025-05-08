@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../core.dart';
@@ -6,12 +5,11 @@ import '../../core.dart';
 part 'category.freezed.dart';
 
 @freezed
-class Category with _$Category {
+class Category with _$Category implements Entity {
   const Category._();
 
   const factory Category({
     required Uuid id,
-    required Uuid userId,
     required String name,
     required CategoryType categoryType,
     required String iconName,

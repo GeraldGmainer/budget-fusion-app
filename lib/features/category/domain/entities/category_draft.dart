@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category_draft.freezed.dart';
@@ -10,7 +9,6 @@ class CategoryDraft with _$CategoryDraft {
 
   factory CategoryDraft({
     Uuid? id,
-    Uuid? userId,
     String? name,
     @Default(CategoryType.outcome) CategoryType categoryType,
     @Default("book_open_outline") String iconName,
@@ -21,10 +19,9 @@ class CategoryDraft with _$CategoryDraft {
 
   bool get isCreating => id == null;
 
-  Category toCategory(Uuid userId) {
+  Category toCategory() {
     return Category(
       id: id ?? Uuid.generate(),
-      userId: userId,
       name: name!,
       categoryType: categoryType,
       iconName: iconName,
@@ -35,10 +32,13 @@ class CategoryDraft with _$CategoryDraft {
     );
   }
 
+  factory CategoryDraft.initial({Category? parent}) {
+    return CategoryDraft(parent: parent);
+  }
+
   factory CategoryDraft.fromCategory(Category category) {
     return CategoryDraft(
       id: category.id,
-      userId: category.userId,
       name: category.name,
       categoryType: category.categoryType,
       iconName: category.iconName,

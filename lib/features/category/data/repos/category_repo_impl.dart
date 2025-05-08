@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data_sources/category_local_data_source.dart';
@@ -19,12 +18,27 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
     return manager.stream.map((dtos) => _mapDtosToDomain(dtos));
   }
 
+  @override
+  Future<Category?> loadById(Uuid id) async {
+    final dto = await manager.loadById(id.value);
+    if (dto == null) return null;
+    return await toEntity(dto);
+  }
+
+  @override
+  Future<Category> toEntity(CategoryDto dto) async {
+    final dtos = await manager.loadAll();
+    final all = _mapDtosToDomain(dtos);
+    return all.firstWhere((c) => c.id == dto.id);
+  }
+
   List<Category> _mapDtosToDomain(List<CategoryDto> dtos) {
+    print("length: ${dtos.length}");
+    print("###############################################################################");
     final Map<Uuid, Category> categoryMap = {
       for (final dto in dtos)
         dto.id: Category(
           id: dto.id,
-          userId: dto.userId,
           name: dto.name,
           categoryType: dto.categoryType,
           iconName: dto.iconName,
@@ -35,11 +49,20 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
         )
     };
 
+    for (final item in categoryMap.entries) {
+      print(item);
+    }
+    print("###############################################################################");
+
     for (final dto in dtos.where((d) => d.parentId != null)) {
       final child = categoryMap[dto.id]!;
+      print(dto);
       final parent = categoryMap[dto.parentId]!;
       final updatedChild = child.copyWith(parent: parent);
-      final updatedParent = parent.copyWith(subcategories: [...parent.subcategories, updatedChild]);
+      final updatedParent = parent.copyWith(
+        subcategories: [...parent.subcategories, updatedChild].sortedByName(),
+      );
+
       categoryMap[dto.id] = updatedChild;
       categoryMap[dto.parentId!] = updatedParent;
     }
@@ -64,7 +87,6 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
   CategoryDto toDto(Category entity) {
     return CategoryDto(
       id: entity.id,
-      userId: entity.userId,
       name: entity.name,
       categoryType: entity.categoryType,
       iconName: entity.iconName,

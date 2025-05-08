@@ -15,13 +15,15 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
 
   @override
   Stream<List<Account>> watch() {
-    return manager.stream.map((dtos) => dtos.map((dto) => _toDomain(dto)).toList());
+    return manager.stream.asyncMap((dtos) async {
+      return await Future.wait(dtos.map((dto) => toEntity(dto)));
+    });
   }
 
-  Account _toDomain(AccountDto dto) {
+  @override
+  Future<Account> toEntity(AccountDto dto) async {
     return Account(
       id: dto.id,
-      userId: dto.userId,
       name: dto.name,
       iconName: dto.iconName,
       iconColor: dto.iconColor,
@@ -33,7 +35,6 @@ class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implemen
   AccountDto toDto(Account entity) {
     return AccountDto(
       id: entity.id,
-      userId: entity.userId,
       name: entity.name,
       iconName: entity.iconName,
       iconColor: entity.iconColor,

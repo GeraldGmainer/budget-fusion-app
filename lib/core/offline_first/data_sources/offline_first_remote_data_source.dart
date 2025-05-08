@@ -8,7 +8,7 @@ import 'package:postgrest/src/types.dart';
 abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchAll from $coloredDomain${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
       PostgrestFilterBuilder<PostgrestList> query = supabase.from(table).select(columns);
       query = _applyFilters(query, filters);
@@ -17,14 +17,14 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       // int randomNumber = random.nextInt(2000) + 3000;
       // await Future.delayed(Duration(milliseconds: randomNumber));
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAll ${result.length} Dtos from $coloredDomain", stopwatch: stopwatch);
+      _log("fetchAll ${result.length} Dtos", stopwatch: stopwatch);
       return result;
     });
   }
 
   Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchAllNewer from $coloredDomain than $updatedAt${filters != null ? "with filters: $filters" : ""}");
+    _log("fetchAllNewer than $updatedAt${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
       var query = supabase.from(table).select(columns);
       if (updatedAt != null) {
@@ -33,47 +33,47 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       query = _applyFilters(query, filters);
       final response = await query;
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAllNewer ${result.length} Dtos from $coloredDomain", stopwatch: stopwatch);
+      _log("fetchAllNewer ${DomainLogger.bold(result.length)} Dtos", stopwatch: stopwatch);
       return result;
     });
   }
 
-  Future<Dto> fetchById(String id) async {
+  Future<Dto?> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("fetchById '$id' from $coloredDomain");
+    _log("fetchById '$id'");
     return execute(table, () async {
       final response = await supabase.from(table).select(columns).eq('id', id).single();
-      _log("fetchById from $coloredDomain", stopwatch: stopwatch);
+      _log("fetchById success", stopwatch: stopwatch);
       return toDto(response);
     });
   }
 
   Future<Dto> upsert(String id, Map<String, dynamic> json) async {
     final stopwatch = Stopwatch()..start();
-    _log("upsert by id '$id' to $coloredDomain");
+    _log("upsert by id '$id'");
     return execute(table, () async {
       final response = await supabase.from(table).upsert(json).eq('id', id).select();
-      _log("upsert success to $coloredDomain", stopwatch: stopwatch);
+      _log("upsert success", stopwatch: stopwatch);
       return toDto((response[0]));
     });
   }
 
   Future<void> upsertAll(List<Dto> dtos) async {
     final stopwatch = Stopwatch()..start();
-    _log("upsertAll ${dtos.length} DTOs to $coloredDomain");
+    _log("upsertAll ${dtos.length} DTOs");
     return execute(table, () async {
       final data = dtos.map((dto) => dto.toJson()).toList();
       await supabase.from(table).upsert(data);
-      _log("upsertAll to $coloredDomain", stopwatch: stopwatch);
+      _log("upsertAll success", stopwatch: stopwatch);
     });
   }
 
   Future<void> deleteById(String id) async {
     final stopwatch = Stopwatch()..start();
-    _log("delete by id '$id' from $coloredDomain");
+    _log("delete by id '$id'");
     return execute(table, () async {
       await supabase.from(table).delete().eq('id', id);
-      _log("delete from $coloredDomain", stopwatch: stopwatch);
+      _log("delete success", stopwatch: stopwatch);
     });
   }
 
@@ -103,13 +103,11 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   _log(String msg, {Stopwatch? stopwatch}) {
     if (stopwatch != null) {
-      DomainLogger.instance.d("RemoteDataSource", "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
+      DomainLogger.instance.d("RemoteDataSource", table, "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
     } else {
-      DomainLogger.instance.d("RemoteDataSource", msg, darkColor: true);
+      DomainLogger.instance.d("RemoteDataSource", table, msg, darkColor: true);
     }
   }
-
-  String get coloredDomain => DomainLogger.applyColor(table);
 
   String get table;
 

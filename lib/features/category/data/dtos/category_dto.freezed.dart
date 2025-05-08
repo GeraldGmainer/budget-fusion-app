@@ -22,9 +22,6 @@ CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) {
 mixin _$CategoryDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  Uuid get userId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_type')
   @CategoryTypeSerializer()
@@ -58,7 +55,6 @@ abstract class $CategoryDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String name,
       @JsonKey(name: 'category_type')
       @CategoryTypeSerializer()
@@ -85,7 +81,6 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? categoryType = null,
     Object? iconName = null,
@@ -97,10 +92,6 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -140,7 +131,6 @@ abstract class _$$CategoryDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
       String name,
       @JsonKey(name: 'category_type')
       @CategoryTypeSerializer()
@@ -165,7 +155,6 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
     Object? name = null,
     Object? categoryType = null,
     Object? iconName = null,
@@ -177,10 +166,6 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as Uuid,
       name: null == name
           ? _value.name
@@ -215,7 +200,6 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
 class _$CategoryDtoImpl extends _CategoryDto {
   const _$CategoryDtoImpl(
       {@UuidSerializer() required this.id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
       required this.name,
       @JsonKey(name: 'category_type')
       @CategoryTypeSerializer()
@@ -234,10 +218,6 @@ class _$CategoryDtoImpl extends _CategoryDto {
   @override
   @UuidSerializer()
   final Uuid id;
-  @override
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  final Uuid userId;
   @override
   final String name;
   @override
@@ -261,7 +241,7 @@ class _$CategoryDtoImpl extends _CategoryDto {
 
   @override
   String toString() {
-    return 'CategoryDto(id: $id, userId: $userId, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, updatedAt: $updatedAt)';
+    return 'CategoryDto(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, updatedAt: $updatedAt)';
   }
 
   @override
@@ -270,7 +250,6 @@ class _$CategoryDtoImpl extends _CategoryDto {
         (other.runtimeType == runtimeType &&
             other is _$CategoryDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
@@ -286,8 +265,8 @@ class _$CategoryDtoImpl extends _CategoryDto {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, name, categoryType,
-      iconName, iconColor, parentId, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, name, categoryType, iconName,
+      iconColor, parentId, updatedAt);
 
   /// Create a copy of CategoryDto
   /// with the given fields replaced by the non-null parameter values.
@@ -308,7 +287,6 @@ class _$CategoryDtoImpl extends _CategoryDto {
 abstract class _CategoryDto extends CategoryDto {
   const factory _CategoryDto(
       {@UuidSerializer() required final Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
       required final String name,
       @JsonKey(name: 'category_type')
       @CategoryTypeSerializer()
@@ -329,10 +307,6 @@ abstract class _CategoryDto extends CategoryDto {
   @override
   @UuidSerializer()
   Uuid get id;
-  @override
-  @JsonKey(name: 'user_id')
-  @UuidSerializer()
-  Uuid get userId;
   @override
   String get name;
   @override

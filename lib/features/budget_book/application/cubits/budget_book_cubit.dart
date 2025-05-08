@@ -84,7 +84,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     try {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
-      DomainLogger.instance.d(runtimeType.toString(), "update view for budget book: $newViewMode / $newFilter");
+      DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "update view for budget book: $newViewMode / $newFilter");
 
       final bookings = await _watchBookingsUseCase().first;
       final filtered = await _filterAndGroupBookingsUseCase(bookings, newFilter);
@@ -115,7 +115,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
   }
 
   Future<void> resetAndLoad() async {
-    DomainLogger.instance.d(runtimeType.toString(), "reset and load for budget book: ${state.viewMode} / ${state.filter}");
+    DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
     emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, period: state.period));
     await _resetBudgetBookUseCase();
   }

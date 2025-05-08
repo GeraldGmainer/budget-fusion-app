@@ -1,36 +1,39 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/category/category.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
-
-import '../../domain/entities/category_draft.dart';
-import 'icon_color_picker_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IconInput extends StatelessWidget {
   final CategoryDraft draft;
-  final Function(String iconName, String iconColor) onIconChange;
 
-  const IconInput({super.key, required this.draft, required this.onIconChange});
+  const IconInput({super.key, required this.draft});
 
   _onIconTap(BuildContext context) async {
-    final result = await showModalBottomSheet<Map<String, String>>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => FractionallySizedBox(
-        heightFactor: 1.0,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: IconColorPickerDialog(
-            initialIconName: draft.iconName,
-            initialIconColor: draft.iconColor,
-          ),
-        ),
-      ),
+    // final result = await showModalBottomSheet<Map<String, String>>(
+    //   context: context,
+    //   isScrollControlled: true,
+    //   builder: (_) => FractionallySizedBox(
+    //     heightFactor: 1.0,
+    //     child: Padding(
+    //       padding: EdgeInsets.only(
+    //         top: MediaQuery.of(context).padding.top,
+    //         bottom: MediaQuery.of(context).viewInsets.bottom,
+    //       ),
+    //       child: IconColorPickerDialog(
+    //         initialIconName: draft.iconName,
+    //         initialIconColor: draft.iconColor,
+    //       ),
+    //     ),
+    //   ),
+    // );
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.categoryIconColorPicker,
+      arguments: draft,
     );
-    if (result != null) {
-      onIconChange(result['iconName']!, result['iconColor']!);
+    final obj = result as Map<String, String>?;
+    if (obj != null && context.mounted) {
+      context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(iconName: obj['iconName']!, iconColor: obj['iconColor']!));
     }
   }
 
