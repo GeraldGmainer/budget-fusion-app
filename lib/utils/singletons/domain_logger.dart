@@ -3,7 +3,10 @@ import 'package:logger/logger.dart';
 
 class DomainLogger {
   static const int serviceCharLength = 25;
+  static const int domainCharLength = 20;
   static final Map<String, AnsiColor> _domainColors = {
+    'queue': AnsiColor.fg(250),
+    'realtime': AnsiColor.fg(250),
     'profile': AnsiColor.fg(34),
     'profile_setting': AnsiColor.fg(35),
     'account': AnsiColor.fg(32),
@@ -19,16 +22,20 @@ class DomainLogger {
     return getDomainColor(table)(table);
   }
 
+  static String bold(Object v) => AnsiColor.fg(208)(v.toString());
+
   static final DomainLogger _instance = DomainLogger._();
 
   DomainLogger._();
 
   static DomainLogger get instance => _instance;
 
-  void d(String service, String msg, {bool? darkColor}) {
-    final color = _determineServiceColor(service, darkColor ?? false);
-    final domainText = color("$service:".padRight(serviceCharLength));
-    BudgetLogger.instance.d("$domainText $msg", short: true);
+  void d(String service, String domain, String msg, {bool? darkColor}) {
+    final serviceColor = _determineServiceColor(service, darkColor ?? false);
+    final domainColor = getDomainColor(domain);
+    final serviceText = serviceColor(service.padRight(serviceCharLength));
+    final domainText = domainColor(domain.padRight(domainCharLength));
+    BudgetLogger.instance.d("$serviceText $domainText $msg", short: true);
   }
 
   AnsiColor _determineServiceColor(String service, bool darkColor) {

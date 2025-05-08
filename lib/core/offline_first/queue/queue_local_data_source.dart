@@ -73,6 +73,6 @@ class QueueLocalDataSource {
   }
 
   _log(String msg) {
-    DomainLogger.instance.d("QueueDataSource", msg);
+    DomainLogger.instance.d("QueueDataSource", "queue", msg);
   }
 }

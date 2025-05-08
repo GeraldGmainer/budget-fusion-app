@@ -35,7 +35,7 @@ class AccountCubit extends Cubit<LoadableState<List<Account>>> {
 
   Future<void> load({String? userId}) async {
     try {
-      DomainLogger.instance.d(runtimeType.toString(), "initiate load for ${DomainLogger.applyColor('account')}");
+      DomainLogger.instance.d(runtimeType.toString(), DomainType.account.name, "initiate load");
       emit(const LoadableState.loading());
       await _loadAccounts();
     } on TranslatedException catch (e, stackTrace) {

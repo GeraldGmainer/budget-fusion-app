@@ -53,6 +53,6 @@ class RealtimeNotifierService {
   }
 
   void _log(String msg, {bool darkColor = false}) {
-    DomainLogger.instance.d("RealtimeNotifier", msg, darkColor: darkColor);
+    DomainLogger.instance.d("RealtimeNotifier", "realtime", msg, darkColor: darkColor);
   }
 }

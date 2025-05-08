@@ -127,6 +127,6 @@ class QueueManager {
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 
   _log(String msg) {
-    DomainLogger.instance.d("QueueManager", msg);
+    DomainLogger.instance.d("QueueManager", "queue", msg);
   }
 }

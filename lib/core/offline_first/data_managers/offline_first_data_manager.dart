@@ -36,56 +36,56 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Stream<List<Dto>> get stream => streamController.stream;
 
   Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
-    _log("start loadAll for $coloredDomain");
+    _log("start loadAll");
     _subscribeToRealtime();
     final cached = cacheManager.get<List<Dto>>(domainType);
     if (cached != null && cached.isNotEmpty) {
-      _log("Using cached data with ${cached.length} items for domain $coloredDomain");
+      _log("Using cached data with ${cached.length} items");
       _emitToStream(cached);
       unawaited(_syncPartial());
       return cached;
     }
 
-    _log("Fetching local data for domain $coloredDomain...");
+    _log("Fetching local data ...");
     final localDtos = await localSource.fetchAll();
     if (localDtos.isNotEmpty) {
-      _log("Local ${localDtos.length} items found for domain $coloredDomain");
+      _log("Local ${DomainLogger.bold(localDtos.length)} items found");
       cacheManager.set(domainType, localDtos);
       _emitToStream(localDtos);
       unawaited(_syncPartial());
       return localDtos;
     }
 
-    _log("No local data found. Fetching remote data for domain $coloredDomain...");
+    _log("No local data found. Fetching remote data ...");
     final dtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
     await localSource.saveAll(dtos);
     cacheManager.set(domainType, dtos);
     _emitToStream(dtos);
-    _log("loadAll completed for domain $coloredDomain");
+    _log("loadAll completed");
     return dtos;
   }
 
   Future<Dto?> loadById(String id) async {
-    _log("start loadById '$id' for $coloredDomain");
+    _log("start loadById '$id'");
     _subscribeToRealtime();
     final cached = cacheManager.get<List<Dto>>(domainType);
     if (cached != null) {
       final found = cached.firstWhereOrNull((e) => e.id.value == id);
       if (found != null) {
-        _log("Using cached data with ID '${found.id}' for domain $coloredDomain");
+        _log("Using cached data with ID '${found.id}'");
         return found;
       }
     }
-    _log("Fetching local data by id for domain $coloredDomain...");
+    _log("Fetching local data by id ...");
     final local = await localSource.fetchById(id);
     if (local != null) {
-      _log("Local data by id '${local.id}' found for domain $coloredDomain");
+      _log("Local data by id '${local.id}' found");
       return local;
     }
-    _log("No local data found. Fetching remote data by id '$id' for domain $coloredDomain...");
+    _log("No local data found. Fetching remote data by id '$id' ...");
     final remote = await remoteLoadingService.wrap(() => remoteSource.fetchById(id));
     if (remote != null) {
-      _log("Remote data by id '${remote.id}' found for domain $coloredDomain");
+      _log("Remote data by id '${remote.id}' found");
       await localSource.save(remote);
       final refreshedDtos = await _refreshCacheFromLocalSource();
       _emitToStream(refreshedDtos);
@@ -95,7 +95,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   Future<void> save(Dto dto) async {
-    _log("Saving DTO with id '${dto.id.value}' for domain $coloredDomain");
+    _log("Saving DTO with id '${dto.id.value}'");
 
     await localSource.save(dto);
     final refreshedDtos = await _refreshCacheFromLocalSource();
@@ -107,7 +107,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       type: QueueTaskType.upsert,
       entityPayload: jsonEncode(dto.toJson()),
     );
-    _log("Queuing upsert for id '${dto.id.value}' for domain $coloredDomain");
+    _log("Queuing upsert for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
 
@@ -128,7 +128,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   Future<void> delete(Dto dto) async {
-    _log("Deleting DTO with id '${dto.id.value}' for domain $coloredDomain");
+    _log("Deleting DTO with id '${dto.id.value}'");
     await localSource.deleteById(dto.id.value);
 
     final dtos = await _refreshCacheFromLocalSource();
@@ -140,12 +140,12 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       type: QueueTaskType.delete,
       entityPayload: jsonEncode(dto.toJson()),
     );
-    _log("Queuing delete for id '${dto.id.value}' for domain $coloredDomain");
+    _log("Queuing delete for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
 
   _emitToStream(List<Dto> dtos) {
-    _log("Emitting ${dtos.length} entities for $coloredDomain", darkColor: true);
+    _log("Emitting ${DomainLogger.bold(dtos.length)} entities", darkColor: true);
     streamController.add(dtos);
   }
 
@@ -156,16 +156,16 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   Future<void> _syncPartial() async {
-    _log("Starting partial sync for domain $coloredDomain");
+    _log("Starting partial sync");
     try {
       final localMax = await localSource.fetchMaxUpdatedAt();
       final remoteDtos = await remoteLoadingService.wrap(() => remoteSource.fetchAllNewer(localMax));
       if (remoteDtos.isEmpty) {
-        _log("No new remote data found during sync for domain $coloredDomain", darkColor: true);
+        _log("No new remote data found during sync", darkColor: true);
         return;
       }
 
-      _log("Fetched ${remoteDtos.length} new remote items for domain $coloredDomain");
+      _log("Fetched ${remoteDtos.length} new remote items");
       final localDtos = await localSource.fetchAll();
       final localMap = {for (final dto in localDtos) dto.id: dto};
 
@@ -183,27 +183,25 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       await localSource.saveAll(mergedList);
       final refreshedDtos = await _refreshCacheFromLocalSource();
       _emitToStream(refreshedDtos);
-      _log("Partial sync completed successfully for domain $coloredDomain");
+      _log("Partial sync completed successfully");
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Sync failed", e, stackTrace);
     }
   }
 
   Future<void> reset() async {
-    _log("Resetting OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
+    _log("Resetting OfflineFirstDataManager", darkColor: true);
     cacheManager.invalidateCache(domainType);
     await localSource.deleteAll();
   }
 
   void dispose() {
-    _log("Disposing OfflineFirstDataManager for domain $coloredDomain", darkColor: true);
+    _log("Disposing OfflineFirstDataManager", darkColor: true);
     streamController.close();
     realtimeNotifierService.stopListeningForDomain(domainType, remoteSource.table);
   }
 
   _log(String msg, {bool darkColor = false}) {
-    DomainLogger.instance.d("DataManager", msg, darkColor: darkColor);
+    DomainLogger.instance.d("DataManager", domainType.text, msg, darkColor: darkColor);
   }
-
-  String get coloredDomain => DomainLogger.applyColor(domainType.name);
 }
