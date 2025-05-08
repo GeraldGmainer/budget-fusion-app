@@ -31,11 +31,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.horizontalPadding),
           sliver: SliverToBoxAdapter(child: Reports()),
         ),
         SliverPadding(
-          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.horizontalPadding, vertical: AppDimensions.verticalPadding),
           sliver: SliverToBoxAdapter(child: RecentTransactions()),
         ),
       ],

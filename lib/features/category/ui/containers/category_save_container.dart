@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -87,7 +88,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
 
   Widget _buildBody(CategoryDraft draft) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: AppDimensions.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

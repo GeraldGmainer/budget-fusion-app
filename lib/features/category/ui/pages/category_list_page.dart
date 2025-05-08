@@ -66,7 +66,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: AppDimensions.pagePadding,
         child: TabBarView(
           controller: _tabController,
           children: [
