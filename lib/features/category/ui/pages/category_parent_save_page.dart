@@ -66,29 +66,37 @@ class CategoryParentSavePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: IconInput(draft: draft),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.floatingPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  NameInput(draft: draft),
-                  const SizedBox(height: 8),
-                  CategoryTypeInput(draft: draft),
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0),
+                    child: IconInput(draft: draft),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        NameInput(draft: draft),
+                        const SizedBox(height: 8),
+                        CategoryTypeInput(draft: draft),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+              _buildSubcategoryHeader(context),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
-        const SizedBox(height: 24),
-        _buildSubcategoryHeader(context),
-        const SizedBox(height: 8),
         Expanded(
           child: SingleChildScrollView(
             child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)),

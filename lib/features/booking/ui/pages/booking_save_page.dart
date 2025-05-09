@@ -134,16 +134,17 @@ class _BookingSavePageState extends State<BookingSavePage> {
 
   Widget _buildContent(BookingDraft draft) {
     return SafeArea(
-      child: Padding(
-        padding: AppDimensions.pagePadding,
-        child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            BookingSaveTab1(draft: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
-            BookingSaveTab2(draft: draft),
-          ],
-        ),
+      child: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          BookingSaveTab1(
+            draft: draft,
+            onCategoryTap: () => _openCategories(draft),
+            amountDisplayKey: _amountDisplayKey,
+          ),
+          BookingSaveTab2(draft: draft),
+        ],
       ),
     );
   }

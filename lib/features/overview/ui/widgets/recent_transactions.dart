@@ -22,7 +22,7 @@ class RecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardWithAction(
+    return CustomCardWithAction(
       onOptionTap: () {
         print("on option tap");
       },

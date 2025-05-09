@@ -27,7 +27,7 @@ class BudgetOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardWithAction(
+    return CustomCardWithAction(
       backgroundColor: AppColors.primaryColor,
       onOptionTap: () {
         // You might navigate or open options here

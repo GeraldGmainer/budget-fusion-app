@@ -88,7 +88,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
 
   Widget _buildBody(CategoryDraft draft) {
     return Padding(
-      padding: AppDimensions.pagePadding,
+      padding: AppDimensions.pageCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

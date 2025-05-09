@@ -1,14 +1,14 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 
-class CardWithAction extends StatelessWidget {
+class CustomCardWithAction extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onOptionTap;
   final VoidCallback? onShowMoreTap;
   final Color backgroundColor;
   final Widget child;
 
-  const CardWithAction({
+  const CustomCardWithAction({
     super.key,
     this.icon = Icons.more_vert,
     this.onOptionTap,

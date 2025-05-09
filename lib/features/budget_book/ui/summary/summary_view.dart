@@ -14,7 +14,7 @@ class SummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: AppDimensions.pagePadding,
+        padding: AppDimensions.pageCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

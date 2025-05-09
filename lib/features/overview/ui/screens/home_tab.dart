@@ -52,7 +52,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: topPadding, left: 16, right: 16, bottom: 8),
+        padding: EdgeInsets.only(top: topPadding, left: 6, right: 6, bottom: 8),
         child: child,
       ),
     );

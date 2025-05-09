@@ -26,27 +26,30 @@ class BookingSaveTab2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SaveBookingOverview(draft: draft),
-        const SizedBox(height: AppDimensions.verticalPadding),
-        Row(
-          children: [
-            SizedBox(width: 8.0),
-            Expanded(child: TransactionTypeInput(draft: draft)),
-            SizedBox(width: 8.0),
-            Expanded(child: AccountSelectInput(draft: draft)),
-            SizedBox(width: 8.0),
-          ],
-        ),
-        const SizedBox(height: AppDimensions.verticalPadding * 2),
-        Expanded(
-          child: CategoryListInput(draft: draft),
-        ),
-        const SizedBox(height: AppDimensions.verticalPadding * 2),
-        SaveButton(onTap: () => _upload(context)),
-        const SizedBox(height: AppDimensions.verticalPadding),
-      ],
+    return Padding(
+      padding: AppDimensions.pageFloatingPadding,
+      child: Column(
+        children: [
+          SaveBookingOverview(draft: draft),
+          const SizedBox(height: AppDimensions.verticalPadding),
+          Row(
+            children: [
+              SizedBox(width: 8.0),
+              Expanded(child: TransactionTypeInput(draft: draft)),
+              SizedBox(width: 8.0),
+              Expanded(child: AccountSelectInput(draft: draft)),
+              SizedBox(width: 8.0),
+            ],
+          ),
+          const SizedBox(height: AppDimensions.verticalPadding * 2),
+          Expanded(
+            child: CategoryListInput(draft: draft),
+          ),
+          const SizedBox(height: AppDimensions.verticalPadding * 2),
+          SaveButton(onTap: () => _upload(context)),
+          const SizedBox(height: AppDimensions.verticalPadding),
+        ],
+      ),
     );
   }
 }
