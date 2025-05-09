@@ -5,12 +5,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/category_draft.dart';
-
 class NameInput extends StatelessWidget {
   final CategoryDraft draft;
+  final bool autofocus;
 
-  const NameInput({super.key, required this.draft});
+  const NameInput({super.key, required this.draft, required this.autofocus});
 
   void _onNameChange(BuildContext context, String value) {
     context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(name: value));
@@ -20,6 +19,7 @@ class NameInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: draft.name,
+      autofocus: autofocus,
       style: TextStyle(fontSize: 13),
       maxLength: FeatureConstants.descriptionMaxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
