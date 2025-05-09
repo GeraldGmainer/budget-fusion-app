@@ -1,10 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../widgets/account_select_input.dart';
 import '../widgets/category_list_input.dart';
@@ -15,14 +11,6 @@ class BookingSaveTab2 extends StatelessWidget {
   final BookingDraft draft;
 
   const BookingSaveTab2({required this.draft});
-
-  _upload(BuildContext context) {
-    if (draft.category == null) {
-      showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
-      return;
-    }
-    context.read<BookingSaveCubit>().save();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +29,10 @@ class BookingSaveTab2 extends StatelessWidget {
               SizedBox(width: 8.0),
             ],
           ),
-          const SizedBox(height: AppDimensions.verticalPadding * 2),
+          const SizedBox(height: AppDimensions.verticalPadding),
           Expanded(
             child: CategoryListInput(draft: draft),
           ),
-          const SizedBox(height: AppDimensions.verticalPadding * 2),
-          SaveButton(onTap: () => _upload(context)),
-          const SizedBox(height: AppDimensions.verticalPadding),
         ],
       ),
     );
