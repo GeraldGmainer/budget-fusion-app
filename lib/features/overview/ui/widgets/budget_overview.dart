@@ -94,10 +94,7 @@ class BudgetOverview extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: const Text('Top Expenses This Month', style: TextStyle(fontSize: 14)),
-          ),
+          const Text('Top Expenses This Month', style: TextStyle(fontSize: 14)),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -134,10 +131,7 @@ class BudgetOverview extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: const Text('6 Month Balances', style: TextStyle(fontSize: 14)),
-          ),
+          const Text('6 Month Balances', style: TextStyle(fontSize: 14)),
           const SizedBox(height: 16),
           Container(
             height: 50,

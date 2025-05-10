@@ -75,11 +75,11 @@ class CustomCardWithAction extends StatelessWidget {
       children: [
         Row(
           children: [
-            const SizedBox(width: 16),
+            const SizedBox(width: 8.0),
             Expanded(
               child: Text(
                 title!,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600).merge(titleStyle),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600).merge(titleStyle),
               ),
             ),
             if (onOptionTap != null)
