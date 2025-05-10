@@ -129,6 +129,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     if (category.subcategories.isEmpty) {
       return null;
     }
-    return Text(category.subcategories.map((x) => x.name).join(", "));
+    // TODO translate
+    return Text("${category.subcategories.length} sub-categories");
   }
 }
