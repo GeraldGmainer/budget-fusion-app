@@ -73,7 +73,11 @@ class _BookingSavePageState extends State<BookingSavePage> {
       return;
     }
     if (draft.category == null) {
-      showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
+      if (_currentPage == 0) {
+        _animateToPage(1);
+      } else {
+        showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
+      }
       return;
     }
     context.read<BookingSaveCubit>().save();
