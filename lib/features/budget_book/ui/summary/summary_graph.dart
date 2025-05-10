@@ -17,6 +17,10 @@ class SummaryGraph extends StatelessWidget {
     final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)] : data.pieData;
 
     return CustomCardWithAction(
+      floatingOption: true,
+      onOptionTap: () {
+        print("on option tap");
+      },
       child: Center(
         child: SizedBox(
           height: 220,
