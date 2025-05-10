@@ -49,7 +49,6 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
 
     for (final dto in dtos.where((d) => d.parentId != null)) {
       final child = categoryMap[dto.id]!;
-      print(dto);
       final parent = categoryMap[dto.parentId]!;
       final updatedChild = child.copyWith(parent: parent);
       final updatedParent = parent.copyWith(

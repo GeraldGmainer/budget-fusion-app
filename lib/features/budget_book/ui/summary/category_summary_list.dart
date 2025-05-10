@@ -11,18 +11,19 @@ class CategorySummaryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: summaries.length,
-          itemBuilder: (BuildContext context, int index) {
-            return CollapsibleCategoryTile(summary: summaries[index]);
-          },
-          separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
-        ),
+    return CustomCardWithAction(
+      title: "Category Summary",
+      onOptionTap: () {
+        print("on option tap");
+      },
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: summaries.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CollapsibleCategoryTile(summary: summaries[index]);
+        },
+        separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
       ),
     );
   }
@@ -111,6 +112,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
   Widget _buildSub(CategoryViewSummaryData sub) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
+      visualDensity: const VisualDensity(vertical: 0),
       leading: Padding(
         padding: const EdgeInsets.only(left: 20.0),
         child: BudgetIcon(name: sub.iconName, color: sub.iconColor, size: 20),

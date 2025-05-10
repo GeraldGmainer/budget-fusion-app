@@ -23,33 +23,14 @@ class RecentTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCardWithAction(
+      title: "Recent Transactions",
       onOptionTap: () {
         print("on option tap");
       },
       onShowMoreTap: () {
         print("on show more tap");
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitle(context),
-          _buildList(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    return Text('Recent Transactions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
-  }
-
-  Widget _buildShowMore(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      child: Text(
-        'Show More',
-        style: TextStyle(color: AppColors.accentColor, fontWeight: FontWeight.bold, fontSize: 12),
-      ),
+      child: _buildList(context),
     );
   }
 

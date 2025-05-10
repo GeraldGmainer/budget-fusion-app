@@ -16,27 +16,29 @@ class SummaryGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)] : data.pieData;
 
-    return Center(
-      child: SizedBox(
-        height: 220,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            PieChart(
-                swapAnimationDuration: Duration(milliseconds: 300),
-                swapAnimationCurve: Curves.linear,
-                PieChartData(
-                  sections: _buildSections(pieData),
-                  centerSpaceRadius: 70,
-                  sectionsSpace: 3,
-                  startDegreeOffset: 270,
-                )),
-            IncomeOutcomeBalanceText(
-              income: data.income,
-              outcome: data.outcome,
-              currency: data.currency,
-            ),
-          ],
+    return CustomCardWithAction(
+      child: Center(
+        child: SizedBox(
+          height: 220,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              PieChart(
+                  swapAnimationDuration: Duration(milliseconds: 300),
+                  swapAnimationCurve: Curves.linear,
+                  PieChartData(
+                    sections: _buildSections(pieData),
+                    centerSpaceRadius: 70,
+                    sectionsSpace: 3,
+                    startDegreeOffset: 270,
+                  )),
+              IncomeOutcomeBalanceText(
+                income: data.income,
+                outcome: data.outcome,
+                currency: data.currency,
+              ),
+            ],
+          ),
         ),
       ),
     );
