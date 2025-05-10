@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/shared/ui/common/custom_card_with_action.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -13,11 +14,12 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _buildList(),
-      ),
+    return CustomCardWithAction(
+      floatingOption: true,
+      onOptionTap: () {
+        print("on tap");
+      },
+      child: _buildList(),
     );
   }
 
