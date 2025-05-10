@@ -18,16 +18,16 @@ class SaveBookingOverview extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppDimensions.horizontalPadding,
-          vertical: AppDimensions.verticalPadding,
+          vertical: 8.0,
         ),
         child: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
               Text(DateTimeConverter.toEEEEdMMMM(draft.date), style: const TextStyle(fontSize: 16)),
-              const SizedBox(height: AppDimensions.verticalPadding),
+              const SizedBox(height: 8.0),
               CurrencyText(value: draft.amount, fontSize: 38, color: AppColors.primaryTextColor),
-              if (showDescription) const SizedBox(height: AppDimensions.verticalPadding),
+              if (showDescription) const SizedBox(height: 8.0),
               if (showDescription) Text("${draft.description}"),
             ],
           ),

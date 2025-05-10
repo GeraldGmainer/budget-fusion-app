@@ -18,7 +18,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   CalculatorCubit() : super(const CalculatorState.initial());
 
   void init(double initialAmount) {
-    _updateState(initialAmount, history: []);
+    _updateState(initialAmount, history: [initialAmount.toString()]);
   }
 
   void clear() {
