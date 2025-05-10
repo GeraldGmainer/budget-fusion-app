@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -64,14 +65,7 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
 
   Widget _buildTile(BuildContext context, T item) {
     return ListTile(
-      leading: Radio<T>(
-        visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity, vertical: VisualDensity.minimumDensity),
-        value: item,
-        groupValue: selectedItem,
-        onChanged: (T? value) {
-          Navigator.pop(context, value);
-        },
-      ),
+      trailing: selectedItem == item ? Icon(Icons.check, color: AppColors.accentColor) : null,
       title: itemLabelBuilder != null ? itemLabelBuilder!(item) : Text(item.toString()),
       onTap: () => Navigator.pop(context, item),
     );
@@ -80,9 +74,9 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
   Widget _buildButtons(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
-      child: ElevatedButton(
+      child: TextButton(
         onPressed: () => Navigator.pop(context, selectedItem),
-        child: const Text('OK'),
+        child: const Text('OK', style: TextStyle(color: AppColors.primaryTextColor)),
       ),
     );
   }
