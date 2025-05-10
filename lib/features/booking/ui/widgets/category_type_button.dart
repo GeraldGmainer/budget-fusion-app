@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:budget_fusion_app/shared/shared.dart' as shared;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,31 +11,15 @@ class TransactionTypeButton extends StatelessWidget {
 
   const TransactionTypeButton({super.key, required this.draft});
 
-  Future<void> _showTypeBottomSheet(BuildContext context) async {
-    final selectedType = await showSelectionBottomSheet<CategoryType?>(
-      context: context,
-      title: "Transaction Type",
-      items: CategoryType.values,
-      selectedItem: draft.categoryType,
-      itemLabelBuilder: (type) => Text(type!.label.tr()),
-    );
-
-    if (selectedType != null && context.mounted) {
-      context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: selectedType, category: null));
-    }
+  _onCategoryTypeChange(BuildContext context, CategoryType value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => _showTypeBottomSheet(context),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Text(
-          draft.categoryType.label.tr(),
-          style: TextStyle(color: AppColors.primaryTextColor),
-        ),
-      ),
+    return shared.CategoryTypeInput(
+      onChange: (value) => _onCategoryTypeChange(context, value),
+      value: draft.categoryType,
     );
   }
 }

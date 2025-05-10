@@ -12,9 +12,10 @@ export 'application/use_cases/watch_profile_use_case.dart';
 export 'data/serializer/category_type_serializer.dart';
 //
 export 'domain/aggregator/profile_setting_aggregator.dart';
-//
 export 'ui/budget_book/budget_icon.dart';
 export 'ui/budget_book/category_list.dart';
+//
+export 'ui/budget_book/category_type_input.dart';
 export 'ui/budget_book/currency_text.dart';
 export 'ui/budget_book/transaction_item.dart';
 export 'ui/budget_book/transaction_list.dart';

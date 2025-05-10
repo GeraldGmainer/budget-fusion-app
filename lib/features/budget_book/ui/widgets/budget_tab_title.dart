@@ -1,16 +1,22 @@
 import 'package:budget_fusion_app/features/budget_book/domain/enums/period_mode.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/cubits/budget_book_cubit.dart';
 import '../../domain/entities/budget_book_filter.dart';
 
 class BudgetTabTitle extends StatelessWidget {
-  final BudgetBookFilter filter;
-
-  const BudgetTabTitle({super.key, required this.filter});
-
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<BudgetBookCubit, BudgetBookState>(
+      builder: (context, state) {
+        return _buildTitle(state.filter);
+      },
+    );
+  }
+
+  Widget _buildTitle(BudgetBookFilter filter) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
