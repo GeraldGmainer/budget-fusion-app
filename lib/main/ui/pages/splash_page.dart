@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _onError(String message) {
-    showErrorSnackBar(context, message);
+    context.showErrorSnackBar(message);
     context.read<LoginCubit>().logout();
   }
 

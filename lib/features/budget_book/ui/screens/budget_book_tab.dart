@@ -68,7 +68,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   void _onError(String message) {
-    showSnackBar(context, message);
+    context.showSnackBar(message);
   }
 
   void _onPageChanged(int pageIndex) {

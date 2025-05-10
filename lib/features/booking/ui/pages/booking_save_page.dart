@@ -76,7 +76,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
       if (_currentPage == 0) {
         _animateToPage(1);
       } else {
-        showErrorSnackBar(context, "booking.validation.required_category", duration: Duration(seconds: 2));
+        context.showErrorSnackBar("booking.validation.required_category", duration: Duration(seconds: 2));
       }
       return;
     }
@@ -84,12 +84,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   _onSaveSuccess(BookingDraft draft) {
-    showSnackBar(context, draft.isCreating ? "booking.create_success" : "booking.edit_success");
+    context.showSnackBar(draft.isCreating ? "booking.create_success" : "booking.edit_success");
     Navigator.of(context).pop();
   }
 
   _onError(String error) {
-    showSnackBar(context, error);
+    context.showSnackBar(error);
   }
 
   _onDelete() {
@@ -104,7 +104,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   _onDeleteSuccess(Booking booking) {
-    showSnackBar(context, "booking.delete_success");
+    context.showSnackBar("booking.delete_success");
     Navigator.of(context).pop();
   }
 

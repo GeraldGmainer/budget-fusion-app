@@ -3,42 +3,62 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../utils.dart';
+extension SnackBarExtensions on BuildContext {
+  void showSnackBar(
+    String message, {
+    Duration duration = const Duration(seconds: 3),
+    Color? backgroundColor,
+    bool vibrate = false,
+    bool floating = false,
+  }) {
+    final messenger = ScaffoldMessenger.of(this);
 
-void showSnackBar(BuildContext? context, String message) {
-  if (context == null) {
-    BudgetLogger.instance.w("showSnackBar: context is NULL");
-    return;
-  }
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message).tr(),
-    ),
-  );
-}
+    messenger.showSnackBar(
+      SnackBar(
+        content: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => messenger.hideCurrentSnackBar(),
+          child: Text(message.tr()),
+        ),
+        backgroundColor: backgroundColor,
+        behavior: floating ? SnackBarBehavior.floating : null,
+        duration: duration,
+      ),
+    );
 
-void showErrorSnackBar(BuildContext? context, String message, {Duration? duration, bool vibrate = true}) {
-  if (context == null) {
-    BudgetLogger.instance.w("showSnackBar: context is NULL");
-    return;
+    if (vibrate) {
+      Haptics.vibrate(HapticsType.error);
+    }
   }
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message).tr(),
+
+  void showErrorSnackBar(
+    String message, {
+    Duration? duration,
+    bool vibrate = true,
+    bool floating = false,
+  }) {
+    showSnackBar(
+      message,
+      duration: duration ?? const Duration(seconds: 4),
       backgroundColor: AppColors.errorColor,
-      duration: duration ?? Duration(seconds: 4),
-    ),
-  );
-  if (vibrate) {
-    Haptics.vibrate(HapticsType.error);
+      vibrate: vibrate,
+      floating: floating,
+    );
+  }
+
+  void showComingSoon([String message = 'This feature isn’t implemented yet']) {
+    showSnackBar(
+      message,
+      duration: const Duration(seconds: 2),
+    );
   }
 }
 
+// TODO maybe not required anymore?
 class ScaffoldProvider extends ChangeNotifier {
   BuildContext? scaffoldContext;
 
   void setScaffoldContext(BuildContext ctx) {
     scaffoldContext = ctx;
-    // notifyListeners();
   }
 }

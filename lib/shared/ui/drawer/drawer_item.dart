@@ -24,7 +24,7 @@ class AppDrawerItem extends StatelessWidget {
         Navigator.of(context).pushNamed(route!);
       }
     } else {
-      showSnackBar(context, "Feature not implemented yet");
+      context.showComingSoon();
     }
   }
 
