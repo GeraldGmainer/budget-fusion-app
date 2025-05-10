@@ -197,6 +197,7 @@ class ParentCategoryList extends StatelessWidget {
                   );
                 }
                 return ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                   leading: CircleAvatar(
                     backgroundColor: AppColors.accentColor,
                     child: const Icon(Icons.add, color: Colors.white),
@@ -285,6 +286,7 @@ class SubcategoryListScreen extends StatelessWidget {
             );
           }
           return ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
             leading: CircleAvatar(backgroundColor: AppColors.accentColor, child: const Icon(Icons.add, color: Colors.white)),
             title: const Text("New Subcategory"),
             onTap: () => createCategory(context, parent),
