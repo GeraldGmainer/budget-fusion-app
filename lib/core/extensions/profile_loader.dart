@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ProfileLoader on BuildContext {
-  void loadUserProfileData({String? userId}) {
+  Future<void> loadUserProfileData({String? userId}) async {
+    read<OfflineFirstQueueCubit>().init();
     read<ProfileCubit>().load(userId: userId);
     read<ProfileSettingCubit>().load(userId: userId);
     read<AccountCubit>().load(userId: userId);
     read<CategoryCubit>().load(userId: userId);
     read<BookingCubit>().load(userId: userId);
-    read<OfflineFirstQueueCubit>().init();
   }
 }

@@ -35,6 +35,10 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Stream<List<Dto>> get stream => streamController.stream;
 
+  Stream<List<QueueItem>> get pendingItemsStream => queueManager.pendingItemsStream;
+
+  bool isSynced(String id) => queueManager.isSynced(id);
+
   Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll");
     _subscribeToRealtime();

@@ -24,15 +24,17 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
   }
 
   void _setupStream() {
-    _sharedBookingsStream = Rx.combineLatest3<List<BookingDto>, List<Account>, List<Category>, List<Booking>>(
+    _sharedBookingsStream = Rx.combineLatest4<List<BookingDto>, List<Account>, List<Category>, List<QueueItem>, List<Booking>>(
       manager.stream,
       _accountRepo.watch(),
       _categoryRepo.watch(),
-      (bookingDtos, accounts, categories) {
+      manager.pendingItemsStream,
+      (bookingDtos, accounts, categories, pendingItems) {
         return bookingDtos.map((dto) {
           final account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
           final category = categories.firstWhereOrNull((cat) => cat.id == dto.categoryId);
-          return _toDomain(dto, account, category);
+          final isSynced = !pendingItems.any((q) => q.entityId == dto.id.value);
+          return _toDomain(dto, account, category, isSynced);
         }).toList();
       },
     ).shareReplay(maxSize: 1);
@@ -42,10 +44,11 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
   Future<Booking> toEntity(BookingDto dto) async {
     final account = await _accountRepo.loadById(dto.accountId);
     final category = await _categoryRepo.loadById(dto.categoryId);
-    return _toDomain(dto, account, category);
+    final isSynced = manager.isSynced(dto.id.value);
+    return _toDomain(dto, account, category, isSynced);
   }
 
-  Booking _toDomain(BookingDto dto, Account? account, Category? category) {
+  Booking _toDomain(BookingDto dto, Account? account, Category? category, bool isSynced) {
     return Booking(
       id: dto.id,
       date: dto.date,
@@ -54,6 +57,7 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       account: account,
       category: category,
       updatedAt: dto.updatedAt,
+      isSynced: isSynced,
     );
   }
 
@@ -72,6 +76,7 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       accountId: entity.account!.id,
       categoryId: entity.category!.id,
       updatedAt: entity.updatedAt,
+      // TODO is it OK to leave isSynced as false?
     );
   }
 }

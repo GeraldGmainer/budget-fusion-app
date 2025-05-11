@@ -23,6 +23,7 @@ mixin _$Booking {
   Category? get category => throw _privateConstructorUsedError;
   Account? get account => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +43,8 @@ abstract class $BookingCopyWith<$Res> {
       Decimal amount,
       Category? category,
       Account? account,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      bool isSynced});
 
   $CategoryCopyWith<$Res>? get category;
   $AccountCopyWith<$Res>? get account;
@@ -70,6 +72,7 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? category = freezed,
     Object? account = freezed,
     Object? updatedAt = null,
+    Object? isSynced = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -100,6 +103,10 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isSynced: null == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -146,7 +153,8 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       Decimal amount,
       Category? category,
       Account? account,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      bool isSynced});
 
   @override
   $CategoryCopyWith<$Res>? get category;
@@ -174,6 +182,7 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? category = freezed,
     Object? account = freezed,
     Object? updatedAt = null,
+    Object? isSynced = null,
   }) {
     return _then(_$BookingImpl(
       id: null == id
@@ -204,6 +213,10 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isSynced: null == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -218,7 +231,8 @@ class _$BookingImpl extends _Booking {
       required this.amount,
       required this.category,
       required this.account,
-      required this.updatedAt})
+      required this.updatedAt,
+      this.isSynced = false})
       : super._();
 
   @override
@@ -235,10 +249,13 @@ class _$BookingImpl extends _Booking {
   final Account? account;
   @override
   final DateTime updatedAt;
+  @override
+  @JsonKey()
+  final bool isSynced;
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt)';
+    return 'Booking(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt, isSynced: $isSynced)';
   }
 
   @override
@@ -255,12 +272,14 @@ class _$BookingImpl extends _Booking {
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, date, description, amount, category, account, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, date, description, amount,
+      category, account, updatedAt, isSynced);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -279,7 +298,8 @@ abstract class _Booking extends Booking {
       required final Decimal amount,
       required final Category? category,
       required final Account? account,
-      required final DateTime updatedAt}) = _$BookingImpl;
+      required final DateTime updatedAt,
+      final bool isSynced}) = _$BookingImpl;
   const _Booking._() : super._();
 
   @override
@@ -296,6 +316,8 @@ abstract class _Booking extends Booking {
   Account? get account;
   @override
   DateTime get updatedAt;
+  @override
+  bool get isSynced;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

@@ -16,24 +16,26 @@ class QueueManager {
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<DomainType, OfflineFirstRemoteDataSource> _remoteSources = {};
   final Map<DomainType, OfflineFirstLocalDataSource> _localSources = {};
+  final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
+
+  Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
   bool _isProcessing = false;
   bool _initialized = false;
 
   QueueManager(this.localDataSource, this.remoteLoadingService);
 
-  void registerDomainSources(
-    DomainType domain,
-    OfflineFirstLocalDataSource localSource,
-    OfflineFirstRemoteDataSource remoteSource,
-  ) {
-    _remoteSources[domain] = remoteSource;
-    _localSources[domain] = localSource;
+  void registerDomainSources(DomainType domain, OfflineFirstLocalDataSource lds, OfflineFirstRemoteDataSource rds) {
+    _remoteSources[domain] = rds;
+    _localSources[domain] = lds;
   }
 
   Future<void> init() async {
+    _log("init QueueManager");
     final items = await localDataSource.fetchPendingItems();
     _inMemoryQueue.addAll(items);
     _initialized = true;
+    _emitPending();
+    _log("init QueueManager done");
     _processNext();
   }
 
@@ -43,10 +45,15 @@ class QueueManager {
     }
     await localDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
-    _processNext();
+
+    if (!_isProcessing) {
+      _processNext();
+    } else {
+      _emitPending();
+    }
   }
 
-  void _processNext() async {
+  Future<void> _processNext() async {
     if (_inMemoryQueue.isEmpty) {
       _log("Queue is empty");
       return;
@@ -55,6 +62,7 @@ class QueueManager {
       _log("Queue is busy");
       return;
     }
+    _emitPending();
 
     _isProcessing = true;
     final currentItem = _inMemoryQueue.first;
@@ -63,6 +71,7 @@ class QueueManager {
       await _processQueueItem(currentItem);
       _inMemoryQueue.removeFirst();
       await localDataSource.removeQueueItem(currentItem.entityId);
+      _emitPending();
     } on Exception catch (e, stack) {
       BudgetLogger.instance.e("Queue task failed", e, stack);
       final updatedAttempts = currentItem.attempts + 1;
@@ -71,11 +80,13 @@ class QueueManager {
         final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
         await localDataSource.updateQueueItem(failedItem);
         _inMemoryQueue.removeFirst();
+        _emitPending();
       } else {
         final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
         _inMemoryQueue.removeFirst();
         _inMemoryQueue.addFirst(retriedItem);
         await localDataSource.updateQueueItem(retriedItem);
+        _emitPending();
       }
     } finally {
       _isProcessing = false;
@@ -120,11 +131,21 @@ class QueueManager {
     }
   }
 
+  void _emitPending() {
+    streamController.add(_inMemoryQueue.where((q) => !q.done).toList());
+  }
+
+  bool isSynced(String entityId) {
+    if (!_initialized) {
+      return false;
+    }
+    final isPending = _inMemoryQueue.any((q) => !q.done && q.entityId == entityId);
+    return !isPending;
+  }
+
   void dispose() {
     streamController.close();
   }
-
-  final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 
   _log(String msg) {
     DomainLogger.instance.d("QueueManager", "queue", msg);

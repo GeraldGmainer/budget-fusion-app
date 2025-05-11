@@ -24,9 +24,33 @@ class TransactionItem extends StatelessWidget {
         width: 40,
         child: BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor),
       ),
-      title: Text(booking.category?.name ?? "", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      title: _buildTitle(),
       subtitle: _buildSubtitle(context),
       trailing: CurrencyText(value: booking.amount, currency: currency, color: booking.category!.categoryType.color, fontSize: 15),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          booking.category?.name ?? "",
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        if (!booking.isSynced) ...[
+          const SizedBox(width: 4),
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: AppColors.errorColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ],
+      ],
     );
   }
 
