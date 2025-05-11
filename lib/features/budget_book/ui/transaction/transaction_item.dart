@@ -20,37 +20,39 @@ class TransactionItem extends StatelessWidget {
       minVerticalPadding: 0,
       onTap: () => _onTap(context),
       visualDensity: const VisualDensity(vertical: -4),
-      leading: SizedBox(
-        width: 40,
-        child: BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor),
-      ),
+      leading: _buildIcon(),
       title: _buildTitle(),
       subtitle: _buildSubtitle(context),
       trailing: CurrencyText(value: booking.amount, currency: currency, color: booking.category!.categoryType.color, fontSize: 15),
     );
   }
 
-  Widget _buildTitle() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          booking.category?.name ?? "",
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        if (!booking.isSynced) ...[
-          const SizedBox(width: 4),
-          Container(
-            width: 6,
-            height: 6,
-            decoration: const BoxDecoration(
-              color: AppColors.errorColor,
-              shape: BoxShape.circle,
+  Widget _buildIcon() {
+    return SizedBox(
+      width: 40,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor),
+          if (!booking.isSynced)
+            Container(
+              width: 6,
+              height: 6,
+              decoration: const BoxDecoration(
+                color: AppColors.errorColor,
+                shape: BoxShape.circle,
+              ),
             ),
-          ),
         ],
-      ],
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Text(
+      booking.category?.name ?? "",
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     );
   }
 

@@ -232,7 +232,7 @@ class _$BookingImpl extends _Booking {
       required this.category,
       required this.account,
       required this.updatedAt,
-      this.isSynced = false})
+      required this.isSynced})
       : super._();
 
   @override
@@ -250,7 +250,6 @@ class _$BookingImpl extends _Booking {
   @override
   final DateTime updatedAt;
   @override
-  @JsonKey()
   final bool isSynced;
 
   @override
@@ -299,7 +298,7 @@ abstract class _Booking extends Booking {
       required final Category? category,
       required final Account? account,
       required final DateTime updatedAt,
-      final bool isSynced}) = _$BookingImpl;
+      required final bool isSynced}) = _$BookingImpl;
   const _Booking._() : super._();
 
   @override

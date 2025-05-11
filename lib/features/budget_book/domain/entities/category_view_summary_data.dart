@@ -17,6 +17,7 @@ class CategoryViewSummaryData with _$CategoryViewSummaryData {
     required String iconColor,
     required int percentage,
     required Decimal value,
+    required bool isSynced,
     @Default([]) List<CategoryViewSummaryData> subSummaries,
   }) = _CategoryViewSummaryData;
 }

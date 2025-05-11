@@ -97,7 +97,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
       visualDensity: const VisualDensity(vertical: 0),
       leading: SizedBox(
         width: 40,
-        child: BudgetIcon(name: widget.summary.iconName, color: widget.summary.iconColor),
+        child: _buildIcon(widget.summary),
       ),
       onTap: () {
         context.showComingSoon();
@@ -172,7 +172,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
       visualDensity: const VisualDensity(vertical: -3),
       leading: Padding(
         padding: const EdgeInsets.only(left: 7.0),
-        child: BudgetIcon(name: sub.iconName, color: sub.iconColor, size: 20),
+        child: _buildIcon(sub),
       ),
       onTap: () {
         context.showComingSoon();
@@ -195,6 +195,25 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildIcon(CategoryViewSummaryData data) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BudgetIcon(name: data.iconName, color: data.iconColor, size: 20),
+        if (!data.isSynced)
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: AppColors.errorColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+      ],
     );
   }
 }

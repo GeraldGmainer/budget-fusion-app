@@ -86,6 +86,7 @@ class SummaryDataGenerator {
   CategoryViewSummaryData _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
     if (group.subGroups.isEmpty) {
       final perc = overallTotal == Decimal.zero ? 0 : ((group.amount / overallTotal).toDouble() * 100).round();
+      final isSynced = group.bookings.where((x) => !x.isSynced).isEmpty;
       return CategoryViewSummaryData(
         currency: currency,
         categoryType: group.category.categoryType,
@@ -95,6 +96,7 @@ class SummaryDataGenerator {
         iconColor: group.category.iconColor,
         percentage: perc,
         value: group.amount,
+        isSynced: isSynced,
       );
     }
 
@@ -104,6 +106,7 @@ class SummaryDataGenerator {
     final childrenPerc = overallTotal == Decimal.zero ? 0 : ((childrenTotal / overallTotal).toDouble() * 100).round();
     final combinedValue = group.amount + childrenTotal;
     final combinedPerc = parentPerc + childrenPerc;
+    final isSynced = subSummaries.where((x) => !x.isSynced).isEmpty;
 
     return CategoryViewSummaryData(
       currency: currency,
@@ -115,6 +118,7 @@ class SummaryDataGenerator {
       percentage: combinedPerc,
       value: combinedValue,
       subSummaries: subSummaries,
+      isSynced: isSynced,
     );
   }
 

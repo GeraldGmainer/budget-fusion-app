@@ -29,6 +29,7 @@ class BookingDraft with _$BookingDraft {
       category: category,
       account: account,
       updatedAt: DateTime.now(),
+      isSynced: false,
     );
   }
 

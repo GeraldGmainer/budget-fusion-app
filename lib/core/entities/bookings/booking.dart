@@ -21,7 +21,7 @@ class Booking with _$Booking implements Entity {
     required Category? category,
     required Account? account,
     required DateTime updatedAt,
-    @Default(false) bool isSynced,
+    required bool isSynced,
   }) = _Booking;
 }
 

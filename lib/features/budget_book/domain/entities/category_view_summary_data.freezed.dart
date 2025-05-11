@@ -24,6 +24,7 @@ mixin _$CategoryViewSummaryData {
   String get iconColor => throw _privateConstructorUsedError;
   int get percentage => throw _privateConstructorUsedError;
   Decimal get value => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
   List<CategoryViewSummaryData> get subSummaries =>
       throw _privateConstructorUsedError;
 
@@ -49,6 +50,7 @@ abstract class $CategoryViewSummaryDataCopyWith<$Res> {
       String iconColor,
       int percentage,
       Decimal value,
+      bool isSynced,
       List<CategoryViewSummaryData> subSummaries});
 
   $CurrencyCopyWith<$Res> get currency;
@@ -78,6 +80,7 @@ class _$CategoryViewSummaryDataCopyWithImpl<$Res,
     Object? iconColor = null,
     Object? percentage = null,
     Object? value = null,
+    Object? isSynced = null,
     Object? subSummaries = null,
   }) {
     return _then(_value.copyWith(
@@ -113,6 +116,10 @@ class _$CategoryViewSummaryDataCopyWithImpl<$Res,
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as Decimal,
+      isSynced: null == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool,
       subSummaries: null == subSummaries
           ? _value.subSummaries
           : subSummaries // ignore: cast_nullable_to_non_nullable
@@ -149,6 +156,7 @@ abstract class _$$CategoryViewSummaryDataImplCopyWith<$Res>
       String iconColor,
       int percentage,
       Decimal value,
+      bool isSynced,
       List<CategoryViewSummaryData> subSummaries});
 
   @override
@@ -178,6 +186,7 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? percentage = null,
     Object? value = null,
+    Object? isSynced = null,
     Object? subSummaries = null,
   }) {
     return _then(_$CategoryViewSummaryDataImpl(
@@ -213,6 +222,10 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as Decimal,
+      isSynced: null == isSynced
+          ? _value.isSynced
+          : isSynced // ignore: cast_nullable_to_non_nullable
+              as bool,
       subSummaries: null == subSummaries
           ? _value._subSummaries
           : subSummaries // ignore: cast_nullable_to_non_nullable
@@ -233,6 +246,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
       required this.iconColor,
       required this.percentage,
       required this.value,
+      required this.isSynced,
       final List<CategoryViewSummaryData> subSummaries = const []})
       : _subSummaries = subSummaries,
         super._();
@@ -253,6 +267,8 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
   final int percentage;
   @override
   final Decimal value;
+  @override
+  final bool isSynced;
   final List<CategoryViewSummaryData> _subSummaries;
   @override
   @JsonKey()
@@ -264,7 +280,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
 
   @override
   String toString() {
-    return 'CategoryViewSummaryData(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, subSummaries: $subSummaries)';
+    return 'CategoryViewSummaryData(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, isSynced: $isSynced, subSummaries: $subSummaries)';
   }
 
   @override
@@ -287,6 +303,8 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
             (identical(other.percentage, percentage) ||
                 other.percentage == percentage) &&
             (identical(other.value, value) || other.value == value) &&
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced) &&
             const DeepCollectionEquality()
                 .equals(other._subSummaries, _subSummaries));
   }
@@ -302,6 +320,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
       iconColor,
       percentage,
       value,
+      isSynced,
       const DeepCollectionEquality().hash(_subSummaries));
 
   /// Create a copy of CategoryViewSummaryData
@@ -324,6 +343,7 @@ abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
           required final String iconColor,
           required final int percentage,
           required final Decimal value,
+          required final bool isSynced,
           final List<CategoryViewSummaryData> subSummaries}) =
       _$CategoryViewSummaryDataImpl;
   const _CategoryViewSummaryData._() : super._();
@@ -344,6 +364,8 @@ abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
   int get percentage;
   @override
   Decimal get value;
+  @override
+  bool get isSynced;
   @override
   List<CategoryViewSummaryData> get subSummaries;
 
