@@ -79,7 +79,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         _currentDateRange = items[reversedIndex].dateRange;
       });
     } else {
-      BudgetLogger.instance.w('items are empty');
+      BudgetLogger.instance.w('budget book items are empty');
     }
   }
 

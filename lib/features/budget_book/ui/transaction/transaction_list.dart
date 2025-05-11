@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/ui/common/custom_card_with_action.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,7 +18,7 @@ class TransactionList extends StatelessWidget {
     return CustomCardWithAction(
       floatingOption: true,
       onOptionTap: () {
-        print("on tap");
+        context.showComingSoon();
       },
       child: _buildList(),
     );

@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/category_view_summary_data.dart';
@@ -14,7 +15,7 @@ class CategorySummaryList extends StatelessWidget {
     return CustomCardWithAction(
       title: "Category Summary",
       onOptionTap: () {
-        print("on option tap");
+        context.showComingSoon();
       },
       child: ListView.separated(
         shrinkWrap: true,

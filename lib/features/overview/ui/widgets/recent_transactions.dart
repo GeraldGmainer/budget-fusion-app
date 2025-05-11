@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class RecentTransactions extends StatelessWidget {
@@ -25,10 +26,10 @@ class RecentTransactions extends StatelessWidget {
     return CustomCardWithAction(
       title: "Recent Transactions",
       onOptionTap: () {
-        print("on option tap");
+        context.showComingSoon();
       },
       onShowMoreTap: () {
-        print("on show more tap");
+        context.showComingSoon();
       },
       child: _buildList(context),
     );

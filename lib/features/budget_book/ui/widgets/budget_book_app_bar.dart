@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,8 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           onSelected: (action) {
             if (action == BudgetMenuAction.reload) {
               context.read<BudgetBookCubit>().resetAndLoad();
+            } else {
+              context.showComingSoon();
             }
           },
           itemBuilder: (ctx) {

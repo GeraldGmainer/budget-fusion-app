@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -32,8 +33,7 @@ class BudgetOverview extends StatelessWidget {
       titleStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
       backgroundColor: AppColors.primaryColor,
       onOptionTap: () {
-        // You might navigate or open options here
-        print('More options tapped');
+        context.showComingSoon();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
