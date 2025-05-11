@@ -31,7 +31,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble() ?? 0);
+    BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble());
     BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
   }

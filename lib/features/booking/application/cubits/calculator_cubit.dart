@@ -17,8 +17,17 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   CalculatorCubit() : super(const CalculatorState.initial());
 
-  void init(double initialAmount) {
-    _updateState(initialAmount, history: [initialAmount.toString()]);
+  void init(double? initialAmount) {
+    if (initialAmount == null) {
+      emit(CalculatorState.initial());
+    } else {
+      _updateState(initialAmount, history: [toTrimmedString(initialAmount)]);
+    }
+  }
+
+  String toTrimmedString(double value) {
+    final s = value.toStringAsFixed(3);
+    return s.replaceAll(RegExp(r'0+$'), '').replaceAll(RegExp(r'\.$'), '');
   }
 
   void clear() {
