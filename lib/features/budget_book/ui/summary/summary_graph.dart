@@ -8,13 +8,15 @@ import '../../domain/entities/summary_view_data.dart';
 import 'income_outcome_balance_text.dart';
 
 class SummaryGraph extends StatelessWidget {
+  static const List<PieData> emptyPie = [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)];
+
   final SummaryViewData data;
 
   const SummaryGraph({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)] : data.pieData;
+    final pieData = data.pieData.isEmpty ? emptyPie : data.pieData;
 
     return CustomCardWithAction(
       floatingOption: true,
@@ -35,6 +37,15 @@ class SummaryGraph extends StatelessWidget {
                     centerSpaceRadius: 70,
                     sectionsSpace: 3,
                     startDegreeOffset: 270,
+                    pieTouchData: PieTouchData(
+                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                        if (event is FlTapUpEvent && pieTouchResponse != null && pieTouchResponse.touchedSection != null) {
+                          final tappedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                          print("tappedIndex $tappedIndex");
+                          context.showComingSoon();
+                        }
+                      },
+                    ),
                   )),
               IncomeOutcomeBalanceText(
                 income: data.income,

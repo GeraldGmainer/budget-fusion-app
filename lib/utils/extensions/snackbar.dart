@@ -46,7 +46,7 @@ extension SnackBarExtensions on BuildContext {
     );
   }
 
-  void showComingSoon([String message = 'This feature isn’t implemented yet']) {
+  void showComingSoon([String message = 'This feature is coming soon ...']) {
     showSnackBar(
       message,
       duration: const Duration(seconds: 2),
