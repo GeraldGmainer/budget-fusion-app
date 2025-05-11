@@ -14,11 +14,11 @@ class CalculatorKeyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 5,
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(8),
       children: [
         CalculatorButton(calculatorKey: CalculatorKey.digit7, onPressed: onPressed),
         CalculatorButton(calculatorKey: CalculatorKey.digit8, onPressed: onPressed),

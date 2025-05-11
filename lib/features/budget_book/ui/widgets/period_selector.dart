@@ -77,11 +77,14 @@ class PeriodSelector extends StatelessWidget {
   }
 
   Widget _buildPeriod(BuildContext context) {
-    return Text(
-      _formatDateRange(context, filter.period),
-      style: TextStyle(
-        fontSize: 18,
-        color: AppColors.primaryTextColor,
+    return GestureDetector(
+      onTap: () => context.showComingSoon(),
+      child: Text(
+        _formatDateRange(context, filter.period),
+        style: TextStyle(
+          fontSize: 18,
+          color: AppColors.primaryTextColor,
+        ),
       ),
     );
   }

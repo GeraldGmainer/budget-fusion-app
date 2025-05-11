@@ -46,9 +46,13 @@ class _BookingSavePageState extends State<BookingSavePage> {
     if (draft.amount.toDouble() > 0) {
       _animateToPage(1);
     } else {
-      Haptics.vibrate(HapticsType.error);
-      _amountDisplayKey.currentState?.triggerShakeAnimation();
+      _showAmountError();
     }
+  }
+
+  _showAmountError() {
+    Haptics.vibrate(HapticsType.error);
+    _amountDisplayKey.currentState?.triggerShakeAnimation();
   }
 
   _animateToPage(int page) {
@@ -63,13 +67,29 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  _onUploadSuccess(BookingDraft draft) {
-    showSnackBar(context, draft.isCreating ? "booking.create_success" : "booking.edit_success");
+  _onSave(BookingDraft draft) {
+    if (draft.amount.toDouble() <= 0) {
+      _showAmountError();
+      return;
+    }
+    if (draft.category == null) {
+      if (_currentPage == 0) {
+        _animateToPage(1);
+      } else {
+        context.showErrorSnackBar("booking.validation.required_category", duration: Duration(seconds: 2));
+      }
+      return;
+    }
+    context.read<BookingSaveCubit>().save();
+  }
+
+  _onSaveSuccess(BookingDraft draft) {
+    context.showSnackBar(draft.isCreating ? "booking.create_success" : "booking.edit_success");
     Navigator.of(context).pop();
   }
 
   _onError(String error) {
-    showSnackBar(context, error);
+    context.showSnackBar(error);
   }
 
   _onDelete() {
@@ -84,7 +104,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   _onDeleteSuccess(Booking booking) {
-    showSnackBar(context, "booking.delete_success");
+    context.showSnackBar("booking.delete_success");
     Navigator.of(context).pop();
   }
 
@@ -108,7 +128,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
       },
       listener: (context, state) {
         state.whenOrNull(
-          loaded: (draft) => _onUploadSuccess(draft),
+          loaded: (draft) => _onSaveSuccess(draft),
           deleted: (_, booking) => _onDeleteSuccess(booking),
           error: (draft, error) => _onError(error),
         );
@@ -118,7 +138,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
           appBar: AppBar(
             title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
             actions: [
-              if (!state.draft.isCreating) _buildDeleteButton(),
+              SaveAction(onSave: () => _onSave(state.draft)),
+              if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
             ],
           ),
           resizeToAvoidBottomInset: false,
@@ -134,24 +155,18 @@ class _BookingSavePageState extends State<BookingSavePage> {
 
   Widget _buildContent(BookingDraft draft) {
     return SafeArea(
-      child: Padding(
-        padding: AppDimensions.pagePadding,
-        child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            BookingSaveTab1(draft: draft, onCategoryTap: () => _openCategories(draft), amountDisplayKey: _amountDisplayKey),
-            BookingSaveTab2(draft: draft),
-          ],
-        ),
+      child: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          BookingSaveTab1(
+            draft: draft,
+            onCategoryTap: () => _openCategories(draft),
+            amountDisplayKey: _amountDisplayKey,
+          ),
+          BookingSaveTab2(draft: draft),
+        ],
       ),
-    );
-  }
-
-  Widget _buildDeleteButton() {
-    return IconButton(
-      icon: Icon(Icons.delete),
-      onPressed: _onDelete,
     );
   }
 }

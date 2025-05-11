@@ -82,20 +82,17 @@ class _DescriptionInputState extends State<DescriptionInput> {
         _onSelect(suggestion);
       },
       builder: (context, controller, focusNode) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: TextField(
-            controller: controller,
-            focusNode: focusNode,
-            onChanged: _onChanged,
-            style: TextStyle(fontSize: 13),
-            maxLength: FeatureConstants.descriptionMaxLength,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.edit, size: 22),
-              labelText: "booking.note".tr(),
-              labelStyle: TextStyle(fontSize: 14),
-              counterText: "",
-            ),
+        return TextField(
+          controller: controller,
+          focusNode: focusNode,
+          onChanged: _onChanged,
+          style: TextStyle(fontSize: 13),
+          maxLength: FeatureConstants.descriptionMaxLength,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.edit, size: 22),
+            labelText: "booking.note".tr(),
+            labelStyle: TextStyle(fontSize: 14),
+            counterText: "",
           ),
         );
       },

@@ -66,7 +66,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: AppDimensions.pageCardPadding,
         child: TabBarView(
           controller: _tabController,
           children: [
@@ -84,11 +84,8 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
         builder: (context, state) {
           return state.maybeWhen(
             loaded: (cats) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _buildContent(type, cats),
-                ),
+              return CustomCard(
+                child: _buildContent(type, cats),
               );
             },
             error: (message) => ErrorText(message: message, onReload: _reloadCategories),
@@ -132,6 +129,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     if (category.subcategories.isEmpty) {
       return null;
     }
-    return Text(category.subcategories.map((x) => x.name).join(", "));
+    // TODO translate
+    return Text("${category.subcategories.length} sub-categories");
   }
 }

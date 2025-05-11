@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/transaction_view_data.dart';
@@ -12,7 +13,7 @@ class TransactionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: AppDimensions.pageCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

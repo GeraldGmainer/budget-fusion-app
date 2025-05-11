@@ -119,5 +119,9 @@ ThemeData createTheme(BuildContext context) {
       indicatorSize: TabBarIndicatorSize.label,
       labelPadding: const EdgeInsets.symmetric(horizontal: 12),
     ),
+    popupMenuTheme: PopupMenuThemeData(
+      // menuPadding: EdgeInsets.zero,
+      textStyle: TextStyle(color: AppColors.primaryTextColor),
+    ),
   );
 }

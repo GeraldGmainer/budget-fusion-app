@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -8,15 +9,15 @@ import '../../application/cubits/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 
 class CategorySaveContainer extends StatefulWidget {
+  final String title;
   final CategoryDraft draft;
-  final AppBar appBar;
   final Widget Function(BuildContext context, CategoryDraft draft) builder;
 
   const CategorySaveContainer({
     super.key,
     required this.draft,
     required this.builder,
-    required this.appBar,
+    required this.title,
   });
 
   @override
@@ -42,17 +43,43 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
   }
 
   _onSavedSuccess(CategoryDraft draft) {
-    showSnackBar(context, draft.isCreating ? "category.create_success" : "category.edit_success");
+    context.showSnackBar(draft.isCreating ? "category.create_success" : "category.edit_success");
     Navigator.of(context).pop(true);
   }
 
+  _onDelete(BuildContext context) {
+    if (widget.draft.subcategories.isNotEmpty) {
+      showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("Cannot delete Category"),
+          content: Text("This category contains sub-categories and cannot be deleted yet. This feature is coming soon!"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    // TODO display different message when it has sub categories. that it will also clear sub categories
+    ConfirmDialog.show(
+      context,
+      headerText: "booking.dialog.delete_title",
+      bodyText: "booking.dialog.delete_body",
+      onOK: () => BlocProvider.of<CategorySaveCubit>(context).delete(),
+    );
+  }
+
   _onDeleteSuccess() {
-    showSnackBar(context, "booking.delete_success");
+    context.showSnackBar("booking.delete_success");
     Navigator.of(context).pop(true);
   }
 
   _onError(String error) {
-    showSnackBar(context, error);
+    context.showSnackBar(error);
   }
 
   @override
@@ -72,10 +99,16 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
             key: _formKey,
             autovalidateMode: _submitted ? AutovalidateMode.always : AutovalidateMode.onUserInteraction,
             child: Scaffold(
-              appBar: widget.appBar,
+              appBar: AppBar(
+                title: Text(widget.title).tr(),
+                actions: [
+                  SaveAction(onSave: _onSave),
+                  if (!widget.draft.isCreating) FormActionMenu(onDelete: () => _onDelete(context)),
+                ],
+              ),
               body: state.maybeWhen(
-                draftUpdate: (draft, _) => _buildBody(draft),
-                error: (draft, __) => _buildBody(draft),
+                draftUpdate: (draft, _) => _buildContent(draft),
+                error: (draft, __) => _buildContent(draft),
                 orElse: () => Center(child: CircularProgressIndicator()),
               ),
             ),
@@ -85,17 +118,10 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     );
   }
 
-  Widget _buildBody(CategoryDraft draft) {
+  Widget _buildContent(CategoryDraft draft) {
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(child: widget.builder(context, draft)),
-          const SizedBox(height: 16),
-          ElevatedButton(onPressed: _onSave, child: Text('Save'.tr())),
-        ],
-      ),
+      padding: AppDimensions.pageCardPadding,
+      child: widget.builder(context, draft),
     );
   }
 }

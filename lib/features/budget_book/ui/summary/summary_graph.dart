@@ -8,35 +8,52 @@ import '../../domain/entities/summary_view_data.dart';
 import 'income_outcome_balance_text.dart';
 
 class SummaryGraph extends StatelessWidget {
+  static const List<PieData> emptyPie = [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)];
+
   final SummaryViewData data;
 
   const SummaryGraph({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    final pieData = data.pieData.isEmpty ? [PieData(xData: " ", yData: 100, text: " ", iconName: "", iconColor: "#7F7F7F", hideIcon: true)] : data.pieData;
+    final pieData = data.pieData.isEmpty ? emptyPie : data.pieData;
 
-    return Center(
-      child: SizedBox(
-        height: 220,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            PieChart(
-                swapAnimationDuration: Duration(milliseconds: 300),
-                swapAnimationCurve: Curves.linear,
-                PieChartData(
-                  sections: _buildSections(pieData),
-                  centerSpaceRadius: 70,
-                  sectionsSpace: 3,
-                  startDegreeOffset: 270,
-                )),
-            IncomeOutcomeBalanceText(
-              income: data.income,
-              outcome: data.outcome,
-              currency: data.currency,
-            ),
-          ],
+    return CustomCardWithAction(
+      floatingOption: true,
+      onOptionTap: () {
+        context.showComingSoon();
+      },
+      child: Center(
+        child: SizedBox(
+          height: 220,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              PieChart(
+                  swapAnimationDuration: Duration(milliseconds: 300),
+                  swapAnimationCurve: Curves.linear,
+                  PieChartData(
+                    sections: _buildSections(pieData),
+                    centerSpaceRadius: 70,
+                    sectionsSpace: 3,
+                    startDegreeOffset: 270,
+                    pieTouchData: PieTouchData(
+                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                        if (event is FlTapUpEvent && pieTouchResponse != null && pieTouchResponse.touchedSection != null) {
+                          final tappedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                          print("tappedIndex $tappedIndex");
+                          context.showComingSoon();
+                        }
+                      },
+                    ),
+                  )),
+              IncomeOutcomeBalanceText(
+                income: data.income,
+                outcome: data.outcome,
+                currency: data.currency,
+              ),
+            ],
+          ),
         ),
       ),
     );

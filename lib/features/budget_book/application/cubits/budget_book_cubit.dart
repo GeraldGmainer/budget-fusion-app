@@ -76,7 +76,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       case BudgetViewMode.transaction:
         return await _generateBudgetTransactionUseCase(filtered);
       case BudgetViewMode.calendar:
-        return [];
+        return await _generateBudgetTransactionUseCase(filtered);
     }
   }
 

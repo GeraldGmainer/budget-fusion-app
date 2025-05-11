@@ -96,12 +96,12 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
 
   _showMessage(String message) {
     final scaffoldContext = prov.Provider.of<ScaffoldProvider>(context, listen: false).scaffoldContext;
-    showSnackBar(scaffoldContext, message);
+    scaffoldContext?.showSnackBar(message);
   }
 
   _showErrorMessage(String message) {
     final scaffoldContext = prov.Provider.of<ScaffoldProvider>(context, listen: false).scaffoldContext;
-    showErrorSnackBar(scaffoldContext, message);
+    scaffoldContext?.showErrorSnackBar(message);
   }
 
   @override

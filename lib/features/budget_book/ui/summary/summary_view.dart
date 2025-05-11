@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/summary_view_data.dart';
@@ -13,7 +14,7 @@ class SummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: AppDimensions.pageCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -25,7 +26,6 @@ class SummaryView extends StatelessWidget {
               RepaintBoundary(
                 child: CategorySummaryList(summaries: data.summaries),
               ),
-            const SizedBox(height: 8.0),
           ],
         ),
       ),

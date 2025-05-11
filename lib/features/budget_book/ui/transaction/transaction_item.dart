@@ -17,9 +17,13 @@ class TransactionItem extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
+      minVerticalPadding: 0,
       onTap: () => _onTap(context),
-      visualDensity: const VisualDensity(vertical: 0),
-      leading: SizedBox(width: 40, child: BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor)),
+      visualDensity: const VisualDensity(vertical: -4),
+      leading: SizedBox(
+        width: 40,
+        child: BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor),
+      ),
       title: Text(booking.category?.name ?? "", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       subtitle: _buildSubtitle(context),
       trailing: CurrencyText(value: booking.amount, currency: currency, color: booking.category!.categoryType.color, fontSize: 15),

@@ -197,6 +197,7 @@ class ParentCategoryList extends StatelessWidget {
                   );
                 }
                 return ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                   leading: CircleAvatar(
                     backgroundColor: AppColors.accentColor,
                     child: const Icon(Icons.add, color: Colors.white),
@@ -285,6 +286,7 @@ class SubcategoryListScreen extends StatelessWidget {
             );
           }
           return ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
             leading: CircleAvatar(backgroundColor: AppColors.accentColor, child: const Icon(Icons.add, color: Colors.white)),
             title: const Text("New Subcategory"),
             onTap: () => createCategory(context, parent),
@@ -317,6 +319,7 @@ class CategoryTile extends StatelessWidget {
     final bool hasSubcategories = category.subcategories.isNotEmpty;
     final bool isSubSelected = selectedCategory?.parent?.id == category.id;
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
       tileColor: isSelected ? AppColors.accentColor : null,
       shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,
       leading: TweenAnimationBuilder<double>(

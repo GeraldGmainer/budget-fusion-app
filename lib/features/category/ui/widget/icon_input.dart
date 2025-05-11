@@ -10,23 +10,6 @@ class IconInput extends StatelessWidget {
   const IconInput({super.key, required this.draft});
 
   _onIconTap(BuildContext context) async {
-    // final result = await showModalBottomSheet<Map<String, String>>(
-    //   context: context,
-    //   isScrollControlled: true,
-    //   builder: (_) => FractionallySizedBox(
-    //     heightFactor: 1.0,
-    //     child: Padding(
-    //       padding: EdgeInsets.only(
-    //         top: MediaQuery.of(context).padding.top,
-    //         bottom: MediaQuery.of(context).viewInsets.bottom,
-    //       ),
-    //       child: IconColorPickerDialog(
-    //         initialIconName: draft.iconName,
-    //         initialIconColor: draft.iconColor,
-    //       ),
-    //     ),
-    //   ),
-    // );
     final result = await Navigator.of(context).pushNamed(
       AppRoutes.categoryIconColorPicker,
       arguments: draft,

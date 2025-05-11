@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -27,17 +28,16 @@ class BudgetOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardWithAction(
+    return CustomCardWithAction(
+      title: "Monthly Balance",
+      titleStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
       backgroundColor: AppColors.primaryColor,
       onOptionTap: () {
-        // You might navigate or open options here
-        print('More options tapped');
+        context.showComingSoon();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title
-          const Text('MONTHLY BALANCE', style: TextStyle(fontSize: 12, color: Colors.grey)),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -94,44 +94,48 @@ class BudgetOverview extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const Text('TOP EXPENSES THIS MONTH', style: TextStyle(fontSize: 12, color: Colors.grey)),
+          const Text('Top Expenses This Month', style: TextStyle(fontSize: 14)),
           const SizedBox(height: 8),
-          Column(
-            children: topCategories.map((category) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.deepPurple,
-                      radius: 12,
-                      child: Icon(
-                        _getCategoryIcon(category.category),
-                        color: Colors.white,
-                        size: 16,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              children: topCategories.map((category) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.deepPurple,
+                        radius: 12,
+                        child: Icon(
+                          _getCategoryIcon(category.category),
+                          color: Colors.white,
+                          size: 16,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        category.category,
-                        style: const TextStyle(fontSize: 14, color: Colors.white),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          category.category,
+                          style: const TextStyle(fontSize: 14, color: Colors.white),
+                        ),
                       ),
-                    ),
-                    Text(
-                      '\$${category.amount.toStringAsFixed(2)}',
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
+                      Text(
+                        '\$${category.amount.toStringAsFixed(2)}',
+                        style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
           ),
           const SizedBox(height: 16),
-          const Text('6 MONTH BALANCES', style: TextStyle(fontSize: 12, color: Colors.grey)),
+          const Text('6 Month Balances', style: TextStyle(fontSize: 14)),
           const SizedBox(height: 16),
-          SizedBox(
+          Container(
             height: 50,
+            padding: EdgeInsets.all(8.0),
             child: LineChart(
               LineChartData(
                 gridData: FlGridData(show: false),

@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onError(String message) {
-    showErrorSnackBar(context, message);
+    context.showErrorSnackBar(message);
     context.read<LoginCubit>().logout();
   }
 
