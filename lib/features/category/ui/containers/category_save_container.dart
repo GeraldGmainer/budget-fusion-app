@@ -48,6 +48,22 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
   }
 
   _onDelete(BuildContext context) {
+    if (widget.draft.subcategories.isNotEmpty) {
+      showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("Cannot delete Category"),
+          content: Text("This category contains sub-categories and cannot be deleted yet. This feature is coming soon!"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
     // TODO display different message when it has sub categories. that it will also clear sub categories
     ConfirmDialog.show(
       context,

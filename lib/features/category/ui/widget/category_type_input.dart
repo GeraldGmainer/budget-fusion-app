@@ -18,6 +18,7 @@ class CategoryTypeInput extends StatelessWidget {
     return shared.CategoryTypeInput(
       onChange: (value) => _onCategoryTypeChange(context, value),
       value: draft.categoryType,
+      disabled: draft.subcategories.isNotEmpty,
     );
   }
 }

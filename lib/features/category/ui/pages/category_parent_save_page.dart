@@ -35,9 +35,10 @@ class CategoryParentSavePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CategorySaveContainer(
-        draft: draft,
-        builder: (BuildContext context, CategoryDraft draft) => _buildContent(context, draft),
-        title: draft.isCreating ? "category.new_title_parent" : "category.edit_title_parent".tr());
+      draft: draft,
+      builder: (BuildContext context, CategoryDraft draft) => _buildContent(context, draft),
+      title: draft.isCreating ? "category.new_title_parent" : "category.edit_title_parent".tr(),
+    );
   }
 
   Widget _buildContent(BuildContext context, CategoryDraft draft) {
