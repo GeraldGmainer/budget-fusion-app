@@ -23,7 +23,7 @@ class TransactionItem extends StatelessWidget {
       leading: _buildIcon(),
       title: _buildTitle(),
       subtitle: _buildSubtitle(context),
-      trailing: CurrencyText(value: booking.amount, currency: currency, color: booking.category!.categoryType.color, fontSize: 15),
+      trailing: CurrencyText(value: booking.amount, currency: currency, color: (booking.category?.categoryType ?? CategoryType.outcome).color, fontSize: 15),
     );
   }
 
@@ -34,7 +34,7 @@ class TransactionItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BudgetIcon(name: booking.category!.iconName, color: booking.category!.iconColor),
+          BudgetIcon(name: booking.category?.iconName, color: booking.category?.iconColor),
           if (!booking.isSynced)
             Container(
               width: 6,
@@ -51,7 +51,7 @@ class TransactionItem extends StatelessWidget {
 
   Widget _buildTitle() {
     return Text(
-      booking.category?.name ?? "",
+      booking.category?.name ?? "unknown category",
       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     );
   }
