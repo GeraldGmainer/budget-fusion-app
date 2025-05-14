@@ -39,7 +39,7 @@ class Uuid {
   }
 
   @override
-  String toString() => "Uuid($value)";
+  String toString() => "$value";
 
   factory Uuid.fromJson(String json) => Uuid(json);
 

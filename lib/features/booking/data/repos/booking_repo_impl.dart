@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -7,11 +8,13 @@ import '../data_sources/booking_local_data_source.dart';
 import '../data_sources/booking_remote_data_source.dart';
 import '../dtos/booking_dto.dart';
 
-@LazySingleton(as: BookingRepo)
+@Singleton(as: BookingRepo)
 class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implements BookingRepo {
   final AccountRepo _accountRepo;
   final CategoryRepo _categoryRepo;
   late final Stream<List<Booking>> _sharedBookingsStream;
+  final Set<Uuid> _missingAccountIds = {};
+  final Set<Uuid> _missingCategoryIds = {};
 
   BookingRepoImpl(
     DataManagerFactory dmf,
@@ -31,9 +34,17 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
       manager.pendingItemsStream,
       (bookingDtos, accounts, categories, pendingItems) {
         return bookingDtos.map((dto) {
-          final account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
-          final category = categories.firstWhereOrNull((cat) => cat.id == dto.categoryId);
-          final isSynced = !pendingItems.any((q) => q.entityId == dto.id.value);
+          final Account? account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
+          final Category? category = categories.firstWhereOrNull((cat) => cat.id == dto.categoryId);
+          final bool isSynced = !pendingItems.any((q) => q.entityId == dto.id.value);
+
+          if (account == null && _missingAccountIds.add(dto.accountId)) {
+            BudgetLogger.instance.e('Null Account', 'No Account found for id ${dto.accountId} in booking ${dto.id}');
+          }
+          if (category == null && _missingCategoryIds.add(dto.categoryId)) {
+            BudgetLogger.instance.e('Null Category', 'No Category found for id ${dto.categoryId} in booking ${dto.id}');
+          }
+
           return _toDomain(dto, account, category, isSynced);
         }).toList();
       },

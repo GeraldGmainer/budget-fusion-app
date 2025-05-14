@@ -141,7 +141,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
     if (subs.isEmpty) {
       return null;
     }
-    final label = "${_isExpanded ? 'Hide' : 'Show'} ${subs.length} sub-categories";
+    final label = "${subs.length} sub-categories";
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _toggleExpanded,

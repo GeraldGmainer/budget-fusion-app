@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
 import 'package:injectable/injectable.dart';
 
@@ -43,10 +42,10 @@ class SummaryDataGenerator {
 
   List<CategoryGroup> _generateCategoryGroups(List<Booking> bookings, List<Category> flatCategories) {
     final Map<Uuid, List<Booking>> bookingsByCat = {};
+
     for (final b in bookings) {
       final cat = b.category;
       if (cat == null) {
-        BudgetLogger.instance.e('Null Category', 'Booking has no category: $b');
         continue;
       }
       bookingsByCat.putIfAbsent(cat.id, () => []).add(b);
