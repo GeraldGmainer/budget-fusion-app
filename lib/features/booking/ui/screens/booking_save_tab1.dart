@@ -1,17 +1,10 @@
-import 'package:budget_fusion_app/core/core.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 
-import '../../domain/entities/booking_draft.dart';
-import '../calculator/calculator.dart';
-import '../widgets/amount_display.dart';
-import '../widgets/date_input.dart';
-import '../widgets/description_input.dart';
 
 // TODO cards 6.0 padding / sonst 16.0 padding
 // TODO delete button in 3 dot
 // TODO fix tab2
 // TODO save button in appbar
+/*
 class BookingSaveTab1 extends StatelessWidget {
   final BookingDraft draft;
   final VoidCallback onCategoryTap;
@@ -86,3 +79,4 @@ class BookingSaveTab1 extends StatelessWidget {
     );
   }
 }
+*/
