@@ -27,9 +27,18 @@ class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> imple
 
   @override
   Future<Category> toEntity(CategoryDto dto) async {
-    final dtos = await manager.loadAll();
-    final all = _mapDtosToDomain(dtos);
-    return all.firstWhere((c) => c.id == dto.id);
+    final dtos = await _fetchCachedDtos();
+    return _mapDtosToDomain(dtos).firstWhere((c) => c.id == dto.id);
+  }
+
+  Future<List<CategoryDto>> _fetchCachedDtos() async {
+    final key = manager.domainType;
+    final cached = manager.cacheManager.get<List<CategoryDto>>(key);
+    if (cached != null) return cached;
+
+    final dtos = await manager.localSource.fetchAll();
+    manager.cacheManager.set(key, dtos);
+    return dtos;
   }
 
   List<Category> _mapDtosToDomain(List<CategoryDto> dtos) {
