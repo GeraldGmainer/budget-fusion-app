@@ -6,6 +6,7 @@ import '../data_sources/category_remote_data_source.dart';
 import '../dtos/category_dto.dart';
 
 @LazySingleton(as: CategoryRepo)
+@Singleton(as: CategoryRepo)
 class CategoryRepoImpl extends OfflineFirstListRepo<Category, CategoryDto> implements CategoryRepo {
   CategoryRepoImpl(
     DataManagerFactory dmf,

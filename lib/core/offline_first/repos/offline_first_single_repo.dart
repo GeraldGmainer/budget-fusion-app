@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 
+// ! dont make implementations LazySingleton !
 abstract class OfflineFirstSingleRepo<T, U extends OfflineFirstDto> {
   final OfflineFirstDataManager<U> manager;
   final OfflineFirstLocalDataSource<U> localDataSource;

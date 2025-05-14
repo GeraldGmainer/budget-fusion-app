@@ -8,7 +8,7 @@ import '../data_sources/booking_local_data_source.dart';
 import '../data_sources/booking_remote_data_source.dart';
 import '../dtos/booking_dto.dart';
 
-@LazySingleton(as: BookingRepo)
+@Singleton(as: BookingRepo)
 class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implements BookingRepo {
   final AccountRepo _accountRepo;
   final CategoryRepo _categoryRepo;

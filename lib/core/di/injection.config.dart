@@ -246,7 +246,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i342.CategoryLocalDataSource>(),
           gh<_i870.CategoryRemoteDataSource>(),
         ));
-    gh.lazySingleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
+    gh.singleton<_i714.ProfileRepo>(() => _i604.ProfileRepoImpl(
           gh<_i714.DataManagerFactory>(),
           gh<_i261.ProfileLocalDataSource>(),
           gh<_i594.ProfileRemoteDataSource>(),
@@ -270,12 +270,11 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i332.WatchProfileUseCase>(),
           gh<_i332.LoadProfileUseCase>(),
         ));
-    gh.lazySingleton<_i714.ProfileSettingRepo>(
-        () => _i52.ProfileSettingRepoImpl(
-              gh<_i714.DataManagerFactory>(),
-              gh<_i652.ProfileSettingLocalDataSource>(),
-              gh<_i146.ProfileSettingRemoteDataSource>(),
-            ));
+    gh.singleton<_i714.ProfileSettingRepo>(() => _i52.ProfileSettingRepoImpl(
+          gh<_i714.DataManagerFactory>(),
+          gh<_i652.ProfileSettingLocalDataSource>(),
+          gh<_i146.ProfileSettingRemoteDataSource>(),
+        ));
     gh.lazySingleton<_i600.SaveCategoryUseCase>(
         () => _i600.SaveCategoryUseCase(gh<_i714.CategoryRepo>()));
     gh.lazySingleton<_i803.LoadCategoryUseCase>(
@@ -302,7 +301,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1071.DeleteCategoryUseCase>(),
           gh<_i803.LoadCategoryUseCase>(),
         ));
-    gh.lazySingleton<_i714.BookingRepo>(() => _i830.BookingRepoImpl(
+    gh.singleton<_i714.BookingRepo>(() => _i830.BookingRepoImpl(
           gh<_i714.DataManagerFactory>(),
           gh<_i423.BookingLocalDataSource>(),
           gh<_i121.BookingRemoteDataSource>(),

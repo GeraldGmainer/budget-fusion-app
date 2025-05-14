@@ -6,6 +6,7 @@ import '../data_sources/account_remote_data_source.dart';
 import '../dtos/account_dto.dart';
 
 @LazySingleton(as: AccountRepo)
+@Singleton(as: AccountRepo)
 class AccountRepoImpl extends OfflineFirstListRepo<Account, AccountDto> implements AccountRepo {
   AccountRepoImpl(
     DataManagerFactory dmf,

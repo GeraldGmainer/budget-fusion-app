@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data_sources/profile_setting_local_data_source.dart';
@@ -7,7 +6,7 @@ import '../data_sources/profile_setting_remote_data_source.dart';
 import '../dtos/currency_dto.dart';
 import '../dtos/profile_setting_dto.dart';
 
-@LazySingleton(as: ProfileSettingRepo)
+@Singleton(as: ProfileSettingRepo)
 class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, ProfileSettingDto> implements ProfileSettingRepo {
   ProfileSettingRepoImpl(
     DataManagerFactory dmf,
@@ -17,7 +16,7 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
 
   @override
   Future<void> loadByUserId(Uuid userId) async {
-    manager.loadAll(filters: {'user_id': userId.value});
+    await manager.loadAll(filters: {'user_id': userId.value});
   }
 
   @override

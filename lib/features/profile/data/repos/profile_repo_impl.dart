@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data_sources/profile_local_data_source.dart';
@@ -8,7 +7,7 @@ import '../dtos/profile_dto.dart';
 
 // TODO rename it to my profile repo or active profile repo? because later, need to load multiple profiles
 // TODO or use List<Profile> and MyProfileDomainService stores current profile id
-@LazySingleton(as: ProfileRepo)
+@Singleton(as: ProfileRepo)
 class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implements ProfileRepo {
   ProfileRepoImpl(
     DataManagerFactory dmf,
@@ -18,7 +17,7 @@ class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implem
 
   @override
   Future<void> loadByUserId(Uuid userId) async {
-    manager.loadAll(filters: {'user_id': userId.value});
+    await manager.loadAll(filters: {'user_id': userId.value});
   }
 
   @override
