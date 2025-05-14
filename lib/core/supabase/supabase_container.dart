@@ -71,7 +71,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
 
   _onTokenRefreshed(Session session) {
     BudgetLogger.instance.d("onTokenRefreshed: ${session.user.id}");
-    context.loadUserProfileData(userId: session.user.id);
+    // context.loadUserProfileData(userId: session.user.id);
   }
 
   _onPasswordRecovery(Session session) {
