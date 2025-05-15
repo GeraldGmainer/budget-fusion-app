@@ -18,7 +18,7 @@ class CalculatorKeyboard extends StatelessWidget {
       crossAxisSpacing: 12,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
       children: [
         CalculatorButton(calculatorKey: CalculatorKey.digit7, onPressed: onPressed),
         CalculatorButton(calculatorKey: CalculatorKey.digit8, onPressed: onPressed),
@@ -53,7 +53,12 @@ class CalculatorKeyboard extends StatelessWidget {
           backgroundColor: operatorColor,
           icon: const Icon(CommunityMaterialIcons.minus, size: 24),
         ),
-        const SizedBox.shrink(),
+        CalculatorButton(
+          calculatorKey: CalculatorKey.equal,
+          onPressed: onPressed,
+          backgroundColor: operatorColor,
+          icon: const Icon(CommunityMaterialIcons.equal, size: 24),
+        ),
         CalculatorButton(calculatorKey: CalculatorKey.digit0, onPressed: onPressed),
         CalculatorButton(
           calculatorKey: CalculatorKey.dot,
@@ -72,10 +77,10 @@ class CalculatorKeyboard extends StatelessWidget {
           icon: const Icon(CommunityMaterialIcons.plus, size: 24),
         ),
         CalculatorButton(
-          calculatorKey: CalculatorKey.equal,
+          calculatorKey: CalculatorKey.done,
           onPressed: onPressed,
           backgroundColor: const Color(0xFF4875C9),
-          icon: const Icon(CommunityMaterialIcons.equal, size: 24),
+          icon: const Icon(CommunityMaterialIcons.check, size: 24),
         ),
       ],
     );

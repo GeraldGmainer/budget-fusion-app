@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
-import '../../domain/entities/booking_draft.dart';
 import 'calculator_key.dart';
 import 'calculator_keyboard.dart';
 
 export 'calculator_key.dart';
 
 class Calculator extends StatefulWidget {
-  final BookingDraft model;
+  final BookingSaveCubit bookingSaveCubit;
+  final CalculatorCubit calculatorCubit;
 
-  const Calculator({required this.model});
+  const Calculator({required this.bookingSaveCubit, required this.calculatorCubit});
 
   @override
   State<Calculator> createState() => _CalculatorState();
@@ -23,24 +23,29 @@ class _CalculatorState extends State<Calculator> {
   _onPressed(CalculatorKey key) {
     switch (key) {
       case CalculatorKey.clear:
-        BlocProvider.of<CalculatorCubit>(context).clear();
+        widget.calculatorCubit.clear();
         break;
 
       case CalculatorKey.back:
-        BlocProvider.of<CalculatorCubit>(context).back();
+        widget.calculatorCubit.back();
         break;
 
       case CalculatorKey.equal:
-        BlocProvider.of<CalculatorCubit>(context).equal();
+        widget.calculatorCubit.equal();
+        break;
+
+      case CalculatorKey.done:
+        widget.calculatorCubit.equal();
+        Navigator.of(context).pop();
         break;
 
       default:
-        BlocProvider.of<CalculatorCubit>(context).key(key);
+        widget.calculatorCubit.key(key);
     }
   }
 
   _onValueChange(double value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
+    widget.bookingSaveCubit.updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
   }
 
   @override

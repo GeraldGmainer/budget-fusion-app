@@ -17,6 +17,7 @@ enum CalculatorKey {
   back,
   clear,
   equal,
+  done,
 }
 
 extension CalculatorKeyExtension on CalculatorKey {

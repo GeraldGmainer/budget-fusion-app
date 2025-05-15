@@ -11,6 +11,7 @@ import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
+import '../calculator/calculator.dart';
 import '../widgets/amount_display.dart';
 
 class BookingSavePage extends StatefulWidget {
@@ -23,6 +24,7 @@ class BookingSavePage extends StatefulWidget {
 }
 
 class _BookingSavePageState extends State<BookingSavePage> {
+  bool _isCalculatorOpen = false;
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
 
   @override
@@ -31,6 +33,51 @@ class _BookingSavePageState extends State<BookingSavePage> {
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble());
     BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
+
+    if (widget.model == null) {
+      Future.delayed(Duration(milliseconds: 300), _openCalculator);
+    }
+  }
+
+  void _openCalculator() {
+    setState(() {
+      _isCalculatorOpen = true;
+    });
+    final bookingCubit = context.read<BookingSaveCubit>();
+    final calculatorCubit = context.read<CalculatorCubit>();
+
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: false,
+      barrierColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Material(
+        // TODO save to AppColors
+        color: Color(0xFF282828),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 32.0),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2)),
+            ),
+            SizedBox(height: 32.0),
+            Calculator(bookingSaveCubit: bookingCubit, calculatorCubit: calculatorCubit),
+          ],
+        ),
+      ),
+    ).whenComplete(() {
+      setState(() {
+        _isCalculatorOpen = false;
+      });
+    });
   }
 
   _showAmountError() {
@@ -98,7 +145,6 @@ class _BookingSavePageState extends State<BookingSavePage> {
           appBar: AppBar(
             title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
             actions: [
-              // SaveAction(onSave: () => _onSave(state.draft)),
               if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
             ],
           ),
@@ -133,7 +179,10 @@ class _BookingSavePageState extends State<BookingSavePage> {
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: AmountDisplay(key: _amountDisplayKey),
+            child: InkWell(
+              onTap: _openCalculator,
+              child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
+            ),
           ),
           SizedBox(height: AppDimensions.verticalPadding),
           Card(
@@ -148,12 +197,11 @@ class _BookingSavePageState extends State<BookingSavePage> {
                     children: [
                       InkWell(
                         onTap: () {},
-                        child: const Icon(Icons.expand_less),
+                        child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_less)),
                       ),
-                      SizedBox(height: 6),
                       InkWell(
                         onTap: () {},
-                        child: const Icon(Icons.expand_more),
+                        child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_more)),
                       ),
                     ],
                   ),
@@ -176,7 +224,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 ),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 // SizedBox(height: AppDimensions.verticalPadding),
-                DescriptionField(initialValue: null, onChanged: (value) {}),
+                _buildListTile<String>(
+                  icon: CommunityMaterialIcons.book_edit,
+                  label: "Description",
+                  value: draft.description,
+                  display: (value) => value,
+                ),
               ],
             ),
           ),
@@ -204,71 +257,6 @@ class _BookingSavePageState extends State<BookingSavePage> {
           : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       // onTap: onTap,
-    );
-  }
-}
-
-class DescriptionField extends StatefulWidget {
-  final String? initialValue;
-  final ValueChanged<String> onChanged;
-
-  const DescriptionField({
-    Key? key,
-    this.initialValue,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  _DescriptionFieldState createState() => _DescriptionFieldState();
-}
-
-class _DescriptionFieldState extends State<DescriptionField> {
-  static const _maxChars = 20;
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.initialValue ?? '');
-    _controller.addListener(() => setState(() {}));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final count = _controller.text.length;
-    return Container(
-      height: 56,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      // decoration: BoxDecoration(
-      //   border: Border(
-      //     bottom: BorderSide(color: Theme.of(context).dividerColor),
-      //   ),
-      // ),
-      child: Row(
-        children: [
-          Icon(CommunityMaterialIcons.pencil_outline, color: Colors.grey[400]),
-          SizedBox(width: 16),
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              maxLength: _maxChars,
-              decoration: InputDecoration(
-                counterText: '',
-                hintText: "Description",
-                border: InputBorder.none,
-              ),
-              style: TextStyle(color: Colors.white),
-              onChanged: widget.onChanged,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
