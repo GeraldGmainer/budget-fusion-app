@@ -197,7 +197,7 @@ class ParentCategoryList extends StatelessWidget {
                   );
                 }
                 return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  // contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
                   leading: CircleAvatar(
                     backgroundColor: AppColors.accentColor,
                     child: const Icon(Icons.add, color: Colors.white),
@@ -319,9 +319,8 @@ class CategoryTile extends StatelessWidget {
     final bool hasSubcategories = category.subcategories.isNotEmpty;
     final bool isSubSelected = selectedCategory?.parent?.id == category.id;
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+      contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
       tileColor: isSelected ? AppColors.accentColor : null,
-      shape: isSelected ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)) : null,
       leading: TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 0.0, end: 1.0),
         duration: const Duration(milliseconds: 300),

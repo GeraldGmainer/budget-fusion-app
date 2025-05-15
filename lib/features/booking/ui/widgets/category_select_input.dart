@@ -1,8 +1,11 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class CategorySelectInput extends StatelessWidget {
@@ -10,49 +13,96 @@ class CategorySelectInput extends StatelessWidget {
 
   const CategorySelectInput({required this.draft});
 
-  _onTap(BuildContext context) async {
-    final accounts = context.read<AccountCubit>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
+  _onCategoryTap(BuildContext context, Category category) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
+    Navigator.of(context).pop();
+  }
 
-    // final Account? selectedAccount = await showSelectionBottomSheet<Account>(
-    //   context: context,
-    //   title: "booking.select_account",
-    //   items: accounts,
-    //   selectedItem: draft.account,
-    //   itemLabelBuilder: (account) {
-    //     return Row(
-    //       children: [
-    //         SizedBox(
-    //           width: 45,
-    //           child: Icon(IconConverter.getIcon(account.iconName), color: ColorConverter.stringToColor(account.iconColor)),
-    //         ),
-    //         Text(account.name),
-    //       ],
-    //     );
-    //   },
-    // );
+  _reload(BuildContext context) {
+    BlocProvider.of<CategoryCubit>(context).load();
+  }
 
-    // if (selectedAccount != null && context.mounted) {
-    //   context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: selectedAccount));
-    // }
+  void _openCategoryPicker(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetCtx) {
+        final theme = Theme.of(context);
+        return Material(
+          color: theme.colorScheme.surface,
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    // back/close button
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(sheetCtx).pop(),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        "Select Category", // TODO translation
+                        style: theme.textTheme.titleLarge,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+                    builder: (ctx, state) {
+                      return state.maybeWhen(
+                        error: (message) => ErrorText(
+                          message: message,
+                          onReload: () {
+                            _reload(context);
+                          },
+                        ),
+                        loaded: (categories) => CategoryList(
+                          categories: categories,
+                          categoryType: draft.categoryType,
+                          onCategoryTap: (category) => _onCategoryTap(context, category),
+                          selectedCategory: draft.category,
+                        ),
+                        orElse: () => const Center(child: CircularProgressIndicator()),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _onTap(context);
-      },
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: "Category",
-          labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-          suffixIcon: Icon(Icons.arrow_drop_down),
-        ),
-        child: Text(
-          draft.account?.name ?? "Select Category",
-          style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
-        ),
+    // TODO translation
+    final hasValue = draft.category != null;
+    return ListTile(
+      leading: hasValue
+          ? Icon(IconConverter.getIcon(draft.category!.iconName), color: ColorConverter.stringToColor(draft.category!.iconColor))
+          : Icon(CommunityMaterialIcons.table_large, color: Theme.of(context).hintColor),
+      title: Text(
+        hasValue ? draft.category!.name : "Category",
+        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
       ),
+      subtitle: hasValue ? Text("Category") : null,
+      trailing: Icon(CommunityMaterialIcons.chevron_right),
+      onTap: () => _openCategoryPicker(context),
+      // onTap: onTap,
     );
   }
 }
