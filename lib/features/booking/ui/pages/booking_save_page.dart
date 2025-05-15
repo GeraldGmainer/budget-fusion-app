@@ -13,6 +13,7 @@ import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../calculator/calculator.dart';
 import '../widgets/amount_display.dart';
+import '../widgets/transaction_type_input.dart';
 
 class BookingSavePage extends StatefulWidget {
   final Booking? model;
@@ -170,15 +171,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppDimensions.floatingPadding),
-            child: CategoryTypeSelector(
-              selected: CategoryType.outcome,
-              onChanged: (CategoryType value) {},
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: TransactionTypeInput(draft: draft),
           ),
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 4),
             child: InkWell(
               onTap: _openCalculator,
               child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
@@ -257,44 +255,6 @@ class _BookingSavePageState extends State<BookingSavePage> {
           : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       // onTap: onTap,
-    );
-  }
-}
-
-class CategoryTypeSelector extends StatelessWidget {
-  final CategoryType selected;
-  final ValueChanged<CategoryType> onChanged;
-
-  const CategoryTypeSelector({
-    super.key,
-    required this.selected,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SegmentedButton<CategoryType>(
-      segments: <ButtonSegment<CategoryType>>[
-        ButtonSegment<CategoryType>(
-          value: CategoryType.income,
-          label: Text(CategoryType.income.label.tr()),
-          icon: Icon(CategoryType.income.icon),
-        ),
-        ButtonSegment<CategoryType>(
-          value: CategoryType.outcome,
-          label: Text(CategoryType.outcome.label.tr()),
-          icon: Icon(CategoryType.outcome.icon),
-        ),
-      ],
-      selected: <CategoryType>{selected},
-      onSelectionChanged: (Set<CategoryType> newSelection) {
-        // setState(() {
-        // By default there is only a single segment that can be
-        // selected at one time, so its value is always the first
-        // item in the selected set.
-        // calendarView = newSelection.first;
-        // });
-      },
     );
   }
 }

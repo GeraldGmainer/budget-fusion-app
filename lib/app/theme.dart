@@ -29,14 +29,6 @@ ThemeData createTheme(BuildContext context) {
       ),
       iconTheme: IconThemeData(color: AppColors.primaryTextColor),
     ),
-    // tabBarTheme: TabBarTheme(
-    //   labelPadding: EdgeInsets.symmetric(vertical: 8),
-    //   labelColor: AppColors.accentColor,
-    //   unselectedLabelColor: AppColors.secondaryTextColor,
-    //   indicator: BoxDecoration(
-    //     border: Border(bottom: BorderSide(color: AppColors.accentColor, width: 4.0)),
-    //   ),
-    // ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.primaryColor,
       selectedItemColor: AppColors.accentColor,
@@ -120,8 +112,36 @@ ThemeData createTheme(BuildContext context) {
       labelPadding: const EdgeInsets.symmetric(horizontal: 12),
     ),
     popupMenuTheme: PopupMenuThemeData(
-      // menuPadding: EdgeInsets.zero,
       textStyle: TextStyle(color: AppColors.primaryTextColor),
+    ),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+        elevation: WidgetStatePropertyAll(4),
+        shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+        side: WidgetStateProperty.resolveWith<BorderSide?>((Set<WidgetState> states) {
+          return BorderSide(color: Colors.transparent);
+        }),
+        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) return null;
+          if (states.contains(WidgetState.selected)) return AppColors.accentColor;
+          return AppColors.cardColor;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) return null;
+          if (states.contains(WidgetState.selected)) return AppColors.primaryTextColor;
+          return AppColors.secondaryTextColor;
+        }),
+        iconColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) return null;
+          if (states.contains(WidgetState.selected)) return AppColors.primaryTextColor;
+          return AppColors.secondaryTextColor;
+        }),
+        padding: WidgetStatePropertyAll(const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0)),
+        textStyle: WidgetStateProperty.resolveWith<TextStyle?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) return GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500);
+          return GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500);
+        }),
+      ),
     ),
   );
 }

@@ -1,6 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/booking/domain/entities/booking_draft.dart';
-import 'package:budget_fusion_app/shared/shared.dart' as shared;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,9 +17,23 @@ class TransactionTypeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return shared.CategoryTypeInput(
-      onChange: (value) => _onCategoryTypeChange(context, value),
-      value: draft.categoryType,
+    return SegmentedButton<CategoryType>(
+      segments: <ButtonSegment<CategoryType>>[
+        ButtonSegment<CategoryType>(
+          value: CategoryType.income,
+          label: Text(CategoryType.income.label.tr()),
+          icon: Icon(CategoryType.income.icon),
+        ),
+        ButtonSegment<CategoryType>(
+          value: CategoryType.outcome,
+          label: Text(CategoryType.outcome.label.tr()),
+          icon: Icon(CategoryType.outcome.icon),
+        ),
+      ],
+      selected: <CategoryType>{draft.categoryType},
+      onSelectionChanged: (Set<CategoryType> newSelection) {
+        _onCategoryTypeChange(context, newSelection.first);
+      },
     );
   }
 }
