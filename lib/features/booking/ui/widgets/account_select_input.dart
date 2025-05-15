@@ -2,6 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,21 +41,20 @@ class AccountSelectInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _onTap(context);
-      },
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: "Account",
-          labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-          suffixIcon: Icon(Icons.arrow_drop_down),
-        ),
-        child: Text(
-          draft.account?.name ?? "Select Account",
-          style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor),
-        ),
+    // TODO translation
+    final hasValue = draft.account != null;
+    return ListTile(
+      leading: hasValue
+          ? Icon(IconConverter.getIcon(draft.account!.iconName), color: ColorConverter.stringToColor(draft.account!.iconColor))
+          : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
+      title: Text(
+        hasValue ? draft.account!.name : "Account",
+        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
       ),
+      subtitle: hasValue ? Text("Account") : null,
+      trailing: Icon(CommunityMaterialIcons.chevron_right),
+      onTap: () => _onTap(context),
+      // onTap: onTap,
     );
   }
 }

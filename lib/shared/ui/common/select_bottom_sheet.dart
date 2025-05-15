@@ -11,6 +11,7 @@ Future<T?> showSelectionBottomSheet<T>({
 }) async {
   return showModalBottomSheet<T>(
     context: context,
+    showDragHandle: true,
     builder: (BuildContext bottomSheetContext) {
       return _SelectionBottomSheet<T>(
         title: title,
@@ -56,7 +57,7 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
                 itemBuilder: (context, index) => _buildTile(context, items[index]),
               ),
             ),
-            _buildButtons(context)
+            SizedBox(height: 16.0)
           ],
         ),
       ),
@@ -68,16 +69,6 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
       trailing: selectedItem == item ? Icon(Icons.check, color: AppColors.accentColor) : null,
       title: itemLabelBuilder != null ? itemLabelBuilder!(item) : Text(item.toString()),
       onTap: () => Navigator.pop(context, item),
-    );
-  }
-
-  Widget _buildButtons(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => Navigator.pop(context, selectedItem),
-        child: const Text('OK', style: TextStyle(color: AppColors.primaryTextColor)),
-      ),
     );
   }
 }

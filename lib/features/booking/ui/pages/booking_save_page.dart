@@ -12,6 +12,7 @@ import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../calculator/calculator.dart';
+import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/date_input.dart';
 import '../widgets/transaction_type_input.dart';
@@ -190,12 +191,13 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 DateInput(draft: draft),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 // SizedBox(height: AppDimensions.verticalPadding),
-                _buildListTile<Account>(
-                  icon: CommunityMaterialIcons.bank,
-                  label: "Account",
-                  value: draft.account,
-                  display: (acct) => acct.name,
-                ),
+                // _buildListTile<Account>(
+                //   icon: CommunityMaterialIcons.bank,
+                //   label: "Account",
+                //   value: draft.account,
+                //   display: (acct) => acct.name,
+                // ),
+                AccountSelectInput(draft: draft),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 // SizedBox(height: AppDimensions.verticalPadding),
                 _buildListTile<Category>(
