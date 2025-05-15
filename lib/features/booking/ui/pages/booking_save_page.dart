@@ -143,12 +143,18 @@ class _BookingSavePageState extends State<BookingSavePage> {
                   leading: Icon(Icons.calendar_today),
                   title: Text("26. Mai 2025"),
                   subtitle: Text("Date"),
-                  trailing: Row(
+                  trailing: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.add_circle_outline),
-                      SizedBox(width: 8.0),
-                      Icon(Icons.remove_circle_outline),
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(Icons.expand_less),
+                      ),
+                      SizedBox(height: 6),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(Icons.expand_more),
+                      ),
                     ],
                   ),
                 ),
