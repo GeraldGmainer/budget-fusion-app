@@ -5,90 +5,103 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
-class DateInput extends StatefulWidget {
+class DateInput extends StatelessWidget {
   final BookingDraft draft;
 
-  const DateInput({required this.draft});
-
-  @override
-  State<DateInput> createState() => _DateInputState();
-}
-
-// TODO not stateful?
-class _DateInputState extends State<DateInput> {
-  // _onDatePicker(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: _selectedDate,
-  //     firstDate: DateTime(1900),
-  //     lastDate: DateTime(2100),
-  //   );
-  //
-  //   if (picked != null && picked != _selectedDate) {
-  //     setState(() {
-  //       _selectedDate = picked;
-  //     });
-  //     if (context.mounted) {
-  //       context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: picked));
-  //     }
-  //   }
-  // }
-
-  _onQuickTap(BuildContext context, int count) {
-    final date = widget.draft.date.add(Duration(days: count));
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: date));
-  }
+  const DateInput({super.key, required this.draft});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Icon(Icons.calendar_today),
-          title: Text(DateTimeConverter.todMMMMYYY(widget.draft.date)),
-          // TODO translation
-          subtitle: Text("Date"),
-          trailing: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onTap: () => _onQuickTap(context, 1),
-                child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_less)),
-              ),
-              InkWell(
-                onTap: () => _onQuickTap(context, -1),
-                child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_more)),
-              ),
-            ],
+    return ListTile(
+      leading: const Icon(Icons.calendar_today),
+      title: Text(DateTimeConverter.todMMMMYYY(draft.date)),
+      subtitle: const Text("Date"),
+      contentPadding: EdgeInsets.only(left: 16.0, right: 12),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () => _onQuickTap(context, -1),
+            padding: EdgeInsets.zero,
           ),
-        ),
-      ],
+          IconButton(
+            icon: const Icon(Icons.chevron_right),
+            onPressed: () => _onQuickTap(context, 1),
+            padding: EdgeInsets.zero,
+          ),
+        ],
+      ),
+      onTap: () => _showDatePicker(context),
     );
   }
 
-// _buildDatePicker() {
-//   return TextButton(
-//     onPressed: () {
-//       _onDatePicker(context);
-//     },
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         const Icon(Icons.edit_calendar, color: AppColors.primaryTextColor),
-//         const SizedBox(width: 8),
-//         AnimatedSwitcher(
-//           duration: const Duration(milliseconds: 300),
-//           transitionBuilder: (child, animation) {
-//             return FadeTransition(opacity: animation, child: child);
-//           },
-//           child: Text(
-//             key: ValueKey(_selectedDate),
-//             DateTimeConverter.toEEEEdMMMM(_selectedDate),
-//             style: const TextStyle(color: AppColors.primaryTextColor, fontSize: 16),
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }
+  _onQuickTap(BuildContext context, int count) {
+    final date = draft.date.add(Duration(days: count));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: date));
+  }
+
+  Future<void> _showDatePicker(BuildContext context) async {
+    final DateTime? picked = await showModalBottomSheet<DateTime>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      useSafeArea: true,
+      builder: (sheetCtx) {
+        final theme = Theme.of(context);
+        final today = DateTime.now();
+        return Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Wrap(
+                spacing: 8,
+                children: [
+                  ActionChip(
+                    // TODO translation
+                    label: const Text("Today"),
+                    onPressed: () => Navigator.of(sheetCtx).pop(today),
+                  ),
+                  ActionChip(
+                    label: const Text("Yesterday"),
+                    onPressed: () {
+                      final yesterday = today.subtract(const Duration(days: 1));
+                      Navigator.of(sheetCtx).pop(yesterday);
+                    },
+                  ),
+                  ActionChip(
+                    label: const Text("2 days ago"),
+                    onPressed: () {
+                      final twoDaysAgo = today.subtract(const Duration(days: 2));
+                      Navigator.of(sheetCtx).pop(twoDaysAgo);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                DateTimeConverter.toEEEEdMMMMYYY(draft.date),
+                style: theme.textTheme.titleMedium,
+              ),
+            ),
+            const Divider(height: 16),
+            CalendarDatePicker(
+              initialDate: draft.date,
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2100),
+              initialCalendarMode: DatePickerMode.day,
+              onDateChanged: (date) => Navigator.of(sheetCtx).pop(date),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (picked != null && context.mounted) {
+      context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(date: picked));
+    }
+  }
 }

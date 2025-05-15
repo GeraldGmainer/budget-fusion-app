@@ -234,9 +234,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
         hasValue ? display(value as T) : label, // show the label as a placeholder
         style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
       ),
-      subtitle: hasValue
-          ? Text(label) // only once you’ve picked something
-          : null,
+      subtitle: hasValue ? Text(label) : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       // onTap: onTap,
     );
