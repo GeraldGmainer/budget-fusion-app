@@ -31,20 +31,23 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.fastOutSlowIn,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: _backgroundColor,
-      ),
-      child: ShakeWidget(
-        duration: Duration(milliseconds: 3000),
-        shakeConstant: ShakeHorizontalConstant2(),
-        autoPlay: _shake,
-        enableWebMouseHover: true,
-        child: _buildView(),
+    return Material(
+      elevation: 4,
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.fastOutSlowIn,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: _backgroundColor,
+        ),
+        child: ShakeWidget(
+          duration: Duration(milliseconds: 3000),
+          shakeConstant: ShakeHorizontalConstant2(),
+          autoPlay: _shake,
+          enableWebMouseHover: true,
+          child: _buildView(),
+        ),
       ),
     );
   }

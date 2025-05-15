@@ -98,9 +98,13 @@ class _BookingSavePageState extends State<BookingSavePage> {
           appBar: AppBar(
             title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
             actions: [
-              SaveAction(onSave: () => _onSave(state.draft)),
+              // SaveAction(onSave: () => _onSave(state.draft)),
               if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _onSave(state.draft),
+            child: Icon(Icons.check),
           ),
           resizeToAvoidBottomInset: false,
           body: state.maybeWhen(
@@ -115,53 +119,61 @@ class _BookingSavePageState extends State<BookingSavePage> {
 
   Widget _buildContent(BookingDraft draft) {
     return Padding(
-      padding: AppDimensions.pageFloatingPadding,
+      padding: AppDimensions.pageCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AmountDisplay(key: _amountDisplayKey),
-          SizedBox(height: AppDimensions.verticalPadding),
-          CategoryTypeSelector(
-            selected: CategoryType.outcome,
-            onChanged: (CategoryType value) {},
-          ),
-          SizedBox(height: AppDimensions.verticalPadding),
-          ListTile(
-            leading: Icon(Icons.calendar_today),
-            title: Text("26. Mai 2025"),
-            subtitle: Text("Date"),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.add_circle_outline),
-                SizedBox(width: 8.0),
-                Icon(Icons.remove_circle_outline),
-              ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.floatingPadding),
+            child: CategoryTypeSelector(
+              selected: CategoryType.outcome,
+              onChanged: (CategoryType value) {},
             ),
           ),
           SizedBox(height: AppDimensions.verticalPadding),
-          _buildListTile<CategoryType>(
-            icon: CommunityMaterialIcons.swap_horizontal,
-            label: "Category Type",
-            value: draft.categoryType,
-            display: (type) => type.name,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: AmountDisplay(key: _amountDisplayKey),
           ),
           SizedBox(height: AppDimensions.verticalPadding),
-          _buildListTile<Account>(
-            icon: CommunityMaterialIcons.bank,
-            label: "Account",
-            value: draft.account,
-            display: (acct) => acct.name,
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.calendar_today),
+                  title: Text("26. Mai 2025"),
+                  subtitle: Text("Date"),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.add_circle_outline),
+                      SizedBox(width: 8.0),
+                      Icon(Icons.remove_circle_outline),
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
+                // SizedBox(height: AppDimensions.verticalPadding),
+                _buildListTile<Account>(
+                  icon: CommunityMaterialIcons.bank,
+                  label: "Account",
+                  value: draft.account,
+                  display: (acct) => acct.name,
+                ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
+                // SizedBox(height: AppDimensions.verticalPadding),
+                _buildListTile<Category>(
+                  icon: CommunityMaterialIcons.table_large,
+                  label: "Category",
+                  value: draft.category,
+                  display: (cat) => cat.name,
+                ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
+                // SizedBox(height: AppDimensions.verticalPadding),
+                DescriptionField(initialValue: null, onChanged: (value) {}),
+              ],
+            ),
           ),
-          SizedBox(height: AppDimensions.verticalPadding),
-          _buildListTile<Category>(
-            icon: CommunityMaterialIcons.table_large,
-            label: "Category",
-            value: draft.category,
-            display: (cat) => cat.name,
-          ),
-          SizedBox(height: AppDimensions.verticalPadding),
-          DescriptionField(initialValue: null, onChanged: (value) {}),
         ],
       ),
     );
@@ -266,36 +278,29 @@ class CategoryTypeSelector extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext ctx) {
-    return Container(
-      height: 56,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          Icon(CommunityMaterialIcons.swap_horizontal, color: Colors.grey[400]),
-          SizedBox(width: 16),
-          Expanded(
-            child: Wrap(
-              spacing: 8,
-              children: CategoryType.values.map((type) {
-                final isSelected = type == selected;
-                return ChoiceChip(
-                  label: Text(type.name.tr()),
-                  selected: isSelected,
-                  onSelected: (_) => onChanged(type),
-                  selectedColor: Theme.of(ctx).colorScheme.primary,
-                  // labelStyle: TextStyle(
-                  //   color: isSelected
-                  //       ? Colors.white
-                  //       : Theme.of(ctx).textTheme.bodyText1!.color,
-                  // ),
-                  backgroundColor: Theme.of(ctx).cardColor,
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
+  Widget build(BuildContext context) {
+    return SegmentedButton<CategoryType>(
+      segments: <ButtonSegment<CategoryType>>[
+        ButtonSegment<CategoryType>(
+          value: CategoryType.income,
+          label: Text(CategoryType.income.label.tr()),
+          icon: Icon(CategoryType.income.icon),
+        ),
+        ButtonSegment<CategoryType>(
+          value: CategoryType.outcome,
+          label: Text(CategoryType.outcome.label.tr()),
+          icon: Icon(CategoryType.outcome.icon),
+        ),
+      ],
+      selected: <CategoryType>{selected},
+      onSelectionChanged: (Set<CategoryType> newSelection) {
+        // setState(() {
+        // By default there is only a single segment that can be
+        // selected at one time, so its value is always the first
+        // item in the selected set.
+        // calendarView = newSelection.first;
+        // });
+      },
     );
   }
 }
