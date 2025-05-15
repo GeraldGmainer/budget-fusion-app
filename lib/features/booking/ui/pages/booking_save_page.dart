@@ -13,6 +13,7 @@ import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../calculator/calculator.dart';
 import '../widgets/amount_display.dart';
+import '../widgets/date_input.dart';
 import '../widgets/transaction_type_input.dart';
 
 class BookingSavePage extends StatefulWidget {
@@ -186,24 +187,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
           Card(
             child: Column(
               children: [
-                ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text("26. Mai 2025"),
-                  subtitle: Text("Date"),
-                  trailing: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_less)),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(padding: const EdgeInsets.all(2.0), child: const Icon(Icons.expand_more)),
-                      ),
-                    ],
-                  ),
-                ),
+                DateInput(draft: draft),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 // SizedBox(height: AppDimensions.verticalPadding),
                 _buildListTile<Account>(
