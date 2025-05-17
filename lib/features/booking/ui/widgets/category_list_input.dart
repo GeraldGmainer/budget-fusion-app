@@ -1,14 +1,14 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-class CategoryList extends StatefulWidget {
+class CategoryListInput extends StatefulWidget {
   final List<Category> categories;
   final CategoryType categoryType;
   final Function(Category) onCategoryTap;
   final Category? selectedCategory;
 
-  const CategoryList({
+  const CategoryListInput({
     super.key,
     required this.categories,
     required this.categoryType,
@@ -17,13 +17,15 @@ class CategoryList extends StatefulWidget {
   });
 
   @override
-  State<CategoryList> createState() => _CategoryListState();
+  State<CategoryListInput> createState() => _CategoryListInputState();
 }
 
-class _CategoryListState extends State<CategoryList> {
+class _CategoryListInputState extends State<CategoryListInput> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   late final ValueNotifier<Category?> _selectedCategoryNotifier;
   late final ValueNotifier<CategoryType> _categoryTypeNotifier;
+  String _currentRoute = 'parent';
+  Category? _currentParent;
 
   @override
   void initState() {
@@ -33,7 +35,7 @@ class _CategoryListState extends State<CategoryList> {
   }
 
   @override
-  void didUpdateWidget(covariant CategoryList oldWidget) {
+  void didUpdateWidget(covariant CategoryListInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedCategory != oldWidget.selectedCategory) {
       _selectedCategoryNotifier.value = widget.selectedCategory;
@@ -69,9 +71,13 @@ class _CategoryListState extends State<CategoryList> {
   Route _generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'parent':
+        _currentRoute = 'parent';
+        _currentParent = null;
         return _createRoute(_buildParentPage());
       case 'subcategories':
+        _currentRoute = 'subcategories';
         final Category parent = settings.arguments as Category;
+        _currentParent = parent;
         return _createRoute(_buildSubcategoryPage(parent));
       default:
         return _createRoute(_buildParentPage());
@@ -86,7 +92,6 @@ class _CategoryListState extends State<CategoryList> {
       onParentSelected: (Category parent) {
         _navigatorKey.currentState?.pushNamed('subcategories', arguments: parent);
       },
-      createCategory: (context, [parent]) {},
       sortByName: _sortCategories,
     );
   }
@@ -98,13 +103,12 @@ class _CategoryListState extends State<CategoryList> {
       selectedCategory: _selectedCategoryNotifier.value,
       onCategoryTap: widget.onCategoryTap,
       onBack: () => _navigatorKey.currentState!.pop(),
-      createCategory: (context, [parent]) {},
       sortByName: _sortCategories,
     );
   }
 
   List<Category> _sortCategories(List<Category> cats) {
-    cats.sort((a, b) => a.name.compareTo(b.name));
+    cats.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     return cats;
   }
 
@@ -112,15 +116,39 @@ class _CategoryListState extends State<CategoryList> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: CategoryTypeNotifierProvider(
-        notifier: _categoryTypeNotifier,
-        child: SelectedCategoryNotifierProvider(
-          notifier: _selectedCategoryNotifier,
-          child: Navigator(
-            key: _navigatorKey,
-            initialRoute: 'parent',
-            onGenerateRoute: _generateRoute,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Select a Category"),
+          leading: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
           ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: CategoryTypeNotifierProvider(
+            notifier: _categoryTypeNotifier,
+            child: SelectedCategoryNotifierProvider(
+              notifier: _selectedCategoryNotifier,
+              child: Navigator(
+                key: _navigatorKey,
+                initialRoute: 'parent',
+                onGenerateRoute: _generateRoute,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (_currentRoute == 'parent') {
+              print("###### new parent categorty");
+              // widget.onCreateParent(context);
+            } else if (_currentRoute == 'subcategories' && _currentParent != null) {
+              // widget.onCreateSubcategory(context, _currentParent!);
+              print("###### new sub categorty $_currentParent");
+            }
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -160,7 +188,6 @@ class ParentCategoryList extends StatelessWidget {
   final Category? selectedCategory;
   final void Function(Category) onCategoryTap;
   final void Function(Category) onParentSelected;
-  final void Function(BuildContext, [Category?]) createCategory;
   final List<Category> Function(List<Category>) sortByName;
 
   const ParentCategoryList({
@@ -169,7 +196,6 @@ class ParentCategoryList extends StatelessWidget {
     required this.selectedCategory,
     required this.onCategoryTap,
     required this.onParentSelected,
-    required this.createCategory,
     required this.sortByName,
   });
 
@@ -184,26 +210,15 @@ class ParentCategoryList extends StatelessWidget {
             final parents = categories.where((c) => c.isParent && c.categoryType == categoryType).toList();
             sortByName(parents);
             return ListView.builder(
-              itemCount: parents.length + 1,
+              itemCount: parents.length,
               itemBuilder: (context, index) {
-                if (index < parents.length) {
-                  final category = parents[index];
-                  return CategoryTile(
-                    category: category,
-                    allCategories: categories,
-                    selectedCategory: selectedCat,
-                    onTap: onCategoryTap,
-                    onParentSelected: onParentSelected,
-                  );
-                }
-                return ListTile(
-                  // contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  leading: CircleAvatar(
-                    backgroundColor: AppColors.accentColor,
-                    child: const Icon(Icons.add, color: Colors.white),
-                  ),
-                  title: const Text("New Category"),
-                  onTap: () => createCategory(context),
+                final category = parents[index];
+                return CategoryTile(
+                  category: category,
+                  allCategories: categories,
+                  selectedCategory: selectedCat,
+                  onTap: onCategoryTap,
+                  onParentSelected: onParentSelected,
                 );
               },
             );
@@ -220,7 +235,6 @@ class SubcategoryListScreen extends StatelessWidget {
   final Category? selectedCategory;
   final void Function(Category) onCategoryTap;
   final VoidCallback onBack;
-  final void Function(BuildContext, [Category?]) createCategory;
   final List<Category> Function(List<Category>) sortByName;
 
   const SubcategoryListScreen({
@@ -230,7 +244,6 @@ class SubcategoryListScreen extends StatelessWidget {
     required this.selectedCategory,
     required this.onCategoryTap,
     required this.onBack,
-    required this.createCategory,
     required this.sortByName,
   });
 
@@ -244,6 +257,7 @@ class SubcategoryListScreen extends StatelessWidget {
           builder: (context, selectedCat, _) {
             final subs = parent.subcategories;
             // sortByName(subs);
+
             return Material(
               color: AppColors.primaryColor,
               child: Column(
@@ -261,35 +275,24 @@ class SubcategoryListScreen extends StatelessWidget {
   }
 
   Widget _buildCategoryParent(BuildContext context) {
-    return TextButton.icon(
-      onPressed: onBack,
-      icon: const Icon(Icons.arrow_back, color: Colors.white),
-      label: Text(
-        parent.name,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
-      ),
+    return ListTile(
+      leading: Icon(Icons.arrow_back, color: AppColors.primaryTextColor),
+      title: Text(parent.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.primaryTextColor)),
+      onTap: onBack,
     );
   }
 
   Widget _buildSubcategories(List<Category> subs, Category? selectedCat) {
     return Expanded(
       child: ListView.builder(
-        itemCount: subs.length + 1,
+        itemCount: subs.length,
         itemBuilder: (context, index) {
-          if (index < subs.length) {
-            return CategoryTile(
-              category: subs[index],
-              allCategories: categories,
-              selectedCategory: selectedCat,
-              onTap: onCategoryTap,
-              onParentSelected: (_) {},
-            );
-          }
-          return ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-            leading: CircleAvatar(backgroundColor: AppColors.accentColor, child: const Icon(Icons.add, color: Colors.white)),
-            title: const Text("New Subcategory"),
-            onTap: () => createCategory(context, parent),
+          return CategoryTile(
+            category: subs[index],
+            allCategories: categories,
+            selectedCategory: selectedCat,
+            onTap: onCategoryTap,
+            onParentSelected: (_) {},
           );
         },
       ),
@@ -320,7 +323,6 @@ class CategoryTile extends StatelessWidget {
     final bool isSubSelected = selectedCategory?.parent?.id == category.id;
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
-      tileColor: isSelected ? AppColors.accentColor : null,
       leading: TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 0.0, end: 1.0),
         duration: const Duration(milliseconds: 300),
@@ -334,13 +336,10 @@ class CategoryTile extends StatelessWidget {
             ),
           );
         },
-        child: CircleAvatar(
-          backgroundColor: ColorConverter.stringToColor(category.iconColor),
-          child: Icon(IconConverter.getIcon(category.iconName), color: Colors.white),
-        ),
+        child: BudgetIcon(name: category.iconName, color: category.iconColor),
       ),
       title: Text(category.name),
-      trailing: isSubSelected ? const Icon(Icons.check, color: Colors.green) : (hasSubcategories ? const Icon(Icons.arrow_forward) : null),
+      trailing: (isSelected || isSubSelected) ? const Icon(Icons.check, color: Colors.green) : (hasSubcategories ? const Icon(Icons.arrow_forward) : null),
       onTap: () {
         if (hasSubcategories) {
           onParentSelected(category);

@@ -1,7 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,17 +20,8 @@ class AccountSelectInput extends StatelessWidget {
       title: "booking.select_account",
       items: accounts,
       selectedItem: draft.account,
-      itemLabelBuilder: (account) {
-        return Row(
-          children: [
-            SizedBox(
-              width: 45,
-              child: Icon(IconConverter.getIcon(account.iconName), color: ColorConverter.stringToColor(account.iconColor)),
-            ),
-            Text(account.name),
-          ],
-        );
-      },
+      labelBuilder: (account) => Text(account.name),
+      iconBuilder: (account) => BudgetIcon(name: account.iconName, color: account.iconColor),
     );
 
     if (selectedAccount != null && context.mounted) {
@@ -45,7 +35,7 @@ class AccountSelectInput extends StatelessWidget {
     final hasValue = draft.account != null;
     return ListTile(
       leading: hasValue
-          ? Icon(IconConverter.getIcon(draft.account!.iconName), color: ColorConverter.stringToColor(draft.account!.iconColor))
+          ? BudgetIcon(name: draft.account!.iconName, color: draft.account!.iconColor)
           : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
       title: Text(
         hasValue ? draft.account!.name : "Account",

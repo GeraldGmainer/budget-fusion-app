@@ -22,14 +22,8 @@ class CategoryTypeInput extends StatelessWidget {
       title: "Category Type",
       items: [CategoryType.outcome, CategoryType.income],
       selectedItem: value,
-      itemLabelBuilder: (categoryType) {
-        return Row(
-          children: [
-            SizedBox(width: 45, child: Icon(categoryType.icon, color: categoryType.color)),
-            Text(categoryType.label.tr()),
-          ],
-        );
-      },
+      iconBuilder: (categoryType) => Icon(categoryType.icon, color: categoryType.color, size: 20),
+      labelBuilder: (categoryType) => Text(categoryType.label.tr()),
     );
 
     if (context.mounted && selectedValue != null) {
