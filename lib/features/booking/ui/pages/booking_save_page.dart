@@ -173,10 +173,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4),
-            child: TransactionTypeInput(draft: draft),
-          ),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft)),
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4),
@@ -195,7 +192,6 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 CategorySelectInput(draft: draft),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
-                // SizedBox(height: AppDimensions.verticalPadding),
                 _buildListTile<String>(
                   icon: CommunityMaterialIcons.book_edit,
                   label: "Description",

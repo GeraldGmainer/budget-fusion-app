@@ -12,7 +12,7 @@ class TransactionTypeInput extends StatelessWidget {
   const TransactionTypeInput({super.key, required this.draft});
 
   _onCategoryTypeChange(BuildContext context, CategoryType value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
   }
 
   @override

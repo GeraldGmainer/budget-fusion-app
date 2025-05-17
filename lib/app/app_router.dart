@@ -20,7 +20,7 @@ class AppRouter {
           builder: (_) => MainPage(),
           settings: settings,
         ),
-    AppRoutes.bookingSave: (settings) => DefaultRoute(
+    AppRoutes.bookingSave: (settings) => SlideRightRoute(
           builder: (_) => BlocProvider<BookingSaveCubit>(
             create: (_) => GetIt.I<BookingSaveCubit>(),
             child: BookingSavePage(model: settings.arguments as Booking?),
