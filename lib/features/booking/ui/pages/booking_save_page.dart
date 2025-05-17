@@ -28,8 +28,9 @@ class BookingSavePage extends StatefulWidget {
 }
 
 class _BookingSavePageState extends State<BookingSavePage> {
-  bool _isCalculatorOpen = false;
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
+  bool _isCalculatorOpen = false;
+  bool _categoryError = false;
 
   @override
   void initState() {
@@ -84,18 +85,39 @@ class _BookingSavePageState extends State<BookingSavePage> {
     });
   }
 
+  _onCategoryTypeChange(CategoryType value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
+  }
+
+  _onDateChange(DateTime value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
+  }
+
+  _onAccountChange(Account value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
+  }
+
+  _onCategoryChange(Category category) {
+    setState(() => _categoryError = true);
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
+  }
+
   _showAmountError() {
     Haptics.vibrate(HapticsType.error);
     _amountDisplayKey.currentState?.triggerShakeAnimation();
   }
 
   _onSave(BookingDraft draft) {
+    bool isValid = true;
     if (draft.amount.toDouble() <= 0) {
+      isValid = false;
       _showAmountError();
-      return;
     }
     if (draft.category == null) {
-      context.showErrorSnackBar("booking.validation.required_category", duration: Duration(seconds: 2));
+      isValid = false;
+      setState(() => _categoryError = true);
+    }
+    if (!isValid) {
       return;
     }
     context.read<BookingSaveCubit>().save();
@@ -173,7 +195,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft)),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange)),
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4),
@@ -186,11 +208,11 @@ class _BookingSavePageState extends State<BookingSavePage> {
           Card(
             child: Column(
               children: [
-                DateInput(draft: draft),
+                DateInput(draft: draft, onChange: _onDateChange),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
-                AccountSelectInput(draft: draft),
+                AccountSelectInput(draft: draft, onChange: _onAccountChange),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
-                CategorySelectInput(draft: draft),
+                CategorySelectInput(draft: draft, onChange: _onCategoryChange, hasError: _categoryError),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
                 _buildListTile<String>(
                   icon: CommunityMaterialIcons.book_edit,

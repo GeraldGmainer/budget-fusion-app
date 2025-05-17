@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/features/booking/application/cubits/booking_save_cubit.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +8,9 @@ import '../../domain/entities/booking_draft.dart';
 
 class AccountSelectInput extends StatelessWidget {
   final BookingDraft draft;
+  final Function(Account) onChange;
 
-  const AccountSelectInput({required this.draft});
+  const AccountSelectInput({required this.draft, required this.onChange});
 
   _onTap(BuildContext context) async {
     final accounts = context.read<AccountCubit>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
@@ -25,7 +25,7 @@ class AccountSelectInput extends StatelessWidget {
     );
 
     if (selectedAccount != null && context.mounted) {
-      context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: selectedAccount));
+      onChange.call(selectedAccount);
     }
   }
 

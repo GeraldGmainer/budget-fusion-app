@@ -39,8 +39,9 @@ class AppColors {
   static const Color cardAccentColor = Color(0xFF03DAC6); // Teal accent for cards
 
   // Status Colors
-  static const Color errorColor = Color(0xFFCF6679); // Bright red for errors
-  static const Color warningColor = Color(0xFFFFD54F); // Yellow for warnings
+  static const Color errorColor = Color(0xFFCF6679);
+  static const Color validationErrorColor = Color(0xFFD32F2F);
+  static const Color warningColor = Color(0xFFFFD54F);
 
   // Transaction Colors
   static const Color incomeColor = Color(0xFF4CAF50); // Green for income

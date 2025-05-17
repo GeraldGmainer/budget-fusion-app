@@ -1,14 +1,18 @@
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/booking_save_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DateInput extends StatelessWidget {
   final BookingDraft draft;
+  final Function(DateTime date) onChange;
 
-  const DateInput({super.key, required this.draft});
+  const DateInput({super.key, required this.draft, required this.onChange});
+
+  _onQuickTap(BuildContext context, int count) {
+    final date = draft.date.add(Duration(days: count));
+    onChange.call(date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +40,13 @@ class DateInput extends StatelessWidget {
     );
   }
 
-  _onQuickTap(BuildContext context, int count) {
-    final date = draft.date.add(Duration(days: count));
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: date));
-  }
-
   Future<void> _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showModalBottomSheet<DateTime>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       useSafeArea: true,
+      // TODO refactor that to own widget
       builder: (sheetCtx) {
         final theme = Theme.of(context);
         final today = DateTime.now();
@@ -101,7 +101,7 @@ class DateInput extends StatelessWidget {
     );
 
     if (picked != null && context.mounted) {
-      context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(date: picked));
+      onChange.call(picked);
     }
   }
 }
