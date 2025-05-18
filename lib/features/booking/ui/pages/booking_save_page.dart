@@ -102,7 +102,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
   }
 
-  _onDescriptionChange(String value) {
+  _onDescriptionChange(String? value) {
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
   }
 
@@ -197,7 +197,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     return Padding(
       padding: AppDimensions.pageCardPadding,
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange)),
           SizedBox(height: AppDimensions.verticalPadding),

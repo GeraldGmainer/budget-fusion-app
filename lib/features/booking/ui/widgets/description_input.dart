@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ import '../../domain/entities/booking_draft.dart';
 
 class DescriptionInput extends StatelessWidget {
   final BookingDraft draft;
-  final Function(String value) onChanged;
+  final Function(String? value) onChanged;
 
   const DescriptionInput({required this.draft, required this.onChanged});
 
@@ -38,14 +39,13 @@ class DescriptionInput extends StatelessWidget {
       subtitle: hasValue ? Text("Description") : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       onTap: () => _openDescriptionModal(context),
-      // onTap: onTap,
     );
   }
 }
 
 class DescriptionInputModal extends StatefulWidget {
   final BookingDraft draft;
-  final Function(String value) onChanged;
+  final Function(String? value) onChanged;
 
   const DescriptionInputModal({super.key, required this.draft, required this.onChanged});
 
@@ -74,14 +74,21 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
     super.dispose();
   }
 
-  _onChanged(String value) {
-    // widget.onChanged.call(value);
+  _onTextChanged(String value) {
+    // _finish(value);
   }
 
   _onSelect(String value) {
-    _controller.text = value;
-    // widget.onChanged.call(value);
-    _focusNode.unfocus();
+    _finish(value);
+  }
+
+  _onSave() {
+    _finish(_controller.text);
+  }
+
+  _finish(String? value) {
+    widget.onChanged.call(value.isNullOrEmpty ? null : value);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -94,14 +101,19 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: BlocBuilder<SuggestionCubit, LoadableState>(
-        builder: (context, state) {
-          final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList()),
-          );
-        },
+      floatingActionButton: FloatingActionButton(onPressed: _onSave, child: Icon(Icons.check)),
+      body: Column(
+        children: [
+          BlocBuilder<SuggestionCubit, LoadableState>(
+            builder: (context, state) {
+              final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -112,7 +124,14 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
       debounceDuration: Duration.zero,
       hideOnEmpty: true,
       suggestionsCallback: (pattern) async {
-        return suggestions.where((s) => s.toLowerCase().contains(pattern.toLowerCase())).toList();
+        if (pattern.isNullOrEmpty) {
+          return [];
+        }
+        final allMatches = suggestions.where((s) => s.toLowerCase().contains(pattern.toLowerCase())).toList();
+        if (allMatches.length > 50) {
+          return allMatches.sublist(0, 50);
+        }
+        return allMatches;
       },
       decorationBuilder: (context, child) {
         return Material(
@@ -127,7 +146,6 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
         );
       },
       itemBuilder: (context, suggestion) {
-        print("itemBuilder $suggestion");
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Text(
@@ -141,15 +159,16 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
         // TODO translation
         return TextField(
           controller: controller,
-          // focusNode: _focusNode,
-          onChanged: _onChanged,
+          focusNode: focusNode,
+          onChanged: _onTextChanged,
           style: TextStyle(fontSize: 13),
+          autofocus: true,
           maxLength: FeatureConstants.descriptionMaxLength,
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.edit, size: 22),
             labelText: "Description",
             labelStyle: TextStyle(fontSize: 14),
-            // counterText: "",
+            counterText: "",
           ),
         );
       },
