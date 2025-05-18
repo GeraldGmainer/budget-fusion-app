@@ -4,43 +4,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
-import '../../domain/entities/booking_draft.dart';
 import 'calculator_key.dart';
 import 'calculator_keyboard.dart';
 
 export 'calculator_key.dart';
 
-class Calculator extends StatefulWidget {
-  final BookingDraft model;
+class Calculator extends StatelessWidget {
+  final BookingSaveCubit bookingSaveCubit;
+  final CalculatorCubit calculatorCubit;
 
-  const Calculator({required this.model});
+  const Calculator({required this.bookingSaveCubit, required this.calculatorCubit});
 
-  @override
-  State<Calculator> createState() => _CalculatorState();
-}
-
-class _CalculatorState extends State<Calculator> {
-  _onPressed(CalculatorKey key) {
+  _onPressed(BuildContext context, CalculatorKey key) {
     switch (key) {
       case CalculatorKey.clear:
-        BlocProvider.of<CalculatorCubit>(context).clear();
+        calculatorCubit.clear();
         break;
 
       case CalculatorKey.back:
-        BlocProvider.of<CalculatorCubit>(context).back();
+        calculatorCubit.back();
         break;
 
       case CalculatorKey.equal:
-        BlocProvider.of<CalculatorCubit>(context).equal();
+        calculatorCubit.equal();
+        break;
+
+      case CalculatorKey.done:
+        calculatorCubit.equal();
+        Navigator.of(context).pop();
         break;
 
       default:
-        BlocProvider.of<CalculatorCubit>(context).key(key);
+        calculatorCubit.key(key);
     }
   }
 
   _onValueChange(double value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
+    bookingSaveCubit.updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
   }
 
   @override
@@ -49,7 +49,7 @@ class _CalculatorState extends State<Calculator> {
       listener: (context, state) {
         state.whenOrNull(updated: (_, result) => _onValueChange(result));
       },
-      child: CalculatorKeyboard(onPressed: _onPressed),
+      child: CalculatorKeyboard(onPressed: (key) => _onPressed(context, key)),
     );
   }
 }

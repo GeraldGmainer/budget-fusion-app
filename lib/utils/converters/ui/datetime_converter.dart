@@ -49,4 +49,11 @@ class DateTimeConverter {
     }
     return DateFormat('EEEE, d MMMM yyyy').format(date);
   }
+
+  static String todMMMMYYY(DateTime? date) {
+    if (date == null) {
+      return "";
+    }
+    return DateFormat('d. MMMM yyyy').format(date);
+  }
 }

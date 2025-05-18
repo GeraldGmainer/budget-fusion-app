@@ -10,9 +10,13 @@ import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
-import '../screens/booking_save_tab1.dart';
-import '../screens/booking_save_tab2.dart';
+import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
+import '../widgets/calculator_sheet.dart';
+import '../widgets/category_select_input.dart';
+import '../widgets/date_input.dart';
+import '../widgets/description_input.dart';
+import '../widgets/transaction_type_input.dart';
 
 class BookingSavePage extends StatefulWidget {
   final Booking? model;
@@ -24,9 +28,9 @@ class BookingSavePage extends StatefulWidget {
 }
 
 class _BookingSavePageState extends State<BookingSavePage> {
-  final PageController _pageController = PageController(initialPage: 0);
   final GlobalKey<AmountDisplayState> _amountDisplayKey = GlobalKey<AmountDisplayState>();
-  int _currentPage = 0;
+  bool _isCalculatorOpen = false;
+  bool _categoryError = false;
 
   @override
   void initState() {
@@ -34,20 +38,51 @@ class _BookingSavePageState extends State<BookingSavePage> {
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble());
     BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
     BlocProvider.of<SuggestionCubit>(context).load();
-  }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  _openCategories(BookingDraft draft) {
-    if (draft.amount.toDouble() > 0) {
-      _animateToPage(1);
-    } else {
-      _showAmountError();
+    if (widget.model == null) {
+      Future.delayed(Duration(milliseconds: 300), _openCalculator);
     }
+  }
+
+  void _openCalculator() {
+    setState(() {
+      _isCalculatorOpen = true;
+    });
+    final bookingCubit = context.read<BookingSaveCubit>();
+    final calculatorCubit = context.read<CalculatorCubit>();
+
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: false,
+      barrierColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CalculatorSheet(bookingSaveCubit: bookingCubit, calculatorCubit: calculatorCubit),
+    ).whenComplete(() {
+      setState(() {
+        _isCalculatorOpen = false;
+      });
+    });
+  }
+
+  _onCategoryTypeChange(CategoryType value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
+  }
+
+  _onDateChange(DateTime value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
+  }
+
+  _onAccountChange(Account value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
+  }
+
+  _onCategoryChange(Category category) {
+    setState(() => _categoryError = true);
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
+  }
+
+  _onDescriptionChange(String? value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
   }
 
   _showAmountError() {
@@ -55,29 +90,17 @@ class _BookingSavePageState extends State<BookingSavePage> {
     _amountDisplayKey.currentState?.triggerShakeAnimation();
   }
 
-  _animateToPage(int page) {
-    setState(() {
-      _currentPage = page;
-    });
-
-    _pageController.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
   _onSave(BookingDraft draft) {
+    bool isValid = true;
     if (draft.amount.toDouble() <= 0) {
+      isValid = false;
       _showAmountError();
-      return;
     }
     if (draft.category == null) {
-      if (_currentPage == 0) {
-        _animateToPage(1);
-      } else {
-        context.showErrorSnackBar("booking.validation.required_category", duration: Duration(seconds: 2));
-      }
+      isValid = false;
+      setState(() => _categoryError = true);
+    }
+    if (!isValid) {
       return;
     }
     context.read<BookingSaveCubit>().save();
@@ -108,17 +131,10 @@ class _BookingSavePageState extends State<BookingSavePage> {
     Navigator.of(context).pop();
   }
 
+  // TODO show unsaved change dialog
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: _currentPage == 0,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
-          _animateToPage(0);
-        }
-      },
-      child: _buildPage(),
-    );
+    return _buildPage();
   }
 
   Widget _buildPage() {
@@ -138,10 +154,10 @@ class _BookingSavePageState extends State<BookingSavePage> {
           appBar: AppBar(
             title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
             actions: [
-              SaveAction(onSave: () => _onSave(state.draft)),
               if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
             ],
           ),
+          floatingActionButton: AppFab.save(() => _onSave(state.draft)),
           resizeToAvoidBottomInset: false,
           body: state.maybeWhen(
             draftUpdate: (draft) => _buildContent(draft),
@@ -154,19 +170,40 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   Widget _buildContent(BookingDraft draft) {
-    return SafeArea(
-      child: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: <Widget>[
-          BookingSaveTab1(
-            draft: draft,
-            onCategoryTap: () => _openCategories(draft),
-            amountDisplayKey: _amountDisplayKey,
+    return Padding(
+      padding: AppDimensions.pageCardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange)),
+          SizedBox(height: AppDimensions.verticalPadding),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: InkWell(
+              onTap: _openCalculator,
+              child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
+            ),
           ),
-          BookingSaveTab2(draft: draft),
+          SizedBox(height: AppDimensions.verticalPadding),
+          Card(
+            child: Column(
+              children: [
+                DateInput(draft: draft, onChange: _onDateChange),
+                _buildDivider(),
+                AccountSelectInput(draft: draft, onChange: _onAccountChange),
+                _buildDivider(),
+                CategorySelectInput(draft: draft, onChange: _onCategoryChange, hasError: _categoryError),
+                _buildDivider(),
+                DescriptionInput(draft: draft, onChanged: _onDescriptionChange),
+              ],
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Widget _buildDivider() {
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor));
   }
 }
