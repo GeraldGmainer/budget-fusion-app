@@ -22,7 +22,6 @@ class CategorySelectInput extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: Colors.transparent,
       builder: (sheetCtx) {
         return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
           builder: (ctx, state) {

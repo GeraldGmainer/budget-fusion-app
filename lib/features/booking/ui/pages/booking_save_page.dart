@@ -1,7 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/category_select_input.dart';
 import '../widgets/date_input.dart';
+import '../widgets/description_input.dart';
 import '../widgets/transaction_type_input.dart';
 
 class BookingSavePage extends StatefulWidget {
@@ -100,6 +100,10 @@ class _BookingSavePageState extends State<BookingSavePage> {
   _onCategoryChange(Category category) {
     setState(() => _categoryError = true);
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
+  }
+
+  _onDescriptionChange(String value) {
+    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
   }
 
   _showAmountError() {
@@ -193,7 +197,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     return Padding(
       padding: AppDimensions.pageCardPadding,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange)),
           SizedBox(height: AppDimensions.verticalPadding),
@@ -209,17 +213,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
             child: Column(
               children: [
                 DateInput(draft: draft, onChange: _onDateChange),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
+                _buildDivider(),
                 AccountSelectInput(draft: draft, onChange: _onAccountChange),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
+                _buildDivider(),
                 CategorySelectInput(draft: draft, onChange: _onCategoryChange, hasError: _categoryError),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor)),
-                _buildListTile<String>(
-                  icon: CommunityMaterialIcons.book_edit,
-                  label: "Description",
-                  value: draft.description,
-                  display: (value) => value,
-                ),
+                _buildDivider(),
+                DescriptionInput(draft: draft, onChanged: _onDescriptionChange),
               ],
             ),
           ),
@@ -228,23 +227,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  Widget _buildListTile<T>({
-    required IconData icon,
-    required String label,
-    T? value,
-    required String Function(T) display,
-    // required VoidCallback onTap,
-  }) {
-    final hasValue = value != null;
-    return ListTile(
-      leading: Icon(icon, color: Colors.grey[400]),
-      title: Text(
-        hasValue ? display(value as T) : label, // show the label as a placeholder
-        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
-      ),
-      subtitle: hasValue ? Text(label) : null,
-      trailing: Icon(CommunityMaterialIcons.chevron_right),
-      // onTap: onTap,
-    );
+  Widget _buildDivider() {
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor));
   }
 }

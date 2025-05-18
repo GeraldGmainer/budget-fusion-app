@@ -1,50 +1,108 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../data/dtos/booking_suggestion_dto.dart';
 import '../../domain/entities/booking_draft.dart';
 
-class DescriptionInput extends StatefulWidget {
+class DescriptionInput extends StatelessWidget {
   final BookingDraft draft;
+  final Function(String value) onChanged;
 
-  const DescriptionInput({required this.draft});
+  const DescriptionInput({required this.draft, required this.onChanged});
+
+  void _openDescriptionModal(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheetCtx) {
+        return DescriptionInputModal(draft: draft, onChanged: onChanged);
+      },
+    );
+  }
 
   @override
-  State<DescriptionInput> createState() => _DescriptionInputState();
+  Widget build(BuildContext context) {
+    final hasValue = draft.description != null;
+    return ListTile(
+      leading: Icon(CommunityMaterialIcons.book_edit, color: Colors.grey[400]),
+      title: Text(
+        hasValue ? draft.description! : "Description",
+        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
+      ),
+      subtitle: hasValue ? Text("Description") : null,
+      trailing: Icon(CommunityMaterialIcons.chevron_right),
+      onTap: () => _openDescriptionModal(context),
+      // onTap: onTap,
+    );
+  }
 }
 
-class _DescriptionInputState extends State<DescriptionInput> {
+class DescriptionInputModal extends StatefulWidget {
+  final BookingDraft draft;
+  final Function(String value) onChanged;
+
+  const DescriptionInputModal({super.key, required this.draft, required this.onChanged});
+
+  @override
+  State<DescriptionInputModal> createState() => _DescriptionInputModalState();
+}
+
+class _DescriptionInputModalState extends State<DescriptionInputModal> {
   late final TextEditingController _controller;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.draft.description);
+    _focusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
   }
 
   _onChanged(String value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
+    // widget.onChanged.call(value);
   }
 
   _onSelect(String value) {
     _controller.text = value;
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
-    FocusScope.of(context).unfocus();
+    // widget.onChanged.call(value);
+    _focusNode.unfocus();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SuggestionCubit, LoadableState>(
-      builder: (context, state) {
-        final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
-        return _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList());
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Enter a Description"),
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: BlocBuilder<SuggestionCubit, LoadableState>(
+        builder: (context, state) {
+          final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList()),
+          );
+        },
+      ),
     );
   }
 
@@ -60,7 +118,6 @@ class _DescriptionInputState extends State<DescriptionInput> {
         return Material(
           elevation: 6,
           child: Container(
-            // constraints: const BoxConstraints(maxHeight: 250),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color: AppColors.cardColor,
@@ -70,6 +127,7 @@ class _DescriptionInputState extends State<DescriptionInput> {
         );
       },
       itemBuilder: (context, suggestion) {
+        print("itemBuilder $suggestion");
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Text(
@@ -78,21 +136,20 @@ class _DescriptionInputState extends State<DescriptionInput> {
           ),
         );
       },
-      onSelected: (suggestion) {
-        _onSelect(suggestion);
-      },
+      onSelected: (suggestion) => _onSelect(suggestion),
       builder: (context, controller, focusNode) {
+        // TODO translation
         return TextField(
           controller: controller,
-          focusNode: focusNode,
+          // focusNode: _focusNode,
           onChanged: _onChanged,
           style: TextStyle(fontSize: 13),
           maxLength: FeatureConstants.descriptionMaxLength,
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.edit, size: 22),
-            labelText: "booking.note".tr(),
+            labelText: "Description",
             labelStyle: TextStyle(fontSize: 14),
-            counterText: "",
+            // counterText: "",
           ),
         );
       },
