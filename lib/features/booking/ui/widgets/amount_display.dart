@@ -20,7 +20,7 @@ class AmountDisplay extends StatefulWidget {
 class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderStateMixin {
   bool _shake = false;
   Color _backgroundColor = const Color(0x885F6971);
-  bool _showCursor = true;
+  bool _showCursor = false;
   Timer? _cursorTimer;
 
   @override

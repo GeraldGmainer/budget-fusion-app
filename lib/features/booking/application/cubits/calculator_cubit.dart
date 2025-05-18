@@ -21,7 +21,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     if (initialAmount == null) {
       emit(CalculatorState.initial());
     } else {
-      _updateState(initialAmount, history: [toTrimmedString(initialAmount)]);
+      final initialString = toTrimmedString(initialAmount);
+      final historyTokens = initialString.split('');
+      _updateState(initialAmount, history: historyTokens);
     }
   }
 
