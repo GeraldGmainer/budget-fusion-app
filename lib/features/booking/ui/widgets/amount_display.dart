@@ -24,8 +24,8 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
   Timer? _cursorTimer;
 
   @override
-  void didUpdateWidget(covariant AmountDisplay old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(covariant AmountDisplay oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (widget.isCalculatorOpen && _cursorTimer == null) {
       _cursorTimer = Timer.periodic(Duration(milliseconds: 500), (_) {
         setState(() {

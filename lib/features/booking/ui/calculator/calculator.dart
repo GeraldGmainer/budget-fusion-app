@@ -9,43 +9,38 @@ import 'calculator_keyboard.dart';
 
 export 'calculator_key.dart';
 
-class Calculator extends StatefulWidget {
+class Calculator extends StatelessWidget {
   final BookingSaveCubit bookingSaveCubit;
   final CalculatorCubit calculatorCubit;
 
   const Calculator({required this.bookingSaveCubit, required this.calculatorCubit});
 
-  @override
-  State<Calculator> createState() => _CalculatorState();
-}
-
-class _CalculatorState extends State<Calculator> {
-  _onPressed(CalculatorKey key) {
+  _onPressed(BuildContext context, CalculatorKey key) {
     switch (key) {
       case CalculatorKey.clear:
-        widget.calculatorCubit.clear();
+        calculatorCubit.clear();
         break;
 
       case CalculatorKey.back:
-        widget.calculatorCubit.back();
+        calculatorCubit.back();
         break;
 
       case CalculatorKey.equal:
-        widget.calculatorCubit.equal();
+        calculatorCubit.equal();
         break;
 
       case CalculatorKey.done:
-        widget.calculatorCubit.equal();
+        calculatorCubit.equal();
         Navigator.of(context).pop();
         break;
 
       default:
-        widget.calculatorCubit.key(key);
+        calculatorCubit.key(key);
     }
   }
 
   _onValueChange(double value) {
-    widget.bookingSaveCubit.updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
+    bookingSaveCubit.updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
   }
 
   @override
@@ -54,7 +49,7 @@ class _CalculatorState extends State<Calculator> {
       listener: (context, state) {
         state.whenOrNull(updated: (_, result) => _onValueChange(result));
       },
-      child: CalculatorKeyboard(onPressed: _onPressed),
+      child: CalculatorKeyboard(onPressed: (key) => _onPressed(context, key)),
     );
   }
 }

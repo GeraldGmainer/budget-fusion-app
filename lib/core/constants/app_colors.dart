@@ -23,6 +23,8 @@ class AppColors {
   // Primary Colors
   static const Color primaryColor = Color(0xFF303030);
   static const Color secondaryColor = Color(0xFF505050);
+  static const Color primaryColorVariant = Color(0xFF282828);
+  static const Color secondaryColorVariant = Color(0xFF404040);
 
   // Accent Colors
   static const Color accentColor = Color(0xFF0287C3); // Deep Teal for primary accents

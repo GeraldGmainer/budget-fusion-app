@@ -10,9 +10,9 @@ import '../../application/cubits/booking_save_cubit.dart';
 import '../../application/cubits/calculator_cubit.dart';
 import '../../application/cubits/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
-import '../calculator/calculator.dart';
 import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
+import '../widgets/calculator_sheet.dart';
 import '../widgets/category_select_input.dart';
 import '../widgets/date_input.dart';
 import '../widgets/description_input.dart';
@@ -56,28 +56,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
       showDragHandle: false,
       barrierColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      builder: (_) => Material(
-        // TODO save to AppColors
-        color: Color(0xFF282828),
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 32.0),
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2)),
-            ),
-            SizedBox(height: 32.0),
-            Calculator(bookingSaveCubit: bookingCubit, calculatorCubit: calculatorCubit),
-          ],
-        ),
-      ),
+      builder: (_) => CalculatorSheet(bookingSaveCubit: bookingCubit, calculatorCubit: calculatorCubit),
     ).whenComplete(() {
       setState(() {
         _isCalculatorOpen = false;
