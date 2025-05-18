@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/core.dart';
-import '../../../../utils/utils.dart';
 
 part 'currency_dto.freezed.dart';
 part 'currency_dto.g.dart';
