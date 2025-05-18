@@ -14,6 +14,20 @@ class DateInput extends StatelessWidget {
     onChange.call(date);
   }
 
+  Future<void> _showDatePicker(BuildContext context) async {
+    final DateTime? picked = await showModalBottomSheet<DateTime>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      useSafeArea: true,
+      builder: (sheetCtx) => DateSheet(draft: draft),
+    );
+
+    if (picked != null && context.mounted) {
+      onChange.call(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -39,69 +53,64 @@ class DateInput extends StatelessWidget {
       onTap: () => _showDatePicker(context),
     );
   }
+}
 
-  Future<void> _showDatePicker(BuildContext context) async {
-    final DateTime? picked = await showModalBottomSheet<DateTime>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      useSafeArea: true,
-      // TODO refactor that to own widget
-      builder: (sheetCtx) {
-        final theme = Theme.of(context);
-        final today = DateTime.now();
-        return Wrap(
-          alignment: WrapAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Wrap(
-                spacing: 8,
-                children: [
-                  ActionChip(
-                    // TODO translation
-                    label: const Text("Today"),
-                    onPressed: () => Navigator.of(sheetCtx).pop(today),
-                  ),
-                  ActionChip(
-                    label: const Text("Yesterday"),
-                    onPressed: () {
-                      final yesterday = today.subtract(const Duration(days: 1));
-                      Navigator.of(sheetCtx).pop(yesterday);
-                    },
-                  ),
-                  ActionChip(
-                    label: const Text("2 days ago"),
-                    onPressed: () {
-                      final twoDaysAgo = today.subtract(const Duration(days: 2));
-                      Navigator.of(sheetCtx).pop(twoDaysAgo);
-                    },
-                  ),
-                ],
+class DateSheet extends StatelessWidget {
+  final BookingDraft draft;
+
+  const DateSheet({super.key, required this.draft});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final today = DateTime.now();
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Wrap(
+            spacing: 8,
+            children: [
+              ActionChip(
+                // TODO translation
+                label: const Text("Today"),
+                onPressed: () => Navigator.of(context).pop(today),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                DateTimeConverter.toEEEEdMMMMYYY(draft.date),
-                style: theme.textTheme.titleMedium,
+              ActionChip(
+                label: const Text("Yesterday"),
+                onPressed: () {
+                  final yesterday = today.subtract(const Duration(days: 1));
+                  Navigator.of(context).pop(yesterday);
+                },
               ),
-            ),
-            const Divider(height: 16),
-            CalendarDatePicker(
-              initialDate: draft.date,
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2100),
-              initialCalendarMode: DatePickerMode.day,
-              onDateChanged: (date) => Navigator.of(sheetCtx).pop(date),
-            ),
-          ],
-        );
-      },
+              ActionChip(
+                label: const Text("2 days ago"),
+                onPressed: () {
+                  final twoDaysAgo = today.subtract(const Duration(days: 2));
+                  Navigator.of(context).pop(twoDaysAgo);
+                },
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            DateTimeConverter.toEEEEdMMMMYYY(draft.date),
+            style: theme.textTheme.titleMedium,
+          ),
+        ),
+        const Divider(height: 16),
+        CalendarDatePicker(
+          initialDate: draft.date,
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2100),
+          initialCalendarMode: DatePickerMode.day,
+          onDateChanged: (date) => Navigator.of(context).pop(date),
+        ),
+      ],
     );
-
-    if (picked != null && context.mounted) {
-      onChange.call(picked);
-    }
   }
 }
