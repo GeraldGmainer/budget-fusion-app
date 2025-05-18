@@ -13,8 +13,13 @@ class CategorySelectInput extends StatelessWidget {
 
   const CategorySelectInput({required this.draft, required this.onChange, required this.hasError});
 
-  _reload(BuildContext context) {
+  void _reload(BuildContext context) {
     BlocProvider.of<CategoryCubit>(context).load();
+  }
+
+  void _onCategoryTap(BuildContext context, Category category) {
+    onChange.call(category);
+    Navigator.of(context).pop();
   }
 
   void _openCategoryPicker(BuildContext context) {
@@ -30,10 +35,7 @@ class CategorySelectInput extends StatelessWidget {
               loaded: (categories) => CategoryListInput(
                 categories: categories,
                 categoryType: draft.categoryType,
-                onCategoryTap: (category) {
-                  onChange.call(category);
-                  Navigator.of(context).pop();
-                },
+                onCategoryTap: (category) => _onCategoryTap(context, category),
                 selectedCategory: draft.category,
               ),
               orElse: () => const Center(child: CircularProgressIndicator()),

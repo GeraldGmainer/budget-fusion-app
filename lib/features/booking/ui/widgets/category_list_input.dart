@@ -2,6 +2,8 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
+enum CategoryPickerRoute { parent, subcategories }
+
 class CategoryListInput extends StatefulWidget {
   final List<Category> categories;
   final CategoryType categoryType;
@@ -24,7 +26,7 @@ class _CategoryListInputState extends State<CategoryListInput> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   late final ValueNotifier<Category?> _selectedCategoryNotifier;
   late final ValueNotifier<CategoryType> _categoryTypeNotifier;
-  String _currentRoute = 'parent';
+  CategoryPickerRoute _currentRoute = CategoryPickerRoute.parent;
   Category? _currentParent;
 
   @override
@@ -42,7 +44,6 @@ class _CategoryListInputState extends State<CategoryListInput> {
     }
     if (widget.categoryType != oldWidget.categoryType) {
       _categoryTypeNotifier.value = widget.categoryType;
-      // _navigatorKey.currentState?.popUntil((route) => route.settings.name == 'parent');
     }
   }
 
@@ -54,44 +55,43 @@ class _CategoryListInputState extends State<CategoryListInput> {
     return true;
   }
 
-  Route _createRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (_, animation, secondaryAnimation) => page,
-      transitionDuration: const Duration(milliseconds: 300),
-      transitionsBuilder: (_, animation, secondaryAnimation, child) {
-        final tween = Tween<Offset>(
-          begin: const Offset(1.0, 0.0),
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.easeInOut));
-        return SlideTransition(position: animation.drive(tween), child: child);
-      },
-    );
-  }
-
-  Route _generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case 'parent':
-        _currentRoute = 'parent';
-        _currentParent = null;
-        return _createRoute(_buildParentPage());
-      case 'subcategories':
-        _currentRoute = 'subcategories';
-        final Category parent = settings.arguments as Category;
-        _currentParent = parent;
-        return _createRoute(_buildSubcategoryPage(parent));
-      default:
-        return _createRoute(_buildParentPage());
-    }
-  }
-
   void _onCreate() {
-    if (_currentRoute == 'parent') {
+    if (_currentRoute == CategoryPickerRoute.parent) {
       print("###### new parent categorty");
       // widget.onCreateParent(context);
     } else if (_currentRoute == 'subcategories' && _currentParent != null) {
       // widget.onCreateSubcategory(context, _currentParent!);
       print("###### new sub categorty $_currentParent");
     }
+  }
+
+  Route _generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case 'parent':
+        _currentRoute = CategoryPickerRoute.parent;
+        _currentParent = null;
+        return _createRoute(_buildParentPage());
+      case 'subcategories':
+        _currentRoute = CategoryPickerRoute.subcategories;
+        final Category parent = settings.arguments as Category;
+        _currentParent = parent;
+        return _createRoute(_buildSubcategoryPage(parent));
+      default:
+        _currentRoute = CategoryPickerRoute.parent;
+        _currentParent = null;
+        return _createRoute(_buildParentPage());
+    }
+  }
+
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (_, animation, secondaryAnimation) => page,
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionsBuilder: (_, animation, secondaryAnimation, child) {
+        final tween = Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
   }
 
   Widget _buildParentPage() {
@@ -255,8 +255,6 @@ class SubcategoryListScreen extends StatelessWidget {
           valueListenable: SelectedCategoryNotifierProvider.of(context),
           builder: (context, selectedCat, _) {
             final subs = parent.subcategories;
-            // sortByName(subs);
-
             return Material(
               color: AppColors.primaryColor,
               child: Column(
