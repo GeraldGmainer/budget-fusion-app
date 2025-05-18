@@ -37,6 +37,7 @@ export 'ui/drawer/app_drawer_button.dart';
 export 'ui/drawer/drawer_header.dart';
 export 'ui/drawer/drawer_item.dart';
 export 'ui/drawer/drawer_section.dart';
+export 'ui/form/app_fab.dart';
 //
 export 'ui/form/disabled_field.dart';
 //

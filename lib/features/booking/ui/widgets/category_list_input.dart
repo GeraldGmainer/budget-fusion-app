@@ -84,6 +84,16 @@ class _CategoryListInputState extends State<CategoryListInput> {
     }
   }
 
+  void _onCreate() {
+    if (_currentRoute == 'parent') {
+      print("###### new parent categorty");
+      // widget.onCreateParent(context);
+    } else if (_currentRoute == 'subcategories' && _currentParent != null) {
+      // widget.onCreateSubcategory(context, _currentParent!);
+      print("###### new sub categorty $_currentParent");
+    }
+  }
+
   Widget _buildParentPage() {
     return ParentCategoryList(
       categories: widget.categories,
@@ -138,18 +148,7 @@ class _CategoryListInputState extends State<CategoryListInput> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (_currentRoute == 'parent') {
-              print("###### new parent categorty");
-              // widget.onCreateParent(context);
-            } else if (_currentRoute == 'subcategories' && _currentParent != null) {
-              // widget.onCreateSubcategory(context, _currentParent!);
-              print("###### new sub categorty $_currentParent");
-            }
-          },
-          child: const Icon(Icons.add),
-        ),
+        floatingActionButton: AppFab.add(_onCreate),
       ),
     );
   }

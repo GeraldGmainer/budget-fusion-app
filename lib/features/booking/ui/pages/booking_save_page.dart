@@ -178,10 +178,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
               if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _onSave(state.draft),
-            child: Icon(Icons.check),
-          ),
+          floatingActionButton: AppFab.save(() => _onSave(state.draft)),
           resizeToAvoidBottomInset: false,
           body: state.maybeWhen(
             draftUpdate: (draft) => _buildContent(draft),

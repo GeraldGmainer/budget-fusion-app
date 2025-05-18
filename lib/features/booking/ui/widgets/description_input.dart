@@ -74,10 +74,6 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
     super.dispose();
   }
 
-  _onTextChanged(String value) {
-    // _finish(value);
-  }
-
   _onSelect(String value) {
     _finish(value);
   }
@@ -101,7 +97,7 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _onSave, child: Icon(Icons.check)),
+      floatingActionButton: AppFab.save(_onSave),
       body: Column(
         children: [
           BlocBuilder<SuggestionCubit, LoadableState>(
@@ -160,7 +156,8 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
         return TextField(
           controller: controller,
           focusNode: focusNode,
-          onChanged: _onTextChanged,
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => _onSave(),
           style: TextStyle(fontSize: 13),
           autofocus: true,
           maxLength: FeatureConstants.descriptionMaxLength,
