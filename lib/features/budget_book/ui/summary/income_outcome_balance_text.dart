@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:decimal/decimal.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class IncomeOutcomeBalanceText extends StatefulWidget {
@@ -30,10 +31,6 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
         transitionBuilder: (Widget child, Animation<double> animation) {
           return ScaleTransition(scale: animation, child: child);
         },
-        // child: Container(
-        //   color: Colors.yellow,
-        //   child: (_showBalance ? _buildBalance() : _buildIncomeOutcome()),
-        // ),
         child: (_showBalance ? _buildBalance() : _buildIncomeOutcome()),
       ),
     );
@@ -47,7 +44,7 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text("Balance", style: TextStyle(fontSize: 14)),
+          Text("budgetBook.tabs.summary.balance".tr(), style: TextStyle(fontSize: 14)),
           CurrencyText(
             value: balance,
             currency: widget.currency,
@@ -66,18 +63,8 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CurrencyText(
-            value: widget.income,
-            currency: widget.currency,
-            color: AppColors.incomeColor,
-            fontSize: 16,
-          ),
-          CurrencyText(
-            value: widget.outcome,
-            currency: widget.currency,
-            color: AppColors.outcomeColor,
-            fontSize: 16,
-          ),
+          CurrencyText(value: widget.income, currency: widget.currency, color: AppColors.incomeColor, fontSize: 16),
+          CurrencyText(value: widget.outcome, currency: widget.currency, color: AppColors.outcomeColor, fontSize: 16),
         ],
       ),
     );

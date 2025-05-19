@@ -12,7 +12,8 @@ part of 'transaction_group.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TransactionGroup {
@@ -30,8 +31,9 @@ mixin _$TransactionGroup {
 /// @nodoc
 abstract class $TransactionGroupCopyWith<$Res> {
   factory $TransactionGroupCopyWith(
-          TransactionGroup value, $Res Function(TransactionGroup) then) =
-      _$TransactionGroupCopyWithImpl<$Res, TransactionGroup>;
+    TransactionGroup value,
+    $Res Function(TransactionGroup) then,
+  ) = _$TransactionGroupCopyWithImpl<$Res, TransactionGroup>;
   @useResult
   $Res call({DateTime date, Currency currency, List<Booking> bookings});
 
@@ -57,20 +59,26 @@ class _$TransactionGroupCopyWithImpl<$Res, $Val extends TransactionGroup>
     Object? currency = null,
     Object? bookings = null,
   }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      bookings: null == bookings
-          ? _value.bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            date:
+                null == date
+                    ? _value.date
+                    : date // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as Currency,
+            bookings:
+                null == bookings
+                    ? _value.bookings
+                    : bookings // ignore: cast_nullable_to_non_nullable
+                        as List<Booking>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of TransactionGroup
@@ -87,9 +95,10 @@ class _$TransactionGroupCopyWithImpl<$Res, $Val extends TransactionGroup>
 /// @nodoc
 abstract class _$$TransactionGroupImplCopyWith<$Res>
     implements $TransactionGroupCopyWith<$Res> {
-  factory _$$TransactionGroupImplCopyWith(_$TransactionGroupImpl value,
-          $Res Function(_$TransactionGroupImpl) then) =
-      __$$TransactionGroupImplCopyWithImpl<$Res>;
+  factory _$$TransactionGroupImplCopyWith(
+    _$TransactionGroupImpl value,
+    $Res Function(_$TransactionGroupImpl) then,
+  ) = __$$TransactionGroupImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime date, Currency currency, List<Booking> bookings});
@@ -102,9 +111,10 @@ abstract class _$$TransactionGroupImplCopyWith<$Res>
 class __$$TransactionGroupImplCopyWithImpl<$Res>
     extends _$TransactionGroupCopyWithImpl<$Res, _$TransactionGroupImpl>
     implements _$$TransactionGroupImplCopyWith<$Res> {
-  __$$TransactionGroupImplCopyWithImpl(_$TransactionGroupImpl _value,
-      $Res Function(_$TransactionGroupImpl) _then)
-      : super(_value, _then);
+  __$$TransactionGroupImplCopyWithImpl(
+    _$TransactionGroupImpl _value,
+    $Res Function(_$TransactionGroupImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TransactionGroup
   /// with the given fields replaced by the non-null parameter values.
@@ -115,32 +125,37 @@ class __$$TransactionGroupImplCopyWithImpl<$Res>
     Object? currency = null,
     Object? bookings = null,
   }) {
-    return _then(_$TransactionGroupImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      bookings: null == bookings
-          ? _value._bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
-    ));
+    return _then(
+      _$TransactionGroupImpl(
+        date:
+            null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as Currency,
+        bookings:
+            null == bookings
+                ? _value._bookings
+                : bookings // ignore: cast_nullable_to_non_nullable
+                    as List<Booking>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TransactionGroupImpl extends _TransactionGroup {
-  const _$TransactionGroupImpl(
-      {required this.date,
-      required this.currency,
-      required final List<Booking> bookings})
-      : _bookings = bookings,
-        super._();
+  const _$TransactionGroupImpl({
+    required this.date,
+    required this.currency,
+    required final List<Booking> bookings,
+  }) : _bookings = bookings,
+       super._();
 
   @override
   final DateTime date;
@@ -171,8 +186,12 @@ class _$TransactionGroupImpl extends _TransactionGroup {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, date, currency,
-      const DeepCollectionEquality().hash(_bookings));
+  int get hashCode => Object.hash(
+    runtimeType,
+    date,
+    currency,
+    const DeepCollectionEquality().hash(_bookings),
+  );
 
   /// Create a copy of TransactionGroup
   /// with the given fields replaced by the non-null parameter values.
@@ -181,14 +200,17 @@ class _$TransactionGroupImpl extends _TransactionGroup {
   @pragma('vm:prefer-inline')
   _$$TransactionGroupImplCopyWith<_$TransactionGroupImpl> get copyWith =>
       __$$TransactionGroupImplCopyWithImpl<_$TransactionGroupImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TransactionGroup extends TransactionGroup {
-  const factory _TransactionGroup(
-      {required final DateTime date,
-      required final Currency currency,
-      required final List<Booking> bookings}) = _$TransactionGroupImpl;
+  const factory _TransactionGroup({
+    required final DateTime date,
+    required final Currency currency,
+    required final List<Booking> bookings,
+  }) = _$TransactionGroupImpl;
   const _TransactionGroup._() : super._();
 
   @override

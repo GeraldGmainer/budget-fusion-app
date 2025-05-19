@@ -12,7 +12,8 @@ part of 'account.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Account {
@@ -33,12 +34,13 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res, Account>;
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      String iconName,
-      String iconColor,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    String name,
+    String iconName,
+    String iconColor,
+    DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -62,44 +64,54 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? iconColor = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
   factory _$$AccountImplCopyWith(
-          _$AccountImpl value, $Res Function(_$AccountImpl) then) =
-      __$$AccountImplCopyWithImpl<$Res>;
+    _$AccountImpl value,
+    $Res Function(_$AccountImpl) then,
+  ) = __$$AccountImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      String iconName,
-      String iconColor,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    String name,
+    String iconName,
+    String iconColor,
+    DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -107,8 +119,9 @@ class __$$AccountImplCopyWithImpl<$Res>
     extends _$AccountCopyWithImpl<$Res, _$AccountImpl>
     implements _$$AccountImplCopyWith<$Res> {
   __$$AccountImplCopyWithImpl(
-      _$AccountImpl _value, $Res Function(_$AccountImpl) _then)
-      : super(_value, _then);
+    _$AccountImpl _value,
+    $Res Function(_$AccountImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -121,41 +134,48 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$AccountImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$AccountImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$AccountImpl extends _Account {
-  const _$AccountImpl(
-      {required this.id,
-      required this.name,
-      required this.iconName,
-      required this.iconColor,
-      required this.updatedAt})
-      : super._();
+  const _$AccountImpl({
+    required this.id,
+    required this.name,
+    required this.iconName,
+    required this.iconColor,
+    required this.updatedAt,
+  }) : super._();
 
   @override
   final Uuid id;
@@ -202,12 +222,13 @@ class _$AccountImpl extends _Account {
 }
 
 abstract class _Account extends Account {
-  const factory _Account(
-      {required final Uuid id,
-      required final String name,
-      required final String iconName,
-      required final String iconColor,
-      required final DateTime updatedAt}) = _$AccountImpl;
+  const factory _Account({
+    required final Uuid id,
+    required final String name,
+    required final String iconName,
+    required final String iconColor,
+    required final DateTime updatedAt,
+  }) = _$AccountImpl;
   const _Account._() : super._();
 
   @override

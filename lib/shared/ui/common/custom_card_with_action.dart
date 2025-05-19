@@ -34,28 +34,14 @@ class CustomCardWithAction extends StatelessWidget {
           if (onOptionTap != null && !floatingOption) _buildContentWithOptionTap(),
           if (onOptionTap == null || floatingOption) _buildContent(),
           if (onOptionTap != null && floatingOption)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: IconButton(
-                icon: Icon(icon, size: 20),
-                onPressed: onOptionTap,
-              ),
-            ),
+            Positioned(top: 0, right: 0, child: IconButton(icon: Icon(icon, size: 20), onPressed: onOptionTap, visualDensity: VisualDensity.compact)),
           if (onShowMoreTap != null)
             Positioned(
               bottom: 0,
               right: 0,
               child: TextButton(
                 onPressed: onShowMoreTap,
-                child: Text(
-                  'Show More',
-                  style: TextStyle(
-                    color: AppColors.accentColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
+                child: Text('Show More', style: TextStyle(color: AppColors.accentColor, fontWeight: FontWeight.bold, fontSize: 13)),
               ),
             ),
         ],
@@ -64,10 +50,7 @@ class CustomCardWithAction extends StatelessWidget {
   }
 
   Widget _buildContent() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: child,
-    );
+    return Padding(padding: const EdgeInsets.all(8.0), child: child);
   }
 
   Widget _buildContentWithOptionTap() {
@@ -76,23 +59,11 @@ class CustomCardWithAction extends StatelessWidget {
         Row(
           children: [
             const SizedBox(width: 8.0),
-            Expanded(
-              child: Text(
-                title!,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600).merge(titleStyle),
-              ),
-            ),
-            if (onOptionTap != null)
-              IconButton(
-                icon: Icon(icon, size: 20),
-                onPressed: onOptionTap,
-              ),
+            Expanded(child: Text(title!, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600).merge(titleStyle))),
+            if (onOptionTap != null) IconButton(icon: Icon(icon, size: 20), onPressed: onOptionTap, visualDensity: VisualDensity.compact),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-          child: child,
-        ),
+        Padding(padding: const EdgeInsets.fromLTRB(8, 0, 8, 8), child: child),
       ],
     );
   }

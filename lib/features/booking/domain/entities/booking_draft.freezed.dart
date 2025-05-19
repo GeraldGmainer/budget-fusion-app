@@ -12,7 +12,8 @@ part of 'booking_draft.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$BookingDraft {
@@ -34,17 +35,19 @@ mixin _$BookingDraft {
 /// @nodoc
 abstract class $BookingDraftCopyWith<$Res> {
   factory $BookingDraftCopyWith(
-          BookingDraft value, $Res Function(BookingDraft) then) =
-      _$BookingDraftCopyWithImpl<$Res, BookingDraft>;
+    BookingDraft value,
+    $Res Function(BookingDraft) then,
+  ) = _$BookingDraftCopyWithImpl<$Res, BookingDraft>;
   @useResult
-  $Res call(
-      {Uuid? id,
-      DateTime date,
-      String? description,
-      Decimal amount,
-      Category? category,
-      Account? account,
-      CategoryType categoryType});
+  $Res call({
+    Uuid? id,
+    DateTime date,
+    String? description,
+    Decimal amount,
+    Category? category,
+    Account? account,
+    CategoryType categoryType,
+  });
 
   $CategoryCopyWith<$Res>? get category;
   $AccountCopyWith<$Res>? get account;
@@ -73,36 +76,46 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
     Object? account = freezed,
     Object? categoryType = null,
   }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      account: freezed == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                freezed == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid?,
+            date:
+                null == date
+                    ? _value.date
+                    : date // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            description:
+                freezed == description
+                    ? _value.description
+                    : description // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            amount:
+                null == amount
+                    ? _value.amount
+                    : amount // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+            category:
+                freezed == category
+                    ? _value.category
+                    : category // ignore: cast_nullable_to_non_nullable
+                        as Category?,
+            account:
+                freezed == account
+                    ? _value.account
+                    : account // ignore: cast_nullable_to_non_nullable
+                        as Account?,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of BookingDraft
@@ -138,18 +151,20 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
 abstract class _$$BookingDraftImplCopyWith<$Res>
     implements $BookingDraftCopyWith<$Res> {
   factory _$$BookingDraftImplCopyWith(
-          _$BookingDraftImpl value, $Res Function(_$BookingDraftImpl) then) =
-      __$$BookingDraftImplCopyWithImpl<$Res>;
+    _$BookingDraftImpl value,
+    $Res Function(_$BookingDraftImpl) then,
+  ) = __$$BookingDraftImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid? id,
-      DateTime date,
-      String? description,
-      Decimal amount,
-      Category? category,
-      Account? account,
-      CategoryType categoryType});
+  $Res call({
+    Uuid? id,
+    DateTime date,
+    String? description,
+    Decimal amount,
+    Category? category,
+    Account? account,
+    CategoryType categoryType,
+  });
 
   @override
   $CategoryCopyWith<$Res>? get category;
@@ -162,8 +177,9 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
     extends _$BookingDraftCopyWithImpl<$Res, _$BookingDraftImpl>
     implements _$$BookingDraftImplCopyWith<$Res> {
   __$$BookingDraftImplCopyWithImpl(
-      _$BookingDraftImpl _value, $Res Function(_$BookingDraftImpl) _then)
-      : super(_value, _then);
+    _$BookingDraftImpl _value,
+    $Res Function(_$BookingDraftImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -178,51 +194,60 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
     Object? account = freezed,
     Object? categoryType = null,
   }) {
-    return _then(_$BookingDraftImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      account: freezed == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-    ));
+    return _then(
+      _$BookingDraftImpl(
+        id:
+            freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid?,
+        date:
+            null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        description:
+            freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        amount:
+            null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+        category:
+            freezed == category
+                ? _value.category
+                : category // ignore: cast_nullable_to_non_nullable
+                    as Category?,
+        account:
+            freezed == account
+                ? _value.account
+                : account // ignore: cast_nullable_to_non_nullable
+                    as Account?,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$BookingDraftImpl extends _BookingDraft {
-  _$BookingDraftImpl(
-      {this.id,
-      required this.date,
-      this.description,
-      required this.amount,
-      this.category,
-      this.account,
-      this.categoryType = CategoryType.outcome})
-      : super._();
+  _$BookingDraftImpl({
+    this.id,
+    required this.date,
+    this.description,
+    required this.amount,
+    this.category,
+    this.account,
+    this.categoryType = CategoryType.outcome,
+  }) : super._();
 
   @override
   final Uuid? id;
@@ -263,8 +288,16 @@ class _$BookingDraftImpl extends _BookingDraft {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, date, description, amount,
-      category, account, categoryType);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    date,
+    description,
+    amount,
+    category,
+    account,
+    categoryType,
+  );
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -276,14 +309,15 @@ class _$BookingDraftImpl extends _BookingDraft {
 }
 
 abstract class _BookingDraft extends BookingDraft {
-  factory _BookingDraft(
-      {final Uuid? id,
-      required final DateTime date,
-      final String? description,
-      required final Decimal amount,
-      final Category? category,
-      final Account? account,
-      final CategoryType categoryType}) = _$BookingDraftImpl;
+  factory _BookingDraft({
+    final Uuid? id,
+    required final DateTime date,
+    final String? description,
+    required final Decimal amount,
+    final Category? category,
+    final Account? account,
+    final CategoryType categoryType,
+  }) = _$BookingDraftImpl;
   _BookingDraft._() : super._();
 
   @override

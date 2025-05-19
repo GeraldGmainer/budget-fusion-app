@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,13 +35,7 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           itemBuilder: (ctx) {
             final isLoading = ctx.read<BudgetBookCubit>().state.isLoading;
-            return [
-              _buildReload(isLoading),
-              PopupMenuItem<BudgetMenuAction>(
-                value: BudgetMenuAction.settings,
-                child: Text('Settings'),
-              )
-            ];
+            return [_buildReload(isLoading), PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr()))];
           },
         ),
       ],
@@ -48,10 +43,6 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   PopupMenuItem<BudgetMenuAction> _buildReload(bool isLoading) {
-    return PopupMenuItem<BudgetMenuAction>(
-      value: BudgetMenuAction.reload,
-      enabled: !isLoading,
-      child: Text('Reload Data'),
-    );
+    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.reload, enabled: !isLoading, child: Text('Reload Data'));
   }
 }

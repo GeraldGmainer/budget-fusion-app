@@ -12,7 +12,8 @@ part of 'profile_setting_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 ProfileSettingDto _$ProfileSettingDtoFromJson(Map<String, dynamic> json) {
   return _ProfileSettingDto.fromJson(json);
@@ -45,14 +46,16 @@ mixin _$ProfileSettingDto {
 /// @nodoc
 abstract class $ProfileSettingDtoCopyWith<$Res> {
   factory $ProfileSettingDtoCopyWith(
-          ProfileSettingDto value, $Res Function(ProfileSettingDto) then) =
-      _$ProfileSettingDtoCopyWithImpl<$Res, ProfileSettingDto>;
+    ProfileSettingDto value,
+    $Res Function(ProfileSettingDto) then,
+  ) = _$ProfileSettingDtoCopyWithImpl<$Res, ProfileSettingDto>;
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
-      @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
+    @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 
   $CurrencyDtoCopyWith<$Res> get currency;
 }
@@ -77,24 +80,31 @@ class _$ProfileSettingDtoCopyWithImpl<$Res, $Val extends ProfileSettingDto>
     Object? currency = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as CurrencyDto,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            userId:
+                null == userId
+                    ? _value.userId
+                    : userId // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as CurrencyDto,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ProfileSettingDto
@@ -111,16 +121,18 @@ class _$ProfileSettingDtoCopyWithImpl<$Res, $Val extends ProfileSettingDto>
 /// @nodoc
 abstract class _$$ProfileSettingDtoImplCopyWith<$Res>
     implements $ProfileSettingDtoCopyWith<$Res> {
-  factory _$$ProfileSettingDtoImplCopyWith(_$ProfileSettingDtoImpl value,
-          $Res Function(_$ProfileSettingDtoImpl) then) =
-      __$$ProfileSettingDtoImplCopyWithImpl<$Res>;
+  factory _$$ProfileSettingDtoImplCopyWith(
+    _$ProfileSettingDtoImpl value,
+    $Res Function(_$ProfileSettingDtoImpl) then,
+  ) = __$$ProfileSettingDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
-      @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
+    @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 
   @override
   $CurrencyDtoCopyWith<$Res> get currency;
@@ -130,9 +142,10 @@ abstract class _$$ProfileSettingDtoImplCopyWith<$Res>
 class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
     extends _$ProfileSettingDtoCopyWithImpl<$Res, _$ProfileSettingDtoImpl>
     implements _$$ProfileSettingDtoImplCopyWith<$Res> {
-  __$$ProfileSettingDtoImplCopyWithImpl(_$ProfileSettingDtoImpl _value,
-      $Res Function(_$ProfileSettingDtoImpl) _then)
-      : super(_value, _then);
+  __$$ProfileSettingDtoImplCopyWithImpl(
+    _$ProfileSettingDtoImpl _value,
+    $Res Function(_$ProfileSettingDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
@@ -144,40 +157,42 @@ class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
     Object? currency = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$ProfileSettingDtoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as CurrencyDto,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$ProfileSettingDtoImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        userId:
+            null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as CurrencyDto,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
-  const _$ProfileSettingDtoImpl(
-      {@UuidSerializer() required this.id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
-      @JsonKey(name: 'currency')
-      @CurrencyDtoSerializer()
-      required this.currency,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required this.updatedAt})
-      : super._();
+  const _$ProfileSettingDtoImpl({
+    @UuidSerializer() required this.id,
+    @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
+    @JsonKey(name: 'currency') @CurrencyDtoSerializer() required this.currency,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
+  }) : super._();
 
   factory _$ProfileSettingDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileSettingDtoImplFromJson(json);
@@ -227,26 +242,27 @@ class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
   @pragma('vm:prefer-inline')
   _$$ProfileSettingDtoImplCopyWith<_$ProfileSettingDtoImpl> get copyWith =>
       __$$ProfileSettingDtoImplCopyWithImpl<_$ProfileSettingDtoImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileSettingDtoImplToJson(
-      this,
-    );
+    return _$$ProfileSettingDtoImplToJson(this);
   }
 }
 
 abstract class _ProfileSettingDto extends ProfileSettingDto {
-  const factory _ProfileSettingDto(
-      {@UuidSerializer() required final Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
-      @JsonKey(name: 'currency')
-      @CurrencyDtoSerializer()
-      required final CurrencyDto currency,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required final DateTime updatedAt}) = _$ProfileSettingDtoImpl;
+  const factory _ProfileSettingDto({
+    @UuidSerializer() required final Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
+    @JsonKey(name: 'currency')
+    @CurrencyDtoSerializer()
+    required final CurrencyDto currency,
+    @JsonKey(name: 'updated_at')
+    @DateTimeSerializer()
+    required final DateTime updatedAt,
+  }) = _$ProfileSettingDtoImpl;
   const _ProfileSettingDto._() : super._();
 
   factory _ProfileSettingDto.fromJson(Map<String, dynamic> json) =

@@ -1,148 +1,183 @@
 {
   "error": {
-    "internet": "Keine Internetverbindung",
-    "default": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-    "auth_error": "Authentifizierung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldeinformationen.",
-    "postgrest_error": "Datenbankfehler. Bitte versuchen Sie es später erneut."
+    "internet": "Network error. Please try again",
+    "default": "An error occurred. Please try again",
+    "authError": "Authentication failed. Please check your credentials",
+    "postgrestError": "Database error. Please try again later",
+    "unauthenticated": "Please log in to continue"
   },
-  "main": {
-    "title": "Budget Book",
-    "drawer": {
-      "account_label": "Account",
-      "period_label": "Period",
-      "view_label": "View",
-      "category_button": "Categories",
-      "account_button": "Accounts",
-      "settings_button": "Settings"
+  "shared": {
+    "button": {
+      "ok": "OK",
+      "cancel": "Cancel",
+      "save": "Save",
+      "add": "Add",
+      "settings": "Settings"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Please enter a valid email address.",
+      "minLength": "Must be at least {} characters.",
+      "maxLength": "Must be no more than {} characters.",
+      "number": "Please enter a valid number."
     }
   },
   "account": {
-    "all_accounts": "All Accounts",
-    "display_account": "Display Account"
-  },
-  "button": {
-    "create": "Add",
-    "edit": "Save"
-  },
-  "booking": {
-    "new_title": "New",
-    "edit_title": "Edit",
-    "choose_category_button": "Account & Category",
-    "select_account": "Select an Account",
-    "outcome_type": "Outcome",
-    "income_type": "Income",
-    "today": "today",
-    "yesterday": "yesterday",
-    "before_yesterday": "2 days ago",
-    "note": "Note",
-    "dialog": {
-      "delete_title": "Delete",
-      "delete_body": "Do you want to delete this booking?"
+    "title": "Accounts",
+    "newTitle": "New",
+    "editTitle": "Edit",
+    "list": {
+      "empty": "No accounts yet",
+      "add": "Add account"
     },
-    "validation": {
-      "required_category": "Please select a category"
-    },
-    "create_success": "Booking created",
-    "edit_success": "Booking edited",
-    "delete_success": "Booking deleted"
-  },
-  "category": {
-    "new_title_parent": "New Category",
-    "edit_title_parent": "Edit Category",
-    "new_title_sub": "New Sub-Category",
-    "edit_title_sub": "Edit Sub-Category",
-    "list_title": "Categories",
-    "select_icon_label": "Select an icon",
-    "select_color_label": "Select a color",
-    "name_label": "Category name",
-    "type_label": "Category Type",
-    "dialog": {
-      "delete_title": "Delete",
-      "delete_body": "Do you want to delete this category?"
-    },
-    "validation": {
-      "required_icon_color": "Select an icon and a color",
-      "required_name": "Enter a name"
-    },
-    "create_success": "Category created",
-    "edit_success": "Category edited",
-    "delete_success": "Category deleted",
-    "error": {
-      "create": "Could not create the category. Please try again",
-      "edit": "Could not edit the category. Please try again",
-      "foreign_key": "Category is still used and cannot be deleted"
+    "fields": {
+      "name": "Name"
     }
   },
-  "currency": {
-    "name": "Currency"
-  },
-  "dialog": {
-    "ok": "OK",
-    "cancel": "Cancel"
-  },
-  "language": {
-    "name": "Language",
-    "dialog": {
-      "title": "Select a Language"
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in"
     },
-    "en": "English",
-    "de": "German"
-  },
-  "login": {
-    "title": "Login",
-    "sign_with_label": "Sign in with",
-    "or_continue_with_label": "or continue with",
-    "forgot_password_label": "Forgot your password?",
-    "dont_have_account_label": "Don't have an account yet? Sign up",
-    "email": "Email",
-    "password": "Password",
-    "confirm_password": "Confirm Password",
-    "login_button": "Login",
-    "error": {
-      "incorrect_credentials": "Incorrect email or password",
-      "logout": "Could not logout. Please try again",
-      "token_not_found": "token not found",
-      "signature_invalid": "Signature Invalid",
-      "default": "Could not login. Please try again"
+    "signup": {
+      "title": "Sign up",
+      "email": "Email",
+      "password": "Password",
+      "confirm": "Confirm password"
     },
-    "logout": {
-      "dialog": {
-        "title": "Logout",
-        "body": "Do you want to logout?"
+    "errors": {
+      "invalidCredentials": "Invalid username or password."
+    }
+  },
+  "booking": {
+    "title": "Bookings",
+    "newTitle": "New",
+    "editTitle": "Edit",
+    "fields": {
+      "date": "Date",
+      "amount": "Amount",
+      "category": "Category",
+      "account": "Account",
+      "type": "Type",
+      "description": "Description"
+    },
+    "enums": {
+      "categoryType": {
+        "income": "Income",
+        "outcome": "Outcome"
+      }
+    },
+    "notifications": {
+      "success": {
+        "create": "Booking created",
+        "edit": "Booking edited",
+        "delete": "Booking deleted"
+      },
+      "error": {
+        "create": "Unable to save booking. Please try again",
+        "edit": "Unable to update booking. Please try again",
+        "delete": "Could not delete booking. Please try again"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete booking?",
+        "body": "Are you sure you want to delete this booking? This action cannot be undone."
+      },
+      "account": {
+        "title": "Select an account"
+      },
+      "category": {
+        "title": "Select a category",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "twoDaysAgo": "2 days ago"
+      },
+      "description": {
+        "title": "Enter a description"
       }
     }
   },
-  "period": {
-    "day": "Day",
-    "month": "Month",
-    "year": "Year",
-    "all": "All"
+  "budgetBook": {
+    "title": "Budget Book",
+    "subtitle": {
+      "transactionAccount": "{} for {} - {{period}}",
+      "outcomesPeriod": "Outcomes - {}",
+      "allTransactionsAccount": "All Transactions for {} - {}",
+      "allTransactionsPeriod": "All Transactions - {}"
+    },
+    "enums": {
+      "periodMode": {
+        "day": "Day",
+        "month": "Month",
+        "year": "Year",
+        "all": "All"
+      },
+      "budgetViewMode": {
+        "summary": "Summary",
+        "transaction": "Transaction",
+        "calendar": "Calendar"
+      }
+    },
+    "tabs": {
+      "empty": "No data available",
+      "summary": {
+        "title": "Category summary",
+        "subCategories": "{} Sub-categories",
+        "balance": "Balance"
+      },
+      "transaction": {
+        "empty": "No transactions found"
+      },
+      "calendar": {
+      }
+    }
   },
-  "transaction_type": {
-    "outcome": "Outcome",
-    "income": "Income"
+  "category": {
+    "title": "Categories",
+    "newParentTitle": "New",
+    "editParentTitle": "Edit",
+    "newSubcategoryTitle": "New Sub-category",
+    "editSubcategoryTitle": "Edit Sub-category",
+    "fields": {
+      "name": "Name",
+      "icon": "Icon",
+      "color": "Color",
+      "parent": "Parent category"
+    },
+    "list": {
+      "empty": "No categories found",
+      "emptySubcategory": "No sub-categories",
+      "subcategoryCount": "{} sub-categories",
+      "subcategories": "Sub-categories"
+    },
+    "notifications": {
+      "success": {
+        "create": "Category created",
+        "edit": "Category edited",
+        "delete": "Category deleted"
+      },
+      "error": {
+        "create": "Unable to save category. Please try again",
+        "edit": "Unable to update category. Please try again",
+        "delete": "Could not delete category. Please try again"
+      }
+    },
+    "dialogs": {
+      "delete": {
+        "title": "Delete category?",
+        "body": "Are you sure you want to delete this category? This action cannot be undone."
+      },
+      "icon": {
+        "title": "Select icon & color"
+      }
+    }
   },
   "profile": {
-    "name": "Name",
-    "email": "Email"
-  },
-  "settings": {
-    "title": "Settings",
-    "general_label": "General",
-    "account_label": "Account",
-    "other_label": "Other",
-    "logout_button": "Logout",
-    "my_profile": "My Profile"
-  },
-  "sign_up": {
-    "title": "Sign Up",
-    "sign_up_button": "Sign up",
-    "success": "Sign up success",
-    "success_detail": "Check your inbox to verify your email address"
-  },
-  "view": {
-    "graph": "Graph",
-    "calendar": "Calendar",
-    "list": "List"
+    "title": "Profile",
+    "edit": "Edit Profile",
+    "logout": "Log out"
   }
 }

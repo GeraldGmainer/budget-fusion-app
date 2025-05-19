@@ -12,7 +12,8 @@ part of 'category_draft.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CategoryDraft {
@@ -34,17 +35,19 @@ mixin _$CategoryDraft {
 /// @nodoc
 abstract class $CategoryDraftCopyWith<$Res> {
   factory $CategoryDraftCopyWith(
-          CategoryDraft value, $Res Function(CategoryDraft) then) =
-      _$CategoryDraftCopyWithImpl<$Res, CategoryDraft>;
+    CategoryDraft value,
+    $Res Function(CategoryDraft) then,
+  ) = _$CategoryDraftCopyWithImpl<$Res, CategoryDraft>;
   @useResult
-  $Res call(
-      {Uuid? id,
-      String? name,
-      CategoryType categoryType,
-      String iconName,
-      String iconColor,
-      Category? parent,
-      List<Category> subcategories});
+  $Res call({
+    Uuid? id,
+    String? name,
+    CategoryType categoryType,
+    String iconName,
+    String iconColor,
+    Category? parent,
+    List<Category> subcategories,
+  });
 
   $CategoryCopyWith<$Res>? get parent;
 }
@@ -72,36 +75,46 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
     Object? parent = freezed,
     Object? subcategories = null,
   }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      subcategories: null == subcategories
-          ? _value.subcategories
-          : subcategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                freezed == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid?,
+            name:
+                freezed == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            parent:
+                freezed == parent
+                    ? _value.parent
+                    : parent // ignore: cast_nullable_to_non_nullable
+                        as Category?,
+            subcategories:
+                null == subcategories
+                    ? _value.subcategories
+                    : subcategories // ignore: cast_nullable_to_non_nullable
+                        as List<Category>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CategoryDraft
@@ -123,18 +136,20 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
 abstract class _$$CategoryDraftImplCopyWith<$Res>
     implements $CategoryDraftCopyWith<$Res> {
   factory _$$CategoryDraftImplCopyWith(
-          _$CategoryDraftImpl value, $Res Function(_$CategoryDraftImpl) then) =
-      __$$CategoryDraftImplCopyWithImpl<$Res>;
+    _$CategoryDraftImpl value,
+    $Res Function(_$CategoryDraftImpl) then,
+  ) = __$$CategoryDraftImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid? id,
-      String? name,
-      CategoryType categoryType,
-      String iconName,
-      String iconColor,
-      Category? parent,
-      List<Category> subcategories});
+  $Res call({
+    Uuid? id,
+    String? name,
+    CategoryType categoryType,
+    String iconName,
+    String iconColor,
+    Category? parent,
+    List<Category> subcategories,
+  });
 
   @override
   $CategoryCopyWith<$Res>? get parent;
@@ -145,8 +160,9 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
     extends _$CategoryDraftCopyWithImpl<$Res, _$CategoryDraftImpl>
     implements _$$CategoryDraftImplCopyWith<$Res> {
   __$$CategoryDraftImplCopyWithImpl(
-      _$CategoryDraftImpl _value, $Res Function(_$CategoryDraftImpl) _then)
-      : super(_value, _then);
+    _$CategoryDraftImpl _value,
+    $Res Function(_$CategoryDraftImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -161,52 +177,61 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? subcategories = null,
   }) {
-    return _then(_$CategoryDraftImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      subcategories: null == subcategories
-          ? _value._subcategories
-          : subcategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-    ));
+    return _then(
+      _$CategoryDraftImpl(
+        id:
+            freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid?,
+        name:
+            freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        parent:
+            freezed == parent
+                ? _value.parent
+                : parent // ignore: cast_nullable_to_non_nullable
+                    as Category?,
+        subcategories:
+            null == subcategories
+                ? _value._subcategories
+                : subcategories // ignore: cast_nullable_to_non_nullable
+                    as List<Category>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CategoryDraftImpl extends _CategoryDraft {
-  _$CategoryDraftImpl(
-      {this.id,
-      this.name,
-      this.categoryType = CategoryType.outcome,
-      this.iconName = "book_open_outline",
-      this.iconColor = "9E9E9E",
-      this.parent,
-      final List<Category> subcategories = const []})
-      : _subcategories = subcategories,
-        super._();
+  _$CategoryDraftImpl({
+    this.id,
+    this.name,
+    this.categoryType = CategoryType.outcome,
+    this.iconName = "book_open_outline",
+    this.iconColor = "9E9E9E",
+    this.parent,
+    final List<Category> subcategories = const [],
+  }) : _subcategories = subcategories,
+       super._();
 
   @override
   final Uuid? id;
@@ -251,13 +276,23 @@ class _$CategoryDraftImpl extends _CategoryDraft {
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
             (identical(other.parent, parent) || other.parent == parent) &&
-            const DeepCollectionEquality()
-                .equals(other._subcategories, _subcategories));
+            const DeepCollectionEquality().equals(
+              other._subcategories,
+              _subcategories,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, categoryType, iconName,
-      iconColor, parent, const DeepCollectionEquality().hash(_subcategories));
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    categoryType,
+    iconName,
+    iconColor,
+    parent,
+    const DeepCollectionEquality().hash(_subcategories),
+  );
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -269,14 +304,15 @@ class _$CategoryDraftImpl extends _CategoryDraft {
 }
 
 abstract class _CategoryDraft extends CategoryDraft {
-  factory _CategoryDraft(
-      {final Uuid? id,
-      final String? name,
-      final CategoryType categoryType,
-      final String iconName,
-      final String iconColor,
-      final Category? parent,
-      final List<Category> subcategories}) = _$CategoryDraftImpl;
+  factory _CategoryDraft({
+    final Uuid? id,
+    final String? name,
+    final CategoryType categoryType,
+    final String iconName,
+    final String iconColor,
+    final Category? parent,
+    final List<Category> subcategories,
+  }) = _$CategoryDraftImpl;
   _CategoryDraft._() : super._();
 
   @override

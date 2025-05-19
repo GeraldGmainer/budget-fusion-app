@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("login.sign_with_label".tr()),
+          Text("Sign in with"),
           const SizedBox(height: AppDimensions.verticalPadding),
           _buildGoogleLogin(widget.isLoading),
           const SizedBox(height: AppDimensions.verticalPadding),
@@ -82,11 +82,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget _buildGoogleLogin(bool isLoading) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton.icon(
-        icon: const Icon(CommunityMaterialIcons.google),
-        label: const Text("Google"),
-        onPressed: isLoading ? null : _googleLogin,
-      ),
+      child: ElevatedButton.icon(icon: const Icon(CommunityMaterialIcons.google), label: const Text("Google"), onPressed: isLoading ? null : _googleLogin),
     );
   }
 
@@ -94,57 +90,34 @@ class _LoginFormState extends State<LoginForm> {
     return Row(
       children: [
         Expanded(child: Container(margin: const EdgeInsets.only(right: 8), child: const Divider(color: Colors.white))),
-        Text("login.or_continue_with_label".tr()),
+        Text("or continue with"),
         Expanded(child: Container(margin: const EdgeInsets.only(left: 8), child: const Divider(color: Colors.white))),
       ],
     );
   }
 
   Widget _buildEmail(bool isLoading) {
-    return FormInputText(
-      controller: _emailController,
-      label: "login.email".tr(),
-      validator: ValidationBuilder().email().build(),
-      isLoading: isLoading,
-    );
+    return FormInputText(controller: _emailController, label: "auth.login.email".tr(), validator: ValidationBuilder().email().build(), isLoading: isLoading);
   }
 
   Widget _buildPassword(bool isLoading) {
     return FormInputPassword(
       controller: _passwordController,
-      label: "login.password".tr(),
+      label: "auth.login.password".tr(),
       validator: ValidationBuilder().required().build(),
       isLoading: isLoading,
     );
   }
 
   Widget _buildLoginButton(bool isLoading) {
-    return SizedBox(
-      width: double.infinity,
-      child: FormButton(
-        text: "login.login_button".tr(),
-        onPressed: _credentialsLogin,
-        isLoading: isLoading,
-      ),
-    );
+    return SizedBox(width: double.infinity, child: FormButton(text: "auth.login.submit".tr(), onPressed: _credentialsLogin, isLoading: isLoading));
   }
 
   Widget _buildForgotPassword(bool isLoading) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        TextButton(
-          onPressed: isLoading ? null : _forgotPassword,
-          child: Text("login.forgot_password_label".tr()),
-        ),
-      ],
-    );
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [TextButton(onPressed: isLoading ? null : _forgotPassword, child: Text("Forgot password"))]);
   }
 
   Widget _buildSignUp(bool isLoading) {
-    return TextButton(
-      onPressed: isLoading ? null : _signUp,
-      child: Text("login.dont_have_account_label".tr()),
-    );
+    return TextButton(onPressed: isLoading ? null : _signUp, child: Text("Dont have account yet?"));
   }
 }

@@ -12,7 +12,8 @@ part of 'category.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Category {
@@ -37,15 +38,16 @@ abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      CategoryType categoryType,
-      String iconName,
-      String iconColor,
-      Category? parent,
-      List<Category> subcategories,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    String name,
+    CategoryType categoryType,
+    String iconName,
+    String iconColor,
+    Category? parent,
+    List<Category> subcategories,
+    DateTime updatedAt,
+  });
 
   $CategoryCopyWith<$Res>? get parent;
 }
@@ -74,40 +76,51 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? subcategories = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      subcategories: null == subcategories
-          ? _value.subcategories
-          : subcategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            parent:
+                freezed == parent
+                    ? _value.parent
+                    : parent // ignore: cast_nullable_to_non_nullable
+                        as Category?,
+            subcategories:
+                null == subcategories
+                    ? _value.subcategories
+                    : subcategories // ignore: cast_nullable_to_non_nullable
+                        as List<Category>,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of Category
@@ -129,19 +142,21 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
 abstract class _$$CategoryImplCopyWith<$Res>
     implements $CategoryCopyWith<$Res> {
   factory _$$CategoryImplCopyWith(
-          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
-      __$$CategoryImplCopyWithImpl<$Res>;
+    _$CategoryImpl value,
+    $Res Function(_$CategoryImpl) then,
+  ) = __$$CategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      CategoryType categoryType,
-      String iconName,
-      String iconColor,
-      Category? parent,
-      List<Category> subcategories,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    String name,
+    CategoryType categoryType,
+    String iconName,
+    String iconColor,
+    Category? parent,
+    List<Category> subcategories,
+    DateTime updatedAt,
+  });
 
   @override
   $CategoryCopyWith<$Res>? get parent;
@@ -152,8 +167,9 @@ class __$$CategoryImplCopyWithImpl<$Res>
     extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
     implements _$$CategoryImplCopyWith<$Res> {
   __$$CategoryImplCopyWithImpl(
-      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
-      : super(_value, _then);
+    _$CategoryImpl _value,
+    $Res Function(_$CategoryImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -169,57 +185,67 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? subcategories = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$CategoryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      subcategories: null == subcategories
-          ? _value._subcategories
-          : subcategories // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$CategoryImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        parent:
+            freezed == parent
+                ? _value.parent
+                : parent // ignore: cast_nullable_to_non_nullable
+                    as Category?,
+        subcategories:
+            null == subcategories
+                ? _value._subcategories
+                : subcategories // ignore: cast_nullable_to_non_nullable
+                    as List<Category>,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CategoryImpl extends _Category {
-  const _$CategoryImpl(
-      {required this.id,
-      required this.name,
-      required this.categoryType,
-      required this.iconName,
-      required this.iconColor,
-      required this.parent,
-      required final List<Category> subcategories,
-      required this.updatedAt})
-      : _subcategories = subcategories,
-        super._();
+  const _$CategoryImpl({
+    required this.id,
+    required this.name,
+    required this.categoryType,
+    required this.iconName,
+    required this.iconColor,
+    required this.parent,
+    required final List<Category> subcategories,
+    required this.updatedAt,
+  }) : _subcategories = subcategories,
+       super._();
 
   @override
   final Uuid id;
@@ -263,23 +289,26 @@ class _$CategoryImpl extends _Category {
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
             (identical(other.parent, parent) || other.parent == parent) &&
-            const DeepCollectionEquality()
-                .equals(other._subcategories, _subcategories) &&
+            const DeepCollectionEquality().equals(
+              other._subcategories,
+              _subcategories,
+            ) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      categoryType,
-      iconName,
-      iconColor,
-      parent,
-      const DeepCollectionEquality().hash(_subcategories),
-      updatedAt);
+    runtimeType,
+    id,
+    name,
+    categoryType,
+    iconName,
+    iconColor,
+    parent,
+    const DeepCollectionEquality().hash(_subcategories),
+    updatedAt,
+  );
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -291,15 +320,16 @@ class _$CategoryImpl extends _Category {
 }
 
 abstract class _Category extends Category {
-  const factory _Category(
-      {required final Uuid id,
-      required final String name,
-      required final CategoryType categoryType,
-      required final String iconName,
-      required final String iconColor,
-      required final Category? parent,
-      required final List<Category> subcategories,
-      required final DateTime updatedAt}) = _$CategoryImpl;
+  const factory _Category({
+    required final Uuid id,
+    required final String name,
+    required final CategoryType categoryType,
+    required final String iconName,
+    required final String iconColor,
+    required final Category? parent,
+    required final List<Category> subcategories,
+    required final DateTime updatedAt,
+  }) = _$CategoryImpl;
   const _Category._() : super._();
 
   @override

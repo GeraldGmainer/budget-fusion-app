@@ -23,9 +23,9 @@ class NameInput extends StatelessWidget {
       style: TextStyle(fontSize: 13),
       maxLength: FeatureConstants.descriptionMaxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) => value.isNullOrEmpty ? 'category.validation.required_name'.tr() : null,
+      validator: (value) => value.isNullOrEmpty ? 'shared.validation.required'.tr() : null,
       decoration: InputDecoration(
-        labelText: 'Name'.tr(),
+        labelText: 'category.fields.name'.tr(),
         labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
         counterText: "",
       ),

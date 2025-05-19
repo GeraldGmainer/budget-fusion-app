@@ -8,18 +8,12 @@ class CategoryTypeInput extends StatelessWidget {
   final Function(CategoryType categoryType) onChange;
   final bool disabled;
 
-  const CategoryTypeInput({
-    super.key,
-    required this.onChange,
-    required this.value,
-    this.disabled = false,
-  });
+  const CategoryTypeInput({super.key, required this.onChange, required this.value, this.disabled = false});
 
   _onTransactionTypeTap(BuildContext context) async {
     final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
       context: context,
-      // TODO translation
-      title: "Category Type",
+      title: "booking.fields.type".tr(),
       items: [CategoryType.outcome, CategoryType.income],
       selectedItem: value,
       iconBuilder: (categoryType) => Icon(categoryType.icon, color: categoryType.color, size: 20),
@@ -38,11 +32,7 @@ class CategoryTypeInput extends StatelessWidget {
     final iconColor = disabled ? AppColors.disabledTextColor : Theme.of(context).iconTheme.color;
 
     final input = InputDecorator(
-      decoration: InputDecoration(
-        labelText: 'category_type'.tr(),
-        labelStyle: labelStyle,
-        suffixIcon: Icon(Icons.arrow_drop_down, color: iconColor),
-      ),
+      decoration: InputDecoration(labelText: 'booking.fields.type'.tr(), labelStyle: labelStyle, suffixIcon: Icon(Icons.arrow_right, color: iconColor)),
       child: Text(value.label.tr(), style: textStyle),
     );
 
@@ -50,10 +40,6 @@ class CategoryTypeInput extends StatelessWidget {
       return input;
     }
 
-    return InkWell(
-      onTap: () => _onTransactionTypeTap(context),
-      borderRadius: BorderRadius.circular(4),
-      child: input,
-    );
+    return InkWell(onTap: () => _onTransactionTypeTap(context), borderRadius: BorderRadius.circular(4), child: input);
   }
 }

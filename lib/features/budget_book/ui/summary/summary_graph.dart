@@ -30,28 +30,25 @@ class SummaryGraph extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               PieChart(
-                  swapAnimationDuration: Duration(milliseconds: 300),
-                  swapAnimationCurve: Curves.linear,
-                  PieChartData(
-                    sections: _buildSections(pieData),
-                    centerSpaceRadius: 70,
-                    sectionsSpace: 3,
-                    startDegreeOffset: 270,
-                    pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                        if (event is FlTapUpEvent && pieTouchResponse != null && pieTouchResponse.touchedSection != null) {
-                          final tappedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                          print("tappedIndex $tappedIndex");
-                          context.showComingSoon();
-                        }
-                      },
-                    ),
-                  )),
-              IncomeOutcomeBalanceText(
-                income: data.income,
-                outcome: data.outcome,
-                currency: data.currency,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.linear,
+                PieChartData(
+                  sections: _buildSections(pieData),
+                  centerSpaceRadius: 70,
+                  sectionsSpace: 3,
+                  startDegreeOffset: 270,
+                  pieTouchData: PieTouchData(
+                    touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                      if (event is FlTapUpEvent && pieTouchResponse != null && pieTouchResponse.touchedSection != null) {
+                        final tappedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                        BudgetLogger.instance.d("tappedIndex $tappedIndex");
+                        context.showComingSoon();
+                      }
+                    },
+                  ),
+                ),
               ),
+              IncomeOutcomeBalanceText(income: data.income, outcome: data.outcome, currency: data.currency),
             ],
           ),
         ),

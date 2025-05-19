@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -9,11 +10,7 @@ class IconColorPickerDialog extends StatefulWidget {
   final String initialIconName;
   final String initialIconColor;
 
-  const IconColorPickerDialog({
-    super.key,
-    required this.initialIconName,
-    required this.initialIconColor,
-  });
+  const IconColorPickerDialog({super.key, required this.initialIconName, required this.initialIconColor});
 
   @override
   _IconColorPickerDialogState createState() => _IconColorPickerDialogState();
@@ -38,14 +35,12 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
     final raw = await rootBundle.loadString('assets/category_icons.json');
     final map = json.decode(raw) as Map<String, dynamic>;
     final list = map['icons'] as List<dynamic>;
-    final groups = list.map((g) {
-      final name = g['name'] as String;
-      final icons = (g['icons'] as List).cast<String>();
-      return _IconGroup(
-        name: name,
-        icons: icons.map((i) => _IconOption(name: i)).toList(),
-      );
-    }).toList();
+    final groups =
+        list.map((g) {
+          final name = g['name'] as String;
+          final icons = (g['icons'] as List).cast<String>();
+          return _IconGroup(name: name, icons: icons.map((i) => _IconOption(name: i)).toList());
+        }).toList();
     final colorsData = map['colors'] as List<dynamic>;
     List<String> colors = [];
     for (var colorList in colorsData) {
@@ -63,29 +58,17 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const SizedBox(
-        height: 200,
-        child: Center(child: CircularProgressIndicator()),
-      );
+      return const SizedBox(height: 200, child: Center(child: CircularProgressIndicator()));
     }
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        appBar: AppBar(
-          leading: CloseButton(),
-          title: Text('Select Icon & Color'),
-        ),
+        appBar: AppBar(leading: CloseButton(), title: Text('category.dialogs.icon.title')),
         body: DefaultTabController(
           length: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 8.0),
-              _buildPreview(),
-              _buildTabs(),
-              _buildTabViews(),
-              _buildOkButton(),
-            ],
+            children: [SizedBox(height: 8.0), _buildPreview(), _buildTabs(), _buildTabViews(), _buildOkButton()],
           ),
         ),
       ),
@@ -99,29 +82,16 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
         type: MaterialType.circle,
         elevation: 4,
         color: AppColors.cardColor,
-        child: SizedBox(
-          width: 80,
-          height: 80,
-          child: Center(
-            child: BudgetIcon(
-              name: _selectedIconName,
-              color: _selectedColor,
-              size: 44,
-            ),
-          ),
-        ),
+        child: SizedBox(width: 80, height: 80, child: Center(child: BudgetIcon(name: _selectedIconName, color: _selectedColor, size: 44))),
       ),
     );
   }
 
   Widget _buildTabs() {
-    return const TabBar(
+    return TabBar(
       isScrollable: true,
       tabAlignment: TabAlignment.center,
-      tabs: [
-        Tab(text: 'Icon'),
-        Tab(text: 'Color'),
-      ],
+      tabs: [Tab(text: 'category.fields.icon'.tr()), Tab(text: 'category.fields.color'.tr())],
     );
   }
 
@@ -129,16 +99,8 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
     return Expanded(
       child: TabBarView(
         children: [
-          IconSelectionTab(
-            groups: _groups,
-            selectedIconName: _selectedIconName,
-            onIconSelected: (name) => setState(() => _selectedIconName = name),
-          ),
-          ColorSelectionTab(
-            colors: _colors,
-            selectedColor: _selectedColor,
-            onColorSelected: (color) => setState(() => _selectedColor = color),
-          ),
+          IconSelectionTab(groups: _groups, selectedIconName: _selectedIconName, onIconSelected: (name) => setState(() => _selectedIconName = name)),
+          ColorSelectionTab(colors: _colors, selectedColor: _selectedColor, onColorSelected: (color) => setState(() => _selectedColor = color)),
         ],
       ),
     );
@@ -148,11 +110,8 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ElevatedButton(
-        onPressed: () => Navigator.of(context).pop({
-          'iconName': _selectedIconName,
-          'iconColor': _selectedColor,
-        }),
-        child: const Text('OK'),
+        onPressed: () => Navigator.of(context).pop({'iconName': _selectedIconName, 'iconColor': _selectedColor}),
+        child: Text('shared.button.ok'.tr()),
       ),
     );
   }
@@ -176,12 +135,7 @@ class ColorSelectionTab extends StatefulWidget {
   final String selectedColor;
   final Function(String) onColorSelected;
 
-  const ColorSelectionTab({
-    super.key,
-    required this.colors,
-    required this.selectedColor,
-    required this.onColorSelected,
-  });
+  const ColorSelectionTab({super.key, required this.colors, required this.selectedColor, required this.onColorSelected});
 
   @override
   State<ColorSelectionTab> createState() => _ColorSelectionTabState();
@@ -197,11 +151,7 @@ class _ColorSelectionTabState extends State<ColorSelectionTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final key = _colorKeys[widget.selectedColor];
       if (key?.currentContext != null) {
-        Scrollable.ensureVisible(
-          key!.currentContext!,
-          duration: Duration(milliseconds: 500),
-          alignment: 0.5,
-        );
+        Scrollable.ensureVisible(key!.currentContext!, duration: Duration(milliseconds: 500), alignment: 0.5);
       }
     });
   }
@@ -213,31 +163,25 @@ class _ColorSelectionTabState extends State<ColorSelectionTab> {
       child: GridView.count(
         controller: _scrollController,
         crossAxisCount: 5,
-        children: widget.colors.map((hex) {
-          final isSel = hex == widget.selectedColor;
-          final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
-          return GestureDetector(
-            onTap: () => widget.onColorSelected(hex),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  key: key,
-                  margin: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000),
-                    shape: BoxShape.circle,
-                  ),
+        children:
+            widget.colors.map((hex) {
+              final isSel = hex == widget.selectedColor;
+              final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
+              return GestureDetector(
+                onTap: () => widget.onColorSelected(hex),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      key: key,
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000), shape: BoxShape.circle),
+                    ),
+                    if (isSel) Icon(Icons.check, color: Colors.white),
+                  ],
                 ),
-                if (isSel)
-                  Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
-              ],
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }
@@ -248,12 +192,7 @@ class IconSelectionTab extends StatefulWidget {
   final String selectedIconName;
   final Function(String) onIconSelected;
 
-  const IconSelectionTab({
-    super.key,
-    required this.groups,
-    required this.selectedIconName,
-    required this.onIconSelected,
-  });
+  const IconSelectionTab({super.key, required this.groups, required this.selectedIconName, required this.onIconSelected});
 
   @override
   State<IconSelectionTab> createState() => _IconSelectionTabState();
@@ -269,11 +208,7 @@ class _IconSelectionTabState extends State<IconSelectionTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final key = _iconKeys[widget.selectedIconName];
       if (key?.currentContext != null) {
-        Scrollable.ensureVisible(
-          key!.currentContext!,
-          duration: Duration(milliseconds: 500),
-          alignment: 0.5,
-        );
+        Scrollable.ensureVisible(key!.currentContext!, duration: Duration(milliseconds: 500), alignment: 0.5);
       }
     });
   }
@@ -284,45 +219,41 @@ class _IconSelectionTabState extends State<IconSelectionTab> {
       controller: _scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: widget.groups.map((group) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(group.name, style: Theme.of(context).textTheme.titleSmall),
-                const SizedBox(height: 8),
-                GridView.count(
-                  crossAxisCount: 5,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: group.icons.map((opt) {
-                    final isSel = opt.name == widget.selectedIconName;
-                    final key = _iconKeys.putIfAbsent(opt.name, () => GlobalKey());
-                    return GestureDetector(
-                      onTap: () => widget.onIconSelected(opt.name),
-                      child: Container(
-                        key: key,
-                        margin: const EdgeInsets.all(4),
-                        decoration: isSel
-                            ? BoxDecoration(
-                                border: Border.all(color: AppColors.primaryTextColor, width: 2),
-                                borderRadius: BorderRadius.circular(8),
-                              )
-                            : null,
-                        child: BudgetIcon(
-                          name: opt.name,
-                          color: isSel ? "#E0E0E0" : "#7F7F7F",
-                          size: 32,
-                        ),
-                      ),
-                    );
-                  }).toList(),
+        children:
+            widget.groups.map((group) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(group.name, style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: 8),
+                    GridView.count(
+                      crossAxisCount: 5,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children:
+                          group.icons.map((opt) {
+                            final isSel = opt.name == widget.selectedIconName;
+                            final key = _iconKeys.putIfAbsent(opt.name, () => GlobalKey());
+                            return GestureDetector(
+                              onTap: () => widget.onIconSelected(opt.name),
+                              child: Container(
+                                key: key,
+                                margin: const EdgeInsets.all(4),
+                                decoration:
+                                    isSel
+                                        ? BoxDecoration(border: Border.all(color: AppColors.primaryTextColor, width: 2), borderRadius: BorderRadius.circular(8))
+                                        : null,
+                                child: BudgetIcon(name: opt.name, color: isSel ? "#E0E0E0" : "#7F7F7F", size: 32),
+                              ),
+                            );
+                          }).toList(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }

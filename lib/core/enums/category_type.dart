@@ -7,10 +7,7 @@ enum CategoryType {
   outcome;
 
   static CategoryType fromString(String value) {
-    return CategoryType.values.firstWhere(
-      (e) => e.name == value,
-      orElse: () => throw Exception("Invalid category type: $value"),
-    );
+    return CategoryType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid category type: $value"));
   }
 }
 
@@ -18,9 +15,9 @@ extension CategoryTypeExtensions on CategoryType {
   String get label {
     switch (this) {
       case CategoryType.income:
-        return "booking.income_type";
+        return "booking.enums.categoryType.income";
       case CategoryType.outcome:
-        return "booking.outcome_type";
+        return "booking.enums.categoryType.outcome";
     }
   }
 

@@ -1,8 +1,10 @@
-class TranslatedException implements Exception {
-  final String message;
+import 'app_error.dart';
 
-  TranslatedException(this.message);
+class TranslatedException implements Exception {
+  final AppError error;
+
+  TranslatedException(this.error);
 
   @override
-  String toString() => "$runtimeType: $message";
+  String toString() => "$runtimeType: $error";
 }

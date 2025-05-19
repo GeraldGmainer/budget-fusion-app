@@ -3,9 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
+import '../../core/exceptions/app_error.dart';
+
 extension SnackBarExtensions on BuildContext {
   void showSnackBar(
-    String message, {
+    String translationKey, {
     Duration duration = const Duration(seconds: 3),
     Color? backgroundColor,
     bool vibrate = false,
@@ -15,11 +17,7 @@ extension SnackBarExtensions on BuildContext {
 
     messenger.showSnackBar(
       SnackBar(
-        content: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => messenger.hideCurrentSnackBar(),
-          child: Text(message.tr()),
-        ),
+        content: GestureDetector(behavior: HitTestBehavior.opaque, onTap: () => messenger.hideCurrentSnackBar(), child: Text(translationKey.tr())),
         backgroundColor: backgroundColor,
         behavior: floating ? SnackBarBehavior.floating : null,
         duration: duration,
@@ -31,14 +29,9 @@ extension SnackBarExtensions on BuildContext {
     }
   }
 
-  void showErrorSnackBar(
-    String message, {
-    Duration? duration,
-    bool vibrate = true,
-    bool floating = false,
-  }) {
+  void showErrorSnackBar(AppError error, {Duration? duration, bool vibrate = true, bool floating = false}) {
     showSnackBar(
-      message,
+      error.translationKey,
       duration: duration ?? const Duration(seconds: 4),
       backgroundColor: AppColors.errorColor,
       vibrate: vibrate,
@@ -47,10 +40,7 @@ extension SnackBarExtensions on BuildContext {
   }
 
   void showComingSoon([String message = 'This feature is coming soon ...']) {
-    showSnackBar(
-      message,
-      duration: const Duration(seconds: 2),
-    );
+    showSnackBar(message, duration: const Duration(seconds: 2));
   }
 }
 

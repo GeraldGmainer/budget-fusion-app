@@ -12,7 +12,8 @@ part of 'category_view_summary_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CategoryViewSummaryData {
@@ -37,28 +38,32 @@ mixin _$CategoryViewSummaryData {
 
 /// @nodoc
 abstract class $CategoryViewSummaryDataCopyWith<$Res> {
-  factory $CategoryViewSummaryDataCopyWith(CategoryViewSummaryData value,
-          $Res Function(CategoryViewSummaryData) then) =
-      _$CategoryViewSummaryDataCopyWithImpl<$Res, CategoryViewSummaryData>;
+  factory $CategoryViewSummaryDataCopyWith(
+    CategoryViewSummaryData value,
+    $Res Function(CategoryViewSummaryData) then,
+  ) = _$CategoryViewSummaryDataCopyWithImpl<$Res, CategoryViewSummaryData>;
   @useResult
-  $Res call(
-      {Currency currency,
-      CategoryType categoryType,
-      String categoryName,
-      String? parentCategoryName,
-      String iconName,
-      String iconColor,
-      int percentage,
-      Decimal value,
-      bool isSynced,
-      List<CategoryViewSummaryData> subSummaries});
+  $Res call({
+    Currency currency,
+    CategoryType categoryType,
+    String categoryName,
+    String? parentCategoryName,
+    String iconName,
+    String iconColor,
+    int percentage,
+    Decimal value,
+    bool isSynced,
+    List<CategoryViewSummaryData> subSummaries,
+  });
 
   $CurrencyCopyWith<$Res> get currency;
 }
 
 /// @nodoc
-class _$CategoryViewSummaryDataCopyWithImpl<$Res,
-        $Val extends CategoryViewSummaryData>
+class _$CategoryViewSummaryDataCopyWithImpl<
+  $Res,
+  $Val extends CategoryViewSummaryData
+>
     implements $CategoryViewSummaryDataCopyWith<$Res> {
   _$CategoryViewSummaryDataCopyWithImpl(this._value, this._then);
 
@@ -83,48 +88,61 @@ class _$CategoryViewSummaryDataCopyWithImpl<$Res,
     Object? isSynced = null,
     Object? subSummaries = null,
   }) {
-    return _then(_value.copyWith(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      categoryName: null == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentCategoryName: freezed == parentCategoryName
-          ? _value.parentCategoryName
-          : parentCategoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      percentage: null == percentage
-          ? _value.percentage
-          : percentage // ignore: cast_nullable_to_non_nullable
-              as int,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      subSummaries: null == subSummaries
-          ? _value.subSummaries
-          : subSummaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummaryData>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as Currency,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+            categoryName:
+                null == categoryName
+                    ? _value.categoryName
+                    : categoryName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            parentCategoryName:
+                freezed == parentCategoryName
+                    ? _value.parentCategoryName
+                    : parentCategoryName // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            percentage:
+                null == percentage
+                    ? _value.percentage
+                    : percentage // ignore: cast_nullable_to_non_nullable
+                        as int,
+            value:
+                null == value
+                    ? _value.value
+                    : value // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            subSummaries:
+                null == subSummaries
+                    ? _value.subSummaries
+                    : subSummaries // ignore: cast_nullable_to_non_nullable
+                        as List<CategoryViewSummaryData>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CategoryViewSummaryData
@@ -142,22 +160,23 @@ class _$CategoryViewSummaryDataCopyWithImpl<$Res,
 abstract class _$$CategoryViewSummaryDataImplCopyWith<$Res>
     implements $CategoryViewSummaryDataCopyWith<$Res> {
   factory _$$CategoryViewSummaryDataImplCopyWith(
-          _$CategoryViewSummaryDataImpl value,
-          $Res Function(_$CategoryViewSummaryDataImpl) then) =
-      __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>;
+    _$CategoryViewSummaryDataImpl value,
+    $Res Function(_$CategoryViewSummaryDataImpl) then,
+  ) = __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Currency currency,
-      CategoryType categoryType,
-      String categoryName,
-      String? parentCategoryName,
-      String iconName,
-      String iconColor,
-      int percentage,
-      Decimal value,
-      bool isSynced,
-      List<CategoryViewSummaryData> subSummaries});
+  $Res call({
+    Currency currency,
+    CategoryType categoryType,
+    String categoryName,
+    String? parentCategoryName,
+    String iconName,
+    String iconColor,
+    int percentage,
+    Decimal value,
+    bool isSynced,
+    List<CategoryViewSummaryData> subSummaries,
+  });
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -165,13 +184,16 @@ abstract class _$$CategoryViewSummaryDataImplCopyWith<$Res>
 
 /// @nodoc
 class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
-    extends _$CategoryViewSummaryDataCopyWithImpl<$Res,
-        _$CategoryViewSummaryDataImpl>
+    extends
+        _$CategoryViewSummaryDataCopyWithImpl<
+          $Res,
+          _$CategoryViewSummaryDataImpl
+        >
     implements _$$CategoryViewSummaryDataImplCopyWith<$Res> {
   __$$CategoryViewSummaryDataImplCopyWithImpl(
-      _$CategoryViewSummaryDataImpl _value,
-      $Res Function(_$CategoryViewSummaryDataImpl) _then)
-      : super(_value, _then);
+    _$CategoryViewSummaryDataImpl _value,
+    $Res Function(_$CategoryViewSummaryDataImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
@@ -189,67 +211,79 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
     Object? isSynced = null,
     Object? subSummaries = null,
   }) {
-    return _then(_$CategoryViewSummaryDataImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      categoryName: null == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentCategoryName: freezed == parentCategoryName
-          ? _value.parentCategoryName
-          : parentCategoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      percentage: null == percentage
-          ? _value.percentage
-          : percentage // ignore: cast_nullable_to_non_nullable
-              as int,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-      subSummaries: null == subSummaries
-          ? _value._subSummaries
-          : subSummaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummaryData>,
-    ));
+    return _then(
+      _$CategoryViewSummaryDataImpl(
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as Currency,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+        categoryName:
+            null == categoryName
+                ? _value.categoryName
+                : categoryName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        parentCategoryName:
+            freezed == parentCategoryName
+                ? _value.parentCategoryName
+                : parentCategoryName // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        percentage:
+            null == percentage
+                ? _value.percentage
+                : percentage // ignore: cast_nullable_to_non_nullable
+                    as int,
+        value:
+            null == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        subSummaries:
+            null == subSummaries
+                ? _value._subSummaries
+                : subSummaries // ignore: cast_nullable_to_non_nullable
+                    as List<CategoryViewSummaryData>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
-  const _$CategoryViewSummaryDataImpl(
-      {required this.currency,
-      required this.categoryType,
-      required this.categoryName,
-      required this.parentCategoryName,
-      required this.iconName,
-      required this.iconColor,
-      required this.percentage,
-      required this.value,
-      required this.isSynced,
-      final List<CategoryViewSummaryData> subSummaries = const []})
-      : _subSummaries = subSummaries,
-        super._();
+  const _$CategoryViewSummaryDataImpl({
+    required this.currency,
+    required this.categoryType,
+    required this.categoryName,
+    required this.parentCategoryName,
+    required this.iconName,
+    required this.iconColor,
+    required this.percentage,
+    required this.value,
+    required this.isSynced,
+    final List<CategoryViewSummaryData> subSummaries = const [],
+  }) : _subSummaries = subSummaries,
+       super._();
 
   @override
   final Currency currency;
@@ -305,23 +339,26 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
             (identical(other.value, value) || other.value == value) &&
             (identical(other.isSynced, isSynced) ||
                 other.isSynced == isSynced) &&
-            const DeepCollectionEquality()
-                .equals(other._subSummaries, _subSummaries));
+            const DeepCollectionEquality().equals(
+              other._subSummaries,
+              _subSummaries,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      currency,
-      categoryType,
-      categoryName,
-      parentCategoryName,
-      iconName,
-      iconColor,
-      percentage,
-      value,
-      isSynced,
-      const DeepCollectionEquality().hash(_subSummaries));
+    runtimeType,
+    currency,
+    categoryType,
+    categoryName,
+    parentCategoryName,
+    iconName,
+    iconColor,
+    percentage,
+    value,
+    isSynced,
+    const DeepCollectionEquality().hash(_subSummaries),
+  );
 
   /// Create a copy of CategoryViewSummaryData
   /// with the given fields replaced by the non-null parameter values.
@@ -329,23 +366,24 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryViewSummaryDataImplCopyWith<_$CategoryViewSummaryDataImpl>
-      get copyWith => __$$CategoryViewSummaryDataImplCopyWithImpl<
-          _$CategoryViewSummaryDataImpl>(this, _$identity);
+  get copyWith => __$$CategoryViewSummaryDataImplCopyWithImpl<
+    _$CategoryViewSummaryDataImpl
+  >(this, _$identity);
 }
 
 abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
-  const factory _CategoryViewSummaryData(
-          {required final Currency currency,
-          required final CategoryType categoryType,
-          required final String categoryName,
-          required final String? parentCategoryName,
-          required final String iconName,
-          required final String iconColor,
-          required final int percentage,
-          required final Decimal value,
-          required final bool isSynced,
-          final List<CategoryViewSummaryData> subSummaries}) =
-      _$CategoryViewSummaryDataImpl;
+  const factory _CategoryViewSummaryData({
+    required final Currency currency,
+    required final CategoryType categoryType,
+    required final String categoryName,
+    required final String? parentCategoryName,
+    required final String iconName,
+    required final String iconColor,
+    required final int percentage,
+    required final Decimal value,
+    required final bool isSynced,
+    final List<CategoryViewSummaryData> subSummaries,
+  }) = _$CategoryViewSummaryDataImpl;
   const _CategoryViewSummaryData._() : super._();
 
   @override
@@ -374,5 +412,5 @@ abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryViewSummaryDataImplCopyWith<_$CategoryViewSummaryDataImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,7 +12,8 @@ part of 'account_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
   return _AccountDto.fromJson(json);
@@ -44,15 +45,17 @@ mixin _$AccountDto {
 /// @nodoc
 abstract class $AccountDtoCopyWith<$Res> {
   factory $AccountDtoCopyWith(
-          AccountDto value, $Res Function(AccountDto) then) =
-      _$AccountDtoCopyWithImpl<$Res, AccountDto>;
+    AccountDto value,
+    $Res Function(AccountDto) then,
+  ) = _$AccountDtoCopyWithImpl<$Res, AccountDto>;
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'icon_name') String iconName,
-      @JsonKey(name: 'icon_color') String iconColor,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'icon_name') String iconName,
+    @JsonKey(name: 'icon_color') String iconColor,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -76,28 +79,36 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
     Object? iconColor = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -105,16 +116,18 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
 abstract class _$$AccountDtoImplCopyWith<$Res>
     implements $AccountDtoCopyWith<$Res> {
   factory _$$AccountDtoImplCopyWith(
-          _$AccountDtoImpl value, $Res Function(_$AccountDtoImpl) then) =
-      __$$AccountDtoImplCopyWithImpl<$Res>;
+    _$AccountDtoImpl value,
+    $Res Function(_$AccountDtoImpl) then,
+  ) = __$$AccountDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'icon_name') String iconName,
-      @JsonKey(name: 'icon_color') String iconColor,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'icon_name') String iconName,
+    @JsonKey(name: 'icon_color') String iconColor,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -122,8 +135,9 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
     extends _$AccountDtoCopyWithImpl<$Res, _$AccountDtoImpl>
     implements _$$AccountDtoImplCopyWith<$Res> {
   __$$AccountDtoImplCopyWithImpl(
-      _$AccountDtoImpl _value, $Res Function(_$AccountDtoImpl) _then)
-      : super(_value, _then);
+    _$AccountDtoImpl _value,
+    $Res Function(_$AccountDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AccountDto
   /// with the given fields replaced by the non-null parameter values.
@@ -136,43 +150,48 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$AccountDtoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$AccountDtoImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AccountDtoImpl extends _AccountDto {
-  const _$AccountDtoImpl(
-      {@UuidSerializer() required this.id,
-      required this.name,
-      @JsonKey(name: 'icon_name') required this.iconName,
-      @JsonKey(name: 'icon_color') required this.iconColor,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required this.updatedAt})
-      : super._();
+  const _$AccountDtoImpl({
+    @UuidSerializer() required this.id,
+    required this.name,
+    @JsonKey(name: 'icon_name') required this.iconName,
+    @JsonKey(name: 'icon_color') required this.iconColor,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
+  }) : super._();
 
   factory _$AccountDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccountDtoImplFromJson(json);
@@ -228,21 +247,20 @@ class _$AccountDtoImpl extends _AccountDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AccountDtoImplToJson(
-      this,
-    );
+    return _$$AccountDtoImplToJson(this);
   }
 }
 
 abstract class _AccountDto extends AccountDto {
-  const factory _AccountDto(
-      {@UuidSerializer() required final Uuid id,
-      required final String name,
-      @JsonKey(name: 'icon_name') required final String iconName,
-      @JsonKey(name: 'icon_color') required final String iconColor,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required final DateTime updatedAt}) = _$AccountDtoImpl;
+  const factory _AccountDto({
+    @UuidSerializer() required final Uuid id,
+    required final String name,
+    @JsonKey(name: 'icon_name') required final String iconName,
+    @JsonKey(name: 'icon_color') required final String iconColor,
+    @JsonKey(name: 'updated_at')
+    @DateTimeSerializer()
+    required final DateTime updatedAt,
+  }) = _$AccountDtoImpl;
   const _AccountDto._() : super._();
 
   factory _AccountDto.fromJson(Map<String, dynamic> json) =

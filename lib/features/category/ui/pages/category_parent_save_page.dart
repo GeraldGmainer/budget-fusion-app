@@ -37,7 +37,7 @@ class CategoryParentSavePage extends StatelessWidget {
     return CategorySaveContainer(
       draft: draft,
       builder: (BuildContext context, CategoryDraft draft) => _buildContent(context, draft),
-      title: draft.isCreating ? "category.new_title_parent" : "category.edit_title_parent".tr(),
+      title: draft.isCreating ? "category.newParentTitle" : "category.editParentTitle",
     );
   }
 
@@ -53,19 +53,12 @@ class CategoryParentSavePage extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0),
-                    child: IconInput(draft: draft),
-                  ),
+                  Padding(padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0), child: IconInput(draft: draft)),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        NameInput(draft: draft, autofocus: draft.isCreating),
-                        const SizedBox(height: 8),
-                        CategoryTypeInput(draft: draft),
-                      ],
+                      children: [NameInput(draft: draft, autofocus: draft.isCreating), const SizedBox(height: 8), CategoryTypeInput(draft: draft)],
                     ),
                   ),
                 ],
@@ -77,11 +70,7 @@ class CategoryParentSavePage extends StatelessWidget {
           ),
         ),
         if (!draft.isCreating)
-          Expanded(
-            child: SingleChildScrollView(
-              child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)),
-            ),
-          ),
+          Expanded(child: SingleChildScrollView(child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)))),
       ],
     );
   }
@@ -90,11 +79,8 @@ class CategoryParentSavePage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('Subcategories'.tr(), style: Theme.of(context).textTheme.titleMedium),
-        IconButton(
-          onPressed: () => _onAddSubcategory(context),
-          icon: Icon(Icons.add, color: AppColors.primaryTextColor),
-        ),
+        Text('category.list.subcategories'.tr(), style: Theme.of(context).textTheme.titleMedium),
+        IconButton(onPressed: () => _onAddSubcategory(context), icon: Icon(Icons.add, color: AppColors.primaryTextColor)),
       ],
     );
   }

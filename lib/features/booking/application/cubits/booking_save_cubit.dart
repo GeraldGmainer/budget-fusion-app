@@ -21,11 +21,7 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
   final SaveBookingUseCase _saveBookingUseCase;
   final DeleteBookingUseCase _deleteBookingUseCase;
 
-  BookingSaveCubit(
-    this._saveBookingUseCase,
-    this._defaultAccountUseCase,
-    this._deleteBookingUseCase,
-  ) : super(BookingSaveState.initial(draft: _initialDraft()));
+  BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._deleteBookingUseCase) : super(BookingSaveState.initial(draft: _initialDraft()));
 
   static BookingDraft _initialDraft({Account? account}) {
     return BookingDraft(date: DateTime.now(), amount: Decimal.zero, account: account);
@@ -41,10 +37,10 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
       }
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
-      emit(BookingSaveState.error(draft: state.draft, message: e.message));
+      emit(BookingSaveState.error(draft: state.draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init Exception", e, stack);
-      emit(BookingSaveState.error(draft: state.draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: state.draft, error: AppError.unknown));
     }
   }
 
@@ -60,10 +56,10 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
       emit(BookingSaveState.loaded(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
-      emit(BookingSaveState.error(draft: draft, message: e.message));
+      emit(BookingSaveState.error(draft: draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stack);
-      emit(BookingSaveState.error(draft: draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: draft, error: AppError.unknown));
     }
   }
 
@@ -74,10 +70,10 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
       emit(BookingSaveState.deleted(draft: draft, booking: booking));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
-      emit(BookingSaveState.error(draft: draft, message: e.message));
+      emit(BookingSaveState.error(draft: draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stack);
-      emit(BookingSaveState.error(draft: draft, message: 'error.default'));
+      emit(BookingSaveState.error(draft: draft, error: AppError.unknown));
     }
   }
 }

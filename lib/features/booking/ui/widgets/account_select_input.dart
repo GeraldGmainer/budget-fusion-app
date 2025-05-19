@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +18,7 @@ class AccountSelectInput extends StatelessWidget {
 
     final Account? selectedAccount = await showSelectionBottomSheet<Account>(
       context: context,
-      title: "booking.select_account",
+      title: "booking.dialogs.account.title",
       items: accounts,
       selectedItem: draft.account,
       labelBuilder: (account) => Text(account.name),
@@ -31,16 +32,13 @@ class AccountSelectInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO translation
     final hasValue = draft.account != null;
     return ListTile(
-      leading: hasValue
-          ? BudgetIcon(name: draft.account!.iconName, color: draft.account!.iconColor)
-          : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
-      title: Text(
-        hasValue ? draft.account!.name : "Account",
-        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
-      ),
+      leading:
+          hasValue
+              ? BudgetIcon(name: draft.account!.iconName, color: draft.account!.iconColor)
+              : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
+      title: Text(hasValue ? draft.account!.name : "booking.fields.account".tr(), style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor)),
       subtitle: hasValue ? Text("Account") : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       onTap: () => _onTap(context),

@@ -12,7 +12,8 @@ part of 'pie_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$PieData {
@@ -34,13 +35,14 @@ abstract class $PieDataCopyWith<$Res> {
   factory $PieDataCopyWith(PieData value, $Res Function(PieData) then) =
       _$PieDataCopyWithImpl<$Res, PieData>;
   @useResult
-  $Res call(
-      {String xData,
-      num yData,
-      String? text,
-      String iconName,
-      String iconColor,
-      bool hideIcon});
+  $Res call({
+    String xData,
+    num yData,
+    String? text,
+    String iconName,
+    String iconColor,
+    bool hideIcon,
+  });
 }
 
 /// @nodoc
@@ -65,49 +67,60 @@ class _$PieDataCopyWithImpl<$Res, $Val extends PieData>
     Object? iconColor = null,
     Object? hideIcon = null,
   }) {
-    return _then(_value.copyWith(
-      xData: null == xData
-          ? _value.xData
-          : xData // ignore: cast_nullable_to_non_nullable
-              as String,
-      yData: null == yData
-          ? _value.yData
-          : yData // ignore: cast_nullable_to_non_nullable
-              as num,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String?,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      hideIcon: null == hideIcon
-          ? _value.hideIcon
-          : hideIcon // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            xData:
+                null == xData
+                    ? _value.xData
+                    : xData // ignore: cast_nullable_to_non_nullable
+                        as String,
+            yData:
+                null == yData
+                    ? _value.yData
+                    : yData // ignore: cast_nullable_to_non_nullable
+                        as num,
+            text:
+                freezed == text
+                    ? _value.text
+                    : text // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            hideIcon:
+                null == hideIcon
+                    ? _value.hideIcon
+                    : hideIcon // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$PieDataImplCopyWith<$Res> implements $PieDataCopyWith<$Res> {
   factory _$$PieDataImplCopyWith(
-          _$PieDataImpl value, $Res Function(_$PieDataImpl) then) =
-      __$$PieDataImplCopyWithImpl<$Res>;
+    _$PieDataImpl value,
+    $Res Function(_$PieDataImpl) then,
+  ) = __$$PieDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String xData,
-      num yData,
-      String? text,
-      String iconName,
-      String iconColor,
-      bool hideIcon});
+  $Res call({
+    String xData,
+    num yData,
+    String? text,
+    String iconName,
+    String iconColor,
+    bool hideIcon,
+  });
 }
 
 /// @nodoc
@@ -115,8 +128,9 @@ class __$$PieDataImplCopyWithImpl<$Res>
     extends _$PieDataCopyWithImpl<$Res, _$PieDataImpl>
     implements _$$PieDataImplCopyWith<$Res> {
   __$$PieDataImplCopyWithImpl(
-      _$PieDataImpl _value, $Res Function(_$PieDataImpl) _then)
-      : super(_value, _then);
+    _$PieDataImpl _value,
+    $Res Function(_$PieDataImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PieData
   /// with the given fields replaced by the non-null parameter values.
@@ -130,46 +144,54 @@ class __$$PieDataImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? hideIcon = null,
   }) {
-    return _then(_$PieDataImpl(
-      xData: null == xData
-          ? _value.xData
-          : xData // ignore: cast_nullable_to_non_nullable
-              as String,
-      yData: null == yData
-          ? _value.yData
-          : yData // ignore: cast_nullable_to_non_nullable
-              as num,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String?,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      hideIcon: null == hideIcon
-          ? _value.hideIcon
-          : hideIcon // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$PieDataImpl(
+        xData:
+            null == xData
+                ? _value.xData
+                : xData // ignore: cast_nullable_to_non_nullable
+                    as String,
+        yData:
+            null == yData
+                ? _value.yData
+                : yData // ignore: cast_nullable_to_non_nullable
+                    as num,
+        text:
+            freezed == text
+                ? _value.text
+                : text // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        hideIcon:
+            null == hideIcon
+                ? _value.hideIcon
+                : hideIcon // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$PieDataImpl extends _PieData {
-  const _$PieDataImpl(
-      {required this.xData,
-      required this.yData,
-      this.text,
-      required this.iconName,
-      required this.iconColor,
-      required this.hideIcon})
-      : super._();
+  const _$PieDataImpl({
+    required this.xData,
+    required this.yData,
+    this.text,
+    required this.iconName,
+    required this.iconColor,
+    required this.hideIcon,
+  }) : super._();
 
   @override
   final String xData;
@@ -207,7 +229,14 @@ class _$PieDataImpl extends _PieData {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, xData, yData, text, iconName, iconColor, hideIcon);
+    runtimeType,
+    xData,
+    yData,
+    text,
+    iconName,
+    iconColor,
+    hideIcon,
+  );
 
   /// Create a copy of PieData
   /// with the given fields replaced by the non-null parameter values.
@@ -219,13 +248,14 @@ class _$PieDataImpl extends _PieData {
 }
 
 abstract class _PieData extends PieData {
-  const factory _PieData(
-      {required final String xData,
-      required final num yData,
-      final String? text,
-      required final String iconName,
-      required final String iconColor,
-      required final bool hideIcon}) = _$PieDataImpl;
+  const factory _PieData({
+    required final String xData,
+    required final num yData,
+    final String? text,
+    required final String iconName,
+    required final String iconColor,
+    required final bool hideIcon,
+  }) = _$PieDataImpl;
   const _PieData._() : super._();
 
   @override

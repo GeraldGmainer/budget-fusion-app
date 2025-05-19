@@ -43,8 +43,8 @@ class _SplashScreenState extends State<SplashPage> {
     Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 
-  _onError(String message) {
-    context.showErrorSnackBar(message);
+  _onError(AppError error) {
+    context.showErrorSnackBar(error);
     context.read<LoginCubit>().logout();
   }
 
@@ -53,17 +53,12 @@ class _SplashScreenState extends State<SplashPage> {
     return Scaffold(
       body: BlocConsumer<ProfileCubit, LoadableState<Profile>>(
         listener: (context, state) {
-          state.whenOrNull(
-            loaded: _onProfileSuccess,
-            error: _onError,
-          );
+          state.whenOrNull(loaded: _onProfileSuccess, error: _onError);
         },
         builder: (context, state) {
           return state.maybeWhen(
-            error: (message) => ErrorText(message: message, onReload: _loadProfile),
-            orElse: () => Center(
-              child: CircularProgressIndicator(),
-            ),
+            error: (message) => ErrorText(error: message, onReload: _loadProfile),
+            orElse: () => Center(child: CircularProgressIndicator()),
           );
         },
       ),

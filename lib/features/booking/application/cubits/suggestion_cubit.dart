@@ -21,10 +21,10 @@ class SuggestionCubit extends Cubit<LoadableState<List<BookingSuggestionDto>>> {
       emit(LoadableState.loaded(suggestions));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
-      emit(LoadableState.error(e.message));
+      emit(LoadableState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stackTrace);
-      emit(const LoadableState.error("error.default"));
+      emit(const LoadableState.error(AppError.unknown));
     }
   }
 }

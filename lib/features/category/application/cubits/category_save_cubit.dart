@@ -18,21 +18,18 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
   final DeleteCategoryUseCase _deleteCategoryUseCase;
   final LoadCategoryUseCase _loadCategoryUseCase;
 
-  CategorySaveCubit(
-    this._saveCategoryUseCase,
-    this._deleteCategoryUseCase,
-    this._loadCategoryUseCase,
-  ) : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
+  CategorySaveCubit(this._saveCategoryUseCase, this._deleteCategoryUseCase, this._loadCategoryUseCase)
+    : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
 
   Future<void> init(CategoryDraft draft) async {
     try {
       emit(CategorySaveState.draftUpdate(draft: draft, initialDraft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
-      emit(CategorySaveState.error(draft: state.draft, message: e.message));
+      emit(CategorySaveState.error(draft: state.draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} init Exception", e, stack);
-      emit(CategorySaveState.error(draft: state.draft, message: 'error.default'));
+      emit(CategorySaveState.error(draft: state.draft, error: AppError.unknown));
     }
   }
 
@@ -56,10 +53,10 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
       emit(CategorySaveState.draftUpdate(draft: newDraft, initialDraft: newDraft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} refresh TranslatedException", e, stack);
-      emit(CategorySaveState.error(draft: state.draft, message: e.message));
+      emit(CategorySaveState.error(draft: state.draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} refresh Exception", e, stack);
-      emit(CategorySaveState.error(draft: state.draft, message: 'error.default'));
+      emit(CategorySaveState.error(draft: state.draft, error: AppError.unknown));
     }
   }
 
@@ -71,10 +68,10 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
       emit(CategorySaveState.saved(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
-      emit(CategorySaveState.error(draft: draft, message: e.message));
+      emit(CategorySaveState.error(draft: draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stack);
-      emit(CategorySaveState.error(draft: draft, message: 'error.default'));
+      emit(CategorySaveState.error(draft: draft, error: AppError.unknown));
     }
   }
 
@@ -85,14 +82,10 @@ class CategorySaveCubit extends Cubit<CategorySaveState> {
       emit(CategorySaveState.deleted(draft: draft));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
-      emit(CategorySaveState.error(draft: draft, message: e.message));
+      emit(CategorySaveState.error(draft: draft, error: e.error));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stack);
-      emit(CategorySaveState.error(draft: draft, message: 'error.default'));
+      emit(CategorySaveState.error(draft: draft, error: AppError.unknown));
     }
   }
-
-// void dispose() {
-//   emit(CategorySaveState.initial(draft: _initialDraft()));
-// }
 }

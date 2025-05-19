@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 
-  _onError(String message) {
-    context.showErrorSnackBar(message);
+  _onError(AppError error) {
+    context.showErrorSnackBar(error);
     context.read<LoginCubit>().logout();
   }
 
@@ -34,46 +34,43 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final scaffoldProvider = Provider.of<ScaffoldProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text("login.title".tr())),
-      body: Builder(builder: (ctx) {
-        scaffoldProvider.setScaffoldContext((ctx));
+      appBar: AppBar(title: Text("auth.login.title".tr())),
+      body: Builder(
+        builder: (ctx) {
+          scaffoldProvider.setScaffoldContext((ctx));
 
-        return BlocConsumer<ProfileCubit, LoadableState<Profile>>(
-          listener: (context, state) {
-            state.whenOrNull(
-              loaded: _onProfileSuccess,
-              error: _onError,
-            );
-          },
-          builder: (context, state1) {
-            return BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
-                state.whenOrNull(
-                  error: _onError,
-                );
-              },
-              builder: (context, state2) {
-                final isProfileLoading = state1.isLoading;
-                final isLoginLoading = state2 is LoginLoadingState || state2 is LoginSuccessState;
+          return BlocConsumer<ProfileCubit, LoadableState<Profile>>(
+            listener: (context, state) {
+              state.whenOrNull(loaded: _onProfileSuccess, error: _onError);
+            },
+            builder: (context, state1) {
+              return BlocConsumer<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  state.whenOrNull(error: _onError);
+                },
+                builder: (context, state2) {
+                  final isProfileLoading = state1.isLoading;
+                  final isLoginLoading = state2 is LoginLoadingState || state2 is LoginSuccessState;
 
-                return SingleChildScrollView(
-                  child: Container(
-                    width: AppDimensions.formWidth,
-                    padding: AppDimensions.formPadding,
-                    child: Column(
-                      children: [
-                        Image.asset('assets/logo.png', height: 100),
-                        const SizedBox(height: 20),
-                        LoginForm(isLoading: isLoginLoading || isProfileLoading),
-                      ],
+                  return SingleChildScrollView(
+                    child: Container(
+                      width: AppDimensions.formWidth,
+                      padding: AppDimensions.formPadding,
+                      child: Column(
+                        children: [
+                          Image.asset('assets/logo.png', height: 100),
+                          const SizedBox(height: 20),
+                          LoginForm(isLoading: isLoginLoading || isProfileLoading),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          },
-        );
-      }),
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -12,7 +12,8 @@ part of 'transaction_view_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TransactionViewData {
@@ -31,13 +32,15 @@ mixin _$TransactionViewData {
 /// @nodoc
 abstract class $TransactionViewDataCopyWith<$Res> {
   factory $TransactionViewDataCopyWith(
-          TransactionViewData value, $Res Function(TransactionViewData) then) =
-      _$TransactionViewDataCopyWithImpl<$Res, TransactionViewData>;
+    TransactionViewData value,
+    $Res Function(TransactionViewData) then,
+  ) = _$TransactionViewDataCopyWithImpl<$Res, TransactionViewData>;
   @useResult
-  $Res call(
-      {Currency currency,
-      BudgetDateRange dateRange,
-      List<TransactionGroup> transactionGroups});
+  $Res call({
+    Currency currency,
+    BudgetDateRange dateRange,
+    List<TransactionGroup> transactionGroups,
+  });
 
   $CurrencyCopyWith<$Res> get currency;
   $BudgetDateRangeCopyWith<$Res> get dateRange;
@@ -62,20 +65,26 @@ class _$TransactionViewDataCopyWithImpl<$Res, $Val extends TransactionViewData>
     Object? dateRange = null,
     Object? transactionGroups = null,
   }) {
-    return _then(_value.copyWith(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      dateRange: null == dateRange
-          ? _value.dateRange
-          : dateRange // ignore: cast_nullable_to_non_nullable
-              as BudgetDateRange,
-      transactionGroups: null == transactionGroups
-          ? _value.transactionGroups
-          : transactionGroups // ignore: cast_nullable_to_non_nullable
-              as List<TransactionGroup>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as Currency,
+            dateRange:
+                null == dateRange
+                    ? _value.dateRange
+                    : dateRange // ignore: cast_nullable_to_non_nullable
+                        as BudgetDateRange,
+            transactionGroups:
+                null == transactionGroups
+                    ? _value.transactionGroups
+                    : transactionGroups // ignore: cast_nullable_to_non_nullable
+                        as List<TransactionGroup>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of TransactionViewData
@@ -102,15 +111,17 @@ class _$TransactionViewDataCopyWithImpl<$Res, $Val extends TransactionViewData>
 /// @nodoc
 abstract class _$$TransactionViewDataImplCopyWith<$Res>
     implements $TransactionViewDataCopyWith<$Res> {
-  factory _$$TransactionViewDataImplCopyWith(_$TransactionViewDataImpl value,
-          $Res Function(_$TransactionViewDataImpl) then) =
-      __$$TransactionViewDataImplCopyWithImpl<$Res>;
+  factory _$$TransactionViewDataImplCopyWith(
+    _$TransactionViewDataImpl value,
+    $Res Function(_$TransactionViewDataImpl) then,
+  ) = __$$TransactionViewDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Currency currency,
-      BudgetDateRange dateRange,
-      List<TransactionGroup> transactionGroups});
+  $Res call({
+    Currency currency,
+    BudgetDateRange dateRange,
+    List<TransactionGroup> transactionGroups,
+  });
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -122,9 +133,10 @@ abstract class _$$TransactionViewDataImplCopyWith<$Res>
 class __$$TransactionViewDataImplCopyWithImpl<$Res>
     extends _$TransactionViewDataCopyWithImpl<$Res, _$TransactionViewDataImpl>
     implements _$$TransactionViewDataImplCopyWith<$Res> {
-  __$$TransactionViewDataImplCopyWithImpl(_$TransactionViewDataImpl _value,
-      $Res Function(_$TransactionViewDataImpl) _then)
-      : super(_value, _then);
+  __$$TransactionViewDataImplCopyWithImpl(
+    _$TransactionViewDataImpl _value,
+    $Res Function(_$TransactionViewDataImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TransactionViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -135,32 +147,37 @@ class __$$TransactionViewDataImplCopyWithImpl<$Res>
     Object? dateRange = null,
     Object? transactionGroups = null,
   }) {
-    return _then(_$TransactionViewDataImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      dateRange: null == dateRange
-          ? _value.dateRange
-          : dateRange // ignore: cast_nullable_to_non_nullable
-              as BudgetDateRange,
-      transactionGroups: null == transactionGroups
-          ? _value._transactionGroups
-          : transactionGroups // ignore: cast_nullable_to_non_nullable
-              as List<TransactionGroup>,
-    ));
+    return _then(
+      _$TransactionViewDataImpl(
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as Currency,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
+        transactionGroups:
+            null == transactionGroups
+                ? _value._transactionGroups
+                : transactionGroups // ignore: cast_nullable_to_non_nullable
+                    as List<TransactionGroup>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TransactionViewDataImpl extends _TransactionViewData {
-  const _$TransactionViewDataImpl(
-      {required this.currency,
-      required this.dateRange,
-      required final List<TransactionGroup> transactionGroups})
-      : _transactionGroups = transactionGroups,
-        super._();
+  const _$TransactionViewDataImpl({
+    required this.currency,
+    required this.dateRange,
+    required final List<TransactionGroup> transactionGroups,
+  }) : _transactionGroups = transactionGroups,
+       super._();
 
   @override
   final Currency currency;
@@ -189,13 +206,19 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
                 other.currency == currency) &&
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange) &&
-            const DeepCollectionEquality()
-                .equals(other._transactionGroups, _transactionGroups));
+            const DeepCollectionEquality().equals(
+              other._transactionGroups,
+              _transactionGroups,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currency, dateRange,
-      const DeepCollectionEquality().hash(_transactionGroups));
+  int get hashCode => Object.hash(
+    runtimeType,
+    currency,
+    dateRange,
+    const DeepCollectionEquality().hash(_transactionGroups),
+  );
 
   /// Create a copy of TransactionViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -204,15 +227,17 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
   @pragma('vm:prefer-inline')
   _$$TransactionViewDataImplCopyWith<_$TransactionViewDataImpl> get copyWith =>
       __$$TransactionViewDataImplCopyWithImpl<_$TransactionViewDataImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TransactionViewData extends TransactionViewData {
-  const factory _TransactionViewData(
-          {required final Currency currency,
-          required final BudgetDateRange dateRange,
-          required final List<TransactionGroup> transactionGroups}) =
-      _$TransactionViewDataImpl;
+  const factory _TransactionViewData({
+    required final Currency currency,
+    required final BudgetDateRange dateRange,
+    required final List<TransactionGroup> transactionGroups,
+  }) = _$TransactionViewDataImpl;
   const _TransactionViewData._() : super._();
 
   @override

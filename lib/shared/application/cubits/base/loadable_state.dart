@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/exceptions/app_error.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'loadable_state.freezed.dart';
@@ -10,12 +11,9 @@ class LoadableState<T> with _$LoadableState<T> {
 
   const factory LoadableState.loaded(T data) = _Loaded<T>;
 
-  const factory LoadableState.error(String message) = _Error<T>;
+  const factory LoadableState.error(AppError error) = _Error<T>;
 }
 
 extension AsyncStateX<T> on LoadableState<T> {
-  bool get isLoading => maybeWhen(
-        loading: (_) => true,
-        orElse: () => false,
-      );
+  bool get isLoading => maybeWhen(loading: (_) => true, orElse: () => false);
 }

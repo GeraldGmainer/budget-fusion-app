@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/budget_book/domain/enums/period_mode.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -20,28 +21,21 @@ class BudgetTabTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Budget Book', style: TextStyle(fontSize: 20)),
-        Text(
-          _buildSubtitle(filter),
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.white70,
-          ),
-        ),
+        Text('budgetBook.title'.tr(), style: TextStyle(fontSize: 20)),
+        Text(_buildSubtitle(filter), style: const TextStyle(fontSize: 14, color: Colors.white70)),
       ],
     );
   }
 
   String _buildSubtitle(BudgetBookFilter filter) {
-    final periodString = filter.period.label.tr();
     if (filter.transaction != null && filter.account != null) {
-      return '${filter.transaction} for ${filter.account!.name} - $periodString';
+      return tr('budgetBook.subtitle.transactionAccount', args: [filter.transaction!.label.tr(), filter.account!.name]);
     } else if (filter.transaction != null) {
-      return 'Outcomes - $periodString';
+      return tr('budgetBook.subtitle.outcomesPeriod', args: [filter.transaction!.label.tr()]);
     } else if (filter.account != null) {
-      return 'All Transactions for ${filter.account!.name} - ${filter.period}';
+      return tr('budgetBook.subtitle.allTransactionsAccount', args: [filter.account!.name]);
     } else {
-      return 'All Transactions - $periodString';
+      return tr('budgetBook.subtitle.allTransactionsPeriod', args: [filter.period.label.tr()]);
     }
   }
 }

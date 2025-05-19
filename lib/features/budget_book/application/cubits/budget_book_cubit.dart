@@ -36,10 +36,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     this._watchBookingsUseCase,
     this._resetBudgetBookUseCase,
     this._generateBudgetTransactionUseCase,
-  ) : super(BudgetBookState.initial(
-          filter: BudgetBookFilter.initial(),
-          period: PeriodMode.month,
-        )) {
+  ) : super(BudgetBookState.initial(filter: BudgetBookFilter.initial(), period: PeriodMode.month)) {
     _subscribeToBookings();
   }
 
@@ -53,19 +50,13 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
 
-      emit(BudgetBookState.loaded(
-        items: items,
-        filter: state.filter,
-        viewMode: state.viewMode,
-        period: state.period,
-        initialLoaded: true,
-      ));
+      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, initialLoaded: true));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} onBookings TranslatedException", e, stack);
-      emit(BudgetBookState.fromError(message: e.message, state: state));
+      emit(BudgetBookState.fromError(error: e.error, state: state));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} onBookings Exception", e, stack);
-      emit(BudgetBookState.fromError(message: 'error.default', state: state));
+      emit(BudgetBookState.fromError(error: AppError.unknown, state: state));
     }
   }
 
@@ -90,27 +81,20 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
       final filtered = await _filterAndGroupBookingsUseCase(bookings, newFilter);
       final items = await _generateViewData(filtered, newViewMode);
 
-      state.maybeWhen(loaded: (_, __, ___, ____, _____) {
-        emit(BudgetBookState.loaded(
-          items: items,
-          filter: newFilter,
-          viewMode: newViewMode,
-          period: state.period,
-          initialLoaded: initialLoad,
-        ));
-      }, orElse: () {
-        emit(state.copyWith(
-          items: items,
-          filter: newFilter,
-          viewMode: newViewMode,
-        ));
-      });
+      state.maybeWhen(
+        loaded: (_, __, ___, ____, _____) {
+          emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, period: state.period, initialLoaded: initialLoad));
+        },
+        orElse: () {
+          emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode));
+        },
+      );
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} updateView TranslatedException", e, stack);
-      emit(BudgetBookState.fromError(message: e.message, state: state));
+      emit(BudgetBookState.fromError(error: e.error, state: state));
     } catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} updateView Exception", e, stack);
-      emit(BudgetBookState.fromError(message: 'error.default', state: state));
+      emit(BudgetBookState.fromError(error: AppError.unknown, state: state));
     }
   }
 

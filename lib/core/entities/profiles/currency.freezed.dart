@@ -12,7 +12,8 @@ part of 'currency.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Currency {
@@ -35,13 +36,14 @@ abstract class $CurrencyCopyWith<$Res> {
   factory $CurrencyCopyWith(Currency value, $Res Function(Currency) then) =
       _$CurrencyCopyWithImpl<$Res, Currency>;
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      int decimalPrecision,
-      bool unitPositionFront,
-      String symbol,
-      int? uiOrder});
+  $Res call({
+    Uuid id,
+    String name,
+    int decimalPrecision,
+    bool unitPositionFront,
+    String symbol,
+    int? uiOrder,
+  });
 }
 
 /// @nodoc
@@ -66,32 +68,41 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
     Object? symbol = null,
     Object? uiOrder = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      decimalPrecision: null == decimalPrecision
-          ? _value.decimalPrecision
-          : decimalPrecision // ignore: cast_nullable_to_non_nullable
-              as int,
-      unitPositionFront: null == unitPositionFront
-          ? _value.unitPositionFront
-          : unitPositionFront // ignore: cast_nullable_to_non_nullable
-              as bool,
-      symbol: null == symbol
-          ? _value.symbol
-          : symbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      uiOrder: freezed == uiOrder
-          ? _value.uiOrder
-          : uiOrder // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            decimalPrecision:
+                null == decimalPrecision
+                    ? _value.decimalPrecision
+                    : decimalPrecision // ignore: cast_nullable_to_non_nullable
+                        as int,
+            unitPositionFront:
+                null == unitPositionFront
+                    ? _value.unitPositionFront
+                    : unitPositionFront // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            symbol:
+                null == symbol
+                    ? _value.symbol
+                    : symbol // ignore: cast_nullable_to_non_nullable
+                        as String,
+            uiOrder:
+                freezed == uiOrder
+                    ? _value.uiOrder
+                    : uiOrder // ignore: cast_nullable_to_non_nullable
+                        as int?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -99,17 +110,19 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
 abstract class _$$CurrencyImplCopyWith<$Res>
     implements $CurrencyCopyWith<$Res> {
   factory _$$CurrencyImplCopyWith(
-          _$CurrencyImpl value, $Res Function(_$CurrencyImpl) then) =
-      __$$CurrencyImplCopyWithImpl<$Res>;
+    _$CurrencyImpl value,
+    $Res Function(_$CurrencyImpl) then,
+  ) = __$$CurrencyImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid id,
-      String name,
-      int decimalPrecision,
-      bool unitPositionFront,
-      String symbol,
-      int? uiOrder});
+  $Res call({
+    Uuid id,
+    String name,
+    int decimalPrecision,
+    bool unitPositionFront,
+    String symbol,
+    int? uiOrder,
+  });
 }
 
 /// @nodoc
@@ -117,8 +130,9 @@ class __$$CurrencyImplCopyWithImpl<$Res>
     extends _$CurrencyCopyWithImpl<$Res, _$CurrencyImpl>
     implements _$$CurrencyImplCopyWith<$Res> {
   __$$CurrencyImplCopyWithImpl(
-      _$CurrencyImpl _value, $Res Function(_$CurrencyImpl) _then)
-      : super(_value, _then);
+    _$CurrencyImpl _value,
+    $Res Function(_$CurrencyImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Currency
   /// with the given fields replaced by the non-null parameter values.
@@ -132,46 +146,54 @@ class __$$CurrencyImplCopyWithImpl<$Res>
     Object? symbol = null,
     Object? uiOrder = freezed,
   }) {
-    return _then(_$CurrencyImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      decimalPrecision: null == decimalPrecision
-          ? _value.decimalPrecision
-          : decimalPrecision // ignore: cast_nullable_to_non_nullable
-              as int,
-      unitPositionFront: null == unitPositionFront
-          ? _value.unitPositionFront
-          : unitPositionFront // ignore: cast_nullable_to_non_nullable
-              as bool,
-      symbol: null == symbol
-          ? _value.symbol
-          : symbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      uiOrder: freezed == uiOrder
-          ? _value.uiOrder
-          : uiOrder // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
+    return _then(
+      _$CurrencyImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        decimalPrecision:
+            null == decimalPrecision
+                ? _value.decimalPrecision
+                : decimalPrecision // ignore: cast_nullable_to_non_nullable
+                    as int,
+        unitPositionFront:
+            null == unitPositionFront
+                ? _value.unitPositionFront
+                : unitPositionFront // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        symbol:
+            null == symbol
+                ? _value.symbol
+                : symbol // ignore: cast_nullable_to_non_nullable
+                    as String,
+        uiOrder:
+            freezed == uiOrder
+                ? _value.uiOrder
+                : uiOrder // ignore: cast_nullable_to_non_nullable
+                    as int?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CurrencyImpl extends _Currency {
-  const _$CurrencyImpl(
-      {required this.id,
-      required this.name,
-      required this.decimalPrecision,
-      required this.unitPositionFront,
-      required this.symbol,
-      this.uiOrder})
-      : super._();
+  const _$CurrencyImpl({
+    required this.id,
+    required this.name,
+    required this.decimalPrecision,
+    required this.unitPositionFront,
+    required this.symbol,
+    this.uiOrder,
+  }) : super._();
 
   @override
   final Uuid id;
@@ -207,8 +229,15 @@ class _$CurrencyImpl extends _Currency {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, decimalPrecision,
-      unitPositionFront, symbol, uiOrder);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    decimalPrecision,
+    unitPositionFront,
+    symbol,
+    uiOrder,
+  );
 
   /// Create a copy of Currency
   /// with the given fields replaced by the non-null parameter values.
@@ -220,13 +249,14 @@ class _$CurrencyImpl extends _Currency {
 }
 
 abstract class _Currency extends Currency {
-  const factory _Currency(
-      {required final Uuid id,
-      required final String name,
-      required final int decimalPrecision,
-      required final bool unitPositionFront,
-      required final String symbol,
-      final int? uiOrder}) = _$CurrencyImpl;
+  const factory _Currency({
+    required final Uuid id,
+    required final String name,
+    required final int decimalPrecision,
+    required final bool unitPositionFront,
+    required final String symbol,
+    final int? uiOrder,
+  }) = _$CurrencyImpl;
   const _Currency._() : super._();
 
   @override

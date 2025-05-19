@@ -29,20 +29,11 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
-    required String message,
+    required AppError error,
   }) = _Error;
 
-  static BudgetBookState fromError({
-    required String message,
-    required BudgetBookState state,
-  }) {
-    return BudgetBookState.error(
-      items: state.items,
-      filter: state.filter,
-      viewMode: state.viewMode,
-      period: state.period,
-      message: message,
-    );
+  static BudgetBookState fromError({required AppError error, required BudgetBookState state}) {
+    return BudgetBookState.error(items: state.items, filter: state.filter, viewMode: state.viewMode, period: state.period, error: error);
   }
 
   @override
@@ -51,25 +42,15 @@ class BudgetBookState with _$BudgetBookState {
       initial: (_, filter, viewMode, period) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
       loading: (_, filter, viewMode, period) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
       loaded: (_, filter, viewMode, period, __) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
-      error: (_, filter, viewMode, period, message) =>
-          'BookingPageState Error:\n- Message: $message\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
+      error: (_, filter, viewMode, period, error) => 'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
     );
   }
 }
 
 extension BookingPageStateExtensions on BudgetBookState {
-  bool get isLoading => maybeWhen(
-        loading: (_, __, ___, ____) => true,
-        orElse: () => false,
-      );
+  bool get isLoading => maybeWhen(loading: (_, __, ___, ____) => true, orElse: () => false);
 
-  bool get isLoaded => maybeWhen(
-        loaded: (_, __, ___, ____, _____) => true,
-        orElse: () => false,
-      );
+  bool get isLoaded => maybeWhen(loaded: (_, __, ___, ____, _____) => true, orElse: () => false);
 
-  bool get isError => maybeWhen(
-        error: (_, __, ___, ____, _____) => true,
-        orElse: () => false,
-      );
+  bool get isError => maybeWhen(error: (_, __, ___, ____, _____) => true, orElse: () => false);
 }

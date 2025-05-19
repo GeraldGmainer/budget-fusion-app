@@ -26,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
     BudgetLogger.instance.d("login with google");
 
     if (_connectivityService.hasNoInternet) {
-      emit(const LoginState.error("error.internet"));
+      emit(const LoginState.error(AppError.internet));
       return;
     }
 
@@ -35,10 +35,10 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginState.success(user));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace);
-      emit(LoginState.error(e.message));
+      emit(LoginState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace);
-      emit(const LoginState.error("error.default"));
+      emit(const LoginState.error(AppError.internet));
     }
   }
 
@@ -51,10 +51,10 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginState.success(user));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace);
-      emit(LoginState.error(e.message));
+      emit(LoginState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace);
-      final errorMessage = e.toString().contains("Invalid login credentials") ? "login.error.incorrect_credentials" : "error.default";
+      final errorMessage = e.toString().contains("Invalid login credentials") ? AppError.incorrectCredentials : AppError.unknown;
       emit(LoginState.error(errorMessage));
     }
   }
@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginState> {
     } catch (e) {
       BudgetLogger.instance.i(e);
       if (!e.toString().contains("User not found")) {
-        emit(const LoginState.error("login.error.logout"));
+        emit(const LoginState.error(AppError.logout));
       } else {
         emit(const LoginState.initial());
       }

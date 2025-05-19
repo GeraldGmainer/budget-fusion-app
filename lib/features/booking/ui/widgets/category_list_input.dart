@@ -1,5 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 enum CategoryPickerRoute { parent, subcategories }
@@ -10,13 +12,7 @@ class CategoryListInput extends StatefulWidget {
   final Function(Category) onCategoryTap;
   final Category? selectedCategory;
 
-  const CategoryListInput({
-    super.key,
-    required this.categories,
-    required this.categoryType,
-    required this.onCategoryTap,
-    this.selectedCategory,
-  });
+  const CategoryListInput({super.key, required this.categories, required this.categoryType, required this.onCategoryTap, this.selectedCategory});
 
   @override
   State<CategoryListInput> createState() => _CategoryListInputState();
@@ -57,11 +53,11 @@ class _CategoryListInputState extends State<CategoryListInput> {
 
   void _onCreate() {
     if (_currentRoute == CategoryPickerRoute.parent) {
-      print("###### new parent categorty");
+      BudgetLogger.instance.d("###### new parent category");
       // widget.onCreateParent(context);
     } else if (_currentRoute == 'subcategories' && _currentParent != null) {
       // widget.onCreateSubcategory(context, _currentParent!);
-      print("###### new sub categorty $_currentParent");
+      BudgetLogger.instance.d("###### new sub category $_currentParent");
     }
   }
 
@@ -128,11 +124,8 @@ class _CategoryListInputState extends State<CategoryListInput> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Select a Category"),
-          leading: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          title: Text("booking.dialogs.category.title".tr()),
+          leading: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -140,11 +133,7 @@ class _CategoryListInputState extends State<CategoryListInput> {
             notifier: _categoryTypeNotifier,
             child: SelectedCategoryNotifierProvider(
               notifier: _selectedCategoryNotifier,
-              child: Navigator(
-                key: _navigatorKey,
-                initialRoute: 'parent',
-                onGenerateRoute: _generateRoute,
-              ),
+              child: Navigator(key: _navigatorKey, initialRoute: 'parent', onGenerateRoute: _generateRoute),
             ),
           ),
         ),
@@ -257,13 +246,7 @@ class SubcategoryListScreen extends StatelessWidget {
             final subs = parent.subcategories;
             return Material(
               color: AppColors.primaryColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildCategoryParent(context),
-                  _buildSubcategories(subs, selectedCat),
-                ],
-              ),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [_buildCategoryParent(context), _buildSubcategories(subs, selectedCat)]),
             );
           },
         );
@@ -284,13 +267,7 @@ class SubcategoryListScreen extends StatelessWidget {
       child: ListView.builder(
         itemCount: subs.length,
         itemBuilder: (context, index) {
-          return CategoryTile(
-            category: subs[index],
-            allCategories: categories,
-            selectedCategory: selectedCat,
-            onTap: onCategoryTap,
-            onParentSelected: (_) {},
-          );
+          return CategoryTile(category: subs[index], allCategories: categories, selectedCategory: selectedCat, onTap: onCategoryTap, onParentSelected: (_) {});
         },
       ),
     );
@@ -325,13 +302,7 @@ class CategoryTile extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
         builder: (context, value, child) {
-          return Transform.scale(
-            scale: value,
-            child: Opacity(
-              opacity: value,
-              child: child,
-            ),
-          );
+          return Transform.scale(scale: value, child: Opacity(opacity: value, child: child));
         },
         child: BudgetIcon(name: category.iconName, color: category.iconColor),
       ),

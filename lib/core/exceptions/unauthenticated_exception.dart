@@ -1,5 +1,6 @@
+import 'app_error.dart';
 import 'translated_exception.dart';
 
 class UnauthenticatedException extends TranslatedException {
-  UnauthenticatedException() : super("error.unauthenticated");
+  UnauthenticatedException() : super(AppError.unauthenticated);
 }
