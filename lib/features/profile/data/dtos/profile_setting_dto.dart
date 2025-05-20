@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/profile/data/serializer/currency_serializer.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'currency_dto.dart';

@@ -1,18 +1,14 @@
-enum BudgetViewMode {
-  summary,
-  transaction,
-  calendar,
-}
+enum BudgetViewMode { summary, transaction, calendar }
 
 extension BudgetViewModeX on BudgetViewMode {
   String get label {
     switch (this) {
       case BudgetViewMode.summary:
-        return "Summary";
+        return "budgetBook.enums.budgetViewMode.summary";
       case BudgetViewMode.transaction:
-        return "Transaction";
+        return "budgetBook.enums.budgetViewMode.transaction";
       case BudgetViewMode.calendar:
-        return "Calendar";
+        return "budgetBook.enums.budgetViewMode.calendar";
     }
   }
 }

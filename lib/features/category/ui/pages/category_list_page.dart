@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,73 +42,58 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories').tr(),
-        actions: [
-          IconButton(
-            icon: const Icon(CommunityMaterialIcons.plus),
-            onPressed: _onCreateCategory,
-          )
-        ],
+        title: Text('category.title').tr(),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48),
           child: Container(
             color: AppColors.primaryColor,
             child: TabBar(
               controller: _tabController,
-              tabs: CategoryType.values.map((vm) {
-                return Tab(text: vm.label.tr());
-              }).toList(),
+              tabs: CategoryType.values.map((vm) => Tab(text: vm.label.tr())).toList(),
               isScrollable: true,
               tabAlignment: TabAlignment.center,
             ),
           ),
         ),
       ),
+      floatingActionButton: AppFab.add(() => _onCreateCategory()),
       body: Padding(
         padding: AppDimensions.pageCardPadding,
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            _buildCategoryList(CategoryType.outcome),
-            _buildCategoryList(CategoryType.income),
-          ],
-        ),
+        child: TabBarView(controller: _tabController, children: [_buildCategoryList(CategoryType.outcome), _buildCategoryList(CategoryType.income)]),
       ),
     );
   }
 
   Widget _buildCategoryList(CategoryType type) {
-    return SingleChildScrollView(
-      child: BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            loaded: (cats) {
-              return CustomCard(
-                child: _buildContent(type, cats),
-              );
-            },
-            error: (message) => ErrorText(message: message, onReload: _reloadCategories),
-            orElse: () => const Center(child: CircularProgressIndicator()),
-          );
-        },
-      ),
+    return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          loaded: (cats) {
+            return _buildContent(type, cats);
+          },
+          error: (message) => ErrorText(error: message, onReload: _reloadCategories),
+          orElse: () => const Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 
   Widget _buildContent(CategoryType type, List<Category> cats) {
     final filtered = (type == CategoryType.outcome) ? cats.parentOutcomeCategories : cats.parentIncomeCategories;
     if (filtered.isEmpty) {
-      return Center(child: Text('No categories found').tr());
+      return Center(child: Text('category.list.empty').tr());
     }
-    return ListView.separated(
-      itemBuilder: (BuildContext context, int index) {
-        final category = filtered[index];
-        return _buildCategory(category);
-      },
-      itemCount: filtered.length,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
+    return SingleChildScrollView(
+      child: CustomCard(
+        child: ListView.separated(
+          itemBuilder: (BuildContext context, int index) => _buildCategory(filtered[index]),
+          itemCount: filtered.length,
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
+        ),
+      ),
     );
   }
 
@@ -129,7 +113,6 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     if (category.subcategories.isEmpty) {
       return null;
     }
-    // TODO translate
-    return Text("${category.subcategories.length} sub-categories");
+    return Text("category.list.subcategoryCount".tr(args: [category.subcategories.length.toString()]));
   }
 }

@@ -12,7 +12,8 @@ part of 'booking_suggestion_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 BookingSuggestionDto _$BookingSuggestionDtoFromJson(Map<String, dynamic> json) {
   return _BookingSuggestionDto.fromJson(json);
@@ -37,20 +38,24 @@ mixin _$BookingSuggestionDto {
 
 /// @nodoc
 abstract class $BookingSuggestionDtoCopyWith<$Res> {
-  factory $BookingSuggestionDtoCopyWith(BookingSuggestionDto value,
-          $Res Function(BookingSuggestionDto) then) =
-      _$BookingSuggestionDtoCopyWithImpl<$Res, BookingSuggestionDto>;
+  factory $BookingSuggestionDtoCopyWith(
+    BookingSuggestionDto value,
+    $Res Function(BookingSuggestionDto) then,
+  ) = _$BookingSuggestionDtoCopyWithImpl<$Res, BookingSuggestionDto>;
   @useResult
-  $Res call(
-      {String suggestion,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      CategoryType categoryType});
+  $Res call({
+    String suggestion,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    CategoryType categoryType,
+  });
 }
 
 /// @nodoc
-class _$BookingSuggestionDtoCopyWithImpl<$Res,
-        $Val extends BookingSuggestionDto>
+class _$BookingSuggestionDtoCopyWithImpl<
+  $Res,
+  $Val extends BookingSuggestionDto
+>
     implements $BookingSuggestionDtoCopyWith<$Res> {
   _$BookingSuggestionDtoCopyWithImpl(this._value, this._then);
 
@@ -63,76 +68,82 @@ class _$BookingSuggestionDtoCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? suggestion = null,
-    Object? categoryType = null,
-  }) {
-    return _then(_value.copyWith(
-      suggestion: null == suggestion
-          ? _value.suggestion
-          : suggestion // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-    ) as $Val);
+  $Res call({Object? suggestion = null, Object? categoryType = null}) {
+    return _then(
+      _value.copyWith(
+            suggestion:
+                null == suggestion
+                    ? _value.suggestion
+                    : suggestion // ignore: cast_nullable_to_non_nullable
+                        as String,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$BookingSuggestionDtoImplCopyWith<$Res>
     implements $BookingSuggestionDtoCopyWith<$Res> {
-  factory _$$BookingSuggestionDtoImplCopyWith(_$BookingSuggestionDtoImpl value,
-          $Res Function(_$BookingSuggestionDtoImpl) then) =
-      __$$BookingSuggestionDtoImplCopyWithImpl<$Res>;
+  factory _$$BookingSuggestionDtoImplCopyWith(
+    _$BookingSuggestionDtoImpl value,
+    $Res Function(_$BookingSuggestionDtoImpl) then,
+  ) = __$$BookingSuggestionDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String suggestion,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      CategoryType categoryType});
+  $Res call({
+    String suggestion,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    CategoryType categoryType,
+  });
 }
 
 /// @nodoc
 class __$$BookingSuggestionDtoImplCopyWithImpl<$Res>
     extends _$BookingSuggestionDtoCopyWithImpl<$Res, _$BookingSuggestionDtoImpl>
     implements _$$BookingSuggestionDtoImplCopyWith<$Res> {
-  __$$BookingSuggestionDtoImplCopyWithImpl(_$BookingSuggestionDtoImpl _value,
-      $Res Function(_$BookingSuggestionDtoImpl) _then)
-      : super(_value, _then);
+  __$$BookingSuggestionDtoImplCopyWithImpl(
+    _$BookingSuggestionDtoImpl _value,
+    $Res Function(_$BookingSuggestionDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSuggestionDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? suggestion = null,
-    Object? categoryType = null,
-  }) {
-    return _then(_$BookingSuggestionDtoImpl(
-      suggestion: null == suggestion
-          ? _value.suggestion
-          : suggestion // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-    ));
+  $Res call({Object? suggestion = null, Object? categoryType = null}) {
+    return _then(
+      _$BookingSuggestionDtoImpl(
+        suggestion:
+            null == suggestion
+                ? _value.suggestion
+                : suggestion // ignore: cast_nullable_to_non_nullable
+                    as String,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BookingSuggestionDtoImpl extends _BookingSuggestionDto {
-  const _$BookingSuggestionDtoImpl(
-      {required this.suggestion,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      required this.categoryType})
-      : super._();
+  const _$BookingSuggestionDtoImpl({
+    required this.suggestion,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    required this.categoryType,
+  }) : super._();
 
   factory _$BookingSuggestionDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingSuggestionDtoImplFromJson(json);
@@ -170,24 +181,25 @@ class _$BookingSuggestionDtoImpl extends _BookingSuggestionDto {
   @override
   @pragma('vm:prefer-inline')
   _$$BookingSuggestionDtoImplCopyWith<_$BookingSuggestionDtoImpl>
-      get copyWith =>
-          __$$BookingSuggestionDtoImplCopyWithImpl<_$BookingSuggestionDtoImpl>(
-              this, _$identity);
+  get copyWith =>
+      __$$BookingSuggestionDtoImplCopyWithImpl<_$BookingSuggestionDtoImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BookingSuggestionDtoImplToJson(
-      this,
-    );
+    return _$$BookingSuggestionDtoImplToJson(this);
   }
 }
 
 abstract class _BookingSuggestionDto extends BookingSuggestionDto {
-  const factory _BookingSuggestionDto(
-      {required final String suggestion,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      required final CategoryType categoryType}) = _$BookingSuggestionDtoImpl;
+  const factory _BookingSuggestionDto({
+    required final String suggestion,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    required final CategoryType categoryType,
+  }) = _$BookingSuggestionDtoImpl;
   const _BookingSuggestionDto._() : super._();
 
   factory _BookingSuggestionDto.fromJson(Map<String, dynamic> json) =
@@ -205,5 +217,5 @@ abstract class _BookingSuggestionDto extends BookingSuggestionDto {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BookingSuggestionDtoImplCopyWith<_$BookingSuggestionDtoImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,7 +12,8 @@ part of 'category_group.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CategoryGroup {
@@ -31,14 +32,16 @@ mixin _$CategoryGroup {
 /// @nodoc
 abstract class $CategoryGroupCopyWith<$Res> {
   factory $CategoryGroupCopyWith(
-          CategoryGroup value, $Res Function(CategoryGroup) then) =
-      _$CategoryGroupCopyWithImpl<$Res, CategoryGroup>;
+    CategoryGroup value,
+    $Res Function(CategoryGroup) then,
+  ) = _$CategoryGroupCopyWithImpl<$Res, CategoryGroup>;
   @useResult
-  $Res call(
-      {Category category,
-      List<Booking> bookings,
-      Decimal amount,
-      List<CategoryGroup> subGroups});
+  $Res call({
+    Category category,
+    List<Booking> bookings,
+    Decimal amount,
+    List<CategoryGroup> subGroups,
+  });
 
   $CategoryCopyWith<$Res> get category;
 }
@@ -63,24 +66,31 @@ class _$CategoryGroupCopyWithImpl<$Res, $Val extends CategoryGroup>
     Object? amount = null,
     Object? subGroups = null,
   }) {
-    return _then(_value.copyWith(
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      bookings: null == bookings
-          ? _value.bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      subGroups: null == subGroups
-          ? _value.subGroups
-          : subGroups // ignore: cast_nullable_to_non_nullable
-              as List<CategoryGroup>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            category:
+                null == category
+                    ? _value.category
+                    : category // ignore: cast_nullable_to_non_nullable
+                        as Category,
+            bookings:
+                null == bookings
+                    ? _value.bookings
+                    : bookings // ignore: cast_nullable_to_non_nullable
+                        as List<Booking>,
+            amount:
+                null == amount
+                    ? _value.amount
+                    : amount // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+            subGroups:
+                null == subGroups
+                    ? _value.subGroups
+                    : subGroups // ignore: cast_nullable_to_non_nullable
+                        as List<CategoryGroup>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CategoryGroup
@@ -98,15 +108,17 @@ class _$CategoryGroupCopyWithImpl<$Res, $Val extends CategoryGroup>
 abstract class _$$CategoryGroupImplCopyWith<$Res>
     implements $CategoryGroupCopyWith<$Res> {
   factory _$$CategoryGroupImplCopyWith(
-          _$CategoryGroupImpl value, $Res Function(_$CategoryGroupImpl) then) =
-      __$$CategoryGroupImplCopyWithImpl<$Res>;
+    _$CategoryGroupImpl value,
+    $Res Function(_$CategoryGroupImpl) then,
+  ) = __$$CategoryGroupImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Category category,
-      List<Booking> bookings,
-      Decimal amount,
-      List<CategoryGroup> subGroups});
+  $Res call({
+    Category category,
+    List<Booking> bookings,
+    Decimal amount,
+    List<CategoryGroup> subGroups,
+  });
 
   @override
   $CategoryCopyWith<$Res> get category;
@@ -117,8 +129,9 @@ class __$$CategoryGroupImplCopyWithImpl<$Res>
     extends _$CategoryGroupCopyWithImpl<$Res, _$CategoryGroupImpl>
     implements _$$CategoryGroupImplCopyWith<$Res> {
   __$$CategoryGroupImplCopyWithImpl(
-      _$CategoryGroupImpl _value, $Res Function(_$CategoryGroupImpl) _then)
-      : super(_value, _then);
+    _$CategoryGroupImpl _value,
+    $Res Function(_$CategoryGroupImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategoryGroup
   /// with the given fields replaced by the non-null parameter values.
@@ -130,38 +143,44 @@ class __$$CategoryGroupImplCopyWithImpl<$Res>
     Object? amount = null,
     Object? subGroups = null,
   }) {
-    return _then(_$CategoryGroupImpl(
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category,
-      bookings: null == bookings
-          ? _value._bookings
-          : bookings // ignore: cast_nullable_to_non_nullable
-              as List<Booking>,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      subGroups: null == subGroups
-          ? _value._subGroups
-          : subGroups // ignore: cast_nullable_to_non_nullable
-              as List<CategoryGroup>,
-    ));
+    return _then(
+      _$CategoryGroupImpl(
+        category:
+            null == category
+                ? _value.category
+                : category // ignore: cast_nullable_to_non_nullable
+                    as Category,
+        bookings:
+            null == bookings
+                ? _value._bookings
+                : bookings // ignore: cast_nullable_to_non_nullable
+                    as List<Booking>,
+        amount:
+            null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+        subGroups:
+            null == subGroups
+                ? _value._subGroups
+                : subGroups // ignore: cast_nullable_to_non_nullable
+                    as List<CategoryGroup>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CategoryGroupImpl extends _CategoryGroup {
-  const _$CategoryGroupImpl(
-      {required this.category,
-      final List<Booking> bookings = const [],
-      required this.amount,
-      final List<CategoryGroup> subGroups = const []})
-      : _bookings = bookings,
-        _subGroups = subGroups,
-        super._();
+  const _$CategoryGroupImpl({
+    required this.category,
+    final List<Booking> bookings = const [],
+    required this.amount,
+    final List<CategoryGroup> subGroups = const [],
+  }) : _bookings = bookings,
+       _subGroups = subGroups,
+       super._();
 
   @override
   final Category category;
@@ -199,17 +218,20 @@ class _$CategoryGroupImpl extends _CategoryGroup {
                 other.category == category) &&
             const DeepCollectionEquality().equals(other._bookings, _bookings) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            const DeepCollectionEquality()
-                .equals(other._subGroups, _subGroups));
+            const DeepCollectionEquality().equals(
+              other._subGroups,
+              _subGroups,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      category,
-      const DeepCollectionEquality().hash(_bookings),
-      amount,
-      const DeepCollectionEquality().hash(_subGroups));
+    runtimeType,
+    category,
+    const DeepCollectionEquality().hash(_bookings),
+    amount,
+    const DeepCollectionEquality().hash(_subGroups),
+  );
 
   /// Create a copy of CategoryGroup
   /// with the given fields replaced by the non-null parameter values.
@@ -221,11 +243,12 @@ class _$CategoryGroupImpl extends _CategoryGroup {
 }
 
 abstract class _CategoryGroup extends CategoryGroup {
-  const factory _CategoryGroup(
-      {required final Category category,
-      final List<Booking> bookings,
-      required final Decimal amount,
-      final List<CategoryGroup> subGroups}) = _$CategoryGroupImpl;
+  const factory _CategoryGroup({
+    required final Category category,
+    final List<Booking> bookings,
+    required final Decimal amount,
+    final List<CategoryGroup> subGroups,
+  }) = _$CategoryGroupImpl;
   const _CategoryGroup._() : super._();
 
   @override

@@ -83,15 +83,15 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onErrorAuthenticating(String message) {
     // TODO better message for sentry
     BudgetLogger.instance.w(message);
-    String text = message;
-    if (message == "Confirmation Token not found") {
-      text = "login.error.token_not_found";
-    } else if (message.contains("signature is invalid")) {
-      text = "login.error.signature_invalid";
-    } else {
-      text = "login.error.default";
-    }
-    _showErrorMessage(text);
+    // String text = message;
+    // if (message == "Confirmation Token not found") {
+    //   text = "login.error.token_not_found";
+    // } else if (message.contains("signature is invalid")) {
+    //   text = "login.error.signature_invalid";
+    // } else {
+    //   text = "login.error.default";
+    // }
+    _showErrorMessage(AppError.unknown);
   }
 
   _showMessage(String message) {
@@ -99,9 +99,9 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
     scaffoldContext?.showSnackBar(message);
   }
 
-  _showErrorMessage(String message) {
+  _showErrorMessage(AppError error) {
     final scaffoldContext = prov.Provider.of<ScaffoldProvider>(context, listen: false).scaffoldContext;
-    scaffoldContext?.showErrorSnackBar(message);
+    scaffoldContext?.showErrorSnackBar(error);
   }
 
   @override

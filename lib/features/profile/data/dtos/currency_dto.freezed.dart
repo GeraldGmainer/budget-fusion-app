@@ -12,7 +12,8 @@ part of 'currency_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) {
   return _CurrencyDto.fromJson(json);
@@ -43,16 +44,18 @@ mixin _$CurrencyDto {
 /// @nodoc
 abstract class $CurrencyDtoCopyWith<$Res> {
   factory $CurrencyDtoCopyWith(
-          CurrencyDto value, $Res Function(CurrencyDto) then) =
-      _$CurrencyDtoCopyWithImpl<$Res, CurrencyDto>;
+    CurrencyDto value,
+    $Res Function(CurrencyDto) then,
+  ) = _$CurrencyDtoCopyWithImpl<$Res, CurrencyDto>;
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'decimal_precision') int decimalPrecision,
-      @JsonKey(name: 'unit_position_front') bool unitPositionFront,
-      String symbol,
-      int? uiOrder});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'decimal_precision') int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
+    String symbol,
+    int? uiOrder,
+  });
 }
 
 /// @nodoc
@@ -77,32 +80,41 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
     Object? symbol = null,
     Object? uiOrder = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      decimalPrecision: null == decimalPrecision
-          ? _value.decimalPrecision
-          : decimalPrecision // ignore: cast_nullable_to_non_nullable
-              as int,
-      unitPositionFront: null == unitPositionFront
-          ? _value.unitPositionFront
-          : unitPositionFront // ignore: cast_nullable_to_non_nullable
-              as bool,
-      symbol: null == symbol
-          ? _value.symbol
-          : symbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      uiOrder: freezed == uiOrder
-          ? _value.uiOrder
-          : uiOrder // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            decimalPrecision:
+                null == decimalPrecision
+                    ? _value.decimalPrecision
+                    : decimalPrecision // ignore: cast_nullable_to_non_nullable
+                        as int,
+            unitPositionFront:
+                null == unitPositionFront
+                    ? _value.unitPositionFront
+                    : unitPositionFront // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            symbol:
+                null == symbol
+                    ? _value.symbol
+                    : symbol // ignore: cast_nullable_to_non_nullable
+                        as String,
+            uiOrder:
+                freezed == uiOrder
+                    ? _value.uiOrder
+                    : uiOrder // ignore: cast_nullable_to_non_nullable
+                        as int?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -110,17 +122,19 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
 abstract class _$$CurrencyDtoImplCopyWith<$Res>
     implements $CurrencyDtoCopyWith<$Res> {
   factory _$$CurrencyDtoImplCopyWith(
-          _$CurrencyDtoImpl value, $Res Function(_$CurrencyDtoImpl) then) =
-      __$$CurrencyDtoImplCopyWithImpl<$Res>;
+    _$CurrencyDtoImpl value,
+    $Res Function(_$CurrencyDtoImpl) then,
+  ) = __$$CurrencyDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'decimal_precision') int decimalPrecision,
-      @JsonKey(name: 'unit_position_front') bool unitPositionFront,
-      String symbol,
-      int? uiOrder});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'decimal_precision') int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
+    String symbol,
+    int? uiOrder,
+  });
 }
 
 /// @nodoc
@@ -128,8 +142,9 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
     extends _$CurrencyDtoCopyWithImpl<$Res, _$CurrencyDtoImpl>
     implements _$$CurrencyDtoImplCopyWith<$Res> {
   __$$CurrencyDtoImplCopyWithImpl(
-      _$CurrencyDtoImpl _value, $Res Function(_$CurrencyDtoImpl) _then)
-      : super(_value, _then);
+    _$CurrencyDtoImpl _value,
+    $Res Function(_$CurrencyDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
@@ -143,46 +158,54 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
     Object? symbol = null,
     Object? uiOrder = freezed,
   }) {
-    return _then(_$CurrencyDtoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      decimalPrecision: null == decimalPrecision
-          ? _value.decimalPrecision
-          : decimalPrecision // ignore: cast_nullable_to_non_nullable
-              as int,
-      unitPositionFront: null == unitPositionFront
-          ? _value.unitPositionFront
-          : unitPositionFront // ignore: cast_nullable_to_non_nullable
-              as bool,
-      symbol: null == symbol
-          ? _value.symbol
-          : symbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      uiOrder: freezed == uiOrder
-          ? _value.uiOrder
-          : uiOrder // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
+    return _then(
+      _$CurrencyDtoImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        decimalPrecision:
+            null == decimalPrecision
+                ? _value.decimalPrecision
+                : decimalPrecision // ignore: cast_nullable_to_non_nullable
+                    as int,
+        unitPositionFront:
+            null == unitPositionFront
+                ? _value.unitPositionFront
+                : unitPositionFront // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        symbol:
+            null == symbol
+                ? _value.symbol
+                : symbol // ignore: cast_nullable_to_non_nullable
+                    as String,
+        uiOrder:
+            freezed == uiOrder
+                ? _value.uiOrder
+                : uiOrder // ignore: cast_nullable_to_non_nullable
+                    as int?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CurrencyDtoImpl extends _CurrencyDto {
-  const _$CurrencyDtoImpl(
-      {@UuidSerializer() required this.id,
-      required this.name,
-      @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
-      @JsonKey(name: 'unit_position_front') this.unitPositionFront = true,
-      required this.symbol,
-      this.uiOrder})
-      : super._();
+  const _$CurrencyDtoImpl({
+    @UuidSerializer() required this.id,
+    required this.name,
+    @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
+    @JsonKey(name: 'unit_position_front') this.unitPositionFront = true,
+    required this.symbol,
+    this.uiOrder,
+  }) : super._();
 
   factory _$CurrencyDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CurrencyDtoImplFromJson(json);
@@ -225,8 +248,15 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, decimalPrecision,
-      unitPositionFront, symbol, uiOrder);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    decimalPrecision,
+    unitPositionFront,
+    symbol,
+    uiOrder,
+  );
 
   /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
@@ -238,20 +268,19 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CurrencyDtoImplToJson(
-      this,
-    );
+    return _$$CurrencyDtoImplToJson(this);
   }
 }
 
 abstract class _CurrencyDto extends CurrencyDto {
-  const factory _CurrencyDto(
-      {@UuidSerializer() required final Uuid id,
-      required final String name,
-      @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
-      @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
-      required final String symbol,
-      final int? uiOrder}) = _$CurrencyDtoImpl;
+  const factory _CurrencyDto({
+    @UuidSerializer() required final Uuid id,
+    required final String name,
+    @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
+    required final String symbol,
+    final int? uiOrder,
+  }) = _$CurrencyDtoImpl;
   const _CurrencyDto._() : super._();
 
   factory _CurrencyDto.fromJson(Map<String, dynamic> json) =

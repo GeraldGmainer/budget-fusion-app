@@ -8,5 +8,5 @@ class LoginState with _$LoginState {
 
   const factory LoginState.success(User user) = LoginSuccessState;
 
-  const factory LoginState.error(String message) = LoginErrorState;
+  const factory LoginState.error(AppError error) = LoginErrorState;
 }

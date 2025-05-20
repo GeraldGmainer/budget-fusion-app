@@ -13,25 +13,21 @@ class CalculatorSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.primaryColorVariant,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 32.0),
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2)),
-          ),
-          SizedBox(height: 32.0),
-          Calculator(bookingSaveCubit: bookingSaveCubit, calculatorCubit: calculatorCubit),
-        ],
+    return SafeArea(
+      child: Material(
+        color: AppColors.primaryColorVariant,
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 32.0),
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: Theme.of(context).dividerColor, borderRadius: BorderRadius.circular(2))),
+            SizedBox(height: 32.0),
+            Calculator(bookingSaveCubit: bookingSaveCubit, calculatorCubit: calculatorCubit),
+          ],
+        ),
       ),
     );
   }

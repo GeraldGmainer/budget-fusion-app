@@ -15,7 +15,7 @@ class TransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
       dense: true,
       minVerticalPadding: 0,
       onTap: () => _onTap(context),
@@ -35,25 +35,14 @@ class TransactionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BudgetIcon(name: booking.category?.iconName, color: booking.category?.iconColor),
-          if (!booking.isSynced)
-            Container(
-              width: 6,
-              height: 6,
-              decoration: const BoxDecoration(
-                color: AppColors.errorColor,
-                shape: BoxShape.circle,
-              ),
-            ),
+          if (!booking.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
         ],
       ),
     );
   }
 
   Widget _buildTitle() {
-    return Text(
-      booking.category?.name ?? "unknown category",
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    );
+    return Text(booking.category?.name ?? "unknown category", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
   }
 
   Widget? _buildSubtitle(BuildContext context) {

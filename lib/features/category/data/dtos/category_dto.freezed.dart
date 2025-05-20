@@ -12,7 +12,8 @@ part of 'category_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) {
   return _CategoryDto.fromJson(json);
@@ -50,19 +51,21 @@ mixin _$CategoryDto {
 /// @nodoc
 abstract class $CategoryDtoCopyWith<$Res> {
   factory $CategoryDtoCopyWith(
-          CategoryDto value, $Res Function(CategoryDto) then) =
-      _$CategoryDtoCopyWithImpl<$Res, CategoryDto>;
+    CategoryDto value,
+    $Res Function(CategoryDto) then,
+  ) = _$CategoryDtoCopyWithImpl<$Res, CategoryDto>;
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      CategoryType categoryType,
-      @JsonKey(name: 'icon_name') String iconName,
-      @JsonKey(name: 'icon_color') String iconColor,
-      @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    CategoryType categoryType,
+    @JsonKey(name: 'icon_name') String iconName,
+    @JsonKey(name: 'icon_color') String iconColor,
+    @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -88,36 +91,46 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
     Object? parentId = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            categoryType:
+                null == categoryType
+                    ? _value.categoryType
+                    : categoryType // ignore: cast_nullable_to_non_nullable
+                        as CategoryType,
+            iconName:
+                null == iconName
+                    ? _value.iconName
+                    : iconName // ignore: cast_nullable_to_non_nullable
+                        as String,
+            iconColor:
+                null == iconColor
+                    ? _value.iconColor
+                    : iconColor // ignore: cast_nullable_to_non_nullable
+                        as String,
+            parentId:
+                freezed == parentId
+                    ? _value.parentId
+                    : parentId // ignore: cast_nullable_to_non_nullable
+                        as Uuid?,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -125,20 +138,22 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
 abstract class _$$CategoryDtoImplCopyWith<$Res>
     implements $CategoryDtoCopyWith<$Res> {
   factory _$$CategoryDtoImplCopyWith(
-          _$CategoryDtoImpl value, $Res Function(_$CategoryDtoImpl) then) =
-      __$$CategoryDtoImplCopyWithImpl<$Res>;
+    _$CategoryDtoImpl value,
+    $Res Function(_$CategoryDtoImpl) then,
+  ) = __$$CategoryDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      String name,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      CategoryType categoryType,
-      @JsonKey(name: 'icon_name') String iconName,
-      @JsonKey(name: 'icon_color') String iconColor,
-      @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    String name,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    CategoryType categoryType,
+    @JsonKey(name: 'icon_name') String iconName,
+    @JsonKey(name: 'icon_color') String iconColor,
+    @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -146,8 +161,9 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
     extends _$CategoryDtoCopyWithImpl<$Res, _$CategoryDtoImpl>
     implements _$$CategoryDtoImplCopyWith<$Res> {
   __$$CategoryDtoImplCopyWithImpl(
-      _$CategoryDtoImpl _value, $Res Function(_$CategoryDtoImpl) _then)
-      : super(_value, _then);
+    _$CategoryDtoImpl _value,
+    $Res Function(_$CategoryDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategoryDto
   /// with the given fields replaced by the non-null parameter values.
@@ -162,55 +178,62 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
     Object? parentId = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_$CategoryDtoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryType: null == categoryType
-          ? _value.categoryType
-          : categoryType // ignore: cast_nullable_to_non_nullable
-              as CategoryType,
-      iconName: null == iconName
-          ? _value.iconName
-          : iconName // ignore: cast_nullable_to_non_nullable
-              as String,
-      iconColor: null == iconColor
-          ? _value.iconColor
-          : iconColor // ignore: cast_nullable_to_non_nullable
-              as String,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as Uuid?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$CategoryDtoImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        categoryType:
+            null == categoryType
+                ? _value.categoryType
+                : categoryType // ignore: cast_nullable_to_non_nullable
+                    as CategoryType,
+        iconName:
+            null == iconName
+                ? _value.iconName
+                : iconName // ignore: cast_nullable_to_non_nullable
+                    as String,
+        iconColor:
+            null == iconColor
+                ? _value.iconColor
+                : iconColor // ignore: cast_nullable_to_non_nullable
+                    as String,
+        parentId:
+            freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                    as Uuid?,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CategoryDtoImpl extends _CategoryDto {
-  const _$CategoryDtoImpl(
-      {@UuidSerializer() required this.id,
-      required this.name,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      required this.categoryType,
-      @JsonKey(name: 'icon_name') required this.iconName,
-      @JsonKey(name: 'icon_color') required this.iconColor,
-      @JsonKey(name: 'parent_id') @UuidSerializer() required this.parentId,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required this.updatedAt})
-      : super._();
+  const _$CategoryDtoImpl({
+    @UuidSerializer() required this.id,
+    required this.name,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    required this.categoryType,
+    @JsonKey(name: 'icon_name') required this.iconName,
+    @JsonKey(name: 'icon_color') required this.iconColor,
+    @JsonKey(name: 'parent_id') @UuidSerializer() required this.parentId,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
+  }) : super._();
 
   factory _$CategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryDtoImplFromJson(json);
@@ -265,8 +288,16 @@ class _$CategoryDtoImpl extends _CategoryDto {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, categoryType, iconName,
-      iconColor, parentId, updatedAt);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    categoryType,
+    iconName,
+    iconColor,
+    parentId,
+    updatedAt,
+  );
 
   /// Create a copy of CategoryDto
   /// with the given fields replaced by the non-null parameter values.
@@ -278,27 +309,24 @@ class _$CategoryDtoImpl extends _CategoryDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CategoryDtoImplToJson(
-      this,
-    );
+    return _$$CategoryDtoImplToJson(this);
   }
 }
 
 abstract class _CategoryDto extends CategoryDto {
-  const factory _CategoryDto(
-      {@UuidSerializer() required final Uuid id,
-      required final String name,
-      @JsonKey(name: 'category_type')
-      @CategoryTypeSerializer()
-      required final CategoryType categoryType,
-      @JsonKey(name: 'icon_name') required final String iconName,
-      @JsonKey(name: 'icon_color') required final String iconColor,
-      @JsonKey(name: 'parent_id')
-      @UuidSerializer()
-      required final Uuid? parentId,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required final DateTime updatedAt}) = _$CategoryDtoImpl;
+  const factory _CategoryDto({
+    @UuidSerializer() required final Uuid id,
+    required final String name,
+    @JsonKey(name: 'category_type')
+    @CategoryTypeSerializer()
+    required final CategoryType categoryType,
+    @JsonKey(name: 'icon_name') required final String iconName,
+    @JsonKey(name: 'icon_color') required final String iconColor,
+    @JsonKey(name: 'parent_id') @UuidSerializer() required final Uuid? parentId,
+    @JsonKey(name: 'updated_at')
+    @DateTimeSerializer()
+    required final DateTime updatedAt,
+  }) = _$CategoryDtoImpl;
   const _CategoryDto._() : super._();
 
   factory _CategoryDto.fromJson(Map<String, dynamic> json) =

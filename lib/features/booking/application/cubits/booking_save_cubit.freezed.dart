@@ -12,7 +12,8 @@ part of 'booking_save_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$BookingSaveState {
@@ -24,9 +25,8 @@ mixin _$BookingSaveState {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
+    required TResult Function(BookingDraft draft, AppError error) error,
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
@@ -34,9 +34,8 @@ mixin _$BookingSaveState {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+    TResult? Function(BookingDraft draft, AppError error)? error,
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
@@ -44,10 +43,9 @@ mixin _$BookingSaveState {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -56,8 +54,7 @@ mixin _$BookingSaveState {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -66,8 +63,7 @@ mixin _$BookingSaveState {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -77,8 +73,7 @@ mixin _$BookingSaveState {
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -90,8 +85,9 @@ mixin _$BookingSaveState {
 /// @nodoc
 abstract class $BookingSaveStateCopyWith<$Res> {
   factory $BookingSaveStateCopyWith(
-          BookingSaveState value, $Res Function(BookingSaveState) then) =
-      _$BookingSaveStateCopyWithImpl<$Res, BookingSaveState>;
+    BookingSaveState value,
+    $Res Function(BookingSaveState) then,
+  ) = _$BookingSaveStateCopyWithImpl<$Res, BookingSaveState>;
   @useResult
   $Res call({BookingDraft draft});
 
@@ -112,15 +108,17 @@ class _$BookingSaveStateCopyWithImpl<$Res, $Val extends BookingSaveState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_value.copyWith(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-    ) as $Val);
+  $Res call({Object? draft = null}) {
+    return _then(
+      _value.copyWith(
+            draft:
+                null == draft
+                    ? _value.draft
+                    : draft // ignore: cast_nullable_to_non_nullable
+                        as BookingDraft,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of BookingSaveState
@@ -138,8 +136,9 @@ class _$BookingSaveStateCopyWithImpl<$Res, $Val extends BookingSaveState>
 abstract class _$$InitialImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+    _$InitialImpl value,
+    $Res Function(_$InitialImpl) then,
+  ) = __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BookingDraft draft});
@@ -153,22 +152,24 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
+    _$InitialImpl _value,
+    $Res Function(_$InitialImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$InitialImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$InitialImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+      ),
+    );
   }
 }
 
@@ -212,7 +213,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
     return initial(draft);
   }
@@ -225,7 +226,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
     return initial?.call(draft);
   }
@@ -238,7 +239,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -309,8 +310,9 @@ abstract class _Initial implements BookingSaveState {
 abstract class _$$DraftUpdateImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$DraftUpdateImplCopyWith(
-          _$DraftUpdateImpl value, $Res Function(_$DraftUpdateImpl) then) =
-      __$$DraftUpdateImplCopyWithImpl<$Res>;
+    _$DraftUpdateImpl value,
+    $Res Function(_$DraftUpdateImpl) then,
+  ) = __$$DraftUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BookingDraft draft});
@@ -324,22 +326,24 @@ class __$$DraftUpdateImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$DraftUpdateImpl>
     implements _$$DraftUpdateImplCopyWith<$Res> {
   __$$DraftUpdateImplCopyWithImpl(
-      _$DraftUpdateImpl _value, $Res Function(_$DraftUpdateImpl) _then)
-      : super(_value, _then);
+    _$DraftUpdateImpl _value,
+    $Res Function(_$DraftUpdateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$DraftUpdateImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$DraftUpdateImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+      ),
+    );
   }
 }
 
@@ -383,7 +387,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
     return draftUpdate(draft);
   }
@@ -396,7 +400,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
     return draftUpdate?.call(draft);
   }
@@ -409,7 +413,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (draftUpdate != null) {
@@ -480,8 +484,9 @@ abstract class _DraftUpdate implements BookingSaveState {
 abstract class _$$LoadingImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+    _$LoadingImpl value,
+    $Res Function(_$LoadingImpl) then,
+  ) = __$$LoadingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BookingDraft draft});
@@ -495,22 +500,24 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+    _$LoadingImpl _value,
+    $Res Function(_$LoadingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$LoadingImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$LoadingImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+      ),
+    );
   }
 }
 
@@ -554,7 +561,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
     return loading(draft);
   }
@@ -567,7 +574,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
     return loading?.call(draft);
   }
@@ -580,7 +587,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -651,8 +658,9 @@ abstract class _Loading implements BookingSaveState {
 abstract class _$$LoadedImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+    _$LoadedImpl value,
+    $Res Function(_$LoadedImpl) then,
+  ) = __$$LoadedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BookingDraft draft});
@@ -666,22 +674,24 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+    _$LoadedImpl _value,
+    $Res Function(_$LoadedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$LoadedImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$LoadedImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+      ),
+    );
   }
 }
 
@@ -725,7 +735,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
     return loaded(draft);
   }
@@ -738,7 +748,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
     return loaded?.call(draft);
   }
@@ -751,7 +761,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -822,8 +832,9 @@ abstract class _Loaded implements BookingSaveState {
 abstract class _$$DeletedImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$DeletedImplCopyWith(
-          _$DeletedImpl value, $Res Function(_$DeletedImpl) then) =
-      __$$DeletedImplCopyWithImpl<$Res>;
+    _$DeletedImpl value,
+    $Res Function(_$DeletedImpl) then,
+  ) = __$$DeletedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BookingDraft draft, Booking booking});
@@ -838,27 +849,29 @@ class __$$DeletedImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$DeletedImpl>
     implements _$$DeletedImplCopyWith<$Res> {
   __$$DeletedImplCopyWithImpl(
-      _$DeletedImpl _value, $Res Function(_$DeletedImpl) _then)
-      : super(_value, _then);
+    _$DeletedImpl _value,
+    $Res Function(_$DeletedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-    Object? booking = null,
-  }) {
-    return _then(_$DeletedImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-      booking: null == booking
-          ? _value.booking
-          : booking // ignore: cast_nullable_to_non_nullable
-              as Booking,
-    ));
+  $Res call({Object? draft = null, Object? booking = null}) {
+    return _then(
+      _$DeletedImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+        booking:
+            null == booking
+                ? _value.booking
+                : booking // ignore: cast_nullable_to_non_nullable
+                    as Booking,
+      ),
+    );
   }
 
   /// Create a copy of BookingSaveState
@@ -915,7 +928,7 @@ class _$DeletedImpl implements _Deleted {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
     return deleted(draft, booking);
   }
@@ -928,7 +941,7 @@ class _$DeletedImpl implements _Deleted {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
     return deleted?.call(draft, booking);
   }
@@ -941,7 +954,7 @@ class _$DeletedImpl implements _Deleted {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (deleted != null) {
@@ -995,9 +1008,10 @@ class _$DeletedImpl implements _Deleted {
 }
 
 abstract class _Deleted implements BookingSaveState {
-  const factory _Deleted(
-      {required final BookingDraft draft,
-      required final Booking booking}) = _$DeletedImpl;
+  const factory _Deleted({
+    required final BookingDraft draft,
+    required final Booking booking,
+  }) = _$DeletedImpl;
 
   @override
   BookingDraft get draft;
@@ -1015,11 +1029,12 @@ abstract class _Deleted implements BookingSaveState {
 abstract class _$$ErrorImplCopyWith<$Res>
     implements $BookingSaveStateCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+    _$ErrorImpl value,
+    $Res Function(_$ErrorImpl) then,
+  ) = __$$ErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BookingDraft draft, String message});
+  $Res call({BookingDraft draft, AppError error});
 
   @override
   $BookingDraftCopyWith<$Res> get draft;
@@ -1030,43 +1045,45 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$BookingSaveStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+    _$ErrorImpl _value,
+    $Res Function(_$ErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-    Object? message = null,
-  }) {
-    return _then(_$ErrorImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as BookingDraft,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? draft = null, Object? error = null}) {
+    return _then(
+      _$ErrorImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
+        error:
+            null == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as AppError,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.draft, required this.message});
+  const _$ErrorImpl({required this.draft, required this.error});
 
   @override
   final BookingDraft draft;
   @override
-  final String message;
+  final AppError error;
 
   @override
   String toString() {
-    return 'BookingSaveState.error(draft: $draft, message: $message)';
+    return 'BookingSaveState.error(draft: $draft, error: $error)';
   }
 
   @override
@@ -1075,11 +1092,11 @@ class _$ErrorImpl implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
             (identical(other.draft, draft) || other.draft == draft) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, draft, message);
+  int get hashCode => Object.hash(runtimeType, draft, error);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -1097,9 +1114,9 @@ class _$ErrorImpl implements _Error {
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
-    required TResult Function(BookingDraft draft, String message) error,
+    required TResult Function(BookingDraft draft, AppError error) error,
   }) {
-    return error(draft, message);
+    return error(draft, this.error);
   }
 
   @override
@@ -1110,9 +1127,9 @@ class _$ErrorImpl implements _Error {
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
-    TResult? Function(BookingDraft draft, String message)? error,
+    TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
-    return error?.call(draft, message);
+    return error?.call(draft, this.error);
   }
 
   @override
@@ -1123,11 +1140,11 @@ class _$ErrorImpl implements _Error {
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
-    TResult Function(BookingDraft draft, String message)? error,
+    TResult Function(BookingDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(draft, message);
+      return error(draft, this.error);
     }
     return orElse();
   }
@@ -1177,13 +1194,14 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements BookingSaveState {
-  const factory _Error(
-      {required final BookingDraft draft,
-      required final String message}) = _$ErrorImpl;
+  const factory _Error({
+    required final BookingDraft draft,
+    required final AppError error,
+  }) = _$ErrorImpl;
 
   @override
   BookingDraft get draft;
-  String get message;
+  AppError get error;
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.

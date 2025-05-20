@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/category_view_summary_data.dart';
@@ -13,7 +14,7 @@ class CategorySummaryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCardWithAction(
-      title: "Category Summary",
+      title: "budgetBook.tabs.summary.title".tr(),
       onOptionTap: () {
         context.showComingSoon();
       },
@@ -46,10 +47,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
   @override
   void initState() {
     super.initState();
-    _arrowController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
+    _arrowController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
   }
 
   @override
@@ -77,14 +75,13 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child: _isExpanded && widget.summary.subSummaries.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Column(
-                    children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList(),
-                  ),
-                )
-              : const SizedBox.shrink(),
+          child:
+              _isExpanded && widget.summary.subSummaries.isNotEmpty
+                  ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Column(children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList()),
+                  )
+                  : const SizedBox.shrink(),
         ),
       ],
     );
@@ -95,10 +92,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
       contentPadding: EdgeInsets.zero,
       dense: true,
       visualDensity: const VisualDensity(vertical: 0),
-      leading: SizedBox(
-        width: 40,
-        child: _buildIcon(widget.summary),
-      ),
+      leading: SizedBox(width: 40, child: _buildIcon(widget.summary)),
       onTap: () {
         context.showComingSoon();
       },
@@ -108,17 +102,8 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(
-            value: widget.summary.value,
-            currency: widget.summary.currency,
-            color: widget.summary.categoryType.color,
-            fontSize: 15,
-          ),
-          Text(
-            "${widget.summary.percentage} %",
-            textAlign: TextAlign.end,
-            style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor),
-          ),
+          CurrencyText(value: widget.summary.value, currency: widget.summary.currency, color: widget.summary.categoryType.color, fontSize: 15),
+          Text("${widget.summary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor)),
         ],
       ),
     );
@@ -129,11 +114,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
     if (widget.summary.subSummaries.isEmpty) {
       return title;
     }
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: _toggleExpanded,
-      child: title,
-    );
+    return GestureDetector(behavior: HitTestBehavior.opaque, onTap: _toggleExpanded, child: title);
   }
 
   Widget? _buildParentSubtitle() {
@@ -141,7 +122,6 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
     if (subs.isEmpty) {
       return null;
     }
-    final label = "${subs.length} sub-categories";
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _toggleExpanded,
@@ -152,14 +132,10 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
           children: [
             RotationTransition(
               turns: Tween(begin: 0.0, end: 0.5).animate(_arrowController),
-              child: Icon(
-                Icons.expand_more,
-                size: 16,
-                color: AppColors.secondaryTextColor,
-              ),
+              child: Icon(Icons.expand_more, size: 16, color: AppColors.secondaryTextColor),
             ),
             const SizedBox(width: 4),
-            Text(label, style: TextStyle(fontSize: 13)),
+            Text("budgetBook.tabs.summary.subCategories".tr(args: [subs.length.toString()]), style: TextStyle(fontSize: 13)),
           ],
         ),
       ),
@@ -170,10 +146,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
     return ListTile(
       contentPadding: EdgeInsets.zero,
       visualDensity: const VisualDensity(vertical: -3),
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 7.0),
-        child: _buildIcon(sub),
-      ),
+      leading: Padding(padding: const EdgeInsets.only(left: 7.0), child: _buildIcon(sub)),
       onTap: () {
         context.showComingSoon();
       },
@@ -182,17 +155,8 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(
-            value: sub.value,
-            currency: sub.currency,
-            color: sub.categoryType.color,
-            fontSize: 14,
-          ),
-          Text(
-            "${sub.percentage} %",
-            textAlign: TextAlign.end,
-            style: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
-          ),
+          CurrencyText(value: sub.value, currency: sub.currency, color: sub.categoryType.color, fontSize: 14),
+          Text("${sub.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor)),
         ],
       ),
     );
@@ -201,18 +165,11 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
   Widget _buildIcon(CategoryViewSummaryData data) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BudgetIcon(name: data.iconName, color: data.iconColor, size: 20),
-        if (!data.isSynced)
-          Container(
-            width: 6,
-            height: 6,
-            decoration: const BoxDecoration(
-              color: AppColors.errorColor,
-              shape: BoxShape.circle,
-            ),
-          ),
+        if (!data.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
       ],
     );
   }

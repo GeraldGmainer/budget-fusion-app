@@ -22,7 +22,7 @@ class BookingCubit extends Cubit<LoadableState<List<Booking>>> {
     _sub?.cancel();
     _sub = _watchBookings().listen(
       (bookings) => emit(LoadableState.loaded(bookings)),
-      onError: (error) => emit(LoadableState.error(error is TranslatedException ? error.message : 'error.default')),
+      onError: (error) => emit(LoadableState.error(error is TranslatedException ? error.error : AppError.unknown)),
     );
   }
 
@@ -39,10 +39,10 @@ class BookingCubit extends Cubit<LoadableState<List<Booking>>> {
       await _loadBookings();
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
-      emit(LoadableState.error(e.message));
+      emit(LoadableState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stackTrace);
-      emit(LoadableState.error("error.default"));
+      emit(LoadableState.error(AppError.unknown));
     }
   }
 }

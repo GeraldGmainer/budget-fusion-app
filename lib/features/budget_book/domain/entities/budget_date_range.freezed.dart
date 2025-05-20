@@ -12,7 +12,8 @@ part of 'budget_date_range.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$BudgetDateRange {
@@ -30,8 +31,9 @@ mixin _$BudgetDateRange {
 /// @nodoc
 abstract class $BudgetDateRangeCopyWith<$Res> {
   factory $BudgetDateRangeCopyWith(
-          BudgetDateRange value, $Res Function(BudgetDateRange) then) =
-      _$BudgetDateRangeCopyWithImpl<$Res, BudgetDateRange>;
+    BudgetDateRange value,
+    $Res Function(BudgetDateRange) then,
+  ) = _$BudgetDateRangeCopyWithImpl<$Res, BudgetDateRange>;
   @useResult
   $Res call({PeriodMode period, DateTime from, DateTime to});
 }
@@ -50,34 +52,37 @@ class _$BudgetDateRangeCopyWithImpl<$Res, $Val extends BudgetDateRange>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? period = null,
-    Object? from = null,
-    Object? to = null,
-  }) {
-    return _then(_value.copyWith(
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as PeriodMode,
-      from: null == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+  $Res call({Object? period = null, Object? from = null, Object? to = null}) {
+    return _then(
+      _value.copyWith(
+            period:
+                null == period
+                    ? _value.period
+                    : period // ignore: cast_nullable_to_non_nullable
+                        as PeriodMode,
+            from:
+                null == from
+                    ? _value.from
+                    : from // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            to:
+                null == to
+                    ? _value.to
+                    : to // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$BudgetDateRangeImplCopyWith<$Res>
     implements $BudgetDateRangeCopyWith<$Res> {
-  factory _$$BudgetDateRangeImplCopyWith(_$BudgetDateRangeImpl value,
-          $Res Function(_$BudgetDateRangeImpl) then) =
-      __$$BudgetDateRangeImplCopyWithImpl<$Res>;
+  factory _$$BudgetDateRangeImplCopyWith(
+    _$BudgetDateRangeImpl value,
+    $Res Function(_$BudgetDateRangeImpl) then,
+  ) = __$$BudgetDateRangeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({PeriodMode period, DateTime from, DateTime to});
@@ -88,42 +93,46 @@ class __$$BudgetDateRangeImplCopyWithImpl<$Res>
     extends _$BudgetDateRangeCopyWithImpl<$Res, _$BudgetDateRangeImpl>
     implements _$$BudgetDateRangeImplCopyWith<$Res> {
   __$$BudgetDateRangeImplCopyWithImpl(
-      _$BudgetDateRangeImpl _value, $Res Function(_$BudgetDateRangeImpl) _then)
-      : super(_value, _then);
+    _$BudgetDateRangeImpl _value,
+    $Res Function(_$BudgetDateRangeImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BudgetDateRange
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? period = null,
-    Object? from = null,
-    Object? to = null,
-  }) {
-    return _then(_$BudgetDateRangeImpl(
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as PeriodMode,
-      from: null == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+  $Res call({Object? period = null, Object? from = null, Object? to = null}) {
+    return _then(
+      _$BudgetDateRangeImpl(
+        period:
+            null == period
+                ? _value.period
+                : period // ignore: cast_nullable_to_non_nullable
+                    as PeriodMode,
+        from:
+            null == from
+                ? _value.from
+                : from // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        to:
+            null == to
+                ? _value.to
+                : to // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$BudgetDateRangeImpl extends _BudgetDateRange {
-  const _$BudgetDateRangeImpl(
-      {required this.period, required this.from, required this.to})
-      : assert(period == PeriodMode.all || (from != null && to != null)),
-        super._();
+  const _$BudgetDateRangeImpl({
+    required this.period,
+    required this.from,
+    required this.to,
+  }) : assert(period == PeriodMode.all || (from != null && to != null)),
+       super._();
 
   @override
   final PeriodMode period;
@@ -157,14 +166,17 @@ class _$BudgetDateRangeImpl extends _BudgetDateRange {
   @pragma('vm:prefer-inline')
   _$$BudgetDateRangeImplCopyWith<_$BudgetDateRangeImpl> get copyWith =>
       __$$BudgetDateRangeImplCopyWithImpl<_$BudgetDateRangeImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _BudgetDateRange extends BudgetDateRange {
-  const factory _BudgetDateRange(
-      {required final PeriodMode period,
-      required final DateTime from,
-      required final DateTime to}) = _$BudgetDateRangeImpl;
+  const factory _BudgetDateRange({
+    required final PeriodMode period,
+    required final DateTime from,
+    required final DateTime to,
+  }) = _$BudgetDateRangeImpl;
   const _BudgetDateRange._() : super._();
 
   @override

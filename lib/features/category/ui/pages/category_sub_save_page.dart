@@ -18,7 +18,7 @@ class CategorySubSavePage extends StatelessWidget {
     return CategorySaveContainer(
       draft: draft,
       builder: (BuildContext context, CategoryDraft draft) => _buildContent(context, draft),
-      title: draft.isCreating ? "category.new_title_sub" : "category.edit_title_sub".tr(),
+      title: draft.isCreating ? "category.newSubcategoryTitle" : "category.editSubcategoryTitle",
     );
   }
 
@@ -31,10 +31,7 @@ class CategorySubSavePage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0),
-                child: IconInput(draft: draft),
-              ),
+              Padding(padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0), child: IconInput(draft: draft)),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(
@@ -42,9 +39,9 @@ class CategorySubSavePage extends StatelessWidget {
                   children: [
                     NameInput(draft: draft, autofocus: draft.isCreating),
                     const SizedBox(height: 8),
-                    DisabledField(label: 'Category Type'.tr(), value: draft.categoryType.label.tr()),
+                    DisabledField(label: 'booking.fields.type'.tr(), value: draft.categoryType.label.tr()),
                     const SizedBox(height: 8),
-                    DisabledField(label: 'Parent Category'.tr(), value: draft.parent?.name ?? "unknown"),
+                    DisabledField(label: 'category.fields.parent'.tr(), value: draft.parent?.name ?? "unknown"),
                   ],
                 ),
               ),

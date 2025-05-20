@@ -12,7 +12,8 @@ part of 'category_save_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CategorySaveState {
@@ -21,36 +22,33 @@ mixin _$CategorySaveState {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
+    required TResult Function(CategoryDraft draft, AppError error) error,
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+    TResult? Function(CategoryDraft draft, AppError error)? error,
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -59,8 +57,7 @@ mixin _$CategorySaveState {
     required TResult Function(_Loaded value) saved,
     required TResult Function(_Deleted value) deleted,
     required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -69,8 +66,7 @@ mixin _$CategorySaveState {
     TResult? Function(_Loaded value)? saved,
     TResult? Function(_Deleted value)? deleted,
     TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -80,8 +76,7 @@ mixin _$CategorySaveState {
     TResult Function(_Deleted value)? deleted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -93,8 +88,9 @@ mixin _$CategorySaveState {
 /// @nodoc
 abstract class $CategorySaveStateCopyWith<$Res> {
   factory $CategorySaveStateCopyWith(
-          CategorySaveState value, $Res Function(CategorySaveState) then) =
-      _$CategorySaveStateCopyWithImpl<$Res, CategorySaveState>;
+    CategorySaveState value,
+    $Res Function(CategorySaveState) then,
+  ) = _$CategorySaveStateCopyWithImpl<$Res, CategorySaveState>;
   @useResult
   $Res call({CategoryDraft draft});
 
@@ -115,15 +111,17 @@ class _$CategorySaveStateCopyWithImpl<$Res, $Val extends CategorySaveState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_value.copyWith(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ) as $Val);
+  $Res call({Object? draft = null}) {
+    return _then(
+      _value.copyWith(
+            draft:
+                null == draft
+                    ? _value.draft
+                    : draft // ignore: cast_nullable_to_non_nullable
+                        as CategoryDraft,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CategorySaveState
@@ -141,8 +139,9 @@ class _$CategorySaveStateCopyWithImpl<$Res, $Val extends CategorySaveState>
 abstract class _$$InitialImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+    _$InitialImpl value,
+    $Res Function(_$InitialImpl) then,
+  ) = __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDraft draft});
@@ -156,22 +155,24 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
+    _$InitialImpl _value,
+    $Res Function(_$InitialImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$InitialImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$InitialImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+      ),
+    );
   }
 }
 
@@ -212,11 +213,11 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
     return initial(draft);
   }
@@ -226,11 +227,11 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
     return initial?.call(draft);
   }
@@ -240,11 +241,11 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -315,8 +316,9 @@ abstract class _Initial implements CategorySaveState {
 abstract class _$$DraftUpdateImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$DraftUpdateImplCopyWith(
-          _$DraftUpdateImpl value, $Res Function(_$DraftUpdateImpl) then) =
-      __$$DraftUpdateImplCopyWithImpl<$Res>;
+    _$DraftUpdateImpl value,
+    $Res Function(_$DraftUpdateImpl) then,
+  ) = __$$DraftUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDraft draft, CategoryDraft initialDraft});
@@ -331,27 +333,29 @@ class __$$DraftUpdateImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$DraftUpdateImpl>
     implements _$$DraftUpdateImplCopyWith<$Res> {
   __$$DraftUpdateImplCopyWithImpl(
-      _$DraftUpdateImpl _value, $Res Function(_$DraftUpdateImpl) _then)
-      : super(_value, _then);
+    _$DraftUpdateImpl _value,
+    $Res Function(_$DraftUpdateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-    Object? initialDraft = null,
-  }) {
-    return _then(_$DraftUpdateImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-      initialDraft: null == initialDraft
-          ? _value.initialDraft
-          : initialDraft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ));
+  $Res call({Object? draft = null, Object? initialDraft = null}) {
+    return _then(
+      _$DraftUpdateImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+        initialDraft:
+            null == initialDraft
+                ? _value.initialDraft
+                : initialDraft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+      ),
+    );
   }
 
   /// Create a copy of CategorySaveState
@@ -406,11 +410,11 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
     return draftUpdate(draft, initialDraft);
   }
@@ -420,11 +424,11 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
     return draftUpdate?.call(draft, initialDraft);
   }
@@ -434,11 +438,11 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (draftUpdate != null) {
@@ -492,9 +496,10 @@ class _$DraftUpdateImpl implements _DraftUpdate {
 }
 
 abstract class _DraftUpdate implements CategorySaveState {
-  factory _DraftUpdate(
-      {required final CategoryDraft draft,
-      required final CategoryDraft initialDraft}) = _$DraftUpdateImpl;
+  factory _DraftUpdate({
+    required final CategoryDraft draft,
+    required final CategoryDraft initialDraft,
+  }) = _$DraftUpdateImpl;
 
   @override
   CategoryDraft get draft;
@@ -512,8 +517,9 @@ abstract class _DraftUpdate implements CategorySaveState {
 abstract class _$$LoadingImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+    _$LoadingImpl value,
+    $Res Function(_$LoadingImpl) then,
+  ) = __$$LoadingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDraft draft});
@@ -527,22 +533,24 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+    _$LoadingImpl _value,
+    $Res Function(_$LoadingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$LoadingImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$LoadingImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+      ),
+    );
   }
 }
 
@@ -583,11 +591,11 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
     return loading(draft);
   }
@@ -597,11 +605,11 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
     return loading?.call(draft);
   }
@@ -611,11 +619,11 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -686,8 +694,9 @@ abstract class _Loading implements CategorySaveState {
 abstract class _$$LoadedImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+    _$LoadedImpl value,
+    $Res Function(_$LoadedImpl) then,
+  ) = __$$LoadedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDraft draft});
@@ -701,22 +710,24 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+    _$LoadedImpl _value,
+    $Res Function(_$LoadedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$LoadedImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$LoadedImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+      ),
+    );
   }
 }
 
@@ -757,11 +768,11 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
     return saved(draft);
   }
@@ -771,11 +782,11 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
     return saved?.call(draft);
   }
@@ -785,11 +796,11 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (saved != null) {
@@ -860,8 +871,9 @@ abstract class _Loaded implements CategorySaveState {
 abstract class _$$DeletedImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$DeletedImplCopyWith(
-          _$DeletedImpl value, $Res Function(_$DeletedImpl) then) =
-      __$$DeletedImplCopyWithImpl<$Res>;
+    _$DeletedImpl value,
+    $Res Function(_$DeletedImpl) then,
+  ) = __$$DeletedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({CategoryDraft draft});
@@ -875,22 +887,24 @@ class __$$DeletedImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$DeletedImpl>
     implements _$$DeletedImplCopyWith<$Res> {
   __$$DeletedImplCopyWithImpl(
-      _$DeletedImpl _value, $Res Function(_$DeletedImpl) _then)
-      : super(_value, _then);
+    _$DeletedImpl _value,
+    $Res Function(_$DeletedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-  }) {
-    return _then(_$DeletedImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-    ));
+  $Res call({Object? draft = null}) {
+    return _then(
+      _$DeletedImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+      ),
+    );
   }
 }
 
@@ -931,11 +945,11 @@ class _$DeletedImpl implements _Deleted {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
     return deleted(draft);
   }
@@ -945,11 +959,11 @@ class _$DeletedImpl implements _Deleted {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
     return deleted?.call(draft);
   }
@@ -959,11 +973,11 @@ class _$DeletedImpl implements _Deleted {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (deleted != null) {
@@ -1034,11 +1048,12 @@ abstract class _Deleted implements CategorySaveState {
 abstract class _$$ErrorImplCopyWith<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+    _$ErrorImpl value,
+    $Res Function(_$ErrorImpl) then,
+  ) = __$$ErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CategoryDraft draft, String message});
+  $Res call({CategoryDraft draft, AppError error});
 
   @override
   $CategoryDraftCopyWith<$Res> get draft;
@@ -1049,43 +1064,45 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$CategorySaveStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+    _$ErrorImpl _value,
+    $Res Function(_$ErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? draft = null,
-    Object? message = null,
-  }) {
-    return _then(_$ErrorImpl(
-      draft: null == draft
-          ? _value.draft
-          : draft // ignore: cast_nullable_to_non_nullable
-              as CategoryDraft,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? draft = null, Object? error = null}) {
+    return _then(
+      _$ErrorImpl(
+        draft:
+            null == draft
+                ? _value.draft
+                : draft // ignore: cast_nullable_to_non_nullable
+                    as CategoryDraft,
+        error:
+            null == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as AppError,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.draft, required this.message});
+  const _$ErrorImpl({required this.draft, required this.error});
 
   @override
   final CategoryDraft draft;
   @override
-  final String message;
+  final AppError error;
 
   @override
   String toString() {
-    return 'CategorySaveState.error(draft: $draft, message: $message)';
+    return 'CategorySaveState.error(draft: $draft, error: $error)';
   }
 
   @override
@@ -1094,11 +1111,11 @@ class _$ErrorImpl implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
             (identical(other.draft, draft) || other.draft == draft) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, draft, message);
+  int get hashCode => Object.hash(runtimeType, draft, error);
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -1113,13 +1130,13 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function(CategoryDraft draft) initial,
     required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-        draftUpdate,
+    draftUpdate,
     required TResult Function(CategoryDraft draft) loading,
     required TResult Function(CategoryDraft draft) saved,
     required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, String message) error,
+    required TResult Function(CategoryDraft draft, AppError error) error,
   }) {
-    return error(draft, message);
+    return error(draft, this.error);
   }
 
   @override
@@ -1127,13 +1144,13 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CategoryDraft draft)? initial,
     TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult? Function(CategoryDraft draft)? loading,
     TResult? Function(CategoryDraft draft)? saved,
     TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, String message)? error,
+    TResult? Function(CategoryDraft draft, AppError error)? error,
   }) {
-    return error?.call(draft, message);
+    return error?.call(draft, this.error);
   }
 
   @override
@@ -1141,15 +1158,15 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CategoryDraft draft)? initial,
     TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-        draftUpdate,
+    draftUpdate,
     TResult Function(CategoryDraft draft)? loading,
     TResult Function(CategoryDraft draft)? saved,
     TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, String message)? error,
+    TResult Function(CategoryDraft draft, AppError error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(draft, message);
+      return error(draft, this.error);
     }
     return orElse();
   }
@@ -1199,13 +1216,14 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements CategorySaveState {
-  const factory _Error(
-      {required final CategoryDraft draft,
-      required final String message}) = _$ErrorImpl;
+  const factory _Error({
+    required final CategoryDraft draft,
+    required final AppError error,
+  }) = _$ErrorImpl;
 
   @override
   CategoryDraft get draft;
-  String get message;
+  AppError get error;
 
   /// Create a copy of CategorySaveState
   /// with the given fields replaced by the non-null parameter values.

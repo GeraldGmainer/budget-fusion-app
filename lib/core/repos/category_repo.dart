@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 
-import '../entities/base/uuid.dart';
 
 abstract class CategoryRepo {
   Stream<List<Category>> watch();

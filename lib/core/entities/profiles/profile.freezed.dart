@@ -12,7 +12,8 @@ part of 'profile.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Profile {
@@ -34,13 +35,14 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
-  $Res call(
-      {Uuid id,
-      Uuid userId,
-      String? name,
-      String email,
-      String? avatarUrl,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    Uuid userId,
+    String? name,
+    String email,
+    String? avatarUrl,
+    DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -65,49 +67,60 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            userId:
+                null == userId
+                    ? _value.userId
+                    : userId // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                freezed == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            email:
+                null == email
+                    ? _value.email
+                    : email // ignore: cast_nullable_to_non_nullable
+                        as String,
+            avatarUrl:
+                freezed == avatarUrl
+                    ? _value.avatarUrl
+                    : avatarUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   factory _$$ProfileImplCopyWith(
-          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
-      __$$ProfileImplCopyWithImpl<$Res>;
+    _$ProfileImpl value,
+    $Res Function(_$ProfileImpl) then,
+  ) = __$$ProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid id,
-      Uuid userId,
-      String? name,
-      String email,
-      String? avatarUrl,
-      DateTime updatedAt});
+  $Res call({
+    Uuid id,
+    Uuid userId,
+    String? name,
+    String email,
+    String? avatarUrl,
+    DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -115,8 +128,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
     extends _$ProfileCopyWithImpl<$Res, _$ProfileImpl>
     implements _$$ProfileImplCopyWith<$Res> {
   __$$ProfileImplCopyWithImpl(
-      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
-      : super(_value, _then);
+    _$ProfileImpl _value,
+    $Res Function(_$ProfileImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -130,46 +144,54 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_$ProfileImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$ProfileImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        userId:
+            null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        email:
+            null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                    as String,
+        avatarUrl:
+            freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ProfileImpl extends _Profile {
-  const _$ProfileImpl(
-      {required this.id,
-      required this.userId,
-      this.name,
-      required this.email,
-      this.avatarUrl,
-      required this.updatedAt})
-      : super._();
+  const _$ProfileImpl({
+    required this.id,
+    required this.userId,
+    this.name,
+    required this.email,
+    this.avatarUrl,
+    required this.updatedAt,
+  }) : super._();
 
   @override
   final Uuid id;
@@ -218,13 +240,14 @@ class _$ProfileImpl extends _Profile {
 }
 
 abstract class _Profile extends Profile {
-  const factory _Profile(
-      {required final Uuid id,
-      required final Uuid userId,
-      final String? name,
-      required final String email,
-      final String? avatarUrl,
-      required final DateTime updatedAt}) = _$ProfileImpl;
+  const factory _Profile({
+    required final Uuid id,
+    required final Uuid userId,
+    final String? name,
+    required final String email,
+    final String? avatarUrl,
+    required final DateTime updatedAt,
+  }) = _$ProfileImpl;
   const _Profile._() : super._();
 
   @override

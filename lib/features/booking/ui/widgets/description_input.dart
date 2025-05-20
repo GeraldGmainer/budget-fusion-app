@@ -2,6 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -32,11 +33,8 @@ class DescriptionInput extends StatelessWidget {
     final hasValue = draft.description != null;
     return ListTile(
       leading: Icon(CommunityMaterialIcons.book_edit, color: Colors.grey[400]),
-      title: Text(
-        hasValue ? draft.description! : "Description",
-        style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor),
-      ),
-      subtitle: hasValue ? Text("Description") : null,
+      title: Text(hasValue ? draft.description! : "booking.fields.description".tr(), style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor)),
+      subtitle: hasValue ? Text("booking.fields.description".tr()) : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       onTap: () => _openDescriptionModal(context),
     );
@@ -91,11 +89,8 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Enter a Description"),
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        title: Text("booking.dialogs.description.title".tr()),
+        leading: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
       ),
       floatingActionButton: AppFab.save(_onSave),
       body: Column(
@@ -132,27 +127,17 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
       decorationBuilder: (context, child) {
         return Material(
           elevation: 6,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: AppColors.cardColor,
-            ),
-            child: child,
-          ),
+          child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.cardColor), child: child),
         );
       },
       itemBuilder: (context, suggestion) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Text(
-            suggestion,
-            style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor, fontWeight: FontWeight.w400),
-          ),
+          child: Text(suggestion, style: TextStyle(fontSize: 13, color: AppColors.primaryTextColor, fontWeight: FontWeight.w400)),
         );
       },
       onSelected: (suggestion) => _onSelect(suggestion),
       builder: (context, controller, focusNode) {
-        // TODO translation
         return TextField(
           controller: controller,
           focusNode: focusNode,
@@ -163,7 +148,7 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
           maxLength: FeatureConstants.descriptionMaxLength,
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.edit, size: 22),
-            labelText: "Description",
+            labelText: "booking.fields.description".tr(),
             labelStyle: TextStyle(fontSize: 14),
             counterText: "",
           ),

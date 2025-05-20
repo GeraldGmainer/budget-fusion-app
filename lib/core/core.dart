@@ -24,8 +24,11 @@ export 'enums/category_type.dart';
 export 'enums/domain_type.dart';
 export 'enums/transaction_type.dart';
 //
+export 'exceptions/app_error.dart';
+export 'exceptions/decimal_parsing_exception.dart';
+export 'exceptions/login_user_not_found_exception.dart';
+export 'exceptions/mapping_exception.dart';
 export 'exceptions/no_internet_exception.dart';
-export 'exceptions/timeout_exception.dart';
 export 'exceptions/translated_exception.dart';
 export 'exceptions/unauthenticated_exception.dart';
 //

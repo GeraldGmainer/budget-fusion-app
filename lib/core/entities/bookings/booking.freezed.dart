@@ -12,7 +12,8 @@ part of 'booking.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Booking {
@@ -36,15 +37,16 @@ abstract class $BookingCopyWith<$Res> {
   factory $BookingCopyWith(Booking value, $Res Function(Booking) then) =
       _$BookingCopyWithImpl<$Res, Booking>;
   @useResult
-  $Res call(
-      {Uuid id,
-      DateTime date,
-      String? description,
-      Decimal amount,
-      Category? category,
-      Account? account,
-      DateTime updatedAt,
-      bool isSynced});
+  $Res call({
+    Uuid id,
+    DateTime date,
+    String? description,
+    Decimal amount,
+    Category? category,
+    Account? account,
+    DateTime updatedAt,
+    bool isSynced,
+  });
 
   $CategoryCopyWith<$Res>? get category;
   $AccountCopyWith<$Res>? get account;
@@ -74,40 +76,51 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? updatedAt = null,
     Object? isSynced = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      account: freezed == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            date:
+                null == date
+                    ? _value.date
+                    : date // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            description:
+                freezed == description
+                    ? _value.description
+                    : description // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            amount:
+                null == amount
+                    ? _value.amount
+                    : amount // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+            category:
+                freezed == category
+                    ? _value.category
+                    : category // ignore: cast_nullable_to_non_nullable
+                        as Category?,
+            account:
+                freezed == account
+                    ? _value.account
+                    : account // ignore: cast_nullable_to_non_nullable
+                        as Account?,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of Booking
@@ -142,19 +155,21 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
 /// @nodoc
 abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
   factory _$$BookingImplCopyWith(
-          _$BookingImpl value, $Res Function(_$BookingImpl) then) =
-      __$$BookingImplCopyWithImpl<$Res>;
+    _$BookingImpl value,
+    $Res Function(_$BookingImpl) then,
+  ) = __$$BookingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Uuid id,
-      DateTime date,
-      String? description,
-      Decimal amount,
-      Category? category,
-      Account? account,
-      DateTime updatedAt,
-      bool isSynced});
+  $Res call({
+    Uuid id,
+    DateTime date,
+    String? description,
+    Decimal amount,
+    Category? category,
+    Account? account,
+    DateTime updatedAt,
+    bool isSynced,
+  });
 
   @override
   $CategoryCopyWith<$Res>? get category;
@@ -167,8 +182,9 @@ class __$$BookingImplCopyWithImpl<$Res>
     extends _$BookingCopyWithImpl<$Res, _$BookingImpl>
     implements _$$BookingImplCopyWith<$Res> {
   __$$BookingImplCopyWithImpl(
-      _$BookingImpl _value, $Res Function(_$BookingImpl) _then)
-      : super(_value, _then);
+    _$BookingImpl _value,
+    $Res Function(_$BookingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -184,56 +200,66 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? isSynced = null,
   }) {
-    return _then(_$BookingImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
-      account: freezed == account
-          ? _value.account
-          : account // ignore: cast_nullable_to_non_nullable
-              as Account?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isSynced: null == isSynced
-          ? _value.isSynced
-          : isSynced // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$BookingImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        date:
+            null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        description:
+            freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        amount:
+            null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+        category:
+            freezed == category
+                ? _value.category
+                : category // ignore: cast_nullable_to_non_nullable
+                    as Category?,
+        account:
+            freezed == account
+                ? _value.account
+                : account // ignore: cast_nullable_to_non_nullable
+                    as Account?,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$BookingImpl extends _Booking {
-  const _$BookingImpl(
-      {required this.id,
-      required this.date,
-      required this.description,
-      required this.amount,
-      required this.category,
-      required this.account,
-      required this.updatedAt,
-      required this.isSynced})
-      : super._();
+  const _$BookingImpl({
+    required this.id,
+    required this.date,
+    required this.description,
+    required this.amount,
+    required this.category,
+    required this.account,
+    required this.updatedAt,
+    required this.isSynced,
+  }) : super._();
 
   @override
   final Uuid id;
@@ -277,8 +303,17 @@ class _$BookingImpl extends _Booking {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, date, description, amount,
-      category, account, updatedAt, isSynced);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    date,
+    description,
+    amount,
+    category,
+    account,
+    updatedAt,
+    isSynced,
+  );
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -290,15 +325,16 @@ class _$BookingImpl extends _Booking {
 }
 
 abstract class _Booking extends Booking {
-  const factory _Booking(
-      {required final Uuid id,
-      required final DateTime date,
-      required final String? description,
-      required final Decimal amount,
-      required final Category? category,
-      required final Account? account,
-      required final DateTime updatedAt,
-      required final bool isSynced}) = _$BookingImpl;
+  const factory _Booking({
+    required final Uuid id,
+    required final DateTime date,
+    required final String? description,
+    required final Decimal amount,
+    required final Category? category,
+    required final Account? account,
+    required final DateTime updatedAt,
+    required final bool isSynced,
+  }) = _$BookingImpl;
   const _Booking._() : super._();
 
   @override

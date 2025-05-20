@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/transaction_view_data.dart';
@@ -17,10 +18,7 @@ class TransactionView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (data.transactionGroups.isNotEmpty)
-              RepaintBoundary(
-                child: TransactionList(data: data),
-              ),
+            if (data.transactionGroups.isNotEmpty) RepaintBoundary(child: TransactionList(data: data)),
             if (data.transactionGroups.isEmpty) _buildEmpty(),
             const SizedBox(height: 8.0),
           ],
@@ -31,13 +29,7 @@ class TransactionView extends StatelessWidget {
 
   Widget _buildEmpty() {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SizedBox(
-          width: double.infinity,
-          child: Text("no transactions"),
-        ),
-      ),
+      child: Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(width: double.infinity, child: Text("budgetBook.tabs.transaction.empty".tr()))),
     );
   }
 }

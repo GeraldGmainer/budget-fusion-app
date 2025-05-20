@@ -12,7 +12,8 @@ part of 'profile_setting.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ProfileSetting {
@@ -31,8 +32,9 @@ mixin _$ProfileSetting {
 /// @nodoc
 abstract class $ProfileSettingCopyWith<$Res> {
   factory $ProfileSettingCopyWith(
-          ProfileSetting value, $Res Function(ProfileSetting) then) =
-      _$ProfileSettingCopyWithImpl<$Res, ProfileSetting>;
+    ProfileSetting value,
+    $Res Function(ProfileSetting) then,
+  ) = _$ProfileSettingCopyWithImpl<$Res, ProfileSetting>;
   @useResult
   $Res call({Uuid id, Uuid userId, Currency currency, DateTime updatedAt});
 
@@ -59,24 +61,31 @@ class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
     Object? currency = null,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            userId:
+                null == userId
+                    ? _value.userId
+                    : userId // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as Currency,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ProfileSetting
@@ -93,9 +102,10 @@ class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
 /// @nodoc
 abstract class _$$ProfileSettingImplCopyWith<$Res>
     implements $ProfileSettingCopyWith<$Res> {
-  factory _$$ProfileSettingImplCopyWith(_$ProfileSettingImpl value,
-          $Res Function(_$ProfileSettingImpl) then) =
-      __$$ProfileSettingImplCopyWithImpl<$Res>;
+  factory _$$ProfileSettingImplCopyWith(
+    _$ProfileSettingImpl value,
+    $Res Function(_$ProfileSettingImpl) then,
+  ) = __$$ProfileSettingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Uuid id, Uuid userId, Currency currency, DateTime updatedAt});
@@ -109,8 +119,9 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
     extends _$ProfileSettingCopyWithImpl<$Res, _$ProfileSettingImpl>
     implements _$$ProfileSettingImplCopyWith<$Res> {
   __$$ProfileSettingImplCopyWithImpl(
-      _$ProfileSettingImpl _value, $Res Function(_$ProfileSettingImpl) _then)
-      : super(_value, _then);
+    _$ProfileSettingImpl _value,
+    $Res Function(_$ProfileSettingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfileSetting
   /// with the given fields replaced by the non-null parameter values.
@@ -122,36 +133,42 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
     Object? currency = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$ProfileSettingImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$ProfileSettingImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        userId:
+            null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as Currency,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ProfileSettingImpl extends _ProfileSetting {
-  const _$ProfileSettingImpl(
-      {required this.id,
-      required this.userId,
-      required this.currency,
-      required this.updatedAt})
-      : super._();
+  const _$ProfileSettingImpl({
+    required this.id,
+    required this.userId,
+    required this.currency,
+    required this.updatedAt,
+  }) : super._();
 
   @override
   final Uuid id;
@@ -190,15 +207,18 @@ class _$ProfileSettingImpl extends _ProfileSetting {
   @pragma('vm:prefer-inline')
   _$$ProfileSettingImplCopyWith<_$ProfileSettingImpl> get copyWith =>
       __$$ProfileSettingImplCopyWithImpl<_$ProfileSettingImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ProfileSetting extends ProfileSetting {
-  const factory _ProfileSetting(
-      {required final Uuid id,
-      required final Uuid userId,
-      required final Currency currency,
-      required final DateTime updatedAt}) = _$ProfileSettingImpl;
+  const factory _ProfileSetting({
+    required final Uuid id,
+    required final Uuid userId,
+    required final Currency currency,
+    required final DateTime updatedAt,
+  }) = _$ProfileSettingImpl;
   const _ProfileSetting._() : super._();
 
   @override

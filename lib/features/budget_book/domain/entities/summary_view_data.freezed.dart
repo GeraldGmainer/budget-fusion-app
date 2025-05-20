@@ -12,7 +12,8 @@ part of 'summary_view_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$SummaryViewData {
@@ -34,16 +35,18 @@ mixin _$SummaryViewData {
 /// @nodoc
 abstract class $SummaryViewDataCopyWith<$Res> {
   factory $SummaryViewDataCopyWith(
-          SummaryViewData value, $Res Function(SummaryViewData) then) =
-      _$SummaryViewDataCopyWithImpl<$Res, SummaryViewData>;
+    SummaryViewData value,
+    $Res Function(SummaryViewData) then,
+  ) = _$SummaryViewDataCopyWithImpl<$Res, SummaryViewData>;
   @useResult
-  $Res call(
-      {Currency currency,
-      BudgetDateRange dateRange,
-      List<PieData> pieData,
-      List<CategoryViewSummaryData> summaries,
-      Decimal income,
-      Decimal outcome});
+  $Res call({
+    Currency currency,
+    BudgetDateRange dateRange,
+    List<PieData> pieData,
+    List<CategoryViewSummaryData> summaries,
+    Decimal income,
+    Decimal outcome,
+  });
 
   $CurrencyCopyWith<$Res> get currency;
   $BudgetDateRangeCopyWith<$Res> get dateRange;
@@ -71,32 +74,41 @@ class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
     Object? income = null,
     Object? outcome = null,
   }) {
-    return _then(_value.copyWith(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      dateRange: null == dateRange
-          ? _value.dateRange
-          : dateRange // ignore: cast_nullable_to_non_nullable
-              as BudgetDateRange,
-      pieData: null == pieData
-          ? _value.pieData
-          : pieData // ignore: cast_nullable_to_non_nullable
-              as List<PieData>,
-      summaries: null == summaries
-          ? _value.summaries
-          : summaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummaryData>,
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      outcome: null == outcome
-          ? _value.outcome
-          : outcome // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as Currency,
+            dateRange:
+                null == dateRange
+                    ? _value.dateRange
+                    : dateRange // ignore: cast_nullable_to_non_nullable
+                        as BudgetDateRange,
+            pieData:
+                null == pieData
+                    ? _value.pieData
+                    : pieData // ignore: cast_nullable_to_non_nullable
+                        as List<PieData>,
+            summaries:
+                null == summaries
+                    ? _value.summaries
+                    : summaries // ignore: cast_nullable_to_non_nullable
+                        as List<CategoryViewSummaryData>,
+            income:
+                null == income
+                    ? _value.income
+                    : income // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+            outcome:
+                null == outcome
+                    ? _value.outcome
+                    : outcome // ignore: cast_nullable_to_non_nullable
+                        as Decimal,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of SummaryViewData
@@ -123,18 +135,20 @@ class _$SummaryViewDataCopyWithImpl<$Res, $Val extends SummaryViewData>
 /// @nodoc
 abstract class _$$SummaryViewDataImplCopyWith<$Res>
     implements $SummaryViewDataCopyWith<$Res> {
-  factory _$$SummaryViewDataImplCopyWith(_$SummaryViewDataImpl value,
-          $Res Function(_$SummaryViewDataImpl) then) =
-      __$$SummaryViewDataImplCopyWithImpl<$Res>;
+  factory _$$SummaryViewDataImplCopyWith(
+    _$SummaryViewDataImpl value,
+    $Res Function(_$SummaryViewDataImpl) then,
+  ) = __$$SummaryViewDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Currency currency,
-      BudgetDateRange dateRange,
-      List<PieData> pieData,
-      List<CategoryViewSummaryData> summaries,
-      Decimal income,
-      Decimal outcome});
+  $Res call({
+    Currency currency,
+    BudgetDateRange dateRange,
+    List<PieData> pieData,
+    List<CategoryViewSummaryData> summaries,
+    Decimal income,
+    Decimal outcome,
+  });
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -147,8 +161,9 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
     extends _$SummaryViewDataCopyWithImpl<$Res, _$SummaryViewDataImpl>
     implements _$$SummaryViewDataImplCopyWith<$Res> {
   __$$SummaryViewDataImplCopyWithImpl(
-      _$SummaryViewDataImpl _value, $Res Function(_$SummaryViewDataImpl) _then)
-      : super(_value, _then);
+    _$SummaryViewDataImpl _value,
+    $Res Function(_$SummaryViewDataImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -162,48 +177,56 @@ class __$$SummaryViewDataImplCopyWithImpl<$Res>
     Object? income = null,
     Object? outcome = null,
   }) {
-    return _then(_$SummaryViewDataImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as Currency,
-      dateRange: null == dateRange
-          ? _value.dateRange
-          : dateRange // ignore: cast_nullable_to_non_nullable
-              as BudgetDateRange,
-      pieData: null == pieData
-          ? _value._pieData
-          : pieData // ignore: cast_nullable_to_non_nullable
-              as List<PieData>,
-      summaries: null == summaries
-          ? _value._summaries
-          : summaries // ignore: cast_nullable_to_non_nullable
-              as List<CategoryViewSummaryData>,
-      income: null == income
-          ? _value.income
-          : income // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      outcome: null == outcome
-          ? _value.outcome
-          : outcome // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ));
+    return _then(
+      _$SummaryViewDataImpl(
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as Currency,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
+        pieData:
+            null == pieData
+                ? _value._pieData
+                : pieData // ignore: cast_nullable_to_non_nullable
+                    as List<PieData>,
+        summaries:
+            null == summaries
+                ? _value._summaries
+                : summaries // ignore: cast_nullable_to_non_nullable
+                    as List<CategoryViewSummaryData>,
+        income:
+            null == income
+                ? _value.income
+                : income // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+        outcome:
+            null == outcome
+                ? _value.outcome
+                : outcome // ignore: cast_nullable_to_non_nullable
+                    as Decimal,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$SummaryViewDataImpl extends _SummaryViewData {
-  const _$SummaryViewDataImpl(
-      {required this.currency,
-      required this.dateRange,
-      required final List<PieData> pieData,
-      required final List<CategoryViewSummaryData> summaries,
-      required this.income,
-      required this.outcome})
-      : _pieData = pieData,
-        _summaries = summaries,
-        super._();
+  const _$SummaryViewDataImpl({
+    required this.currency,
+    required this.dateRange,
+    required final List<PieData> pieData,
+    required final List<CategoryViewSummaryData> summaries,
+    required this.income,
+    required this.outcome,
+  }) : _pieData = pieData,
+       _summaries = summaries,
+       super._();
 
   @override
   final Currency currency;
@@ -245,21 +268,24 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange) &&
             const DeepCollectionEquality().equals(other._pieData, _pieData) &&
-            const DeepCollectionEquality()
-                .equals(other._summaries, _summaries) &&
+            const DeepCollectionEquality().equals(
+              other._summaries,
+              _summaries,
+            ) &&
             (identical(other.income, income) || other.income == income) &&
             (identical(other.outcome, outcome) || other.outcome == outcome));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      currency,
-      dateRange,
-      const DeepCollectionEquality().hash(_pieData),
-      const DeepCollectionEquality().hash(_summaries),
-      income,
-      outcome);
+    runtimeType,
+    currency,
+    dateRange,
+    const DeepCollectionEquality().hash(_pieData),
+    const DeepCollectionEquality().hash(_summaries),
+    income,
+    outcome,
+  );
 
   /// Create a copy of SummaryViewData
   /// with the given fields replaced by the non-null parameter values.
@@ -268,17 +294,20 @@ class _$SummaryViewDataImpl extends _SummaryViewData {
   @pragma('vm:prefer-inline')
   _$$SummaryViewDataImplCopyWith<_$SummaryViewDataImpl> get copyWith =>
       __$$SummaryViewDataImplCopyWithImpl<_$SummaryViewDataImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _SummaryViewData extends SummaryViewData {
-  const factory _SummaryViewData(
-      {required final Currency currency,
-      required final BudgetDateRange dateRange,
-      required final List<PieData> pieData,
-      required final List<CategoryViewSummaryData> summaries,
-      required final Decimal income,
-      required final Decimal outcome}) = _$SummaryViewDataImpl;
+  const factory _SummaryViewData({
+    required final Currency currency,
+    required final BudgetDateRange dateRange,
+    required final List<PieData> pieData,
+    required final List<CategoryViewSummaryData> summaries,
+    required final Decimal income,
+    required final Decimal outcome,
+  }) = _$SummaryViewDataImpl;
   const _SummaryViewData._() : super._();
 
   @override

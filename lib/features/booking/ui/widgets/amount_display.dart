@@ -50,7 +50,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
   void triggerShakeAnimation() async {
     setState(() {
       _shake = true;
-      _backgroundColor = Colors.red;
+      _backgroundColor = AppColors.validationErrorColor;
     });
     await Future.delayed(Duration(milliseconds: 500));
     setState(() {
@@ -64,9 +64,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
     return Material(
       elevation: 4,
       color: _backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       clipBehavior: Clip.antiAlias,
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
@@ -92,13 +90,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildCurrency(context),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _buildHistory(state.history),
-                  _buildResult(state.result),
-                ],
-              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [_buildHistory(state.history), _buildResult(state.result)]),
             ],
           );
         },

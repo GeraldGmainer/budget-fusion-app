@@ -12,8 +12,7 @@ class UserRemoteSource {
     if (success && supabase.auth.currentUser != null) {
       return supabase.auth.currentUser!;
     }
-    // TODO exception
-    throw "login error";
+    throw LoginUserNotFoundException();
   }
 
   Future<User> credentialsLogin(String email, String password) async {
@@ -21,8 +20,7 @@ class UserRemoteSource {
     if (response.user != null) {
       return response.user!;
     }
-    // TODO exception
-    throw "login error";
+    throw LoginUserNotFoundException();
   }
 
   Future<void> signUp(String email, String password) async {

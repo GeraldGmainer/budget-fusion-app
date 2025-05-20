@@ -20,15 +20,15 @@ abstract class SupabaseClient {
       return await action();
     } on AuthException catch (e, stackTrace) {
       BudgetLogger.instance.e("AuthException in $tableName: ${e.message}", e, stackTrace);
-      throw TranslatedException("error.auth_error");
+      throw TranslatedException(AppError.authError);
     } on PostgrestException catch (e, stackTrace) {
       BudgetLogger.instance.e("PostgrestException in $tableName: ${e.message}", e, stackTrace);
-      throw TranslatedException("error.postgrest_error");
+      throw TranslatedException(AppError.postgrestError);
     } on NoInternetException {
       throw NoInternetException();
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("Exception in $tableName", e, stackTrace);
-      throw TranslatedException("error.default");
+      throw TranslatedException(AppError.unknown);
     }
   }
 

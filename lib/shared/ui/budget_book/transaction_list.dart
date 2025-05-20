@@ -25,14 +25,7 @@ class TransactionList extends StatelessWidget {
       physics: physics,
       itemCount: itemCount,
       itemBuilder: itemBuilder,
-      separatorBuilder: (context, index) =>
-          separator ??
-          const Divider(
-            color: AppColors.disabledTextColor,
-            thickness: 1,
-            // indent: 16,
-            // endIndent: 16,
-          ),
+      separatorBuilder: (context, index) => separator ?? const Divider(color: AppColors.disabledTextColor, thickness: 1),
     );
   }
 }

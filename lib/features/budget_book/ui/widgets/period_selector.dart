@@ -16,10 +16,7 @@ class PeriodSelector extends StatelessWidget {
 
   void _onPrevious(BuildContext context) {
     if (pageController.hasClients) {
-      pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
+      pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     } else {
       BudgetLogger.instance.w("PeriodSelector cannot navigate to previous page: has no clients ?");
     }
@@ -34,22 +31,12 @@ class PeriodSelector extends StatelessWidget {
       BudgetLogger.instance.w("PeriodSelector cannot navigate to next page: page <= 0");
       return;
     }
-    pageController.previousPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildPrevious(context),
-        _buildPeriod(context),
-        _buildNext(context),
-      ],
-    );
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [_buildPrevious(context), _buildPeriod(context), _buildNext(context)]);
   }
 
   Widget _buildPrevious(BuildContext context) {
@@ -68,24 +55,19 @@ class PeriodSelector extends StatelessWidget {
 
     return IconButton(
       icon: Icon(Icons.chevron_right, color: isEnd ? AppColors.disabledTextColor : AppColors.secondaryTextColor),
-      onPressed: isEnd
-          ? null
-          : () {
-              _onNext(context);
-            },
+      onPressed:
+          isEnd
+              ? null
+              : () {
+                _onNext(context);
+              },
     );
   }
 
   Widget _buildPeriod(BuildContext context) {
     return GestureDetector(
       onTap: () => context.showComingSoon(),
-      child: Text(
-        _formatDateRange(context, filter.period),
-        style: TextStyle(
-          fontSize: 18,
-          color: AppColors.primaryTextColor,
-        ),
-      ),
+      child: Text(_formatDateRange(context, filter.period), style: TextStyle(fontSize: 18, color: AppColors.primaryTextColor)),
     );
   }
 
@@ -108,9 +90,6 @@ class PeriodSelector extends StatelessWidget {
 
       case PeriodMode.day:
         return DateFormat.yMMMMd(context.locale.toString()).format(dateRange.from);
-
-      default:
-        return tr('unknown_period');
     }
   }
 }

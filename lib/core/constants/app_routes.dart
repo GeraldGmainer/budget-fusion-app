@@ -14,4 +14,7 @@ class AppRoutes {
   static const categoryParentSave = "/categoryParentSave";
   static const categorySubSave = "/categorySubSave";
   static const categoryIconColorPicker = '/category/icon-picker';
+
+  // settings
+  static const settings = "/settings";
 }

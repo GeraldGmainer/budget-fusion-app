@@ -20,7 +20,7 @@ class ProfileSettingCubit extends Cubit<LoadableState<ProfileSetting>> {
     _sub?.cancel();
     _sub = _watchProfileSetting().listen(
       (profile) => emit(LoadableState.loaded(profile)),
-      onError: (error) => emit(LoadableState.error(error is TranslatedException ? error.message : 'error.default')),
+      onError: (error) => emit(LoadableState.error(error is TranslatedException ? error.error : AppError.unknown)),
     );
   }
 
@@ -31,10 +31,10 @@ class ProfileSettingCubit extends Cubit<LoadableState<ProfileSetting>> {
       await _loadProfileSetting(Uuid(userId ?? supabase.auth.currentUser!.id));
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
-      emit(LoadableState.error(e.message));
+      emit(LoadableState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stackTrace);
-      emit(LoadableState.error("error.default"));
+      emit(LoadableState.error(AppError.unknown));
     }
   }
 }

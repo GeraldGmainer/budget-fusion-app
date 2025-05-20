@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/budget_book_filter.dart';
@@ -29,13 +28,11 @@ class _DescriptionFilterState extends State<DescriptionFilter> {
       style: TextStyle(fontSize: 14),
       maxLines: 1,
       decoration: InputDecoration(
-        labelText: 'Search by description'.tr(),
+        labelText: 'Search by description',
         labelStyle: TextStyle(fontSize: 14, color: AppColors.disabledTextColor),
         prefixIcon: const Icon(Icons.search),
         contentPadding: EdgeInsets.zero,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (value) {
         widget.filter.description = value;

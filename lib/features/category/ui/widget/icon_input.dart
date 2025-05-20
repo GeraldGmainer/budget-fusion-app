@@ -10,10 +10,7 @@ class IconInput extends StatelessWidget {
   const IconInput({super.key, required this.draft});
 
   _onIconTap(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(
-      AppRoutes.categoryIconColorPicker,
-      arguments: draft,
-    );
+    final result = await Navigator.of(context).pushNamed(AppRoutes.categoryIconColorPicker, arguments: draft);
     final obj = result as Map<String, String>?;
     if (obj != null && context.mounted) {
       context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(iconName: obj['iconName']!, iconColor: obj['iconColor']!));
@@ -24,17 +21,7 @@ class IconInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _onIconTap(context),
-      child: SizedBox(
-        width: 80,
-        height: 80,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            _buildBudgetIcon(),
-            _buildEditIcon(),
-          ],
-        ),
-      ),
+      child: SizedBox(width: 80, height: 80, child: Stack(clipBehavior: Clip.none, children: [_buildBudgetIcon(), _buildEditIcon()])),
     );
   }
 
@@ -45,13 +32,7 @@ class IconInput extends StatelessWidget {
         elevation: 4,
         shadowColor: Colors.black45,
         color: AppColors.cardColor,
-        child: Center(
-          child: BudgetIcon(
-            name: draft.iconName,
-            color: draft.iconColor,
-            size: 44,
-          ),
-        ),
+        child: Center(child: BudgetIcon(name: draft.iconName, color: draft.iconColor, size: 44)),
       ),
     );
   }
@@ -63,18 +44,8 @@ class IconInput extends StatelessWidget {
       child: Container(
         width: 24,
         height: 24,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.accentColor,
-          boxShadow: const [
-            BoxShadow(color: Colors.black26, blurRadius: 4),
-          ],
-        ),
-        child: Icon(
-          Icons.edit,
-          size: 12,
-          color: Colors.white,
-        ),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.accentColor, boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)]),
+        child: Icon(Icons.edit, size: 12, color: Colors.white),
       ),
     );
   }

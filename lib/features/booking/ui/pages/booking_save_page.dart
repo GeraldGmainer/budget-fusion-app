@@ -1,6 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:decimal/decimal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,9 +46,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   void _openCalculator() {
-    setState(() {
-      _isCalculatorOpen = true;
-    });
+    setState(() => _isCalculatorOpen = true);
     final bookingCubit = context.read<BookingSaveCubit>();
     final calculatorCubit = context.read<CalculatorCubit>();
 
@@ -58,10 +57,21 @@ class _BookingSavePageState extends State<BookingSavePage> {
       backgroundColor: Colors.transparent,
       builder: (_) => CalculatorSheet(bookingSaveCubit: bookingCubit, calculatorCubit: calculatorCubit),
     ).whenComplete(() {
-      setState(() {
-        _isCalculatorOpen = false;
-      });
+      setState(() => _isCalculatorOpen = false);
     });
+  }
+
+  Future<void> _showPasteMenuAt(Offset tapPosition) async {
+    PasteHelper.showPasteMenuAt<double>(
+      context: context,
+      position: tapPosition,
+      parser: (input) => double.tryParse(input),
+      onValid: (value) {
+        context.read<CalculatorCubit>().init(value);
+        context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(amount: Decimal.parse(value.toString())));
+      },
+      onInvalid: _showAmountError,
+    );
   }
 
   _onCategoryTypeChange(CategoryType value) {
@@ -107,19 +117,19 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   _onSaveSuccess(BookingDraft draft) {
-    context.showSnackBar(draft.isCreating ? "booking.create_success" : "booking.edit_success");
+    context.showSnackBar(draft.isCreating ? "booking.notifications.success.create" : "booking.notifications.success.edit");
     Navigator.of(context).pop();
   }
 
-  _onError(String error) {
-    context.showSnackBar(error);
+  _onError(AppError error) {
+    context.showErrorSnackBar(error);
   }
 
   _onDelete() {
     ConfirmDialog.show(
       context,
-      headerText: "booking.dialog.delete_title",
-      bodyText: "booking.dialog.delete_body",
+      headerText: "booking.dialogs.delete.title",
+      bodyText: "booking.dialog.delete.body",
       onOK: () {
         BlocProvider.of<BookingSaveCubit>(context).delete(widget.model);
       },
@@ -127,7 +137,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   _onDeleteSuccess(Booking booking) {
-    context.showSnackBar("booking.delete_success");
+    context.showSnackBar("booking.notifications.delete.success");
     Navigator.of(context).pop();
   }
 
@@ -152,10 +162,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(state.draft.isCreating ? "booking.new_title" : "booking.edit_title").tr(),
-            actions: [
-              if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete),
-            ],
+            title: Text(state.draft.isCreating ? "booking.newTitle" : "booking.editTitle").tr(),
+            actions: [if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete)],
           ),
           floatingActionButton: AppFab.save(() => _onSave(state.draft)),
           resizeToAvoidBottomInset: false,
@@ -181,7 +189,13 @@ class _BookingSavePageState extends State<BookingSavePage> {
             padding: EdgeInsets.symmetric(horizontal: 4),
             child: InkWell(
               onTap: _openCalculator,
-              child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onLongPressStart: (details) {
+                  _showPasteMenuAt(details.globalPosition);
+                },
+                child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
+              ),
             ),
           ),
           SizedBox(height: AppDimensions.verticalPadding),

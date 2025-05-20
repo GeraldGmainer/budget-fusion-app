@@ -12,7 +12,8 @@ part of 'profile_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
   return _ProfileDto.fromJson(json);
@@ -46,16 +47,18 @@ mixin _$ProfileDto {
 /// @nodoc
 abstract class $ProfileDtoCopyWith<$Res> {
   factory $ProfileDtoCopyWith(
-          ProfileDto value, $Res Function(ProfileDto) then) =
-      _$ProfileDtoCopyWithImpl<$Res, ProfileDto>;
+    ProfileDto value,
+    $Res Function(ProfileDto) then,
+  ) = _$ProfileDtoCopyWithImpl<$Res, ProfileDto>;
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
-      String? name,
-      String email,
-      @JsonKey(name: 'avatar_url') String? avatarUrl,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
+    String? name,
+    String email,
+    @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -80,32 +83,41 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            userId:
+                null == userId
+                    ? _value.userId
+                    : userId // ignore: cast_nullable_to_non_nullable
+                        as Uuid,
+            name:
+                freezed == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            email:
+                null == email
+                    ? _value.email
+                    : email // ignore: cast_nullable_to_non_nullable
+                        as String,
+            avatarUrl:
+                freezed == avatarUrl
+                    ? _value.avatarUrl
+                    : avatarUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -113,17 +125,19 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
 abstract class _$$ProfileDtoImplCopyWith<$Res>
     implements $ProfileDtoCopyWith<$Res> {
   factory _$$ProfileDtoImplCopyWith(
-          _$ProfileDtoImpl value, $Res Function(_$ProfileDtoImpl) then) =
-      __$$ProfileDtoImplCopyWithImpl<$Res>;
+    _$ProfileDtoImpl value,
+    $Res Function(_$ProfileDtoImpl) then,
+  ) = __$$ProfileDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@UuidSerializer() Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
-      String? name,
-      String email,
-      @JsonKey(name: 'avatar_url') String? avatarUrl,
-      @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt});
+  $Res call({
+    @UuidSerializer() Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() Uuid userId,
+    String? name,
+    String email,
+    @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
+  });
 }
 
 /// @nodoc
@@ -131,8 +145,9 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
     extends _$ProfileDtoCopyWithImpl<$Res, _$ProfileDtoImpl>
     implements _$$ProfileDtoImplCopyWith<$Res> {
   __$$ProfileDtoImplCopyWithImpl(
-      _$ProfileDtoImpl _value, $Res Function(_$ProfileDtoImpl) _then)
-      : super(_value, _then);
+    _$ProfileDtoImpl _value,
+    $Res Function(_$ProfileDtoImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.
@@ -146,48 +161,54 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
-    return _then(_$ProfileDtoImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as Uuid,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$ProfileDtoImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        userId:
+            null == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                    as Uuid,
+        name:
+            freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        email:
+            null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                    as String,
+        avatarUrl:
+            freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ProfileDtoImpl extends _ProfileDto {
-  const _$ProfileDtoImpl(
-      {@UuidSerializer() required this.id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
-      this.name,
-      required this.email,
-      @JsonKey(name: 'avatar_url') this.avatarUrl,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required this.updatedAt})
-      : super._();
+  const _$ProfileDtoImpl({
+    @UuidSerializer() required this.id,
+    @JsonKey(name: 'user_id') @UuidSerializer() required this.userId,
+    this.name,
+    required this.email,
+    @JsonKey(name: 'avatar_url') this.avatarUrl,
+    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
+  }) : super._();
 
   factory _$ProfileDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileDtoImplFromJson(json);
@@ -246,22 +267,21 @@ class _$ProfileDtoImpl extends _ProfileDto {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileDtoImplToJson(
-      this,
-    );
+    return _$$ProfileDtoImplToJson(this);
   }
 }
 
 abstract class _ProfileDto extends ProfileDto {
-  const factory _ProfileDto(
-      {@UuidSerializer() required final Uuid id,
-      @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
-      final String? name,
-      required final String email,
-      @JsonKey(name: 'avatar_url') final String? avatarUrl,
-      @JsonKey(name: 'updated_at')
-      @DateTimeSerializer()
-      required final DateTime updatedAt}) = _$ProfileDtoImpl;
+  const factory _ProfileDto({
+    @UuidSerializer() required final Uuid id,
+    @JsonKey(name: 'user_id') @UuidSerializer() required final Uuid userId,
+    final String? name,
+    required final String email,
+    @JsonKey(name: 'avatar_url') final String? avatarUrl,
+    @JsonKey(name: 'updated_at')
+    @DateTimeSerializer()
+    required final DateTime updatedAt,
+  }) = _$ProfileDtoImpl;
   const _ProfileDto._() : super._();
 
   factory _ProfileDto.fromJson(Map<String, dynamic> json) =

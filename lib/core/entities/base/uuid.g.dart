@@ -6,10 +6,8 @@ part of 'uuid.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Uuid _$UuidFromJson(Map<String, dynamic> json) => Uuid(
-      json['value'] as String,
-    );
+Uuid _$UuidFromJson(Map<String, dynamic> json) => Uuid(json['value'] as String);
 
 Map<String, dynamic> _$UuidToJson(Uuid instance) => <String, dynamic>{
-      'value': instance.value,
-    };
+  'value': instance.value,
+};
