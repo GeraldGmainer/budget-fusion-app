@@ -8,6 +8,20 @@
 - Android SDK: 34
 - Android Studio: 2024.3.2
 
+### Install
+
+```
+git clone https://github.com/budgetfusion/budget-fusion-app.git
+cd budget-fusion-app
+
+fvm use 3.29.3  
+fvm flutter pub get
+```
+
+### Run
+
+fvm flutter run
+
 ## Useful commands
 
 watch changes:
