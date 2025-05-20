@@ -138,7 +138,6 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
       },
       onSelected: (suggestion) => _onSelect(suggestion),
       builder: (context, controller, focusNode) {
-        // TODO translation
         return TextField(
           controller: controller,
           focusNode: focusNode,

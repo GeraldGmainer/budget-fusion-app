@@ -5,7 +5,9 @@
     "authError": "Authentication failed. Please check your credentials",
     "postgrestError": "Database error. Please try again later",
     "unauthenticated": "Please log in to continue",
-    "invalidCategoryType": "Invalid category type"
+    "invalidCategoryType": "Invalid category type",
+    "decimalParsing": "Invalid decimal value",
+    "loginUserNotFound": "Login error. Please try again"
   },
   "shared": {
     "button": {
@@ -13,6 +15,7 @@
       "cancel": "Cancel",
       "save": "Save",
       "add": "Add",
+      "delete": "Delete",
       "settings": "Settings"
     },
     "validation": {

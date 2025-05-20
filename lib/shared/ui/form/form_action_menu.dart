@@ -1,4 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FormActionMenu extends StatelessWidget {
@@ -19,8 +20,7 @@ class FormActionMenu extends StatelessWidget {
       items.add(
         PopupMenuItem<void>(
           value: null,
-          // TODO translation
-          child: Text('Delete'),
+          child: Text('shared.button.delete'.tr()),
           onTap: () {
             onDelete!();
           },
@@ -32,9 +32,6 @@ class FormActionMenu extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return PopupMenuButton<void>(
-      icon: const Icon(CommunityMaterialIcons.dots_vertical),
-      itemBuilder: (_) => items,
-    );
+    return PopupMenuButton<void>(icon: const Icon(CommunityMaterialIcons.dots_vertical), itemBuilder: (_) => items);
   }
 }

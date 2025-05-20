@@ -13,6 +13,7 @@ class AppError {
   static const AppError authError = AppError._('error.authError');
   static const AppError logout = AppError._('error.logout');
   static const AppError unauthenticated = AppError._('error.unauthenticated');
+  static const AppError loginUserNotFound = AppError._('error.loginUserNotFound');
 
   //
   static const AppError invalidCategoryType = AppError._('error.invalidCategoryType');
