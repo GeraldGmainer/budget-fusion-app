@@ -94,7 +94,9 @@
         "title": "Select an account"
       },
       "category": {
-        "title": "Select a category",
+        "title": "Select a category"
+      },
+      "date": {
         "today": "Today",
         "yesterday": "Yesterday",
         "twoDaysAgo": "2 days ago"

@@ -2,6 +2,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/constants/app_dimensions.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DateInput extends StatelessWidget {
@@ -34,8 +35,8 @@ class DateInput extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.calendar_today),
       title: Text(DateTimeConverter.todMMMMYYY(draft.date)),
-      subtitle: Text("booking.fields.date".tr()),
-      contentPadding: EdgeInsets.only(left: 16.0, right: 12),
+      subtitle: Text(_determineSubtitle()),
+      contentPadding: const EdgeInsets.only(left: 16, right: 12),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -45,6 +46,18 @@ class DateInput extends StatelessWidget {
       ),
       onTap: () => _showDatePicker(context),
     );
+  }
+
+  String _determineSubtitle() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final d = DateTime(draft.date.year, draft.date.month, draft.date.day);
+    final diff = today.difference(d).inDays;
+    final label = 'booking.fields.date'.tr();
+
+    return (diff >= 0 && diff <= 2)
+        ? '$label: ${{0: 'booking.dialogs.date.today'.tr(), 1: 'booking.dialogs.date.yesterday'.tr(), 2: 'booking.dialogs.date.twoDaysAgo'.tr()}[diff]}'
+        : label;
   }
 }
 
@@ -66,16 +79,16 @@ class DateSheet extends StatelessWidget {
           child: Wrap(
             spacing: 8,
             children: [
-              ActionChip(label: Text("booking.dialogs.category.today".tr()), onPressed: () => Navigator.of(context).pop(today)),
+              ActionChip(label: Text("booking.dialogs.date.today".tr()), onPressed: () => Navigator.of(context).pop(today)),
               ActionChip(
-                label: Text("booking.dialogs.category.yesterday".tr()),
+                label: Text("booking.dialogs.date.yesterday".tr()),
                 onPressed: () {
                   final yesterday = today.subtract(const Duration(days: 1));
                   Navigator.of(context).pop(yesterday);
                 },
               ),
               ActionChip(
-                label: Text("booking.dialogs.category.twoDaysAgo".tr()),
+                label: Text("booking.dialogs.date.twoDaysAgo".tr()),
                 onPressed: () {
                   final twoDaysAgo = today.subtract(const Duration(days: 2));
                   Navigator.of(context).pop(twoDaysAgo);
@@ -96,6 +109,7 @@ class DateSheet extends StatelessWidget {
           initialCalendarMode: DatePickerMode.day,
           onDateChanged: (date) => Navigator.of(context).pop(date),
         ),
+        SizedBox(height: AppDimensions.verticalPadding),
       ],
     );
   }
