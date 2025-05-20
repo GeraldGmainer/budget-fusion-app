@@ -4,7 +4,6 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
@@ -73,20 +72,6 @@ class _BookingSavePageState extends State<BookingSavePage> {
       },
       onInvalid: _showAmountError,
     );
-  }
-
-  Future<void> _pasteFromClipboard() async {
-    final data = await Clipboard.getData(Clipboard.kTextPlain);
-    final text = data?.text?.trim() ?? '';
-    final value = double.tryParse(text);
-    if (!mounted) return;
-
-    if (value != null) {
-      context.read<CalculatorCubit>().init(value);
-      context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(amount: Decimal.parse(value.toString())));
-    } else {
-      _showAmountError();
-    }
   }
 
   _onCategoryTypeChange(CategoryType value) {
