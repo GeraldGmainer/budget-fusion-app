@@ -4,7 +4,8 @@
     "default": "An error occurred. Please try again",
     "authError": "Authentication failed. Please check your credentials",
     "postgrestError": "Database error. Please try again later",
-    "unauthenticated": "Please log in to continue"
+    "unauthenticated": "Please log in to continue",
+    "invalidCategoryType": "Invalid category type"
   },
   "shared": {
     "button": {
