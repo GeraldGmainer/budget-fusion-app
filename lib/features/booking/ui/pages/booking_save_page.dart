@@ -1,8 +1,10 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
+import 'package:decimal/decimal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
@@ -58,6 +60,33 @@ class _BookingSavePageState extends State<BookingSavePage> {
     ).whenComplete(() {
       setState(() => _isCalculatorOpen = false);
     });
+  }
+
+  Future<void> _showPasteMenuAt(Offset tapPosition) async {
+    PasteHelper.showPasteMenuAt<double>(
+      context: context,
+      position: tapPosition,
+      parser: (input) => double.tryParse(input),
+      onValid: (value) {
+        context.read<CalculatorCubit>().init(value);
+        context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(amount: Decimal.parse(value.toString())));
+      },
+      onInvalid: _showAmountError,
+    );
+  }
+
+  Future<void> _pasteFromClipboard() async {
+    final data = await Clipboard.getData(Clipboard.kTextPlain);
+    final text = data?.text?.trim() ?? '';
+    final value = double.tryParse(text);
+    if (!mounted) return;
+
+    if (value != null) {
+      context.read<CalculatorCubit>().init(value);
+      context.read<BookingSaveCubit>().updateDraft((d) => d.copyWith(amount: Decimal.parse(value.toString())));
+    } else {
+      _showAmountError();
+    }
   }
 
   _onCategoryTypeChange(CategoryType value) {
@@ -173,7 +202,16 @@ class _BookingSavePageState extends State<BookingSavePage> {
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4),
-            child: InkWell(onTap: _openCalculator, child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen)),
+            child: InkWell(
+              onTap: _openCalculator,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onLongPressStart: (details) {
+                  _showPasteMenuAt(details.globalPosition);
+                },
+                child: AmountDisplay(key: _amountDisplayKey, isCalculatorOpen: _isCalculatorOpen),
+              ),
+            ),
           ),
           SizedBox(height: AppDimensions.verticalPadding),
           Card(
