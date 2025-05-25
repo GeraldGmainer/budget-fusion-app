@@ -10,10 +10,5 @@ part 'profile_setting.freezed.dart';
 class ProfileSetting with _$ProfileSetting implements Entity {
   const ProfileSetting._();
 
-  const factory ProfileSetting({
-    required Uuid id,
-    required Uuid userId,
-    required Currency currency,
-    required DateTime updatedAt,
-  }) = _ProfileSetting;
+  const factory ProfileSetting({required Uuid id, required Currency currency, required DateTime updatedAt}) = _ProfileSetting;
 }

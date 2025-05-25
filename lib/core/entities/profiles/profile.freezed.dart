@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Profile {
   Uuid get id => throw _privateConstructorUsedError;
-  Uuid get userId => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
@@ -37,9 +37,9 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call({
     Uuid id,
-    Uuid userId,
-    String? name,
     String email,
+    String? firstName,
+    String? lastName,
     String? avatarUrl,
     DateTime updatedAt,
   });
@@ -61,9 +61,9 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
-    Object? name = freezed,
     Object? email = null,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
@@ -74,21 +74,21 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            userId:
-                null == userId
-                    ? _value.userId
-                    : userId // ignore: cast_nullable_to_non_nullable
-                        as Uuid,
-            name:
-                freezed == name
-                    ? _value.name
-                    : name // ignore: cast_nullable_to_non_nullable
-                        as String?,
             email:
                 null == email
                     ? _value.email
                     : email // ignore: cast_nullable_to_non_nullable
                         as String,
+            firstName:
+                freezed == firstName
+                    ? _value.firstName
+                    : firstName // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            lastName:
+                freezed == lastName
+                    ? _value.lastName
+                    : lastName // ignore: cast_nullable_to_non_nullable
+                        as String?,
             avatarUrl:
                 freezed == avatarUrl
                     ? _value.avatarUrl
@@ -115,9 +115,9 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call({
     Uuid id,
-    Uuid userId,
-    String? name,
     String email,
+    String? firstName,
+    String? lastName,
     String? avatarUrl,
     DateTime updatedAt,
   });
@@ -138,9 +138,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? userId = null,
-    Object? name = freezed,
     Object? email = null,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? updatedAt = null,
   }) {
@@ -151,21 +151,21 @@ class __$$ProfileImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        userId:
-            null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                    as Uuid,
-        name:
-            freezed == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                    as String?,
         email:
             null == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
                     as String,
+        firstName:
+            freezed == firstName
+                ? _value.firstName
+                : firstName // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        lastName:
+            freezed == lastName
+                ? _value.lastName
+                : lastName // ignore: cast_nullable_to_non_nullable
+                    as String?,
         avatarUrl:
             freezed == avatarUrl
                 ? _value.avatarUrl
@@ -186,9 +186,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
 class _$ProfileImpl extends _Profile {
   const _$ProfileImpl({
     required this.id,
-    required this.userId,
-    this.name,
     required this.email,
+    this.firstName,
+    this.lastName,
     this.avatarUrl,
     required this.updatedAt,
   }) : super._();
@@ -196,11 +196,11 @@ class _$ProfileImpl extends _Profile {
   @override
   final Uuid id;
   @override
-  final Uuid userId;
-  @override
-  final String? name;
-  @override
   final String email;
+  @override
+  final String? firstName;
+  @override
+  final String? lastName;
   @override
   final String? avatarUrl;
   @override
@@ -208,7 +208,7 @@ class _$ProfileImpl extends _Profile {
 
   @override
   String toString() {
-    return 'Profile(id: $id, userId: $userId, name: $name, email: $email, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
+    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
   }
 
   @override
@@ -217,9 +217,11 @@ class _$ProfileImpl extends _Profile {
         (other.runtimeType == runtimeType &&
             other is _$ProfileImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -227,8 +229,15 @@ class _$ProfileImpl extends _Profile {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, userId, name, email, avatarUrl, updatedAt);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    email,
+    firstName,
+    lastName,
+    avatarUrl,
+    updatedAt,
+  );
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -242,9 +251,9 @@ class _$ProfileImpl extends _Profile {
 abstract class _Profile extends Profile {
   const factory _Profile({
     required final Uuid id,
-    required final Uuid userId,
-    final String? name,
     required final String email,
+    final String? firstName,
+    final String? lastName,
     final String? avatarUrl,
     required final DateTime updatedAt,
   }) = _$ProfileImpl;
@@ -253,11 +262,11 @@ abstract class _Profile extends Profile {
   @override
   Uuid get id;
   @override
-  Uuid get userId;
-  @override
-  String? get name;
-  @override
   String get email;
+  @override
+  String? get firstName;
+  @override
+  String? get lastName;
   @override
   String? get avatarUrl;
   @override

@@ -9,12 +9,6 @@ part 'profile.freezed.dart';
 class Profile with _$Profile implements Entity {
   const Profile._();
 
-  const factory Profile({
-    required Uuid id,
-    required Uuid userId,
-    String? name,
-    required String email,
-    String? avatarUrl,
-    required DateTime updatedAt,
-  }) = _Profile;
+  const factory Profile({required Uuid id, required String email, String? firstName, String? lastName, String? avatarUrl, required DateTime updatedAt}) =
+      _Profile;
 }

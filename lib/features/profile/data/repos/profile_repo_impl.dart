@@ -9,15 +9,11 @@ import '../dtos/profile_dto.dart';
 // TODO or use List<Profile> and MyProfileDomainService stores current profile id
 @Singleton(as: ProfileRepo)
 class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implements ProfileRepo {
-  ProfileRepoImpl(
-    DataManagerFactory dmf,
-    ProfileLocalDataSource lds,
-    ProfileRemoteDataSource rds,
-  ) : super(DomainType.profile, dmf, lds, rds);
+  ProfileRepoImpl(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds) : super(DomainType.profile, dmf, lds, rds);
 
   @override
-  Future<void> loadByUserId(Uuid userId) async {
-    await manager.loadAll(filters: {'user_id': userId.value});
+  Future<void> loadByUserId({Map<String, dynamic>? filters}) async {
+    await manager.loadAll(filters: filters);
   }
 
   @override
@@ -26,25 +22,12 @@ class ProfileRepoImpl extends OfflineFirstSingleRepo<Profile, ProfileDto> implem
   }
 
   Profile _toDomain(ProfileDto dto) {
-    return Profile(
-      id: dto.id,
-      userId: dto.userId,
-      name: dto.name,
-      email: dto.email,
-      avatarUrl: dto.avatarUrl,
-      updatedAt: dto.updatedAt,
-    );
+    final email = supabase.auth.currentUser?.email ?? "Unknown Email";
+    return Profile(id: dto.id, email: email, firstName: dto.firstName, lastName: dto.lastName, avatarUrl: dto.avatarUrl, updatedAt: dto.updatedAt);
   }
 
   @override
   ProfileDto toDto(Profile entity) {
-    return ProfileDto(
-      id: entity.id,
-      userId: entity.userId,
-      name: entity.name,
-      email: entity.email,
-      avatarUrl: entity.avatarUrl,
-      updatedAt: entity.updatedAt,
-    );
+    return ProfileDto(id: entity.id, firstName: entity.firstName, lastName: entity.lastName, avatarUrl: entity.avatarUrl, updatedAt: entity.updatedAt);
   }
 }

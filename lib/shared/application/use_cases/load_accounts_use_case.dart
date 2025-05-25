@@ -7,7 +7,7 @@ class LoadAccountsUseCase {
 
   LoadAccountsUseCase(this._repo);
 
-  Future<void> call() async {
-    await _repo.loadAll();
+  Future<void> call(UserContext userContext) async {
+    await _repo.loadAll(filters: userContext.profileFilter);
   }
 }

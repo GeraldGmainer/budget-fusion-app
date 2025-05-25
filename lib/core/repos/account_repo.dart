@@ -1,10 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 
-
 abstract class AccountRepo {
   Stream<List<Account>> watch();
 
-  Future<void> loadAll();
+  Future<void> loadAll({Map<String, dynamic>? filters});
 
   Future<Account?> loadById(Uuid id);
 

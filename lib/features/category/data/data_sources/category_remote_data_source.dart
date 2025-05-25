@@ -9,7 +9,7 @@ class CategoryRemoteDataSource extends OfflineFirstRemoteDataSource<CategoryDto>
   String get table => 'category';
 
   @override
-  String get columns => 'id, user_id, name, category_type, icon_name, icon_color, parent_id, updated_at';
+  String get columns => 'id, name, category_type, icon_name, icon_color, parent_id, updated_at';
 
   @override
   CategoryDto toDto(Map<String, dynamic> json) {

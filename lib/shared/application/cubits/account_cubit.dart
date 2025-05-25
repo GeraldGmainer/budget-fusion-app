@@ -33,11 +33,11 @@ class AccountCubit extends Cubit<LoadableState<List<Account>>> {
     return super.close();
   }
 
-  Future<void> load({String? userId}) async {
+  Future<void> load() async {
     try {
       DomainLogger.instance.d(runtimeType.toString(), DomainType.account.name, "initiate load");
       emit(const LoadableState.loading());
-      await _loadAccounts();
+      await _loadAccounts(supabase.auth.currentUser!.userContext);
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
       emit(LoadableState.error(e.error));

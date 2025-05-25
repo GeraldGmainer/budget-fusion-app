@@ -32,11 +32,11 @@ class BookingCubit extends Cubit<LoadableState<List<Booking>>> {
     return super.close();
   }
 
-  Future<void> load({String? userId}) async {
+  Future<void> load() async {
     try {
       DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "initiate load");
       emit(const LoadableState.loading());
-      await _loadBookings();
+      await _loadBookings(supabase.auth.currentUser!.userContext);
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
       emit(LoadableState.error(e.error));
