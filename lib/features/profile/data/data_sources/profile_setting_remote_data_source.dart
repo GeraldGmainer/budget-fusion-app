@@ -9,8 +9,9 @@ class ProfileSettingRemoteDataSource extends OfflineFirstRemoteDataSource<Profil
   String get table => 'profile_setting';
 
   @override
-  String get columns => 'id, user_id, currency_id, updated_at, '
-      'currency:currency(id, name, decimal_precision, unit_position_front, symbol, ui_order, updated_at)';
+  String get columns =>
+      'id, currency_id, updated_at, '
+      'currency:currency(id, name, decimal_precision, unit_position_front, symbol, ui_order)';
 
   @override
   ProfileSettingDto toDto(Map<String, dynamic> json) {

@@ -30,11 +30,11 @@ class ProfileCubit extends Cubit<LoadableState<Profile>> {
     return super.close();
   }
 
-  Future<void> load({String? userId}) async {
+  Future<void> load() async {
     try {
       DomainLogger.instance.d(runtimeType.toString(), DomainType.profile.name, "initiate load");
       emit(const LoadableState.loading());
-      await _loadProfile(Uuid(userId ?? supabase.auth.currentUser!.id));
+      await _loadProfile(supabase.auth.currentUser!.userContext);
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
       emit(LoadableState.error(e.error));

@@ -46,15 +46,15 @@ class DebugEntities extends StatelessWidget {
         return state.when(
           initial: () => const Text('Initial'),
           loading: (_) => const Center(child: CircularProgressIndicator()),
-          loaded: (profile) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (profile.name != null) Text('Name: ${profile.name}'),
-              Text('Email: ${profile.email}'),
-              if (profile.avatarUrl != null) Text('Avatar URL: ${profile.avatarUrl}'),
-              Text('Updated At: ${_formatDate(profile.updatedAt)}'),
-            ],
-          ),
+          loaded:
+              (profile) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Email: ${profile.email}'),
+                  if (profile.avatarUrl != null) Text('Avatar URL: ${profile.avatarUrl}'),
+                  Text('Updated At: ${_formatDate(profile.updatedAt)}'),
+                ],
+              ),
           error: (message) => Text('Error: $message'),
         );
       },
@@ -67,13 +67,11 @@ class DebugEntities extends StatelessWidget {
         return state.when(
           initial: () => const Text('Initial'),
           loading: (_) => const Center(child: CircularProgressIndicator()),
-          loaded: (setting) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Currency: ${setting.currency.name} / ${setting.currency.symbol}'),
-              Text('Updated At: ${_formatDate(setting.updatedAt)}'),
-            ],
-          ),
+          loaded:
+              (setting) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text('Currency: ${setting.currency.name} / ${setting.currency.symbol}'), Text('Updated At: ${_formatDate(setting.updatedAt)}')],
+              ),
           error: (message) => Text('Error: $message'),
         );
       },
@@ -92,17 +90,18 @@ class DebugEntities extends StatelessWidget {
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: accounts.map((account) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Name: ${account.name}'),
-                    Text('Icon: ${account.iconName} / ${account.iconColor}'),
-                    Text('Updated At: ${_formatDate(account.updatedAt)}'),
-                    SizedBox(height: 8),
-                  ],
-                );
-              }).toList(),
+              children:
+                  accounts.map((account) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name: ${account.name}'),
+                        Text('Icon: ${account.iconName} / ${account.iconColor}'),
+                        Text('Updated At: ${_formatDate(account.updatedAt)}'),
+                        SizedBox(height: 8),
+                      ],
+                    );
+                  }).toList(),
             );
           },
           error: (message) => Text('Error: $message'),
@@ -123,18 +122,19 @@ class DebugEntities extends StatelessWidget {
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: categories.map((category) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Name: ${category.name} / ${category.categoryType == CategoryType.outcome ? "OUTCOME" : "INCOME"}'),
-                    Text('Icon: ${category.iconName} / ${category.iconColor}'),
-                    Text('Updated At: ${_formatDate(category.updatedAt)}'),
-                    const SizedBox(height: 8),
-                    const Divider(),
-                  ],
-                );
-              }).toList(),
+              children:
+                  categories.map((category) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name: ${category.name} / ${category.categoryType == CategoryType.outcome ? "OUTCOME" : "INCOME"}'),
+                        Text('Icon: ${category.iconName} / ${category.iconColor}'),
+                        Text('Updated At: ${_formatDate(category.updatedAt)}'),
+                        const SizedBox(height: 8),
+                        const Divider(),
+                      ],
+                    );
+                  }).toList(),
             );
           },
           error: (message) => Text('Error: $message'),
@@ -155,12 +155,13 @@ class DebugEntities extends StatelessWidget {
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: bookings.map((booking) {
-                final formattedDate = DateFormat('dd.MM.yyyy').format(booking.date);
-                final description = booking.description ?? 'No description';
-                final amount = booking.amount.toString();
-                return Text('$formattedDate | $description | $amount');
-              }).toList(),
+              children:
+                  bookings.map((booking) {
+                    final formattedDate = DateFormat('dd.MM.yyyy').format(booking.date);
+                    final description = booking.description ?? 'No description';
+                    final amount = booking.amount.toString();
+                    return Text('$formattedDate | $description | $amount');
+                  }).toList(),
             );
           },
           error: (message) => Text('Error: $message'),

@@ -1,10 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 
-
 abstract class CategoryRepo {
   Stream<List<Category>> watch();
 
-  Future<void> loadAll();
+  Future<void> loadAll({Map<String, dynamic>? filters});
 
   Future<Category?> loadById(Uuid id);
 

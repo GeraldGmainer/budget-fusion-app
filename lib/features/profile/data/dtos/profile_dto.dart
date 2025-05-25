@@ -10,9 +10,8 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
 
   const factory ProfileDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'user_id') @UuidSerializer() required Uuid userId,
-    String? name,
-    required String email,
+    @JsonKey(name: 'first_name') String? firstName,
+    @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
     @JsonKey(name: 'updated_at') @DateTimeSerializer() required DateTime updatedAt,
   }) = _ProfileDto;

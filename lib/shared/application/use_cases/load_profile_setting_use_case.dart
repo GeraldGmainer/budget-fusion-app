@@ -7,7 +7,7 @@ class LoadProfileSettingUseCase {
 
   LoadProfileSettingUseCase(this._repo);
 
-  Future<void> call(Uuid profileId) async {
-    await _repo.loadByUserId(profileId);
+  Future<void> call(UserContext userContext) async {
+    await _repo.loadByUserId(filters: userContext.profileFilter);
   }
 }

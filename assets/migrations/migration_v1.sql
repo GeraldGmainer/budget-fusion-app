@@ -9,16 +9,15 @@ CREATE TABLE IF NOT EXISTS queue_items (
 
 CREATE TABLE IF NOT EXISTS profile (
     id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL,
-    name TEXT,
     email TEXT,
+    first_name TEXT,
+    last_name TEXT,
     avatar_url TEXT,
     updated_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS profile_setting (
     id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL,
     currency TEXT NOT NULL,
     updated_at TEXT
 );

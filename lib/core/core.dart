@@ -64,3 +64,4 @@ export 'repos/profile_setting_repo.dart';
 export 'supabase/supabase.dart';
 export 'supabase/supabase_client.dart';
 export 'supabase/supabase_container.dart';
+export 'supabase/user_context.dart';
