@@ -33,11 +33,11 @@ class CategoryCubit extends Cubit<LoadableState<List<Category>>> {
     return super.close();
   }
 
-  Future<void> load({String? userId, bool clearCache = false}) async {
+  Future<void> load({bool clearCache = false}) async {
     try {
       DomainLogger.instance.d(runtimeType.toString(), DomainType.category.name, "initiate load");
       emit(const LoadableState.loading());
-      await _loadCategories(clearCache);
+      await _loadCategories(supabase.auth.currentUser!.userContext, clearCache);
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
       emit(LoadableState.error(e.error));

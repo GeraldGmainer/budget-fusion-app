@@ -1,10 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 
-
 abstract class ProfileRepo {
   Stream<Profile> watch();
 
-  Future<void> loadByUserId(Uuid id);
+  Future<void> loadByUserId({Map<String, dynamic>? filters});
 
   Future<void> save(Profile entity);
 

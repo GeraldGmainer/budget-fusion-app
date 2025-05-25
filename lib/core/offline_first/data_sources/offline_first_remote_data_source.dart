@@ -78,8 +78,6 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
   }
 
   dynamic _applyFilters(dynamic query, List<QueryFilter>? filters) {
-    // TODO add tenant_id
-    query = query.eq('user_id', supabase.auth.currentUser?.id);
     if (filters != null && filters.isNotEmpty) {
       for (final filter in filters) {
         switch (filter.operator) {

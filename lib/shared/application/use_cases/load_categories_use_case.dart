@@ -7,10 +7,10 @@ class LoadCategoriesUseCase {
 
   LoadCategoriesUseCase(this._repo);
 
-  Future<void> call(bool clearCache) async {
+  Future<void> call(UserContext userContext, bool clearCache) async {
     if (clearCache) {
       await _repo.reset();
     }
-    await _repo.loadAll();
+    await _repo.loadAll(filters: userContext.profileFilter);
   }
 }

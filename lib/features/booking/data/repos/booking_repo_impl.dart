@@ -16,13 +16,8 @@ class BookingRepoImpl extends OfflineFirstListRepo<Booking, BookingDto> implemen
   final Set<Uuid> _missingAccountIds = {};
   final Set<Uuid> _missingCategoryIds = {};
 
-  BookingRepoImpl(
-    DataManagerFactory dmf,
-    BookingLocalDataSource lds,
-    BookingRemoteDataSource rds,
-    this._accountRepo,
-    this._categoryRepo,
-  ) : super(DomainType.booking, dmf, lds, rds) {
+  BookingRepoImpl(DataManagerFactory dmf, BookingLocalDataSource lds, BookingRemoteDataSource rds, this._accountRepo, this._categoryRepo)
+    : super(DomainType.booking, dmf, lds, rds) {
     _setupStream();
   }
 

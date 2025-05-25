@@ -8,15 +8,12 @@ import '../dtos/profile_setting_dto.dart';
 
 @Singleton(as: ProfileSettingRepo)
 class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, ProfileSettingDto> implements ProfileSettingRepo {
-  ProfileSettingRepoImpl(
-    DataManagerFactory dmf,
-    ProfileSettingLocalDataSource lds,
-    ProfileSettingRemoteDataSource rds,
-  ) : super(DomainType.profileSetting, dmf, lds, rds);
+  ProfileSettingRepoImpl(DataManagerFactory dmf, ProfileSettingLocalDataSource lds, ProfileSettingRemoteDataSource rds)
+    : super(DomainType.profileSetting, dmf, lds, rds);
 
   @override
-  Future<void> loadByUserId(Uuid userId) async {
-    await manager.loadAll(filters: {'user_id': userId.value});
+  Future<void> loadByUserId({Map<String, dynamic>? filters}) async {
+    await manager.loadAll(filters: filters);
   }
 
   @override
@@ -25,19 +22,13 @@ class ProfileSettingRepoImpl extends OfflineFirstSingleRepo<ProfileSetting, Prof
   }
 
   ProfileSetting _toDomain(ProfileSettingDto dto) {
-    return ProfileSetting(
-      id: dto.id,
-      userId: dto.userId,
-      currency: dto.currency.toDomain(),
-      updatedAt: dto.updatedAt,
-    );
+    return ProfileSetting(id: dto.id, currency: dto.currency.toDomain(), updatedAt: dto.updatedAt);
   }
 
   @override
   ProfileSettingDto toDto(ProfileSetting entity) {
     return ProfileSettingDto(
       id: entity.id,
-      userId: entity.userId,
       currency: CurrencyDto(
         id: entity.currency.id,
         name: entity.currency.name,

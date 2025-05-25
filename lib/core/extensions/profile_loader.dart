@@ -7,14 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 extension ProfileLoader on BuildContext {
-  Future<void> loadUserProfileData({String? userId}) async {
+  Future<void> loadUserProfileData() async {
     await _refreshToken();
     read<OfflineFirstQueueCubit>().init();
-    read<ProfileCubit>().load(userId: userId);
-    read<ProfileSettingCubit>().load(userId: userId);
-    read<AccountCubit>().load(userId: userId);
-    read<CategoryCubit>().load(userId: userId);
-    read<BookingCubit>().load(userId: userId);
+    read<ProfileCubit>().load();
+    read<ProfileSettingCubit>().load();
+    read<AccountCubit>().load();
+    read<CategoryCubit>().load();
+    read<BookingCubit>().load();
   }
 
   Future<void> _refreshToken() async {
