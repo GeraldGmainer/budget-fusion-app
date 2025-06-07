@@ -59,6 +59,8 @@ export 'offline_first/repos/offline_first_list_repo.dart';
 export 'offline_first/repos/offline_first_single_repo.dart';
 export 'offline_first/ui/data_manager_cubit.dart';
 export 'offline_first/ui/data_manager_list.dart';
+export 'offline_first/ui/data_manager_single.dart';
+export 'offline_first/ui/data_manager_single_nullable.dart';
 //
 export 'remote_loading/cubits/remote_loading_cubit.dart';
 export 'remote_loading/service/remote_loading_service.dart';

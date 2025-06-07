@@ -1,10 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/core.dart';
-import '../../../../shared/shared.dart';
 
 class CurrencyText extends StatelessWidget {
   static const double defaultFontSize = 14;
@@ -22,15 +20,12 @@ class CurrencyText extends StatelessWidget {
     if (currency != null) {
       _buildText(context, currency!);
     }
-    return BlocBuilder<DataManagerCubit<ProfileSetting>, LoadableState<List<ProfileSetting>>>(
-      // return BlocSelector<DataManagerCubit<List<ProfileSetting>>, LoadableState, Currency?>(
-      // selector: (state) => state.maybeWhen(loaded: (profileSetting) => profileSetting.first.currency, orElse: () => null),
-      builder: (context, state) {
-        final selectedCurrency = state.whenOrNull(loaded: (data) => data.first.currency);
-        if (selectedCurrency != null) {
-          return _buildText(context, selectedCurrency);
+    return DataManagerSingleNullable<ProfileSetting>(
+      builder: (context, data) {
+        if (data == null) {
+          return _buildDefaultText(context);
         }
-        return _buildDefaultText(context);
+        return _buildText(context, data.currency);
       },
     );
   }

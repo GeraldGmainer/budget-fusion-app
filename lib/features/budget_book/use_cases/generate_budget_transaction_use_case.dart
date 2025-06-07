@@ -13,8 +13,7 @@ class GenerateBudgetTransactionUseCase {
   GenerateBudgetTransactionUseCase(this._profileSettingDataManager, this._transactionDataGenerator);
 
   Future<List<TransactionViewData>> call(List<BudgetPageData> datas) async {
-    // TODO is there a nicer solution? and use futures await?
-    final currency = (await _profileSettingDataManager.getAll()).first.currency;
+    final currency = await _profileSettingDataManager.getCurrency();
     return datas.map((data) => _transactionDataGenerator.generate(data, currency)).toList();
   }
 }

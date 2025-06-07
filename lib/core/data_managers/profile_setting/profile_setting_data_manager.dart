@@ -21,6 +21,8 @@ class ProfileSettingDataManager extends DataManager<ProfileSetting> with AutoSub
   @override
   Stream<List<ProfileSetting>> watch() => _manager.stream.map((dtos) => _toEntities(dtos));
 
+  Future<Currency> getCurrency() => getAll().then((settings) => settings.first.currency);
+
   void dispose() => _manager.dispose();
 
   Future<void> reset() => _manager.reset();

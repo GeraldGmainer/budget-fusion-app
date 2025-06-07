@@ -14,9 +14,9 @@ class GenerateBudgetSummaryUseCase {
   GenerateBudgetSummaryUseCase(this._profileSettingDataManager, this._categoryDataManager, this._summaryDataGenerator);
 
   Future<List<SummaryViewData>> call(List<BudgetPageData> datas) async {
-    // TODO is there a nicer solution? and use futures await?
-    final currency = (await _profileSettingDataManager.getAll()).first.currency;
-    final categories = await _categoryDataManager.getAll();
+    final results = await Future.wait([_profileSettingDataManager.getCurrency(), _categoryDataManager.getAll()]);
+    final currency = results[0] as Currency;
+    final categories = results[1] as List<Category>;
     return datas.map((data) => _summaryDataGenerator.generate(data, currency, categories)).toList();
   }
 }
