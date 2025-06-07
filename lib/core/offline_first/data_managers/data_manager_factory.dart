@@ -13,12 +13,12 @@ class DataManagerFactory {
   DataManagerFactory(this.cacheManager, this.queueManager, this.realtimeNotifierService, this.remoteLoadingService);
 
   OfflineFirstDataManager<Dto> createManager<Dto extends OfflineFirstDto>({
-    required DomainType domainType,
+    required EntityType entityType,
     required OfflineFirstLocalDataSource<Dto> localDataSource,
     required OfflineFirstRemoteDataSource<Dto> remoteDataSource,
   }) {
     return OfflineFirstDataManager<Dto>(
-      domainType: domainType,
+      entityType: entityType,
       localSource: localDataSource,
       remoteSource: remoteDataSource,
       cacheManager: cacheManager,

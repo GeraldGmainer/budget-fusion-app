@@ -10,7 +10,7 @@ class AccountDataManager extends DataManager<Account> with AutoSubscribe<Account
   late final OfflineFirstDataManager<AccountDto> _manager;
 
   AccountDataManager(DataManagerFactory dmf, AccountLocalDataSource lds, AccountRemoteDataSource rds)
-    : _manager = dmf.createManager<AccountDto>(domainType: DomainType.account, localDataSource: lds, remoteDataSource: rds);
+    : _manager = dmf.createManager<AccountDto>(entityType: EntityType.account, localDataSource: lds, remoteDataSource: rds);
 
   @override
   Future<List<Account>> loadAll({Map<String, dynamic>? filters}) async {

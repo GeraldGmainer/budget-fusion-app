@@ -1,4 +1,4 @@
-enum DomainType {
+enum EntityType {
   profile,
   profileSetting,
   account,
@@ -9,7 +9,7 @@ enum DomainType {
 
   String get text => _toSnakeCase(name);
 
-  static DomainType fromString(String value) {
-    return DomainType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid domain type: $value"));
+  static EntityType fromString(String value) {
+    return EntityType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid entity type: $value"));
   }
 }

@@ -1,10 +1,10 @@
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:logger/logger.dart';
 
-class DomainLogger {
+class EntityLogger {
   static const int serviceCharLength = 25;
-  static const int domainCharLength = 20;
-  static final Map<String, AnsiColor> _domainColors = {
+  static const int entityCharLength = 20;
+  static final Map<String, AnsiColor> _entityColors = {
     'queue': AnsiColor.fg(250),
     'realtime': AnsiColor.fg(250),
     'profile': AnsiColor.fg(34),
@@ -14,28 +14,28 @@ class DomainLogger {
     'booking': AnsiColor.fg(133),
   };
 
-  static AnsiColor getDomainColor(String table) {
-    return _domainColors[table] ?? AnsiColor.fg(30);
+  static AnsiColor getEntityColor(String table) {
+    return _entityColors[table] ?? AnsiColor.fg(30);
   }
 
   static String applyColor(String table) {
-    return getDomainColor(table)(table);
+    return getEntityColor(table)(table);
   }
 
   static String bold(Object v) => AnsiColor.fg(208)(v.toString());
 
-  static final DomainLogger _instance = DomainLogger._();
+  static final EntityLogger _instance = EntityLogger._();
 
-  DomainLogger._();
+  EntityLogger._();
 
-  static DomainLogger get instance => _instance;
+  static EntityLogger get instance => _instance;
 
-  void d(String service, String domain, String msg, {bool? darkColor}) {
+  void d(String service, String entity, String msg, {bool? darkColor}) {
     final serviceColor = _determineServiceColor(service, darkColor ?? false);
-    final domainColor = getDomainColor(domain);
+    final entityColor = getEntityColor(entity);
     final serviceText = serviceColor(service.padRight(serviceCharLength));
-    final domainText = domainColor(domain.padRight(domainCharLength));
-    BudgetLogger.instance.d("$serviceText $domainText $msg", short: true);
+    final entityText = entityColor(entity.padRight(entityCharLength));
+    BudgetLogger.instance.d("$serviceText $entityText $msg", short: true);
   }
 
   AnsiColor _determineServiceColor(String service, bool darkColor) {

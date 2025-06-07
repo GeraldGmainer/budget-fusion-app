@@ -13,17 +13,13 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     final effectiveOrderBy = orderBy ?? defaultOrderBy;
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
-    final rows = await db.query(
-      table,
-      where: filterClause?.key,
-      whereArgs: filterClause?.value,
-      orderBy: effectiveOrderBy,
-    );
-    _log("fetched ${DomainLogger.bold(rows.length)} DTOs", darkColor: true);
-    final dtos = rows.map((row) {
-      final dto = fromJson(row);
-      return dto;
-    }).toList();
+    final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value, orderBy: effectiveOrderBy);
+    _log("fetched ${EntityLogger.bold(rows.length)} DTOs", darkColor: true);
+    final dtos =
+        rows.map((row) {
+          final dto = fromJson(row);
+          return dto;
+        }).toList();
     return dtos;
   }
 
@@ -47,7 +43,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   Future<void> saveAll(List<Dto> dtos) async {
-    _log("saveAll  ${DomainLogger.bold(dtos.length)} DTOs");
+    _log("saveAll  ${EntityLogger.bold(dtos.length)} DTOs");
     final batch = db.batch();
     for (final dto in dtos) {
       final stringifiedFields = _convertMapsToString(dto.toJson());
@@ -103,7 +99,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   _log(String msg, {bool darkColor = false}) {
-    DomainLogger.instance.d("LocalDataSource", table, msg, darkColor: darkColor);
+    EntityLogger.instance.d("LocalDataSource", table, msg, darkColor: darkColor);
   }
 
   Map<String, dynamic> _convertMapsToString(Map<String, dynamic> input) {
@@ -113,14 +109,15 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
       if (value is Map) {
         output[key] = jsonEncode(value);
       } else if (value is List) {
-        output[key] = value.map((element) {
-          if (element is Map) {
-            return jsonEncode(element);
-          } else if (element is List) {
-            return element.map((e) => e is Map ? jsonEncode(e) : e).toList();
-          }
-          return element;
-        }).toList();
+        output[key] =
+            value.map((element) {
+              if (element is Map) {
+                return jsonEncode(element);
+              } else if (element is List) {
+                return element.map((e) => e is Map ? jsonEncode(e) : e).toList();
+              }
+              return element;
+            }).toList();
       } else {
         output[key] = value;
       }

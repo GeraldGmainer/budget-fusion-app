@@ -7,8 +7,8 @@ abstract class OfflineFirstListRepo<T extends Entity, U extends OfflineFirstDto>
   final OfflineFirstLocalDataSource<U> localDataSource;
   final OfflineFirstRemoteDataSource<U> remoteDataSource;
 
-  OfflineFirstListRepo(DomainType domainType, DataManagerFactory dataManagerFactory, this.localDataSource, this.remoteDataSource)
-    : manager = dataManagerFactory.createManager<U>(domainType: domainType, localDataSource: localDataSource, remoteDataSource: remoteDataSource);
+  OfflineFirstListRepo(EntityType entityType, DataManagerFactory dataManagerFactory, this.localDataSource, this.remoteDataSource)
+    : manager = dataManagerFactory.createManager<U>(entityType: entityType, localDataSource: localDataSource, remoteDataSource: remoteDataSource);
 
   Future<void> loadAll({Map<String, dynamic>? filters}) => manager.loadAll(filters: filters);
 

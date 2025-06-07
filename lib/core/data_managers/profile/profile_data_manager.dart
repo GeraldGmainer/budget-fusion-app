@@ -11,7 +11,7 @@ class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile
   late final OfflineFirstDataManager<ProfileDto> _manager;
 
   ProfileDataManager(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds)
-    : _manager = dmf.createManager<ProfileDto>(domainType: DomainType.profile, localDataSource: lds, remoteDataSource: rds);
+    : _manager = dmf.createManager<ProfileDto>(entityType: EntityType.profile, localDataSource: lds, remoteDataSource: rds);
 
   @override
   Future<List<Profile>> loadAll({Map<String, dynamic>? filters}) async {

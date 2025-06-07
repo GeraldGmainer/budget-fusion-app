@@ -9,24 +9,24 @@ import 'memory_cache_impl.dart';
 @lazySingleton
 class CacheManager {
   static const defaultCacheDuration = Duration(minutes: 5);
-  final Map<DomainType, MemoryCache<dynamic>> _caches = {};
+  final Map<EntityType, MemoryCache<dynamic>> _caches = {};
 
-  T? get<T>(DomainType key) {
+  T? get<T>(EntityType key) {
     return _caches[key]?.get();
   }
 
-  void set<T>(DomainType key, T value, {Duration cacheDuration = defaultCacheDuration}) {
+  void set<T>(EntityType key, T value, {Duration cacheDuration = defaultCacheDuration}) {
     _caches[key] ??= MemoryCacheImpl<T>(cacheDuration: cacheDuration);
     _caches[key]!.set(value);
   }
 
-  Future<void> updateList<T>(DomainType key, FutureOr<List<T>> Function(List<T>?) update) async {
+  Future<void> updateList<T>(EntityType key, FutureOr<List<T>> Function(List<T>?) update) async {
     final currentList = get<List<T>>(key) ?? [];
     final updatedList = await update(currentList);
     set<List<T>>(key, updatedList);
   }
 
-  void invalidateCache(DomainType key) {
+  void invalidateCache(EntityType key) {
     _caches[key]?.invalidate();
   }
 

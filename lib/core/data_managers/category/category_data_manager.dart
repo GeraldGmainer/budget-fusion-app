@@ -12,7 +12,7 @@ class CategoryDataManager extends DataManager<Category> with AutoSubscribe<Categ
   final CategoryMapper _mapper;
 
   CategoryDataManager(DataManagerFactory dmf, CategoryLocalDataSource lds, CategoryRemoteDataSource rds, this._mapper)
-    : _manager = dmf.createManager<CategoryDto>(domainType: DomainType.category, localDataSource: lds, remoteDataSource: rds);
+    : _manager = dmf.createManager<CategoryDto>(entityType: EntityType.category, localDataSource: lds, remoteDataSource: rds);
 
   @override
   Future<List<Category>> loadAll({Map<String, dynamic>? filters}) async {

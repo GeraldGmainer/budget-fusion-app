@@ -17,6 +17,7 @@ import '../view_models/budget_book_filter.dart';
 import '../view_models/budget_page_data.dart';
 
 part 'budget_book_cubit.freezed.dart';
+
 part 'budget_book_state.dart';
 
 @injectable
@@ -70,7 +71,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     try {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
-      DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "update view for budget book: $newViewMode / $newFilter");
+      EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "update view for budget book: $newViewMode / $newFilter");
 
       final bookings = await _manager.watch().first;
       final filtered = await _filterAndGroupBookingsUseCase(bookings, newFilter);
@@ -94,7 +95,7 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
   }
 
   Future<void> resetAndLoad() async {
-    DomainLogger.instance.d(runtimeType.toString(), DomainType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
+    EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
     emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, period: state.period));
     await _resetBudgetBookUseCase();
   }

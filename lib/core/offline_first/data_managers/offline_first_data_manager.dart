@@ -9,7 +9,7 @@ import '../../../utils/utils.dart';
 import '../../core.dart';
 
 class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
-  final DomainType domainType;
+  final EntityType entityType;
   final OfflineFirstLocalDataSource<Dto> localSource;
   final OfflineFirstRemoteDataSource<Dto> remoteSource;
   final CacheManager cacheManager;
@@ -22,7 +22,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<List<Dto>>? _refreshing;
 
   OfflineFirstDataManager({
-    required this.domainType,
+    required this.entityType,
     required this.localSource,
     required this.remoteSource,
     required this.cacheManager,
@@ -30,7 +30,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     required this.realtimeNotifierService,
     required this.remoteLoadingService,
   }) {
-    queueManager.registerDomainSources(domainType, localSource, remoteSource);
+    queueManager.registerEntitySources(entityType, localSource, remoteSource);
   }
 
   Stream<List<Dto>> get stream => streamController.stream;
@@ -42,7 +42,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<Dto>>(domainType);
+    final cached = cacheManager.get<List<Dto>>(entityType);
     if (cached != null && cached.isNotEmpty) {
       _log("Using cached data with ${cached.length} items");
       _emitToStream(cached);
@@ -53,8 +53,8 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("Fetching local data ...");
     final localDtos = await localSource.fetchAll();
     if (localDtos.isNotEmpty) {
-      _log("Local ${DomainLogger.bold(localDtos.length)} items found");
-      cacheManager.set(domainType, localDtos);
+      _log("Local ${EntityLogger.bold(localDtos.length)} items found");
+      cacheManager.set(entityType, localDtos);
       _emitToStream(localDtos);
       unawaited(_syncPartial());
       return localDtos;
@@ -63,7 +63,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("No local data found. Fetching remote data ...");
     final dtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
     await localSource.saveAll(dtos);
-    cacheManager.set(domainType, dtos);
+    cacheManager.set(entityType, dtos);
     _emitToStream(dtos);
     _log("loadAll completed");
     return dtos;
@@ -72,7 +72,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<Dto?> loadById(String id) async {
     _log("start loadById '$id'");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<Dto>>(domainType);
+    final cached = cacheManager.get<List<Dto>>(entityType);
     if (cached != null) {
       final found = cached.firstWhereOrNull((e) => e.id.value == id);
       if (found != null) {
@@ -105,7 +105,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final refreshedDtos = await _refreshCacheFromLocalSource();
     _emitToStream(refreshedDtos);
 
-    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
+    final item = QueueItem(entityId: dto.id.value, entity: entityType, type: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing upsert for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
@@ -117,7 +117,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _refreshing =
         (() async {
           final dtos = await localSource.fetchAll();
-          cacheManager.set(domainType, dtos);
+          cacheManager.set(entityType, dtos);
           return dtos;
         })();
     try {
@@ -134,20 +134,20 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final dtos = await _refreshCacheFromLocalSource();
     _emitToStream(dtos);
 
-    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
+    final item = QueueItem(entityId: dto.id.value, entity: entityType, type: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing delete for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
 
   _emitToStream(List<Dto> dtos) {
-    _log("Emitting ${DomainLogger.bold(dtos.length)} view_models", darkColor: true);
+    _log("Emitting ${EntityLogger.bold(dtos.length)} view_models", darkColor: true);
     streamController.add(dtos);
   }
 
   void _subscribeToRealtime() {
     if (_isRealtimeSubscribed) return;
     _isRealtimeSubscribed = true;
-    realtimeNotifierService.startListeningForDomain(domainType, remoteSource.table);
+    realtimeNotifierService.startListeningForEntity(entityType, remoteSource.table);
   }
 
   Future<void> _syncPartial() async {
@@ -186,17 +186,17 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Future<void> reset() async {
     _log("Resetting OfflineFirstDataManager", darkColor: true);
-    cacheManager.invalidateCache(domainType);
+    cacheManager.invalidateCache(entityType);
     await localSource.deleteAll();
   }
 
   void dispose() {
     _log("Disposing OfflineFirstDataManager", darkColor: true);
     streamController.close();
-    realtimeNotifierService.stopListeningForDomain(domainType, remoteSource.table);
+    realtimeNotifierService.stopListeningForEntity(entityType, remoteSource.table);
   }
 
   _log(String msg, {bool darkColor = false}) {
-    DomainLogger.instance.d("DataManager", domainType.text, msg, darkColor: darkColor);
+    EntityLogger.instance.d("DataManager", entityType.text, msg, darkColor: darkColor);
   }
 }

@@ -10,7 +10,7 @@ class ProfileSettingDataManager extends DataManager<ProfileSetting> with AutoSub
   final OfflineFirstDataManager<ProfileSettingDto> _manager;
 
   ProfileSettingDataManager(DataManagerFactory dmf, ProfileSettingLocalDataSource lds, ProfileSettingRemoteDataSource rds)
-    : _manager = dmf.createManager<ProfileSettingDto>(domainType: DomainType.profileSetting, localDataSource: lds, remoteDataSource: rds);
+    : _manager = dmf.createManager<ProfileSettingDto>(entityType: EntityType.profileSetting, localDataSource: lds, remoteDataSource: rds);
 
   @override
   Future<List<ProfileSetting>> loadAll({Map<String, dynamic>? filters}) async {

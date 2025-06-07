@@ -33,7 +33,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       query = _applyFilters(query, filters);
       final response = await query;
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAllNewer ${DomainLogger.bold(result.length)} Dtos", stopwatch: stopwatch);
+      _log("fetchAllNewer ${EntityLogger.bold(result.length)} Dtos", stopwatch: stopwatch);
       return result;
     });
   }
@@ -101,9 +101,9 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   _log(String msg, {Stopwatch? stopwatch}) {
     if (stopwatch != null) {
-      DomainLogger.instance.d("RemoteDataSource", table, "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
+      EntityLogger.instance.d("RemoteDataSource", table, "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
     } else {
-      DomainLogger.instance.d("RemoteDataSource", table, msg, darkColor: true);
+      EntityLogger.instance.d("RemoteDataSource", table, msg, darkColor: true);
     }
   }
 

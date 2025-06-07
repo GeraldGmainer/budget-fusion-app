@@ -21,7 +21,7 @@ class BookingDataManager extends DataManager<Booking> implements StreamLifecycle
   late final StreamSubscription<List<Booking>> _sub;
 
   BookingDataManager(DataManagerFactory dmf, this._lds, BookingRemoteDataSource rds, this._mapper, this._accountDataManager, this._categoryDataManager) {
-    _manager = dmf.createManager<BookingDto>(domainType: DomainType.booking, localDataSource: _lds, remoteDataSource: rds);
+    _manager = dmf.createManager<BookingDto>(entityType: EntityType.booking, localDataSource: _lds, remoteDataSource: rds);
   }
 
   @override
