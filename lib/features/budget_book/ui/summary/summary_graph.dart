@@ -3,8 +3,8 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/pie_data.dart';
-import '../../domain/entities/summary_view_data.dart';
+import '../../view_models/pie_data.dart';
+import '../../view_models/summary_view_data.dart';
 import 'income_outcome_balance_text.dart';
 
 class SummaryGraph extends StatelessWidget {

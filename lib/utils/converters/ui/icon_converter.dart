@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class IconConverter {
   static final Map<String, IconData> _iconDataMap = {
+    "not_found": CommunityMaterialIcons.file_search,
     "home": CommunityMaterialIcons.home,
     "key": CommunityMaterialIcons.key,
     "bank_outline": CommunityMaterialIcons.bank_outline,

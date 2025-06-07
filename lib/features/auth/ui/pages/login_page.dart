@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     context.read<LoginCubit>().init();
   }
 
-  _onProfileSuccess(Profile profile) {
+  _onSuccess() {
     Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 
@@ -39,33 +38,19 @@ class _LoginPageState extends State<LoginPage> {
         builder: (ctx) {
           scaffoldProvider.setScaffoldContext((ctx));
 
-          return BlocConsumer<ProfileCubit, LoadableState<Profile>>(
+          return BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
-              state.whenOrNull(loaded: _onProfileSuccess, error: _onError);
+              state.whenOrNull(success: (_) => _onSuccess(), error: _onError);
             },
-            builder: (context, state1) {
-              return BlocConsumer<LoginCubit, LoginState>(
-                listener: (context, state) {
-                  state.whenOrNull(error: _onError);
-                },
-                builder: (context, state2) {
-                  final isProfileLoading = state1.isLoading;
-                  final isLoginLoading = state2 is LoginLoadingState || state2 is LoginSuccessState;
+            builder: (context, state) {
+              final isLoginLoading = state is LoginLoadingState || state is LoginSuccessState;
 
-                  return SingleChildScrollView(
-                    child: Container(
-                      width: AppDimensions.formWidth,
-                      padding: AppDimensions.formPadding,
-                      child: Column(
-                        children: [
-                          Image.asset('assets/logo.png', height: 100),
-                          const SizedBox(height: 20),
-                          LoginForm(isLoading: isLoginLoading || isProfileLoading),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+              return SingleChildScrollView(
+                child: Container(
+                  width: AppDimensions.formWidth,
+                  padding: AppDimensions.formPadding,
+                  child: Column(children: [Image.asset('assets/logo.png', height: 100), const SizedBox(height: 20), LoginForm(isLoading: isLoginLoading)]),
+                ),
               );
             },
           );

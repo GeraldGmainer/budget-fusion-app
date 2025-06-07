@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/budget_book_cubit.dart';
-import '../../domain/entities/budget_book_filter.dart';
+import '../../bloc/budget_book_cubit.dart';
+import '../../view_models/budget_book_filter.dart';
 import 'account_filter.dart';
 import 'description_filter.dart';
 import 'period_filter.dart';
@@ -63,15 +63,9 @@ class _FilterModalState extends State<FilterModal> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(
-          onPressed: () => _onCancel(context),
-          child: const Text('Cancel'),
-        ),
+        TextButton(onPressed: () => _onCancel(context), child: const Text('Cancel')),
         const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () => _onSave(context),
-          child: const Text('Save'),
-        ),
+        ElevatedButton(onPressed: () => _onSave(context), child: const Text('Save')),
       ],
     );
   }

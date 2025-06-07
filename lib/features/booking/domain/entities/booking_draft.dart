@@ -26,8 +26,8 @@ class BookingDraft with _$BookingDraft {
       date: date,
       description: description,
       amount: amount,
-      category: category,
-      account: account,
+      category: category!,
+      account: account!,
       updatedAt: DateTime.now(),
       isSynced: false,
     );

@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/category_list_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 
 class CategoryListPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   void initState() {
     super.initState();
     _tabController = TabController(length: CategoryType.values.length, vsync: this);
+    context.read<CategoryListCubit>().load();
   }
 
   @override
@@ -27,7 +29,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   }
 
   _reloadCategories() {
-    context.read<CategoryCubit>().load(clearCache: true);
+    context.read<CategoryListCubit>().load(clearCache: true);
   }
 
   void _onCreateCategory() {
@@ -65,7 +67,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
   }
 
   Widget _buildCategoryList(CategoryType type) {
-    return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
+    return BlocBuilder<CategoryListCubit, LoadableState<List<Category>>>(
       builder: (context, state) {
         return state.maybeWhen(
           loaded: (cats) {

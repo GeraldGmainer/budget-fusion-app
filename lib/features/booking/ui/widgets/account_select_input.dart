@@ -14,7 +14,7 @@ class AccountSelectInput extends StatelessWidget {
   const AccountSelectInput({required this.draft, required this.onChange});
 
   _onTap(BuildContext context) async {
-    final accounts = context.read<AccountCubit>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
+    final accounts = context.read<DataManagerCubit<Account>>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
 
     final Account? selectedAccount = await showSelectionBottomSheet<Account>(
       context: context,
@@ -34,10 +34,7 @@ class AccountSelectInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasValue = draft.account != null;
     return ListTile(
-      leading:
-          hasValue
-              ? BudgetIcon(name: draft.account!.iconName, color: draft.account!.iconColor)
-              : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
+      leading: hasValue ? BudgetIcon(name: draft.account!.iconName, color: draft.account!.iconColor) : Icon(CommunityMaterialIcons.bank, color: Theme.of(context).hintColor),
       title: Text(hasValue ? draft.account!.name : "booking.fields.account".tr(), style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor)),
       subtitle: hasValue ? Text("Account") : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),

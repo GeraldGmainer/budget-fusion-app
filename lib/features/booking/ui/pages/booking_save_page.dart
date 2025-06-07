@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
-import '../../application/cubits/booking_save_cubit.dart';
-import '../../application/cubits/calculator_cubit.dart';
-import '../../application/cubits/suggestion_cubit.dart';
+import '../../bloc/booking_save_cubit.dart';
+import '../../bloc/calculator_cubit.dart';
+import '../../bloc/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
@@ -131,7 +131,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
       headerText: "booking.dialogs.delete.title",
       bodyText: "booking.dialog.delete.body",
       onOK: () {
-        BlocProvider.of<BookingSaveCubit>(context).delete(widget.model);
+        // TODO use different model than booking ?
+        BlocProvider.of<BookingSaveCubit>(context).delete(widget.model!);
       },
     );
   }
@@ -153,11 +154,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
         return previous.draft != current.draft;
       },
       listener: (context, state) {
-        state.whenOrNull(
-          loaded: (draft) => _onSaveSuccess(draft),
-          deleted: (_, booking) => _onDeleteSuccess(booking),
-          error: (draft, error) => _onError(error),
-        );
+        state.whenOrNull(loaded: (draft) => _onSaveSuccess(draft), deleted: (_, booking) => _onDeleteSuccess(booking), error: (draft, error) => _onError(error));
       },
       builder: (context, state) {
         return Scaffold(
@@ -167,11 +164,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
           ),
           floatingActionButton: AppFab.save(() => _onSave(state.draft)),
           resizeToAvoidBottomInset: false,
-          body: state.maybeWhen(
-            draftUpdate: (draft) => _buildContent(draft),
-            error: (draft, __) => _buildContent(draft),
-            orElse: () => Center(child: CircularProgressIndicator()),
-          ),
+          body: state.maybeWhen(draftUpdate: (draft) => _buildContent(draft), error: (draft, __) => _buildContent(draft), orElse: () => Center(child: CircularProgressIndicator())),
         );
       },
     );

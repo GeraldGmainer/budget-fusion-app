@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/shared.dart';
-import '../../domain/entities/budget_book_filter.dart';
-import '../../domain/enums/period_mode.dart';
+import '../../enums/period_mode.dart';
+import '../../view_models/budget_book_filter.dart';
 
 class PeriodFilter extends StatelessWidget {
   final List<PeriodMode> _periods = [PeriodMode.all, PeriodMode.year, PeriodMode.month, PeriodMode.day];

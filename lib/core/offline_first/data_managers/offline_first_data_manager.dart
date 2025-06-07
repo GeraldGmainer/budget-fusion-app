@@ -105,12 +105,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final refreshedDtos = await _refreshCacheFromLocalSource();
     _emitToStream(refreshedDtos);
 
-    final item = QueueItem(
-      entityId: dto.id.value,
-      domain: domainType,
-      type: QueueTaskType.upsert,
-      entityPayload: jsonEncode(dto.toJson()),
-    );
+    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing upsert for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
@@ -119,11 +114,12 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     if (_refreshing != null) {
       return await _refreshing!;
     }
-    _refreshing = (() async {
-      final dtos = await localSource.fetchAll();
-      cacheManager.set(domainType, dtos);
-      return dtos;
-    })();
+    _refreshing =
+        (() async {
+          final dtos = await localSource.fetchAll();
+          cacheManager.set(domainType, dtos);
+          return dtos;
+        })();
     try {
       return await _refreshing!;
     } finally {
@@ -138,18 +134,13 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final dtos = await _refreshCacheFromLocalSource();
     _emitToStream(dtos);
 
-    final item = QueueItem(
-      entityId: dto.id.value,
-      domain: domainType,
-      type: QueueTaskType.delete,
-      entityPayload: jsonEncode(dto.toJson()),
-    );
+    final item = QueueItem(entityId: dto.id.value, domain: domainType, type: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing delete for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
 
   _emitToStream(List<Dto> dtos) {
-    _log("Emitting ${DomainLogger.bold(dtos.length)} entities", darkColor: true);
+    _log("Emitting ${DomainLogger.bold(dtos.length)} view_models", darkColor: true);
     streamController.add(dtos);
   }
 

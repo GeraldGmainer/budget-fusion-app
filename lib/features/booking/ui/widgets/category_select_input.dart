@@ -3,9 +3,9 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/booking_draft.dart';
+import 'category_list_input.dart';
 
 class CategorySelectInput extends StatelessWidget {
   final BookingDraft draft;
@@ -13,10 +13,6 @@ class CategorySelectInput extends StatelessWidget {
   final bool hasError;
 
   const CategorySelectInput({required this.draft, required this.onChange, required this.hasError});
-
-  void _reload(BuildContext context) {
-    BlocProvider.of<CategoryCubit>(context).load();
-  }
 
   void _onCategoryTap(BuildContext context, Category category) {
     onChange.call(category);
@@ -29,18 +25,13 @@ class CategorySelectInput extends StatelessWidget {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (sheetCtx) {
-        return BlocBuilder<CategoryCubit, LoadableState<List<Category>>>(
-          builder: (ctx, state) {
-            return state.maybeWhen(
-              error: (message) => ErrorText(error: message, onReload: () => _reload(context)),
-              loaded:
-                  (categories) => CategoryListInput(
-                    categories: categories,
-                    categoryType: draft.categoryType,
-                    onCategoryTap: (category) => _onCategoryTap(context, category),
-                    selectedCategory: draft.category,
-                  ),
-              orElse: () => const Center(child: CircularProgressIndicator()),
+        return DataManagerList<Category>(
+          builder: (ctx, data) {
+            return CategoryListInput(
+              categories: data,
+              categoryType: draft.categoryType,
+              onCategoryTap: (category) => _onCategoryTap(context, category),
+              selectedCategory: draft.category,
             );
           },
         );
@@ -53,9 +44,7 @@ class CategorySelectInput extends StatelessWidget {
     final hasValue = draft.category != null;
     return ListTile(
       leading:
-          hasValue
-              ? BudgetIcon(name: draft.category!.iconName, color: draft.category!.iconColor)
-              : Icon(CommunityMaterialIcons.table_large, color: Theme.of(context).hintColor),
+          hasValue ? BudgetIcon(name: draft.category!.iconName, color: draft.category!.iconColor) : Icon(CommunityMaterialIcons.table_large, color: Theme.of(context).hintColor),
       title: Text(hasValue ? draft.category!.name : "booking.fields.category".tr(), style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor)),
       subtitle:
           hasValue

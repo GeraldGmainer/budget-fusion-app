@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 
-import '../../application/cubits/calculator_cubit.dart';
+import '../../bloc/calculator_cubit.dart';
 
 class AmountDisplay extends StatefulWidget {
   final bool isCalculatorOpen;
@@ -70,13 +70,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
         duration: Duration(milliseconds: 200),
         curve: Curves.fastOutSlowIn,
         width: double.infinity,
-        child: ShakeWidget(
-          duration: Duration(milliseconds: 3000),
-          shakeConstant: ShakeHorizontalConstant2(),
-          autoPlay: _shake,
-          enableWebMouseHover: true,
-          child: _buildView(),
-        ),
+        child: ShakeWidget(duration: Duration(milliseconds: 3000), shakeConstant: ShakeHorizontalConstant2(), autoPlay: _shake, enableWebMouseHover: true, child: _buildView()),
       ),
     );
   }
@@ -99,19 +93,16 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
   }
 
   Widget _buildCurrency(BuildContext context) {
-    return BlocBuilder<ProfileSettingCubit, LoadableState<ProfileSetting>>(
+    return BlocBuilder<DataManagerCubit<ProfileSetting>, LoadableState<List<ProfileSetting>>>(
       builder: (context, state) {
-        final value = state.whenOrNull(loaded: (setting) => setting.currency.symbol);
+        final value = state.whenOrNull(loaded: (data) => data.first.currency.symbol);
         return Text(value ?? "", style: TextStyle(fontSize: 24, color: AppColors.primaryTextColor));
       },
     );
   }
 
   Widget _buildHistory(List<String> history) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 4),
-      child: Text(history.join(), style: const TextStyle(fontSize: 18, color: AppColors.primaryTextColor)),
-    );
+    return Padding(padding: const EdgeInsets.only(right: 4), child: Text(history.join(), style: const TextStyle(fontSize: 18, color: AppColors.primaryTextColor)));
   }
 
   Widget _buildResult(double result) {

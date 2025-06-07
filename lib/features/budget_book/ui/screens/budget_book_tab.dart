@@ -5,11 +5,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/budget_book_cubit.dart';
-import '../../domain/entities/budget_date_range.dart';
-import '../../domain/entities/summary_view_data.dart';
-import '../../domain/entities/transaction_view_data.dart';
-import '../../domain/enums/budget_view_mode.dart';
+import '../../bloc/budget_book_cubit.dart';
+import '../../enums/budget_view_mode.dart';
+import '../../view_models/budget_date_range.dart';
+import '../../view_models/summary_view_data.dart';
+import '../../view_models/transaction_view_data.dart';
 import '../calendar/calendar_view.dart';
 import '../summary/summary_view.dart';
 import '../transaction/transaction_view.dart';
@@ -29,13 +29,12 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   void initState() {
     super.initState();
     _initPagination();
-    _tabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)
-      ..addListener(() {
-        if (_tabController.indexIsChanging) {
-          final vm = BudgetViewMode.values[_tabController.index];
-          context.read<BudgetBookCubit>().updateView(viewMode: vm, initialLoad: false);
-        }
-      });
+    _tabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)..addListener(() {
+      if (_tabController.indexIsChanging) {
+        final vm = BudgetViewMode.values[_tabController.index];
+        context.read<BudgetBookCubit>().updateView(viewMode: vm, initialLoad: false);
+      }
+    });
   }
 
   void _initPagination() {
