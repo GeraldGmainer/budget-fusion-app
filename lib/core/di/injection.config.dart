@@ -133,9 +133,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
-    gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
-    gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
+    gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
+    gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
     gh.lazySingleton<_i247.RemoteLoadingService>(
       () => _i247.RemoteLoadingService(),
@@ -149,9 +149,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i828.CategoryRemoteDataSource>(
       () => _i828.CategoryRemoteDataSource(),
     );
+    gh.lazySingleton<_i699.CategoryMapper>(() => _i699.CategoryMapper());
     gh.lazySingleton<_i983.BookingRemoteDataSource>(
       () => _i983.BookingRemoteDataSource(),
     );
+    gh.lazySingleton<_i162.BookingMapper>(() => _i162.BookingMapper());
     gh.lazySingleton<_i548.ProfileSettingRemoteDataSource>(
       () => _i548.ProfileSettingRemoteDataSource(),
     );
@@ -161,8 +163,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i817.AccountRemoteDataSource>(
       () => _i817.AccountRemoteDataSource(),
     );
-    gh.lazySingleton<_i699.CategoryMapper>(() => _i699.CategoryMapper());
-    gh.lazySingleton<_i162.BookingMapper>(() => _i162.BookingMapper());
     gh.lazySingleton<_i431.FilterBookingsUseCase>(
       () => _i431.FilterBookingsUseCase(),
     );
