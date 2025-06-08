@@ -60,8 +60,8 @@ import 'package:budget_fusion_app/core/offline_first/queue/queue_manager.dart'
     as _i327;
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart'
     as _i371;
-import 'package:budget_fusion_app/core/remote_loading/cubits/remote_loading_cubit.dart'
-    as _i314;
+import 'package:budget_fusion_app/core/remote_loading/bloc/remote_loading_cubit.dart'
+    as _i234;
 import 'package:budget_fusion_app/core/remote_loading/service/remote_loading_service.dart'
     as _i247;
 import 'package:budget_fusion_app/features/auth/bloc/login_cubit.dart' as _i319;
@@ -178,8 +178,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i78.BudgetPageDataService>(
       () => _i78.BudgetPageDataService(gh<_i428.DatetimeService>()),
     );
-    gh.factory<_i314.RemoteLoadingCubit>(
-      () => _i314.RemoteLoadingCubit(gh<_i247.RemoteLoadingService>()),
+    gh.factory<_i234.RemoteLoadingCubit>(
+      () => _i234.RemoteLoadingCubit(gh<_i247.RemoteLoadingService>()),
     );
     gh.lazySingleton<_i702.ConnectivityService>(
       () => _i702.ConnectivityService(gh<_i895.Connectivity>()),
