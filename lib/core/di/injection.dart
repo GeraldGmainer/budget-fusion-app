@@ -8,6 +8,7 @@ GetIt getIt = GetIt.instance;
 
 @InjectableInit(preferRelativeImports: false)
 Future<void> configureInjection() async {
+  getIt.enableRegisteringMultipleInstancesOfOneType();
   await getIt.init();
 }
 

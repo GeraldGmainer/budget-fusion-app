@@ -3,15 +3,14 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../app/stream_life_cycle.dart';
 import '../../core.dart';
 import 'data_sources/booking_local_data_source.dart';
 import 'data_sources/booking_remote_data_source.dart';
 import 'dtos/booking_dto.dart';
 import 'mappers/booking_mapper.dart';
 
-@lazySingleton
-class BookingDataManager extends DataManager<Booking> implements StreamLifecycle {
+@singleton
+class BookingDataManager extends DataManager<Booking> {
   late final OfflineFirstDataManager<BookingDto> _manager;
   final AccountDataManager _accountDataManager;
   final CategoryDataManager _categoryDataManager;

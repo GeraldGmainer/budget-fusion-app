@@ -6,7 +6,7 @@ import 'data_sources/category_remote_data_source.dart';
 import 'dtos/category_dto.dart';
 import 'mappers/category_mapper.dart';
 
-@lazySingleton
+@singleton
 class CategoryDataManager extends DataManager<Category> with AutoSubscribe<Category> {
   late final OfflineFirstDataManager<CategoryDto> _manager;
   final CategoryMapper _mapper;

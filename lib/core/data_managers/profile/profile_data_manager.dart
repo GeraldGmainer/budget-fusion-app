@@ -6,7 +6,7 @@ import 'data_sources/profile_remote_data_source.dart';
 import 'dtos/profile_dto.dart';
 
 // TODO rename it to my profile repo or active profile repo? because later, need to load multiple profiles. Also need correctly map the email to entity
-@lazySingleton
+@singleton
 class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile> {
   late final OfflineFirstDataManager<ProfileDto> _manager;
 

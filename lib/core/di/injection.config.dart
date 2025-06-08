@@ -45,6 +45,7 @@ import 'package:budget_fusion_app/core/data_managers/profile_setting/data_source
     as _i548;
 import 'package:budget_fusion_app/core/data_managers/profile_setting/profile_setting_data_manager.dart'
     as _i853;
+import 'package:budget_fusion_app/core/di/data_manager_module.dart' as _i192;
 import 'package:budget_fusion_app/core/di/database_module.dart' as _i752;
 import 'package:budget_fusion_app/core/di/injection.dart' as _i87;
 import 'package:budget_fusion_app/core/offline_first/cache/cache_manager.dart'
@@ -127,6 +128,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final databaseModule = _$DatabaseModule();
     final registerModule = _$RegisterModule();
+    final dataManagerModule = _$DataManagerModule();
     await gh.factoryAsync<_i779.Database>(
       () => databaseModule.provideDatabase(),
       preResolve: true,
@@ -227,7 +229,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.RemoteLoadingService>(),
       ),
     );
-    gh.lazySingleton<_i818.AccountDataManager>(
+    gh.singleton<_i818.AccountDataManager>(
       () => _i818.AccountDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i835.AccountLocalDataSource>(),
@@ -237,14 +239,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i576.BookingAccountService>(
       () => _i576.BookingAccountService(gh<_i714.AccountDataManager>()),
     );
-    gh.lazySingleton<_i853.ProfileSettingDataManager>(
+    gh.singleton<_i853.ProfileSettingDataManager>(
       () => _i853.ProfileSettingDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i823.ProfileSettingLocalDataSource>(),
         gh<_i548.ProfileSettingRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i841.CategoryDataManager>(
+    gh.singleton<_i841.CategoryDataManager>(
       () => _i841.CategoryDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i219.CategoryLocalDataSource>(),
@@ -252,7 +254,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i699.CategoryMapper>(),
       ),
     );
-    gh.lazySingleton<_i824.ProfileDataManager>(
+    gh.singleton<_i824.ProfileDataManager>(
       () => _i824.ProfileDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i627.ProfileLocalDataSource>(),
@@ -284,7 +286,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i788.CategoryListCubit>(
       () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
     );
-    gh.lazySingleton<_i219.BookingDataManager>(
+    gh.singleton<_i219.BookingDataManager>(
       () => _i219.BookingDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i745.BookingLocalDataSource>(),
@@ -314,18 +316,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.BookingDataManager>(),
       ),
     );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(
-        gh<_i714.AccountDataManager>(),
-        gh<_i714.CategoryDataManager>(),
-        gh<_i714.ProfileDataManager>(),
-        gh<_i714.ProfileSettingDataManager>(),
-        gh<_i714.BookingDataManager>(),
-      ),
-    );
     gh.factory<_i655.OfflineFirstLoaderCubit>(
       () => _i655.OfflineFirstLoaderCubit(
         gh<_i714.QueueManager>(),
+        gh<_i714.CategoryDataManager>(),
+        gh<_i714.AccountDataManager>(),
+        gh<_i714.BookingDataManager>(),
+        gh<_i714.ProfileDataManager>(),
+        gh<_i714.ProfileSettingDataManager>(),
+      ),
+    );
+    gh.singleton<List<_i714.DataManager<dynamic>>>(
+      () => dataManagerModule.managers(
         gh<_i714.CategoryDataManager>(),
         gh<_i714.AccountDataManager>(),
         gh<_i714.BookingDataManager>(),
@@ -342,6 +344,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i196.GenerateBudgetTransactionUseCase>(),
       ),
     );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.DataManager<dynamic>>>()),
+    );
     return this;
   }
 }
@@ -349,3 +354,5 @@ extension GetItInjectableX on _i174.GetIt {
 class _$DatabaseModule extends _i752.DatabaseModule {}
 
 class _$RegisterModule extends _i87.RegisterModule {}
+
+class _$DataManagerModule extends _i192.DataManagerModule {}

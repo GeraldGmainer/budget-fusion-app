@@ -5,7 +5,7 @@ import 'data_sources/account_local_data_source.dart';
 import 'data_sources/account_remote_data_source.dart';
 import 'dtos/account_dto.dart';
 
-@lazySingleton
+@singleton
 class AccountDataManager extends DataManager<Account> with AutoSubscribe<Account> {
   late final OfflineFirstDataManager<AccountDto> _manager;
 

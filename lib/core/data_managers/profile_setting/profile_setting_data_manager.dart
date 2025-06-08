@@ -5,7 +5,7 @@ import 'data_sources/profile_setting_local_data_source.dart';
 import 'data_sources/profile_setting_remote_data_source.dart';
 import 'dtos/profile_setting_dto.dart';
 
-@lazySingleton
+@singleton
 class ProfileSettingDataManager extends DataManager<ProfileSetting> with AutoSubscribe<ProfileSetting> {
   final OfflineFirstDataManager<ProfileSettingDto> _manager;
 
