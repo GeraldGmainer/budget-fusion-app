@@ -18,7 +18,7 @@ class CurrencyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (currency != null) {
-      _buildText(context, currency!);
+      return _buildText(context, currency!);
     }
     return DataManagerSingleNullable<ProfileSetting>(
       builder: (context, data) {
