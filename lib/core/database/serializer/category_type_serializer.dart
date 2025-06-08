@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 class CategoryTypeSerializer implements JsonConverter<CategoryType, String> {
@@ -13,8 +12,7 @@ class CategoryTypeSerializer implements JsonConverter<CategoryType, String> {
     if (json.toLowerCase() == "income") {
       return CategoryType.income;
     }
-    BudgetLogger.instance.i("CategoryTypeSerializer: unknown CategoryType: $json");
-    throw MappingException(AppError.invalidCategoryType);
+    throw MappingException(AppError.invalidCategoryType, "CategoryTypeSerializer: unknown CategoryType: $json");
   }
 
   @override

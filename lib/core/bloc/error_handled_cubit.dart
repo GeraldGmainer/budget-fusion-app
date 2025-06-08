@@ -24,7 +24,8 @@ abstract class ErrorHandledCubit<S> extends Cubit<S> {
     try {
       await action();
     } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace);
+      // TODO what to log, so that sentry gets nice messages
+      BudgetLogger.instance.e(e.message, e.e, stackTrace);
       emit(onError(e, e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace);

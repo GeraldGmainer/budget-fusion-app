@@ -2,8 +2,6 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/utils.dart';
-
 enum CategoryType {
   income,
   outcome;
@@ -11,10 +9,7 @@ enum CategoryType {
   static CategoryType fromString(String value) {
     return CategoryType.values.firstWhere(
       (e) => e.name == value,
-      orElse: () {
-        BudgetLogger.instance.i("CategoryType.fromString: unknown CategoryType: $value");
-        throw MappingException(AppError.invalidCategoryType);
-      },
+      orElse: () => throw MappingException(AppError.invalidCategoryType, "CategoryType.fromString: unknown CategoryType: $value"),
     );
   }
 }

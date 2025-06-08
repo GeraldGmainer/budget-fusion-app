@@ -9,7 +9,7 @@ class BookingRemoteDataSource extends OfflineFirstRemoteDataSource<BookingDto> {
   String get table => 'booking';
 
   @override
-  String get columns => 'id, date, description, amount, category_id, account_id, updated_at';
+  String get columns => 'id, date, description, amount, category_id, account_id, updated_at, omg';
 
   @override
   BookingDto toDto(Map<String, dynamic> json) {
