@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import 'app/app.dart';
-import 'app/app_life_cycle_manager.dart';
 import 'core/di/injection.dart';
 import 'utils/utils.dart';
 
