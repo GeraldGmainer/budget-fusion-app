@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'base/budget_view_data.dart';
