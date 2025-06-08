@@ -32,7 +32,7 @@ class BookingDataManager extends DataManager<Booking> implements StreamLifecycle
       _categoryDataManager.watch(),
       _manager.pendingItemsStream,
       (bookingDtos, accounts, categories, pendingItems) => _mapper.mapBookings(bookingDtos, accounts, categories, pendingItems),
-    ).shareReplay(maxSize: 1);
+    ).debounceTime(const Duration(milliseconds: 50)).shareReplay(maxSize: 1);
 
     _sub = watch().listen((_) {});
   }

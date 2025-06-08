@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-import '../../../shared/shared.dart';
 import '../../../utils/utils.dart';
-import '../interfaces/data_manager.dart';
+import '../../core.dart';
 
 class DataManagerCubit<T> extends Cubit<LoadableState<List<T>>> {
   final DataManager<T> _manager;

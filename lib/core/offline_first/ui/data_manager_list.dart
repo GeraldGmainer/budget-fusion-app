@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/shared.dart';
-import 'data_manager_cubit.dart';
+import '../../core.dart';
 
 class DataManagerList<T> extends StatelessWidget {
   final Widget Function(BuildContext context, List<T> data) builder;

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,11 +16,10 @@ import '../view_models/budget_book_filter.dart';
 import '../view_models/budget_page_data.dart';
 
 part 'budget_book_cubit.freezed.dart';
-
 part 'budget_book_state.dart';
 
 @injectable
-class BudgetBookCubit extends Cubit<BudgetBookState> {
+class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   final BookingDataManager _manager;
   final FilterAndGroupBookingsUseCase _filterAndGroupBookingsUseCase;
   final GenerateBudgetSummaryUseCase _generateBudgetSummaryUseCase;
@@ -40,21 +38,14 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     _bookingSub = _manager.watch().listen(_onBookings);
   }
 
-  Future<void> _onBookings(List<Booking> rawBookingList) async {
-    try {
-      BudgetLogger.instance.i("rawBookingList ${rawBookingList.length}");
+  Future<void> _onBookings(List<Booking> rawBookingList) => safeRun(
+    action: () async {
       final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
-
       emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, initialLoaded: true));
-    } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} onBookings TranslatedException", e, stack);
-      emit(BudgetBookState.fromError(error: e.error, state: state));
-    } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} onBookings Exception", e, stack);
-      emit(BudgetBookState.fromError(error: AppError.unknown, state: state));
-    }
-  }
+    },
+    onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
+  );
 
   Future<List<BudgetViewData>> _generateViewData(List<BudgetPageData> filtered, BudgetViewMode viewMode) async {
     switch (viewMode) {
@@ -67,8 +58,8 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
     }
   }
 
-  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, bool initialLoad = true}) async {
-    try {
+  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, bool initialLoad = true}) => safeRun(
+    action: () async {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "update view for budget book: $newViewMode / $newFilter");
@@ -85,14 +76,9 @@ class BudgetBookCubit extends Cubit<BudgetBookState> {
           emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode));
         },
       );
-    } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} updateView TranslatedException", e, stack);
-      emit(BudgetBookState.fromError(error: e.error, state: state));
-    } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} updateView Exception", e, stack);
-      emit(BudgetBookState.fromError(error: AppError.unknown, state: state));
-    }
-  }
+    },
+    onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
+  );
 
   Future<void> resetAndLoad() async {
     EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");

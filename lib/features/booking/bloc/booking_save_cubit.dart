@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +14,7 @@ part 'booking_save_cubit.freezed.dart';
 part 'booking_save_state.dart';
 
 @injectable
-class BookingSaveCubit extends Cubit<BookingSaveState> {
+class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
   final DefaultAccountUseCase _defaultAccountUseCase;
   final SaveBookingUseCase _saveBookingUseCase;
   final BookingDataManager _bookingDataManager;
@@ -26,22 +25,17 @@ class BookingSaveCubit extends Cubit<BookingSaveState> {
     return BookingDraft(date: DateTime.now(), amount: Decimal.zero, account: account);
   }
 
-  Future<void> init(Booking? booking) async {
-    try {
+  Future<void> init(Booking? booking) => safeRun(
+    action: () async {
       if (booking == null) {
         final defaultAccount = await _defaultAccountUseCase.get();
         emit(BookingSaveState.draftUpdate(draft: _initialDraft(account: defaultAccount)));
       } else {
         emit(BookingSaveState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
       }
-    } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} init TranslatedException", e, stack);
-      emit(BookingSaveState.error(draft: state.draft, error: e.error));
-    } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} init Exception", e, stack);
-      emit(BookingSaveState.error(draft: state.draft, error: AppError.unknown));
-    }
-  }
+    },
+    onError: (e, appError) => BookingSaveState.error(draft: state.draft, error: appError),
+  );
 
   void updateDraft(BookingDraft Function(BookingDraft) update) {
     emit(state.copyWith(draft: update(state.draft)));

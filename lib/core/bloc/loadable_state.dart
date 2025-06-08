@@ -1,5 +1,6 @@
-import 'package:budget_fusion_app/core/exceptions/app_error.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../core/core.dart';
 
 part 'loadable_state.freezed.dart';
 
