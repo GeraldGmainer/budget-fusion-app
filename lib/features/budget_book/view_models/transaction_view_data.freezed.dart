@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TransactionViewData {
-  Currency get currency => throw _privateConstructorUsedError;
   BudgetDateRange get dateRange => throw _privateConstructorUsedError;
   List<TransactionGroup> get transactionGroups =>
       throw _privateConstructorUsedError;
@@ -37,12 +36,10 @@ abstract class $TransactionViewDataCopyWith<$Res> {
   ) = _$TransactionViewDataCopyWithImpl<$Res, TransactionViewData>;
   @useResult
   $Res call({
-    Currency currency,
     BudgetDateRange dateRange,
     List<TransactionGroup> transactionGroups,
   });
 
-  $CurrencyCopyWith<$Res> get currency;
   $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
@@ -60,18 +57,9 @@ class _$TransactionViewDataCopyWithImpl<$Res, $Val extends TransactionViewData>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? currency = null,
-    Object? dateRange = null,
-    Object? transactionGroups = null,
-  }) {
+  $Res call({Object? dateRange = null, Object? transactionGroups = null}) {
     return _then(
       _value.copyWith(
-            currency:
-                null == currency
-                    ? _value.currency
-                    : currency // ignore: cast_nullable_to_non_nullable
-                        as Currency,
             dateRange:
                 null == dateRange
                     ? _value.dateRange
@@ -85,16 +73,6 @@ class _$TransactionViewDataCopyWithImpl<$Res, $Val extends TransactionViewData>
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of TransactionViewData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CurrencyCopyWith<$Res> get currency {
-    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
-      return _then(_value.copyWith(currency: value) as $Val);
-    });
   }
 
   /// Create a copy of TransactionViewData
@@ -118,13 +96,10 @@ abstract class _$$TransactionViewDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    Currency currency,
     BudgetDateRange dateRange,
     List<TransactionGroup> transactionGroups,
   });
 
-  @override
-  $CurrencyCopyWith<$Res> get currency;
   @override
   $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
@@ -142,18 +117,9 @@ class __$$TransactionViewDataImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? currency = null,
-    Object? dateRange = null,
-    Object? transactionGroups = null,
-  }) {
+  $Res call({Object? dateRange = null, Object? transactionGroups = null}) {
     return _then(
       _$TransactionViewDataImpl(
-        currency:
-            null == currency
-                ? _value.currency
-                : currency // ignore: cast_nullable_to_non_nullable
-                    as Currency,
         dateRange:
             null == dateRange
                 ? _value.dateRange
@@ -173,14 +139,11 @@ class __$$TransactionViewDataImplCopyWithImpl<$Res>
 
 class _$TransactionViewDataImpl extends _TransactionViewData {
   const _$TransactionViewDataImpl({
-    required this.currency,
     required this.dateRange,
     required final List<TransactionGroup> transactionGroups,
   }) : _transactionGroups = transactionGroups,
        super._();
 
-  @override
-  final Currency currency;
   @override
   final BudgetDateRange dateRange;
   final List<TransactionGroup> _transactionGroups;
@@ -194,7 +157,7 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
 
   @override
   String toString() {
-    return 'TransactionViewData(currency: $currency, dateRange: $dateRange, transactionGroups: $transactionGroups)';
+    return 'TransactionViewData(dateRange: $dateRange, transactionGroups: $transactionGroups)';
   }
 
   @override
@@ -202,8 +165,6 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionViewDataImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             (identical(other.dateRange, dateRange) ||
                 other.dateRange == dateRange) &&
             const DeepCollectionEquality().equals(
@@ -215,7 +176,6 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    currency,
     dateRange,
     const DeepCollectionEquality().hash(_transactionGroups),
   );
@@ -234,14 +194,11 @@ class _$TransactionViewDataImpl extends _TransactionViewData {
 
 abstract class _TransactionViewData extends TransactionViewData {
   const factory _TransactionViewData({
-    required final Currency currency,
     required final BudgetDateRange dateRange,
     required final List<TransactionGroup> transactionGroups,
   }) = _$TransactionViewDataImpl;
   const _TransactionViewData._() : super._();
 
-  @override
-  Currency get currency;
   @override
   BudgetDateRange get dateRange;
   @override

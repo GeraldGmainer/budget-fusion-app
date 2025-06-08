@@ -9,14 +9,13 @@ class CategoryViewSummaryData with _$CategoryViewSummaryData {
   const CategoryViewSummaryData._();
 
   const factory CategoryViewSummaryData({
-    required Currency currency,
     required CategoryType categoryType,
     required String categoryName,
     required String? parentCategoryName,
     required String iconName,
     required String iconColor,
     required int percentage,
-    required Decimal value,
+    required Money money,
     required bool isSynced,
     @Default([]) List<CategoryViewSummaryData> subSummaries,
   }) = _CategoryViewSummaryData;

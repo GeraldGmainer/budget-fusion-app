@@ -2,13 +2,10 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-import '../../../profile/profile.dart';
-
 class TransactionItem extends StatelessWidget {
   final Booking booking;
-  final Currency currency;
 
-  const TransactionItem({super.key, required this.booking, required this.currency});
+  const TransactionItem({super.key, required this.booking});
 
   _onTap(BuildContext context) {
     Navigator.of(context).pushNamed(AppRoutes.bookingSave, arguments: booking);
@@ -25,7 +22,7 @@ class TransactionItem extends StatelessWidget {
       leading: _buildIcon(),
       title: _buildTitle(),
       subtitle: _buildSubtitle(context),
-      trailing: CurrencyText(value: booking.amount, currency: currency, color: (booking.category?.categoryType ?? CategoryType.outcome).color, fontSize: 15),
+      trailing: MoneyText(money: booking.money, color: booking.category.categoryType.color, fontSize: 15),
     );
   }
 
@@ -36,7 +33,7 @@ class TransactionItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BudgetIcon(name: booking.category?.iconName, color: booking.category?.iconColor),
+          BudgetIcon(name: booking.category.iconName, color: booking.category.iconColor),
           if (!booking.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
         ],
       ),
@@ -44,7 +41,7 @@ class TransactionItem extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Text(booking.category?.name ?? "unknown category", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
+    return Text(booking.category.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
   }
 
   Widget? _buildSubtitle(BuildContext context) {

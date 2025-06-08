@@ -14,19 +14,19 @@ class Booking with _$Booking implements Entity {
     required Uuid id,
     required DateTime date,
     required String? description,
-    required Decimal amount,
+    required Money money,
     required Category category,
     required Account account,
     required DateTime updatedAt,
     required bool isSynced,
   }) = _Booking;
 
-  factory Booking.fromDto(BookingDto dto, Account account, Category category, bool isSynced) {
+  factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency, bool isSynced) {
     return Booking(
       id: dto.id,
       date: dto.date,
       description: dto.description,
-      amount: dto.amount,
+      money: Money(amount: dto.amount, currency: currency),
       category: category,
       account: account,
       updatedAt: dto.updatedAt,
@@ -37,16 +37,18 @@ class Booking with _$Booking implements Entity {
   BookingDto toDto() {
     return BookingDto(id: id, date: date, description: description, amount: amount, categoryId: category.id, accountId: account.id, updatedAt: updatedAt);
   }
+
+  Decimal get amount => money.amount;
 }
 
-extension BookingListExtension on Iterable<Booking> {
-  Decimal get totalAmount => fold(Decimal.zero, (sum, booking) => sum + booking.amount);
+extension BookingMoneyX on Iterable<Booking> {
+  Money get totalMoney => isEmpty ? Money.zero() : fold(Money.zero(), (sum, b) => sum + b.money);
 
-  List<Booking> get incomeBookings => where((booking) => booking.category?.categoryType == CategoryType.income).toList();
+  List<Booking> get incomeBookings => where((b) => b.category.categoryType == CategoryType.income).toList();
 
-  List<Booking> get outcomeBookings => where((booking) => booking.category?.categoryType == CategoryType.outcome).toList();
+  List<Booking> get outcomeBookings => where((b) => b.category.categoryType == CategoryType.outcome).toList();
 
-  Decimal totalIncomeAmount() => incomeBookings.totalAmount;
+  Money totalIncomeMoney() => incomeBookings.totalMoney;
 
-  Decimal totalOutcomeAmount() => outcomeBookings.totalAmount;
+  Money totalOutcomeMoney() => outcomeBookings.totalMoney;
 }

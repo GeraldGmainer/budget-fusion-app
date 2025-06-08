@@ -11,9 +11,5 @@ part 'transaction_view_data.freezed.dart';
 class TransactionViewData with _$TransactionViewData implements BudgetViewData {
   const TransactionViewData._();
 
-  const factory TransactionViewData({
-    required Currency currency,
-    required BudgetDateRange dateRange,
-    required List<TransactionGroup> transactionGroups,
-  }) = _TransactionViewData;
+  const factory TransactionViewData({required BudgetDateRange dateRange, required List<TransactionGroup> transactionGroups}) = _TransactionViewData;
 }

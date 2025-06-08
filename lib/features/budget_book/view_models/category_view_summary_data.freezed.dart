@@ -17,14 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CategoryViewSummaryData {
-  Currency get currency => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
   String? get parentCategoryName => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
   int get percentage => throw _privateConstructorUsedError;
-  Decimal get value => throw _privateConstructorUsedError;
+  Money get money => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
   List<CategoryViewSummaryData> get subSummaries =>
       throw _privateConstructorUsedError;
@@ -44,19 +43,18 @@ abstract class $CategoryViewSummaryDataCopyWith<$Res> {
   ) = _$CategoryViewSummaryDataCopyWithImpl<$Res, CategoryViewSummaryData>;
   @useResult
   $Res call({
-    Currency currency,
     CategoryType categoryType,
     String categoryName,
     String? parentCategoryName,
     String iconName,
     String iconColor,
     int percentage,
-    Decimal value,
+    Money money,
     bool isSynced,
     List<CategoryViewSummaryData> subSummaries,
   });
 
-  $CurrencyCopyWith<$Res> get currency;
+  $MoneyCopyWith<$Res> get money;
 }
 
 /// @nodoc
@@ -77,24 +75,18 @@ class _$CategoryViewSummaryDataCopyWithImpl<
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = null,
     Object? categoryType = null,
     Object? categoryName = null,
     Object? parentCategoryName = freezed,
     Object? iconName = null,
     Object? iconColor = null,
     Object? percentage = null,
-    Object? value = null,
+    Object? money = null,
     Object? isSynced = null,
     Object? subSummaries = null,
   }) {
     return _then(
       _value.copyWith(
-            currency:
-                null == currency
-                    ? _value.currency
-                    : currency // ignore: cast_nullable_to_non_nullable
-                        as Currency,
             categoryType:
                 null == categoryType
                     ? _value.categoryType
@@ -125,11 +117,11 @@ class _$CategoryViewSummaryDataCopyWithImpl<
                     ? _value.percentage
                     : percentage // ignore: cast_nullable_to_non_nullable
                         as int,
-            value:
-                null == value
-                    ? _value.value
-                    : value // ignore: cast_nullable_to_non_nullable
-                        as Decimal,
+            money:
+                null == money
+                    ? _value.money
+                    : money // ignore: cast_nullable_to_non_nullable
+                        as Money,
             isSynced:
                 null == isSynced
                     ? _value.isSynced
@@ -149,9 +141,9 @@ class _$CategoryViewSummaryDataCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CurrencyCopyWith<$Res> get currency {
-    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
-      return _then(_value.copyWith(currency: value) as $Val);
+  $MoneyCopyWith<$Res> get money {
+    return $MoneyCopyWith<$Res>(_value.money, (value) {
+      return _then(_value.copyWith(money: value) as $Val);
     });
   }
 }
@@ -166,20 +158,19 @@ abstract class _$$CategoryViewSummaryDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    Currency currency,
     CategoryType categoryType,
     String categoryName,
     String? parentCategoryName,
     String iconName,
     String iconColor,
     int percentage,
-    Decimal value,
+    Money money,
     bool isSynced,
     List<CategoryViewSummaryData> subSummaries,
   });
 
   @override
-  $CurrencyCopyWith<$Res> get currency;
+  $MoneyCopyWith<$Res> get money;
 }
 
 /// @nodoc
@@ -200,24 +191,18 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = null,
     Object? categoryType = null,
     Object? categoryName = null,
     Object? parentCategoryName = freezed,
     Object? iconName = null,
     Object? iconColor = null,
     Object? percentage = null,
-    Object? value = null,
+    Object? money = null,
     Object? isSynced = null,
     Object? subSummaries = null,
   }) {
     return _then(
       _$CategoryViewSummaryDataImpl(
-        currency:
-            null == currency
-                ? _value.currency
-                : currency // ignore: cast_nullable_to_non_nullable
-                    as Currency,
         categoryType:
             null == categoryType
                 ? _value.categoryType
@@ -248,11 +233,11 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
                 ? _value.percentage
                 : percentage // ignore: cast_nullable_to_non_nullable
                     as int,
-        value:
-            null == value
-                ? _value.value
-                : value // ignore: cast_nullable_to_non_nullable
-                    as Decimal,
+        money:
+            null == money
+                ? _value.money
+                : money // ignore: cast_nullable_to_non_nullable
+                    as Money,
         isSynced:
             null == isSynced
                 ? _value.isSynced
@@ -272,21 +257,18 @@ class __$$CategoryViewSummaryDataImplCopyWithImpl<$Res>
 
 class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
   const _$CategoryViewSummaryDataImpl({
-    required this.currency,
     required this.categoryType,
     required this.categoryName,
     required this.parentCategoryName,
     required this.iconName,
     required this.iconColor,
     required this.percentage,
-    required this.value,
+    required this.money,
     required this.isSynced,
     final List<CategoryViewSummaryData> subSummaries = const [],
   }) : _subSummaries = subSummaries,
        super._();
 
-  @override
-  final Currency currency;
   @override
   final CategoryType categoryType;
   @override
@@ -300,7 +282,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
   @override
   final int percentage;
   @override
-  final Decimal value;
+  final Money money;
   @override
   final bool isSynced;
   final List<CategoryViewSummaryData> _subSummaries;
@@ -314,7 +296,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
 
   @override
   String toString() {
-    return 'CategoryViewSummaryData(currency: $currency, categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, value: $value, isSynced: $isSynced, subSummaries: $subSummaries)';
+    return 'CategoryViewSummaryData(categoryType: $categoryType, categoryName: $categoryName, parentCategoryName: $parentCategoryName, iconName: $iconName, iconColor: $iconColor, percentage: $percentage, money: $money, isSynced: $isSynced, subSummaries: $subSummaries)';
   }
 
   @override
@@ -322,8 +304,6 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryViewSummaryDataImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
             (identical(other.categoryName, categoryName) ||
@@ -336,7 +316,7 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
                 other.iconColor == iconColor) &&
             (identical(other.percentage, percentage) ||
                 other.percentage == percentage) &&
-            (identical(other.value, value) || other.value == value) &&
+            (identical(other.money, money) || other.money == money) &&
             (identical(other.isSynced, isSynced) ||
                 other.isSynced == isSynced) &&
             const DeepCollectionEquality().equals(
@@ -348,14 +328,13 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    currency,
     categoryType,
     categoryName,
     parentCategoryName,
     iconName,
     iconColor,
     percentage,
-    value,
+    money,
     isSynced,
     const DeepCollectionEquality().hash(_subSummaries),
   );
@@ -373,21 +352,18 @@ class _$CategoryViewSummaryDataImpl extends _CategoryViewSummaryData {
 
 abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
   const factory _CategoryViewSummaryData({
-    required final Currency currency,
     required final CategoryType categoryType,
     required final String categoryName,
     required final String? parentCategoryName,
     required final String iconName,
     required final String iconColor,
     required final int percentage,
-    required final Decimal value,
+    required final Money money,
     required final bool isSynced,
     final List<CategoryViewSummaryData> subSummaries,
   }) = _$CategoryViewSummaryDataImpl;
   const _CategoryViewSummaryData._() : super._();
 
-  @override
-  Currency get currency;
   @override
   CategoryType get categoryType;
   @override
@@ -401,7 +377,7 @@ abstract class _CategoryViewSummaryData extends CategoryViewSummaryData {
   @override
   int get percentage;
   @override
-  Decimal get value;
+  Money get money;
   @override
   bool get isSynced;
   @override

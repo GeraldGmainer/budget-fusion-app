@@ -20,12 +20,12 @@ class BookingDraft with _$BookingDraft {
 
   bool get isCreating => id == null;
 
-  Booking toBooking() {
+  Booking toBooking(Currency currency) {
     return Booking(
       id: id ?? Uuid.generate(),
       date: date,
       description: description,
-      amount: amount,
+      money: Money(amount: amount, currency: currency),
       category: category!,
       account: account!,
       updatedAt: DateTime.now(),
@@ -41,7 +41,7 @@ class BookingDraft with _$BookingDraft {
       amount: booking.amount,
       category: booking.category,
       account: booking.account,
-      categoryType: booking.category?.categoryType ?? CategoryType.outcome,
+      categoryType: booking.category.categoryType,
     );
   }
 }

@@ -63,13 +63,21 @@ class BudgetPageDataService {
         periods.add(BudgetPageData.empty(dateRange));
       } else {
         final bookings = bookingsByMonthAndCategory[monthKey]!;
-        periods.add(BudgetPageData(dateRange: dateRange, income: bookings.totalIncomeAmount(), outcome: bookings.totalOutcomeAmount(), bookings: bookings));
+        periods.add(BudgetPageData(dateRange: dateRange, income: bookings.totalIncomeMoney(), outcome: bookings.totalOutcomeMoney(), bookings: bookings));
       }
 
       currentMonth = DateTime(currentMonth.year, currentMonth.month + 1);
     }
 
     return periods;
+  }
+
+  List<BudgetPageData> _convertToDay(List<Booking> bookings) => _convertToAll(bookings);
+
+  List<BudgetPageData> _convertToYear(List<Booking> bookings) => _convertToAll(bookings);
+
+  List<BudgetPageData> _convertToAll(List<Booking> bookings) {
+    return [BudgetPageData.empty(BudgetDateRange(period: PeriodMode.all, from: _datetimeService.now(), to: _datetimeService.now()))];
   }
 
   /*
@@ -182,12 +190,4 @@ class BudgetPageDataService {
     return typeComparison != 0 ? typeComparison : amountComparison;
   }
   */
-
-  List<BudgetPageData> _convertToDay(List<Booking> bookings) => _convertToAll(bookings);
-
-  List<BudgetPageData> _convertToYear(List<Booking> bookings) => _convertToAll(bookings);
-
-  List<BudgetPageData> _convertToAll(List<Booking> bookings) {
-    return [BudgetPageData.empty(BudgetDateRange(period: PeriodMode.all, from: _datetimeService.now(), to: _datetimeService.now()))];
-  }
 }

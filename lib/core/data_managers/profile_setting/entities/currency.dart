@@ -16,6 +16,10 @@ class Currency with _$Currency implements Entity {
     return Currency(id: dto.id, name: dto.name, decimalPrecision: dto.decimalPrecision, unitPositionFront: dto.unitPositionFront, symbol: dto.symbol, uiOrder: dto.uiOrder);
   }
 
+  factory Currency.notFound() {
+    return Currency(id: Uuid.generate(), name: "not found", decimalPrecision: 2, symbol: "€", unitPositionFront: false, uiOrder: 1);
+  }
+
   CurrencyDto toDto() {
     return CurrencyDto(id: id, name: name, decimalPrecision: decimalPrecision, unitPositionFront: unitPositionFront, symbol: symbol, uiOrder: uiOrder);
   }

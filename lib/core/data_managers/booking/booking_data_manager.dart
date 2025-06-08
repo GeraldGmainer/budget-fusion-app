@@ -14,23 +14,33 @@ class BookingDataManager extends DataManager<Booking> {
   late final OfflineFirstDataManager<BookingDto> _manager;
   final AccountDataManager _accountDataManager;
   final CategoryDataManager _categoryDataManager;
+  final ProfileSettingDataManager _profileSettingDataManager;
   final BookingMapper _mapper;
   final BookingLocalDataSource _lds;
   late final Stream<List<Booking>> _sharedBookingsStream;
   late final StreamSubscription<List<Booking>> _sub;
 
-  BookingDataManager(DataManagerFactory dmf, this._lds, BookingRemoteDataSource rds, this._mapper, this._accountDataManager, this._categoryDataManager) {
+  BookingDataManager(
+    DataManagerFactory dmf,
+    this._lds,
+    BookingRemoteDataSource rds,
+    this._mapper,
+    this._accountDataManager,
+    this._categoryDataManager,
+    this._profileSettingDataManager,
+  ) {
     _manager = dmf.createManager<BookingDto>(entityType: EntityType.booking, localDataSource: _lds, remoteDataSource: rds);
   }
 
   @override
   void setupStreams() {
-    _sharedBookingsStream = Rx.combineLatest4<List<BookingDto>, List<Account>, List<Category>, List<QueueItem>, List<Booking>>(
+    _sharedBookingsStream = Rx.combineLatest5<List<BookingDto>, List<Account>, List<Category>, List<ProfileSetting>, List<QueueItem>, List<Booking>>(
       _manager.stream,
       _accountDataManager.watch(),
       _categoryDataManager.watch(),
+      _profileSettingDataManager.watch(),
       _manager.pendingItemsStream,
-      (bookingDtos, accounts, categories, pendingItems) => _mapper.mapBookings(bookingDtos, accounts, categories, pendingItems),
+      (bookingDtos, accounts, categories, profileSettings, pendingItems) => _mapper.mapBookings(bookingDtos, accounts, categories, profileSettings, pendingItems),
     ).debounceTime(const Duration(milliseconds: 50)).shareReplay(maxSize: 1);
 
     _sub = watch().listen((_) {});

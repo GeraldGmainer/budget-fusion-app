@@ -19,7 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CategoryGroup {
   Category get category => throw _privateConstructorUsedError;
   List<Booking> get bookings => throw _privateConstructorUsedError;
-  Decimal get amount => throw _privateConstructorUsedError;
+  Money get money => throw _privateConstructorUsedError;
   List<CategoryGroup> get subGroups => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryGroup
@@ -39,11 +39,12 @@ abstract class $CategoryGroupCopyWith<$Res> {
   $Res call({
     Category category,
     List<Booking> bookings,
-    Decimal amount,
+    Money money,
     List<CategoryGroup> subGroups,
   });
 
   $CategoryCopyWith<$Res> get category;
+  $MoneyCopyWith<$Res> get money;
 }
 
 /// @nodoc
@@ -63,7 +64,7 @@ class _$CategoryGroupCopyWithImpl<$Res, $Val extends CategoryGroup>
   $Res call({
     Object? category = null,
     Object? bookings = null,
-    Object? amount = null,
+    Object? money = null,
     Object? subGroups = null,
   }) {
     return _then(
@@ -78,11 +79,11 @@ class _$CategoryGroupCopyWithImpl<$Res, $Val extends CategoryGroup>
                     ? _value.bookings
                     : bookings // ignore: cast_nullable_to_non_nullable
                         as List<Booking>,
-            amount:
-                null == amount
-                    ? _value.amount
-                    : amount // ignore: cast_nullable_to_non_nullable
-                        as Decimal,
+            money:
+                null == money
+                    ? _value.money
+                    : money // ignore: cast_nullable_to_non_nullable
+                        as Money,
             subGroups:
                 null == subGroups
                     ? _value.subGroups
@@ -102,6 +103,16 @@ class _$CategoryGroupCopyWithImpl<$Res, $Val extends CategoryGroup>
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
+
+  /// Create a copy of CategoryGroup
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MoneyCopyWith<$Res> get money {
+    return $MoneyCopyWith<$Res>(_value.money, (value) {
+      return _then(_value.copyWith(money: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -116,12 +127,14 @@ abstract class _$$CategoryGroupImplCopyWith<$Res>
   $Res call({
     Category category,
     List<Booking> bookings,
-    Decimal amount,
+    Money money,
     List<CategoryGroup> subGroups,
   });
 
   @override
   $CategoryCopyWith<$Res> get category;
+  @override
+  $MoneyCopyWith<$Res> get money;
 }
 
 /// @nodoc
@@ -140,7 +153,7 @@ class __$$CategoryGroupImplCopyWithImpl<$Res>
   $Res call({
     Object? category = null,
     Object? bookings = null,
-    Object? amount = null,
+    Object? money = null,
     Object? subGroups = null,
   }) {
     return _then(
@@ -155,11 +168,11 @@ class __$$CategoryGroupImplCopyWithImpl<$Res>
                 ? _value._bookings
                 : bookings // ignore: cast_nullable_to_non_nullable
                     as List<Booking>,
-        amount:
-            null == amount
-                ? _value.amount
-                : amount // ignore: cast_nullable_to_non_nullable
-                    as Decimal,
+        money:
+            null == money
+                ? _value.money
+                : money // ignore: cast_nullable_to_non_nullable
+                    as Money,
         subGroups:
             null == subGroups
                 ? _value._subGroups
@@ -176,7 +189,7 @@ class _$CategoryGroupImpl extends _CategoryGroup {
   const _$CategoryGroupImpl({
     required this.category,
     final List<Booking> bookings = const [],
-    required this.amount,
+    required this.money,
     final List<CategoryGroup> subGroups = const [],
   }) : _bookings = bookings,
        _subGroups = subGroups,
@@ -194,7 +207,7 @@ class _$CategoryGroupImpl extends _CategoryGroup {
   }
 
   @override
-  final Decimal amount;
+  final Money money;
   final List<CategoryGroup> _subGroups;
   @override
   @JsonKey()
@@ -206,7 +219,7 @@ class _$CategoryGroupImpl extends _CategoryGroup {
 
   @override
   String toString() {
-    return 'CategoryGroup(category: $category, bookings: $bookings, amount: $amount, subGroups: $subGroups)';
+    return 'CategoryGroup(category: $category, bookings: $bookings, money: $money, subGroups: $subGroups)';
   }
 
   @override
@@ -217,7 +230,7 @@ class _$CategoryGroupImpl extends _CategoryGroup {
             (identical(other.category, category) ||
                 other.category == category) &&
             const DeepCollectionEquality().equals(other._bookings, _bookings) &&
-            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.money, money) || other.money == money) &&
             const DeepCollectionEquality().equals(
               other._subGroups,
               _subGroups,
@@ -229,7 +242,7 @@ class _$CategoryGroupImpl extends _CategoryGroup {
     runtimeType,
     category,
     const DeepCollectionEquality().hash(_bookings),
-    amount,
+    money,
     const DeepCollectionEquality().hash(_subGroups),
   );
 
@@ -246,7 +259,7 @@ abstract class _CategoryGroup extends CategoryGroup {
   const factory _CategoryGroup({
     required final Category category,
     final List<Booking> bookings,
-    required final Decimal amount,
+    required final Money money,
     final List<CategoryGroup> subGroups,
   }) = _$CategoryGroupImpl;
   const _CategoryGroup._() : super._();
@@ -256,7 +269,7 @@ abstract class _CategoryGroup extends CategoryGroup {
   @override
   List<Booking> get bookings;
   @override
-  Decimal get amount;
+  Money get money;
   @override
   List<CategoryGroup> get subGroups;
 

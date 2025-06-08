@@ -7,16 +7,13 @@ import 'service/summary_data_generator.dart';
 
 @lazySingleton
 class GenerateBudgetSummaryUseCase {
-  final ProfileSettingDataManager _profileSettingDataManager;
   final CategoryDataManager _categoryDataManager;
   final SummaryDataGenerator _summaryDataGenerator;
 
-  GenerateBudgetSummaryUseCase(this._profileSettingDataManager, this._categoryDataManager, this._summaryDataGenerator);
+  GenerateBudgetSummaryUseCase(this._categoryDataManager, this._summaryDataGenerator);
 
   Future<List<SummaryViewData>> call(List<BudgetPageData> datas) async {
-    final results = await Future.wait([_profileSettingDataManager.getCurrency(), _categoryDataManager.getAll()]);
-    final currency = results[0] as Currency;
-    final categories = results[1] as List<Category>;
-    return datas.map((data) => _summaryDataGenerator.generate(data, currency, categories)).toList();
+    final categories = await _categoryDataManager.getAll();
+    return datas.map((data) => _summaryDataGenerator.generate(data, categories)).toList();
   }
 }

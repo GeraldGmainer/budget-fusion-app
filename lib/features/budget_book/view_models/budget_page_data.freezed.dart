@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BudgetPageData {
   BudgetDateRange get dateRange => throw _privateConstructorUsedError;
-  Decimal get income => throw _privateConstructorUsedError;
-  Decimal get outcome => throw _privateConstructorUsedError;
+  Money get income => throw _privateConstructorUsedError;
+  Money get outcome => throw _privateConstructorUsedError;
   List<Booking> get bookings => throw _privateConstructorUsedError;
 
   /// Create a copy of BudgetPageData
@@ -38,12 +38,14 @@ abstract class $BudgetPageDataCopyWith<$Res> {
   @useResult
   $Res call({
     BudgetDateRange dateRange,
-    Decimal income,
-    Decimal outcome,
+    Money income,
+    Money outcome,
     List<Booking> bookings,
   });
 
   $BudgetDateRangeCopyWith<$Res> get dateRange;
+  $MoneyCopyWith<$Res> get income;
+  $MoneyCopyWith<$Res> get outcome;
 }
 
 /// @nodoc
@@ -77,12 +79,12 @@ class _$BudgetPageDataCopyWithImpl<$Res, $Val extends BudgetPageData>
                 null == income
                     ? _value.income
                     : income // ignore: cast_nullable_to_non_nullable
-                        as Decimal,
+                        as Money,
             outcome:
                 null == outcome
                     ? _value.outcome
                     : outcome // ignore: cast_nullable_to_non_nullable
-                        as Decimal,
+                        as Money,
             bookings:
                 null == bookings
                     ? _value.bookings
@@ -102,6 +104,26 @@ class _$BudgetPageDataCopyWithImpl<$Res, $Val extends BudgetPageData>
       return _then(_value.copyWith(dateRange: value) as $Val);
     });
   }
+
+  /// Create a copy of BudgetPageData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MoneyCopyWith<$Res> get income {
+    return $MoneyCopyWith<$Res>(_value.income, (value) {
+      return _then(_value.copyWith(income: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BudgetPageData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MoneyCopyWith<$Res> get outcome {
+    return $MoneyCopyWith<$Res>(_value.outcome, (value) {
+      return _then(_value.copyWith(outcome: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -115,13 +137,17 @@ abstract class _$$BudgetPageDataImplCopyWith<$Res>
   @useResult
   $Res call({
     BudgetDateRange dateRange,
-    Decimal income,
-    Decimal outcome,
+    Money income,
+    Money outcome,
     List<Booking> bookings,
   });
 
   @override
   $BudgetDateRangeCopyWith<$Res> get dateRange;
+  @override
+  $MoneyCopyWith<$Res> get income;
+  @override
+  $MoneyCopyWith<$Res> get outcome;
 }
 
 /// @nodoc
@@ -154,12 +180,12 @@ class __$$BudgetPageDataImplCopyWithImpl<$Res>
             null == income
                 ? _value.income
                 : income // ignore: cast_nullable_to_non_nullable
-                    as Decimal,
+                    as Money,
         outcome:
             null == outcome
                 ? _value.outcome
                 : outcome // ignore: cast_nullable_to_non_nullable
-                    as Decimal,
+                    as Money,
         bookings:
             null == bookings
                 ? _value._bookings
@@ -184,9 +210,9 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
   @override
   final BudgetDateRange dateRange;
   @override
-  final Decimal income;
+  final Money income;
   @override
-  final Decimal outcome;
+  final Money outcome;
   final List<Booking> _bookings;
   @override
   @JsonKey()
@@ -237,8 +263,8 @@ class _$BudgetPageDataImpl extends _BudgetPageData {
 abstract class _BudgetPageData extends BudgetPageData {
   const factory _BudgetPageData({
     required final BudgetDateRange dateRange,
-    required final Decimal income,
-    required final Decimal outcome,
+    required final Money income,
+    required final Money outcome,
     final List<Booking> bookings,
   }) = _$BudgetPageDataImpl;
   const _BudgetPageData._() : super._();
@@ -246,9 +272,9 @@ abstract class _BudgetPageData extends BudgetPageData {
   @override
   BudgetDateRange get dateRange;
   @override
-  Decimal get income;
+  Money get income;
   @override
-  Decimal get outcome;
+  Money get outcome;
   @override
   List<Booking> get bookings;
 

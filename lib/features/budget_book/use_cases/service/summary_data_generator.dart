@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/core.dart';
@@ -10,14 +9,14 @@ import '../../view_models/summary_view_data.dart';
 
 @lazySingleton
 class SummaryDataGenerator {
-  SummaryViewData generate(BudgetPageData pageData, Currency currency, List<Category> categories) {
-    final summaries = _mapSummaries(pageData, currency, categories);
+  SummaryViewData generate(BudgetPageData pageData, List<Category> categories) {
+    final summaries = _mapSummaries(pageData, categories);
     final pieData = _generatePieData(summaries);
 
-    return SummaryViewData(currency: currency, dateRange: pageData.dateRange, pieData: pieData, summaries: summaries, income: pageData.income, outcome: pageData.outcome);
+    return SummaryViewData(dateRange: pageData.dateRange, pieData: pieData, summaries: summaries, income: pageData.income, outcome: pageData.outcome);
   }
 
-  List<CategoryViewSummaryData> _mapSummaries(BudgetPageData pageData, Currency currency, List<Category> categories) {
+  List<CategoryViewSummaryData> _mapSummaries(BudgetPageData pageData, List<Category> categories) {
     final categoryGroups = _generateCategoryGroups(pageData.bookings, categories);
 
     categoryGroups.sort((a, b) {
@@ -29,7 +28,7 @@ class SummaryDataGenerator {
 
     return categoryGroups.map((group) {
       final overall = group.category.categoryType == CategoryType.income ? pageData.income : pageData.outcome;
-      return _convertGroup(group, overall, currency);
+      return _convertGroup(group, overall);
     }).toList();
   }
 
@@ -42,15 +41,15 @@ class SummaryDataGenerator {
     }
 
     // Calculate total amount for each category, including subcategories
-    final Map<Uuid, Decimal> amountByCatId = {};
+    final Map<Uuid, Money> amountByCatId = {};
     for (final booking in bookings) {
       // Add booking amount to its immediate category
-      amountByCatId.update(booking.category!.id, (value) => value + booking.amount, ifAbsent: () => booking.amount);
+      amountByCatId.update(booking.category.id, (value) => value + booking.money, ifAbsent: () => booking.money);
 
       // Also add to parent categories if they exist
       Category? currentCategory = booking.category.parent;
       while (currentCategory != null) {
-        amountByCatId.update(currentCategory.id, (value) => value + booking.amount, ifAbsent: () => booking.amount);
+        amountByCatId.update(currentCategory.id, (value) => value + booking.money, ifAbsent: () => booking.money);
         currentCategory = currentCategory.parent;
       }
     }
@@ -61,18 +60,18 @@ class SummaryDataGenerator {
       final List<CategoryGroup> subGroups = [];
       for (final subcategory in parentCategory.subcategories) {
         final childBookings = bookingsByCatId[subcategory.id] ?? [];
-        final childAmount = amountByCatId[subcategory.id] ?? Decimal.zero;
-        subGroups.add(CategoryGroup(category: subcategory, bookings: childBookings, amount: childAmount));
+        final childAmount = amountByCatId[subcategory.id] ?? Money.zero();
+        subGroups.add(CategoryGroup(category: subcategory, bookings: childBookings, money: childAmount));
       }
 
       subGroups.sort(_compareCategoryGroups);
 
       final parentBookings = bookingsByCatId[parentCategory.id] ?? [];
-      final parentAmount = amountByCatId[parentCategory.id] ?? Decimal.zero;
+      final parentAmount = amountByCatId[parentCategory.id] ?? Money.zero();
 
       // Only add parent group if it has direct bookings or sub-groups with bookings
       if (parentBookings.isNotEmpty || subGroups.isNotEmpty) {
-        topGroups.add(CategoryGroup(category: parentCategory, bookings: parentBookings, amount: parentAmount, subGroups: subGroups));
+        topGroups.add(CategoryGroup(category: parentCategory, bookings: parentBookings, money: parentAmount, subGroups: subGroups));
       }
     }
 
@@ -86,24 +85,22 @@ class SummaryDataGenerator {
     return b.totalGroupAmount.compareTo(a.totalGroupAmount); // Use totalGroupAmount for sorting
   }
 
-  CategoryViewSummaryData _convertGroup(CategoryGroup group, Decimal overallTotal, Currency currency) {
-    final Decimal groupTotalAmount = group.totalGroupAmount; // Use the combined amount for the group
-    final double percentage = overallTotal == Decimal.zero ? 0 : ((groupTotalAmount / overallTotal).toDouble() * 100).roundToDouble();
+  CategoryViewSummaryData _convertGroup(CategoryGroup group, Money overallTotal) {
+    final Money groupTotalAmount = group.totalGroupAmount; // Use the combined amount for the group
+    final double percentage = overallTotal.isZero() ? 0 : ((groupTotalAmount.amount / overallTotal.amount).toDouble() * 100).roundToDouble();
 
-    final List<CategoryViewSummaryData> subSummaries =
-        group.subGroups.map((sub) => _convertGroup(sub, overallTotal, currency)).toList()..sort((a, b) => b.value.compareTo(a.value));
+    final List<CategoryViewSummaryData> subSummaries = group.subGroups.map((sub) => _convertGroup(sub, overallTotal)).toList()..sort((a, b) => b.money.compareTo(a.money));
 
     final bool isSynced = (group.bookings.where((x) => !x.isSynced).isEmpty) && subSummaries.every((sub) => sub.isSynced);
 
     return CategoryViewSummaryData(
-      currency: currency,
       categoryType: group.category.categoryType,
       categoryName: group.category.name,
       parentCategoryName: group.category.parent?.name,
       iconName: group.category.iconName,
       iconColor: group.category.iconColor,
       percentage: percentage.toInt(),
-      value: groupTotalAmount,
+      money: groupTotalAmount,
       subSummaries: subSummaries,
       isSynced: isSynced,
     );
@@ -112,7 +109,14 @@ class SummaryDataGenerator {
   List<PieData> _generatePieData(List<CategoryViewSummaryData> summaries) {
     return summaries.where((s) => s.categoryType == CategoryType.outcome).map((s) {
       final hideIcon = s.percentage < 5;
-      return PieData(xData: s.categoryName, yData: s.value.toDouble(), text: hideIcon ? null : s.categoryName, iconName: s.iconName, iconColor: s.iconColor, hideIcon: hideIcon);
+      return PieData(
+        xData: s.categoryName,
+        yData: s.money.amount.toDouble(),
+        text: hideIcon ? null : s.categoryName,
+        iconName: s.iconName,
+        iconColor: s.iconColor,
+        hideIcon: hideIcon,
+      );
     }).toList();
   }
 }
