@@ -63,8 +63,7 @@ import 'package:budget_fusion_app/core/remote_loading/cubits/remote_loading_cubi
     as _i314;
 import 'package:budget_fusion_app/core/remote_loading/service/remote_loading_service.dart'
     as _i247;
-import 'package:budget_fusion_app/features/auth/application/login/login_cubit.dart'
-    as _i991;
+import 'package:budget_fusion_app/features/auth/bloc/login_cubit.dart' as _i319;
 import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_source.dart'
     as _i478;
 import 'package:budget_fusion_app/features/auth/data/repos/user_repo.dart'
@@ -183,8 +182,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i702.ConnectivityService>(
       () => _i702.ConnectivityService(gh<_i895.Connectivity>()),
     );
-    gh.factory<_i991.LoginCubit>(
-      () => _i991.LoginCubit(
+    gh.factory<_i319.LoginCubit>(
+      () => _i319.LoginCubit(
         gh<_i871.UserRepo>(),
         gh<_i428.ConnectivityService>(),
       ),

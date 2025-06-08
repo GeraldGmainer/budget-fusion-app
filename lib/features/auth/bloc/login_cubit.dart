@@ -3,9 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/core.dart';
-import '../../../../utils/utils.dart';
-import '../../data/repos/user_repo.dart';
+import '../../../core/core.dart';
+import '../../../utils/utils.dart';
+import '../data/repos/user_repo.dart';
 
 part 'login_cubit.freezed.dart';
 part 'login_state.dart';

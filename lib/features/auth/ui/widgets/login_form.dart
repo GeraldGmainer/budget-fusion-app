@@ -7,7 +7,7 @@ import 'package:form_validator/form_validator.dart';
 
 import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
-import '../../application/login/login_cubit.dart';
+import '../../bloc/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
   final bool isLoading;
@@ -101,12 +101,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildPassword(bool isLoading) {
-    return FormInputPassword(
-      controller: _passwordController,
-      label: "auth.login.password".tr(),
-      validator: ValidationBuilder().required().build(),
-      isLoading: isLoading,
-    );
+    return FormInputPassword(controller: _passwordController, label: "auth.login.password".tr(), validator: ValidationBuilder().required().build(), isLoading: isLoading);
   }
 
   Widget _buildLoginButton(bool isLoading) {
