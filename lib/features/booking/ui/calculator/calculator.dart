@@ -2,8 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/booking_save_cubit.dart';
-import '../../application/cubits/calculator_cubit.dart';
+import '../../bloc/booking_save_cubit.dart';
+import '../../bloc/calculator_cubit.dart';
 import 'calculator_key.dart';
 import 'calculator_keyboard.dart';
 

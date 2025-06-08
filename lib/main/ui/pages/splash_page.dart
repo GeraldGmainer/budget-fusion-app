@@ -6,6 +6,8 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../main.dart';
+
 class SplashPage extends StatefulWidget {
   @override
   State<SplashPage> createState() => _SplashScreenState();
@@ -36,10 +38,10 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _loadProfile() {
-    context.loadUserProfileData();
+    context.read<OfflineFirstLoaderCubit>().init();
   }
 
-  _onProfileSuccess(Profile profile) {
+  _onProfileSuccess() {
     Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 
@@ -51,15 +53,12 @@ class _SplashScreenState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<ProfileCubit, LoadableState<Profile>>(
+      body: BlocConsumer<OfflineFirstLoaderCubit, OfflineFirstLoaderState>(
         listener: (context, state) {
-          state.whenOrNull(loaded: _onProfileSuccess, error: _onError);
+          state.whenOrNull(success: _onProfileSuccess, error: _onError);
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            error: (message) => ErrorText(error: message, onReload: _loadProfile),
-            orElse: () => Center(child: CircularProgressIndicator()),
-          );
+          return state.maybeWhen(error: (message) => ErrorText(error: message, onReload: _loadProfile), orElse: () => Center(child: CircularProgressIndicator()));
         },
       ),
     );

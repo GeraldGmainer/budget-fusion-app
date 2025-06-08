@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/exceptions/app_error.dart';
-import '../../application/cubits/category_save_cubit.dart';
+import '../../bloc/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 
 class CategorySaveContainer extends StatefulWidget {

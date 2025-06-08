@@ -1,7 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/budget_book_filter.dart';
+import '../../view_models/budget_book_filter.dart';
 
 class DescriptionFilter extends StatefulWidget {
   final BudgetBookFilter filter;

@@ -1,0 +1,20 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../core/core.dart';
+
+part 'loadable_state.freezed.dart';
+
+@freezed
+class LoadableState<T> with _$LoadableState<T> {
+  const factory LoadableState.initial() = _Initial<T>;
+
+  const factory LoadableState.loading({T? data}) = _Loading<T>;
+
+  const factory LoadableState.loaded(T data) = _Loaded<T>;
+
+  const factory LoadableState.error(AppError error) = _Error<T>;
+}
+
+extension AsyncStateX<T> on LoadableState<T> {
+  bool get isLoading => maybeWhen(loading: (_) => true, orElse: () => false);
+}

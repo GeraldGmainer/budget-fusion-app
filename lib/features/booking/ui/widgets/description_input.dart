@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../application/cubits/suggestion_cubit.dart';
-import '../../data/dtos/booking_suggestion_dto.dart';
+import '../../bloc/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class DescriptionInput extends StatelessWidget {
@@ -88,16 +87,13 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("booking.dialogs.description.title".tr()),
-        leading: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
-      ),
+      appBar: AppBar(title: Text("booking.dialogs.description.title".tr()), leading: IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop())),
       floatingActionButton: AppFab.save(_onSave),
       body: Column(
         children: [
           BlocBuilder<SuggestionCubit, LoadableState>(
             builder: (context, state) {
-              final List<BookingSuggestionDto> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
+              final List<BookingSuggestion> suggestions = state.maybeWhen(loaded: (suggestions) => suggestions, orElse: () => []);
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: _buildInput(suggestions.where((x) => x.categoryType == widget.draft.categoryType).map((x) => x.suggestion).toList()),
@@ -125,10 +121,7 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
         return allMatches;
       },
       decorationBuilder: (context, child) {
-        return Material(
-          elevation: 6,
-          child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.cardColor), child: child),
-        );
+        return Material(elevation: 6, child: Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.cardColor), child: child));
       },
       itemBuilder: (context, suggestion) {
         return Container(

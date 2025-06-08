@@ -4,43 +4,44 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../enums/domain_type.dart';
+import '../../enums/entity_type.dart';
 import '../../supabase/supabase.dart';
-import 'domain_realtime_event.dart';
+import 'entity_realtime_event.dart';
 
 @lazySingleton
 class RealtimeNotifierService {
-  final StreamController<DomainRealtimeEvent> _controller = StreamController.broadcast();
+  final StreamController<EntityRealtimeEvent> _controller = StreamController.broadcast();
   final Map<String, RealtimeChannel> _channels = {};
 
-  Stream<DomainRealtimeEvent> get events => _controller.stream;
+  Stream<EntityRealtimeEvent> get events => _controller.stream;
 
-  void startListeningForDomain(DomainType domain, String table) {
-    _log("Starting realtime listener for domain ${DomainLogger.applyColor(table)}");
+  void startListeningForEntity(EntityType entity, String table) {
+    _log("Starting realtime listener for entity ${EntityLogger.applyColor(table)}");
     final channelId = 'public:$table';
     if (_channels.containsKey(channelId)) {
       return;
     }
-    final channel = supabase
-        .channel(channelId)
-        .onPostgresChanges(
-          event: PostgresChangeEvent.all,
-          schema: 'public',
-          table: table,
-          callback: (payload) {
-            _log("Realtime event received for table $table: $payload", darkColor: true);
-            _controller.add(DomainRealtimeEvent(domain: domain));
-          },
-        )
-        .subscribe();
+    final channel =
+        supabase
+            .channel(channelId)
+            .onPostgresChanges(
+              event: PostgresChangeEvent.all,
+              schema: 'public',
+              table: table,
+              callback: (payload) {
+                _log("Realtime event received for table $table: $payload", darkColor: true);
+                _controller.add(EntityRealtimeEvent(entity: entity));
+              },
+            )
+            .subscribe();
     _channels[channelId] = channel;
   }
 
-  Future<void> stopListeningForDomain(DomainType domain, String table) async {
+  Future<void> stopListeningForEntity(EntityType entity, String table) async {
     final channelId = 'public:$table';
     final channel = _channels.remove(channelId);
     if (channel != null) {
-      _log("Stopping realtime listener for domain ${DomainLogger.applyColor(table)}");
+      _log("Stopping realtime listener for entity ${EntityLogger.applyColor(table)}");
       await supabase.removeChannel(channel);
     }
   }
@@ -53,6 +54,6 @@ class RealtimeNotifierService {
   }
 
   void _log(String msg, {bool darkColor = false}) {
-    DomainLogger.instance.d("RealtimeNotifier", "realtime", msg, darkColor: darkColor);
+    EntityLogger.instance.d("RealtimeNotifier", "realtime", msg, darkColor: darkColor);
   }
 }

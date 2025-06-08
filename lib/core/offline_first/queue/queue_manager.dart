@@ -14,8 +14,8 @@ class QueueManager {
   final QueueLocalDataSource localDataSource;
   final RemoteLoadingService remoteLoadingService;
   final Queue<QueueItem> _inMemoryQueue = Queue();
-  final Map<DomainType, OfflineFirstRemoteDataSource> _remoteSources = {};
-  final Map<DomainType, OfflineFirstLocalDataSource> _localSources = {};
+  final Map<EntityType, OfflineFirstRemoteDataSource> _remoteSources = {};
+  final Map<EntityType, OfflineFirstLocalDataSource> _localSources = {};
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 
   Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
@@ -24,9 +24,9 @@ class QueueManager {
 
   QueueManager(this.localDataSource, this.remoteLoadingService);
 
-  void registerDomainSources(DomainType domain, OfflineFirstLocalDataSource lds, OfflineFirstRemoteDataSource rds) {
-    _remoteSources[domain] = rds;
-    _localSources[domain] = lds;
+  void registerEntitySources(EntityType entity, OfflineFirstLocalDataSource lds, OfflineFirstRemoteDataSource rds) {
+    _remoteSources[entity] = rds;
+    _localSources[entity] = lds;
   }
 
   Future<void> init() async {
@@ -99,10 +99,10 @@ class QueueManager {
   Future<void> _processQueueItem(QueueItem item) async {
     _log("Processing queue item with entityId: ${item.entityId}");
 
-    final remoteSource = _remoteSources[item.domain];
-    final localSource = _localSources[item.domain];
+    final remoteSource = _remoteSources[item.entity];
+    final localSource = _localSources[item.entity];
     if (remoteSource == null || localSource == null) {
-      throw Exception("Domain sources not registered for domain ${item.domain}");
+      throw Exception("Entity sources not registered for entity ${item.entity}");
     }
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
@@ -148,6 +148,6 @@ class QueueManager {
   }
 
   _log(String msg) {
-    DomainLogger.instance.d("QueueManager", "queue", msg);
+    EntityLogger.instance.d("QueueManager", "queue", msg);
   }
 }

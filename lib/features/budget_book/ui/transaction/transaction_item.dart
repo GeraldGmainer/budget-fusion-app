@@ -2,6 +2,8 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
+import '../../../profile/profile.dart';
+
 class TransactionItem extends StatelessWidget {
   final Booking booking;
   final Currency currency;

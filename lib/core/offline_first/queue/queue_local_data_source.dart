@@ -11,35 +11,28 @@ class QueueLocalDataSource {
   QueueLocalDataSource(this.db);
 
   Future<void> addQueueItem(QueueItem item) async {
-    _log("Adding queue item with entityId '${item.entityId}' in ${DomainLogger.applyColor(item.domain.name)}");
-    BudgetLogger.instance.d("add queue item:\n"
-        "   taskType: ${item.type}\n"
-        "   entityPayload: ${item.entityPayload}\n"
-        "   attempts: ${item.attempts} / done: ${item.done}");
-    await db.insert(
-      'queue_items',
-      {
-        'entity_id': item.entityId,
-        'type': item.type.toString(),
-        'domain': item.domain.toString(),
-        'entity_payload': item.entityPayload,
-        'attempts': item.attempts,
-        'done': item.done ? 1 : 0,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
+    _log("Adding queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entity.name)}");
+    BudgetLogger.instance.d(
+      "add queue item:\n"
+      "   taskType: ${item.type}\n"
+      "   entityPayload: ${item.entityPayload}\n"
+      "   attempts: ${item.attempts} / done: ${item.done}",
     );
+    await db.insert('queue_items', {
+      'entity_id': item.entityId,
+      'type': item.type.toString(),
+      'entity': item.entity.toString(),
+      'entity_payload': item.entityPayload,
+      'attempts': item.attempts,
+      'done': item.done ? 1 : 0,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<void> updateQueueItem(QueueItem item) async {
-    _log("Updating queue item with entityId '${item.entityId}' in ${DomainLogger.applyColor(item.domain.name)}");
+    _log("Updating queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entity.name)}");
     await db.update(
       'queue_items',
-      {
-        'type': item.type.name,
-        'entity_payload': item.entityPayload,
-        'attempts': item.attempts,
-        'done': item.done ? 1 : 0,
-      },
+      {'type': item.type.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
       where: 'entity_id = ?',
       whereArgs: [item.entityId],
     );
@@ -47,23 +40,16 @@ class QueueLocalDataSource {
 
   Future<void> removeQueueItem(String id) async {
     _log("Removing queue item with entityId '$id'");
-    await db.delete(
-      'queue_items',
-      where: 'entity_id = ?',
-      whereArgs: [id],
-    );
+    await db.delete('queue_items', where: 'entity_id = ?', whereArgs: [id]);
   }
 
   Future<List<QueueItem>> fetchPendingItems() async {
     _log("Fetching pending queue items");
-    final rows = await db.query(
-      'queue_items',
-      where: 'done = 0',
-    );
+    final rows = await db.query('queue_items', where: 'done = 0');
     return rows.map((map) {
       return QueueItem(
         entityId: map['entity_id'] as String,
-        domain: DomainType.fromString(map['domain'] as String),
+        entity: EntityType.fromString(map['entity'] as String),
         type: QueueTaskType.fromString(map['type'] as String),
         entityPayload: map['entity_payload'] as String,
         attempts: map['attempts'] as int,
@@ -73,6 +59,6 @@ class QueueLocalDataSource {
   }
 
   _log(String msg) {
-    DomainLogger.instance.d("QueueDataSource", "queue", msg);
+    EntityLogger.instance.d("QueueDataSource", "queue", msg);
   }
 }

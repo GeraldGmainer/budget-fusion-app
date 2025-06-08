@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/transaction_view_data.dart';
+import '../../view_models/transaction_view_data.dart';
 import 'transaction_list.dart';
 
 class TransactionView extends StatelessWidget {
@@ -28,8 +28,6 @@ class TransactionView extends StatelessWidget {
   }
 
   Widget _buildEmpty() {
-    return Card(
-      child: Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(width: double.infinity, child: Text("budgetBook.tabs.transaction.empty".tr()))),
-    );
+    return Card(child: Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(width: double.infinity, child: Text("budgetBook.tabs.transaction.empty".tr()))));
   }
 }

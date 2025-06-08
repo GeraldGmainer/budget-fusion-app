@@ -4,7 +4,8 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/category_view_summary_data.dart';
+import '../../../profile/profile.dart';
+import '../../view_models/category_view_summary_data.dart';
 
 class CategorySummaryList extends StatelessWidget {
   final List<CategoryViewSummaryData> summaries;
@@ -77,10 +78,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
           curve: Curves.easeInOut,
           child:
               _isExpanded && widget.summary.subSummaries.isNotEmpty
-                  ? Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Column(children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList()),
-                  )
+                  ? Padding(padding: const EdgeInsets.only(left: 16.0), child: Column(children: widget.summary.subSummaries.map((sub) => _buildSub(sub)).toList()))
                   : const SizedBox.shrink(),
         ),
       ],
@@ -130,10 +128,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            RotationTransition(
-              turns: Tween(begin: 0.0, end: 0.5).animate(_arrowController),
-              child: Icon(Icons.expand_more, size: 16, color: AppColors.secondaryTextColor),
-            ),
+            RotationTransition(turns: Tween(begin: 0.0, end: 0.5).animate(_arrowController), child: Icon(Icons.expand_more, size: 16, color: AppColors.secondaryTextColor)),
             const SizedBox(width: 4),
             Text("budgetBook.tabs.summary.subCategories".tr(args: [subs.length.toString()]), style: TextStyle(fontSize: 13)),
           ],

@@ -1,7 +1,7 @@
 import 'package:budget_fusion_app/core/constants/app_dimensions.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/summary_view_data.dart';
+import '../../view_models/summary_view_data.dart';
 import 'category_summary_list.dart';
 import 'summary_graph.dart';
 
@@ -18,14 +18,9 @@ class SummaryView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RepaintBoundary(
-              child: SummaryGraph(data: data),
-            ),
+            RepaintBoundary(child: SummaryGraph(data: data)),
             const SizedBox(height: 12.0),
-            if (data.summaries.isNotEmpty)
-              RepaintBoundary(
-                child: CategorySummaryList(summaries: data.summaries),
-              ),
+            if (data.summaries.isNotEmpty) RepaintBoundary(child: CategorySummaryList(summaries: data.summaries)),
           ],
         ),
       ),

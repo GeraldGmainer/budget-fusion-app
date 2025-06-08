@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:budget_fusion_app/main/bloc/offline_first_loader_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +66,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
   _onAuthenticated(Session session) {
     if (mounted) {
       BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
-      context.loadUserProfileData();
+      context.read<OfflineFirstLoaderCubit>().init();
     }
   }
 

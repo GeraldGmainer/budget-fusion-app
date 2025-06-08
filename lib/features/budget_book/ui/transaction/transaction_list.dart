@@ -4,8 +4,8 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../domain/entities/transaction_group.dart';
-import '../../domain/entities/transaction_view_data.dart';
+import '../../view_models/transaction_group.dart';
+import '../../view_models/transaction_view_data.dart';
 import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
@@ -44,12 +44,9 @@ class TransactionList extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          child: Text(
-            DateFormat.yMMMMd().format(group.date),
-            style: TextStyle(fontSize: 14, color: AppColors.secondaryTextColor),
-          ),
+          child: Text(DateFormat.yMMMMd().format(group.date), style: TextStyle(fontSize: 14, color: AppColors.secondaryTextColor)),
         ),
-        ...group.bookings.map((booking) => TransactionItem(booking: booking, currency: data.currency))
+        ...group.bookings.map((booking) => TransactionItem(booking: booking, currency: data.currency)),
       ],
     );
   }

@@ -1,8 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:decimal/decimal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
+import '../../../profile/profile.dart';
 
 class IncomeOutcomeBalanceText extends StatefulWidget {
   final Decimal income;
@@ -45,12 +46,7 @@ class _IncomeOutcomeBalanceTextState extends State<IncomeOutcomeBalanceText> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text("budgetBook.tabs.summary.balance".tr(), style: TextStyle(fontSize: 14)),
-          CurrencyText(
-            value: balance,
-            currency: widget.currency,
-            color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor,
-            fontSize: 16,
-          ),
+          CurrencyText(value: balance, currency: widget.currency, color: balance >= Decimal.zero ? AppColors.incomeColor : AppColors.outcomeColor, fontSize: 16),
         ],
       ),
     );

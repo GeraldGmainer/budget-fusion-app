@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../application/cubits/category_save_cubit.dart';
+import '../../bloc/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
 import '../widget/category_type_input.dart';
@@ -69,8 +69,7 @@ class CategoryParentSavePage extends StatelessWidget {
             ],
           ),
         ),
-        if (!draft.isCreating)
-          Expanded(child: SingleChildScrollView(child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)))),
+        if (!draft.isCreating) Expanded(child: SingleChildScrollView(child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)))),
       ],
     );
   }

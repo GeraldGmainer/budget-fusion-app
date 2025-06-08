@@ -3,9 +3,9 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/budget_book_filter.dart';
-import '../../domain/entities/budget_date_range.dart';
-import '../../domain/enums/period_mode.dart';
+import '../../enums/period_mode.dart';
+import '../../view_models/budget_book_filter.dart';
+import '../../view_models/budget_date_range.dart';
 
 class PeriodSelector extends StatelessWidget {
   final BudgetBookFilter filter;
