@@ -17,7 +17,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       // int randomNumber = random.nextInt(2000) + 3000;
       // await Future.delayed(Duration(milliseconds: randomNumber));
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAll ${result.length} Dtos", stopwatch: stopwatch);
+      _log("fetchAll ${result.length} DTOs", stopwatch: stopwatch);
       return result;
     });
   }

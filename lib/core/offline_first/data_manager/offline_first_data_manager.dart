@@ -140,7 +140,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   _emitToStream(List<Dto> dtos) {
-    _log("Emitting ${EntityLogger.bold(dtos.length)} view_models", darkColor: true);
+    _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
     streamController.add(dtos);
   }
 
