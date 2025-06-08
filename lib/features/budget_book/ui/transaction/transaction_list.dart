@@ -46,7 +46,7 @@ class TransactionList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           child: Text(DateFormat.yMMMMd().format(group.date), style: TextStyle(fontSize: 14, color: AppColors.secondaryTextColor)),
         ),
-        ...group.bookings.map((booking) => TransactionItem(booking: booking, currency: data.currency)),
+        ...group.bookings.map((booking) => TransactionItem(booking: booking)),
       ],
     );
   }

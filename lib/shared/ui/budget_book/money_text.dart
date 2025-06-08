@@ -2,42 +2,41 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/core.dart';
+import '../../../core/core.dart';
 
-class CurrencyText extends StatelessWidget {
+class MoneyText extends StatelessWidget {
   static const double defaultFontSize = 14;
 
-  final Decimal? value;
-  final Currency? currency;
+  final Money money;
   final double fontSize;
   final Color color;
   final bool showSymbol;
 
-  const CurrencyText({super.key, this.currency, required this.value, this.fontSize = defaultFontSize, this.showSymbol = true, this.color = AppColors.primaryTextColor});
+  const MoneyText({super.key, required this.money, this.fontSize = defaultFontSize, this.showSymbol = true, this.color = AppColors.primaryTextColor});
 
   @override
   Widget build(BuildContext context) {
-    if (currency != null) {
-      return _buildText(context, currency!);
+    if (money.currency != null) {
+      return _buildText(context, money.amount, money.currency!);
     }
     return DataManagerSingleNullable<ProfileSetting>(
       builder: (context, data) {
         if (data == null) {
-          return _buildDefaultText(context);
+          return _buildText(context, money.amount, Currency.notFound());
         }
-        return _buildText(context, data.currency);
+        return _buildText(context, money.amount, data.currency);
       },
     );
   }
 
-  Widget _buildText(BuildContext context, Currency currency) {
+  Widget _buildText(BuildContext context, Decimal value, Currency currency) {
     final int decimalPrecision = currency.decimalPrecision;
     final bool isUnitPositionFront = currency.unitPositionFront;
     final String symbol = currency.symbol;
     final decimalSeparator = _getDecimalSeparator(context);
     final groupSeparator = _getGroupSeparator(context);
 
-    final String formattedValue = (value ?? Decimal.zero).toStringAsFixed(decimalPrecision);
+    final String formattedValue = value.toStringAsFixed(decimalPrecision);
     final List<String> parts = formattedValue.split('.');
     final RegExp regExp = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
     final String integerPart = parts[0].replaceAllMapped(regExp, (Match match) {
@@ -61,10 +60,6 @@ class CurrencyText extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildDefaultText(BuildContext context) {
-    return Text((value ?? Decimal.zero).toStringAsFixed(0), style: TextStyle(fontSize: fontSize, color: color));
   }
 
   String _getDecimalSeparator(BuildContext context) {

@@ -7,9 +7,5 @@ part 'transaction_group.freezed.dart';
 class TransactionGroup with _$TransactionGroup {
   const TransactionGroup._();
 
-  const factory TransactionGroup({
-    required DateTime date,
-    required Currency currency,
-    required List<Booking> bookings,
-  }) = _TransactionGroup;
+  const factory TransactionGroup({required DateTime date, required List<Booking> bookings}) = _TransactionGroup;
 }

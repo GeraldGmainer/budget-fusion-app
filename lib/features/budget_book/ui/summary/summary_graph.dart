@@ -48,7 +48,7 @@ class SummaryGraph extends StatelessWidget {
                   ),
                 ),
               ),
-              IncomeOutcomeBalanceText(income: data.income, outcome: data.outcome, currency: data.currency),
+              IncomeOutcomeBalanceText(income: data.income, outcome: data.outcome),
             ],
           ),
         ),

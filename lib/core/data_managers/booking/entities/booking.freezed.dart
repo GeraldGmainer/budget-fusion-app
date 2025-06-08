@@ -20,7 +20,7 @@ mixin _$Booking {
   Uuid get id => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  Decimal get amount => throw _privateConstructorUsedError;
+  Money get money => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
@@ -41,13 +41,14 @@ abstract class $BookingCopyWith<$Res> {
     Uuid id,
     DateTime date,
     String? description,
-    Decimal amount,
+    Money money,
     Category category,
     Account account,
     DateTime updatedAt,
     bool isSynced,
   });
 
+  $MoneyCopyWith<$Res> get money;
   $CategoryCopyWith<$Res> get category;
   $AccountCopyWith<$Res> get account;
 }
@@ -70,7 +71,7 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? id = null,
     Object? date = null,
     Object? description = freezed,
-    Object? amount = null,
+    Object? money = null,
     Object? category = null,
     Object? account = null,
     Object? updatedAt = null,
@@ -93,11 +94,11 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                     ? _value.description
                     : description // ignore: cast_nullable_to_non_nullable
                         as String?,
-            amount:
-                null == amount
-                    ? _value.amount
-                    : amount // ignore: cast_nullable_to_non_nullable
-                        as Decimal,
+            money:
+                null == money
+                    ? _value.money
+                    : money // ignore: cast_nullable_to_non_nullable
+                        as Money,
             category:
                 null == category
                     ? _value.category
@@ -121,6 +122,16 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of Booking
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MoneyCopyWith<$Res> get money {
+    return $MoneyCopyWith<$Res>(_value.money, (value) {
+      return _then(_value.copyWith(money: value) as $Val);
+    });
   }
 
   /// Create a copy of Booking
@@ -156,13 +167,15 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
     Uuid id,
     DateTime date,
     String? description,
-    Decimal amount,
+    Money money,
     Category category,
     Account account,
     DateTime updatedAt,
     bool isSynced,
   });
 
+  @override
+  $MoneyCopyWith<$Res> get money;
   @override
   $CategoryCopyWith<$Res> get category;
   @override
@@ -186,7 +199,7 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? id = null,
     Object? date = null,
     Object? description = freezed,
-    Object? amount = null,
+    Object? money = null,
     Object? category = null,
     Object? account = null,
     Object? updatedAt = null,
@@ -209,11 +222,11 @@ class __$$BookingImplCopyWithImpl<$Res>
                 ? _value.description
                 : description // ignore: cast_nullable_to_non_nullable
                     as String?,
-        amount:
-            null == amount
-                ? _value.amount
-                : amount // ignore: cast_nullable_to_non_nullable
-                    as Decimal,
+        money:
+            null == money
+                ? _value.money
+                : money // ignore: cast_nullable_to_non_nullable
+                    as Money,
         category:
             null == category
                 ? _value.category
@@ -246,7 +259,7 @@ class _$BookingImpl extends _Booking {
     required this.id,
     required this.date,
     required this.description,
-    required this.amount,
+    required this.money,
     required this.category,
     required this.account,
     required this.updatedAt,
@@ -260,7 +273,7 @@ class _$BookingImpl extends _Booking {
   @override
   final String? description;
   @override
-  final Decimal amount;
+  final Money money;
   @override
   final Category category;
   @override
@@ -272,7 +285,7 @@ class _$BookingImpl extends _Booking {
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, updatedAt: $updatedAt, isSynced: $isSynced)';
+    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, updatedAt: $updatedAt, isSynced: $isSynced)';
   }
 
   @override
@@ -284,7 +297,7 @@ class _$BookingImpl extends _Booking {
             (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.money, money) || other.money == money) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
@@ -300,7 +313,7 @@ class _$BookingImpl extends _Booking {
     id,
     date,
     description,
-    amount,
+    money,
     category,
     account,
     updatedAt,
@@ -321,7 +334,7 @@ abstract class _Booking extends Booking {
     required final Uuid id,
     required final DateTime date,
     required final String? description,
-    required final Decimal amount,
+    required final Money money,
     required final Category category,
     required final Account account,
     required final DateTime updatedAt,
@@ -336,7 +349,7 @@ abstract class _Booking extends Booking {
   @override
   String? get description;
   @override
-  Decimal get amount;
+  Money get money;
   @override
   Category get category;
   @override

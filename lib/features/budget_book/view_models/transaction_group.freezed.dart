@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TransactionGroup {
   DateTime get date => throw _privateConstructorUsedError;
-  Currency get currency => throw _privateConstructorUsedError;
   List<Booking> get bookings => throw _privateConstructorUsedError;
 
   /// Create a copy of TransactionGroup
@@ -35,9 +34,7 @@ abstract class $TransactionGroupCopyWith<$Res> {
     $Res Function(TransactionGroup) then,
   ) = _$TransactionGroupCopyWithImpl<$Res, TransactionGroup>;
   @useResult
-  $Res call({DateTime date, Currency currency, List<Booking> bookings});
-
-  $CurrencyCopyWith<$Res> get currency;
+  $Res call({DateTime date, List<Booking> bookings});
 }
 
 /// @nodoc
@@ -54,11 +51,7 @@ class _$TransactionGroupCopyWithImpl<$Res, $Val extends TransactionGroup>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? date = null,
-    Object? currency = null,
-    Object? bookings = null,
-  }) {
+  $Res call({Object? date = null, Object? bookings = null}) {
     return _then(
       _value.copyWith(
             date:
@@ -66,11 +59,6 @@ class _$TransactionGroupCopyWithImpl<$Res, $Val extends TransactionGroup>
                     ? _value.date
                     : date // ignore: cast_nullable_to_non_nullable
                         as DateTime,
-            currency:
-                null == currency
-                    ? _value.currency
-                    : currency // ignore: cast_nullable_to_non_nullable
-                        as Currency,
             bookings:
                 null == bookings
                     ? _value.bookings
@@ -79,16 +67,6 @@ class _$TransactionGroupCopyWithImpl<$Res, $Val extends TransactionGroup>
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of TransactionGroup
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CurrencyCopyWith<$Res> get currency {
-    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
-      return _then(_value.copyWith(currency: value) as $Val);
-    });
   }
 }
 
@@ -101,10 +79,7 @@ abstract class _$$TransactionGroupImplCopyWith<$Res>
   ) = __$$TransactionGroupImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime date, Currency currency, List<Booking> bookings});
-
-  @override
-  $CurrencyCopyWith<$Res> get currency;
+  $Res call({DateTime date, List<Booking> bookings});
 }
 
 /// @nodoc
@@ -120,11 +95,7 @@ class __$$TransactionGroupImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? date = null,
-    Object? currency = null,
-    Object? bookings = null,
-  }) {
+  $Res call({Object? date = null, Object? bookings = null}) {
     return _then(
       _$TransactionGroupImpl(
         date:
@@ -132,11 +103,6 @@ class __$$TransactionGroupImplCopyWithImpl<$Res>
                 ? _value.date
                 : date // ignore: cast_nullable_to_non_nullable
                     as DateTime,
-        currency:
-            null == currency
-                ? _value.currency
-                : currency // ignore: cast_nullable_to_non_nullable
-                    as Currency,
         bookings:
             null == bookings
                 ? _value._bookings
@@ -152,15 +118,12 @@ class __$$TransactionGroupImplCopyWithImpl<$Res>
 class _$TransactionGroupImpl extends _TransactionGroup {
   const _$TransactionGroupImpl({
     required this.date,
-    required this.currency,
     required final List<Booking> bookings,
   }) : _bookings = bookings,
        super._();
 
   @override
   final DateTime date;
-  @override
-  final Currency currency;
   final List<Booking> _bookings;
   @override
   List<Booking> get bookings {
@@ -171,7 +134,7 @@ class _$TransactionGroupImpl extends _TransactionGroup {
 
   @override
   String toString() {
-    return 'TransactionGroup(date: $date, currency: $currency, bookings: $bookings)';
+    return 'TransactionGroup(date: $date, bookings: $bookings)';
   }
 
   @override
@@ -180,8 +143,6 @@ class _$TransactionGroupImpl extends _TransactionGroup {
         (other.runtimeType == runtimeType &&
             other is _$TransactionGroupImpl &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             const DeepCollectionEquality().equals(other._bookings, _bookings));
   }
 
@@ -189,7 +150,6 @@ class _$TransactionGroupImpl extends _TransactionGroup {
   int get hashCode => Object.hash(
     runtimeType,
     date,
-    currency,
     const DeepCollectionEquality().hash(_bookings),
   );
 
@@ -208,15 +168,12 @@ class _$TransactionGroupImpl extends _TransactionGroup {
 abstract class _TransactionGroup extends TransactionGroup {
   const factory _TransactionGroup({
     required final DateTime date,
-    required final Currency currency,
     required final List<Booking> bookings,
   }) = _$TransactionGroupImpl;
   const _TransactionGroup._() : super._();
 
   @override
   DateTime get date;
-  @override
-  Currency get currency;
   @override
   List<Booking> get bookings;
 

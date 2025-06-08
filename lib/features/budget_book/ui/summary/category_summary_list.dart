@@ -4,7 +4,6 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../profile/profile.dart';
 import '../../view_models/category_view_summary_data.dart';
 
 class CategorySummaryList extends StatelessWidget {
@@ -100,7 +99,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(value: widget.summary.value, currency: widget.summary.currency, color: widget.summary.categoryType.color, fontSize: 15),
+          MoneyText(money: widget.summary.money, color: widget.summary.categoryType.color, fontSize: 15),
           Text("${widget.summary.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 13, color: AppColors.secondaryTextColor)),
         ],
       ),
@@ -150,7 +149,7 @@ class _CollapsibleCategoryTileState extends State<CollapsibleCategoryTile> with 
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          CurrencyText(value: sub.value, currency: sub.currency, color: sub.categoryType.color, fontSize: 14),
+          MoneyText(money: sub.money, color: sub.categoryType.color, fontSize: 14),
           Text("${sub.percentage} %", textAlign: TextAlign.end, style: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor)),
         ],
       ),

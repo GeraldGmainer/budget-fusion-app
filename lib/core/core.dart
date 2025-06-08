@@ -68,4 +68,5 @@ export 'supabase/supabase_client.dart';
 export 'supabase/supabase_container.dart';
 export 'supabase/user_context.dart';
 //
+export 'value_objects/money.dart';
 export 'value_objects/uuid.dart';

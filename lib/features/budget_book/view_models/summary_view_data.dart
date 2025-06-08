@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/core.dart';
@@ -14,15 +13,14 @@ class SummaryViewData with _$SummaryViewData implements BudgetViewData {
   const SummaryViewData._();
 
   const factory SummaryViewData({
-    required Currency currency,
     required BudgetDateRange dateRange,
     required List<PieData> pieData,
     required List<CategoryViewSummaryData> summaries,
-    required Decimal income,
-    required Decimal outcome,
+    required Money income,
+    required Money outcome,
   }) = _SummaryViewData;
 
-  Decimal get balance {
+  Money get balance {
     return income - outcome;
   }
 }
