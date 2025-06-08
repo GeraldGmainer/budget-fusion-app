@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../models/uuid.dart';
+import '../../value_objects/uuid.dart';
 
 class UuidSerializer extends JsonConverter<Uuid, String> {
   const UuidSerializer();

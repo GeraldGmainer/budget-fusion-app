@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/uuid.dart';
+import '../value_objects/uuid.dart';
 
 class UserContext {
   final Uuid userId;

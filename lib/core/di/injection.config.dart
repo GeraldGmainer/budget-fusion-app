@@ -52,8 +52,8 @@ import 'package:budget_fusion_app/core/offline_first/cache/cache_manager.dart'
     as _i866;
 import 'package:budget_fusion_app/core/offline_first/cubits/offline_first_queue_cubit.dart'
     as _i810;
-import 'package:budget_fusion_app/core/offline_first/data_managers/data_manager_factory.dart'
-    as _i327;
+import 'package:budget_fusion_app/core/offline_first/data_manager/data_manager_factory.dart'
+    as _i657;
 import 'package:budget_fusion_app/core/offline_first/queue/queue_local_data_source.dart'
     as _i76;
 import 'package:budget_fusion_app/core/offline_first/queue/queue_manager.dart'
@@ -221,12 +221,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i810.OfflineFirstQueueCubit>(
       () => _i810.OfflineFirstQueueCubit(gh<_i714.QueueManager>()),
     );
-    gh.lazySingleton<_i327.DataManagerFactory>(
-      () => _i327.DataManagerFactory(
+    gh.lazySingleton<_i657.DataManagerFactory>(
+      () => _i657.DataManagerFactory(
         gh<_i714.CacheManager>(),
         gh<_i714.QueueManager>(),
         gh<_i371.RealtimeNotifierService>(),
         gh<_i714.RemoteLoadingService>(),
+      ),
+    );
+    gh.singleton<_i824.ProfileDataManager>(
+      () => _i824.ProfileDataManager(
+        gh<_i714.DataManagerFactory>(),
+        gh<_i627.ProfileLocalDataSource>(),
+        gh<_i412.ProfileRemoteDataSource>(),
+      ),
+    );
+    gh.singleton<_i853.ProfileSettingDataManager>(
+      () => _i853.ProfileSettingDataManager(
+        gh<_i714.DataManagerFactory>(),
+        gh<_i823.ProfileSettingLocalDataSource>(),
+        gh<_i548.ProfileSettingRemoteDataSource>(),
       ),
     );
     gh.singleton<_i818.AccountDataManager>(
@@ -239,26 +253,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i576.BookingAccountService>(
       () => _i576.BookingAccountService(gh<_i714.AccountDataManager>()),
     );
-    gh.singleton<_i853.ProfileSettingDataManager>(
-      () => _i853.ProfileSettingDataManager(
-        gh<_i714.DataManagerFactory>(),
-        gh<_i823.ProfileSettingLocalDataSource>(),
-        gh<_i548.ProfileSettingRemoteDataSource>(),
-      ),
-    );
     gh.singleton<_i841.CategoryDataManager>(
       () => _i841.CategoryDataManager(
         gh<_i714.DataManagerFactory>(),
         gh<_i219.CategoryLocalDataSource>(),
         gh<_i828.CategoryRemoteDataSource>(),
         gh<_i699.CategoryMapper>(),
-      ),
-    );
-    gh.singleton<_i824.ProfileDataManager>(
-      () => _i824.ProfileDataManager(
-        gh<_i714.DataManagerFactory>(),
-        gh<_i627.ProfileLocalDataSource>(),
-        gh<_i412.ProfileRemoteDataSource>(),
       ),
     );
     gh.lazySingleton<_i656.DefaultAccountUseCase>(
@@ -283,9 +283,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.SummaryDataGenerator>(),
       ),
     );
-    gh.factory<_i788.CategoryListCubit>(
-      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
-    );
     gh.singleton<_i219.BookingDataManager>(
       () => _i219.BookingDataManager(
         gh<_i714.DataManagerFactory>(),
@@ -294,26 +291,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i162.BookingMapper>(),
         gh<_i714.AccountDataManager>(),
         gh<_i714.CategoryDataManager>(),
-      ),
-    );
-    gh.lazySingleton<_i405.SaveBookingUseCase>(
-      () => _i405.SaveBookingUseCase(gh<_i714.BookingDataManager>()),
-    );
-    gh.factory<_i963.SuggestionCubit>(
-      () => _i963.SuggestionCubit(gh<_i714.BookingDataManager>()),
-    );
-    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
-      () => _i562.ResetBudgetBookUseCase(
-        gh<_i714.CategoryDataManager>(),
-        gh<_i714.AccountDataManager>(),
-        gh<_i714.BookingDataManager>(),
-      ),
-    );
-    gh.factory<_i863.BookingSaveCubit>(
-      () => _i863.BookingSaveCubit(
-        gh<_i405.SaveBookingUseCase>(),
-        gh<_i656.DefaultAccountUseCase>(),
-        gh<_i714.BookingDataManager>(),
       ),
     );
     gh.factory<_i655.OfflineFirstLoaderCubit>(
@@ -335,6 +312,32 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.ProfileSettingDataManager>(),
       ),
     );
+    gh.factory<_i788.CategoryListCubit>(
+      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
+    );
+    gh.lazySingleton<_i405.SaveBookingUseCase>(
+      () => _i405.SaveBookingUseCase(gh<_i714.BookingDataManager>()),
+    );
+    gh.factory<_i963.SuggestionCubit>(
+      () => _i963.SuggestionCubit(gh<_i714.BookingDataManager>()),
+    );
+    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
+      () => _i562.ResetBudgetBookUseCase(
+        gh<_i714.CategoryDataManager>(),
+        gh<_i714.AccountDataManager>(),
+        gh<_i714.BookingDataManager>(),
+      ),
+    );
+    gh.factory<_i863.BookingSaveCubit>(
+      () => _i863.BookingSaveCubit(
+        gh<_i405.SaveBookingUseCase>(),
+        gh<_i656.DefaultAccountUseCase>(),
+        gh<_i714.BookingDataManager>(),
+      ),
+    );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.DataManager<dynamic>>>()),
+    );
     gh.factory<_i569.BudgetBookCubit>(
       () => _i569.BudgetBookCubit(
         gh<_i507.GenerateBudgetSummaryUseCase>(),
@@ -343,9 +346,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i562.ResetBudgetBookUseCase>(),
         gh<_i196.GenerateBudgetTransactionUseCase>(),
       ),
-    );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.DataManager<dynamic>>>()),
     );
     return this;
   }

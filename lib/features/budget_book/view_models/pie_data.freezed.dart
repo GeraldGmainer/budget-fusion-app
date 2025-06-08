@@ -12,16 +12,21 @@ part of 'pie_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-entities',
 );
 
 /// @nodoc
 mixin _$PieData {
   String get xData => throw _privateConstructorUsedError;
+
   num get yData => throw _privateConstructorUsedError;
+
   String? get text => throw _privateConstructorUsedError;
+
   String get iconName => throw _privateConstructorUsedError;
+
   String get iconColor => throw _privateConstructorUsedError;
+
   bool get hideIcon => throw _privateConstructorUsedError;
 
   /// Create a copy of PieData
@@ -32,26 +37,19 @@ mixin _$PieData {
 
 /// @nodoc
 abstract class $PieDataCopyWith<$Res> {
-  factory $PieDataCopyWith(PieData value, $Res Function(PieData) then) =
-      _$PieDataCopyWithImpl<$Res, PieData>;
+  factory $PieDataCopyWith(PieData value, $Res Function(PieData) then) = _$PieDataCopyWithImpl<$Res, PieData>;
+
   @useResult
-  $Res call({
-    String xData,
-    num yData,
-    String? text,
-    String iconName,
-    String iconColor,
-    bool hideIcon,
-  });
+  $Res call({String xData, num yData, String? text, String iconName, String iconColor, bool hideIcon});
 }
 
 /// @nodoc
-class _$PieDataCopyWithImpl<$Res, $Val extends PieData>
-    implements $PieDataCopyWith<$Res> {
+class _$PieDataCopyWithImpl<$Res, $Val extends PieData> implements $PieDataCopyWith<$Res> {
   _$PieDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -59,14 +57,7 @@ class _$PieDataCopyWithImpl<$Res, $Val extends PieData>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? xData = null,
-    Object? yData = null,
-    Object? text = freezed,
-    Object? iconName = null,
-    Object? iconColor = null,
-    Object? hideIcon = null,
-  }) {
+  $Res call({Object? xData = null, Object? yData = null, Object? text = freezed, Object? iconName = null, Object? iconColor = null, Object? hideIcon = null}) {
     return _then(
       _value.copyWith(
             xData:
@@ -107,43 +98,22 @@ class _$PieDataCopyWithImpl<$Res, $Val extends PieData>
 
 /// @nodoc
 abstract class _$$PieDataImplCopyWith<$Res> implements $PieDataCopyWith<$Res> {
-  factory _$$PieDataImplCopyWith(
-    _$PieDataImpl value,
-    $Res Function(_$PieDataImpl) then,
-  ) = __$$PieDataImplCopyWithImpl<$Res>;
+  factory _$$PieDataImplCopyWith(_$PieDataImpl value, $Res Function(_$PieDataImpl) then) = __$$PieDataImplCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({
-    String xData,
-    num yData,
-    String? text,
-    String iconName,
-    String iconColor,
-    bool hideIcon,
-  });
+  $Res call({String xData, num yData, String? text, String iconName, String iconColor, bool hideIcon});
 }
 
 /// @nodoc
-class __$$PieDataImplCopyWithImpl<$Res>
-    extends _$PieDataCopyWithImpl<$Res, _$PieDataImpl>
-    implements _$$PieDataImplCopyWith<$Res> {
-  __$$PieDataImplCopyWithImpl(
-    _$PieDataImpl _value,
-    $Res Function(_$PieDataImpl) _then,
-  ) : super(_value, _then);
+class __$$PieDataImplCopyWithImpl<$Res> extends _$PieDataCopyWithImpl<$Res, _$PieDataImpl> implements _$$PieDataImplCopyWith<$Res> {
+  __$$PieDataImplCopyWithImpl(_$PieDataImpl _value, $Res Function(_$PieDataImpl) _then) : super(_value, _then);
 
   /// Create a copy of PieData
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? xData = null,
-    Object? yData = null,
-    Object? text = freezed,
-    Object? iconName = null,
-    Object? iconColor = null,
-    Object? hideIcon = null,
-  }) {
+  $Res call({Object? xData = null, Object? yData = null, Object? text = freezed, Object? iconName = null, Object? iconColor = null, Object? hideIcon = null}) {
     return _then(
       _$PieDataImpl(
         xData:
@@ -184,14 +154,7 @@ class __$$PieDataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PieDataImpl extends _PieData {
-  const _$PieDataImpl({
-    required this.xData,
-    required this.yData,
-    this.text,
-    required this.iconName,
-    required this.iconColor,
-    required this.hideIcon,
-  }) : super._();
+  const _$PieDataImpl({required this.xData, required this.yData, this.text, required this.iconName, required this.iconColor, required this.hideIcon}) : super._();
 
   @override
   final String xData;
@@ -219,32 +182,20 @@ class _$PieDataImpl extends _PieData {
             (identical(other.xData, xData) || other.xData == xData) &&
             (identical(other.yData, yData) || other.yData == yData) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.iconName, iconName) ||
-                other.iconName == iconName) &&
-            (identical(other.iconColor, iconColor) ||
-                other.iconColor == iconColor) &&
-            (identical(other.hideIcon, hideIcon) ||
-                other.hideIcon == hideIcon));
+            (identical(other.iconName, iconName) || other.iconName == iconName) &&
+            (identical(other.iconColor, iconColor) || other.iconColor == iconColor) &&
+            (identical(other.hideIcon, hideIcon) || other.hideIcon == hideIcon));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    xData,
-    yData,
-    text,
-    iconName,
-    iconColor,
-    hideIcon,
-  );
+  int get hashCode => Object.hash(runtimeType, xData, yData, text, iconName, iconColor, hideIcon);
 
   /// Create a copy of PieData
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PieDataImplCopyWith<_$PieDataImpl> get copyWith =>
-      __$$PieDataImplCopyWithImpl<_$PieDataImpl>(this, _$identity);
+  _$$PieDataImplCopyWith<_$PieDataImpl> get copyWith => __$$PieDataImplCopyWithImpl<_$PieDataImpl>(this, _$identity);
 }
 
 abstract class _PieData extends PieData {
@@ -256,18 +207,24 @@ abstract class _PieData extends PieData {
     required final String iconColor,
     required final bool hideIcon,
   }) = _$PieDataImpl;
+
   const _PieData._() : super._();
 
   @override
   String get xData;
+
   @override
   num get yData;
+
   @override
   String? get text;
+
   @override
   String get iconName;
+
   @override
   String get iconColor;
+
   @override
   bool get hideIcon;
 
@@ -275,6 +232,5 @@ abstract class _PieData extends PieData {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PieDataImplCopyWith<_$PieDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PieDataImplCopyWith<_$PieDataImpl> get copyWith => throw _privateConstructorUsedError;
 }

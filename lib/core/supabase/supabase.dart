@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/uuid.dart';
+import '../value_objects/uuid.dart';
 
 export 'supabase_client.dart';
 export 'supabase_container.dart';

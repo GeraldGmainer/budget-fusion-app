@@ -1,4 +1,4 @@
-import '../../models/uuid.dart';
+import '../../value_objects/uuid.dart';
 
 abstract class OfflineFirstDto {
   Uuid get id;

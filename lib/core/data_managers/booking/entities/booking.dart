@@ -1,11 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../enums/category_type.dart';
-import '../../../models/entity.dart';
-import '../../../models/uuid.dart';
-import '../../account/entities/account.dart';
-import '../../category/entities/category.dart';
+import '../../../core.dart';
 import '../dtos/booking_dto.dart';
 
 part 'booking.freezed.dart';

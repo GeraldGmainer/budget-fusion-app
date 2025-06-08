@@ -1,9 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../models/entity.dart';
-import '../../../models/uuid.dart';
+import '../../../core.dart';
 import '../dtos/profile_setting_dto.dart';
-import 'currency.dart';
 
 part 'profile_setting.freezed.dart';
 
