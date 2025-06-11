@@ -9,7 +9,7 @@ class ResetBudgetBookUseCase {
 
   ResetBudgetBookUseCase(this._categoryManager, this._accountManager, this._bookingManager);
 
-  Future<void> call() async {
+  Future<void> reset() async {
     await _bookingManager.reset();
     await _categoryManager.reset();
     await _accountManager.reset();

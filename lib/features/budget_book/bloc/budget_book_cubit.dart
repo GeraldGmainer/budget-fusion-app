@@ -16,6 +16,7 @@ import '../view_models/budget_book_filter.dart';
 import '../view_models/budget_page_data.dart';
 
 part 'budget_book_cubit.freezed.dart';
+
 part 'budget_book_state.dart';
 
 @injectable
@@ -84,7 +85,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     action: () async {
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
       emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, period: state.period));
-      await _resetBudgetBookUseCase();
+      await _resetBudgetBookUseCase.reset();
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );

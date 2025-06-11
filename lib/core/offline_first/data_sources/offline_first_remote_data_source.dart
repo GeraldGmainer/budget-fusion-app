@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
@@ -13,9 +14,9 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
       PostgrestFilterBuilder<PostgrestList> query = supabase.from(table).select(columns);
       query = _applyFilters(query, filters);
       final response = await query.order('updated_at', ascending: false);
-      // Random random = Random();
-      // int randomNumber = random.nextInt(2000) + 3000;
-      // await Future.delayed(Duration(milliseconds: randomNumber));
+      Random random = Random();
+      int randomNumber = random.nextInt(500) + 1000;
+      await Future.delayed(Duration(milliseconds: randomNumber));
       final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
       _log("fetchAll ${result.length} DTOs", stopwatch: stopwatch);
       return result;
