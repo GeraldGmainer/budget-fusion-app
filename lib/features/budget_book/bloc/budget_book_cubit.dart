@@ -27,6 +27,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   final ResetBudgetBookUseCase _resetBudgetBookUseCase;
 
   StreamSubscription<List<Booking>>? _bookingSub;
+  bool _shouldResetPageIndex = true;
 
   BudgetBookCubit(this._generateBudgetSummaryUseCase, this._filterAndGroupBookingsUseCase, this._manager, this._resetBudgetBookUseCase, this._generateBudgetTransactionUseCase)
     : super(BudgetBookState.initial(filter: BudgetBookFilter.initial(), period: PeriodMode.month)) {
@@ -42,7 +43,10 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     action: () async {
       final filtered = await _filterAndGroupBookingsUseCase.load(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
-      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, loadTabWithIndex: 0));
+      final newPage = _shouldResetPageIndex ? 0 : state.pageIndex;
+
+      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, pageIndex: newPage));
+      _shouldResetPageIndex = false;
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
@@ -58,11 +62,12 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     }
   }
 
-  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, int? loadTabWithIndex}) => safeRun(
+  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode}) => safeRun(
     action: () async {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
       final newPeriod = newFilter.period;
+      final pageIndex = state.pageIndex;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "update view for budget book: $newViewMode / $newFilter");
 
       final bookings = await _manager.watch().first;
@@ -70,9 +75,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       final items = await _generateViewData(filtered, newViewMode);
 
       state.maybeWhen(
-        loaded:
-            (_, __, ___, ____, _____) =>
-                emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, period: newPeriod, loadTabWithIndex: loadTabWithIndex)),
+        loaded: (_, __, ___, ____, _____) => emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, period: newPeriod, pageIndex: pageIndex)),
         orElse: () => emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode)),
       );
     },
@@ -81,12 +84,17 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   Future<void> resetAndLoad() => safeRun(
     action: () async {
+      _shouldResetPageIndex = true;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
       emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, period: state.period));
       await _resetBudgetBookUseCase.reset();
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
+
+  void updatePageIndex(int newIndex) {
+    emit(state.copyWith(pageIndex: newIndex));
+  }
 
   @override
   Future<void> close() async {

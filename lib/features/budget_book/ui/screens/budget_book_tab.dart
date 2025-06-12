@@ -33,8 +33,8 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     _budgetViewTabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)
       ..addListener(() {
         if (_budgetViewTabController.indexIsChanging) {
-          final vm = BudgetViewMode.values[_budgetViewTabController.index];
-          context.read<BudgetBookCubit>().updateView(viewMode: vm, loadTabWithIndex: _contentPageController.page?.toInt());
+          final viewMode = BudgetViewMode.values[_budgetViewTabController.index];
+          context.read<BudgetBookCubit>().updateView(viewMode: viewMode);
         }
       });
   }
@@ -52,13 +52,11 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     super.dispose();
   }
 
-  void _onLoaded(int? loadTabWithIndex) {
-    if (loadTabWithIndex == null) return;
-
+  void _onLoaded(int pageIndex) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_contentPageController.hasClients) {
-        _contentPageController.animateToPage(loadTabWithIndex, duration: const Duration(milliseconds: 300), curve: Curves.linear);
-        _onContentPageChanged(loadTabWithIndex);
+        _contentPageController.animateToPage(pageIndex, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+        _onContentPageChanged(pageIndex);
       }
     });
   }
@@ -66,6 +64,8 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   void _onError(AppError error) => context.showErrorSnackBar(error);
 
   void _onContentPageChanged(int pageIndex) {
+    context.read<BudgetBookCubit>().updatePageIndex(pageIndex);
+
     final items = context.read<BudgetBookCubit>().state.items;
     if (items.isNotEmpty) {
       final reversedIndex = items.length - 1 - pageIndex;
@@ -83,10 +83,10 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
       listenWhen: (prev, curr) => prev.items != curr.items,
       listener: (context, state) {
-        state.whenOrNull(loaded: (_, __, ___, ____, loadTabWithIndex) => _onLoaded(loadTabWithIndex), error: (_, __, ___, ____, error) => _onError(error));
+        state.whenOrNull(loaded: (_, __, ___, ____, pageIndex) => _onLoaded(pageIndex), error: (_, __, ___, ____, _____, error) => _onError(error));
       },
       builder: (context, state) {
-        if (state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false)) {
+        if (state.maybeWhen(initial: (_, __, ___, ____, _____) => true, orElse: () => false)) {
           return Center(child: CircularProgressIndicator());
         }
         return Column(
