@@ -16,7 +16,6 @@ import '../view_models/budget_book_filter.dart';
 import '../view_models/budget_page_data.dart';
 
 part 'budget_book_cubit.freezed.dart';
-
 part 'budget_book_state.dart';
 
 @injectable
@@ -41,9 +40,9 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   Future<void> _onBookings(List<Booking> rawBookingList) => safeRun(
     action: () async {
-      final filtered = await _filterAndGroupBookingsUseCase(rawBookingList, state.filter);
+      final filtered = await _filterAndGroupBookingsUseCase.load(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
-      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, initialLoaded: true));
+      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, period: state.period, loadTabWithIndex: 0));
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
@@ -59,23 +58,22 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     }
   }
 
-  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, bool initialLoad = true}) => safeRun(
+  Future<void> updateView({BudgetBookFilter? filter, BudgetViewMode? viewMode, int? loadTabWithIndex}) => safeRun(
     action: () async {
       final newViewMode = viewMode ?? state.viewMode;
       final newFilter = filter ?? state.filter;
+      final newPeriod = newFilter.period;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "update view for budget book: $newViewMode / $newFilter");
 
       final bookings = await _manager.watch().first;
-      final filtered = await _filterAndGroupBookingsUseCase(bookings, newFilter);
+      final filtered = await _filterAndGroupBookingsUseCase.load(bookings, newFilter);
       final items = await _generateViewData(filtered, newViewMode);
 
       state.maybeWhen(
-        loaded: (_, __, ___, ____, _____) {
-          emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, period: state.period, initialLoaded: initialLoad));
-        },
-        orElse: () {
-          emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode));
-        },
+        loaded:
+            (_, __, ___, ____, _____) =>
+                emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, period: newPeriod, loadTabWithIndex: loadTabWithIndex)),
+        orElse: () => emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode)),
       );
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),

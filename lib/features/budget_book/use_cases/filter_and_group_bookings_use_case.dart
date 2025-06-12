@@ -11,7 +11,7 @@ class FilterAndGroupBookingsUseCase {
 
   FilterAndGroupBookingsUseCase(this._budgetPageDataService);
 
-  Future<List<BudgetPageData>> call(List<Booking> bookings, BudgetBookFilter filter) async {
+  Future<List<BudgetPageData>> load(List<Booking> bookings, BudgetBookFilter filter) async {
     return await _budgetPageDataService.load(bookings, filter);
   }
 }

@@ -17,7 +17,7 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
-    required bool initialLoaded,
+    required int? loadTabWithIndex,
   }) = _Loaded;
 
   const factory BudgetBookState.error({

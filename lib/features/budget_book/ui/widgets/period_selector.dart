@@ -40,28 +40,15 @@ class PeriodSelector extends StatelessWidget {
   }
 
   Widget _buildPrevious(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.chevron_left, color: AppColors.secondaryTextColor),
-      onPressed: () {
-        _onPrevious(context);
-      },
-    );
+    return IconButton(icon: Icon(Icons.chevron_left, color: AppColors.secondaryTextColor), onPressed: () => _onPrevious(context));
   }
 
   Widget _buildNext(BuildContext context) {
     final pc = pageController;
     final page = pc.hasClients && pc.positions.isNotEmpty ? pc.page ?? pc.initialPage.toDouble() : pc.initialPage.toDouble();
     final isEnd = page < 0.5;
-
-    return IconButton(
-      icon: Icon(Icons.chevron_right, color: isEnd ? AppColors.disabledTextColor : AppColors.secondaryTextColor),
-      onPressed:
-          isEnd
-              ? null
-              : () {
-                _onNext(context);
-              },
-    );
+    final color = isEnd ? AppColors.disabledTextColor : AppColors.secondaryTextColor;
+    return IconButton(icon: Icon(Icons.chevron_right, color: color), onPressed: isEnd ? null : () => _onNext(context));
   }
 
   Widget _buildPeriod(BuildContext context) {

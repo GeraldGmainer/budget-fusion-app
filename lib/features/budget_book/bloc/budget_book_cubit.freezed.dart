@@ -42,7 +42,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )
     loaded,
     required TResult Function(
@@ -75,7 +75,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult? Function(
@@ -108,7 +108,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult Function(
@@ -370,7 +370,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )
     loaded,
     required TResult Function(
@@ -407,7 +407,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult? Function(
@@ -444,7 +444,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult Function(
@@ -668,7 +668,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )
     loaded,
     required TResult Function(
@@ -705,7 +705,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult? Function(
@@ -742,7 +742,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult Function(
@@ -838,7 +838,7 @@ abstract class _$$LoadedImplCopyWith<$Res>
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
     PeriodMode period,
-    bool initialLoaded,
+    int? loadTabWithIndex,
   });
 
   @override
@@ -863,7 +863,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? filter = null,
     Object? viewMode = null,
     Object? period = null,
-    Object? initialLoaded = null,
+    Object? loadTabWithIndex = freezed,
   }) {
     return _then(
       _$LoadedImpl(
@@ -887,11 +887,11 @@ class __$$LoadedImplCopyWithImpl<$Res>
                 ? _value.period
                 : period // ignore: cast_nullable_to_non_nullable
                     as PeriodMode,
-        initialLoaded:
-            null == initialLoaded
-                ? _value.initialLoaded
-                : initialLoaded // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        loadTabWithIndex:
+            freezed == loadTabWithIndex
+                ? _value.loadTabWithIndex
+                : loadTabWithIndex // ignore: cast_nullable_to_non_nullable
+                    as int?,
       ),
     );
   }
@@ -905,7 +905,7 @@ class _$LoadedImpl implements _Loaded {
     required this.filter,
     required this.viewMode,
     required this.period,
-    required this.initialLoaded,
+    required this.loadTabWithIndex,
   }) : _items = items;
 
   final List<BudgetViewData> _items;
@@ -923,7 +923,7 @@ class _$LoadedImpl implements _Loaded {
   @override
   final PeriodMode period;
   @override
-  final bool initialLoaded;
+  final int? loadTabWithIndex;
 
   @override
   bool operator ==(Object other) {
@@ -935,8 +935,8 @@ class _$LoadedImpl implements _Loaded {
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
             (identical(other.period, period) || other.period == period) &&
-            (identical(other.initialLoaded, initialLoaded) ||
-                other.initialLoaded == initialLoaded));
+            (identical(other.loadTabWithIndex, loadTabWithIndex) ||
+                other.loadTabWithIndex == loadTabWithIndex));
   }
 
   @override
@@ -946,7 +946,7 @@ class _$LoadedImpl implements _Loaded {
     filter,
     viewMode,
     period,
-    initialLoaded,
+    loadTabWithIndex,
   );
 
   /// Create a copy of BudgetBookState
@@ -979,7 +979,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )
     loaded,
     required TResult Function(
@@ -991,7 +991,7 @@ class _$LoadedImpl implements _Loaded {
     )
     error,
   }) {
-    return loaded(items, filter, viewMode, period, initialLoaded);
+    return loaded(items, filter, viewMode, period, loadTabWithIndex);
   }
 
   @override
@@ -1016,7 +1016,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult? Function(
@@ -1028,7 +1028,7 @@ class _$LoadedImpl implements _Loaded {
     )?
     error,
   }) {
-    return loaded?.call(items, filter, viewMode, period, initialLoaded);
+    return loaded?.call(items, filter, viewMode, period, loadTabWithIndex);
   }
 
   @override
@@ -1053,7 +1053,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult Function(
@@ -1067,7 +1067,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, filter, viewMode, period, initialLoaded);
+      return loaded(items, filter, viewMode, period, loadTabWithIndex);
     }
     return orElse();
   }
@@ -1116,7 +1116,7 @@ abstract class _Loaded implements BudgetBookState {
     required final BudgetBookFilter filter,
     required final BudgetViewMode viewMode,
     required final PeriodMode period,
-    required final bool initialLoaded,
+    required final int? loadTabWithIndex,
   }) = _$LoadedImpl;
 
   @override
@@ -1127,7 +1127,7 @@ abstract class _Loaded implements BudgetBookState {
   BudgetViewMode get viewMode;
   @override
   PeriodMode get period;
-  bool get initialLoaded;
+  int? get loadTabWithIndex;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -1291,7 +1291,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )
     loaded,
     required TResult Function(
@@ -1328,7 +1328,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult? Function(
@@ -1365,7 +1365,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       PeriodMode period,
-      bool initialLoaded,
+      int? loadTabWithIndex,
     )?
     loaded,
     TResult Function(
