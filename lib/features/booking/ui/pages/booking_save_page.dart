@@ -74,26 +74,18 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  _onCategoryTypeChange(CategoryType value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
-  }
+  _onCategoryTypeChange(CategoryType value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
 
-  _onDateChange(DateTime value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
-  }
+  _onDateChange(DateTime value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
 
-  _onAccountChange(Account value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
-  }
+  _onAccountChange(Account value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
 
   _onCategoryChange(Category category) {
     setState(() => _categoryError = true);
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
   }
 
-  _onDescriptionChange(String? value) {
-    context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
-  }
+  _onDescriptionChange(String? value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
 
   _showAmountError() {
     Haptics.vibrate(HapticsType.error);
@@ -121,19 +113,14 @@ class _BookingSavePageState extends State<BookingSavePage> {
     Navigator.of(context).pop();
   }
 
-  _onError(AppError error) {
-    context.showErrorSnackBar(error);
-  }
+  _onError(AppError error) => context.showErrorSnackBar(error);
 
   _onDelete() {
     ConfirmDialog.show(
       context,
       headerText: "booking.dialogs.delete.title",
       bodyText: "booking.dialog.delete.body",
-      onOK: () {
-        // TODO use different model than booking ?
-        BlocProvider.of<BookingSaveCubit>(context).delete(widget.model!);
-      },
+      onOK: () => BlocProvider.of<BookingSaveCubit>(context).delete(widget.model!),
     );
   }
 
@@ -142,29 +129,29 @@ class _BookingSavePageState extends State<BookingSavePage> {
     Navigator.of(context).pop();
   }
 
-  // TODO show unsaved change dialog
   @override
   Widget build(BuildContext context) {
-    return _buildPage();
-  }
-
-  Widget _buildPage() {
     return BlocConsumer<BookingSaveCubit, BookingSaveState>(
-      buildWhen: (previous, current) {
-        return previous.draft != current.draft;
-      },
+      buildWhen: (previous, current) => previous.draft != current.draft,
       listener: (context, state) {
         state.whenOrNull(loaded: (draft) => _onSaveSuccess(draft), deleted: (_, booking) => _onDeleteSuccess(booking), error: (draft, error) => _onError(error));
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(state.draft.isCreating ? "booking.newTitle" : "booking.editTitle").tr(),
-            actions: [if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete)],
+        return UnsavedChangesGuard(
+          hasChange: state.draft != state.initialDraft,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(state.draft.isCreating ? "booking.newTitle" : "booking.editTitle").tr(),
+              actions: [if (!state.draft.isCreating) FormActionMenu(onDelete: _onDelete)],
+            ),
+            floatingActionButton: AppFab.save(() => _onSave(state.draft)),
+            resizeToAvoidBottomInset: false,
+            body: state.maybeWhen(
+              draftUpdate: (draft, _) => _buildContent(draft),
+              error: (draft, __) => _buildContent(draft),
+              orElse: () => Center(child: CircularProgressIndicator()),
+            ),
           ),
-          floatingActionButton: AppFab.save(() => _onSave(state.draft)),
-          resizeToAvoidBottomInset: false,
-          body: state.maybeWhen(draftUpdate: (draft) => _buildContent(draft), error: (draft, __) => _buildContent(draft), orElse: () => Center(child: CircularProgressIndicator())),
         );
       },
     );
@@ -210,7 +197,5 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  Widget _buildDivider() {
-    return Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor));
-  }
+  Widget _buildDivider() => Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor));
 }
