@@ -54,7 +54,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   Future<List<BudgetViewData>> _generateViewData(List<BudgetPageData> filtered, BudgetViewMode viewMode) async {
     switch (viewMode) {
       case BudgetViewMode.summary:
-        return await _generateBudgetSummaryUseCase(filtered);
+        return await _generateBudgetSummaryUseCase.generate(filtered);
       case BudgetViewMode.transaction:
         return await _generateBudgetTransactionUseCase(filtered);
       case BudgetViewMode.calendar:
