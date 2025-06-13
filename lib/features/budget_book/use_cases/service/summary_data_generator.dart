@@ -42,22 +42,12 @@ class SummaryDataGenerator {
       bookingsByCatId.putIfAbsent(cat.id, () => []).add(b);
     }
 
-    // Calculate total amount for each category, including subcategories
     final Map<Uuid, Money> amountByCatId = {};
     for (final booking in bookings) {
-      // Add booking amount to its immediate category
       amountByCatId.update(booking.category.id, (value) => value + booking.money, ifAbsent: () => booking.money);
-
-      // Also add to parent categories if they exist
-      Category? currentCategory = booking.category.parent;
-      while (currentCategory != null) {
-        amountByCatId.update(currentCategory.id, (value) => value + booking.money, ifAbsent: () => booking.money);
-        currentCategory = currentCategory.parent;
-      }
     }
 
     final List<CategoryGroup> topGroups = [];
-    // Only process parent categories from the input list
     for (final parentCategory in categories.where((c) => c.isParent)) {
       final List<CategoryGroup> subGroups = [];
       for (final subcategory in parentCategory.subcategories) {
@@ -71,7 +61,6 @@ class SummaryDataGenerator {
       final parentBookings = bookingsByCatId[parentCategory.id] ?? [];
       final parentAmount = amountByCatId[parentCategory.id] ?? Money.zero();
 
-      // Only add parent group if it has direct bookings or sub-groups with bookings
       if (parentBookings.isNotEmpty || subGroups.isNotEmpty) {
         topGroups.add(CategoryGroup(category: parentCategory, bookings: parentBookings, money: parentAmount, subGroups: subGroups));
       }
