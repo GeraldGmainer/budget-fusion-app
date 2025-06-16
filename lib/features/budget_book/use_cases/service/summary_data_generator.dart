@@ -52,8 +52,10 @@ class SummaryDataGenerator {
       final List<CategoryGroup> subGroups = [];
       for (final subcategory in parentCategory.subcategories) {
         final childBookings = bookingsByCatId[subcategory.id] ?? [];
-        final childAmount = amountByCatId[subcategory.id] ?? Money.zero();
-        subGroups.add(CategoryGroup(category: subcategory, bookings: childBookings, money: childAmount));
+        if (amountByCatId.containsKey(subcategory.id)) {
+          final childAmount = amountByCatId[subcategory.id]!;
+          subGroups.add(CategoryGroup(category: subcategory, bookings: childBookings, money: childAmount));
+        }
       }
 
       subGroups.sort(_compareCategoryGroups);
