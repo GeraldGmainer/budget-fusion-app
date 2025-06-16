@@ -13,7 +13,7 @@ class DateInput extends StatelessWidget {
 
   _onQuickTap(BuildContext context, int count) {
     final date = draft.date.add(Duration(days: count));
-    onChange.call(date);
+    onChange.call(date.startOfDay);
   }
 
   Future<void> _showDatePicker(BuildContext context) async {
@@ -26,7 +26,7 @@ class DateInput extends StatelessWidget {
     );
 
     if (picked != null && context.mounted) {
-      onChange.call(picked);
+      onChange.call(picked.startOfDay);
     }
   }
 
@@ -97,10 +97,7 @@ class DateSheet extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(DateTimeConverter.toEEEEdMMMMYYY(draft.date), style: theme.textTheme.titleMedium),
-        ),
+        Padding(padding: const EdgeInsets.symmetric(vertical: 8.0), child: Text(DateTimeConverter.toEEEEdMMMMYYY(draft.date), style: theme.textTheme.titleMedium)),
         const Divider(height: 16),
         CalendarDatePicker(
           initialDate: draft.date,

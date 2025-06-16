@@ -33,7 +33,7 @@ class QueueLocalDataSource {
     _log("Updating queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entityType.name)}");
     await db.update(
       'queue_items',
-      {'type': item.taskType.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
+      {'task_type': item.taskType.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
       where: 'entity_id = ?',
       whereArgs: [item.entityId],
     );
