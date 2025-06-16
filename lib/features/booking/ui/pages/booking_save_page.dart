@@ -119,7 +119,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     ConfirmDialog.show(
       context,
       headerText: "booking.dialogs.delete.title",
-      bodyText: "booking.dialog.delete.body",
+      bodyText: "booking.dialogs.delete.body",
       onOK: () => BlocProvider.of<BookingSaveCubit>(context).delete(widget.model!),
     );
   }
