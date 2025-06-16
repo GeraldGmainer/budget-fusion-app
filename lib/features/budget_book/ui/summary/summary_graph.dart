@@ -57,9 +57,6 @@ class SummaryGraph extends StatelessWidget {
   }
 
   List<PieChartSectionData> _buildSections(List<PieData> data) {
-    for (var pieData in data) {
-      print(pieData);
-    }
     return data.map((pieData) {
       final sliceColor = ColorConverter.stringToColor(pieData.iconColor);
       final darkerColor = ColorConverter.darken(sliceColor, 0.08);

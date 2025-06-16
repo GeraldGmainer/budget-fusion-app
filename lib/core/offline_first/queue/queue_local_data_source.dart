@@ -11,17 +11,18 @@ class QueueLocalDataSource {
   QueueLocalDataSource(this.db);
 
   Future<void> addQueueItem(QueueItem item) async {
-    _log("Adding queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entity.name)}");
+    _log("Adding queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entityType.name)}");
     BudgetLogger.instance.d(
       "add queue item:\n"
-      "   taskType: ${item.type}\n"
+      "   taskType: ${item.taskType}\n"
+      "   entityType: ${item.entityType}\n"
       "   entityPayload: ${item.entityPayload}\n"
       "   attempts: ${item.attempts} / done: ${item.done}",
     );
     await db.insert('queue_items', {
       'entity_id': item.entityId,
-      'type': item.type.toString(),
-      'entity': item.entity.toString(),
+      'task_type': item.taskType.toString(),
+      'entity_type': item.entityType.toString(),
       'entity_payload': item.entityPayload,
       'attempts': item.attempts,
       'done': item.done ? 1 : 0,
@@ -29,10 +30,10 @@ class QueueLocalDataSource {
   }
 
   Future<void> updateQueueItem(QueueItem item) async {
-    _log("Updating queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entity.name)}");
+    _log("Updating queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entityType.name)}");
     await db.update(
       'queue_items',
-      {'type': item.type.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
+      {'type': item.taskType.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
       where: 'entity_id = ?',
       whereArgs: [item.entityId],
     );
@@ -49,8 +50,8 @@ class QueueLocalDataSource {
     return rows.map((map) {
       return QueueItem(
         entityId: map['entity_id'] as String,
-        entity: EntityType.fromString(map['entity'] as String),
-        type: QueueTaskType.fromString(map['type'] as String),
+        entityType: EntityType.fromString(map['entity_type'] as String),
+        taskType: QueueTaskType.fromString(map['task_type'] as String),
         entityPayload: map['entity_payload'] as String,
         attempts: map['attempts'] as int,
         done: (map['done'] as int) == 1,

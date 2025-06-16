@@ -12,18 +12,18 @@ enum QueueTaskType {
 class QueueItem {
   final String entityId;
   final String entityPayload;
-  final EntityType entity;
-  final QueueTaskType type;
+  final EntityType entityType;
+  final QueueTaskType taskType;
   final int attempts;
   final bool done;
 
-  QueueItem({required this.entityId, required this.entity, required this.type, required this.entityPayload, this.attempts = 0, this.done = false});
+  QueueItem({required this.entityId, required this.entityType, required this.taskType, required this.entityPayload, this.attempts = 0, this.done = false});
 
-  QueueItem copyWith({String? entityId, EntityType? entity, QueueTaskType? type, String? entityPayload, int? attempts, bool? done}) {
+  QueueItem copyWith({String? entityId, EntityType? entityType, QueueTaskType? taskType, String? entityPayload, int? attempts, bool? done}) {
     return QueueItem(
       entityId: entityId ?? this.entityId,
-      entity: entity ?? this.entity,
-      type: type ?? this.type,
+      entityType: entityType ?? this.entityType,
+      taskType: taskType ?? this.taskType,
       entityPayload: entityPayload ?? this.entityPayload,
       attempts: attempts ?? this.attempts,
       done: done ?? this.done,
@@ -32,6 +32,6 @@ class QueueItem {
 
   @override
   String toString() {
-    return "QueueItem(entityId: $entityId, entityPayload: $entityPayload, entity: $entity, type: $type, attempts: $attempts, done: $done)";
+    return "QueueItem(entityId: $entityId, entityPayload: $entityPayload, entityType: $entityType, taskType: $taskType, attempts: $attempts, done: $done)";
   }
 }

@@ -105,7 +105,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final refreshedDtos = await _refreshCacheFromLocalSource();
     _emitToStream(refreshedDtos);
 
-    final item = QueueItem(entityId: dto.id.value, entity: entityType, type: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
+    final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing upsert for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
@@ -134,7 +134,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     final dtos = await _refreshCacheFromLocalSource();
     _emitToStream(dtos);
 
-    final item = QueueItem(entityId: dto.id.value, entity: entityType, type: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
+    final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing delete for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
