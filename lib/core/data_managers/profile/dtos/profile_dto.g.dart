@@ -12,9 +12,7 @@ _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       avatarUrl: json['avatar_url'] as String?,
-      updatedAt: const DateTimeSerializer().fromJson(
-        json['updated_at'] as String,
-      ),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
     );
 
 Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>

@@ -7,7 +7,7 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     @Default(BudgetViewMode.summary) BudgetViewMode viewMode,
     required PeriodMode period,
-    @Default(0) int pageIndex,
+    required BudgetDateRange dateRange,
   }) = _Initial;
 
   const factory BudgetBookState.loading({
@@ -15,7 +15,7 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
-    @Default(0) int pageIndex,
+    required BudgetDateRange dateRange,
   }) = _Loading;
 
   const factory BudgetBookState.loaded({
@@ -23,7 +23,7 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
-    @Default(0) int pageIndex,
+    required BudgetDateRange dateRange,
   }) = _Loaded;
 
   const factory BudgetBookState.error({
@@ -31,21 +31,23 @@ class BudgetBookState with _$BudgetBookState {
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
     required PeriodMode period,
-    @Default(0) int pageIndex,
+    required BudgetDateRange dateRange,
     required AppError error,
   }) = _Error;
 
   static BudgetBookState fromError({required AppError error, required BudgetBookState state}) {
-    return BudgetBookState.error(items: state.items, filter: state.filter, viewMode: state.viewMode, period: state.period, error: error);
+    return BudgetBookState.error(items: state.items, filter: state.filter, viewMode: state.viewMode, period: state.period, dateRange: state.dateRange, error: error);
   }
 
   @override
   String toString() {
     return when(
-      initial: (_, filter, viewMode, period, __) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
-      loading: (_, filter, viewMode, period, __) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
-      loaded: (_, filter, viewMode, period, __) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
-      error: (_, filter, viewMode, period, __, error) => 'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period',
+      initial: (_, filter, viewMode, period, dateRange) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
+      loading: (_, filter, viewMode, period, dateRange) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
+      loaded: (_, filter, viewMode, period, dateRange) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
+      error:
+          (_, filter, viewMode, period, dateRange, error) =>
+              'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
     );
   }
 }

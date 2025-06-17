@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/budget_book_cubit.dart';
 import '../../enums/budget_view_mode.dart';
-import '../../view_models/budget_date_range.dart';
 import '../../view_models/summary_view_data.dart';
 import '../../view_models/transaction_view_data.dart';
 import '../calendar/calendar_view.dart';
@@ -23,13 +22,12 @@ class BudgetBookTab extends StatefulWidget {
 
 class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late final TabController _budgetViewTabController;
-  final PageController _contentPageController = PageController();
-  late BudgetDateRange _currentDateRange;
+  late final PageController _contentPageController;
 
   @override
   void initState() {
     super.initState();
-    _initPagination();
+    _contentPageController = PageController();
     _budgetViewTabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)
       ..addListener(() {
         if (_budgetViewTabController.indexIsChanging) {
@@ -37,12 +35,8 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
           context.read<BudgetBookCubit>().updateView(viewMode: viewMode);
         }
       });
-  }
 
-  void _initPagination() {
-    final now = DateTime.now();
-    final period = context.read<BudgetBookCubit>().state.filter.period;
-    _currentDateRange = BudgetDateRange(period: period, from: now, to: now);
+    _handleSelectedRangeChange(context.read<BudgetBookCubit>().state);
   }
 
   @override
@@ -52,46 +46,42 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     super.dispose();
   }
 
-  void _onLoaded(int pageIndex) {
+  void _handleError(AppError error) => context.showErrorSnackBar(error);
+
+  void _handleSelectedRangeChange(BudgetBookState state) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_contentPageController.hasClients) {
-        _contentPageController.animateToPage(pageIndex, duration: const Duration(milliseconds: 300), curve: Curves.linear);
-        _onContentPageChanged(pageIndex);
-      }
+      final idx = state.items.indexWhere((e) => e.dateRange == state.dateRange);
+      if (idx == -1) return;
+      final targetPage = state.items.length - 1 - idx;
+      if (!_contentPageController.hasClients) return;
+      final current = _contentPageController.page ?? _contentPageController.initialPage.toDouble();
+      if (current.round() == targetPage) return;
+      _contentPageController.jumpToPage(targetPage);
     });
   }
 
-  void _onError(AppError error) => context.showErrorSnackBar(error);
-
   void _onContentPageChanged(int pageIndex) {
-    context.read<BudgetBookCubit>().updatePageIndex(pageIndex);
-
     final items = context.read<BudgetBookCubit>().state.items;
-    if (items.isNotEmpty) {
-      final reversedIndex = items.length - 1 - pageIndex;
-      setState(() {
-        _currentDateRange = items[reversedIndex].dateRange;
-      });
-    } else {
-      BudgetLogger.instance.w('budget book items are empty');
-    }
+    if (items.isEmpty) return;
+    final reversedIndex = items.length - 1 - pageIndex;
+    context.read<BudgetBookCubit>().setDateRange(items[reversedIndex].dateRange);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
-      listenWhen: (prev, curr) => prev.items != curr.items,
+      listenWhen: (prev, curr) => prev.dateRange != curr.dateRange || (curr.isError && !prev.isError),
       listener: (context, state) {
-        state.whenOrNull(loaded: (_, __, ___, ____, pageIndex) => _onLoaded(pageIndex), error: (_, __, ___, ____, _____, error) => _onError(error));
+        state.whenOrNull(error: (_, __, ___, ____, dateRange, error) => _handleError(error));
+        _handleSelectedRangeChange(state);
       },
       builder: (context, state) {
-        if (state.maybeWhen(initial: (_, __, ___, ____, _____) => true, orElse: () => false)) {
-          return Center(child: CircularProgressIndicator());
-        }
+        final isInitial = state.maybeWhen(initial: (_, __, ___, ____, _____) => true, orElse: () => false);
+        if (isInitial) return Center(child: CircularProgressIndicator());
         return Column(
           children: [
-            PeriodSelector(filter: state.filter, dateRange: _currentDateRange, pageController: _contentPageController),
+            PeriodSelector(pageController: _contentPageController),
             Material(
               color: AppColors.primaryColor,
               child: TabBar(
@@ -111,18 +101,14 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   Widget _buildBody(BudgetBookState state) {
     if (state.isLoading) return Center(child: CircularProgressIndicator());
     if (state.items.isEmpty) return Center(child: Text('budgetBook.tabs.empty'.tr()));
-
-    final List<BudgetViewData> items = state.items.reversed.toList();
-
+    final items = state.items.reversed.toList();
     return PageView.builder(
       controller: _contentPageController,
       itemCount: items.length,
       onPageChanged: _onContentPageChanged,
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (ctx, i) {
-        return RepaintBoundary(child: _buildContent(state.viewMode, items[i]));
-      },
+      itemBuilder: (ctx, i) => RepaintBoundary(child: _buildContent(state.viewMode, items[i])),
     );
   }
 
