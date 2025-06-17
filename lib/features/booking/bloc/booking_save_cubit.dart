@@ -27,12 +27,14 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
 
   Future<void> init(Booking? booking) => safeRun(
     action: () async {
+      late BookingDraft draft;
       if (booking == null) {
         final defaultAccount = await _defaultAccountUseCase.get();
-        emit(BookingSaveState.draftUpdate(draft: _initialDraft(account: defaultAccount)));
+        draft = _initialDraft(account: defaultAccount);
       } else {
-        emit(BookingSaveState.draftUpdate(draft: BookingDraft.fromBooking(booking)));
+        draft = BookingDraft.fromBooking(booking);
       }
+      emit(BookingSaveState.draftUpdate(draft: draft, initialDraft: draft));
     },
     onError: (e, appError) => BookingSaveState.error(draft: state.draft, error: appError),
   );

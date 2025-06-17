@@ -21,7 +21,8 @@ mixin _$BookingSaveState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -30,7 +31,8 @@ mixin _$BookingSaveState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -39,7 +41,8 @@ mixin _$BookingSaveState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -209,7 +212,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -222,7 +226,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -235,7 +240,8 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -315,10 +321,11 @@ abstract class _$$DraftUpdateImplCopyWith<$Res>
   ) = __$$DraftUpdateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BookingDraft draft});
+  $Res call({BookingDraft draft, BookingDraft initialDraft});
 
   @override
   $BookingDraftCopyWith<$Res> get draft;
+  $BookingDraftCopyWith<$Res> get initialDraft;
 }
 
 /// @nodoc
@@ -334,7 +341,7 @@ class __$$DraftUpdateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? draft = null}) {
+  $Res call({Object? draft = null, Object? initialDraft = null}) {
     return _then(
       _$DraftUpdateImpl(
         draft:
@@ -342,22 +349,39 @@ class __$$DraftUpdateImplCopyWithImpl<$Res>
                 ? _value.draft
                 : draft // ignore: cast_nullable_to_non_nullable
                     as BookingDraft,
+        initialDraft:
+            null == initialDraft
+                ? _value.initialDraft
+                : initialDraft // ignore: cast_nullable_to_non_nullable
+                    as BookingDraft,
       ),
     );
+  }
+
+  /// Create a copy of BookingSaveState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookingDraftCopyWith<$Res> get initialDraft {
+    return $BookingDraftCopyWith<$Res>(_value.initialDraft, (value) {
+      return _then(_value.copyWith(initialDraft: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$DraftUpdateImpl implements _DraftUpdate {
-  _$DraftUpdateImpl({required this.draft});
+  _$DraftUpdateImpl({required this.draft, required this.initialDraft});
 
   @override
   final BookingDraft draft;
+  @override
+  final BookingDraft initialDraft;
 
   @override
   String toString() {
-    return 'BookingSaveState.draftUpdate(draft: $draft)';
+    return 'BookingSaveState.draftUpdate(draft: $draft, initialDraft: $initialDraft)';
   }
 
   @override
@@ -365,11 +389,13 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DraftUpdateImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
+            (identical(other.draft, draft) || other.draft == draft) &&
+            (identical(other.initialDraft, initialDraft) ||
+                other.initialDraft == initialDraft));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, draft);
+  int get hashCode => Object.hash(runtimeType, draft, initialDraft);
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -383,33 +409,36 @@ class _$DraftUpdateImpl implements _DraftUpdate {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
     required TResult Function(BookingDraft draft, AppError error) error,
   }) {
-    return draftUpdate(draft);
+    return draftUpdate(draft, initialDraft);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
     TResult? Function(BookingDraft draft, AppError error)? error,
   }) {
-    return draftUpdate?.call(draft);
+    return draftUpdate?.call(draft, initialDraft);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -417,7 +446,7 @@ class _$DraftUpdateImpl implements _DraftUpdate {
     required TResult orElse(),
   }) {
     if (draftUpdate != null) {
-      return draftUpdate(draft);
+      return draftUpdate(draft, initialDraft);
     }
     return orElse();
   }
@@ -467,10 +496,14 @@ class _$DraftUpdateImpl implements _DraftUpdate {
 }
 
 abstract class _DraftUpdate implements BookingSaveState {
-  factory _DraftUpdate({required final BookingDraft draft}) = _$DraftUpdateImpl;
+  factory _DraftUpdate({
+    required final BookingDraft draft,
+    required final BookingDraft initialDraft,
+  }) = _$DraftUpdateImpl;
 
   @override
   BookingDraft get draft;
+  BookingDraft get initialDraft;
 
   /// Create a copy of BookingSaveState
   /// with the given fields replaced by the non-null parameter values.
@@ -557,7 +590,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -570,7 +604,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -583,7 +618,8 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -731,7 +767,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -744,7 +781,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -757,7 +795,8 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -924,7 +963,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -937,7 +977,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -950,7 +991,8 @@ class _$DeletedImpl implements _Deleted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,
@@ -1110,7 +1152,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BookingDraft draft) initial,
-    required TResult Function(BookingDraft draft) draftUpdate,
+    required TResult Function(BookingDraft draft, BookingDraft initialDraft)
+    draftUpdate,
     required TResult Function(BookingDraft draft) loading,
     required TResult Function(BookingDraft draft) loaded,
     required TResult Function(BookingDraft draft, Booking booking) deleted,
@@ -1123,7 +1166,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BookingDraft draft)? initial,
-    TResult? Function(BookingDraft draft)? draftUpdate,
+    TResult? Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult? Function(BookingDraft draft)? loading,
     TResult? Function(BookingDraft draft)? loaded,
     TResult? Function(BookingDraft draft, Booking booking)? deleted,
@@ -1136,7 +1180,8 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BookingDraft draft)? initial,
-    TResult Function(BookingDraft draft)? draftUpdate,
+    TResult Function(BookingDraft draft, BookingDraft initialDraft)?
+    draftUpdate,
     TResult Function(BookingDraft draft)? loading,
     TResult Function(BookingDraft draft)? loaded,
     TResult Function(BookingDraft draft, Booking booking)? deleted,

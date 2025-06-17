@@ -51,6 +51,13 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
   key(CalculatorKey key) async {
     List<String> history = [...state.history];
+    if (key == CalculatorKey.dot) {
+      final parts = history.join().split(RegExp(r'[+\-*/]'));
+      if (parts.last.contains('.')) {
+        return;
+      }
+    }
+
     if (_isLastHistoryAOperation() && key.isOperation) {
       history.removeLast();
     }

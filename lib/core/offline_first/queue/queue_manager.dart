@@ -99,16 +99,16 @@ class QueueManager {
   Future<void> _processQueueItem(QueueItem item) async {
     _log("Processing queue item with entityId: ${item.entityId}");
 
-    final remoteSource = _remoteSources[item.entity];
-    final localSource = _localSources[item.entity];
+    final remoteSource = _remoteSources[item.entityType];
+    final localSource = _localSources[item.entityType];
     if (remoteSource == null || localSource == null) {
-      throw Exception("Entity sources not registered for entity ${item.entity}");
+      throw Exception("Entity sources not registered for entity ${item.entityType}");
     }
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
     try {
       await remoteLoadingService.wrap(() async {
-        switch (item.type) {
+        switch (item.taskType) {
           case QueueTaskType.upsert:
             final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
             if (updatedDto.updatedAt == null) {

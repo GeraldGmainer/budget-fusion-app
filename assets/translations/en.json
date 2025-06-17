@@ -24,6 +24,12 @@
       "minLength": "Must be at least {} characters.",
       "maxLength": "Must be no more than {} characters.",
       "number": "Please enter a valid number."
+    },
+    "dialog": {
+      "unsaved_changes": {
+        "title": "Unsaved changes",
+        "body": "You have unsaved changes. Are you sure you want to leave?"
+      }
     }
   },
   "account": {

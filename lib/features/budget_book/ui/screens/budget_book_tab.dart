@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
 import 'package:budget_fusion_app/core/exceptions/app_error.dart';
+import 'package:budget_fusion_app/features/budget_book/view_models/base/budget_view_data.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +22,21 @@ class BudgetBookTab extends StatefulWidget {
 }
 
 class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-  final PageController _pageController = PageController();
+  late final TabController _budgetViewTabController;
+  final PageController _contentPageController = PageController();
   late BudgetDateRange _currentDateRange;
 
   @override
   void initState() {
     super.initState();
     _initPagination();
-    _tabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)..addListener(() {
-      if (_tabController.indexIsChanging) {
-        final vm = BudgetViewMode.values[_tabController.index];
-        context.read<BudgetBookCubit>().updateView(viewMode: vm, initialLoad: false);
-      }
-    });
+    _budgetViewTabController = TabController(length: BudgetViewMode.values.length, vsync: this, initialIndex: context.read<BudgetBookCubit>().state.viewMode.index)
+      ..addListener(() {
+        if (_budgetViewTabController.indexIsChanging) {
+          final viewMode = BudgetViewMode.values[_budgetViewTabController.index];
+          context.read<BudgetBookCubit>().updateView(viewMode: viewMode);
+        }
+      });
   }
 
   void _initPagination() {
@@ -45,26 +47,25 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _pageController.dispose();
+    _budgetViewTabController.dispose();
+    _contentPageController.dispose();
     super.dispose();
   }
 
-  void _onLoaded(bool initialLoaded) {
-    if (!initialLoaded) return;
+  void _onLoaded(int pageIndex) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_pageController.hasClients) {
-        _pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.linear);
-        _onPageChanged(0);
+      if (_contentPageController.hasClients) {
+        _contentPageController.animateToPage(pageIndex, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+        _onContentPageChanged(pageIndex);
       }
     });
   }
 
-  void _onError(AppError error) {
-    context.showErrorSnackBar(error);
-  }
+  void _onError(AppError error) => context.showErrorSnackBar(error);
 
-  void _onPageChanged(int pageIndex) {
+  void _onContentPageChanged(int pageIndex) {
+    context.read<BudgetBookCubit>().updatePageIndex(pageIndex);
+
     final items = context.read<BudgetBookCubit>().state.items;
     if (items.isNotEmpty) {
       final reversedIndex = items.length - 1 - pageIndex;
@@ -82,25 +83,22 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
       listenWhen: (prev, curr) => prev.items != curr.items,
       listener: (context, state) {
-        state.whenOrNull(loaded: (_, __, ___, ____, initialLoaded) => _onLoaded(initialLoaded), error: (_, __, ___, ____, error) => _onError(error));
+        state.whenOrNull(loaded: (_, __, ___, ____, pageIndex) => _onLoaded(pageIndex), error: (_, __, ___, ____, _____, error) => _onError(error));
       },
       builder: (context, state) {
-        if (state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false)) {
+        if (state.maybeWhen(initial: (_, __, ___, ____, _____) => true, orElse: () => false)) {
           return Center(child: CircularProgressIndicator());
         }
         return Column(
           children: [
-            PeriodSelector(filter: state.filter, dateRange: _currentDateRange, pageController: _pageController),
+            PeriodSelector(filter: state.filter, dateRange: _currentDateRange, pageController: _contentPageController),
             Material(
               color: AppColors.primaryColor,
               child: TabBar(
-                controller: _tabController,
+                controller: _budgetViewTabController,
                 isScrollable: true,
                 tabAlignment: TabAlignment.center,
-                tabs:
-                    BudgetViewMode.values.map((vm) {
-                      return Tab(text: vm.label.tr());
-                    }).toList(),
+                tabs: BudgetViewMode.values.map((vm) => Tab(text: vm.label.tr())).toList(),
               ),
             ),
             Expanded(child: _buildBody(state)),
@@ -111,49 +109,29 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   Widget _buildBody(BudgetBookState state) {
-    if (state.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (state.items.isEmpty) {
-      return Center(child: Text('budgetBook.tabs.empty'.tr()));
-    }
+    if (state.isLoading) return Center(child: CircularProgressIndicator());
+    if (state.items.isEmpty) return Center(child: Text('budgetBook.tabs.empty'.tr()));
 
-    return TabBarView(
-      controller: _tabController,
-      children: [
-        if (state.viewMode == BudgetViewMode.summary) _buildSummary(state.items.cast<SummaryViewData>()) else const SizedBox.shrink(),
-        if (state.viewMode == BudgetViewMode.transaction) _buildTransaction(state.items.cast<TransactionViewData>()) else const SizedBox.shrink(),
-        if (state.viewMode == BudgetViewMode.calendar) CalendarView() else const SizedBox.shrink(),
-      ],
-    );
-  }
+    final List<BudgetViewData> items = state.items.reversed.toList();
 
-  Widget _buildSummary(List<SummaryViewData> items) {
-    final reversed = items.reversed.toList();
     return PageView.builder(
-      controller: _pageController,
-      itemCount: reversed.length,
-      onPageChanged: _onPageChanged,
+      controller: _contentPageController,
+      itemCount: items.length,
+      onPageChanged: _onContentPageChanged,
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return RepaintBoundary(child: SummaryView(data: reversed[index]));
+      itemBuilder: (ctx, i) {
+        return RepaintBoundary(child: _buildContent(state.viewMode, items[i]));
       },
     );
   }
 
-  Widget _buildTransaction(List<TransactionViewData> items) {
-    final reversed = items.reversed.toList();
-    return PageView.builder(
-      controller: _pageController,
-      itemCount: reversed.length,
-      onPageChanged: _onPageChanged,
-      reverse: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return RepaintBoundary(child: TransactionView(data: reversed[index]));
-      },
-    );
+  Widget _buildContent(BudgetViewMode viewMode, BudgetViewData item) {
+    return switch (viewMode) {
+      BudgetViewMode.summary => SummaryView(data: item as SummaryViewData),
+      BudgetViewMode.transaction => TransactionView(data: item as TransactionViewData),
+      BudgetViewMode.calendar => CalendarView(),
+    };
   }
 
   @override

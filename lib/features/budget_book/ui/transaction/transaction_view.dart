@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../view_models/transaction_view_data.dart';
+import '../widgets/budget_book_reloader.dart';
 import 'transaction_list.dart';
 
 class TransactionView extends StatelessWidget {
@@ -12,16 +13,18 @@ class TransactionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: AppDimensions.pageCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (data.transactionGroups.isNotEmpty) RepaintBoundary(child: TransactionList(data: data)),
-            if (data.transactionGroups.isEmpty) _buildEmpty(),
-            const SizedBox(height: 8.0),
-          ],
+    return BudgetBookReloader(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: AppDimensions.pageCardPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (data.transactionGroups.isNotEmpty) RepaintBoundary(child: TransactionList(data: data)),
+              if (data.transactionGroups.isEmpty) _buildEmpty(),
+              const SizedBox(height: 8.0),
+            ],
+          ),
         ),
       ),
     );

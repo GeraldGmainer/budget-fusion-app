@@ -12,8 +12,9 @@ class GenerateBudgetSummaryUseCase {
 
   GenerateBudgetSummaryUseCase(this._categoryDataManager, this._summaryDataGenerator);
 
-  Future<List<SummaryViewData>> call(List<BudgetPageData> datas) async {
+  Future<List<SummaryViewData>> generate(List<BudgetPageData> datas) async {
     final categories = await _categoryDataManager.getAll();
-    return datas.map((data) => _summaryDataGenerator.generate(data, categories)).toList();
+    final viewDatas = datas.map((data) => _summaryDataGenerator.generate(data, categories)).toList();
+    return viewDatas;
   }
 }

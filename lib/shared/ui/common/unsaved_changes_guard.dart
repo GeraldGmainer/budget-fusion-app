@@ -11,27 +11,22 @@ class UnsavedChangesGuard extends StatelessWidget {
     super.key,
     required this.hasChange,
     required this.child,
-    this.titleKey = 'Unsaved changes',
-    this.messageKey = 'You have unsaved changes. Are you sure you want to leave?',
+    this.titleKey = 'shared.dialog.unsaved_changes.title',
+    this.messageKey = 'shared.dialog.unsaved_changes.body',
   });
 
   Future<bool> _confirmDiscard(BuildContext ctx) async {
     final result = await showDialog<bool>(
       context: ctx,
-      builder: (_) => AlertDialog(
-        title: Text(titleKey).tr(),
-        content: Text(messageKey).tr(),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text('Cancel').tr(),
+      builder:
+          (_) => AlertDialog(
+            title: Text(titleKey).tr(),
+            content: Text(messageKey).tr(),
+            actions: [
+              TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('shared.button.cancel').tr()),
+              TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text('shared.button.ok').tr()),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text('OK').tr(),
-          ),
-        ],
-      ),
     );
     return result == true;
   }

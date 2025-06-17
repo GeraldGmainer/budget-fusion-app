@@ -6,8 +6,8 @@ class ConfirmDialog {
     BuildContext context, {
     required Function onOK,
     Function? onCancel,
-    String okText = "dialog.ok",
-    String cancelText = "dialog.cancel",
+    String okText = "shared.button.ok",
+    String cancelText = "shared.button.cancel",
     required String headerText,
     required String bodyText,
   }) {
