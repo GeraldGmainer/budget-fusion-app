@@ -79,6 +79,8 @@ import 'package:budget_fusion_app/features/booking/domain/service/booking_accoun
     as _i576;
 import 'package:budget_fusion_app/features/booking/use_cases/default_account_use_case.dart'
     as _i656;
+import 'package:budget_fusion_app/features/booking/use_cases/default_new_date_use_case.dart'
+    as _i226;
 import 'package:budget_fusion_app/features/booking/use_cases/save_booking_use_case.dart'
     as _i405;
 import 'package:budget_fusion_app/features/budget_book/bloc/budget_book_cubit.dart'
@@ -171,6 +173,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i226.SummaryDataGenerator>(
       () => _i226.SummaryDataGenerator(),
+    );
+    gh.lazySingleton<_i226.DefaultNewDateUseCase>(
+      () => _i226.DefaultNewDateUseCase(),
     );
     gh.lazySingleton<_i871.UserRepo>(
       () => _i871.UserRepo(gh<_i478.UserRemoteSource>()),
@@ -330,15 +335,16 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.BookingDataManager>(),
       ),
     );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.DataManager<dynamic>>>()),
+    );
     gh.factory<_i863.BookingSaveCubit>(
       () => _i863.BookingSaveCubit(
         gh<_i405.SaveBookingUseCase>(),
         gh<_i656.DefaultAccountUseCase>(),
         gh<_i714.BookingDataManager>(),
+        gh<_i226.DefaultNewDateUseCase>(),
       ),
-    );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.DataManager<dynamic>>>()),
     );
     gh.factory<_i569.BudgetBookCubit>(
       () => _i569.BudgetBookCubit(

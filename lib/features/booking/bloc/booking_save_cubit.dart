@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/booking/use_cases/default_new_date_use_case.dart';
+import 'package:budget_fusion_app/features/budget_book/enums/period_mode.dart';
+import 'package:budget_fusion_app/features/budget_book/view_models/budget_date_range.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,21 +19,24 @@ part 'booking_save_state.dart';
 @injectable
 class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
   final DefaultAccountUseCase _defaultAccountUseCase;
+  final DefaultNewDateUseCase _defaultNewDateUseCase;
   final SaveBookingUseCase _saveBookingUseCase;
   final BookingDataManager _bookingDataManager;
 
-  BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._bookingDataManager) : super(BookingSaveState.initial(draft: _initialDraft()));
+  BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._bookingDataManager, this._defaultNewDateUseCase)
+    : super(BookingSaveState.initial(draft: _initialDraft()));
 
-  static BookingDraft _initialDraft({Account? account}) {
-    return BookingDraft(date: DateTime.now(), amount: Decimal.zero, account: account);
+  static BookingDraft _initialDraft({Account? account, DateTime? date}) {
+    return BookingDraft(date: date ?? DateTime.now(), amount: Decimal.zero, account: account);
   }
 
-  Future<void> init(Booking? booking) => safeRun(
+  Future<void> init(Booking? booking, BudgetDateRange dateRange, PeriodMode period) => safeRun(
     action: () async {
       late BookingDraft draft;
       if (booking == null) {
         final defaultAccount = await _defaultAccountUseCase.get();
-        draft = _initialDraft(account: defaultAccount);
+        final date = _defaultNewDateUseCase.get(dateRange, period);
+        draft = _initialDraft(account: defaultAccount, date: date);
       } else {
         draft = BookingDraft.fromBooking(booking);
       }

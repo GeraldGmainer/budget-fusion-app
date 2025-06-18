@@ -9,15 +9,9 @@ class BudgetDateRange with _$BudgetDateRange {
   const BudgetDateRange._();
 
   @Assert('period == PeriodMode.all || (from != null && to != null)')
-  const factory BudgetDateRange({
-    required PeriodMode period,
-    required DateTime from,
-    required DateTime to,
-  }) = _BudgetDateRange;
+  const factory BudgetDateRange({required PeriodMode period, required DateTime from, required DateTime to}) = _BudgetDateRange;
 
-  factory BudgetDateRange.all() => BudgetDateRange(
-        period: PeriodMode.all,
-        from: DateTime.fromMillisecondsSinceEpoch(0),
-        to: DateTime.fromMillisecondsSinceEpoch(9999999999999),
-      );
+  factory BudgetDateRange.all() => BudgetDateRange(period: PeriodMode.all, from: DateTime.fromMillisecondsSinceEpoch(0), to: DateTime.fromMillisecondsSinceEpoch(9999999999999));
+
+  bool contains(DateTime date) => !date.isBefore(from) && !date.isAfter(to);
 }
