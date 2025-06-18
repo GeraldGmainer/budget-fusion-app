@@ -19,9 +19,7 @@ _$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
         json['parent_id'],
         const UuidSerializer().fromJson,
       ),
-      updatedAt: const DateTimeSerializer().fromJson(
-        json['updated_at'] as String,
-      ),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
     );
 
 Map<String, dynamic> _$$CategoryDtoImplToJson(

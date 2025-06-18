@@ -1,4 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/features/budget_book/budget_book.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:decimal/decimal.dart';
@@ -36,8 +37,9 @@ class _BookingSavePageState extends State<BookingSavePage> {
   @override
   void initState() {
     super.initState();
+    final state = context.read<BudgetBookCubit>().state;
     BlocProvider.of<CalculatorCubit>(context).init(widget.model?.amount.toDouble());
-    BlocProvider.of<BookingSaveCubit>(context).init(widget.model);
+    BlocProvider.of<BookingSaveCubit>(context).init(widget.model, state.dateRange, state.period);
     BlocProvider.of<SuggestionCubit>(context).load();
 
     if (widget.model == null) {

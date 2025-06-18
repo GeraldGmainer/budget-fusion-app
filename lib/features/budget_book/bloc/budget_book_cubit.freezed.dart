@@ -20,40 +20,36 @@ mixin _$BudgetBookState {
   List<BudgetViewData> get items => throw _privateConstructorUsedError;
   BudgetBookFilter get filter => throw _privateConstructorUsedError;
   BudgetViewMode get viewMode => throw _privateConstructorUsedError;
-  PeriodMode get period => throw _privateConstructorUsedError;
-  int get pageIndex => throw _privateConstructorUsedError;
+  BudgetDateRange get dateRange => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     initial,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     loading,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )
     error,
@@ -64,32 +60,29 @@ mixin _$BudgetBookState {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
@@ -100,32 +93,29 @@ mixin _$BudgetBookState {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
@@ -172,11 +162,11 @@ abstract class $BudgetBookStateCopyWith<$Res> {
     List<BudgetViewData> items,
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
-    PeriodMode period,
-    int pageIndex,
+    BudgetDateRange dateRange,
   });
 
   $BudgetBookFilterCopyWith<$Res> get filter;
+  $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -197,8 +187,7 @@ class _$BudgetBookStateCopyWithImpl<$Res, $Val extends BudgetBookState>
     Object? items = null,
     Object? filter = null,
     Object? viewMode = null,
-    Object? period = null,
-    Object? pageIndex = null,
+    Object? dateRange = null,
   }) {
     return _then(
       _value.copyWith(
@@ -217,16 +206,11 @@ class _$BudgetBookStateCopyWithImpl<$Res, $Val extends BudgetBookState>
                     ? _value.viewMode
                     : viewMode // ignore: cast_nullable_to_non_nullable
                         as BudgetViewMode,
-            period:
-                null == period
-                    ? _value.period
-                    : period // ignore: cast_nullable_to_non_nullable
-                        as PeriodMode,
-            pageIndex:
-                null == pageIndex
-                    ? _value.pageIndex
-                    : pageIndex // ignore: cast_nullable_to_non_nullable
-                        as int,
+            dateRange:
+                null == dateRange
+                    ? _value.dateRange
+                    : dateRange // ignore: cast_nullable_to_non_nullable
+                        as BudgetDateRange,
           )
           as $Val,
     );
@@ -239,6 +223,16 @@ class _$BudgetBookStateCopyWithImpl<$Res, $Val extends BudgetBookState>
   $BudgetBookFilterCopyWith<$Res> get filter {
     return $BudgetBookFilterCopyWith<$Res>(_value.filter, (value) {
       return _then(_value.copyWith(filter: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BudgetBookState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BudgetDateRangeCopyWith<$Res> get dateRange {
+    return $BudgetDateRangeCopyWith<$Res>(_value.dateRange, (value) {
+      return _then(_value.copyWith(dateRange: value) as $Val);
     });
   }
 }
@@ -256,12 +250,13 @@ abstract class _$$InitialImplCopyWith<$Res>
     List<BudgetViewData> items,
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
-    PeriodMode period,
-    int pageIndex,
+    BudgetDateRange dateRange,
   });
 
   @override
   $BudgetBookFilterCopyWith<$Res> get filter;
+  @override
+  $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -281,8 +276,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? items = null,
     Object? filter = null,
     Object? viewMode = null,
-    Object? period = null,
-    Object? pageIndex = null,
+    Object? dateRange = null,
   }) {
     return _then(
       _$InitialImpl(
@@ -301,16 +295,11 @@ class __$$InitialImplCopyWithImpl<$Res>
                 ? _value.viewMode
                 : viewMode // ignore: cast_nullable_to_non_nullable
                     as BudgetViewMode,
-        period:
-            null == period
-                ? _value.period
-                : period // ignore: cast_nullable_to_non_nullable
-                    as PeriodMode,
-        pageIndex:
-            null == pageIndex
-                ? _value.pageIndex
-                : pageIndex // ignore: cast_nullable_to_non_nullable
-                    as int,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
       ),
     );
   }
@@ -323,8 +312,7 @@ class _$InitialImpl implements _Initial {
     final List<BudgetViewData> items = const [],
     required this.filter,
     this.viewMode = BudgetViewMode.summary,
-    required this.period,
-    this.pageIndex = 0,
+    required this.dateRange,
   }) : _items = items;
 
   final List<BudgetViewData> _items;
@@ -342,10 +330,7 @@ class _$InitialImpl implements _Initial {
   @JsonKey()
   final BudgetViewMode viewMode;
   @override
-  final PeriodMode period;
-  @override
-  @JsonKey()
-  final int pageIndex;
+  final BudgetDateRange dateRange;
 
   @override
   bool operator ==(Object other) {
@@ -356,9 +341,8 @@ class _$InitialImpl implements _Initial {
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
-            (identical(other.period, period) || other.period == period) &&
-            (identical(other.pageIndex, pageIndex) ||
-                other.pageIndex == pageIndex));
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange));
   }
 
   @override
@@ -367,8 +351,7 @@ class _$InitialImpl implements _Initial {
     const DeepCollectionEquality().hash(_items),
     filter,
     viewMode,
-    period,
-    pageIndex,
+    dateRange,
   );
 
   /// Create a copy of BudgetBookState
@@ -386,37 +369,34 @@ class _$InitialImpl implements _Initial {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     initial,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     loading,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )
     error,
   }) {
-    return initial(items, filter, viewMode, period, pageIndex);
+    return initial(items, filter, viewMode, dateRange);
   }
 
   @override
@@ -426,37 +406,34 @@ class _$InitialImpl implements _Initial {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
   }) {
-    return initial?.call(items, filter, viewMode, period, pageIndex);
+    return initial?.call(items, filter, viewMode, dateRange);
   }
 
   @override
@@ -466,39 +443,36 @@ class _$InitialImpl implements _Initial {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(items, filter, viewMode, period, pageIndex);
+      return initial(items, filter, viewMode, dateRange);
     }
     return orElse();
   }
@@ -546,8 +520,7 @@ abstract class _Initial implements BudgetBookState {
     final List<BudgetViewData> items,
     required final BudgetBookFilter filter,
     final BudgetViewMode viewMode,
-    required final PeriodMode period,
-    final int pageIndex,
+    required final BudgetDateRange dateRange,
   }) = _$InitialImpl;
 
   @override
@@ -557,9 +530,7 @@ abstract class _Initial implements BudgetBookState {
   @override
   BudgetViewMode get viewMode;
   @override
-  PeriodMode get period;
-  @override
-  int get pageIndex;
+  BudgetDateRange get dateRange;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -582,12 +553,13 @@ abstract class _$$LoadingImplCopyWith<$Res>
     List<BudgetViewData> items,
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
-    PeriodMode period,
-    int pageIndex,
+    BudgetDateRange dateRange,
   });
 
   @override
   $BudgetBookFilterCopyWith<$Res> get filter;
+  @override
+  $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -607,8 +579,7 @@ class __$$LoadingImplCopyWithImpl<$Res>
     Object? items = null,
     Object? filter = null,
     Object? viewMode = null,
-    Object? period = null,
-    Object? pageIndex = null,
+    Object? dateRange = null,
   }) {
     return _then(
       _$LoadingImpl(
@@ -627,16 +598,11 @@ class __$$LoadingImplCopyWithImpl<$Res>
                 ? _value.viewMode
                 : viewMode // ignore: cast_nullable_to_non_nullable
                     as BudgetViewMode,
-        period:
-            null == period
-                ? _value.period
-                : period // ignore: cast_nullable_to_non_nullable
-                    as PeriodMode,
-        pageIndex:
-            null == pageIndex
-                ? _value.pageIndex
-                : pageIndex // ignore: cast_nullable_to_non_nullable
-                    as int,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
       ),
     );
   }
@@ -649,8 +615,7 @@ class _$LoadingImpl implements _Loading {
     required final List<BudgetViewData> items,
     required this.filter,
     required this.viewMode,
-    required this.period,
-    this.pageIndex = 0,
+    required this.dateRange,
   }) : _items = items;
 
   final List<BudgetViewData> _items;
@@ -666,10 +631,7 @@ class _$LoadingImpl implements _Loading {
   @override
   final BudgetViewMode viewMode;
   @override
-  final PeriodMode period;
-  @override
-  @JsonKey()
-  final int pageIndex;
+  final BudgetDateRange dateRange;
 
   @override
   bool operator ==(Object other) {
@@ -680,9 +642,8 @@ class _$LoadingImpl implements _Loading {
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
-            (identical(other.period, period) || other.period == period) &&
-            (identical(other.pageIndex, pageIndex) ||
-                other.pageIndex == pageIndex));
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange));
   }
 
   @override
@@ -691,8 +652,7 @@ class _$LoadingImpl implements _Loading {
     const DeepCollectionEquality().hash(_items),
     filter,
     viewMode,
-    period,
-    pageIndex,
+    dateRange,
   );
 
   /// Create a copy of BudgetBookState
@@ -710,37 +670,34 @@ class _$LoadingImpl implements _Loading {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     initial,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     loading,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )
     error,
   }) {
-    return loading(items, filter, viewMode, period, pageIndex);
+    return loading(items, filter, viewMode, dateRange);
   }
 
   @override
@@ -750,37 +707,34 @@ class _$LoadingImpl implements _Loading {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
   }) {
-    return loading?.call(items, filter, viewMode, period, pageIndex);
+    return loading?.call(items, filter, viewMode, dateRange);
   }
 
   @override
@@ -790,39 +744,36 @@ class _$LoadingImpl implements _Loading {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(items, filter, viewMode, period, pageIndex);
+      return loading(items, filter, viewMode, dateRange);
     }
     return orElse();
   }
@@ -870,8 +821,7 @@ abstract class _Loading implements BudgetBookState {
     required final List<BudgetViewData> items,
     required final BudgetBookFilter filter,
     required final BudgetViewMode viewMode,
-    required final PeriodMode period,
-    final int pageIndex,
+    required final BudgetDateRange dateRange,
   }) = _$LoadingImpl;
 
   @override
@@ -881,9 +831,7 @@ abstract class _Loading implements BudgetBookState {
   @override
   BudgetViewMode get viewMode;
   @override
-  PeriodMode get period;
-  @override
-  int get pageIndex;
+  BudgetDateRange get dateRange;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -906,12 +854,14 @@ abstract class _$$LoadedImplCopyWith<$Res>
     List<BudgetViewData> items,
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
-    PeriodMode period,
-    int pageIndex,
+    BudgetDateRange dateRange,
+    bool isInitial,
   });
 
   @override
   $BudgetBookFilterCopyWith<$Res> get filter;
+  @override
+  $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -931,8 +881,8 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? items = null,
     Object? filter = null,
     Object? viewMode = null,
-    Object? period = null,
-    Object? pageIndex = null,
+    Object? dateRange = null,
+    Object? isInitial = null,
   }) {
     return _then(
       _$LoadedImpl(
@@ -951,16 +901,16 @@ class __$$LoadedImplCopyWithImpl<$Res>
                 ? _value.viewMode
                 : viewMode // ignore: cast_nullable_to_non_nullable
                     as BudgetViewMode,
-        period:
-            null == period
-                ? _value.period
-                : period // ignore: cast_nullable_to_non_nullable
-                    as PeriodMode,
-        pageIndex:
-            null == pageIndex
-                ? _value.pageIndex
-                : pageIndex // ignore: cast_nullable_to_non_nullable
-                    as int,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
+        isInitial:
+            null == isInitial
+                ? _value.isInitial
+                : isInitial // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -973,8 +923,8 @@ class _$LoadedImpl implements _Loaded {
     required final List<BudgetViewData> items,
     required this.filter,
     required this.viewMode,
-    required this.period,
-    this.pageIndex = 0,
+    required this.dateRange,
+    required this.isInitial,
   }) : _items = items;
 
   final List<BudgetViewData> _items;
@@ -990,10 +940,9 @@ class _$LoadedImpl implements _Loaded {
   @override
   final BudgetViewMode viewMode;
   @override
-  final PeriodMode period;
+  final BudgetDateRange dateRange;
   @override
-  @JsonKey()
-  final int pageIndex;
+  final bool isInitial;
 
   @override
   bool operator ==(Object other) {
@@ -1004,9 +953,10 @@ class _$LoadedImpl implements _Loaded {
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
-            (identical(other.period, period) || other.period == period) &&
-            (identical(other.pageIndex, pageIndex) ||
-                other.pageIndex == pageIndex));
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange) &&
+            (identical(other.isInitial, isInitial) ||
+                other.isInitial == isInitial));
   }
 
   @override
@@ -1015,8 +965,8 @@ class _$LoadedImpl implements _Loaded {
     const DeepCollectionEquality().hash(_items),
     filter,
     viewMode,
-    period,
-    pageIndex,
+    dateRange,
+    isInitial,
   );
 
   /// Create a copy of BudgetBookState
@@ -1034,37 +984,34 @@ class _$LoadedImpl implements _Loaded {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     initial,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     loading,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )
     error,
   }) {
-    return loaded(items, filter, viewMode, period, pageIndex);
+    return loaded(items, filter, viewMode, dateRange, isInitial);
   }
 
   @override
@@ -1074,37 +1021,34 @@ class _$LoadedImpl implements _Loaded {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
   }) {
-    return loaded?.call(items, filter, viewMode, period, pageIndex);
+    return loaded?.call(items, filter, viewMode, dateRange, isInitial);
   }
 
   @override
@@ -1114,39 +1058,36 @@ class _$LoadedImpl implements _Loaded {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, filter, viewMode, period, pageIndex);
+      return loaded(items, filter, viewMode, dateRange, isInitial);
     }
     return orElse();
   }
@@ -1194,8 +1135,8 @@ abstract class _Loaded implements BudgetBookState {
     required final List<BudgetViewData> items,
     required final BudgetBookFilter filter,
     required final BudgetViewMode viewMode,
-    required final PeriodMode period,
-    final int pageIndex,
+    required final BudgetDateRange dateRange,
+    required final bool isInitial,
   }) = _$LoadedImpl;
 
   @override
@@ -1205,9 +1146,8 @@ abstract class _Loaded implements BudgetBookState {
   @override
   BudgetViewMode get viewMode;
   @override
-  PeriodMode get period;
-  @override
-  int get pageIndex;
+  BudgetDateRange get dateRange;
+  bool get isInitial;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -1230,13 +1170,14 @@ abstract class _$$ErrorImplCopyWith<$Res>
     List<BudgetViewData> items,
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
-    PeriodMode period,
-    int pageIndex,
+    BudgetDateRange dateRange,
     AppError error,
   });
 
   @override
   $BudgetBookFilterCopyWith<$Res> get filter;
+  @override
+  $BudgetDateRangeCopyWith<$Res> get dateRange;
 }
 
 /// @nodoc
@@ -1256,8 +1197,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
     Object? items = null,
     Object? filter = null,
     Object? viewMode = null,
-    Object? period = null,
-    Object? pageIndex = null,
+    Object? dateRange = null,
     Object? error = null,
   }) {
     return _then(
@@ -1277,16 +1217,11 @@ class __$$ErrorImplCopyWithImpl<$Res>
                 ? _value.viewMode
                 : viewMode // ignore: cast_nullable_to_non_nullable
                     as BudgetViewMode,
-        period:
-            null == period
-                ? _value.period
-                : period // ignore: cast_nullable_to_non_nullable
-                    as PeriodMode,
-        pageIndex:
-            null == pageIndex
-                ? _value.pageIndex
-                : pageIndex // ignore: cast_nullable_to_non_nullable
-                    as int,
+        dateRange:
+            null == dateRange
+                ? _value.dateRange
+                : dateRange // ignore: cast_nullable_to_non_nullable
+                    as BudgetDateRange,
         error:
             null == error
                 ? _value.error
@@ -1304,8 +1239,7 @@ class _$ErrorImpl implements _Error {
     required final List<BudgetViewData> items,
     required this.filter,
     required this.viewMode,
-    required this.period,
-    this.pageIndex = 0,
+    required this.dateRange,
     required this.error,
   }) : _items = items;
 
@@ -1322,10 +1256,7 @@ class _$ErrorImpl implements _Error {
   @override
   final BudgetViewMode viewMode;
   @override
-  final PeriodMode period;
-  @override
-  @JsonKey()
-  final int pageIndex;
+  final BudgetDateRange dateRange;
   @override
   final AppError error;
 
@@ -1338,9 +1269,8 @@ class _$ErrorImpl implements _Error {
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
-            (identical(other.period, period) || other.period == period) &&
-            (identical(other.pageIndex, pageIndex) ||
-                other.pageIndex == pageIndex) &&
+            (identical(other.dateRange, dateRange) ||
+                other.dateRange == dateRange) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -1350,8 +1280,7 @@ class _$ErrorImpl implements _Error {
     const DeepCollectionEquality().hash(_items),
     filter,
     viewMode,
-    period,
-    pageIndex,
+    dateRange,
     error,
   );
 
@@ -1370,37 +1299,34 @@ class _$ErrorImpl implements _Error {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     initial,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )
     loading,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )
     error,
   }) {
-    return error(items, filter, viewMode, period, pageIndex, this.error);
+    return error(items, filter, viewMode, dateRange, this.error);
   }
 
   @override
@@ -1410,37 +1336,34 @@ class _$ErrorImpl implements _Error {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
   }) {
-    return error?.call(items, filter, viewMode, period, pageIndex, this.error);
+    return error?.call(items, filter, viewMode, dateRange, this.error);
   }
 
   @override
@@ -1450,39 +1373,36 @@ class _$ErrorImpl implements _Error {
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     initial,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
     )?
     loading,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
       List<BudgetViewData> items,
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
-      PeriodMode period,
-      int pageIndex,
+      BudgetDateRange dateRange,
       AppError error,
     )?
     error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(items, filter, viewMode, period, pageIndex, this.error);
+      return error(items, filter, viewMode, dateRange, this.error);
     }
     return orElse();
   }
@@ -1530,8 +1450,7 @@ abstract class _Error implements BudgetBookState {
     required final List<BudgetViewData> items,
     required final BudgetBookFilter filter,
     required final BudgetViewMode viewMode,
-    required final PeriodMode period,
-    final int pageIndex,
+    required final BudgetDateRange dateRange,
     required final AppError error,
   }) = _$ErrorImpl;
 
@@ -1542,9 +1461,7 @@ abstract class _Error implements BudgetBookState {
   @override
   BudgetViewMode get viewMode;
   @override
-  PeriodMode get period;
-  @override
-  int get pageIndex;
+  BudgetDateRange get dateRange;
   AppError get error;
 
   /// Create a copy of BudgetBookState
