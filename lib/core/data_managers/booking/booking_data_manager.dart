@@ -46,7 +46,7 @@ class BookingDataManager extends DataManager<Booking> {
         EntityLogger.instance.d("DataManager", EntityType.booking.text, "Emitting ${EntityLogger.bold(bookings.length)} entities", darkColor: true);
         return bookings;
       },
-    ).debounceTime(const Duration(milliseconds: 50)).shareReplay(maxSize: 1);
+    ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
 
     _sub = watch().listen((_) {});
   }
