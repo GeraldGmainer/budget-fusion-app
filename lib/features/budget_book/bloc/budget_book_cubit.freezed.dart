@@ -42,6 +42,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
@@ -74,6 +75,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
@@ -106,6 +108,7 @@ mixin _$BudgetBookState {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
@@ -381,6 +384,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
@@ -417,6 +421,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
@@ -453,6 +458,7 @@ class _$InitialImpl implements _Initial {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
@@ -679,6 +685,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
@@ -715,6 +722,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
@@ -751,6 +759,7 @@ class _$LoadingImpl implements _Loading {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
@@ -846,6 +855,7 @@ abstract class _$$LoadedImplCopyWith<$Res>
     BudgetBookFilter filter,
     BudgetViewMode viewMode,
     BudgetDateRange dateRange,
+    bool isInitial,
   });
 
   @override
@@ -872,6 +882,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
     Object? filter = null,
     Object? viewMode = null,
     Object? dateRange = null,
+    Object? isInitial = null,
   }) {
     return _then(
       _$LoadedImpl(
@@ -895,6 +906,11 @@ class __$$LoadedImplCopyWithImpl<$Res>
                 ? _value.dateRange
                 : dateRange // ignore: cast_nullable_to_non_nullable
                     as BudgetDateRange,
+        isInitial:
+            null == isInitial
+                ? _value.isInitial
+                : isInitial // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -908,6 +924,7 @@ class _$LoadedImpl implements _Loaded {
     required this.filter,
     required this.viewMode,
     required this.dateRange,
+    required this.isInitial,
   }) : _items = items;
 
   final List<BudgetViewData> _items;
@@ -924,6 +941,8 @@ class _$LoadedImpl implements _Loaded {
   final BudgetViewMode viewMode;
   @override
   final BudgetDateRange dateRange;
+  @override
+  final bool isInitial;
 
   @override
   bool operator ==(Object other) {
@@ -935,7 +954,9 @@ class _$LoadedImpl implements _Loaded {
             (identical(other.viewMode, viewMode) ||
                 other.viewMode == viewMode) &&
             (identical(other.dateRange, dateRange) ||
-                other.dateRange == dateRange));
+                other.dateRange == dateRange) &&
+            (identical(other.isInitial, isInitial) ||
+                other.isInitial == isInitial));
   }
 
   @override
@@ -945,6 +966,7 @@ class _$LoadedImpl implements _Loaded {
     filter,
     viewMode,
     dateRange,
+    isInitial,
   );
 
   /// Create a copy of BudgetBookState
@@ -977,6 +999,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
@@ -988,7 +1011,7 @@ class _$LoadedImpl implements _Loaded {
     )
     error,
   }) {
-    return loaded(items, filter, viewMode, dateRange);
+    return loaded(items, filter, viewMode, dateRange, isInitial);
   }
 
   @override
@@ -1013,6 +1036,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
@@ -1024,7 +1048,7 @@ class _$LoadedImpl implements _Loaded {
     )?
     error,
   }) {
-    return loaded?.call(items, filter, viewMode, dateRange);
+    return loaded?.call(items, filter, viewMode, dateRange, isInitial);
   }
 
   @override
@@ -1049,6 +1073,7 @@ class _$LoadedImpl implements _Loaded {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(
@@ -1062,7 +1087,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(items, filter, viewMode, dateRange);
+      return loaded(items, filter, viewMode, dateRange, isInitial);
     }
     return orElse();
   }
@@ -1111,6 +1136,7 @@ abstract class _Loaded implements BudgetBookState {
     required final BudgetBookFilter filter,
     required final BudgetViewMode viewMode,
     required final BudgetDateRange dateRange,
+    required final bool isInitial,
   }) = _$LoadedImpl;
 
   @override
@@ -1121,6 +1147,7 @@ abstract class _Loaded implements BudgetBookState {
   BudgetViewMode get viewMode;
   @override
   BudgetDateRange get dateRange;
+  bool get isInitial;
 
   /// Create a copy of BudgetBookState
   /// with the given fields replaced by the non-null parameter values.
@@ -1287,6 +1314,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )
     loaded,
     required TResult Function(
@@ -1323,6 +1351,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult? Function(
@@ -1359,6 +1388,7 @@ class _$ErrorImpl implements _Error {
       BudgetBookFilter filter,
       BudgetViewMode viewMode,
       BudgetDateRange dateRange,
+      bool isInitial,
     )?
     loaded,
     TResult Function(

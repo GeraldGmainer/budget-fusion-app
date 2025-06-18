@@ -56,6 +56,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       if (!_contentPageController.hasClients) return;
       final current = _contentPageController.page ?? _contentPageController.initialPage.toDouble();
       if (current.round() == targetPage) return;
+      print("--------- jump to $targetPage");
       _contentPageController.jumpToPage(targetPage);
     });
   }
@@ -71,10 +72,15 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
-      listenWhen: (prev, curr) => prev.dateRange != curr.dateRange || (curr.isError && !prev.isError),
       listener: (context, state) {
         state.whenOrNull(error: (_, __, ___, dateRange, error) => _handleError(error));
-        _handleSelectedRangeChange(state);
+        state.whenOrNull(
+          loaded: (_, __, ___, ____, isInitial) {
+            if (isInitial) {
+              _handleSelectedRangeChange(state);
+            }
+          },
+        );
       },
       builder: (context, state) {
         final isInitial = state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false);

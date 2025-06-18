@@ -17,7 +17,6 @@ import '../view_models/budget_date_range.dart';
 import '../view_models/budget_page_data.dart';
 
 part 'budget_book_cubit.freezed.dart';
-
 part 'budget_book_state.dart';
 
 @injectable
@@ -64,7 +63,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       dateRange ??= items.isNotEmpty ? items.first.dateRange : state.dateRange;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "loaded bookings for budget book: $dateRange");
 
-      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, dateRange: dateRange));
+      emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, dateRange: dateRange, isInitial: true));
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
@@ -91,7 +90,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       final items = await _generateViewData(filtered, newViewMode);
 
       state.maybeWhen(
-        loaded: (_, __, ___, dateRange) => emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, dateRange: dateRange)),
+        loaded: (_, __, ___, dateRange, ____) => emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, dateRange: dateRange, isInitial: false)),
         orElse: () => emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode)),
       );
     },
