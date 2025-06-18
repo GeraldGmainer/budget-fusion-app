@@ -6,7 +6,6 @@ class BudgetBookState with _$BudgetBookState {
     @Default([]) List<BudgetViewData> items,
     required BudgetBookFilter filter,
     @Default(BudgetViewMode.summary) BudgetViewMode viewMode,
-    required PeriodMode period,
     required BudgetDateRange dateRange,
   }) = _Initial;
 
@@ -14,7 +13,6 @@ class BudgetBookState with _$BudgetBookState {
     required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
-    required PeriodMode period,
     required BudgetDateRange dateRange,
   }) = _Loading;
 
@@ -22,7 +20,6 @@ class BudgetBookState with _$BudgetBookState {
     required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
-    required PeriodMode period,
     required BudgetDateRange dateRange,
   }) = _Loaded;
 
@@ -30,32 +27,31 @@ class BudgetBookState with _$BudgetBookState {
     required List<BudgetViewData> items,
     required BudgetBookFilter filter,
     required BudgetViewMode viewMode,
-    required PeriodMode period,
     required BudgetDateRange dateRange,
     required AppError error,
   }) = _Error;
 
   static BudgetBookState fromError({required AppError error, required BudgetBookState state}) {
-    return BudgetBookState.error(items: state.items, filter: state.filter, viewMode: state.viewMode, period: state.period, dateRange: state.dateRange, error: error);
+    return BudgetBookState.error(items: state.items, filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange, error: error);
   }
 
   @override
   String toString() {
     return when(
-      initial: (_, filter, viewMode, period, dateRange) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
-      loading: (_, filter, viewMode, period, dateRange) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
-      loaded: (_, filter, viewMode, period, dateRange) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
-      error:
-          (_, filter, viewMode, period, dateRange, error) =>
-              'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- Period: $period\n- DateRange: $dateRange',
+      initial: (_, filter, viewMode, dateRange) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      loading: (_, filter, viewMode, dateRange) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      loaded: (_, filter, viewMode, dateRange) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      error: (_, filter, viewMode, dateRange, error) => 'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
     );
   }
 }
 
 extension BookingPageStateExtensions on BudgetBookState {
-  bool get isLoading => maybeWhen(loading: (_, __, ___, ____, _____) => true, orElse: () => false);
+  bool get isLoading => maybeWhen(loading: (_, __, ___, ____) => true, orElse: () => false);
 
-  bool get isLoaded => maybeWhen(loaded: (_, __, ___, ____, _____) => true, orElse: () => false);
+  bool get isLoaded => maybeWhen(loaded: (_, __, ___, ____) => true, orElse: () => false);
 
-  bool get isError => maybeWhen(error: (_, __, ___, ____, _____, ______) => true, orElse: () => false);
+  bool get isError => maybeWhen(error: (_, __, ___, ____, _____) => true, orElse: () => false);
+
+  PeriodMode get period => filter.period;
 }

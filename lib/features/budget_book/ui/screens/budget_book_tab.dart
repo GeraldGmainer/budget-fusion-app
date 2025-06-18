@@ -73,11 +73,11 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
       listenWhen: (prev, curr) => prev.dateRange != curr.dateRange || (curr.isError && !prev.isError),
       listener: (context, state) {
-        state.whenOrNull(error: (_, __, ___, ____, dateRange, error) => _handleError(error));
+        state.whenOrNull(error: (_, __, ___, dateRange, error) => _handleError(error));
         _handleSelectedRangeChange(state);
       },
       builder: (context, state) {
-        final isInitial = state.maybeWhen(initial: (_, __, ___, ____, _____) => true, orElse: () => false);
+        final isInitial = state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false);
         if (isInitial) return Center(child: CircularProgressIndicator());
         return Column(
           children: [
