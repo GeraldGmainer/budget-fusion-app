@@ -142,11 +142,6 @@ class _$BudgetDateRangeImpl extends _BudgetDateRange {
   final DateTime to;
 
   @override
-  String toString() {
-    return 'BudgetDateRange(period: $period, from: $from, to: $to)';
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
