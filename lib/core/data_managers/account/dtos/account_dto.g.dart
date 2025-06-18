@@ -12,9 +12,7 @@ _$AccountDtoImpl _$$AccountDtoImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       iconName: json['icon_name'] as String,
       iconColor: json['icon_color'] as String,
-      updatedAt: const DateTimeSerializer().fromJson(
-        json['updated_at'] as String,
-      ),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
     );
 
 Map<String, dynamic> _$$AccountDtoImplToJson(_$AccountDtoImpl instance) =>

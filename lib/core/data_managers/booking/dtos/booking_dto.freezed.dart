@@ -24,7 +24,7 @@ mixin _$BookingDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'date')
-  @DateTimeSerializer()
+  @DateSerializer()
   DateTime get date => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @DecimalConverter()
@@ -58,7 +58,7 @@ abstract class $BookingDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @JsonKey(name: 'date') @DateTimeSerializer() DateTime date,
+    @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
@@ -144,7 +144,7 @@ abstract class _$$BookingDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @JsonKey(name: 'date') @DateTimeSerializer() DateTime date,
+    @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
@@ -222,7 +222,7 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
 class _$BookingDtoImpl extends _BookingDto {
   const _$BookingDtoImpl({
     @UuidSerializer() required this.id,
-    @JsonKey(name: 'date') @DateTimeSerializer() required this.date,
+    @JsonKey(name: 'date') @DateSerializer() required this.date,
     this.description,
     @DecimalConverter() required this.amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required this.categoryId,
@@ -238,7 +238,7 @@ class _$BookingDtoImpl extends _BookingDto {
   final Uuid id;
   @override
   @JsonKey(name: 'date')
-  @DateTimeSerializer()
+  @DateSerializer()
   final DateTime date;
   @override
   final String? description;
@@ -311,7 +311,7 @@ class _$BookingDtoImpl extends _BookingDto {
 abstract class _BookingDto extends BookingDto {
   const factory _BookingDto({
     @UuidSerializer() required final Uuid id,
-    @JsonKey(name: 'date') @DateTimeSerializer() required final DateTime date,
+    @JsonKey(name: 'date') @DateSerializer() required final DateTime date,
     final String? description,
     @DecimalConverter() required final Decimal amount,
     @JsonKey(name: 'category_id')
@@ -334,7 +334,7 @@ abstract class _BookingDto extends BookingDto {
   Uuid get id;
   @override
   @JsonKey(name: 'date')
-  @DateTimeSerializer()
+  @DateSerializer()
   DateTime get date;
   @override
   String? get description;

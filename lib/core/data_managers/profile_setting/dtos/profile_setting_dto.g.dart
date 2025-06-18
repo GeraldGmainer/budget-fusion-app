@@ -11,7 +11,7 @@ _$ProfileSettingDtoImpl _$$ProfileSettingDtoImplFromJson(
 ) => _$ProfileSettingDtoImpl(
   id: const UuidSerializer().fromJson(json['id'] as String),
   currency: const CurrencyDtoSerializer().fromJson(json['currency']),
-  updatedAt: const DateTimeSerializer().fromJson(json['updated_at'] as String),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
 );
 
 Map<String, dynamic> _$$ProfileSettingDtoImplToJson(
