@@ -9,6 +9,7 @@ part of 'booking_dto.dart';
 _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
     _$BookingDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
+      syncMeta: const SyncMetaSerializer().fromJson(json['syncMeta']),
       date: const DateSerializer().fromJson(json['date'] as String),
       description: json['description'] as String?,
       amount: const DecimalConverter().fromJson(json['amount']),
@@ -16,16 +17,15 @@ _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
         json['category_id'] as String,
       ),
       accountId: const UuidSerializer().fromJson(json['account_id'] as String),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
     );
 
 Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
+      'syncMeta': const SyncMetaSerializer().toJson(instance.syncMeta),
       'date': const DateSerializer().toJson(instance.date),
       'description': instance.description,
       'amount': const DecimalConverter().toJson(instance.amount),
       'category_id': const UuidSerializer().toJson(instance.categoryId),
       'account_id': const UuidSerializer().toJson(instance.accountId),
-      'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
     };

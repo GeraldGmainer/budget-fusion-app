@@ -7,7 +7,7 @@ import '../dtos/booking_dto.dart';
 part 'booking.freezed.dart';
 
 @freezed
-class Booking with _$Booking implements Entity {
+class Booking with _$Booking implements SyncEntity {
   const Booking._();
 
   const factory Booking({
@@ -17,8 +17,7 @@ class Booking with _$Booking implements Entity {
     required Money money,
     required Category category,
     required Account account,
-    required DateTime updatedAt,
-    required bool isSynced,
+    required SyncMeta syncMeta,
   }) = _Booking;
 
   factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency, bool isSynced) {
@@ -29,13 +28,12 @@ class Booking with _$Booking implements Entity {
       money: Money(amount: dto.amount, currency: currency),
       category: category,
       account: account,
-      updatedAt: dto.updatedAt,
-      isSynced: isSynced,
+      syncMeta: dto.syncMeta,
     );
   }
 
   BookingDto toDto() {
-    return BookingDto(id: id, date: date, description: description, amount: amount, categoryId: category.id, accountId: account.id, updatedAt: updatedAt);
+    return BookingDto(id: id, date: date, description: description, amount: amount, categoryId: category.id, accountId: account.id, syncMeta: syncMeta);
   }
 
   Decimal get amount => money.amount;

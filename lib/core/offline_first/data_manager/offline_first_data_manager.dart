@@ -169,7 +169,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
           localMap[dto.id] = dto;
         } else {
           final existing = localMap[dto.id]!;
-          if (existing.updatedAt == null || (dto.updatedAt != null && existing.updatedAt!.isBefore(dto.updatedAt!))) {
+          if (existing.syncMeta.updatedAt == null || (dto.syncMeta.updatedAt != null && existing.syncMeta.updatedAt!.isBefore(dto.syncMeta.updatedAt!))) {
             localMap[dto.id] = dto;
           }
         }

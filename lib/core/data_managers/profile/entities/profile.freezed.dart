@@ -22,7 +22,7 @@ mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  SyncMeta get syncMeta => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +41,7 @@ abstract class $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
-    DateTime updatedAt,
+    SyncMeta syncMeta,
   });
 }
 
@@ -65,7 +65,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? updatedAt = null,
+    Object? syncMeta = null,
   }) {
     return _then(
       _value.copyWith(
@@ -94,11 +94,11 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                     ? _value.avatarUrl
                     : avatarUrl // ignore: cast_nullable_to_non_nullable
                         as String?,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
+            syncMeta:
+                null == syncMeta
+                    ? _value.syncMeta
+                    : syncMeta // ignore: cast_nullable_to_non_nullable
+                        as SyncMeta,
           )
           as $Val,
     );
@@ -119,7 +119,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
-    DateTime updatedAt,
+    SyncMeta syncMeta,
   });
 }
 
@@ -142,7 +142,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? updatedAt = null,
+    Object? syncMeta = null,
   }) {
     return _then(
       _$ProfileImpl(
@@ -171,11 +171,11 @@ class __$$ProfileImplCopyWithImpl<$Res>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                     as String?,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
+        syncMeta:
+            null == syncMeta
+                ? _value.syncMeta
+                : syncMeta // ignore: cast_nullable_to_non_nullable
+                    as SyncMeta,
       ),
     );
   }
@@ -190,7 +190,7 @@ class _$ProfileImpl extends _Profile {
     this.firstName,
     this.lastName,
     this.avatarUrl,
-    required this.updatedAt,
+    required this.syncMeta,
   }) : super._();
 
   @override
@@ -204,11 +204,11 @@ class _$ProfileImpl extends _Profile {
   @override
   final String? avatarUrl;
   @override
-  final DateTime updatedAt;
+  final SyncMeta syncMeta;
 
   @override
   String toString() {
-    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
+    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, syncMeta: $syncMeta)';
   }
 
   @override
@@ -224,8 +224,8 @@ class _$ProfileImpl extends _Profile {
                 other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.syncMeta, syncMeta) ||
+                other.syncMeta == syncMeta));
   }
 
   @override
@@ -236,7 +236,7 @@ class _$ProfileImpl extends _Profile {
     firstName,
     lastName,
     avatarUrl,
-    updatedAt,
+    syncMeta,
   );
 
   /// Create a copy of Profile
@@ -255,7 +255,7 @@ abstract class _Profile extends Profile {
     final String? firstName,
     final String? lastName,
     final String? avatarUrl,
-    required final DateTime updatedAt,
+    required final SyncMeta syncMeta,
   }) = _$ProfileImpl;
   const _Profile._() : super._();
 
@@ -270,7 +270,7 @@ abstract class _Profile extends Profile {
   @override
   String? get avatarUrl;
   @override
-  DateTime get updatedAt;
+  SyncMeta get syncMeta;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

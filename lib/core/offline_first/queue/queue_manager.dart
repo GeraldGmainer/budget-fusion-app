@@ -111,14 +111,14 @@ class QueueManager {
         switch (item.taskType) {
           case QueueTaskType.upsert:
             final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
-            if (updatedDto.updatedAt == null) {
+            if (updatedDto.syncMeta.updatedAt == null) {
               BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
               BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
               BudgetLogger.instance.i("QueueManager upsert updatedDto: $updatedDto");
               // TODO throw custom exception
               throw "QueueManager: upserting queue task returned updatedAt as null";
             }
-            await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+            await localSource.markAsSynced(updatedDto.id.value, updatedDto.syncMeta.updatedAt!);
             break;
           case QueueTaskType.delete:
             await remoteSource.deleteById(item.entityId);

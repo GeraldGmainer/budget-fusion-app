@@ -15,6 +15,7 @@ class CategoryDraft with _$CategoryDraft {
     @Default("9E9E9E") String iconColor,
     Category? parent,
     @Default([]) List<Category> subcategories,
+    SyncMeta? syncMeta,
   }) = _CategoryDraft;
 
   bool get isCreating => id == null;
@@ -28,7 +29,7 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: iconColor,
       parent: parent,
       subcategories: subcategories,
-      updatedAt: DateTime.now(),
+      syncMeta: syncMeta ?? SyncMeta(),
     );
   }
 
@@ -45,6 +46,7 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: category.iconColor,
       parent: category.parent,
       subcategories: category.subcategories,
+      syncMeta: category.syncMeta,
     );
   }
 }

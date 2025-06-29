@@ -6,16 +6,16 @@ import '../dtos/profile_setting_dto.dart';
 part 'profile_setting.freezed.dart';
 
 @freezed
-class ProfileSetting with _$ProfileSetting implements Entity {
+class ProfileSetting with _$ProfileSetting implements SyncEntity {
   const ProfileSetting._();
 
-  const factory ProfileSetting({required Uuid id, required Currency currency, required DateTime updatedAt}) = _ProfileSetting;
+  const factory ProfileSetting({required Uuid id, required Currency currency, required SyncMeta syncMeta}) = _ProfileSetting;
 
   factory ProfileSetting.fromDto(ProfileSettingDto dto) {
-    return ProfileSetting(id: dto.id, currency: Currency.fromDto(dto.currency), updatedAt: dto.updatedAt);
+    return ProfileSetting(id: dto.id, currency: Currency.fromDto(dto.currency), syncMeta: dto.syncMeta);
   }
 
   ProfileSettingDto toDto() {
-    return ProfileSettingDto(id: id, currency: currency.toDto(), updatedAt: updatedAt);
+    return ProfileSettingDto(id: id, currency: currency.toDto(), syncMeta: syncMeta);
   }
 }

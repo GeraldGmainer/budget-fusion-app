@@ -24,12 +24,14 @@ export 'database/database_manager.dart';
 export 'database/serializer/category_type_serializer.dart';
 export 'database/serializer/date_serializer.dart';
 export 'database/serializer/date_time_serializer.dart';
+export 'database/serializer/sync_meta_serializer.dart';
 export 'database/serializer/uuid_serializer.dart';
 //
 export 'di/database_module.dart';
 export 'di/injection.dart';
 //
 export 'entities/entity.dart';
+export 'entities/sync_entity.dart';
 //
 export 'enums/category_type.dart';
 export 'enums/entity_type.dart';
@@ -49,11 +51,13 @@ export 'offline_first/data_manager/data_manager_factory.dart';
 export 'offline_first/data_manager/offline_first_data_manager.dart';
 export 'offline_first/data_sources/offline_first_local_data_source.dart';
 export 'offline_first/data_sources/offline_first_remote_data_source.dart';
+export 'offline_first/enums/sync_status.dart';
 export 'offline_first/filters/query_filter.dart';
 export 'offline_first/filters/query_operator.dart';
 export 'offline_first/interfaces/data_manager.dart';
 export 'offline_first/models/offline_first_dto.dart';
 export 'offline_first/models/queue_item.dart';
+export 'offline_first/models/sync_meta.dart';
 export 'offline_first/queue/queue_manager.dart';
 export 'offline_first/ui/data_manager_cubit.dart';
 export 'offline_first/ui/data_manager_list.dart';

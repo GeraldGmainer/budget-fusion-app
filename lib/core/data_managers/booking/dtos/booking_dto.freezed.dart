@@ -23,6 +23,8 @@ BookingDto _$BookingDtoFromJson(Map<String, dynamic> json) {
 mixin _$BookingDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
+  @SyncMetaSerializer()
+  SyncMeta get syncMeta => throw _privateConstructorUsedError;
   @JsonKey(name: 'date')
   @DateSerializer()
   DateTime get date => throw _privateConstructorUsedError;
@@ -35,9 +37,6 @@ mixin _$BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   Uuid get accountId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this BookingDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,12 +57,12 @@ abstract class $BookingDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
+    @SyncMetaSerializer() SyncMeta syncMeta,
     @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() Uuid accountId,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
   });
 }
 
@@ -83,12 +82,12 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
   @override
   $Res call({
     Object? id = null,
+    Object? syncMeta = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? categoryId = null,
     Object? accountId = null,
-    Object? updatedAt = null,
   }) {
     return _then(
       _value.copyWith(
@@ -97,6 +96,11 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
+            syncMeta:
+                null == syncMeta
+                    ? _value.syncMeta
+                    : syncMeta // ignore: cast_nullable_to_non_nullable
+                        as SyncMeta,
             date:
                 null == date
                     ? _value.date
@@ -122,11 +126,6 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
                     ? _value.accountId
                     : accountId // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
           )
           as $Val,
     );
@@ -144,12 +143,12 @@ abstract class _$$BookingDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
+    @SyncMetaSerializer() SyncMeta syncMeta,
     @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() Uuid accountId,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
   });
 }
 
@@ -168,12 +167,12 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? syncMeta = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? categoryId = null,
     Object? accountId = null,
-    Object? updatedAt = null,
   }) {
     return _then(
       _$BookingDtoImpl(
@@ -182,6 +181,11 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
+        syncMeta:
+            null == syncMeta
+                ? _value.syncMeta
+                : syncMeta // ignore: cast_nullable_to_non_nullable
+                    as SyncMeta,
         date:
             null == date
                 ? _value.date
@@ -207,11 +211,6 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
                 ? _value.accountId
                 : accountId // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
       ),
     );
   }
@@ -222,12 +221,12 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
 class _$BookingDtoImpl extends _BookingDto {
   const _$BookingDtoImpl({
     @UuidSerializer() required this.id,
+    @SyncMetaSerializer() required this.syncMeta,
     @JsonKey(name: 'date') @DateSerializer() required this.date,
     this.description,
     @DecimalConverter() required this.amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required this.categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() required this.accountId,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
   }) : super._();
 
   factory _$BookingDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -236,6 +235,9 @@ class _$BookingDtoImpl extends _BookingDto {
   @override
   @UuidSerializer()
   final Uuid id;
+  @override
+  @SyncMetaSerializer()
+  final SyncMeta syncMeta;
   @override
   @JsonKey(name: 'date')
   @DateSerializer()
@@ -253,14 +255,10 @@ class _$BookingDtoImpl extends _BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   final Uuid accountId;
-  @override
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'BookingDto(id: $id, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId, updatedAt: $updatedAt)';
+    return 'BookingDto(id: $id, syncMeta: $syncMeta, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId)';
   }
 
   @override
@@ -269,6 +267,8 @@ class _$BookingDtoImpl extends _BookingDto {
         (other.runtimeType == runtimeType &&
             other is _$BookingDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.syncMeta, syncMeta) ||
+                other.syncMeta == syncMeta) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -276,9 +276,7 @@ class _$BookingDtoImpl extends _BookingDto {
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.accountId, accountId) ||
-                other.accountId == accountId) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.accountId == accountId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -286,12 +284,12 @@ class _$BookingDtoImpl extends _BookingDto {
   int get hashCode => Object.hash(
     runtimeType,
     id,
+    syncMeta,
     date,
     description,
     amount,
     categoryId,
     accountId,
-    updatedAt,
   );
 
   /// Create a copy of BookingDto
@@ -311,6 +309,7 @@ class _$BookingDtoImpl extends _BookingDto {
 abstract class _BookingDto extends BookingDto {
   const factory _BookingDto({
     @UuidSerializer() required final Uuid id,
+    @SyncMetaSerializer() required final SyncMeta syncMeta,
     @JsonKey(name: 'date') @DateSerializer() required final DateTime date,
     final String? description,
     @DecimalConverter() required final Decimal amount,
@@ -320,9 +319,6 @@ abstract class _BookingDto extends BookingDto {
     @JsonKey(name: 'account_id')
     @UuidSerializer()
     required final Uuid accountId,
-    @JsonKey(name: 'updated_at')
-    @DateTimeSerializer()
-    required final DateTime updatedAt,
   }) = _$BookingDtoImpl;
   const _BookingDto._() : super._();
 
@@ -332,6 +328,9 @@ abstract class _BookingDto extends BookingDto {
   @override
   @UuidSerializer()
   Uuid get id;
+  @override
+  @SyncMetaSerializer()
+  SyncMeta get syncMeta;
   @override
   @JsonKey(name: 'date')
   @DateSerializer()
@@ -349,10 +348,6 @@ abstract class _BookingDto extends BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   Uuid get accountId;
-  @override
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  DateTime get updatedAt;
 
   /// Create a copy of BookingDto
   /// with the given fields replaced by the non-null parameter values.

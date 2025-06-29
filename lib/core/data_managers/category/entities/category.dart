@@ -6,7 +6,7 @@ import '../dtos/category_dto.dart';
 part 'category.freezed.dart';
 
 @freezed
-class Category with _$Category implements Entity {
+class Category with _$Category implements SyncEntity {
   const Category._();
 
   const factory Category({
@@ -17,7 +17,7 @@ class Category with _$Category implements Entity {
     required String iconColor,
     Category? parent,
     @Default([]) List<Category> subcategories,
-    required DateTime updatedAt,
+    required SyncMeta syncMeta,
   }) = _Category;
 
   factory Category.notFound() {
@@ -27,16 +27,16 @@ class Category with _$Category implements Entity {
       categoryType: CategoryType.outcome,
       iconName: FeatureConstants.notFoundIconName,
       iconColor: FeatureConstants.notFoundIconColor,
-      updatedAt: DateTime.now(),
+      syncMeta: SyncMeta(),
     );
   }
 
   factory Category.fromDto(CategoryDto dto) {
-    return Category(id: dto.id, name: dto.name, categoryType: dto.categoryType, iconName: dto.iconName, iconColor: dto.iconColor, updatedAt: dto.updatedAt);
+    return Category(id: dto.id, name: dto.name, categoryType: dto.categoryType, iconName: dto.iconName, iconColor: dto.iconColor, syncMeta: dto.syncMeta);
   }
 
   CategoryDto toDto() {
-    return CategoryDto(id: id, name: name, categoryType: categoryType, iconName: iconName, iconColor: iconColor, parentId: parent?.id, updatedAt: updatedAt);
+    return CategoryDto(id: id, name: name, categoryType: categoryType, iconName: iconName, iconColor: iconColor, parentId: parent?.id, syncMeta: syncMeta);
   }
 
   bool get isParent => parent == null;

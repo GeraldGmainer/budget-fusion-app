@@ -15,7 +15,7 @@ class CategoryMapper {
         iconName: dto.iconName,
         iconColor: dto.iconColor,
         parentId: dto.parentId,
-        updatedAt: dto.updatedAt,
+        syncMeta: dto.syncMeta,
       );
     }
     for (var builder in builderMap.values) {
@@ -55,7 +55,7 @@ class CategoryMapper {
       iconColor: b.iconColor,
       parent: null,
       subcategories: children,
-      updatedAt: b.updatedAt,
+      syncMeta: b.syncMeta,
     );
   }
 
@@ -73,7 +73,7 @@ class _CategoryBuilder {
   final String iconName;
   final String iconColor;
   final Uuid? parentId;
-  final DateTime updatedAt;
+  final SyncMeta syncMeta;
   _CategoryBuilder? parentBuilder;
   final List<_CategoryBuilder> children = [];
 
@@ -84,6 +84,6 @@ class _CategoryBuilder {
     required this.iconName,
     required this.iconColor,
     required this.parentId,
-    required this.updatedAt,
+    required this.syncMeta,
   });
 }
