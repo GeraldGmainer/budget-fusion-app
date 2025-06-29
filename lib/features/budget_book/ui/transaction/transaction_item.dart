@@ -34,7 +34,7 @@ class TransactionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BudgetIcon(name: booking.category.iconName, color: booking.category.iconColor),
-          if (!booking.syncMeta.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
+          if (!booking.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
         ],
       ),
     );

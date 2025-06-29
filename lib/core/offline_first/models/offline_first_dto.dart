@@ -4,7 +4,7 @@ import 'sync_meta.dart';
 abstract class OfflineFirstDto {
   Uuid get id;
 
-  SyncMeta get syncMeta;
+  DateTime? get updatedAt;
 
   Map<String, dynamic> toJson();
 }

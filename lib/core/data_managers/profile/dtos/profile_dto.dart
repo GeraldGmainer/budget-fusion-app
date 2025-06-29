@@ -10,7 +10,7 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
 
   const factory ProfileDto({
     @UuidSerializer() required Uuid id,
-    @SyncMetaSerializer() required SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,

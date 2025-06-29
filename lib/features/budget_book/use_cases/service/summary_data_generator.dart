@@ -82,7 +82,7 @@ class SummaryDataGenerator {
     final Money groupTotalAmount = group.totalGroupAmount; // Use the combined amount for the group
     final double percentage = overallTotal.isZero() ? 0 : ((groupTotalAmount.amount / overallTotal.amount).toDouble() * 100).roundToDouble();
     final List<CategoryViewSummaryData> subSummaries = group.subGroups.map((sub) => _convertGroup(sub, overallTotal)).toList()..sort((a, b) => b.money.compareTo(a.money));
-    final bool isSynced = (group.bookings.where((x) => !x.syncMeta.isSynced).isEmpty) && subSummaries.every((sub) => sub.isSynced);
+    final bool isSynced = (group.bookings.where((x) => !x.isSynced).isEmpty) && subSummaries.every((sub) => sub.isSynced);
 
     return CategoryViewSummaryData(
       categoryType: group.category.categoryType,

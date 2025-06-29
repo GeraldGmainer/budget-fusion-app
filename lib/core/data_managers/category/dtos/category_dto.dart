@@ -10,7 +10,7 @@ class CategoryDto with _$CategoryDto implements OfflineFirstDto {
 
   const factory CategoryDto({
     @UuidSerializer() required Uuid id,
-    @SyncMetaSerializer() required SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     required String name,
     @JsonKey(name: 'category_type') @CategoryTypeSerializer() required CategoryType categoryType,
     @JsonKey(name: 'icon_name') required String iconName,

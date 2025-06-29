@@ -23,8 +23,9 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
 mixin _$ProfileDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'first_name')
   String? get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
@@ -51,7 +52,7 @@ abstract class $ProfileDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
@@ -74,7 +75,7 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
@@ -86,11 +87,11 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
             firstName:
                 freezed == firstName
                     ? _value.firstName
@@ -123,7 +124,7 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
@@ -145,7 +146,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
@@ -157,11 +158,11 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
         firstName:
             freezed == firstName
                 ? _value.firstName
@@ -187,7 +188,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
 class _$ProfileDtoImpl extends _ProfileDto {
   const _$ProfileDtoImpl({
     @UuidSerializer() required this.id,
-    @SyncMetaSerializer() required this.syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @JsonKey(name: 'first_name') this.firstName,
     @JsonKey(name: 'last_name') this.lastName,
     @JsonKey(name: 'avatar_url') this.avatarUrl,
@@ -200,8 +201,9 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @UuidSerializer()
   final Uuid id;
   @override
-  @SyncMetaSerializer()
-  final SyncMeta syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
   @override
   @JsonKey(name: 'first_name')
   final String? firstName;
@@ -214,7 +216,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
 
   @override
   String toString() {
-    return 'ProfileDto(id: $id, syncMeta: $syncMeta, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl)';
+    return 'ProfileDto(id: $id, updatedAt: $updatedAt, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -223,8 +225,8 @@ class _$ProfileDtoImpl extends _ProfileDto {
         (other.runtimeType == runtimeType &&
             other is _$ProfileDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -236,7 +238,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, syncMeta, firstName, lastName, avatarUrl);
+      Object.hash(runtimeType, id, updatedAt, firstName, lastName, avatarUrl);
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.
@@ -255,7 +257,9 @@ class _$ProfileDtoImpl extends _ProfileDto {
 abstract class _ProfileDto extends ProfileDto {
   const factory _ProfileDto({
     @UuidSerializer() required final Uuid id,
-    @SyncMetaSerializer() required final SyncMeta syncMeta,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime updatedAt,
     @JsonKey(name: 'first_name') final String? firstName,
     @JsonKey(name: 'last_name') final String? lastName,
     @JsonKey(name: 'avatar_url') final String? avatarUrl,
@@ -269,8 +273,9 @@ abstract class _ProfileDto extends ProfileDto {
   @UuidSerializer()
   Uuid get id;
   @override
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
   @override
   @JsonKey(name: 'first_name')
   String? get firstName;

@@ -23,8 +23,9 @@ ProfileSettingDto _$ProfileSettingDtoFromJson(Map<String, dynamic> json) {
 mixin _$ProfileSettingDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'currency')
   @CurrencyDtoSerializer()
   CurrencyDto get currency => throw _privateConstructorUsedError;
@@ -48,7 +49,7 @@ abstract class $ProfileSettingDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
   });
 
@@ -71,7 +72,7 @@ class _$ProfileSettingDtoCopyWithImpl<$Res, $Val extends ProfileSettingDto>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? currency = null,
   }) {
     return _then(
@@ -81,11 +82,11 @@ class _$ProfileSettingDtoCopyWithImpl<$Res, $Val extends ProfileSettingDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
             currency:
                 null == currency
                     ? _value.currency
@@ -118,7 +119,7 @@ abstract class _$$ProfileSettingDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'currency') @CurrencyDtoSerializer() CurrencyDto currency,
   });
 
@@ -141,7 +142,7 @@ class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? currency = null,
   }) {
     return _then(
@@ -151,11 +152,11 @@ class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
         currency:
             null == currency
                 ? _value.currency
@@ -171,7 +172,7 @@ class __$$ProfileSettingDtoImplCopyWithImpl<$Res>
 class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
   const _$ProfileSettingDtoImpl({
     @UuidSerializer() required this.id,
-    @SyncMetaSerializer() required this.syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @JsonKey(name: 'currency') @CurrencyDtoSerializer() required this.currency,
   }) : super._();
 
@@ -182,8 +183,9 @@ class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
   @UuidSerializer()
   final Uuid id;
   @override
-  @SyncMetaSerializer()
-  final SyncMeta syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
   @override
   @JsonKey(name: 'currency')
   @CurrencyDtoSerializer()
@@ -191,7 +193,7 @@ class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
 
   @override
   String toString() {
-    return 'ProfileSettingDto(id: $id, syncMeta: $syncMeta, currency: $currency)';
+    return 'ProfileSettingDto(id: $id, updatedAt: $updatedAt, currency: $currency)';
   }
 
   @override
@@ -200,15 +202,15 @@ class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
         (other.runtimeType == runtimeType &&
             other is _$ProfileSettingDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.currency, currency) ||
                 other.currency == currency));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, syncMeta, currency);
+  int get hashCode => Object.hash(runtimeType, id, updatedAt, currency);
 
   /// Create a copy of ProfileSettingDto
   /// with the given fields replaced by the non-null parameter values.
@@ -230,7 +232,9 @@ class _$ProfileSettingDtoImpl extends _ProfileSettingDto {
 abstract class _ProfileSettingDto extends ProfileSettingDto {
   const factory _ProfileSettingDto({
     @UuidSerializer() required final Uuid id,
-    @SyncMetaSerializer() required final SyncMeta syncMeta,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime updatedAt,
     @JsonKey(name: 'currency')
     @CurrencyDtoSerializer()
     required final CurrencyDto currency,
@@ -244,8 +248,9 @@ abstract class _ProfileSettingDto extends ProfileSettingDto {
   @UuidSerializer()
   Uuid get id;
   @override
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
   @override
   @JsonKey(name: 'currency')
   @CurrencyDtoSerializer()

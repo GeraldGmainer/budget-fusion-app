@@ -23,8 +23,9 @@ AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
 mixin _$AccountDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'icon_name')
   String get iconName => throw _privateConstructorUsedError;
@@ -50,7 +51,7 @@ abstract class $AccountDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
@@ -73,7 +74,7 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -85,11 +86,11 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
             name:
                 null == name
                     ? _value.name
@@ -122,7 +123,7 @@ abstract class _$$AccountDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @SyncMetaSerializer() SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
@@ -144,7 +145,7 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? syncMeta = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
@@ -156,11 +157,11 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
         name:
             null == name
                 ? _value.name
@@ -186,7 +187,7 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
 class _$AccountDtoImpl extends _AccountDto {
   const _$AccountDtoImpl({
     @UuidSerializer() required this.id,
-    @SyncMetaSerializer() required this.syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     required this.name,
     @JsonKey(name: 'icon_name') required this.iconName,
     @JsonKey(name: 'icon_color') required this.iconColor,
@@ -199,8 +200,9 @@ class _$AccountDtoImpl extends _AccountDto {
   @UuidSerializer()
   final Uuid id;
   @override
-  @SyncMetaSerializer()
-  final SyncMeta syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
   @override
   final String name;
   @override
@@ -212,7 +214,7 @@ class _$AccountDtoImpl extends _AccountDto {
 
   @override
   String toString() {
-    return 'AccountDto(id: $id, syncMeta: $syncMeta, name: $name, iconName: $iconName, iconColor: $iconColor)';
+    return 'AccountDto(id: $id, updatedAt: $updatedAt, name: $name, iconName: $iconName, iconColor: $iconColor)';
   }
 
   @override
@@ -221,8 +223,8 @@ class _$AccountDtoImpl extends _AccountDto {
         (other.runtimeType == runtimeType &&
             other is _$AccountDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
@@ -233,7 +235,7 @@ class _$AccountDtoImpl extends _AccountDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, syncMeta, name, iconName, iconColor);
+      Object.hash(runtimeType, id, updatedAt, name, iconName, iconColor);
 
   /// Create a copy of AccountDto
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +254,9 @@ class _$AccountDtoImpl extends _AccountDto {
 abstract class _AccountDto extends AccountDto {
   const factory _AccountDto({
     @UuidSerializer() required final Uuid id,
-    @SyncMetaSerializer() required final SyncMeta syncMeta,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime updatedAt,
     required final String name,
     @JsonKey(name: 'icon_name') required final String iconName,
     @JsonKey(name: 'icon_color') required final String iconColor,
@@ -266,8 +270,9 @@ abstract class _AccountDto extends AccountDto {
   @UuidSerializer()
   Uuid get id;
   @override
-  @SyncMetaSerializer()
-  SyncMeta get syncMeta;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
   @override
   String get name;
   @override

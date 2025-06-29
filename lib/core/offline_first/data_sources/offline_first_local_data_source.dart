@@ -9,53 +9,94 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   OfflineFirstLocalDataSource(this.db);
 
-  Future<List<Dto>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
+  SyncedDto<Dto> _mapRowToSyncedDto(Map<String, dynamic> row) {
+    final m = Map<String, dynamic>.from(row);
+    final statusString = m.remove('sync_status') as String;
+    final lastSyncedAtString = m.remove('last_synced_at') as String?;
+    final modifiedLocallyAtString = m.remove('modified_locally_at') as String?;
+    final meta = SyncMeta(
+      status: SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString),
+      lastSyncedAt: lastSyncedAtString == null ? null : DateTime.parse(lastSyncedAtString).toLocal(),
+      modifiedLocallyAt: modifiedLocallyAtString == null ? null : DateTime.parse(modifiedLocallyAtString).toLocal(),
+    );
+    final dto = fromJson(m);
+    return SyncedDto(dto: dto, syncMeta: meta);
+  }
+
+  Future<List<SyncedDto<Dto>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
     final effectiveOrderBy = orderBy ?? defaultOrderBy;
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
     final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value, orderBy: effectiveOrderBy);
     _log("fetched ${EntityLogger.bold(rows.length)} DTOs", darkColor: true);
-    final dtos =
-        rows.map((row) {
-          final dto = fromJson(row);
-          return dto;
-        }).toList();
-    return dtos;
+    return rows.map(_mapRowToSyncedDto).toList();
   }
 
-  Future<Dto?> fetchById(String id) async {
+  Future<SyncedDto<Dto>?> fetchById(String id) async {
     _log("fetchById '$id'");
     final rows = await db.query(table, where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) {
       _log("no row found with id: '$id'", darkColor: true);
       return null;
     }
-    final dto = fromJson(rows.first);
     _log("fetched row for id '$id'", darkColor: true);
-    return dto;
+    return _mapRowToSyncedDto(rows.first);
   }
 
-  Future<void> save(Dto dto) async {
-    _log("save for id '${dto.id.value}'");
-    final stringifiedFields = _convertMapsToString(dto.toJson());
+  Future<void> save(SyncedDto<Dto> syncedDto) async {
+    _log("save for id '${syncedDto.dto.id.value}'");
+    final data = syncedDto.dto.toJson();
+    data['sync_status'] = syncedDto.syncMeta.status.toString().split('.').last;
+    data['last_synced_at'] = syncedDto.syncMeta.lastSyncedAt?.toUtc().toIso8601String();
+    data['modified_locally_at'] = syncedDto.syncMeta.modifiedLocallyAt?.toUtc().toIso8601String();
+    final stringifiedFields = _convertMapsToString(data);
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
-    _log("save success for id '${dto.id.value}'", darkColor: true);
+    _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
   }
 
-  Future<void> saveAll(List<Dto> dtos) async {
-    _log("saveAll  ${EntityLogger.bold(dtos.length)} DTOs");
+  Future<void> saveAll(List<SyncedDto<Dto>> syncedDtos) async {
+    _log("saveAll ${EntityLogger.bold(syncedDtos.length)} DTOs");
     final batch = db.batch();
-    for (final dto in dtos) {
-      final stringifiedFields = _convertMapsToString(dto.toJson());
+    for (final dto in syncedDtos) {
+      final data = dto.dto.toJson();
+      data['sync_status'] = dto.syncMeta.status.toString().split('.').last;
+      data['last_synced_at'] = dto.syncMeta.lastSyncedAt?.toUtc().toIso8601String();
+      data['modified_locally_at'] = dto.syncMeta.modifiedLocallyAt?.toUtc().toIso8601String();
+      final stringifiedFields = _convertMapsToString(data);
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
     _log("saveAll success", darkColor: true);
   }
 
+  Future<void> saveAllNotSynced(List<Dto> dtos) async {
+    _log("saveAllNotSynced ${dtos.length} DTOs");
+    final batch = db.batch();
+    for (final dto in dtos) {
+      final data = dto.toJson();
+      data['sync_status'] = SyncStatus.synced.name;
+      data['last_synced_at'] = (dto.updatedAt ?? DateTime.now()).toUtc().toIso8601String();
+      data['modified_locally_at'] = null;
+      batch.insert(table, _convertMapsToString(data), conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+    await batch.commit(noResult: true);
+    _log("saveAllNotSynced success", darkColor: true);
+  }
+
+  Future<void> saveNotSynced(Dto dto) async {
+    _log("saveNotSynced for id '${dto.id.value}'");
+    final data = dto.toJson();
+    data['sync_status'] = SyncStatus.synced.name;
+    data['last_synced_at'] = (dto.updatedAt ?? DateTime.now()).toUtc().toIso8601String();
+    data['modified_locally_at'] = null;
+    await db.insert(table, _convertMapsToString(data), conflictAlgorithm: ConflictAlgorithm.replace);
+    _log("saveNotSynced success for id '${dto.id.value}'", darkColor: true);
+  }
+
   Future<void> markAsSynced(String id, DateTime updated) async {
     _log("markAsSynced for id '$id' with updatedAt: $updated");
-    await db.update(table, {'updated_at': updated.toIso8601String()}, where: 'id = ?', whereArgs: [id]);
+    final data = {'sync_status': SyncStatus.synced.name, 'last_synced_at': updated.toUtc().toIso8601String(), 'updated_at': updated.toUtc().toIso8601String()};
+    await db.update(table, data, where: 'id = ?', whereArgs: [id]);
     _log("markAsSynced success for id '$id'", darkColor: true);
   }
 

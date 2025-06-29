@@ -13,7 +13,7 @@ class ProfileSettingDto with _$ProfileSettingDto implements OfflineFirstDto {
 
   const factory ProfileSettingDto({
     @UuidSerializer() required Uuid id,
-    @SyncMetaSerializer() required SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'currency') @CurrencyDtoSerializer() required CurrencyDto currency,
   }) = _ProfileSettingDto;
 

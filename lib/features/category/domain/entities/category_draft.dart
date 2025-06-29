@@ -29,7 +29,7 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: iconColor,
       parent: parent,
       subcategories: subcategories,
-      syncMeta: syncMeta ?? SyncMeta(),
+      isSynced: false,
     );
   }
 
@@ -46,7 +46,6 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: category.iconColor,
       parent: category.parent,
       subcategories: category.subcategories,
-      syncMeta: category.syncMeta,
     );
   }
 }

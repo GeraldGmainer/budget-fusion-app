@@ -9,7 +9,7 @@ part of 'category_dto.dart';
 _$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
     _$CategoryDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
-      syncMeta: const SyncMetaSerializer().fromJson(json['syncMeta']),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       name: json['name'] as String,
       categoryType: const CategoryTypeSerializer().fromJson(
         json['category_type'] as String,
@@ -26,7 +26,7 @@ Map<String, dynamic> _$$CategoryDtoImplToJson(
   _$CategoryDtoImpl instance,
 ) => <String, dynamic>{
   'id': const UuidSerializer().toJson(instance.id),
-  'syncMeta': const SyncMetaSerializer().toJson(instance.syncMeta),
+  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
   'name': instance.name,
   'category_type': const CategoryTypeSerializer().toJson(instance.categoryType),
   'icon_name': instance.iconName,

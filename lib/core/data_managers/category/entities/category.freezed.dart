@@ -24,7 +24,7 @@ mixin _$Category {
   String get iconColor => throw _privateConstructorUsedError;
   Category? get parent => throw _privateConstructorUsedError;
   List<Category> get subcategories => throw _privateConstructorUsedError;
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -46,7 +46,7 @@ abstract class $CategoryCopyWith<$Res> {
     String iconColor,
     Category? parent,
     List<Category> subcategories,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 
   $CategoryCopyWith<$Res>? get parent;
@@ -74,7 +74,7 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? iconColor = null,
     Object? parent = freezed,
     Object? subcategories = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _value.copyWith(
@@ -113,11 +113,11 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                     ? _value.subcategories
                     : subcategories // ignore: cast_nullable_to_non_nullable
                         as List<Category>,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
           )
           as $Val,
     );
@@ -155,7 +155,7 @@ abstract class _$$CategoryImplCopyWith<$Res>
     String iconColor,
     Category? parent,
     List<Category> subcategories,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 
   @override
@@ -183,7 +183,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? parent = freezed,
     Object? subcategories = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _$CategoryImpl(
@@ -222,11 +222,11 @@ class __$$CategoryImplCopyWithImpl<$Res>
                 ? _value._subcategories
                 : subcategories // ignore: cast_nullable_to_non_nullable
                     as List<Category>,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -243,7 +243,7 @@ class _$CategoryImpl extends _Category {
     required this.iconColor,
     this.parent,
     final List<Category> subcategories = const [],
-    required this.syncMeta,
+    required this.isSynced,
   }) : _subcategories = subcategories,
        super._();
 
@@ -269,11 +269,11 @@ class _$CategoryImpl extends _Category {
   }
 
   @override
-  final SyncMeta syncMeta;
+  final bool isSynced;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, syncMeta: $syncMeta)';
+    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, isSynced: $isSynced)';
   }
 
   @override
@@ -294,8 +294,8 @@ class _$CategoryImpl extends _Category {
               other._subcategories,
               _subcategories,
             ) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced));
   }
 
   @override
@@ -308,7 +308,7 @@ class _$CategoryImpl extends _Category {
     iconColor,
     parent,
     const DeepCollectionEquality().hash(_subcategories),
-    syncMeta,
+    isSynced,
   );
 
   /// Create a copy of Category
@@ -329,7 +329,7 @@ abstract class _Category extends Category {
     required final String iconColor,
     final Category? parent,
     final List<Category> subcategories,
-    required final SyncMeta syncMeta,
+    required final bool isSynced,
   }) = _$CategoryImpl;
   const _Category._() : super._();
 
@@ -348,7 +348,7 @@ abstract class _Category extends Category {
   @override
   List<Category> get subcategories;
   @override
-  SyncMeta get syncMeta;
+  bool get isSynced;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

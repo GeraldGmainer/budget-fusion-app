@@ -23,7 +23,7 @@ mixin _$Booking {
   Money get money => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -43,7 +43,7 @@ abstract class $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 
   $MoneyCopyWith<$Res> get money;
@@ -72,7 +72,7 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _value.copyWith(
@@ -106,11 +106,11 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                     ? _value.account
                     : account // ignore: cast_nullable_to_non_nullable
                         as Account,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
           )
           as $Val,
     );
@@ -162,7 +162,7 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 
   @override
@@ -193,7 +193,7 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _$BookingImpl(
@@ -227,11 +227,11 @@ class __$$BookingImplCopyWithImpl<$Res>
                 ? _value.account
                 : account // ignore: cast_nullable_to_non_nullable
                     as Account,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -247,7 +247,7 @@ class _$BookingImpl extends _Booking {
     required this.money,
     required this.category,
     required this.account,
-    required this.syncMeta,
+    required this.isSynced,
   }) : super._();
 
   @override
@@ -263,11 +263,11 @@ class _$BookingImpl extends _Booking {
   @override
   final Account account;
   @override
-  final SyncMeta syncMeta;
+  final bool isSynced;
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, syncMeta: $syncMeta)';
+    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, isSynced: $isSynced)';
   }
 
   @override
@@ -283,8 +283,8 @@ class _$BookingImpl extends _Booking {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced));
   }
 
   @override
@@ -296,7 +296,7 @@ class _$BookingImpl extends _Booking {
     money,
     category,
     account,
-    syncMeta,
+    isSynced,
   );
 
   /// Create a copy of Booking
@@ -316,7 +316,7 @@ abstract class _Booking extends Booking {
     required final Money money,
     required final Category category,
     required final Account account,
-    required final SyncMeta syncMeta,
+    required final bool isSynced,
   }) = _$BookingImpl;
   const _Booking._() : super._();
 
@@ -333,7 +333,7 @@ abstract class _Booking extends Booking {
   @override
   Account get account;
   @override
-  SyncMeta get syncMeta;
+  bool get isSynced;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

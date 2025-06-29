@@ -21,7 +21,7 @@ mixin _$Account {
   String get name => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -39,7 +39,7 @@ abstract class $AccountCopyWith<$Res> {
     String name,
     String iconName,
     String iconColor,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 }
 
@@ -62,7 +62,7 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _value.copyWith(
@@ -86,11 +86,11 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
                     ? _value.iconColor
                     : iconColor // ignore: cast_nullable_to_non_nullable
                         as String,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
           )
           as $Val,
     );
@@ -110,7 +110,7 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
     String name,
     String iconName,
     String iconColor,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 }
 
@@ -132,7 +132,7 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _$AccountImpl(
@@ -156,11 +156,11 @@ class __$$AccountImplCopyWithImpl<$Res>
                 ? _value.iconColor
                 : iconColor // ignore: cast_nullable_to_non_nullable
                     as String,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -174,7 +174,7 @@ class _$AccountImpl extends _Account {
     required this.name,
     required this.iconName,
     required this.iconColor,
-    required this.syncMeta,
+    required this.isSynced,
   }) : super._();
 
   @override
@@ -186,11 +186,11 @@ class _$AccountImpl extends _Account {
   @override
   final String iconColor;
   @override
-  final SyncMeta syncMeta;
+  final bool isSynced;
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, syncMeta: $syncMeta)';
+    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, isSynced: $isSynced)';
   }
 
   @override
@@ -204,13 +204,13 @@ class _$AccountImpl extends _Account {
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, iconName, iconColor, syncMeta);
+      Object.hash(runtimeType, id, name, iconName, iconColor, isSynced);
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -227,7 +227,7 @@ abstract class _Account extends Account {
     required final String name,
     required final String iconName,
     required final String iconColor,
-    required final SyncMeta syncMeta,
+    required final bool isSynced,
   }) = _$AccountImpl;
   const _Account._() : super._();
 
@@ -240,7 +240,7 @@ abstract class _Account extends Account {
   @override
   String get iconColor;
   @override
-  SyncMeta get syncMeta;
+  bool get isSynced;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.

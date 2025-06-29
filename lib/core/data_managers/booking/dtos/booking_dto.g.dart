@@ -9,7 +9,7 @@ part of 'booking_dto.dart';
 _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
     _$BookingDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
-      syncMeta: const SyncMetaSerializer().fromJson(json['syncMeta']),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       date: const DateSerializer().fromJson(json['date'] as String),
       description: json['description'] as String?,
       amount: const DecimalConverter().fromJson(json['amount']),
@@ -22,7 +22,7 @@ _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
-      'syncMeta': const SyncMetaSerializer().toJson(instance.syncMeta),
+      'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
       'date': const DateSerializer().toJson(instance.date),
       'description': instance.description,
       'amount': const DecimalConverter().toJson(instance.amount),

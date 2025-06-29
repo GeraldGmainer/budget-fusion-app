@@ -4,7 +4,6 @@ import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'booking_dto.freezed.dart';
-
 part 'booking_dto.g.dart';
 
 @freezed
@@ -13,7 +12,7 @@ class BookingDto with _$BookingDto implements OfflineFirstDto {
 
   const factory BookingDto({
     @UuidSerializer() required Uuid id,
-    @SyncMetaSerializer() required SyncMeta syncMeta,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() required DateTime date,
     String? description,
     @DecimalConverter() required Decimal amount,

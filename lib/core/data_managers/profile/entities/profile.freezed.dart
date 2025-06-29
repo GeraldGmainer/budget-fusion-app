@@ -22,7 +22,7 @@ mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
-  SyncMeta get syncMeta => throw _privateConstructorUsedError;
+  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +41,7 @@ abstract class $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 }
 
@@ -65,7 +65,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _value.copyWith(
@@ -94,11 +94,11 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                     ? _value.avatarUrl
                     : avatarUrl // ignore: cast_nullable_to_non_nullable
                         as String?,
-            syncMeta:
-                null == syncMeta
-                    ? _value.syncMeta
-                    : syncMeta // ignore: cast_nullable_to_non_nullable
-                        as SyncMeta,
+            isSynced:
+                null == isSynced
+                    ? _value.isSynced
+                    : isSynced // ignore: cast_nullable_to_non_nullable
+                        as bool,
           )
           as $Val,
     );
@@ -119,7 +119,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
-    SyncMeta syncMeta,
+    bool isSynced,
   });
 }
 
@@ -142,7 +142,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? syncMeta = null,
+    Object? isSynced = null,
   }) {
     return _then(
       _$ProfileImpl(
@@ -171,11 +171,11 @@ class __$$ProfileImplCopyWithImpl<$Res>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                     as String?,
-        syncMeta:
-            null == syncMeta
-                ? _value.syncMeta
-                : syncMeta // ignore: cast_nullable_to_non_nullable
-                    as SyncMeta,
+        isSynced:
+            null == isSynced
+                ? _value.isSynced
+                : isSynced // ignore: cast_nullable_to_non_nullable
+                    as bool,
       ),
     );
   }
@@ -190,7 +190,7 @@ class _$ProfileImpl extends _Profile {
     this.firstName,
     this.lastName,
     this.avatarUrl,
-    required this.syncMeta,
+    required this.isSynced,
   }) : super._();
 
   @override
@@ -204,11 +204,11 @@ class _$ProfileImpl extends _Profile {
   @override
   final String? avatarUrl;
   @override
-  final SyncMeta syncMeta;
+  final bool isSynced;
 
   @override
   String toString() {
-    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, syncMeta: $syncMeta)';
+    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, isSynced: $isSynced)';
   }
 
   @override
@@ -224,8 +224,8 @@ class _$ProfileImpl extends _Profile {
                 other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
-            (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+            (identical(other.isSynced, isSynced) ||
+                other.isSynced == isSynced));
   }
 
   @override
@@ -236,7 +236,7 @@ class _$ProfileImpl extends _Profile {
     firstName,
     lastName,
     avatarUrl,
-    syncMeta,
+    isSynced,
   );
 
   /// Create a copy of Profile
@@ -255,7 +255,7 @@ abstract class _Profile extends Profile {
     final String? firstName,
     final String? lastName,
     final String? avatarUrl,
-    required final SyncMeta syncMeta,
+    required final bool isSynced,
   }) = _$ProfileImpl;
   const _Profile._() : super._();
 
@@ -270,7 +270,7 @@ abstract class _Profile extends Profile {
   @override
   String? get avatarUrl;
   @override
-  SyncMeta get syncMeta;
+  bool get isSynced;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

@@ -5,9 +5,10 @@ import '../dtos/category_dto.dart';
 
 @lazySingleton
 class CategoryMapper {
-  List<Category> fromDtos(List<CategoryDto> dtos) {
+  List<Category> fromDtos(List<SyncedDto<CategoryDto>> syncedDtos) {
     final Map<Uuid, _CategoryBuilder> builderMap = {};
-    for (var dto in dtos) {
+    for (var syncedDto in syncedDtos) {
+      final dto = syncedDto.dto;
       builderMap[dto.id] = _CategoryBuilder(
         id: dto.id,
         name: dto.name,
@@ -15,7 +16,7 @@ class CategoryMapper {
         iconName: dto.iconName,
         iconColor: dto.iconColor,
         parentId: dto.parentId,
-        syncMeta: dto.syncMeta,
+        isSynced: syncedDto.isSynced,
       );
     }
     for (var builder in builderMap.values) {
@@ -55,7 +56,7 @@ class CategoryMapper {
       iconColor: b.iconColor,
       parent: null,
       subcategories: children,
-      syncMeta: b.syncMeta,
+      isSynced: b.isSynced,
     );
   }
 
@@ -73,7 +74,7 @@ class _CategoryBuilder {
   final String iconName;
   final String iconColor;
   final Uuid? parentId;
-  final SyncMeta syncMeta;
+  final bool isSynced;
   _CategoryBuilder? parentBuilder;
   final List<_CategoryBuilder> children = [];
 
@@ -84,6 +85,6 @@ class _CategoryBuilder {
     required this.iconName,
     required this.iconColor,
     required this.parentId,
-    required this.syncMeta,
+    required this.isSynced,
   });
 }

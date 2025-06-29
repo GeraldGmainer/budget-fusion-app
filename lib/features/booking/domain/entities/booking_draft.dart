@@ -29,7 +29,7 @@ class BookingDraft with _$BookingDraft {
       money: Money(amount: amount, currency: currency),
       category: category!,
       account: account!,
-      syncMeta: syncMeta ?? SyncMeta(),
+      isSynced: false,
     );
   }
 
@@ -42,7 +42,6 @@ class BookingDraft with _$BookingDraft {
       category: booking.category,
       account: booking.account,
       categoryType: booking.category.categoryType,
-      syncMeta: booking.syncMeta,
     );
   }
 }
