@@ -100,6 +100,11 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     _log("markAsSynced success for id '$id'", darkColor: true);
   }
 
+  Future<void> updateSyncStatus(String id, SyncStatus status) async {
+    _log("updateSyncStatus for id '$id' with SyncStatus: $status");
+    await db.update(table, {'sync_status': status.name}, where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<DateTime?> fetchMaxUpdatedAt() async {
     _log("fetchMaxUpdatedAt");
     final result = await db.rawQuery('SELECT MAX(updated_at) AS maxDate FROM $table');

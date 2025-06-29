@@ -1,1 +1,1 @@
-enum SyncStatus { synced, createdLocally, updatedLocally, deletedLocally, syncFailed }
+enum SyncStatus { synced, createdLocally, updatedLocally, syncFailed }

@@ -120,11 +120,10 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _log("Saving DTO with id '${dto.id.value}'");
     final now = DateTime.now();
     final existing = await localSource.fetchById(dto.id.value);
-    // TODO set modifiedLocallyAt and lastSyncedAt correctly
     final newMeta =
         (existing?.syncMeta != null)
             ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now)
-            : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: now);
+            : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: null);
     final wrapped = SyncedDto<Dto>(dto: dto, syncMeta: newMeta);
 
     await localSource.save(wrapped);
@@ -190,24 +189,15 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       _log("Fetched ${remoteDtos.length} new remote items");
       final localSyncedDtos = await localSource.fetchAll();
       final localMap = {for (final syncedDto in localSyncedDtos) syncedDto.dto.id: syncedDto};
-      final now = DateTime.now();
-
-      // final newMeta =
-      // (existing?.syncMeta != null)
-      //     ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now)
-      //     : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now);
-      // final wrapped = SyncedDto<Dto>(dto: dto, syncMeta: newMeta);
 
       for (final dto in remoteDtos) {
         if (!localMap.containsKey(dto.id)) {
-          // TODO set modifiedLocallyAt and lastSyncedAt correctly
-          final meta = SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: now);
+          final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
           localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
         } else {
           final existing = localMap[dto.id]!;
           if (existing.dto.updatedAt == null || (dto.updatedAt != null && existing.dto.updatedAt!.isBefore(dto.updatedAt!))) {
-            // TODO set modifiedLocallyAt and lastSyncedAt correctly
-            final meta = existing.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now, lastSyncedAt: now);
+            final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
             localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
           }
         }
