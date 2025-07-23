@@ -27,5 +27,5 @@ class ProfileSettingDataManager extends DataManager<ProfileSetting> with AutoSub
 
   Future<void> reset() => _manager.reset();
 
-  List<ProfileSetting> _toEntities(List<ProfileSettingDto> dtos) => dtos.map((dto) => ProfileSetting.fromDto(dto)).toList();
+  List<ProfileSetting> _toEntities(List<SyncedDto<ProfileSettingDto>> dtos) => dtos.map((dto) => ProfileSetting.fromDto(dto.dto, isSynced: dto.isSynced)).toList();
 }

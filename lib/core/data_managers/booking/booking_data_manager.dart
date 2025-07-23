@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../utils/utils.dart';
 import '../../core.dart';
 import 'data_sources/booking_local_data_source.dart';
 import 'data_sources/booking_remote_data_source.dart';
@@ -35,17 +34,12 @@ class BookingDataManager extends DataManager<Booking> {
 
   @override
   void setupStreams() {
-    _sharedBookingsStream = Rx.combineLatest5<List<BookingDto>, List<Account>, List<Category>, List<ProfileSetting>, List<QueueItem>, List<Booking>>(
+    _sharedBookingsStream = Rx.combineLatest4<List<SyncedDto<BookingDto>>, List<Account>, List<Category>, List<ProfileSetting>, List<Booking>>(
       _manager.stream,
       _accountDataManager.watch(),
       _categoryDataManager.watch(),
       _profileSettingDataManager.watch(),
-      _manager.pendingItemsStream,
-      (bookingDtos, accounts, categories, profileSettings, pendingItems) {
-        final bookings = _mapper.mapBookings(bookingDtos, accounts, categories, profileSettings, pendingItems);
-        EntityLogger.instance.d("DataManager", EntityType.booking.text, "Emitting ${EntityLogger.bold(bookings.length)} entities", darkColor: true);
-        return bookings;
-      },
+      (bookingDtos, accounts, categories, profileSettings) => _mapper.mapBookings(bookingDtos, accounts, categories, profileSettings),
     ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
 
     _sub = watch().listen((_) {});

@@ -17,7 +17,6 @@ class Booking with _$Booking implements Entity {
     required Money money,
     required Category category,
     required Account account,
-    required DateTime updatedAt,
     required bool isSynced,
   }) = _Booking;
 
@@ -29,13 +28,12 @@ class Booking with _$Booking implements Entity {
       money: Money(amount: dto.amount, currency: currency),
       category: category,
       account: account,
-      updatedAt: dto.updatedAt,
       isSynced: isSynced,
     );
   }
 
   BookingDto toDto() {
-    return BookingDto(id: id, date: date, description: description, amount: amount, categoryId: category.id, accountId: account.id, updatedAt: updatedAt);
+    return BookingDto(id: id, date: date, description: description, amount: amount, categoryId: category.id, accountId: account.id, updatedAt: DateTime.now());
   }
 
   Decimal get amount => money.amount;

@@ -11,12 +11,12 @@ class BookingMapper {
   final Set<Uuid> _missingCategoryIds = {};
   bool _hasMissingCurrency = false;
 
-  List<Booking> mapBookings(List<BookingDto> bookingDtos, List<Account> accounts, List<Category> categories, List<ProfileSetting> profileSettings, List<QueueItem> pendingItems) {
-    return bookingDtos.map((dto) {
+  List<Booking> mapBookings(List<SyncedDto<BookingDto>> bookingDtos, List<Account> accounts, List<Category> categories, List<ProfileSetting> profileSettings) {
+    return bookingDtos.map((syncedDto) {
+      final dto = syncedDto.dto;
       final account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
       final category = _findCategory(categories, dto.categoryId);
       final currency = profileSettings.firstOrNull?.currency;
-      final bool isSynced = !pendingItems.any((q) => q.entityId == dto.id.value);
 
       if (account == null && _missingAccountIds.add(dto.accountId)) {
         BudgetLogger.instance.e('Null Account', 'No Account found for id ${dto.accountId} in booking ${dto.id}');
@@ -29,7 +29,7 @@ class BookingMapper {
         BudgetLogger.instance.e('Null Currency', 'No Currency found');
       }
 
-      return Booking.fromDto(dto, account ?? Account.notFound(), category ?? Category.notFound(), currency ?? Currency.notFound(), isSynced);
+      return Booking.fromDto(dto, account ?? Account.notFound(), category ?? Category.notFound(), currency ?? Currency.notFound(), syncedDto.isSynced);
     }).toList();
   }
 

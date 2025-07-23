@@ -55,6 +55,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     return execute(table, () async {
       final response = await supabase.from(table).upsert(json).eq('id', id).select();
       _log("upsert success", stopwatch: stopwatch);
+      await Future.delayed(Duration(milliseconds: 1500));
       return toDto((response[0]));
     });
   }

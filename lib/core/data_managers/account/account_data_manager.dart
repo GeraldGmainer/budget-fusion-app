@@ -25,7 +25,5 @@ class AccountDataManager extends DataManager<Account> with AutoSubscribe<Account
   @override
   Stream<List<Account>> watch() => _manager.stream.map((dtos) => _toEntities(dtos));
 
-  List<Account> _toEntities(List<AccountDto> dtos) {
-    return dtos.map((dto) => Account.fromDto(dto)).toList();
-  }
+  List<Account> _toEntities(List<SyncedDto<AccountDto>> dtos) => dtos.map((dto) => Account.fromDto(dto.dto, isSynced: dto.isSynced)).toList();
 }
