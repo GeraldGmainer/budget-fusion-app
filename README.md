@@ -8,7 +8,7 @@
 - Android SDK: 34
 - Android Studio: 2024.3.2
 
-### Install
+## Install
 
 ```
 git clone https://github.com/budgetfusion/budget-fusion-app.git
@@ -18,11 +18,15 @@ fvm use 3.29.3
 fvm flutter pub get
 ```
 
-### Run
+## AI Prompts
+
+https://supabase.com/docs/guides/getting-started/ai-prompts
+
+## Run
 
 fvm flutter run
 
-## Useful commands
+### Useful commands
 
 watch changes:
 
