@@ -23,15 +23,15 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) {
 mixin _$ProfileDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'first_name')
   String? get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
   String? get lastName => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,10 +52,10 @@ abstract class $ProfileDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
   });
 }
 
@@ -75,10 +75,10 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
   @override
   $Res call({
     Object? id = null,
+    Object? updatedAt = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? updatedAt = null,
   }) {
     return _then(
       _value.copyWith(
@@ -87,6 +87,11 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
             firstName:
                 freezed == firstName
                     ? _value.firstName
@@ -102,11 +107,6 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
                     ? _value.avatarUrl
                     : avatarUrl // ignore: cast_nullable_to_non_nullable
                         as String?,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
           )
           as $Val,
     );
@@ -124,10 +124,10 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() DateTime updatedAt,
   });
 }
 
@@ -146,10 +146,10 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? updatedAt = null,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
-    Object? updatedAt = null,
   }) {
     return _then(
       _$ProfileDtoImpl(
@@ -158,6 +158,11 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
         firstName:
             freezed == firstName
                 ? _value.firstName
@@ -173,11 +178,6 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                     as String?,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
       ),
     );
   }
@@ -188,10 +188,10 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
 class _$ProfileDtoImpl extends _ProfileDto {
   const _$ProfileDtoImpl({
     @UuidSerializer() required this.id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @JsonKey(name: 'first_name') this.firstName,
     @JsonKey(name: 'last_name') this.lastName,
     @JsonKey(name: 'avatar_url') this.avatarUrl,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() required this.updatedAt,
   }) : super._();
 
   factory _$ProfileDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -201,6 +201,10 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @UuidSerializer()
   final Uuid id;
   @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
+  @override
   @JsonKey(name: 'first_name')
   final String? firstName;
   @override
@@ -209,14 +213,10 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @override
   @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
-  @override
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  final DateTime updatedAt;
 
   @override
   String toString() {
-    return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, updatedAt: $updatedAt)';
+    return 'ProfileDto(id: $id, updatedAt: $updatedAt, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -225,20 +225,20 @@ class _$ProfileDtoImpl extends _ProfileDto {
         (other.runtimeType == runtimeType &&
             other is _$ProfileDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.avatarUrl == avatarUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, firstName, lastName, avatarUrl, updatedAt);
+      Object.hash(runtimeType, id, updatedAt, firstName, lastName, avatarUrl);
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.
@@ -257,12 +257,12 @@ class _$ProfileDtoImpl extends _ProfileDto {
 abstract class _ProfileDto extends ProfileDto {
   const factory _ProfileDto({
     @UuidSerializer() required final Uuid id,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime updatedAt,
     @JsonKey(name: 'first_name') final String? firstName,
     @JsonKey(name: 'last_name') final String? lastName,
     @JsonKey(name: 'avatar_url') final String? avatarUrl,
-    @JsonKey(name: 'updated_at')
-    @DateTimeSerializer()
-    required final DateTime updatedAt,
   }) = _$ProfileDtoImpl;
   const _ProfileDto._() : super._();
 
@@ -273,6 +273,10 @@ abstract class _ProfileDto extends ProfileDto {
   @UuidSerializer()
   Uuid get id;
   @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
+  @override
   @JsonKey(name: 'first_name')
   String? get firstName;
   @override
@@ -281,10 +285,6 @@ abstract class _ProfileDto extends ProfileDto {
   @override
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl;
-  @override
-  @JsonKey(name: 'updated_at')
-  @DateTimeSerializer()
-  DateTime get updatedAt;
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.

@@ -17,9 +17,10 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final RealtimeNotifierService realtimeNotifierService;
   final RemoteLoadingService remoteLoadingService;
 
-  ReplaySubject<List<Dto>> streamController = ReplaySubject<List<Dto>>(maxSize: 1);
+  ReplaySubject<List<SyncedDto<Dto>>> streamController = ReplaySubject<List<SyncedDto<Dto>>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
-  Future<List<Dto>>? _refreshing;
+  Future<List<SyncedDto<Dto>>>? _refreshing;
+  late final StreamSubscription<List<QueueItem>> _queueSub;
 
   OfflineFirstDataManager({
     required this.entityType,
@@ -31,18 +32,22 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     required this.remoteLoadingService,
   }) {
     queueManager.registerEntitySources(entityType, localSource, remoteSource);
+
+    _queueSub = queueManager.pendingItemsStream
+        .map((items) => items.where((item) => item.entityType == entityType).toList())
+        .distinct((prev, next) => const ListEquality<QueueItem>().equals(prev, next))
+        .listen((_) async {
+          final dtos = await _refreshCacheFromLocalSource();
+          _emitToStream(dtos);
+        });
   }
 
-  Stream<List<Dto>> get stream => streamController.stream;
+  Stream<List<SyncedDto<Dto>>> get stream => streamController.stream;
 
-  Stream<List<QueueItem>> get pendingItemsStream => queueManager.pendingItemsStream;
-
-  bool isSynced(String id) => queueManager.isSynced(id);
-
-  Future<List<Dto>> loadAll({Map<String, dynamic>? filters}) async {
+  Future<List<SyncedDto<Dto>>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<Dto>>(entityType);
+    final cached = cacheManager.get<List<SyncedDto<Dto>>>(entityType);
     if (cached != null && cached.isNotEmpty) {
       _log("Using cached data with ${cached.length} items");
       _emitToStream(cached);
@@ -61,56 +66,77 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     }
 
     _log("No local data found. Fetching remote data ...");
-    final dtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
-    await localSource.saveAll(dtos);
-    cacheManager.set(entityType, dtos);
-    _emitToStream(dtos);
+    final remoteDtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
+    await localSource.saveAllNotSynced(remoteDtos);
+    final synced = await _refreshCacheFromLocalSource();
+    cacheManager.set(entityType, synced);
+    _emitToStream(synced);
     _log("loadAll completed");
-    return dtos;
+    return synced;
   }
 
-  Future<Dto?> loadById(String id) async {
+  Future<SyncedDto<Dto>?> loadById(String id) async {
     _log("start loadById '$id'");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<Dto>>(entityType);
+    final cached = cacheManager.get<List<SyncedDto<Dto>>>(entityType);
     if (cached != null) {
-      final found = cached.firstWhereOrNull((e) => e.id.value == id);
+      final found = cached.firstWhereOrNull((e) => e.dto.id.value == id);
       if (found != null) {
-        _log("Using cached data with ID '${found.id}'");
+        _log("Using cached data with ID '${found.dto.id}'");
         return found;
       }
     }
     _log("Fetching local data by id ...");
     final local = await localSource.fetchById(id);
     if (local != null) {
-      _log("Local data by id '${local.id}' found");
+      _log("Local data by id '${local.dto.id}' found");
       return local;
     }
     _log("No local data found. Fetching remote data by id '$id' ...");
     final remote = await remoteLoadingService.wrap(() => remoteSource.fetchById(id));
     if (remote != null) {
       _log("Remote data by id '${remote.id}' found");
-      await localSource.save(remote);
+      await localSource.saveNotSynced(remote);
       final refreshedDtos = await _refreshCacheFromLocalSource();
       _emitToStream(refreshedDtos);
-      return remote;
+      return refreshedDtos.firstWhereOrNull((e) => e.dto.id.value == id);
     }
     return null;
   }
 
+  // Future<void> save(Dto dto) async {
+  //   _log("Saving DTO with id '${dto.id.value}'");
+  //
+  //   await localSource.save(dto);
+  //   final refreshedDtos = await _refreshCacheFromLocalSource();
+  //   _emitToStream(refreshedDtos);
+  //
+  //   final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
+  //   _log("Queuing upsert for id '${dto.id.value}'");
+  //   unawaited(queueManager.add(item));
+  // }
+
   Future<void> save(Dto dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
+    final now = DateTime.now();
+    final existing = await localSource.fetchById(dto.id.value);
+    final newMeta =
+        (existing?.syncMeta != null)
+            ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now)
+            : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: null);
+    final wrapped = SyncedDto<Dto>(dto: dto, syncMeta: newMeta);
 
-    await localSource.save(dto);
-    final refreshedDtos = await _refreshCacheFromLocalSource();
-    _emitToStream(refreshedDtos);
+    await localSource.save(wrapped);
+    final refreshed = await _refreshCacheFromLocalSource();
+    _emitToStream(refreshed);
 
-    final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
+    final payload = jsonEncode(dto.toJson());
+    final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.upsert, entityPayload: payload);
     _log("Queuing upsert for id '${dto.id.value}'");
     unawaited(queueManager.add(item));
   }
 
-  Future<List<Dto>> _refreshCacheFromLocalSource() async {
+  Future<List<SyncedDto<Dto>>> _refreshCacheFromLocalSource() async {
     if (_refreshing != null) {
       return await _refreshing!;
     }
@@ -139,7 +165,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     unawaited(queueManager.add(item));
   }
 
-  _emitToStream(List<Dto> dtos) {
+  _emitToStream(List<SyncedDto<Dto>> dtos) {
     _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
     streamController.add(dtos);
   }
@@ -161,16 +187,18 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       }
 
       _log("Fetched ${remoteDtos.length} new remote items");
-      final localDtos = await localSource.fetchAll();
-      final localMap = {for (final dto in localDtos) dto.id: dto};
+      final localSyncedDtos = await localSource.fetchAll();
+      final localMap = {for (final syncedDto in localSyncedDtos) syncedDto.dto.id: syncedDto};
 
       for (final dto in remoteDtos) {
         if (!localMap.containsKey(dto.id)) {
-          localMap[dto.id] = dto;
+          final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
+          localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
         } else {
           final existing = localMap[dto.id]!;
-          if (existing.updatedAt == null || (dto.updatedAt != null && existing.updatedAt!.isBefore(dto.updatedAt!))) {
-            localMap[dto.id] = dto;
+          if (existing.dto.updatedAt == null || (dto.updatedAt != null && existing.dto.updatedAt!.isBefore(dto.updatedAt!))) {
+            final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
+            localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
           }
         }
       }
@@ -192,6 +220,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   void dispose() {
     _log("Disposing OfflineFirstDataManager", darkColor: true);
+    _queueSub.cancel();
     streamController.close();
     realtimeNotifierService.stopListeningForEntity(entityType, remoteSource.table);
   }

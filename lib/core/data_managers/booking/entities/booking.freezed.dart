@@ -23,7 +23,6 @@ mixin _$Booking {
   Money get money => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
@@ -44,7 +43,6 @@ abstract class $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    DateTime updatedAt,
     bool isSynced,
   });
 
@@ -74,7 +72,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? updatedAt = null,
     Object? isSynced = null,
   }) {
     return _then(
@@ -109,11 +106,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                     ? _value.account
                     : account // ignore: cast_nullable_to_non_nullable
                         as Account,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
             isSynced:
                 null == isSynced
                     ? _value.isSynced
@@ -170,7 +162,6 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    DateTime updatedAt,
     bool isSynced,
   });
 
@@ -202,7 +193,6 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? updatedAt = null,
     Object? isSynced = null,
   }) {
     return _then(
@@ -237,11 +227,6 @@ class __$$BookingImplCopyWithImpl<$Res>
                 ? _value.account
                 : account // ignore: cast_nullable_to_non_nullable
                     as Account,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
         isSynced:
             null == isSynced
                 ? _value.isSynced
@@ -262,7 +247,6 @@ class _$BookingImpl extends _Booking {
     required this.money,
     required this.category,
     required this.account,
-    required this.updatedAt,
     required this.isSynced,
   }) : super._();
 
@@ -279,13 +263,11 @@ class _$BookingImpl extends _Booking {
   @override
   final Account account;
   @override
-  final DateTime updatedAt;
-  @override
   final bool isSynced;
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, updatedAt: $updatedAt, isSynced: $isSynced)';
+    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, isSynced: $isSynced)';
   }
 
   @override
@@ -301,8 +283,6 @@ class _$BookingImpl extends _Booking {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.isSynced, isSynced) ||
                 other.isSynced == isSynced));
   }
@@ -316,7 +296,6 @@ class _$BookingImpl extends _Booking {
     money,
     category,
     account,
-    updatedAt,
     isSynced,
   );
 
@@ -337,7 +316,6 @@ abstract class _Booking extends Booking {
     required final Money money,
     required final Category category,
     required final Account account,
-    required final DateTime updatedAt,
     required final bool isSynced,
   }) = _$BookingImpl;
   const _Booking._() : super._();
@@ -354,8 +332,6 @@ abstract class _Booking extends Booking {
   Category get category;
   @override
   Account get account;
-  @override
-  DateTime get updatedAt;
   @override
   bool get isSynced;
 

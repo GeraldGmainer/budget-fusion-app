@@ -12,12 +12,12 @@ class BookingDto with _$BookingDto implements OfflineFirstDto {
 
   const factory BookingDto({
     @UuidSerializer() required Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() required DateTime date,
     String? description,
     @DecimalConverter() required Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() required Uuid accountId,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() required DateTime updatedAt,
   }) = _BookingDto;
 
   factory BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);

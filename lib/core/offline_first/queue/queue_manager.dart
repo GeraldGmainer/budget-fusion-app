@@ -11,7 +11,7 @@ import 'queue_local_data_source.dart';
 @lazySingleton
 class QueueManager {
   static const maxAttempts = 3;
-  final QueueLocalDataSource localDataSource;
+  final QueueLocalDataSource queueDataSource;
   final RemoteLoadingService remoteLoadingService;
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<EntityType, OfflineFirstRemoteDataSource> _remoteSources = {};
@@ -22,7 +22,7 @@ class QueueManager {
   bool _isProcessing = false;
   bool _initialized = false;
 
-  QueueManager(this.localDataSource, this.remoteLoadingService);
+  QueueManager(this.queueDataSource, this.remoteLoadingService);
 
   void registerEntitySources(EntityType entity, OfflineFirstLocalDataSource lds, OfflineFirstRemoteDataSource rds) {
     _remoteSources[entity] = rds;
@@ -31,7 +31,7 @@ class QueueManager {
 
   Future<void> init() async {
     _log("init QueueManager");
-    final items = await localDataSource.fetchPendingItems();
+    final items = await queueDataSource.fetchPendingItems();
     _inMemoryQueue.addAll(items);
     _initialized = true;
     _emitPending();
@@ -43,7 +43,7 @@ class QueueManager {
     if (!_initialized) {
       throw Exception("QueueManager not initialized yet!");
     }
-    await localDataSource.addQueueItem(item);
+    await queueDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
 
     if (!_isProcessing) {
@@ -66,11 +66,18 @@ class QueueManager {
 
     _isProcessing = true;
     final currentItem = _inMemoryQueue.first;
+    final remoteSource = _remoteSources[currentItem.entityType];
+    final localSource = _localSources[currentItem.entityType];
+
+    if (remoteSource == null || localSource == null) {
+      BudgetLogger.instance.e("Queue processing error", "Entity sources not registered for entity ${currentItem.entityType}");
+      return;
+    }
 
     try {
-      await _processQueueItem(currentItem);
+      await _processQueueItem(currentItem, remoteSource, localSource);
       _inMemoryQueue.removeFirst();
-      await localDataSource.removeQueueItem(currentItem.entityId);
+      await queueDataSource.removeQueueItem(currentItem.entityId);
       _emitPending();
     } on Exception catch (e, stack) {
       BudgetLogger.instance.e("Queue task failed", e, stack);
@@ -78,14 +85,15 @@ class QueueManager {
 
       if (updatedAttempts >= maxAttempts) {
         final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
-        await localDataSource.updateQueueItem(failedItem);
+        await queueDataSource.updateQueueItem(failedItem);
+        await localSource.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
         _inMemoryQueue.removeFirst();
         _emitPending();
       } else {
         final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
         _inMemoryQueue.removeFirst();
         _inMemoryQueue.addFirst(retriedItem);
-        await localDataSource.updateQueueItem(retriedItem);
+        await queueDataSource.updateQueueItem(retriedItem);
         _emitPending();
       }
     } finally {
@@ -96,14 +104,9 @@ class QueueManager {
     }
   }
 
-  Future<void> _processQueueItem(QueueItem item) async {
+  Future<void> _processQueueItem(QueueItem item, OfflineFirstRemoteDataSource<OfflineFirstDto> remoteSource, OfflineFirstLocalDataSource<OfflineFirstDto> localSource) async {
     _log("Processing queue item with entityId: ${item.entityId}");
 
-    final remoteSource = _remoteSources[item.entityType];
-    final localSource = _localSources[item.entityType];
-    if (remoteSource == null || localSource == null) {
-      throw Exception("Entity sources not registered for entity ${item.entityType}");
-    }
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
 
     try {

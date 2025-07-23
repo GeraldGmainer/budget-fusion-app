@@ -9,13 +9,13 @@ part 'profile_setting.freezed.dart';
 class ProfileSetting with _$ProfileSetting implements Entity {
   const ProfileSetting._();
 
-  const factory ProfileSetting({required Uuid id, required Currency currency, required DateTime updatedAt}) = _ProfileSetting;
+  const factory ProfileSetting({required Uuid id, required Currency currency, required bool isSynced}) = _ProfileSetting;
 
-  factory ProfileSetting.fromDto(ProfileSettingDto dto) {
-    return ProfileSetting(id: dto.id, currency: Currency.fromDto(dto.currency), updatedAt: dto.updatedAt);
+  factory ProfileSetting.fromDto(ProfileSettingDto dto, {required bool isSynced}) {
+    return ProfileSetting(id: dto.id, currency: Currency.fromDto(dto.currency), isSynced: isSynced);
   }
 
   ProfileSettingDto toDto() {
-    return ProfileSettingDto(id: id, currency: currency.toDto(), updatedAt: updatedAt);
+    return ProfileSettingDto(id: id, currency: currency.toDto(), updatedAt: DateTime.now());
   }
 }

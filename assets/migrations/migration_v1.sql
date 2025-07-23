@@ -13,39 +13,54 @@ CREATE TABLE IF NOT EXISTS profile (
     first_name TEXT,
     last_name TEXT,
     avatar_url TEXT,
-    updated_at TEXT
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS profile_setting (
     id TEXT PRIMARY KEY,
-    currency TEXT NOT NULL,
-    updated_at TEXT
+    currency TEXT   NOT NULL,
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS account (
     id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT        NOT NULL,
     icon_name TEXT,
     icon_color TEXT,
-    updated_at TEXT DEFAULT (datetime('now'))
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS category (
     id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT          NOT NULL,
     icon_name TEXT,
     icon_color TEXT,
     category_type TEXT NOT NULL,
     parent_id TEXT,
-    updated_at TEXT DEFAULT (datetime('now'))
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS booking (
     id TEXT PRIMARY KEY,
-    date TEXT NOT NULL,
+    date TEXT        NOT NULL,
     description TEXT,
-    amount REAL NOT NULL DEFAULT 0,
+    amount REAL      NOT NULL DEFAULT 0,
     category_id TEXT NOT NULL,
-    account_id TEXT NOT NULL,
-    updated_at TEXT DEFAULT (datetime('now'))
+    account_id TEXT  NOT NULL,
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );

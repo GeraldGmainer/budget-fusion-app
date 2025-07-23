@@ -17,7 +17,7 @@ class Category with _$Category implements Entity {
     required String iconColor,
     Category? parent,
     @Default([]) List<Category> subcategories,
-    required DateTime updatedAt,
+    required bool isSynced,
   }) = _Category;
 
   factory Category.notFound() {
@@ -27,16 +27,16 @@ class Category with _$Category implements Entity {
       categoryType: CategoryType.outcome,
       iconName: FeatureConstants.notFoundIconName,
       iconColor: FeatureConstants.notFoundIconColor,
-      updatedAt: DateTime.now(),
+      isSynced: true,
     );
   }
 
-  factory Category.fromDto(CategoryDto dto) {
-    return Category(id: dto.id, name: dto.name, categoryType: dto.categoryType, iconName: dto.iconName, iconColor: dto.iconColor, updatedAt: dto.updatedAt);
+  factory Category.fromDto(CategoryDto dto, {required bool isSynced}) {
+    return Category(id: dto.id, name: dto.name, categoryType: dto.categoryType, iconName: dto.iconName, iconColor: dto.iconColor, isSynced: isSynced);
   }
 
   CategoryDto toDto() {
-    return CategoryDto(id: id, name: name, categoryType: categoryType, iconName: iconName, iconColor: iconColor, parentId: parent?.id, updatedAt: updatedAt);
+    return CategoryDto(id: id, name: name, categoryType: categoryType, iconName: iconName, iconColor: iconColor, parentId: parent?.id, updatedAt: DateTime.now());
   }
 
   bool get isParent => parent == null;

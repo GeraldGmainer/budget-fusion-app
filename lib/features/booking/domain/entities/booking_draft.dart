@@ -16,6 +16,7 @@ class BookingDraft with _$BookingDraft {
     Category? category,
     Account? account,
     @Default(CategoryType.outcome) CategoryType categoryType,
+    SyncMeta? syncMeta,
   }) = _BookingDraft;
 
   bool get isCreating => id == null;
@@ -28,7 +29,6 @@ class BookingDraft with _$BookingDraft {
       money: Money(amount: amount, currency: currency),
       category: category!,
       account: account!,
-      updatedAt: DateTime.now(),
       isSynced: false,
     );
   }

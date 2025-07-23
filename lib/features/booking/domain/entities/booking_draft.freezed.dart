@@ -24,6 +24,7 @@ mixin _$BookingDraft {
   Category? get category => throw _privateConstructorUsedError;
   Account? get account => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
+  SyncMeta? get syncMeta => throw _privateConstructorUsedError;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -47,6 +48,7 @@ abstract class $BookingDraftCopyWith<$Res> {
     Category? category,
     Account? account,
     CategoryType categoryType,
+    SyncMeta? syncMeta,
   });
 
   $CategoryCopyWith<$Res>? get category;
@@ -75,6 +77,7 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
     Object? category = freezed,
     Object? account = freezed,
     Object? categoryType = null,
+    Object? syncMeta = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -113,6 +116,11 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
                     ? _value.categoryType
                     : categoryType // ignore: cast_nullable_to_non_nullable
                         as CategoryType,
+            syncMeta:
+                freezed == syncMeta
+                    ? _value.syncMeta
+                    : syncMeta // ignore: cast_nullable_to_non_nullable
+                        as SyncMeta?,
           )
           as $Val,
     );
@@ -164,6 +172,7 @@ abstract class _$$BookingDraftImplCopyWith<$Res>
     Category? category,
     Account? account,
     CategoryType categoryType,
+    SyncMeta? syncMeta,
   });
 
   @override
@@ -193,6 +202,7 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
     Object? category = freezed,
     Object? account = freezed,
     Object? categoryType = null,
+    Object? syncMeta = freezed,
   }) {
     return _then(
       _$BookingDraftImpl(
@@ -231,6 +241,11 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
                 ? _value.categoryType
                 : categoryType // ignore: cast_nullable_to_non_nullable
                     as CategoryType,
+        syncMeta:
+            freezed == syncMeta
+                ? _value.syncMeta
+                : syncMeta // ignore: cast_nullable_to_non_nullable
+                    as SyncMeta?,
       ),
     );
   }
@@ -247,6 +262,7 @@ class _$BookingDraftImpl extends _BookingDraft {
     this.category,
     this.account,
     this.categoryType = CategoryType.outcome,
+    this.syncMeta,
   }) : super._();
 
   @override
@@ -264,10 +280,12 @@ class _$BookingDraftImpl extends _BookingDraft {
   @override
   @JsonKey()
   final CategoryType categoryType;
+  @override
+  final SyncMeta? syncMeta;
 
   @override
   String toString() {
-    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType)';
+    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType, syncMeta: $syncMeta)';
   }
 
   @override
@@ -284,7 +302,9 @@ class _$BookingDraftImpl extends _BookingDraft {
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.categoryType, categoryType) ||
-                other.categoryType == categoryType));
+                other.categoryType == categoryType) &&
+            (identical(other.syncMeta, syncMeta) ||
+                other.syncMeta == syncMeta));
   }
 
   @override
@@ -297,6 +317,7 @@ class _$BookingDraftImpl extends _BookingDraft {
     category,
     account,
     categoryType,
+    syncMeta,
   );
 
   /// Create a copy of BookingDraft
@@ -317,6 +338,7 @@ abstract class _BookingDraft extends BookingDraft {
     final Category? category,
     final Account? account,
     final CategoryType categoryType,
+    final SyncMeta? syncMeta,
   }) = _$BookingDraftImpl;
   _BookingDraft._() : super._();
 
@@ -334,6 +356,8 @@ abstract class _BookingDraft extends BookingDraft {
   Account? get account;
   @override
   CategoryType get categoryType;
+  @override
+  SyncMeta? get syncMeta;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.

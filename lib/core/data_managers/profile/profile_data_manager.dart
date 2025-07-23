@@ -26,8 +26,8 @@ class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile
 
   Future<void> reset() => _manager.reset();
 
-  List<Profile> _toEntities(List<ProfileDto> dtos) {
+  List<Profile> _toEntities(List<SyncedDto<ProfileDto>> dtos) {
     final email = supabase.auth.currentUser?.email ?? "unknown email";
-    return dtos.map((dto) => Profile.fromDto(dto, email)).toList();
+    return dtos.map((dto) => Profile.fromDto(dto.dto, email: email, isSynced: dto.isSynced)).toList();
   }
 }

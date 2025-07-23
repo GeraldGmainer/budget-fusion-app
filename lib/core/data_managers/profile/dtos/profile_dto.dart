@@ -10,10 +10,10 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
 
   const factory ProfileDto({
     @UuidSerializer() required Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
-    @JsonKey(name: 'updated_at') @DateTimeSerializer() required DateTime updatedAt,
   }) = _ProfileDto;
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
