@@ -5,12 +5,12 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class SaveBookingUseCase {
   final BookingDataManager _manager;
-  final ProfileSettingDataManager _profileSettingDataManager;
+  final ProfileDataManager _profileDataManager;
 
-  SaveBookingUseCase(this._manager, this._profileSettingDataManager);
+  SaveBookingUseCase(this._manager, this._profileDataManager);
 
   Future<void> save(BookingDraft draft) async {
-    final currency = await _profileSettingDataManager.getCurrency();
+    final currency = (await _profileDataManager.getSetting()).currency;
     if (draft.description != null) {
       draft = draft.copyWith(description: draft.description!.trim());
     }

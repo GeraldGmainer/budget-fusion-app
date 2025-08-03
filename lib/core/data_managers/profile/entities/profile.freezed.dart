@@ -22,6 +22,7 @@ mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
+  ProfileSetting get setting => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of Profile
@@ -41,8 +42,11 @@ abstract class $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
+    ProfileSetting setting,
     bool isSynced,
   });
+
+  $ProfileSettingCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -65,6 +69,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
+    Object? setting = null,
     Object? isSynced = null,
   }) {
     return _then(
@@ -94,6 +99,11 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                     ? _value.avatarUrl
                     : avatarUrl // ignore: cast_nullable_to_non_nullable
                         as String?,
+            setting:
+                null == setting
+                    ? _value.setting
+                    : setting // ignore: cast_nullable_to_non_nullable
+                        as ProfileSetting,
             isSynced:
                 null == isSynced
                     ? _value.isSynced
@@ -102,6 +112,16 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileSettingCopyWith<$Res> get setting {
+    return $ProfileSettingCopyWith<$Res>(_value.setting, (value) {
+      return _then(_value.copyWith(setting: value) as $Val);
+    });
   }
 }
 
@@ -119,8 +139,12 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
     String? firstName,
     String? lastName,
     String? avatarUrl,
+    ProfileSetting setting,
     bool isSynced,
   });
+
+  @override
+  $ProfileSettingCopyWith<$Res> get setting;
 }
 
 /// @nodoc
@@ -142,6 +166,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
+    Object? setting = null,
     Object? isSynced = null,
   }) {
     return _then(
@@ -171,6 +196,11 @@ class __$$ProfileImplCopyWithImpl<$Res>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                     as String?,
+        setting:
+            null == setting
+                ? _value.setting
+                : setting // ignore: cast_nullable_to_non_nullable
+                    as ProfileSetting,
         isSynced:
             null == isSynced
                 ? _value.isSynced
@@ -190,6 +220,7 @@ class _$ProfileImpl extends _Profile {
     this.firstName,
     this.lastName,
     this.avatarUrl,
+    required this.setting,
     required this.isSynced,
   }) : super._();
 
@@ -204,11 +235,13 @@ class _$ProfileImpl extends _Profile {
   @override
   final String? avatarUrl;
   @override
+  final ProfileSetting setting;
+  @override
   final bool isSynced;
 
   @override
   String toString() {
-    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, isSynced: $isSynced)';
+    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, setting: $setting, isSynced: $isSynced)';
   }
 
   @override
@@ -224,6 +257,7 @@ class _$ProfileImpl extends _Profile {
                 other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
+            (identical(other.setting, setting) || other.setting == setting) &&
             (identical(other.isSynced, isSynced) ||
                 other.isSynced == isSynced));
   }
@@ -236,6 +270,7 @@ class _$ProfileImpl extends _Profile {
     firstName,
     lastName,
     avatarUrl,
+    setting,
     isSynced,
   );
 
@@ -255,6 +290,7 @@ abstract class _Profile extends Profile {
     final String? firstName,
     final String? lastName,
     final String? avatarUrl,
+    required final ProfileSetting setting,
     required final bool isSynced,
   }) = _$ProfileImpl;
   const _Profile._() : super._();
@@ -269,6 +305,8 @@ abstract class _Profile extends Profile {
   String? get lastName;
   @override
   String? get avatarUrl;
+  @override
+  ProfileSetting get setting;
   @override
   bool get isSynced;
 

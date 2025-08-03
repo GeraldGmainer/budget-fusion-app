@@ -16,23 +16,15 @@ class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
   final AccountDataManager _accountManager;
   final BookingDataManager _bookingManager;
   final ProfileDataManager _profileManager;
-  final ProfileSettingDataManager _profileSettingManager;
 
-  OfflineFirstLoaderCubit(this._queueManager, this._categoryManager, this._accountManager, this._bookingManager, this._profileManager, this._profileSettingManager)
+  OfflineFirstLoaderCubit(this._queueManager, this._categoryManager, this._accountManager, this._bookingManager, this._profileManager)
     : super(const OfflineFirstLoaderState.initial());
 
   Future<void> init() async {
     try {
       emit(OfflineFirstLoaderState.loading());
       await _refreshToken();
-      Future.wait([
-        _queueManager.init(),
-        _categoryManager.loadAll(),
-        _accountManager.loadAll(),
-        _bookingManager.loadAll(),
-        _profileManager.loadAll(),
-        _profileSettingManager.loadAll(),
-      ]);
+      Future.wait([_queueManager.init(), _categoryManager.loadAll(), _accountManager.loadAll(), _bookingManager.loadAll(), _profileManager.loadAll()]);
       emit(OfflineFirstLoaderState.success());
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);

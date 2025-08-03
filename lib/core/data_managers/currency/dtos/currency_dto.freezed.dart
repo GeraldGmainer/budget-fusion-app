@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'currency.dart';
+part of 'currency_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,53 +15,70 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) {
+  return _CurrencyDto.fromJson(json);
+}
+
 /// @nodoc
-mixin _$Currency {
+mixin _$CurrencyDto {
+  @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'decimal_precision')
   int get decimalPrecision => throw _privateConstructorUsedError;
+  @JsonKey(name: 'unit_position_front')
   bool get unitPositionFront => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   int? get uiOrder => throw _privateConstructorUsedError;
 
-  /// Create a copy of Currency
+  /// Serializes this CurrencyDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CurrencyCopyWith<Currency> get copyWith =>
+  $CurrencyDtoCopyWith<CurrencyDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CurrencyCopyWith<$Res> {
-  factory $CurrencyCopyWith(Currency value, $Res Function(Currency) then) =
-      _$CurrencyCopyWithImpl<$Res, Currency>;
+abstract class $CurrencyDtoCopyWith<$Res> {
+  factory $CurrencyDtoCopyWith(
+    CurrencyDto value,
+    $Res Function(CurrencyDto) then,
+  ) = _$CurrencyDtoCopyWithImpl<$Res, CurrencyDto>;
   @useResult
   $Res call({
-    Uuid id,
+    @UuidSerializer() Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
-    int decimalPrecision,
-    bool unitPositionFront,
+    @JsonKey(name: 'decimal_precision') int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
     String symbol,
     int? uiOrder,
   });
 }
 
 /// @nodoc
-class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
-    implements $CurrencyCopyWith<$Res> {
-  _$CurrencyCopyWithImpl(this._value, this._then);
+class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
+    implements $CurrencyDtoCopyWith<$Res> {
+  _$CurrencyDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Currency
+  /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? decimalPrecision = null,
     Object? unitPositionFront = null,
@@ -75,6 +92,11 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
             name:
                 null == name
                     ? _value.name
@@ -107,39 +129,41 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
 }
 
 /// @nodoc
-abstract class _$$CurrencyImplCopyWith<$Res>
-    implements $CurrencyCopyWith<$Res> {
-  factory _$$CurrencyImplCopyWith(
-    _$CurrencyImpl value,
-    $Res Function(_$CurrencyImpl) then,
-  ) = __$$CurrencyImplCopyWithImpl<$Res>;
+abstract class _$$CurrencyDtoImplCopyWith<$Res>
+    implements $CurrencyDtoCopyWith<$Res> {
+  factory _$$CurrencyDtoImplCopyWith(
+    _$CurrencyDtoImpl value,
+    $Res Function(_$CurrencyDtoImpl) then,
+  ) = __$$CurrencyDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
-    Uuid id,
+    @UuidSerializer() Uuid id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
-    int decimalPrecision,
-    bool unitPositionFront,
+    @JsonKey(name: 'decimal_precision') int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
     String symbol,
     int? uiOrder,
   });
 }
 
 /// @nodoc
-class __$$CurrencyImplCopyWithImpl<$Res>
-    extends _$CurrencyCopyWithImpl<$Res, _$CurrencyImpl>
-    implements _$$CurrencyImplCopyWith<$Res> {
-  __$$CurrencyImplCopyWithImpl(
-    _$CurrencyImpl _value,
-    $Res Function(_$CurrencyImpl) _then,
+class __$$CurrencyDtoImplCopyWithImpl<$Res>
+    extends _$CurrencyDtoCopyWithImpl<$Res, _$CurrencyDtoImpl>
+    implements _$$CurrencyDtoImplCopyWith<$Res> {
+  __$$CurrencyDtoImplCopyWithImpl(
+    _$CurrencyDtoImpl _value,
+    $Res Function(_$CurrencyDtoImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of Currency
+  /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? updatedAt = null,
     Object? name = null,
     Object? decimalPrecision = null,
     Object? unitPositionFront = null,
@@ -147,12 +171,17 @@ class __$$CurrencyImplCopyWithImpl<$Res>
     Object? uiOrder = freezed,
   }) {
     return _then(
-      _$CurrencyImpl(
+      _$CurrencyDtoImpl(
         id:
             null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
         name:
             null == name
                 ? _value.name
@@ -184,24 +213,35 @@ class __$$CurrencyImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$CurrencyImpl extends _Currency {
-  const _$CurrencyImpl({
-    required this.id,
+@JsonSerializable()
+class _$CurrencyDtoImpl extends _CurrencyDto {
+  const _$CurrencyDtoImpl({
+    @UuidSerializer() required this.id,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     required this.name,
-    required this.decimalPrecision,
-    required this.unitPositionFront,
+    @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
+    @JsonKey(name: 'unit_position_front') this.unitPositionFront = true,
     required this.symbol,
     this.uiOrder,
   }) : super._();
 
+  factory _$CurrencyDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CurrencyDtoImplFromJson(json);
+
   @override
+  @UuidSerializer()
   final Uuid id;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
   @override
   final String name;
   @override
+  @JsonKey(name: 'decimal_precision')
   final int decimalPrecision;
   @override
+  @JsonKey(name: 'unit_position_front')
   final bool unitPositionFront;
   @override
   final String symbol;
@@ -210,15 +250,17 @@ class _$CurrencyImpl extends _Currency {
 
   @override
   String toString() {
-    return 'Currency(id: $id, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder)';
+    return 'CurrencyDto(id: $id, updatedAt: $updatedAt, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CurrencyImpl &&
+            other is _$CurrencyDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.decimalPrecision, decimalPrecision) ||
                 other.decimalPrecision == decimalPrecision) &&
@@ -228,10 +270,12 @@ class _$CurrencyImpl extends _Currency {
             (identical(other.uiOrder, uiOrder) || other.uiOrder == uiOrder));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
     id,
+    updatedAt,
     name,
     decimalPrecision,
     unitPositionFront,
@@ -239,43 +283,61 @@ class _$CurrencyImpl extends _Currency {
     uiOrder,
   );
 
-  /// Create a copy of Currency
+  /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CurrencyImplCopyWith<_$CurrencyImpl> get copyWith =>
-      __$$CurrencyImplCopyWithImpl<_$CurrencyImpl>(this, _$identity);
-}
-
-abstract class _Currency extends Currency {
-  const factory _Currency({
-    required final Uuid id,
-    required final String name,
-    required final int decimalPrecision,
-    required final bool unitPositionFront,
-    required final String symbol,
-    final int? uiOrder,
-  }) = _$CurrencyImpl;
-  const _Currency._() : super._();
+  _$$CurrencyDtoImplCopyWith<_$CurrencyDtoImpl> get copyWith =>
+      __$$CurrencyDtoImplCopyWithImpl<_$CurrencyDtoImpl>(this, _$identity);
 
   @override
+  Map<String, dynamic> toJson() {
+    return _$$CurrencyDtoImplToJson(this);
+  }
+}
+
+abstract class _CurrencyDto extends CurrencyDto {
+  const factory _CurrencyDto({
+    @UuidSerializer() required final Uuid id,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime updatedAt,
+    required final String name,
+    @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
+    @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
+    required final String symbol,
+    final int? uiOrder,
+  }) = _$CurrencyDtoImpl;
+  const _CurrencyDto._() : super._();
+
+  factory _CurrencyDto.fromJson(Map<String, dynamic> json) =
+      _$CurrencyDtoImpl.fromJson;
+
+  @override
+  @UuidSerializer()
   Uuid get id;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
   @override
   String get name;
   @override
+  @JsonKey(name: 'decimal_precision')
   int get decimalPrecision;
   @override
+  @JsonKey(name: 'unit_position_front')
   bool get unitPositionFront;
   @override
   String get symbol;
   @override
   int? get uiOrder;
 
-  /// Create a copy of Currency
+  /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CurrencyImplCopyWith<_$CurrencyImpl> get copyWith =>
+  _$$CurrencyDtoImplCopyWith<_$CurrencyDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

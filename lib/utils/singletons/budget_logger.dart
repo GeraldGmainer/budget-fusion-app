@@ -10,15 +10,8 @@ class BudgetLogger {
   static BudgetLogger get instance => _instance;
   final MyLogger _logger = MyLogger();
   final MyLogger _shortLogger = MyLogger(
-      printer: MyPrinter(
-    printTime: true,
-    printEmojis: true,
-    errorMethodCount: 12,
-    stackTraceBeginIndex: 0,
-    noBoxingByDefault: true,
-    methodCount: 0,
-    compactMode: true,
-  ));
+    printer: MyPrinter(printTime: true, printEmojis: true, errorMethodCount: 30, stackTraceBeginIndex: 0, noBoxingByDefault: true, methodCount: 0, compactMode: true),
+  );
 
   /// Log a message at level [Level.trace].
   void t(dynamic message, {dynamic e, StackTrace? stackTrace}) {
@@ -57,17 +50,18 @@ class BudgetLogger {
 
 class MyLogger extends Logger {
   MyLogger({MyPrinter? printer})
-      : super(
-          printer: printer ??
-              MyPrinter(
-                printTime: true,
-                printEmojis: true,
-                errorMethodCount: 12,
-                stackTraceBeginIndex: 0,
-                // noBoxingByDefault: kReleaseMode,
-                methodCount: 2,
-              ),
-        );
+    : super(
+        printer:
+            printer ??
+            MyPrinter(
+              printTime: true,
+              printEmojis: true,
+              errorMethodCount: 30,
+              stackTraceBeginIndex: 0,
+              // noBoxingByDefault: kReleaseMode,
+              methodCount: 2,
+            ),
+      );
 }
 
 /// Default implementation of [LogPrinter].
@@ -101,14 +95,7 @@ class MyPrinter extends LogPrinter {
     Level.fatal: AnsiColor.fg(199),
   };
 
-  static final levelEmojis = {
-    Level.trace: '',
-    Level.debug: '🐛 ',
-    Level.info: '💡 ',
-    Level.warning: '⚠️ ',
-    Level.error: '⛔ ',
-    Level.fatal: '👾 ',
-  };
+  static final levelEmojis = {Level.trace: '', Level.debug: '🐛 ', Level.info: '💡 ', Level.warning: '⚠️ ', Level.error: '⛔ ', Level.fatal: '👾 '};
 
   /// Matches a stacktrace line as generated on Android/iOS devices.
   /// For budget_fusion:
@@ -209,13 +196,7 @@ class MyPrinter extends LogPrinter {
       timeStr = getTime();
     }
 
-    return _formatAndPrint(
-      event.level,
-      messageStr,
-      timeStr,
-      errorStr,
-      stackTraceStr,
-    );
+    return _formatAndPrint(event.level, messageStr, timeStr, errorStr, stackTraceStr);
   }
 
   String? formatStackTrace(StackTrace? stackTrace, int methodCount) {
@@ -338,13 +319,7 @@ class MyPrinter extends LogPrinter {
     }
   }
 
-  List<String> _formatAndPrint(
-    Level level,
-    String message,
-    String? time,
-    String? error,
-    String? stacktrace,
-  ) {
+  List<String> _formatAndPrint(Level level, String message, String? time, String? error, String? stacktrace) {
     if (compactMode) {
       var emoji = _getEmoji(level);
       var timePart = time != null ? '$time  ' : '';
@@ -363,9 +338,7 @@ class MyPrinter extends LogPrinter {
     if (error != null) {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
-        buffer.add(
-          color(verticalLineAtLevel1) + errorColor.resetForeground + errorColor(line) + errorColor.resetBackground,
-        );
+        buffer.add(color(verticalLineAtLevel1) + errorColor.resetForeground + errorColor(line) + errorColor.resetBackground);
       }
       if (includeBox[level]!) buffer.add(color(_middleBorder));
     }

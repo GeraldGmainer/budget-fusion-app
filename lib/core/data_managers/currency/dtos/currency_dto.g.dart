@@ -9,6 +9,7 @@ part of 'currency_dto.dart';
 _$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
     _$CurrencyDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       name: json['name'] as String,
       decimalPrecision: (json['decimal_precision'] as num).toInt(),
       unitPositionFront: json['unit_position_front'] as bool? ?? true,
@@ -19,6 +20,7 @@ _$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$CurrencyDtoImplToJson(_$CurrencyDtoImpl instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
+      'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
       'name': instance.name,
       'decimal_precision': instance.decimalPrecision,
       'unit_position_front': instance.unitPositionFront,

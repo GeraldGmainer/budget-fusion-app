@@ -13,13 +13,16 @@ _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       avatarUrl: json['avatar_url'] as String?,
+      settingDto: const ProfileSettingDtoConverter().fromJson(json['settings']),
     );
 
-Map<String, dynamic> _$$ProfileDtoImplToJson(_$ProfileDtoImpl instance) =>
-    <String, dynamic>{
-      'id': const UuidSerializer().toJson(instance.id),
-      'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'avatar_url': instance.avatarUrl,
-    };
+Map<String, dynamic> _$$ProfileDtoImplToJson(
+  _$ProfileDtoImpl instance,
+) => <String, dynamic>{
+  'id': const UuidSerializer().toJson(instance.id),
+  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
+  'first_name': instance.firstName,
+  'last_name': instance.lastName,
+  'avatar_url': instance.avatarUrl,
+  'settings': const ProfileSettingDtoConverter().toJson(instance.settingDto),
+};

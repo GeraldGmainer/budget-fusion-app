@@ -10,60 +10,45 @@ import 'dtos/booking_dto.dart';
 import 'mappers/booking_mapper.dart';
 
 @singleton
-class BookingDataManager extends DataManager<Booking> {
+class BookingDataManager extends DataManager<Booking> with AutoSubscribe<Booking> {
   late final OfflineFirstDataManager<BookingDto> _manager;
   final AccountDataManager _accountDataManager;
   final CategoryDataManager _categoryDataManager;
-  final ProfileSettingDataManager _profileSettingDataManager;
+  final ProfileDataManager _profileDataManager;
   final BookingMapper _mapper;
   final BookingLocalDataSource _lds;
-  late final Stream<List<Booking>> _sharedBookingsStream;
-  late final StreamSubscription<List<Booking>> _sub;
+  late final Stream<List<Booking>> _sharedStream;
 
-  BookingDataManager(
-    DataManagerFactory dmf,
-    this._lds,
-    BookingRemoteDataSource rds,
-    this._mapper,
-    this._accountDataManager,
-    this._categoryDataManager,
-    this._profileSettingDataManager,
-  ) {
+  BookingDataManager(DataManagerFactory dmf, this._lds, BookingRemoteDataSource rds, this._mapper, this._accountDataManager, this._categoryDataManager, this._profileDataManager) {
     _manager = dmf.createManager<BookingDto>(entityType: EntityType.booking, localDataSource: _lds, remoteDataSource: rds);
   }
 
   @override
   void setupStreams() {
-    _sharedBookingsStream = Rx.combineLatest4<List<SyncedDto<BookingDto>>, List<Account>, List<Category>, List<ProfileSetting>, List<Booking>>(
+    _sharedStream = Rx.combineLatest4<List<SyncedDto<BookingDto>>, List<Account>, List<Category>, List<Profile>, List<Booking>>(
       _manager.stream,
       _accountDataManager.watch(),
       _categoryDataManager.watch(),
-      _profileSettingDataManager.watch(),
-      (bookingDtos, accounts, categories, profileSettings) => _mapper.mapBookings(bookingDtos, accounts, categories, profileSettings),
+      _profileDataManager.watch(),
+      (bookingDtos, accounts, categories, profiles) => _mapper.mapBookings(bookingDtos, accounts, categories, profiles),
     ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
-
-    _sub = watch().listen((_) {});
+    super.setupStreams();
   }
-
-  @override
-  Future<void> disposeStreams() => _sub.cancel();
 
   @override
   Future<List<Booking>> loadAll({Map<String, dynamic>? filters}) async {
     await _manager.loadAll();
-    return await _sharedBookingsStream.first;
+    return await _sharedStream.first;
   }
 
   @override
-  Stream<List<Booking>> watch() => _sharedBookingsStream;
+  Stream<List<Booking>> watch() => _sharedStream;
+
+  Future<void> reset() => _manager.reset();
 
   Future<List<BookingSuggestion>> loadSuggestions() async => (await _lds.getSuggestions()).map((dto) => BookingSuggestion.fromDto(dto)).toList();
 
   Future<void> delete(Booking booking) async => await _manager.delete(booking.toDto());
 
   Future<void> save(Booking booking) async => await _manager.save(booking.toDto());
-
-  void dispose() => _manager.dispose();
-
-  Future<void> reset() => _manager.reset();
 }

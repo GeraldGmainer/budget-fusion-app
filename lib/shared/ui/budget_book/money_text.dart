@@ -19,12 +19,12 @@ class MoneyText extends StatelessWidget {
     if (money.currency != null) {
       return _buildText(context, money.amount, money.currency!);
     }
-    return DataManagerSingleNullable<ProfileSetting>(
+    return DataManagerSingleNullable<Profile>(
       builder: (context, data) {
         if (data == null) {
           return _buildText(context, money.amount, Currency.notFound());
         }
-        return _buildText(context, money.amount, data.currency);
+        return _buildText(context, money.amount, data.setting.currency);
       },
     );
   }
