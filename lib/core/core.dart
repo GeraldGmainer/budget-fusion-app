@@ -11,7 +11,6 @@ export 'data_managers/account/account_data_manager.dart';
 export 'data_managers/account/entities/account.dart';
 export 'data_managers/booking/booking_data_manager.dart';
 export 'data_managers/booking/entities/booking.dart';
-export 'data_managers/booking/entities/booking_suggestion.dart';
 export 'data_managers/category/category_data_manager.dart';
 export 'data_managers/category/entities/category.dart';
 export 'data_managers/currency/currency_data_manager.dart';

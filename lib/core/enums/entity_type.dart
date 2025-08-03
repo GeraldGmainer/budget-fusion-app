@@ -1,7 +1,6 @@
 enum EntityType {
   currency,
   profile,
-  profileSetting,
   account,
   category,
   booking;

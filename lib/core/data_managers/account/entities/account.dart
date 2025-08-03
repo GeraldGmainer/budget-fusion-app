@@ -9,7 +9,13 @@ part 'account.freezed.dart';
 class Account with _$Account implements Entity {
   const Account._();
 
-  const factory Account({required Uuid id, required String name, required String iconName, required String iconColor, required bool isSynced}) = _Account;
+  const factory Account({
+    required Uuid id,
+    required String name,
+    required String iconName,
+    required String iconColor,
+    required bool isSynced,
+  }) = _Account;
 
   factory Account.fromDto(AccountDto dto, {required bool isSynced}) {
     return Account(id: dto.id, name: dto.name, iconName: dto.iconName, iconColor: dto.iconColor, isSynced: isSynced);

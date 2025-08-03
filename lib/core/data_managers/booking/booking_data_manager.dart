@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../features/booking/domain/entities/booking_suggestion.dart';
 import '../../core.dart';
 import 'data_sources/booking_local_data_source.dart';
 import 'data_sources/booking_remote_data_source.dart';

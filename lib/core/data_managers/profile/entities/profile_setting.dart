@@ -9,7 +9,9 @@ part 'profile_setting.freezed.dart';
 class ProfileSetting with _$ProfileSetting {
   const ProfileSetting._();
 
-  const factory ProfileSetting({required Currency currency}) = _ProfileSetting;
+  const factory ProfileSetting({
+    required Currency currency,
+  }) = _ProfileSetting;
 
   ProfileSettingDto toDto() {
     return ProfileSettingDto(currencyId: currency.id);

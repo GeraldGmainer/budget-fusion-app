@@ -9,6 +9,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../../bloc/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
+import '../../domain/entities/booking_suggestion.dart';
 
 class DescriptionInput extends StatelessWidget {
   final BookingDraft draft;
