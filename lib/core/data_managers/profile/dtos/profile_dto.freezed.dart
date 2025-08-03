@@ -32,6 +32,9 @@ mixin _$ProfileDto {
   String? get lastName => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'settings')
+  @ProfileSettingDtoConverter()
+  ProfileSettingDto get settingDto => throw _privateConstructorUsedError;
 
   /// Serializes this ProfileDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +59,12 @@ abstract class $ProfileDtoCopyWith<$Res> {
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'settings')
+    @ProfileSettingDtoConverter()
+    ProfileSettingDto settingDto,
   });
+
+  $ProfileSettingDtoCopyWith<$Res> get settingDto;
 }
 
 /// @nodoc
@@ -79,6 +87,7 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
+    Object? settingDto = null,
   }) {
     return _then(
       _value.copyWith(
@@ -107,9 +116,24 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
                     ? _value.avatarUrl
                     : avatarUrl // ignore: cast_nullable_to_non_nullable
                         as String?,
+            settingDto:
+                null == settingDto
+                    ? _value.settingDto
+                    : settingDto // ignore: cast_nullable_to_non_nullable
+                        as ProfileSettingDto,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of ProfileDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileSettingDtoCopyWith<$Res> get settingDto {
+    return $ProfileSettingDtoCopyWith<$Res>(_value.settingDto, (value) {
+      return _then(_value.copyWith(settingDto: value) as $Val);
+    });
   }
 }
 
@@ -128,7 +152,13 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'settings')
+    @ProfileSettingDtoConverter()
+    ProfileSettingDto settingDto,
   });
+
+  @override
+  $ProfileSettingDtoCopyWith<$Res> get settingDto;
 }
 
 /// @nodoc
@@ -150,6 +180,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
+    Object? settingDto = null,
   }) {
     return _then(
       _$ProfileDtoImpl(
@@ -178,6 +209,11 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                     as String?,
+        settingDto:
+            null == settingDto
+                ? _value.settingDto
+                : settingDto // ignore: cast_nullable_to_non_nullable
+                    as ProfileSettingDto,
       ),
     );
   }
@@ -192,6 +228,9 @@ class _$ProfileDtoImpl extends _ProfileDto {
     @JsonKey(name: 'first_name') this.firstName,
     @JsonKey(name: 'last_name') this.lastName,
     @JsonKey(name: 'avatar_url') this.avatarUrl,
+    @JsonKey(name: 'settings')
+    @ProfileSettingDtoConverter()
+    required this.settingDto,
   }) : super._();
 
   factory _$ProfileDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -213,10 +252,14 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @override
   @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
+  @override
+  @JsonKey(name: 'settings')
+  @ProfileSettingDtoConverter()
+  final ProfileSettingDto settingDto;
 
   @override
   String toString() {
-    return 'ProfileDto(id: $id, updatedAt: $updatedAt, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl)';
+    return 'ProfileDto(id: $id, updatedAt: $updatedAt, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settingDto: $settingDto)';
   }
 
   @override
@@ -232,13 +275,22 @@ class _$ProfileDtoImpl extends _ProfileDto {
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.settingDto, settingDto) ||
+                other.settingDto == settingDto));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, updatedAt, firstName, lastName, avatarUrl);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    updatedAt,
+    firstName,
+    lastName,
+    avatarUrl,
+    settingDto,
+  );
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.
@@ -263,6 +315,9 @@ abstract class _ProfileDto extends ProfileDto {
     @JsonKey(name: 'first_name') final String? firstName,
     @JsonKey(name: 'last_name') final String? lastName,
     @JsonKey(name: 'avatar_url') final String? avatarUrl,
+    @JsonKey(name: 'settings')
+    @ProfileSettingDtoConverter()
+    required final ProfileSettingDto settingDto,
   }) = _$ProfileDtoImpl;
   const _ProfileDto._() : super._();
 
@@ -285,6 +340,10 @@ abstract class _ProfileDto extends ProfileDto {
   @override
   @JsonKey(name: 'avatar_url')
   String? get avatarUrl;
+  @override
+  @JsonKey(name: 'settings')
+  @ProfileSettingDtoConverter()
+  ProfileSettingDto get settingDto;
 
   /// Create a copy of ProfileDto
   /// with the given fields replaced by the non-null parameter values.

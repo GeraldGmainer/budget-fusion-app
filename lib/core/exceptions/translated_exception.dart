@@ -8,5 +8,5 @@ class TranslatedException implements Exception {
   TranslatedException(this.error, this.message, [this.e]);
 
   @override
-  String toString() => "$runtimeType - $error: $message";
+  String toString() => "$runtimeType - $error: $message\n$e";
 }

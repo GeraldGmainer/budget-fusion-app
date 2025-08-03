@@ -92,9 +92,9 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
   }
 
   Widget _buildCurrency(BuildContext context) {
-    return BlocBuilder<DataManagerCubit<ProfileSetting>, LoadableState<List<ProfileSetting>>>(
+    return BlocBuilder<DataManagerCubit<Profile>, LoadableState<List<Profile>>>(
       builder: (context, state) {
-        final value = state.whenOrNull(loaded: (data) => data.first.currency.symbol);
+        final value = state.whenOrNull(loaded: (data) => data.first.setting.currency.symbol);
         return Text(value ?? "", style: TextStyle(fontSize: 24, color: AppColors.primaryTextColor));
       },
     );

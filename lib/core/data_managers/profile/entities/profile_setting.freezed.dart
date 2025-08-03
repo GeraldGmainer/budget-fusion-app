@@ -17,9 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfileSetting {
-  Uuid get id => throw _privateConstructorUsedError;
   Currency get currency => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileSetting
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +33,7 @@ abstract class $ProfileSettingCopyWith<$Res> {
     $Res Function(ProfileSetting) then,
   ) = _$ProfileSettingCopyWithImpl<$Res, ProfileSetting>;
   @useResult
-  $Res call({Uuid id, Currency currency, bool isSynced});
+  $Res call({Currency currency});
 
   $CurrencyCopyWith<$Res> get currency;
 }
@@ -54,28 +52,14 @@ class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? currency = null,
-    Object? isSynced = null,
-  }) {
+  $Res call({Object? currency = null}) {
     return _then(
       _value.copyWith(
-            id:
-                null == id
-                    ? _value.id
-                    : id // ignore: cast_nullable_to_non_nullable
-                        as Uuid,
             currency:
                 null == currency
                     ? _value.currency
                     : currency // ignore: cast_nullable_to_non_nullable
                         as Currency,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
           )
           as $Val,
     );
@@ -101,7 +85,7 @@ abstract class _$$ProfileSettingImplCopyWith<$Res>
   ) = __$$ProfileSettingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Uuid id, Currency currency, bool isSynced});
+  $Res call({Currency currency});
 
   @override
   $CurrencyCopyWith<$Res> get currency;
@@ -120,28 +104,14 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? currency = null,
-    Object? isSynced = null,
-  }) {
+  $Res call({Object? currency = null}) {
     return _then(
       _$ProfileSettingImpl(
-        id:
-            null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                    as Uuid,
         currency:
             null == currency
                 ? _value.currency
                 : currency // ignore: cast_nullable_to_non_nullable
                     as Currency,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
       ),
     );
   }
@@ -150,22 +120,14 @@ class __$$ProfileSettingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProfileSettingImpl extends _ProfileSetting {
-  const _$ProfileSettingImpl({
-    required this.id,
-    required this.currency,
-    required this.isSynced,
-  }) : super._();
+  const _$ProfileSettingImpl({required this.currency}) : super._();
 
   @override
-  final Uuid id;
-  @override
   final Currency currency;
-  @override
-  final bool isSynced;
 
   @override
   String toString() {
-    return 'ProfileSetting(id: $id, currency: $currency, isSynced: $isSynced)';
+    return 'ProfileSetting(currency: $currency)';
   }
 
   @override
@@ -173,15 +135,12 @@ class _$ProfileSettingImpl extends _ProfileSetting {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProfileSettingImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+                other.currency == currency));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, currency, isSynced);
+  int get hashCode => Object.hash(runtimeType, currency);
 
   /// Create a copy of ProfileSetting
   /// with the given fields replaced by the non-null parameter values.
@@ -196,19 +155,12 @@ class _$ProfileSettingImpl extends _ProfileSetting {
 }
 
 abstract class _ProfileSetting extends ProfileSetting {
-  const factory _ProfileSetting({
-    required final Uuid id,
-    required final Currency currency,
-    required final bool isSynced,
-  }) = _$ProfileSettingImpl;
+  const factory _ProfileSetting({required final Currency currency}) =
+      _$ProfileSettingImpl;
   const _ProfileSetting._() : super._();
 
   @override
-  Uuid get id;
-  @override
   Currency get currency;
-  @override
-  bool get isSynced;
 
   /// Create a copy of ProfileSetting
   /// with the given fields replaced by the non-null parameter values.

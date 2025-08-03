@@ -12,6 +12,7 @@ class EntityLogger {
     'account': AnsiColor.fg(32),
     'category': AnsiColor.fg(214),
     'booking': AnsiColor.fg(133),
+    'currency': AnsiColor.fg(220),
   };
 
   static AnsiColor getEntityColor(String table) {

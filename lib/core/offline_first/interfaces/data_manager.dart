@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 abstract class DataManager<T> {
   Future<List<T>> loadAll({Map<String, dynamic>? filters});
 
@@ -7,6 +9,7 @@ abstract class DataManager<T> {
 
   Future<List<T>> getAll() => watch().first;
 
+  @mustCallSuper
   void setupStreams();
 
   Future<void> disposeStreams();

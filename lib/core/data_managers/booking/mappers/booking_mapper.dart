@@ -11,12 +11,12 @@ class BookingMapper {
   final Set<Uuid> _missingCategoryIds = {};
   bool _hasMissingCurrency = false;
 
-  List<Booking> mapBookings(List<SyncedDto<BookingDto>> bookingDtos, List<Account> accounts, List<Category> categories, List<ProfileSetting> profileSettings) {
+  List<Booking> mapBookings(List<SyncedDto<BookingDto>> bookingDtos, List<Account> accounts, List<Category> categories, List<Profile> profiles) {
     return bookingDtos.map((syncedDto) {
       final dto = syncedDto.dto;
       final account = accounts.firstWhereOrNull((acc) => acc.id == dto.accountId);
       final category = _findCategory(categories, dto.categoryId);
-      final currency = profileSettings.firstOrNull?.currency;
+      final currency = profiles.firstOrNull?.setting.currency;
 
       if (account == null && _missingAccountIds.add(dto.accountId)) {
         BudgetLogger.instance.e('Null Account', 'No Account found for id ${dto.accountId} in booking ${dto.id}');

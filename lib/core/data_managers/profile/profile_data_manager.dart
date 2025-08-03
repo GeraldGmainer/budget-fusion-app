@@ -1,33 +1,52 @@
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../core.dart';
 import 'data_sources/profile_local_data_source.dart';
 import 'data_sources/profile_remote_data_source.dart';
 import 'dtos/profile_dto.dart';
 
-// TODO rename it to my profile repo or active profile repo? because later, need to load multiple profiles. Also need correctly map the email to entity
 @singleton
 class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile> {
   late final OfflineFirstDataManager<ProfileDto> _manager;
+  late final Stream<List<Profile>> _sharedStream;
+  final CurrencyDataManager _currencyDataManager;
 
-  ProfileDataManager(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds)
+  ProfileDataManager(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds, this._currencyDataManager)
     : _manager = dmf.createManager<ProfileDto>(entityType: EntityType.profile, localDataSource: lds, remoteDataSource: rds);
 
   @override
-  Future<List<Profile>> loadAll({Map<String, dynamic>? filters}) async {
-    final dtos = await _manager.loadAll(filters: filters);
-    return _toEntities(dtos);
+  void setupStreams() {
+    _sharedStream = Rx.combineLatest2<List<SyncedDto<ProfileDto>>, List<Currency>, List<Profile>>(
+      _manager.stream,
+      _currencyDataManager.watch(),
+      (profileDtos, currencies) => _mapProfiles(profileDtos, currencies),
+    ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
+    super.setupStreams();
+  }
+
+  List<Profile> _mapProfiles(List<SyncedDto<ProfileDto>> profileDtos, List<Currency> currencies) {
+    return profileDtos.map((dto) {
+      final email = supabase.auth.currentUser?.email ?? "unknown email";
+      final currency = currencies.firstWhereOrNull((c) => c.id == dto.dto.settingDto.currencyId) ?? Currency.notFound();
+      return Profile.fromDto(dto.dto, email: email, isSynced: dto.isSynced, currency: currency);
+    }).toList();
   }
 
   @override
-  Stream<List<Profile>> watch() => _manager.stream.map((dtos) => _toEntities(dtos));
+  Future<List<Profile>> loadAll({Map<String, dynamic>? filters}) async {
+    await _manager.loadAll(filters: filters);
+    return await _sharedStream.first;
+  }
 
-  void dispose() => _manager.dispose();
+  @override
+  Stream<List<Profile>> watch() => _sharedStream;
 
   Future<void> reset() => _manager.reset();
 
-  List<Profile> _toEntities(List<SyncedDto<ProfileDto>> dtos) {
-    final email = supabase.auth.currentUser?.email ?? "unknown email";
-    return dtos.map((dto) => Profile.fromDto(dto.dto, email: email, isSynced: dto.isSynced)).toList();
+  Future<ProfileSetting> getSetting() async {
+    final profiles = await getAll();
+    return profiles.first.setting;
   }
 }

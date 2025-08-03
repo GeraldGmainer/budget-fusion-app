@@ -6,13 +6,15 @@ class ResetBudgetBookUseCase {
   final CategoryDataManager _categoryManager;
   final AccountDataManager _accountManager;
   final BookingDataManager _bookingManager;
+  final ProfileDataManager _profileDataManager;
 
-  ResetBudgetBookUseCase(this._categoryManager, this._accountManager, this._bookingManager);
+  ResetBudgetBookUseCase(this._categoryManager, this._accountManager, this._bookingManager, this._profileDataManager);
 
   Future<void> reset() async {
     await _bookingManager.reset();
     await _categoryManager.reset();
     await _accountManager.reset();
-    await Future.wait([_accountManager.loadAll(), _categoryManager.loadAll(), _bookingManager.loadAll()]);
+    await _profileDataManager.reset();
+    await Future.wait([_accountManager.loadAll(), _categoryManager.loadAll(), _bookingManager.loadAll(), _profileDataManager.loadAll()]);
   }
 }

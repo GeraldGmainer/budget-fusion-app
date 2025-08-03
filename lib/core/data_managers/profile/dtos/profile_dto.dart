@@ -1,6 +1,9 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../serializer/profile_setting_serializer.dart';
+import 'profile_setting_dto.dart';
+
 part 'profile_dto.freezed.dart';
 part 'profile_dto.g.dart';
 
@@ -14,6 +17,7 @@ class ProfileDto with _$ProfileDto implements OfflineFirstDto {
     @JsonKey(name: 'first_name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'settings') @ProfileSettingDtoConverter() required ProfileSettingDto settingDto,
   }) = _ProfileDto;
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);

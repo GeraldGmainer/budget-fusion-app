@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../data_managers/profile_setting/entities/currency.dart';
+import '../data_managers/currency/entities/currency.dart';
 
 part 'money.freezed.dart';
 

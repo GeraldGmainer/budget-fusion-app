@@ -31,6 +31,6 @@ List<BlocProvider> _dataManagerProviders() {
     BlocProvider<DataManagerCubit<Category>>(create: (_) => DataManagerCubit(GetIt.I<CategoryDataManager>())),
     BlocProvider<DataManagerCubit<Booking>>(create: (_) => DataManagerCubit(GetIt.I<BookingDataManager>())),
     BlocProvider<DataManagerCubit<Profile>>(create: (_) => DataManagerCubit(GetIt.I<ProfileDataManager>())),
-    BlocProvider<DataManagerCubit<ProfileSetting>>(create: (_) => DataManagerCubit(GetIt.I<ProfileSettingDataManager>())),
+    BlocProvider<DataManagerCubit<Currency>>(create: (_) => DataManagerCubit(GetIt.I<CurrencyDataManager>())),
   ];
 }

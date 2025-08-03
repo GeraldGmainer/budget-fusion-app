@@ -7,21 +7,36 @@ CREATE TABLE IF NOT EXISTS queue_items (
     done INTEGER NOT NULL
 );
 
+CREATE TABLE currency
+(
+    id                  TEXT PRIMARY KEY,
+    name                TEXT,
+    decimal_precision   INTEGER,
+    unit_position_front INTEGER,
+    symbol              TEXT  ,
+    ui_order            INTEGER
+);
+
 CREATE TABLE IF NOT EXISTS profile (
     id TEXT PRIMARY KEY,
     email TEXT,
     first_name TEXT,
     last_name TEXT,
     avatar_url TEXT,
+    settings TEXT,
     updated_at TEXT,
     sync_status TEXT    NOT NULL DEFAULT 'synced',
     last_synced_at TEXT,
     modified_locally_at TEXT
 );
 
-CREATE TABLE IF NOT EXISTS profile_setting (
+CREATE TABLE IF NOT EXISTS profile (
     id TEXT PRIMARY KEY,
-    currency TEXT   NOT NULL,
+    email TEXT,
+    first_name TEXT,
+    last_name TEXT,
+    avatar_url TEXT,
+    settings TEXT,
     updated_at TEXT,
     sync_status TEXT    NOT NULL DEFAULT 'synced',
     last_synced_at TEXT,
