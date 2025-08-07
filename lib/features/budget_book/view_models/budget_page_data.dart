@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../data_managers/booking/booking.dart';
+import '../../../data_managers/currency/currency.dart';
 import 'budget_date_range.dart';
 
 part 'budget_page_data.freezed.dart';

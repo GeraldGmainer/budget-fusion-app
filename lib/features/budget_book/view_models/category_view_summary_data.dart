@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../data_managers/currency/currency.dart';
+
 part 'category_view_summary_data.freezed.dart';
 
 @freezed

@@ -2,6 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../core/core.dart';
+import '../data_managers/account/account.dart';
+import '../data_managers/booking/booking.dart';
+import '../data_managers/category/category.dart';
+import '../data_managers/currency/currency.dart';
+import '../data_managers/profile/profile.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/budget_book/budget_book.dart';

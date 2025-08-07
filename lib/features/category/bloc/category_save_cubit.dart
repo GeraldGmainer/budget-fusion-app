@@ -3,6 +3,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../data_managers/category/category.dart';
 import '../domain/entities/category_draft.dart';
 
 part 'category_save_cubit.freezed.dart';

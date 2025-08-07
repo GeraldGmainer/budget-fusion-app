@@ -1,6 +1,8 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/features/booking/domain/entities/booking_draft.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../data_managers/booking/booking.dart';
+import '../../../data_managers/profile/profile.dart';
 
 @lazySingleton
 class SaveBookingUseCase {

@@ -3,6 +3,7 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data_managers/category/category.dart';
 import '../../domain/entities/category_draft.dart';
 
 class SubcategoryList extends StatelessWidget {

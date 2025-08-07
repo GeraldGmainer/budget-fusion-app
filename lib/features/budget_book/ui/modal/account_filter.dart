@@ -2,6 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data_managers/account/account.dart';
 import '../../view_models/budget_book_filter.dart';
 
 class AccountFilter extends StatelessWidget {
@@ -17,7 +18,7 @@ class AccountFilter extends StatelessWidget {
           title: 'Accounts',
           items: data,
           selectedItem: filter.account,
-          valueToString: (data) => data?.name ?? "Unknown",
+          valueToString: (Account? data) => data?.name ?? "Unknown",
           onItemSelected: (Account? value) {
             filter.account = value;
           },

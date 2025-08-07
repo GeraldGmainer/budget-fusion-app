@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../data_managers/booking/booking.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/category/category.dart';
@@ -17,8 +18,7 @@ class AppRouter {
     AppRoutes.main: (settings) => DefaultRoute(builder: (_) => MainPage(), settings: settings),
     AppRoutes.bookingSave:
         (settings) => SlideRightRoute(
-          builder:
-              (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),
+          builder: (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),
           settings: settings,
         ),
     AppRoutes.categoryList: (settings) => DefaultRoute(builder: (_) => CategoryListPage(), settings: settings),

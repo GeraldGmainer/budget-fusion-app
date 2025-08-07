@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/core.dart';
+import '../../../data_managers/currency/currency.dart';
 import 'base/budget_view_data.dart';
 import 'budget_date_range.dart';
 import 'category_view_summary_data.dart';

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/core.dart';
+import '../../../data_managers/currency/currency.dart';
+import '../../../data_managers/profile/profile.dart';
 
 class MoneyText extends StatelessWidget {
   static const double defaultFontSize = 14;

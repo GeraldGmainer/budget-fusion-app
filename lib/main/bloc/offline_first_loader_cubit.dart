@@ -4,6 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/core.dart';
+import '../../data_managers/account/account.dart';
+import '../../data_managers/booking/booking.dart';
+import '../../data_managers/category/category.dart';
+import '../../data_managers/profile/profile.dart';
 import '../../utils/utils.dart';
 
 part 'offline_first_loader_cubit.freezed.dart';

@@ -1,5 +1,10 @@
 import 'package:injectable/injectable.dart';
 
+import '../../data_managers/account/account.dart';
+import '../../data_managers/booking/booking.dart';
+import '../../data_managers/category/category.dart';
+import '../../data_managers/currency/currency.dart';
+import '../../data_managers/profile/profile.dart';
 import '../core.dart';
 
 @module

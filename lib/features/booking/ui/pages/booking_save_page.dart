@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haptic_feedback/haptic_feedback.dart';
 
+import '../../../../data_managers/account/account.dart';
+import '../../../../data_managers/booking/booking.dart';
+import '../../../../data_managers/category/category.dart';
 import '../../bloc/booking_save_cubit.dart';
 import '../../bloc/calculator_cubit.dart';
 import '../../bloc/suggestion_cubit.dart';

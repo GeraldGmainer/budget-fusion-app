@@ -1,6 +1,9 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/core.dart';
+import '../../../../data_managers/booking/booking.dart';
+import '../../../../data_managers/category/category.dart';
+import '../../../../data_managers/currency/currency.dart';
 import '../../view_models/budget_page_data.dart';
 import '../../view_models/category_group.dart';
 import '../../view_models/category_view_summary_data.dart';

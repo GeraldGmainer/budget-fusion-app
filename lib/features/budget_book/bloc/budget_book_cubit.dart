@@ -5,6 +5,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../data_managers/booking/booking.dart';
 import '../enums/budget_view_mode.dart';
 import '../enums/period_mode.dart';
 import '../use_cases/filter_and_group_bookings_use_case.dart';

@@ -1,6 +1,10 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../data_managers/booking/booking.dart';
+import '../../../data_managers/category/category.dart';
+import '../../../data_managers/currency/currency.dart';
+
 part 'category_group.freezed.dart';
 
 @freezed

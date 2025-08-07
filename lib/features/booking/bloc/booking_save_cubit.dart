@@ -9,6 +9,8 @@ import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../data_managers/account/account.dart';
+import '../../../data_managers/booking/booking.dart';
 import '../domain/entities/booking_draft.dart';
 import '../use_cases/default_account_use_case.dart';
 import '../use_cases/save_booking_use_case.dart';

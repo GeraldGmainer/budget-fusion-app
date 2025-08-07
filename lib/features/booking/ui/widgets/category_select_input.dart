@@ -4,6 +4,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data_managers/category/category.dart';
 import '../../domain/entities/booking_draft.dart';
 import 'category_list_input.dart';
 

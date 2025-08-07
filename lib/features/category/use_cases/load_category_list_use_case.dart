@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../core/core.dart';
+import '../../../data_managers/category/category.dart';
 
 @lazySingleton
 class LoadCategoryListUseCase {
