@@ -60,6 +60,12 @@ import 'package:budget_fusion_app/core/offline_first/queue/queue_manager.dart'
     as _i327;
 import 'package:budget_fusion_app/core/offline_first/realtime/realtime_notifier_service.dart'
     as _i371;
+import 'package:budget_fusion_app/core/offline_first/sync_manager/sync_cursor_repo.dart'
+    as _i136;
+import 'package:budget_fusion_app/core/offline_first/sync_manager/sync_manager.dart'
+    as _i32;
+import 'package:budget_fusion_app/core/offline_first/sync_manager/sync_remote_source.dart'
+    as _i398;
 import 'package:budget_fusion_app/core/remote_loading/bloc/remote_loading_cubit.dart'
     as _i234;
 import 'package:budget_fusion_app/core/remote_loading/service/remote_loading_service.dart'
@@ -119,6 +125,7 @@ import 'package:budget_fusion_app/utils/utils.dart' as _i428;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import 'package:sqflite/sqflite.dart' as _i779;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -135,19 +142,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => databaseModule.provideDatabase(),
       preResolve: true,
     );
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => registerModule.sharedPrefs,
+      preResolve: true,
+    );
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
     gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
     gh.lazySingleton<_i895.Connectivity>(() => registerModule.connectivity);
-    gh.lazySingleton<_i247.RemoteLoadingService>(
-      () => _i247.RemoteLoadingService(),
-    );
-    gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
-    gh.lazySingleton<_i371.RealtimeNotifierService>(
-      () => _i371.RealtimeNotifierService(),
-    );
-    gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
-    gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
     gh.lazySingleton<_i828.CategoryRemoteDataSource>(
       () => _i828.CategoryRemoteDataSource(),
     );
@@ -162,6 +164,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i817.AccountRemoteDataSource>(
       () => _i817.AccountRemoteDataSource(),
     );
+    gh.lazySingleton<_i112.CurrencyRemoteDataSource>(
+      () => _i112.CurrencyRemoteDataSource(),
+    );
+    gh.lazySingleton<_i247.RemoteLoadingService>(
+      () => _i247.RemoteLoadingService(),
+    );
+    gh.lazySingleton<_i866.CacheManager>(() => _i866.CacheManager());
+    gh.lazySingleton<_i371.RealtimeNotifierService>(
+      () => _i371.RealtimeNotifierService(),
+    );
+    gh.lazySingleton<_i398.SyncRemoteSource>(() => _i398.SyncRemoteSource());
+    gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
+    gh.lazySingleton<_i226.DefaultNewDateUseCase>(
+      () => _i226.DefaultNewDateUseCase(),
+    );
     gh.lazySingleton<_i431.FilterBookingsUseCase>(
       () => _i431.FilterBookingsUseCase(),
     );
@@ -171,11 +188,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i226.SummaryDataGenerator>(
       () => _i226.SummaryDataGenerator(),
     );
-    gh.lazySingleton<_i226.DefaultNewDateUseCase>(
-      () => _i226.DefaultNewDateUseCase(),
-    );
-    gh.lazySingleton<_i112.CurrencyRemoteDataSource>(
-      () => _i112.CurrencyRemoteDataSource(),
+    gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
+    gh.lazySingleton<_i136.SyncCursorRepo>(
+      () => _i136.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i871.UserRepo>(
       () => _i871.UserRepo(gh<_i478.UserRemoteSource>()),
@@ -200,9 +215,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i601.TransactionDataGenerator>(),
       ),
     );
-    gh.lazySingleton<_i76.QueueLocalDataSource>(
-      () => _i76.QueueLocalDataSource(gh<_i779.Database>()),
-    );
     gh.lazySingleton<_i219.CategoryLocalDataSource>(
       () => _i219.CategoryLocalDataSource(gh<_i779.Database>()),
     );
@@ -217,6 +229,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i409.CurrencyLocalDataSource>(
       () => _i409.CurrencyLocalDataSource(gh<_i779.Database>()),
+    );
+    gh.lazySingleton<_i76.QueueLocalDataSource>(
+      () => _i76.QueueLocalDataSource(gh<_i779.Database>()),
+    );
+    gh.lazySingleton<_i32.SyncManager>(
+      () => _i32.SyncManager(
+        gh<_i136.SyncCursorRepo>(),
+        gh<_i398.SyncRemoteSource>(),
+      ),
     );
     gh.lazySingleton<_i318.FilterAndGroupBookingsUseCase>(
       () =>
@@ -237,6 +258,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.QueueManager>(),
         gh<_i371.RealtimeNotifierService>(),
         gh<_i714.RemoteLoadingService>(),
+        gh<_i32.SyncManager>(),
       ),
     );
     gh.singleton<_i616.CurrencyDataManager>(

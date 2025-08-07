@@ -7,13 +7,16 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../../utils/utils.dart';
 import '../../core.dart';
+import '../sync_manager/sync_manager.dart';
 
 class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final EntityType entityType;
   final OfflineFirstLocalDataSource<Dto> localSource;
+
   final OfflineFirstRemoteDataSource<Dto> remoteSource;
   final CacheManager cacheManager;
   final QueueManager queueManager;
+  final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
   final RemoteLoadingService remoteLoadingService;
 
@@ -28,10 +31,12 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     required this.remoteSource,
     required this.cacheManager,
     required this.queueManager,
+    required this.syncManager,
     required this.realtimeNotifierService,
     required this.remoteLoadingService,
   }) {
     queueManager.registerEntitySources(entityType, localSource, remoteSource);
+    syncManager.register(entityType, this, localSource);
 
     _queueSub = queueManager.pendingItemsStream
         .map((items) => items.where((item) => item.entityType == entityType).toList())
@@ -51,7 +56,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     if (cached != null && cached.isNotEmpty) {
       _log("Using cached data with ${cached.length} items");
       _emitToStream(cached);
-      unawaited(_syncPartial());
+      unawaited(syncManager.syncAll());
       return cached;
     }
 
@@ -61,18 +66,15 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
       cacheManager.set(entityType, localDtos);
       _emitToStream(localDtos);
-      unawaited(_syncPartial());
+      unawaited(syncManager.syncAll());
       return localDtos;
     }
 
     _log("No local data found. Fetching remote data ...");
-    final remoteDtos = await remoteLoadingService.wrap(() => remoteSource.fetchAll());
-    await localSource.saveAllNotSynced(remoteDtos);
-    final synced = await _refreshCacheFromLocalSource();
-    cacheManager.set(entityType, synced);
-    _emitToStream(synced);
-    _log("loadAll completed");
-    return synced;
+    await syncManager.syncAll();
+    final first = await streamController.first;
+    _log("loadAll completed with ${first.length} items");
+    return first;
   }
 
   Future<SyncedDto<Dto>?> loadById(String id) async {
@@ -93,28 +95,23 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       return local;
     }
     _log("No local data found. Fetching remote data by id '$id' ...");
-    final remote = await remoteLoadingService.wrap(() => remoteSource.fetchById(id));
-    if (remote != null) {
-      _log("Remote data by id '${remote.id}' found");
-      await localSource.saveNotSynced(remote);
-      final refreshedDtos = await _refreshCacheFromLocalSource();
-      _emitToStream(refreshedDtos);
-      return refreshedDtos.firstWhereOrNull((e) => e.dto.id.value == id);
+
+    await syncManager.syncAll();
+    final local2 = await localSource.fetchById(id);
+    if (local2 != null) {
+      _log("Local data by id '${local2.dto.id}' found");
+      return local2;
     }
+    _log("No local data found after syncAll for ID '$id' ...");
     return null;
   }
 
-  // Future<void> save(Dto dto) async {
-  //   _log("Saving DTO with id '${dto.id.value}'");
-  //
-  //   await localSource.save(dto);
-  //   final refreshedDtos = await _refreshCacheFromLocalSource();
-  //   _emitToStream(refreshedDtos);
-  //
-  //   final item = QueueItem(entityId: dto.id.value, entityType: entityType, taskType: QueueTaskType.upsert, entityPayload: jsonEncode(dto.toJson()));
-  //   _log("Queuing upsert for id '${dto.id.value}'");
-  //   unawaited(queueManager.add(item));
-  // }
+  Future<void> refresh() async {
+    _log("Refreshing local data ...");
+    final localDtos = await localSource.fetchAll();
+    cacheManager.set(entityType, localDtos);
+    _emitToStream(localDtos);
+  }
 
   Future<void> save(Dto dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
@@ -174,42 +171,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     if (_isRealtimeSubscribed) return;
     _isRealtimeSubscribed = true;
     realtimeNotifierService.startListeningForEntity(entityType, remoteSource.table);
-  }
-
-  Future<void> _syncPartial() async {
-    _log("Starting partial sync");
-    try {
-      final localMax = await localSource.fetchMaxUpdatedAt();
-      final remoteDtos = await remoteLoadingService.wrap(() => remoteSource.fetchAllNewer(localMax));
-      if (remoteDtos.isEmpty) {
-        _log("No new remote data found during sync", darkColor: true);
-        return;
-      }
-
-      _log("Fetched ${remoteDtos.length} new remote items");
-      final localSyncedDtos = await localSource.fetchAll();
-      final localMap = {for (final syncedDto in localSyncedDtos) syncedDto.dto.id: syncedDto};
-
-      for (final dto in remoteDtos) {
-        if (!localMap.containsKey(dto.id)) {
-          final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
-          localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
-        } else {
-          final existing = localMap[dto.id]!;
-          if (existing.dto.updatedAt == null || (dto.updatedAt != null && existing.dto.updatedAt!.isBefore(dto.updatedAt!))) {
-            final meta = SyncMeta(status: SyncStatus.synced, modifiedLocallyAt: null, lastSyncedAt: dto.updatedAt);
-            localMap[dto.id] = SyncedDto<Dto>(dto: dto, syncMeta: meta);
-          }
-        }
-      }
-      final mergedList = localMap.values.toList();
-      await localSource.saveAll(mergedList);
-      final refreshedDtos = await _refreshCacheFromLocalSource();
-      _emitToStream(refreshedDtos);
-      _log("Partial sync completed successfully");
-    } catch (e, stackTrace) {
-      BudgetLogger.instance.e("Sync failed", e, stackTrace);
-    }
   }
 
   Future<void> reset() async {
