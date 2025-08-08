@@ -8,13 +8,11 @@ import 'package:rxdart/rxdart.dart';
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
 import '../../sync_manager/sync_manager.dart';
-import '../cache/cache_manager.dart';
 import '../models/queue_item.dart';
 import '../realtime/realtime_notifier_service.dart';
 
 class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   final DomainSyncAdapter<Dto> adapter;
-  final CacheManager cacheManager;
   final QueueManager queueManager;
   final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
@@ -27,7 +25,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   OfflineFirstDataManager({
     required this.adapter,
-    required this.cacheManager,
     required this.queueManager,
     required this.syncManager,
     required this.realtimeNotifierService,
@@ -50,19 +47,10 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<List<SyncedDto<Dto>>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<SyncedDto<Dto>>>(adapter.type);
-    if (cached != null && cached.isNotEmpty) {
-      _log("Using cached data with ${cached.length} items");
-      _emitToStream(cached);
-      unawaited(syncManager.syncAll("DM loadAll - Cache"));
-      return cached;
-    }
 
-    _log("Fetching local data ...");
     final localDtos = await adapter.local.fetchAll();
     if (localDtos.isNotEmpty) {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
-      cacheManager.set(adapter.type, localDtos);
       _emitToStream(localDtos);
       unawaited(syncManager.syncAll("DM loadAll - Local"));
       return localDtos;
@@ -78,15 +66,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<SyncedDto<Dto>?> loadById(String id) async {
     _log("start loadById '$id'");
     _subscribeToRealtime();
-    final cached = cacheManager.get<List<SyncedDto<Dto>>>(adapter.type);
-    if (cached != null) {
-      final found = cached.firstWhereOrNull((e) => e.dto.id.value == id);
-      if (found != null) {
-        _log("Using cached data with ID '${found.dto.id}'");
-        return found;
-      }
-    }
-    _log("Fetching local data by id ...");
     final local = await adapter.local.fetchById(id);
     if (local != null) {
       _log("Local data by id '${local.dto.id}' found");
@@ -107,7 +86,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   Future<void> refresh() async {
     _log("Refreshing local data ...");
     final localDtos = await adapter.local.fetchAll();
-    cacheManager.set(adapter.type, localDtos);
     _emitToStream(localDtos);
   }
 
@@ -138,7 +116,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _refreshing =
         (() async {
           final dtos = await adapter.local.fetchAll();
-          cacheManager.set(adapter.type, dtos);
           return dtos;
         })();
     try {
@@ -173,7 +150,6 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
 
   Future<void> reset() async {
     _log("Resetting OfflineFirstDataManager", darkColor: true);
-    cacheManager.invalidateCache(adapter.type);
     await adapter.local.deleteAll();
   }
 
