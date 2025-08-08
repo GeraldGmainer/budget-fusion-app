@@ -80,15 +80,22 @@ class SyncManager {
     }
 
     final newTs = result.newTimestamps;
-    final newCursors = <EntityType, DateTime?>{
+    final tsByEntity = <EntityType, DateTime?>{
       EntityType.account: newTs.account,
       EntityType.category: newTs.category,
       EntityType.booking: newTs.booking,
       EntityType.profile: newTs.profile,
       EntityType.currency: newTs.currency,
     };
-    // TODO only set cursor when result.entity.length > 0
-    await _syncCursorRepo.setAll(newCursors);
+
+    for (final entry in deltas.entries) {
+      final entity = entry.key;
+      final delta = entry.value;
+      if (delta.upserts.isEmpty && delta.deletes.isEmpty) continue;
+      final ts = tsByEntity[entity];
+      if (ts == null) continue;
+      await _syncCursorRepo.setLastSyncedAt(entity, ts);
+    }
 
     final changes = deltas.map((e, d) => MapEntry(e, d.upserts.length + d.deletes.length));
     final logStr = changes.entries.map((e) => '${e.key.name}:${e.value}').join(', ');
