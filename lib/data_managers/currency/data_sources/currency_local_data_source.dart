@@ -4,7 +4,7 @@ import '../../../core/core.dart';
 import '../dtos/currency_dto.dart';
 
 @lazySingleton
-class CurrencyLocalDataSource extends OfflineFirstLocalDataSource<CurrencyDto> {
+class CurrencyLocalDataSource extends LocalDataSource<CurrencyDto> {
   CurrencyLocalDataSource(super.db);
 
   @override

@@ -6,7 +6,7 @@ part of 'sync_all_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SyncDeltaImpl<T> _$$SyncDeltaImplFromJson<T extends OfflineFirstDto>(
+_$SyncDeltaImpl<T> _$$SyncDeltaImplFromJson<T extends Dto>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) => _$SyncDeltaImpl<T>(
@@ -14,7 +14,7 @@ _$SyncDeltaImpl<T> _$$SyncDeltaImplFromJson<T extends OfflineFirstDto>(
   deletes: (json['deletes'] as List<dynamic>).map((e) => e as String).toList(),
 );
 
-Map<String, dynamic> _$$SyncDeltaImplToJson<T extends OfflineFirstDto>(
+Map<String, dynamic> _$$SyncDeltaImplToJson<T extends Dto>(
   _$SyncDeltaImpl<T> instance,
   Object? Function(T value) toJsonT,
 ) => <String, dynamic>{

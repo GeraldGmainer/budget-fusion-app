@@ -5,7 +5,7 @@ import '../dtos/booking_dto.dart';
 import '../dtos/booking_suggestion_dto.dart';
 
 @lazySingleton
-class BookingLocalDataSource extends OfflineFirstLocalDataSource<BookingDto> {
+class BookingLocalDataSource extends LocalDataSource<BookingDto> {
   BookingLocalDataSource(super.db);
 
   @override

@@ -1,6 +1,6 @@
-import '../../../value_objects/uuid.dart';
+import '../../value_objects/uuid.dart';
 
-abstract class OfflineFirstDto {
+abstract class Dto {
   Uuid get id;
 
   DateTime? get updatedAt;

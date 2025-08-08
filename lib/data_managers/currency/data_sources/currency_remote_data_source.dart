@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../dtos/currency_dto.dart';
 
 @lazySingleton
-class CurrencyRemoteDataSource extends OfflineFirstRemoteDataSource<CurrencyDto> {
+class CurrencyRemoteDataSource extends RemoteDataSource<CurrencyDto> {
   @override
   String get table => 'currency';
 

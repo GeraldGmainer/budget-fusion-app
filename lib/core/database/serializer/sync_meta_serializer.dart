@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../core.dart';
-import '../../data/offline_first/models/sync_meta.dart';
+import '../../data/enums/sync_status.dart';
 
 class SyncMetaSerializer implements JsonConverter<SyncMeta, dynamic> {
   const SyncMetaSerializer();

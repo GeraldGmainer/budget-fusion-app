@@ -4,10 +4,10 @@ import 'dart:math';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestFilterBuilder, PostgrestList;
 
 import '../../../../utils/utils.dart';
-import '../../../core.dart';
+import '../../core.dart';
 
-abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
-  Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {
+abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
+  Future<List<E>> fetchAll({List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
@@ -23,7 +23,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<List<Dto>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
+  Future<List<E>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchAllNewer than $updatedAt${filters != null ? "with filters: $filters" : ""}");
     return execute(table, () async {
@@ -39,7 +39,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<Dto?> fetchById(String id) async {
+  Future<E?> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchById '$id'");
     return execute(table, () async {
@@ -49,7 +49,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<Dto> upsert(String id, Map<String, dynamic> json) async {
+  Future<E> upsert(String id, Map<String, dynamic> json) async {
     final stopwatch = Stopwatch()..start();
     _log("upsert by id '$id'");
     return execute(table, () async {
@@ -60,7 +60,7 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
     });
   }
 
-  Future<void> upsertAll(List<Dto> dtos) async {
+  Future<void> upsertAll(List<E> dtos) async {
     final stopwatch = Stopwatch()..start();
     _log("upsertAll ${dtos.length} DTOs");
     return execute(table, () async {
@@ -113,5 +113,5 @@ abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends
 
   String get columns;
 
-  Dto toDto(Map<String, dynamic> json);
+  E toDto(Map<String, dynamic> json);
 }

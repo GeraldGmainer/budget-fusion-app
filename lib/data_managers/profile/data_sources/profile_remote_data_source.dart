@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../dtos/profile_dto.dart';
 
 @lazySingleton
-class ProfileRemoteDataSource extends OfflineFirstRemoteDataSource<ProfileDto> {
+class ProfileRemoteDataSource extends RemoteDataSource<ProfileDto> {
   @override
   String get table => 'profile';
 

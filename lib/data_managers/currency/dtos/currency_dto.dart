@@ -6,7 +6,7 @@ part 'currency_dto.freezed.dart';
 part 'currency_dto.g.dart';
 
 @freezed
-class CurrencyDto with _$CurrencyDto implements OfflineFirstDto {
+class CurrencyDto with _$CurrencyDto implements Dto {
   const CurrencyDto._();
 
   const factory CurrencyDto({

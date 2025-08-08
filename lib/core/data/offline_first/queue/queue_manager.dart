@@ -3,10 +3,11 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/core/data/domain_sync_adapter.dart';
+import 'package:budget_fusion_app/core/data/data_sources/data_source_adapter.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../enums/sync_status.dart';
 import '../models/queue_item.dart';
 import 'queue_local_data_source.dart';
 
@@ -16,7 +17,7 @@ class QueueManager {
   final QueueLocalDataSource queueDataSource;
   final RemoteLoadingService remoteLoadingService;
   final Queue<QueueItem> _inMemoryQueue = Queue();
-  final Map<EntityType, DomainSyncAdapter> _adapters = {};
+  final Map<EntityType, DataSourceAdapter> _adapters = {};
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 
   Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
@@ -25,7 +26,7 @@ class QueueManager {
 
   QueueManager(this.queueDataSource, this.remoteLoadingService);
 
-  void register(DomainSyncAdapter adapter) => _adapters[adapter.type] = (adapter);
+  void register(DataSourceAdapter adapter) => _adapters[adapter.type] = (adapter);
 
   Future<void> init() async {
     _log("init QueueManager");
@@ -101,7 +102,7 @@ class QueueManager {
     }
   }
 
-  Future<void> _processQueueItem(QueueItem item, DomainSyncAdapter adapter) async {
+  Future<void> _processQueueItem(QueueItem item, DataSourceAdapter adapter) async {
     _log("Processing queue item with entityId: ${item.entityId}");
 
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;

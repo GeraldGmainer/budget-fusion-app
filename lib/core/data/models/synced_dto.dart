@@ -1,8 +1,8 @@
-import '../../../value_objects/uuid.dart';
-import 'offline_first_dto.dart';
+import '../../value_objects/uuid.dart';
+import 'dto.dart';
 import 'sync_meta.dart';
 
-class SyncedDto<T extends OfflineFirstDto> {
+class SyncedDto<T extends Dto> {
   final T dto;
   final SyncMeta syncMeta;
 

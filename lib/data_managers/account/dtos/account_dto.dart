@@ -5,7 +5,7 @@ part 'account_dto.freezed.dart';
 part 'account_dto.g.dart';
 
 @freezed
-class AccountDto with _$AccountDto implements OfflineFirstDto {
+class AccountDto with _$AccountDto implements Dto {
   const AccountDto._();
 
   const factory AccountDto({

@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../dtos/category_dto.dart';
 
 @lazySingleton
-class CategoryLocalDataSource extends OfflineFirstLocalDataSource<CategoryDto> {
+class CategoryLocalDataSource extends LocalDataSource<CategoryDto> {
   CategoryLocalDataSource(super.db);
 
   @override

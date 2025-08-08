@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-SyncDelta<T> _$SyncDeltaFromJson<T extends OfflineFirstDto>(
+SyncDelta<T> _$SyncDeltaFromJson<T extends Dto>(
   Map<String, dynamic> json,
   T Function(Object?) fromJsonT,
 ) {
@@ -23,7 +23,7 @@ SyncDelta<T> _$SyncDeltaFromJson<T extends OfflineFirstDto>(
 }
 
 /// @nodoc
-mixin _$SyncDelta<T extends OfflineFirstDto> {
+mixin _$SyncDelta<T extends Dto> {
   List<T> get upserts => throw _privateConstructorUsedError;
   List<String> get deletes => throw _privateConstructorUsedError;
 
@@ -39,7 +39,7 @@ mixin _$SyncDelta<T extends OfflineFirstDto> {
 }
 
 /// @nodoc
-abstract class $SyncDeltaCopyWith<T extends OfflineFirstDto, $Res> {
+abstract class $SyncDeltaCopyWith<T extends Dto, $Res> {
   factory $SyncDeltaCopyWith(
     SyncDelta<T> value,
     $Res Function(SyncDelta<T>) then,
@@ -49,11 +49,7 @@ abstract class $SyncDeltaCopyWith<T extends OfflineFirstDto, $Res> {
 }
 
 /// @nodoc
-class _$SyncDeltaCopyWithImpl<
-  T extends OfflineFirstDto,
-  $Res,
-  $Val extends SyncDelta<T>
->
+class _$SyncDeltaCopyWithImpl<T extends Dto, $Res, $Val extends SyncDelta<T>>
     implements $SyncDeltaCopyWith<T, $Res> {
   _$SyncDeltaCopyWithImpl(this._value, this._then);
 
@@ -86,7 +82,7 @@ class _$SyncDeltaCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$SyncDeltaImplCopyWith<T extends OfflineFirstDto, $Res>
+abstract class _$$SyncDeltaImplCopyWith<T extends Dto, $Res>
     implements $SyncDeltaCopyWith<T, $Res> {
   factory _$$SyncDeltaImplCopyWith(
     _$SyncDeltaImpl<T> value,
@@ -98,7 +94,7 @@ abstract class _$$SyncDeltaImplCopyWith<T extends OfflineFirstDto, $Res>
 }
 
 /// @nodoc
-class __$$SyncDeltaImplCopyWithImpl<T extends OfflineFirstDto, $Res>
+class __$$SyncDeltaImplCopyWithImpl<T extends Dto, $Res>
     extends _$SyncDeltaCopyWithImpl<T, $Res, _$SyncDeltaImpl<T>>
     implements _$$SyncDeltaImplCopyWith<T, $Res> {
   __$$SyncDeltaImplCopyWithImpl(
@@ -130,7 +126,7 @@ class __$$SyncDeltaImplCopyWithImpl<T extends OfflineFirstDto, $Res>
 
 /// @nodoc
 @JsonSerializable(genericArgumentFactories: true)
-class _$SyncDeltaImpl<T extends OfflineFirstDto> implements _SyncDelta<T> {
+class _$SyncDeltaImpl<T extends Dto> implements _SyncDelta<T> {
   const _$SyncDeltaImpl({
     required final List<T> upserts,
     required final List<String> deletes,
@@ -194,7 +190,7 @@ class _$SyncDeltaImpl<T extends OfflineFirstDto> implements _SyncDelta<T> {
   }
 }
 
-abstract class _SyncDelta<T extends OfflineFirstDto> implements SyncDelta<T> {
+abstract class _SyncDelta<T extends Dto> implements SyncDelta<T> {
   const factory _SyncDelta({
     required final List<T> upserts,
     required final List<String> deletes,

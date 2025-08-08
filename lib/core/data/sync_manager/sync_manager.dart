@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../utils/utils.dart';
 import '../../core.dart';
-import '../domain_sync_adapter.dart';
+import '../data_sources/data_source_adapter.dart';
 import 'sync_all_response.dart';
 import 'sync_cursor_repo.dart';
 import 'sync_remote_source.dart';
@@ -14,13 +14,13 @@ class SyncManager {
   final SyncCursorRepo _syncCursorRepo;
   final SyncRemoteSource _syncRemoteSource;
   final Map<EntityType, OfflineFirstDataManager> _dataManagers = {};
-  final Map<EntityType, DomainSyncAdapter> _adapters = {};
+  final Map<EntityType, DataSourceAdapter> _adapters = {};
   DateTime? _lastSyncTime;
   Future<void>? _ongoingSync;
 
   SyncManager(this._syncCursorRepo, this._syncRemoteSource);
 
-  void register(OfflineFirstDataManager dataManager, DomainSyncAdapter adapter) {
+  void register(OfflineFirstDataManager dataManager, DataSourceAdapter adapter) {
     _dataManagers[adapter.type] = dataManager;
     _adapters[adapter.type] = adapter;
   }

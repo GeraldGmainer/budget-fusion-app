@@ -3,19 +3,15 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../../utils/utils.dart';
+import '../../core.dart';
 import '../enums/sync_status.dart';
-import '../filters/query_filter.dart';
-import '../filters/query_operator.dart';
-import '../models/offline_first_dto.dart';
-import '../models/sync_meta.dart';
-import '../models/synced_dto.dart';
 
-abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
+abstract class LocalDataSource<E extends Dto> {
   final Database db;
 
-  OfflineFirstLocalDataSource(this.db);
+  LocalDataSource(this.db);
 
-  SyncedDto<Dto> _mapRowToSyncedDto(Map<String, dynamic> row) {
+  SyncedDto<E> _mapRowToSyncedDto(Map<String, dynamic> row) {
     final m = Map<String, dynamic>.from(row);
     final statusString = m.remove('sync_status') as String;
     final lastSyncedAtString = m.remove('last_synced_at') as String?;
@@ -29,7 +25,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     return SyncedDto(dto: dto, syncMeta: meta);
   }
 
-  Future<List<SyncedDto<Dto>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
+  Future<List<SyncedDto<E>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
     final effectiveOrderBy = orderBy ?? defaultOrderBy;
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
@@ -38,7 +34,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     return rows.map(_mapRowToSyncedDto).toList();
   }
 
-  Future<SyncedDto<Dto>?> fetchById(String id) async {
+  Future<SyncedDto<E>?> fetchById(String id) async {
     _log("fetchById '$id'");
     final rows = await db.query(table, where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) {
@@ -49,7 +45,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     return _mapRowToSyncedDto(rows.first);
   }
 
-  Future<void> save(SyncedDto<Dto> syncedDto) async {
+  Future<void> save(SyncedDto<E> syncedDto) async {
     _log("save for id '${syncedDto.dto.id.value}'");
     final data = syncedDto.dto.toJson();
     data['sync_status'] = syncedDto.syncMeta.status.toString().split('.').last;
@@ -60,7 +56,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
   }
 
-  Future<void> saveAll(List<SyncedDto<Dto>> syncedDtos) async {
+  Future<void> saveAll(List<SyncedDto<E>> syncedDtos) async {
     _log("saveAll ${EntityLogger.bold(syncedDtos.length)} DTOs");
     final batch = db.batch();
     for (final dto in syncedDtos) {
@@ -75,7 +71,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     _log("saveAll success", darkColor: true);
   }
 
-  Future<void> saveAllNotSynced(List<Dto> dtos) async {
+  Future<void> saveAllNotSynced(List<E> dtos) async {
     if (dtos.isEmpty) return;
     _log("saveAllNotSynced ${EntityLogger.bold(dtos.length)} DTOs");
     final batch = db.batch();
@@ -90,7 +86,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
     // _log("saveAllNotSynced success", darkColor: true);
   }
 
-  Future<void> saveNotSynced(Dto dto) async {
+  Future<void> saveNotSynced(E dto) async {
     _log("saveNotSynced for id '${dto.id.value}'");
     final data = dto.toJson();
     data['sync_status'] = SyncStatus.synced.name;
@@ -195,5 +191,5 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
 
   String? get defaultOrderBy;
 
-  Dto fromJson(Map<String, dynamic> json);
+  E fromJson(Map<String, dynamic> json);
 }

@@ -1,26 +1,27 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:budget_fusion_app/core/data/domain_sync_adapter.dart';
+import 'package:budget_fusion_app/core/data/data_sources/data_source_adapter.dart';
 import 'package:collection/collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
+import '../../enums/sync_status.dart';
 import '../../sync_manager/sync_manager.dart';
 import '../models/queue_item.dart';
 import '../realtime/realtime_notifier_service.dart';
 
-class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
-  final DomainSyncAdapter<Dto> adapter;
+class OfflineFirstDataManager<E extends Dto> {
+  final DataSourceAdapter<E> adapter;
   final QueueManager queueManager;
   final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
   final RemoteLoadingService remoteLoadingService;
 
-  ReplaySubject<List<SyncedDto<Dto>>> streamController = ReplaySubject<List<SyncedDto<Dto>>>(maxSize: 1);
+  ReplaySubject<List<SyncedDto<E>>> streamController = ReplaySubject<List<SyncedDto<E>>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
-  Future<List<SyncedDto<Dto>>>? _refreshing;
+  Future<List<SyncedDto<E>>>? _refreshing;
   late final StreamSubscription<List<QueueItem>> _queueSub;
 
   OfflineFirstDataManager({
@@ -42,9 +43,9 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
         });
   }
 
-  Stream<List<SyncedDto<Dto>>> get stream => streamController.stream;
+  Stream<List<SyncedDto<E>>> get stream => streamController.stream;
 
-  Future<List<SyncedDto<Dto>>> loadAll({Map<String, dynamic>? filters}) async {
+  Future<List<SyncedDto<E>>> loadAll({Map<String, dynamic>? filters}) async {
     _log("start loadAll");
     _subscribeToRealtime();
 
@@ -63,7 +64,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     return first;
   }
 
-  Future<SyncedDto<Dto>?> loadById(String id) async {
+  Future<SyncedDto<E>?> loadById(String id) async {
     _log("start loadById '$id'");
     _subscribeToRealtime();
     final local = await adapter.local.fetchById(id);
@@ -89,7 +90,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     _emitToStream(localDtos);
   }
 
-  Future<void> save(Dto dto) async {
+  Future<void> save(E dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
     final now = DateTime.now();
     final existing = await adapter.local.fetchById(dto.id.value);
@@ -97,7 +98,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
         (existing?.syncMeta != null)
             ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now)
             : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: null);
-    final wrapped = SyncedDto<Dto>(dto: dto, syncMeta: newMeta);
+    final wrapped = SyncedDto<E>(dto: dto, syncMeta: newMeta);
 
     await adapter.local.save(wrapped);
     final refreshed = await _refreshCacheFromLocalSource();
@@ -109,7 +110,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     unawaited(queueManager.add(item));
   }
 
-  Future<List<SyncedDto<Dto>>> _refreshCacheFromLocalSource() async {
+  Future<List<SyncedDto<E>>> _refreshCacheFromLocalSource() async {
     if (_refreshing != null) {
       return await _refreshing!;
     }
@@ -125,7 +126,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     }
   }
 
-  Future<void> delete(Dto dto) async {
+  Future<void> delete(E dto) async {
     _log("Deleting DTO with id '${dto.id.value}'");
     await adapter.local.deleteById(dto.id.value);
 
@@ -137,7 +138,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     unawaited(queueManager.add(item));
   }
 
-  _emitToStream(List<SyncedDto<Dto>> dtos) {
+  _emitToStream(List<SyncedDto<E>> dtos) {
     _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
     streamController.add(dtos);
   }

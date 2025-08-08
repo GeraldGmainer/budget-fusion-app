@@ -8,7 +8,7 @@ part 'profile_dto.freezed.dart';
 part 'profile_dto.g.dart';
 
 @freezed
-class ProfileDto with _$ProfileDto implements OfflineFirstDto {
+class ProfileDto with _$ProfileDto implements Dto {
   const ProfileDto._();
 
   const factory ProfileDto({

@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../dtos/account_dto.dart';
 
 @lazySingleton
-class AccountLocalDataSource extends OfflineFirstLocalDataSource<AccountDto> {
+class AccountLocalDataSource extends LocalDataSource<AccountDto> {
   AccountLocalDataSource(super.db);
 
   @override

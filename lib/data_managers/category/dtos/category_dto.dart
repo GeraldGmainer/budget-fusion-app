@@ -5,7 +5,7 @@ part 'category_dto.freezed.dart';
 part 'category_dto.g.dart';
 
 @freezed
-class CategoryDto with _$CategoryDto implements OfflineFirstDto {
+class CategoryDto with _$CategoryDto implements Dto {
   const CategoryDto._();
 
   const factory CategoryDto({

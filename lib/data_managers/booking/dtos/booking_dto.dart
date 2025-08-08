@@ -7,7 +7,7 @@ part 'booking_dto.freezed.dart';
 part 'booking_dto.g.dart';
 
 @freezed
-class BookingDto with _$BookingDto implements OfflineFirstDto {
+class BookingDto with _$BookingDto implements Dto {
   const BookingDto._();
 
   const factory BookingDto({

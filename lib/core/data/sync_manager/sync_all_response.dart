@@ -5,7 +5,7 @@ import '../../../data_managers/booking/dtos/booking_dto.dart';
 import '../../../data_managers/category/dtos/category_dto.dart';
 import '../../../data_managers/currency/currency.dart';
 import '../../../data_managers/profile/dtos/profile_dto.dart';
-import '../offline_first/models/offline_first_dto.dart';
+import '../models/dto.dart';
 
 part 'sync_all_response.freezed.dart';
 part 'sync_all_response.g.dart';
@@ -15,7 +15,7 @@ DateTime? _parseNullable(String? s) => s == null ? null : DateTime.parse(s);
 String? _stringifyNullable(DateTime? dt) => dt?.toIso8601String();
 
 @Freezed(genericArgumentFactories: true)
-class SyncDelta<T extends OfflineFirstDto> with _$SyncDelta<T> {
+class SyncDelta<T extends Dto> with _$SyncDelta<T> {
   const factory SyncDelta({
     required List<T> upserts,
     required List<String> deletes,
