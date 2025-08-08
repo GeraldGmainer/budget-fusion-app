@@ -28,6 +28,7 @@ _$NewTimestampsImpl _$$NewTimestampsImplFromJson(Map<String, dynamic> json) =>
       booking: _parseNullable(json['booking'] as String?),
       profile: _parseNullable(json['profile'] as String?),
       category: _parseNullable(json['category'] as String?),
+      currency: _parseNullable(json['currency'] as String?),
     );
 
 Map<String, dynamic> _$$NewTimestampsImplToJson(_$NewTimestampsImpl instance) =>
@@ -36,6 +37,7 @@ Map<String, dynamic> _$$NewTimestampsImplToJson(_$NewTimestampsImpl instance) =>
       'booking': _stringifyNullable(instance.booking),
       'profile': _stringifyNullable(instance.profile),
       'category': _stringifyNullable(instance.category),
+      'currency': _stringifyNullable(instance.currency),
     };
 
 _$SyncAllResponseImpl _$$SyncAllResponseImplFromJson(
@@ -45,6 +47,7 @@ _$SyncAllResponseImpl _$$SyncAllResponseImplFromJson(
   booking: _bookingDeltaFromJson(json['booking'] as Map<String, dynamic>),
   profile: _profileDeltaFromJson(json['profile'] as Map<String, dynamic>),
   category: _categoryDeltaFromJson(json['category'] as Map<String, dynamic>),
+  currency: _currencyDeltaFromJson(json['currency'] as Map<String, dynamic>),
   newTimestamps: NewTimestamps.fromJson(
     json['newTimestamps'] as Map<String, dynamic>,
   ),
@@ -57,5 +60,6 @@ Map<String, dynamic> _$$SyncAllResponseImplToJson(
   'booking': _bookingDeltaToJson(instance.booking),
   'profile': _profileDeltaToJson(instance.profile),
   'category': _categoryDeltaToJson(instance.category),
+  'currency': _currencyDeltaToJson(instance.currency),
   'newTimestamps': instance.newTimestamps,
 };

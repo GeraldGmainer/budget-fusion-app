@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../core/core.dart';
+import '../../utils/utils.dart';
 import '../currency/currency.dart';
 import 'data_sources/profile_local_data_source.dart';
 import 'data_sources/profile_remote_data_source.dart';
@@ -25,12 +26,13 @@ class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile
       _manager.stream,
       _currencyDataManager.watch(),
       (profileDtos, currencies) => _mapProfiles(profileDtos, currencies),
-    ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
+    ).debounceTime(FeatureConstants.mapperDebounceDuration).shareReplay(maxSize: 1);
     super.setupStreams();
   }
 
   List<Profile> _mapProfiles(List<SyncedDto<ProfileDto>> profileDtos, List<Currency> currencies) {
     return profileDtos.map((dto) {
+      EntityLogger.instance.d("DataManager", EntityType.profile.text, "mapping Profile with ${currencies.length} currencies");
       final email = supabase.auth.currentUser?.email ?? "unknown email";
       final currency = currencies.firstWhereOrNull((c) => c.id == dto.dto.settingDto.currencyId) ?? Currency.notFound();
       return Profile.fromDto(dto.dto, email: email, isSynced: dto.isSynced, currency: currency);

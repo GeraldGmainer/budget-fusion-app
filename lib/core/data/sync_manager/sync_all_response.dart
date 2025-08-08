@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../data_managers/account/dtos/account_dto.dart';
 import '../../../data_managers/booking/dtos/booking_dto.dart';
 import '../../../data_managers/category/dtos/category_dto.dart';
+import '../../../data_managers/currency/currency.dart';
 import '../../../data_managers/profile/dtos/profile_dto.dart';
 import '../offline_first/models/offline_first_dto.dart';
 
@@ -30,12 +31,10 @@ class SyncDelta<T extends OfflineFirstDto> with _$SyncDelta<T> {
 class NewTimestamps with _$NewTimestamps {
   const factory NewTimestamps({
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? account,
-
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? booking,
-
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? profile,
-
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? category,
+    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? currency,
   }) = _NewTimestamps;
 
   factory NewTimestamps.fromJson(Map<String, dynamic> json) => _$NewTimestampsFromJson(json);
@@ -45,10 +44,12 @@ class NewTimestamps with _$NewTimestamps {
 class SyncAllResponse with _$SyncAllResponse {
   const factory SyncAllResponse({
     // TODO use dynamic instead of concrete Dtos?
+    // TODO dont define every EntityType manually
     @JsonKey(fromJson: _accountDeltaFromJson, toJson: _accountDeltaToJson) required SyncDelta<AccountDto> account,
     @JsonKey(fromJson: _bookingDeltaFromJson, toJson: _bookingDeltaToJson) required SyncDelta<BookingDto> booking,
     @JsonKey(fromJson: _profileDeltaFromJson, toJson: _profileDeltaToJson) required SyncDelta<ProfileDto> profile,
     @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson) required SyncDelta<CategoryDto> category,
+    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson) required SyncDelta<CurrencyDto> currency,
     @JsonKey(name: 'newTimestamps') required NewTimestamps newTimestamps,
   }) = _SyncAllResponse;
 
@@ -70,3 +71,7 @@ Map<String, dynamic> _profileDeltaToJson(SyncDelta<ProfileDto> delta) => delta.t
 SyncDelta<CategoryDto> _categoryDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => CategoryDto.fromJson(j as Map<String, dynamic>));
 
 Map<String, dynamic> _categoryDeltaToJson(SyncDelta<CategoryDto> delta) => delta.toJson((a) => a.toJson());
+
+SyncDelta<CurrencyDto> _currencyDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => CurrencyDto.fromJson(j as Map<String, dynamic>));
+
+Map<String, dynamic> _currencyDeltaToJson(SyncDelta<CurrencyDto> delta) => delta.toJson((a) => a.toJson());

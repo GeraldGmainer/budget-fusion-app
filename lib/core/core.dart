@@ -23,6 +23,7 @@ export 'data/offline_first/ui/data_manager_list.dart';
 export 'data/offline_first/ui/data_manager_single.dart';
 export 'data/offline_first/ui/data_manager_single_nullable.dart';
 export 'database/database_manager.dart';
+export 'database/serializer/bool_int_serializer.dart';
 export 'database/serializer/category_type_serializer.dart';
 export 'database/serializer/date_serializer.dart';
 export 'database/serializer/date_time_serializer.dart';

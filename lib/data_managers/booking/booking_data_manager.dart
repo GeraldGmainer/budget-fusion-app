@@ -34,9 +34,9 @@ class BookingDataManager extends DataManager<Booking> with AutoSubscribe<Booking
       _manager.stream,
       _accountDataManager.watch(),
       _categoryDataManager.watch(),
-      _profileDataManager.watch(),
+      _profileDataManager.watch().startWith([]).where((profiles) => profiles.isNotEmpty),
       (bookingDtos, accounts, categories, profiles) => _mapper.mapBookings(bookingDtos, accounts, categories, profiles),
-    ).debounceTime(const Duration(milliseconds: 100)).shareReplay(maxSize: 1);
+    ).debounceTime(FeatureConstants.mapperDebounceDuration).shareReplay(maxSize: 1);
     super.setupStreams();
   }
 

@@ -5,7 +5,6 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestFilterBuil
 
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
-import '../models/offline_first_dto.dart';
 
 abstract class OfflineFirstRemoteDataSource<Dto extends OfflineFirstDto> extends SupabaseClient {
   Future<List<Dto>> fetchAll({List<QueryFilter>? filters}) async {

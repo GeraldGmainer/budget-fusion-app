@@ -14,10 +14,10 @@ abstract class DataManagerModule {
   /// booking data manager needs profile manager, so profile manager must be before!
   @singleton
   List<DataManager<dynamic>> managers(
-    ProfileDataManager profileDM,
     CurrencyDataManager currencyDM,
+    ProfileDataManager profileDM,
     CategoryDataManager categoryDM,
     AccountDataManager accountDM,
     BookingDataManager bookingDM,
-  ) => [profileDM, currencyDM, categoryDM, accountDM, bookingDM];
+  ) => [currencyDM, profileDM, categoryDM, accountDM, bookingDM];
 }

@@ -76,7 +76,8 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
   }
 
   Future<void> saveAllNotSynced(List<Dto> dtos) async {
-    _log("saveAllNotSynced ${dtos.length} DTOs");
+    if (dtos.isEmpty) return;
+    _log("saveAllNotSynced ${EntityLogger.bold(dtos.length)} DTOs");
     final batch = db.batch();
     for (final dto in dtos) {
       final data = dto.toJson();
@@ -86,7 +87,7 @@ abstract class OfflineFirstLocalDataSource<Dto extends OfflineFirstDto> {
       batch.insert(table, _convertMapsToString(data), conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
-    _log("saveAllNotSynced success", darkColor: true);
+    // _log("saveAllNotSynced success", darkColor: true);
   }
 
   Future<void> saveNotSynced(Dto dto) async {

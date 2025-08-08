@@ -9,7 +9,6 @@ import '../../../core.dart';
 import '../../sync_manager/sync_manager.dart';
 import '../cache/cache_manager.dart';
 import '../models/queue_item.dart';
-import '../queue/queue_manager.dart';
 import '../realtime/realtime_notifier_service.dart';
 
 class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
@@ -59,7 +58,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     if (cached != null && cached.isNotEmpty) {
       _log("Using cached data with ${cached.length} items");
       _emitToStream(cached);
-      unawaited(syncManager.syncAll());
+      unawaited(syncManager.syncAll("DM loadAll - Cache"));
       return cached;
     }
 
@@ -69,12 +68,12 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
       cacheManager.set(entityType, localDtos);
       _emitToStream(localDtos);
-      unawaited(syncManager.syncAll());
+      unawaited(syncManager.syncAll("DM loadAll - Local"));
       return localDtos;
     }
 
     _log("No local data found. Fetching remote data ...");
-    await syncManager.syncAll();
+    await syncManager.syncAll("DM loadAll - Remote");
     final first = await streamController.first;
     _log("loadAll completed with ${first.length} items");
     return first;
@@ -99,7 +98,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
     }
     _log("No local data found. Fetching remote data by id '$id' ...");
 
-    await syncManager.syncAll();
+    await syncManager.syncAll("DM loadById");
     final local2 = await localSource.fetchById(id);
     if (local2 != null) {
       _log("Local data by id '${local2.dto.id}' found");
@@ -171,7 +170,7 @@ class OfflineFirstDataManager<Dto extends OfflineFirstDto> {
   }
 
   void _subscribeToRealtime() {
-    if (_isRealtimeSubscribed) return;
+    if (_isRealtimeSubscribed || !entityType.realtimeEnabled) return;
     _isRealtimeSubscribed = true;
     realtimeNotifierService.startListeningForEntity(entityType, remoteSource.table);
   }

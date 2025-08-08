@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../core/core.dart';
 
 part 'currency_dto.freezed.dart';
-
 part 'currency_dto.g.dart';
 
 @freezed
@@ -15,9 +14,9 @@ class CurrencyDto with _$CurrencyDto implements OfflineFirstDto {
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     required String name,
     @JsonKey(name: 'decimal_precision') required int decimalPrecision,
-    @JsonKey(name: 'unit_position_front') @Default(true) bool unitPositionFront,
+    @BoolIntSerializer() @JsonKey(name: 'unit_position_front') required bool unitPositionFront,
     required String symbol,
-    int? uiOrder,
+    @JsonKey(name: 'ui_order') int? uiOrder,
   }) = _CurrencyDto;
 
   factory CurrencyDto.fromJson(Map<String, dynamic> json) => _$CurrencyDtoFromJson(json);

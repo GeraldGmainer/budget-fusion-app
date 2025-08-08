@@ -12,9 +12,11 @@ _$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
       updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       name: json['name'] as String,
       decimalPrecision: (json['decimal_precision'] as num).toInt(),
-      unitPositionFront: json['unit_position_front'] as bool? ?? true,
+      unitPositionFront: const BoolIntSerializer().fromJson(
+        json['unit_position_front'],
+      ),
       symbol: json['symbol'] as String,
-      uiOrder: (json['uiOrder'] as num?)?.toInt(),
+      uiOrder: (json['ui_order'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$CurrencyDtoImplToJson(_$CurrencyDtoImpl instance) =>
@@ -23,7 +25,9 @@ Map<String, dynamic> _$$CurrencyDtoImplToJson(_$CurrencyDtoImpl instance) =>
       'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
       'name': instance.name,
       'decimal_precision': instance.decimalPrecision,
-      'unit_position_front': instance.unitPositionFront,
+      'unit_position_front': const BoolIntSerializer().toJson(
+        instance.unitPositionFront,
+      ),
       'symbol': instance.symbol,
-      'uiOrder': instance.uiOrder,
+      'ui_order': instance.uiOrder,
     };

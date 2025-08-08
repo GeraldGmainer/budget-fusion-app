@@ -25,7 +25,7 @@ class SyncCursorRepo {
     await prefs.setString(_key, jsonEncode(data));
   }
 
-  Future<Map<String, String?>> getAll() async {
+  Future<Map<String, String>> getAll() async {
     return _read();
   }
 
@@ -43,7 +43,11 @@ class SyncCursorRepo {
 
   Map<String, String> _read() {
     final raw = prefs.getString(_key);
-    if (raw == null) return <String, String>{};
+    if (raw == null) {
+      return Map.fromEntries(
+        EntityType.values.map((e) => MapEntry(e.name, nullDate)),
+      );
+    }
     final decoded = jsonDecode(raw) as Map<String, dynamic>;
     return decoded.map((k, v) => MapEntry(k, v ?? nullDate));
   }

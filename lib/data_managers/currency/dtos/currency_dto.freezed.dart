@@ -29,9 +29,11 @@ mixin _$CurrencyDto {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'decimal_precision')
   int get decimalPrecision => throw _privateConstructorUsedError;
+  @BoolIntSerializer()
   @JsonKey(name: 'unit_position_front')
   bool get unitPositionFront => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ui_order')
   int? get uiOrder => throw _privateConstructorUsedError;
 
   /// Serializes this CurrencyDto to a JSON map.
@@ -56,9 +58,11 @@ abstract class $CurrencyDtoCopyWith<$Res> {
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'decimal_precision') int decimalPrecision,
-    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
+    @BoolIntSerializer()
+    @JsonKey(name: 'unit_position_front')
+    bool unitPositionFront,
     String symbol,
-    int? uiOrder,
+    @JsonKey(name: 'ui_order') int? uiOrder,
   });
 }
 
@@ -142,9 +146,11 @@ abstract class _$$CurrencyDtoImplCopyWith<$Res>
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'decimal_precision') int decimalPrecision,
-    @JsonKey(name: 'unit_position_front') bool unitPositionFront,
+    @BoolIntSerializer()
+    @JsonKey(name: 'unit_position_front')
+    bool unitPositionFront,
     String symbol,
-    int? uiOrder,
+    @JsonKey(name: 'ui_order') int? uiOrder,
   });
 }
 
@@ -220,9 +226,11 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     required this.name,
     @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
-    @JsonKey(name: 'unit_position_front') this.unitPositionFront = true,
+    @BoolIntSerializer()
+    @JsonKey(name: 'unit_position_front')
+    required this.unitPositionFront,
     required this.symbol,
-    this.uiOrder,
+    @JsonKey(name: 'ui_order') this.uiOrder,
   }) : super._();
 
   factory _$CurrencyDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -241,11 +249,13 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
   @JsonKey(name: 'decimal_precision')
   final int decimalPrecision;
   @override
+  @BoolIntSerializer()
   @JsonKey(name: 'unit_position_front')
   final bool unitPositionFront;
   @override
   final String symbol;
   @override
+  @JsonKey(name: 'ui_order')
   final int? uiOrder;
 
   @override
@@ -305,9 +315,11 @@ abstract class _CurrencyDto extends CurrencyDto {
     required final DateTime updatedAt,
     required final String name,
     @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
-    @JsonKey(name: 'unit_position_front') final bool unitPositionFront,
+    @BoolIntSerializer()
+    @JsonKey(name: 'unit_position_front')
+    required final bool unitPositionFront,
     required final String symbol,
-    final int? uiOrder,
+    @JsonKey(name: 'ui_order') final int? uiOrder,
   }) = _$CurrencyDtoImpl;
   const _CurrencyDto._() : super._();
 
@@ -327,11 +339,13 @@ abstract class _CurrencyDto extends CurrencyDto {
   @JsonKey(name: 'decimal_precision')
   int get decimalPrecision;
   @override
+  @BoolIntSerializer()
   @JsonKey(name: 'unit_position_front')
   bool get unitPositionFront;
   @override
   String get symbol;
   @override
+  @JsonKey(name: 'ui_order')
   int? get uiOrder;
 
   /// Create a copy of CurrencyDto

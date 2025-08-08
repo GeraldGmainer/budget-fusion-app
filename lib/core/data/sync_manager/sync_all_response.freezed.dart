@@ -232,6 +232,8 @@ mixin _$NewTimestamps {
   DateTime? get profile => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
   DateTime? get category => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+  DateTime? get currency => throw _privateConstructorUsedError;
 
   /// Serializes this NewTimestamps to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -259,6 +261,8 @@ abstract class $NewTimestampsCopyWith<$Res> {
     DateTime? profile,
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
     DateTime? category,
+    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+    DateTime? currency,
   });
 }
 
@@ -281,6 +285,7 @@ class _$NewTimestampsCopyWithImpl<$Res, $Val extends NewTimestamps>
     Object? booking = freezed,
     Object? profile = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -303,6 +308,11 @@ class _$NewTimestampsCopyWithImpl<$Res, $Val extends NewTimestamps>
                 freezed == category
                     ? _value.category
                     : category // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            currency:
+                freezed == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
           )
           as $Val,
@@ -328,6 +338,8 @@ abstract class _$$NewTimestampsImplCopyWith<$Res>
     DateTime? profile,
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
     DateTime? category,
+    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+    DateTime? currency,
   });
 }
 
@@ -349,6 +361,7 @@ class __$$NewTimestampsImplCopyWithImpl<$Res>
     Object? booking = freezed,
     Object? profile = freezed,
     Object? category = freezed,
+    Object? currency = freezed,
   }) {
     return _then(
       _$NewTimestampsImpl(
@@ -372,6 +385,11 @@ class __$$NewTimestampsImplCopyWithImpl<$Res>
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
+        currency:
+            freezed == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -386,6 +404,8 @@ class _$NewTimestampsImpl implements _NewTimestamps {
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) this.profile,
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
     this.category,
+    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+    this.currency,
   });
 
   factory _$NewTimestampsImpl.fromJson(Map<String, dynamic> json) =>
@@ -403,10 +423,13 @@ class _$NewTimestampsImpl implements _NewTimestamps {
   @override
   @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
   final DateTime? category;
+  @override
+  @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+  final DateTime? currency;
 
   @override
   String toString() {
-    return 'NewTimestamps(account: $account, booking: $booking, profile: $profile, category: $category)';
+    return 'NewTimestamps(account: $account, booking: $booking, profile: $profile, category: $category, currency: $currency)';
   }
 
   @override
@@ -418,13 +441,15 @@ class _$NewTimestampsImpl implements _NewTimestamps {
             (identical(other.booking, booking) || other.booking == booking) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.category, category) ||
-                other.category == category));
+                other.category == category) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, account, booking, profile, category);
+      Object.hash(runtimeType, account, booking, profile, category, currency);
 
   /// Create a copy of NewTimestamps
   /// with the given fields replaced by the non-null parameter values.
@@ -450,6 +475,8 @@ abstract class _NewTimestamps implements NewTimestamps {
     final DateTime? profile,
     @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
     final DateTime? category,
+    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+    final DateTime? currency,
   }) = _$NewTimestampsImpl;
 
   factory _NewTimestamps.fromJson(Map<String, dynamic> json) =
@@ -467,6 +494,9 @@ abstract class _NewTimestamps implements NewTimestamps {
   @override
   @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
   DateTime? get category;
+  @override
+  @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable)
+  DateTime? get currency;
 
   /// Create a copy of NewTimestamps
   /// with the given fields replaced by the non-null parameter values.
@@ -483,6 +513,7 @@ SyncAllResponse _$SyncAllResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SyncAllResponse {
   // TODO use dynamic instead of concrete Dtos?
+  // TODO dont define every EntityType manually
   @JsonKey(fromJson: _accountDeltaFromJson, toJson: _accountDeltaToJson)
   SyncDelta<AccountDto> get account => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _bookingDeltaFromJson, toJson: _bookingDeltaToJson)
@@ -491,6 +522,8 @@ mixin _$SyncAllResponse {
   SyncDelta<ProfileDto> get profile => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
   SyncDelta<CategoryDto> get category => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+  SyncDelta<CurrencyDto> get currency => throw _privateConstructorUsedError;
   @JsonKey(name: 'newTimestamps')
   NewTimestamps get newTimestamps => throw _privateConstructorUsedError;
 
@@ -520,6 +553,8 @@ abstract class $SyncAllResponseCopyWith<$Res> {
     SyncDelta<ProfileDto> profile,
     @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
     SyncDelta<CategoryDto> category,
+    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+    SyncDelta<CurrencyDto> currency,
     @JsonKey(name: 'newTimestamps') NewTimestamps newTimestamps,
   });
 
@@ -527,6 +562,7 @@ abstract class $SyncAllResponseCopyWith<$Res> {
   $SyncDeltaCopyWith<BookingDto, $Res> get booking;
   $SyncDeltaCopyWith<ProfileDto, $Res> get profile;
   $SyncDeltaCopyWith<CategoryDto, $Res> get category;
+  $SyncDeltaCopyWith<CurrencyDto, $Res> get currency;
   $NewTimestampsCopyWith<$Res> get newTimestamps;
 }
 
@@ -549,6 +585,7 @@ class _$SyncAllResponseCopyWithImpl<$Res, $Val extends SyncAllResponse>
     Object? booking = null,
     Object? profile = null,
     Object? category = null,
+    Object? currency = null,
     Object? newTimestamps = null,
   }) {
     return _then(
@@ -573,6 +610,11 @@ class _$SyncAllResponseCopyWithImpl<$Res, $Val extends SyncAllResponse>
                     ? _value.category
                     : category // ignore: cast_nullable_to_non_nullable
                         as SyncDelta<CategoryDto>,
+            currency:
+                null == currency
+                    ? _value.currency
+                    : currency // ignore: cast_nullable_to_non_nullable
+                        as SyncDelta<CurrencyDto>,
             newTimestamps:
                 null == newTimestamps
                     ? _value.newTimestamps
@@ -627,6 +669,16 @@ class _$SyncAllResponseCopyWithImpl<$Res, $Val extends SyncAllResponse>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $SyncDeltaCopyWith<CurrencyDto, $Res> get currency {
+    return $SyncDeltaCopyWith<CurrencyDto, $Res>(_value.currency, (value) {
+      return _then(_value.copyWith(currency: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SyncAllResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $NewTimestampsCopyWith<$Res> get newTimestamps {
     return $NewTimestampsCopyWith<$Res>(_value.newTimestamps, (value) {
       return _then(_value.copyWith(newTimestamps: value) as $Val);
@@ -652,6 +704,8 @@ abstract class _$$SyncAllResponseImplCopyWith<$Res>
     SyncDelta<ProfileDto> profile,
     @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
     SyncDelta<CategoryDto> category,
+    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+    SyncDelta<CurrencyDto> currency,
     @JsonKey(name: 'newTimestamps') NewTimestamps newTimestamps,
   });
 
@@ -663,6 +717,8 @@ abstract class _$$SyncAllResponseImplCopyWith<$Res>
   $SyncDeltaCopyWith<ProfileDto, $Res> get profile;
   @override
   $SyncDeltaCopyWith<CategoryDto, $Res> get category;
+  @override
+  $SyncDeltaCopyWith<CurrencyDto, $Res> get currency;
   @override
   $NewTimestampsCopyWith<$Res> get newTimestamps;
 }
@@ -685,6 +741,7 @@ class __$$SyncAllResponseImplCopyWithImpl<$Res>
     Object? booking = null,
     Object? profile = null,
     Object? category = null,
+    Object? currency = null,
     Object? newTimestamps = null,
   }) {
     return _then(
@@ -709,6 +766,11 @@ class __$$SyncAllResponseImplCopyWithImpl<$Res>
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
                     as SyncDelta<CategoryDto>,
+        currency:
+            null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                    as SyncDelta<CurrencyDto>,
         newTimestamps:
             null == newTimestamps
                 ? _value.newTimestamps
@@ -731,6 +793,8 @@ class _$SyncAllResponseImpl implements _SyncAllResponse {
     required this.profile,
     @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
     required this.category,
+    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+    required this.currency,
     @JsonKey(name: 'newTimestamps') required this.newTimestamps,
   });
 
@@ -738,6 +802,7 @@ class _$SyncAllResponseImpl implements _SyncAllResponse {
       _$$SyncAllResponseImplFromJson(json);
 
   // TODO use dynamic instead of concrete Dtos?
+  // TODO dont define every EntityType manually
   @override
   @JsonKey(fromJson: _accountDeltaFromJson, toJson: _accountDeltaToJson)
   final SyncDelta<AccountDto> account;
@@ -751,12 +816,15 @@ class _$SyncAllResponseImpl implements _SyncAllResponse {
   @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
   final SyncDelta<CategoryDto> category;
   @override
+  @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+  final SyncDelta<CurrencyDto> currency;
+  @override
   @JsonKey(name: 'newTimestamps')
   final NewTimestamps newTimestamps;
 
   @override
   String toString() {
-    return 'SyncAllResponse(account: $account, booking: $booking, profile: $profile, category: $category, newTimestamps: $newTimestamps)';
+    return 'SyncAllResponse(account: $account, booking: $booking, profile: $profile, category: $category, currency: $currency, newTimestamps: $newTimestamps)';
   }
 
   @override
@@ -769,6 +837,8 @@ class _$SyncAllResponseImpl implements _SyncAllResponse {
             (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.category, category) ||
                 other.category == category) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
             (identical(other.newTimestamps, newTimestamps) ||
                 other.newTimestamps == newTimestamps));
   }
@@ -781,6 +851,7 @@ class _$SyncAllResponseImpl implements _SyncAllResponse {
     booking,
     profile,
     category,
+    currency,
     newTimestamps,
   );
 
@@ -811,6 +882,8 @@ abstract class _SyncAllResponse implements SyncAllResponse {
     required final SyncDelta<ProfileDto> profile,
     @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
     required final SyncDelta<CategoryDto> category,
+    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+    required final SyncDelta<CurrencyDto> currency,
     @JsonKey(name: 'newTimestamps') required final NewTimestamps newTimestamps,
   }) = _$SyncAllResponseImpl;
 
@@ -818,6 +891,7 @@ abstract class _SyncAllResponse implements SyncAllResponse {
       _$SyncAllResponseImpl.fromJson;
 
   // TODO use dynamic instead of concrete Dtos?
+  // TODO dont define every EntityType manually
   @override
   @JsonKey(fromJson: _accountDeltaFromJson, toJson: _accountDeltaToJson)
   SyncDelta<AccountDto> get account;
@@ -830,6 +904,9 @@ abstract class _SyncAllResponse implements SyncAllResponse {
   @override
   @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson)
   SyncDelta<CategoryDto> get category;
+  @override
+  @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson)
+  SyncDelta<CurrencyDto> get currency;
   @override
   @JsonKey(name: 'newTimestamps')
   NewTimestamps get newTimestamps;
