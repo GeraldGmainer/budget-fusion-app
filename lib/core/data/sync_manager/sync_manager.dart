@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../utils/utils.dart';
 import '../../core.dart';
+import '../domain_sync_adapter.dart';
 import 'sync_all_response.dart';
 import 'sync_cursor_repo.dart';
 import 'sync_remote_source.dart';
@@ -13,15 +14,15 @@ class SyncManager {
   final SyncCursorRepo _syncCursorRepo;
   final SyncRemoteSource _syncRemoteSource;
   final Map<EntityType, OfflineFirstDataManager> _dataManagers = {};
-  final Map<EntityType, OfflineFirstLocalDataSource> _localSources = {};
+  final Map<EntityType, DomainSyncAdapter> _adapters = {};
   DateTime? _lastSyncTime;
   Future<void>? _ongoingSync;
 
   SyncManager(this._syncCursorRepo, this._syncRemoteSource);
 
-  void register(EntityType entity, OfflineFirstDataManager dm, OfflineFirstLocalDataSource lds) {
-    _dataManagers[entity] = dm;
-    _localSources[entity] = lds;
+  void register(OfflineFirstDataManager dataManager, DomainSyncAdapter adapter) {
+    _dataManagers[adapter.type] = dataManager;
+    _adapters[adapter.type] = adapter;
   }
 
   Future<void> syncAll(String cameFrom) async {
@@ -34,7 +35,7 @@ class SyncManager {
       return;
     }
 
-    _log("Starting sync | called from $cameFrom");
+    _log("Starting sync, called from $cameFrom");
 
     final completer = Completer<void>();
     _ongoingSync = completer.future;
@@ -67,7 +68,7 @@ class SyncManager {
     for (final entry in deltas.entries) {
       final entity = entry.key;
       final delta = entry.value;
-      final localDataSource = _localSources[entity]!;
+      final localDataSource = _adapters[entity]!.local;
       await localDataSource.saveAllNotSynced(delta.upserts);
       for (final id in delta.deletes) {
         await localDataSource.deleteById(id);
@@ -91,10 +92,10 @@ class SyncManager {
 
     final changes = deltas.map((e, d) => MapEntry(e, d.upserts.length + d.deletes.length));
     final logStr = changes.entries.map((e) => '${e.key.name}:${e.value}').join(', ');
-    _log('sync done | changes: $logStr');
+    _log('sync done --> changes: $logStr', dark: true);
   }
 
-  _log(String msg) {
-    EntityLogger.instance.d("SyncManager", "sync", msg);
+  _log(String msg, {bool dark = false}) {
+    EntityLogger.instance.d("SyncManager", "sync", msg, darkColor: dark);
   }
 }

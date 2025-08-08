@@ -3,12 +3,10 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/core/data/domain_sync_adapter.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data_sources/offline_first_local_data_source.dart';
-import '../data_sources/offline_first_remote_data_source.dart';
-import '../models/offline_first_dto.dart';
 import '../models/queue_item.dart';
 import 'queue_local_data_source.dart';
 
@@ -18,8 +16,7 @@ class QueueManager {
   final QueueLocalDataSource queueDataSource;
   final RemoteLoadingService remoteLoadingService;
   final Queue<QueueItem> _inMemoryQueue = Queue();
-  final Map<EntityType, OfflineFirstRemoteDataSource> _remoteSources = {};
-  final Map<EntityType, OfflineFirstLocalDataSource> _localSources = {};
+  final Map<EntityType, DomainSyncAdapter> _adapters = {};
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
 
   Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
@@ -28,10 +25,7 @@ class QueueManager {
 
   QueueManager(this.queueDataSource, this.remoteLoadingService);
 
-  void registerEntitySources(EntityType entity, OfflineFirstLocalDataSource lds, OfflineFirstRemoteDataSource rds) {
-    _remoteSources[entity] = rds;
-    _localSources[entity] = lds;
-  }
+  void register(DomainSyncAdapter adapter) => _adapters[adapter.type] = (adapter);
 
   Future<void> init() async {
     _log("init QueueManager");
@@ -70,16 +64,15 @@ class QueueManager {
 
     _isProcessing = true;
     final currentItem = _inMemoryQueue.first;
-    final remoteSource = _remoteSources[currentItem.entityType];
-    final localSource = _localSources[currentItem.entityType];
+    final adapter = _adapters[currentItem.entityType];
 
-    if (remoteSource == null || localSource == null) {
-      BudgetLogger.instance.e("Queue processing error", "Entity sources not registered for entity ${currentItem.entityType}");
+    if (adapter == null) {
+      BudgetLogger.instance.e("Queue processing error", "Entity adapter not registered for entity ${currentItem.entityType}");
       return;
     }
 
     try {
-      await _processQueueItem(currentItem, remoteSource, localSource);
+      await _processQueueItem(currentItem, adapter);
       _inMemoryQueue.removeFirst();
       await queueDataSource.removeQueueItem(currentItem.entityId);
       _emitPending();
@@ -90,7 +83,7 @@ class QueueManager {
       if (updatedAttempts >= maxAttempts) {
         final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
         await queueDataSource.updateQueueItem(failedItem);
-        await localSource.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
+        await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
         _inMemoryQueue.removeFirst();
         _emitPending();
       } else {
@@ -108,7 +101,7 @@ class QueueManager {
     }
   }
 
-  Future<void> _processQueueItem(QueueItem item, OfflineFirstRemoteDataSource<OfflineFirstDto> remoteSource, OfflineFirstLocalDataSource<OfflineFirstDto> localSource) async {
+  Future<void> _processQueueItem(QueueItem item, DomainSyncAdapter adapter) async {
     _log("Processing queue item with entityId: ${item.entityId}");
 
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
@@ -117,7 +110,7 @@ class QueueManager {
       await remoteLoadingService.wrap(() async {
         switch (item.taskType) {
           case QueueTaskType.upsert:
-            final updatedDto = await remoteSource.upsert(item.entityId, jsonMap);
+            final updatedDto = await adapter.remote.upsert(item.entityId, jsonMap);
             if (updatedDto.updatedAt == null) {
               BudgetLogger.instance.i("QueueManager upsert QueueItem: $item");
               BudgetLogger.instance.i("QueueManager upsert jsonMap: $jsonMap");
@@ -125,10 +118,10 @@ class QueueManager {
               // TODO throw custom exception
               throw "QueueManager: upserting queue task returned updatedAt as null";
             }
-            await localSource.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+            await adapter.local.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
             break;
           case QueueTaskType.delete:
-            await remoteSource.deleteById(item.entityId);
+            await adapter.remote.deleteById(item.entityId);
             break;
         }
       });

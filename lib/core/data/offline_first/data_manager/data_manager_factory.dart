@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../enums/entity_type.dart';
 import '../../../remote_loading/service/remote_loading_service.dart';
+import '../../domain_sync_adapter.dart';
 import '../../sync_manager/sync_manager.dart';
 import '../cache/cache_manager.dart';
 import '../data_sources/offline_first_local_data_source.dart';
@@ -33,14 +34,20 @@ class DataManagerFactory {
     required OfflineFirstRemoteDataSource<Dto> remoteDataSource,
   }) {
     return OfflineFirstDataManager<Dto>(
-      entityType: entityType,
-      localSource: localDataSource,
-      remoteSource: remoteDataSource,
+      adapter: createAdapter(entityType, localDataSource, remoteDataSource),
       cacheManager: cacheManager,
       queueManager: queueManager,
       syncManager: syncManager,
       realtimeNotifierService: realtimeNotifierService,
       remoteLoadingService: remoteLoadingService,
+    );
+  }
+
+  DomainSyncAdapter<Dto> createAdapter<Dto extends OfflineFirstDto>(EntityType type, OfflineFirstLocalDataSource<Dto> local, OfflineFirstRemoteDataSource<Dto> remote) {
+    return DomainSyncAdapter<Dto>(
+      type: type,
+      local: local,
+      remote: remote,
     );
   }
 }

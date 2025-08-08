@@ -6,9 +6,10 @@ class EntityLogger {
   static const int entityCharLength = 20;
   static final Map<String, AnsiColor> _entityColors = {
     'queue': AnsiColor.fg(250),
+    'sync': AnsiColor.fg(250),
     'realtime': AnsiColor.fg(250),
+    //
     'profile': AnsiColor.fg(34),
-    'profile_setting': AnsiColor.fg(35),
     'account': AnsiColor.fg(32),
     'category': AnsiColor.fg(214),
     'booking': AnsiColor.fg(133),
@@ -61,12 +62,12 @@ class EntityLogger {
     if (service.contains("Cubit")) {
       return darkColor ? AnsiColor.fg(208) : AnsiColor.fg(136);
     }
-    if (service == "SyncManager") {
+    if (service == "SyncManager" || service == "SyncRemoteSource") {
       return darkColor ? AnsiColor.fg(160) : AnsiColor.fg(203);
     }
-    if (service == "SyncRemoteSource") {
-      return darkColor ? AnsiColor.fg(125) : AnsiColor.fg(213);
-    }
+    // if (service == "SyncRemoteSource") {
+    //   return darkColor ? AnsiColor.fg(125) : AnsiColor.fg(213);
+    // }
 
     BudgetLogger.instance.d("unknown service name for logging: $service");
 

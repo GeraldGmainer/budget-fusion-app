@@ -20,16 +20,16 @@ class SyncRemoteSource extends SupabaseClient {
         EntityType.profile: result.profile.upserts.length + result.profile.deletes.length,
         EntityType.currency: result.currency.upserts.length + result.currency.deletes.length,
       };
-      _log('syncAll result: ${counts.entries.map((e) => '${e.key.name}: ${e.value}').join(', ')}', stopwatch: stopwatch);
+      _log('syncAll result: ${counts.entries.map((e) => '${e.key.name}: ${e.value}').join(', ')}', stopwatch: stopwatch, dark: true);
       return result;
     });
   }
 
-  _log(String msg, {Stopwatch? stopwatch}) {
+  _log(String msg, {Stopwatch? stopwatch, bool dark = false}) {
     if (stopwatch != null) {
-      EntityLogger.instance.d("SyncRemoteSource", "syncAll", "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
+      EntityLogger.instance.d("SyncRemoteSource", "sync", "$msg -> took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: dark);
     } else {
-      EntityLogger.instance.d("SyncRemoteSource", "syncAll", msg, darkColor: true);
+      EntityLogger.instance.d("SyncRemoteSource", "sync", msg, darkColor: dark);
     }
   }
 }
