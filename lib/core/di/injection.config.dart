@@ -346,24 +346,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.DefaultNewDateUseCase>(),
       ),
     );
-    gh.factory<_i738.RepoLoaderCubit>(
-      () => _i738.RepoLoaderCubit(
-        gh<_i714.QueueManager>(),
+    gh.singleton<List<_i714.Repo<dynamic>>>(
+      () => dataManagerModule.repos(
+        gh<_i881.CurrencyRepo>(),
+        gh<_i421.ProfileRepo>(),
         gh<_i531.CategoryRepo>(),
         gh<_i500.AccountRepo>(),
         gh<_i269.BookingRepo>(),
-        gh<_i421.ProfileRepo>(),
-        gh<_i881.CurrencyRepo>(),
       ),
     );
-    gh.singleton<List<_i714.Repo<dynamic>>>(
-      () => dataManagerModule.managers(
-        gh<_i881.CurrencyRepo>(),
-        gh<_i421.ProfileRepo>(),
-        gh<_i531.CategoryRepo>(),
-        gh<_i500.AccountRepo>(),
-        gh<_i269.BookingRepo>(),
-      ),
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
     );
     gh.factory<_i788.CategoryListCubit>(
       () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
@@ -377,8 +370,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i196.GenerateBudgetTransactionUseCase>(),
       ),
     );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
+    gh.factory<_i738.RepoLoaderCubit>(
+      () => _i738.RepoLoaderCubit(
+        gh<_i714.QueueManager>(),
+        gh<List<_i714.Repo<dynamic>>>(),
+      ),
     );
     return this;
   }

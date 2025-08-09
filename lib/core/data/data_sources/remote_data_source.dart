@@ -23,22 +23,6 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     });
   }
 
-  Future<List<E>> fetchAllNewer(DateTime? updatedAt, {List<QueryFilter>? filters}) async {
-    final stopwatch = Stopwatch()..start();
-    _log("fetchAllNewer than $updatedAt${filters != null ? "with filters: $filters" : ""}");
-    return execute(table, () async {
-      var query = supabase.from(table).select(columns);
-      if (updatedAt != null) {
-        query = query.gt('updated_at', updatedAt.toIso8601String());
-      }
-      query = _applyFilters(query, filters);
-      final response = await query;
-      final result = (response as List).map((data) => toDto(data as Map<String, dynamic>)).toList();
-      _log("fetchAllNewer ${EntityLogger.bold(result.length)} Dtos", stopwatch: stopwatch);
-      return result;
-    });
-  }
-
   Future<E?> fetchById(String id) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchById '$id'");

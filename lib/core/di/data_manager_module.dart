@@ -13,7 +13,7 @@ abstract class DataManagerModule {
   /// ATTENTION: order is important
   /// booking data manager needs profile manager, so profile manager must be before!
   @singleton
-  List<Repo<dynamic>> managers(
+  List<Repo<dynamic>> repos(
     CurrencyRepo currencyRepo,
     ProfileRepo profileRepo,
     CategoryRepo categoryRepo,

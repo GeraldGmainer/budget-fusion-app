@@ -26,4 +26,8 @@ class DataSourceAdapter<E extends Dto> {
       await local.deleteById(id);
     }
   }
+
+  List<E> fromJsons(List<Map<String, dynamic>> jsons) => jsons.map(local.fromJson).toList();
+
+  E fromJson(Map<String, dynamic> json) => local.fromJson(json);
 }

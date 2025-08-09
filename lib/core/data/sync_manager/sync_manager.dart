@@ -60,7 +60,13 @@ class SyncManager {
       final raw = result.deltas[entry.key.name];
       if (raw == null) continue;
       final adapter = entry.value;
-      await adapter.applyRaw(upserts: raw.upserts, deletes: raw.deletes);
+      if (raw.upserts.isNotEmpty) {
+        final dtos = adapter.fromJsons(raw.upserts);
+        await adapter.local.saveAllNotSynced(dtos);
+      }
+      for (final id in raw.deletes) {
+        await adapter.local.deleteById(id);
+      }
     }
 
     for (final dm in _dataManagers.values) {
@@ -101,7 +107,7 @@ class SyncManager {
           final k = t.name;
           final r = result.deltas[k];
           final c = r == null ? 0 : r.upserts.length + r.deletes.length;
-          return '${t.name}:$c';
+          return '${t.name}:${EntityLogger.bold(c)}';
         })
         .join(', ');
     _log('sync done --> changes: $logStr', dark: true);
