@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 
 import '../../../utils/utils.dart';
@@ -22,14 +24,15 @@ class SyncRemoteSource extends SupabaseClient {
       final response = await supabase.rpc('sync_all', params: {'p_last_synced': payload});
       final data = response as Map<String, dynamic>;
       final result = SyncAllResponse.fromJson(data);
-      _log('syncAll', stopwatch: stopwatch, dark: true);
+      final kB = (utf8.encode(jsonEncode(data)).length / 1024).toStringAsFixed(1);
+      _log('syncAll response size is ${EntityLogger.bold("${kB}kB")} and', stopwatch: stopwatch, dark: true);
       return result;
     });
   }
 
   _log(String msg, {Stopwatch? stopwatch, bool dark = false}) {
     if (stopwatch != null) {
-      EntityLogger.instance.d("SyncRemoteSource", "sync", "$msg -> took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: dark);
+      EntityLogger.instance.d("SyncRemoteSource", "sync", "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: dark);
     } else {
       EntityLogger.instance.d("SyncRemoteSource", "sync", msg, darkColor: dark);
     }

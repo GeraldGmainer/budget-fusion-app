@@ -25,17 +25,17 @@ class SyncManager {
     _adapters[adapter.type] = adapter;
   }
 
-  Future<void> syncAll(String cameFrom) async {
+  Future<void> syncAll() async {
     final now = DateTime.now();
     if (_ongoingSync != null) {
       return _ongoingSync!;
     }
     if (_lastSyncTime != null && now.difference(_lastSyncTime!) < FeatureConstants.syncAllCacheDuration) {
-      _log("Recent sync already completed | skipping new sync | called from $cameFrom");
+      _log("Recent sync already completed | skipping new sync");
       return;
     }
 
-    _log("Starting sync, called from $cameFrom");
+    _log("Starting sync");
 
     final completer = Completer<void>();
     _ongoingSync = completer.future;

@@ -52,12 +52,12 @@ class OfflineFirstDataManager<E extends Dto> {
     if (localDtos.isNotEmpty) {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
       _emitToStream(localDtos);
-      unawaited(syncManager.syncAll("DM loadAll - Local"));
+      unawaited(syncManager.syncAll());
       return localDtos;
     }
 
     _log("No local data found. Fetching remote data ...");
-    await syncManager.syncAll("DM loadAll - Remote");
+    await syncManager.syncAll();
     final first = await streamController.first;
     _log("loadAll completed with ${first.length} items");
     return first;
@@ -73,7 +73,7 @@ class OfflineFirstDataManager<E extends Dto> {
     }
     _log("No local data found. Fetching remote data by id '$id' ...");
 
-    await syncManager.syncAll("DM loadById");
+    await syncManager.syncAll();
     final local2 = await adapter.local.fetchById(id);
     if (local2 != null) {
       _log("Local data by id '${local2.dto.id}' found");
