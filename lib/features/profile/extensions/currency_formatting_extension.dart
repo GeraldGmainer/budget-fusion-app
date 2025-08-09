@@ -2,7 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/data_managers/currency/entities/currency.dart';
+import '../../../repos/currency/currency.dart';
 
 extension CurrencyFormatting on Decimal {
   String formatCurrency({required Currency currency, required BuildContext context, bool showSymbol = true}) {

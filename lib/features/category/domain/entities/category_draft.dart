@@ -1,6 +1,8 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../repos/category/category.dart';
+
 part 'category_draft.freezed.dart';
 
 @freezed

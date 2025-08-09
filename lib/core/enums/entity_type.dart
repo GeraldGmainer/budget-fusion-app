@@ -1,7 +1,6 @@
 enum EntityType {
   currency,
   profile,
-  profileSetting,
   account,
   category,
   booking;
@@ -12,5 +11,16 @@ enum EntityType {
 
   static EntityType fromString(String value) {
     return EntityType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid entity type: $value"));
+  }
+}
+
+extension EntityTypeX on EntityType {
+  bool get realtimeEnabled {
+    switch (this) {
+      case EntityType.currency:
+        return false;
+      default:
+        return true;
+    }
   }
 }

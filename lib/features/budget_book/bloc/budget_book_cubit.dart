@@ -5,6 +5,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../repos/booking/booking.dart';
 import '../enums/budget_view_mode.dart';
 import '../enums/period_mode.dart';
 import '../use_cases/filter_and_group_bookings_use_case.dart';
@@ -21,7 +22,7 @@ part 'budget_book_state.dart';
 
 @injectable
 class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
-  final BookingDataManager _manager;
+  final BookingRepo _repo;
   final FilterAndGroupBookingsUseCase _filterAndGroupBookingsUseCase;
   final GenerateBudgetSummaryUseCase _generateBudgetSummaryUseCase;
   final GenerateBudgetTransactionUseCase _generateBudgetTransactionUseCase;
@@ -29,7 +30,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   StreamSubscription<List<Booking>>? _bookingSub;
 
-  BudgetBookCubit(this._generateBudgetSummaryUseCase, this._filterAndGroupBookingsUseCase, this._manager, this._resetBudgetBookUseCase, this._generateBudgetTransactionUseCase)
+  BudgetBookCubit(this._generateBudgetSummaryUseCase, this._filterAndGroupBookingsUseCase, this._repo, this._resetBudgetBookUseCase, this._generateBudgetTransactionUseCase)
     : super(_initialState()) {
     _subscribeToBookings();
   }
@@ -44,7 +45,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   void _subscribeToBookings() {
     _bookingSub?.cancel();
-    _bookingSub = _manager.watch().listen(_onBookings);
+    _bookingSub = _repo.watch().listen(_onBookings);
   }
 
   Future<void> _onBookings(List<Booking> rawBookingList) => safeRun(
@@ -85,7 +86,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       final newFilter = filter ?? state.filter;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "update view for budget book: $newViewMode / $newFilter");
 
-      final bookings = await _manager.watch().first;
+      final bookings = await _repo.watch().first;
       final filtered = await _filterAndGroupBookingsUseCase.load(bookings, newFilter);
       final items = await _generateViewData(filtered, newViewMode);
 

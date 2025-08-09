@@ -4,6 +4,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../repos/booking/booking.dart';
 import '../../view_models/transaction_group.dart';
 import '../../view_models/transaction_view_data.dart';
 import 'transaction_item.dart';
@@ -46,7 +47,7 @@ class TransactionList extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           child: Text(DateFormat.yMMMMd().format(group.date), style: TextStyle(fontSize: 14, color: AppColors.secondaryTextColor)),
         ),
-        ...group.bookings.map((booking) => TransactionItem(booking: booking)),
+        ...group.bookings.map((Booking booking) => TransactionItem(booking: booking)),
       ],
     );
   }

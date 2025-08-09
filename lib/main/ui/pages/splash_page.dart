@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   _loadProfile() {
-    context.read<OfflineFirstLoaderCubit>().init();
+    context.read<RepoLoaderCubit>().init();
   }
 
   _onProfileSuccess() {
@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<OfflineFirstLoaderCubit, OfflineFirstLoaderState>(
+      body: BlocConsumer<RepoLoaderCubit, RepoLoaderState>(
         listener: (context, state) {
           state.whenOrNull(success: _onProfileSuccess, error: _onError);
         },

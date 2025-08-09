@@ -9,6 +9,7 @@ import '../features/booking/booking.dart';
 import '../features/category/category.dart';
 import '../features/settings/settings.dart';
 import '../main/main.dart';
+import '../repos/booking/booking.dart';
 
 // TODO SignUpPage, ForgotPasswordPage, ResetPasswordPage
 class AppRouter {
@@ -17,8 +18,7 @@ class AppRouter {
     AppRoutes.main: (settings) => DefaultRoute(builder: (_) => MainPage(), settings: settings),
     AppRoutes.bookingSave:
         (settings) => SlideRightRoute(
-          builder:
-              (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),
+          builder: (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),
           settings: settings,
         ),
     AppRoutes.categoryList: (settings) => DefaultRoute(builder: (_) => CategoryListPage(), settings: settings),

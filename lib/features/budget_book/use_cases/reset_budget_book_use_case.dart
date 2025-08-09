@@ -1,20 +1,27 @@
-import 'package:budget_fusion_app/core/core.dart';
+import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../repos/account/account.dart';
+import '../../../repos/booking/booking.dart';
+import '../../../repos/category/category.dart';
+import '../../../repos/profile/profile.dart';
 
 @lazySingleton
 class ResetBudgetBookUseCase {
-  final CategoryDataManager _categoryManager;
-  final AccountDataManager _accountManager;
-  final BookingDataManager _bookingManager;
-  final ProfileDataManager _profileDataManager;
+  final SyncCursorRepo _syncCursorRepo;
+  final CategoryRepo _categoryRepo;
+  final AccountRepo _accountRepo;
+  final BookingRepo _bookingRepo;
+  final ProfileRepo _profileRepo;
 
-  ResetBudgetBookUseCase(this._categoryManager, this._accountManager, this._bookingManager, this._profileDataManager);
+  ResetBudgetBookUseCase(this._syncCursorRepo, this._categoryRepo, this._accountRepo, this._bookingRepo, this._profileRepo);
 
   Future<void> reset() async {
-    await _bookingManager.reset();
-    await _categoryManager.reset();
-    await _accountManager.reset();
-    await _profileDataManager.reset();
-    await Future.wait([_accountManager.loadAll(), _categoryManager.loadAll(), _bookingManager.loadAll(), _profileDataManager.loadAll()]);
+    await _syncCursorRepo.clear();
+    await _bookingRepo.reset();
+    await _categoryRepo.reset();
+    await _accountRepo.reset();
+    await _profileRepo.reset();
+    await Future.wait([_accountRepo.loadAll(), _categoryRepo.loadAll(), _bookingRepo.loadAll(), _profileRepo.loadAll()]);
   }
 }

@@ -9,9 +9,9 @@ import '../utils/service/connectivity_service.dart';
 
 @singleton
 class AppLifecycleManager {
-  final List<DataManager<dynamic>> _dataManagers;
+  final List<Repo<dynamic>> _repos;
 
-  AppLifecycleManager(this._dataManagers);
+  AppLifecycleManager(this._repos);
 
   Future<void> init() async {
     await EasyLocalization.ensureInitialized();
@@ -21,13 +21,13 @@ class AppLifecycleManager {
 
     await Supabase.initialize(url: dotenv.env['SUPABASE_URL'] ?? "", anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? "");
 
-    for (final managers in _dataManagers) {
-      managers.setupStreams();
+    for (final repo in _repos) {
+      repo.setupStreams();
     }
   }
 
   Future<void> dispose() async {
-    for (final lc in _dataManagers) {
+    for (final lc in _repos) {
       await lc.disposeStreams();
     }
   }

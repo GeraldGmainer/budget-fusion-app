@@ -4,6 +4,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../repos/category/category.dart';
 import '../../domain/entities/booking_draft.dart';
 import 'category_list_input.dart';
 
@@ -25,7 +26,7 @@ class CategorySelectInput extends StatelessWidget {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (sheetCtx) {
-        return DataManagerList<Category>(
+        return RepoList<Category>(
           builder: (ctx, data) {
             return CategoryListInput(
               categories: data,

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/core.dart';
+import '../../../repos/category/category.dart';
 
 part 'category_list_cubit.freezed.dart';
 part 'category_list_state.dart';

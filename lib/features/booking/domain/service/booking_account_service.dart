@@ -1,13 +1,14 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../repos/account/account.dart';
 
 @lazySingleton
 class BookingAccountService {
-  final AccountDataManager _manager;
+  final AccountRepo _repo;
 
-  BookingAccountService(this._manager);
+  BookingAccountService(this._repo);
 
   Future<Account?> getDefaultAccount() async {
-    return (await _manager.getAll()).firstOrNull;
+    return (await _repo.getAll()).firstOrNull;
   }
 }

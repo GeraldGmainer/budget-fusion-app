@@ -14,7 +14,11 @@ CREATE TABLE currency
     decimal_precision   INTEGER,
     unit_position_front INTEGER,
     symbol              TEXT  ,
-    ui_order            INTEGER
+    ui_order            INTEGER,
+    updated_at TEXT,
+    sync_status TEXT    NOT NULL DEFAULT 'synced',
+    last_synced_at TEXT,
+    modified_locally_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS profile (

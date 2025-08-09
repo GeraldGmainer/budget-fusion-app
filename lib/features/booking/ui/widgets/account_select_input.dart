@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../repos/account/account.dart';
 import '../../domain/entities/booking_draft.dart';
 
 class AccountSelectInput extends StatelessWidget {
@@ -14,7 +15,7 @@ class AccountSelectInput extends StatelessWidget {
   const AccountSelectInput({required this.draft, required this.onChange});
 
   _onTap(BuildContext context) async {
-    final accounts = context.read<DataManagerCubit<Account>>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
+    final accounts = context.read<RepoCubit<Account>>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
 
     final Account? selectedAccount = await showSelectionBottomSheet<Account>(
       context: context,

@@ -1,7 +1,7 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../repos/booking/booking.dart';
 import '../../enums/period_mode.dart';
 import '../../view_models/budget_book_filter.dart';
 import '../../view_models/budget_date_range.dart';

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/core.dart';
+import '../../../repos/currency/currency.dart';
+import '../../../repos/profile/profile.dart';
 
 class MoneyText extends StatelessWidget {
   static const double defaultFontSize = 14;
@@ -19,7 +21,7 @@ class MoneyText extends StatelessWidget {
     if (money.currency != null) {
       return _buildText(context, money.amount, money.currency!);
     }
-    return DataManagerSingleNullable<Profile>(
+    return RepoSingleNullable<Profile>(
       builder: (context, data) {
         if (data == null) {
           return _buildText(context, money.amount, Currency.notFound());

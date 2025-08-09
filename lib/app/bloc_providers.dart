@@ -8,6 +8,11 @@ import '../features/budget_book/budget_book.dart';
 import '../features/category/category.dart';
 import '../features/profile/profile.dart';
 import '../main/main.dart';
+import '../repos/account/account.dart';
+import '../repos/booking/booking.dart';
+import '../repos/category/category.dart';
+import '../repos/currency/currency.dart';
+import '../repos/profile/profile.dart';
 
 List<BlocProvider> getBlocProviders() {
   return [
@@ -20,17 +25,17 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),
     BlocProvider<RemoteLoadingCubit>(create: (_) => GetIt.I<RemoteLoadingCubit>()),
-    BlocProvider<OfflineFirstLoaderCubit>(create: (_) => GetIt.I<OfflineFirstLoaderCubit>()),
+    BlocProvider<RepoLoaderCubit>(create: (_) => GetIt.I<RepoLoaderCubit>()),
     ..._dataManagerProviders(),
   ];
 }
 
 List<BlocProvider> _dataManagerProviders() {
   return [
-    BlocProvider<DataManagerCubit<Account>>(create: (_) => DataManagerCubit(GetIt.I<AccountDataManager>())),
-    BlocProvider<DataManagerCubit<Category>>(create: (_) => DataManagerCubit(GetIt.I<CategoryDataManager>())),
-    BlocProvider<DataManagerCubit<Booking>>(create: (_) => DataManagerCubit(GetIt.I<BookingDataManager>())),
-    BlocProvider<DataManagerCubit<Profile>>(create: (_) => DataManagerCubit(GetIt.I<ProfileDataManager>())),
-    BlocProvider<DataManagerCubit<Currency>>(create: (_) => DataManagerCubit(GetIt.I<CurrencyDataManager>())),
+    BlocProvider<RepoCubit<Account>>(create: (_) => RepoCubit(GetIt.I<AccountRepo>())),
+    BlocProvider<RepoCubit<Category>>(create: (_) => RepoCubit(GetIt.I<CategoryRepo>())),
+    BlocProvider<RepoCubit<Booking>>(create: (_) => RepoCubit(GetIt.I<BookingRepo>())),
+    BlocProvider<RepoCubit<Profile>>(create: (_) => RepoCubit(GetIt.I<ProfileRepo>())),
+    BlocProvider<RepoCubit<Currency>>(create: (_) => RepoCubit(GetIt.I<CurrencyRepo>())),
   ];
 }
