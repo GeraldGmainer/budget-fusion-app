@@ -100,8 +100,6 @@ class OfflineFirstDataManager<E extends Dto> {
     final wrapped = SyncedDto<E>(dto: dto, syncMeta: newMeta);
 
     await adapter.local.save(wrapped);
-    final refreshed = await _refreshCacheFromLocalSource();
-    _emitToStream(refreshed);
 
     final payload = jsonEncode(dto.toJson());
     final item = QueueItem(entityId: dto.id.value, entityType: adapter.type, taskType: QueueTaskType.upsert, entityPayload: payload);

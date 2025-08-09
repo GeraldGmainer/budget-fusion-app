@@ -11,6 +11,7 @@ class SyncRemoteSource extends SupabaseClient {
   Future<SyncAllResponse> syncAll({
     required Map<String, String> cursors,
     required Iterable<EntityType> entities,
+    Set<String> excludeIds = const {},
   }) async {
     final payload = <String, String>{};
     for (final e in entities) {
@@ -21,7 +22,11 @@ class SyncRemoteSource extends SupabaseClient {
     final stopwatch = Stopwatch()..start();
     _log("call syncAll: ${payload.entries.map((e) => '${e.key}:${e.value.substring(0, 10)}').join(', ')}");
     return execute("syncAll", () async {
-      final response = await supabase.rpc('sync_all', params: {'p_last_synced': payload});
+      final excludeJson = excludeIds.toList();
+      if (excludeIds.isNotEmpty) {
+        _log("calling syncAll and exclude IDs: $excludeJson");
+      }
+      final response = await supabase.rpc('sync_all', params: {'p_last_synced': payload, 'p_exclude_ids': excludeJson});
       final data = response as Map<String, dynamic>;
       final result = SyncAllResponse.fromJson(data);
       final kB = (utf8.encode(jsonEncode(data)).length / 1024).toStringAsFixed(1);

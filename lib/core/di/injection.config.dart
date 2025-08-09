@@ -21,6 +21,8 @@ import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.da
     as _i1046;
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_notifier_service.dart'
     as _i342;
+import 'package:budget_fusion_app/core/data/sync_manager/sync_coordinator.dart'
+    as _i752;
 import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart'
     as _i705;
 import 'package:budget_fusion_app/core/data/sync_manager/sync_manager.dart'
@@ -155,10 +157,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i247.RemoteLoadingService>(
       () => _i247.RemoteLoadingService(),
     );
-    gh.lazySingleton<_i467.SyncRemoteSource>(() => _i467.SyncRemoteSource());
-    gh.lazySingleton<_i342.RealtimeNotifierService>(
-      () => _i342.RealtimeNotifierService(),
-    );
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
     gh.lazySingleton<_i226.DefaultNewDateUseCase>(
       () => _i226.DefaultNewDateUseCase(),
@@ -173,22 +171,26 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i226.SummaryDataGenerator(),
     );
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i110.CategoryRemoteDataSource>(
-      () => _i110.CategoryRemoteDataSource(),
+    gh.lazySingleton<_i342.RealtimeNotifierService>(
+      () => _i342.RealtimeNotifierService(),
     );
-    gh.lazySingleton<_i536.CategoryMapper>(() => _i536.CategoryMapper());
+    gh.lazySingleton<_i467.SyncRemoteSource>(() => _i467.SyncRemoteSource());
+    gh.lazySingleton<_i722.AccountRemoteDataSource>(
+      () => _i722.AccountRemoteDataSource(),
+    );
     gh.lazySingleton<_i1026.BookingRemoteDataSource>(
       () => _i1026.BookingRemoteDataSource(),
     );
     gh.lazySingleton<_i1048.BookingMapper>(() => _i1048.BookingMapper());
-    gh.lazySingleton<_i755.ProfileRemoteDataSource>(
-      () => _i755.ProfileRemoteDataSource(),
+    gh.lazySingleton<_i110.CategoryRemoteDataSource>(
+      () => _i110.CategoryRemoteDataSource(),
     );
-    gh.lazySingleton<_i722.AccountRemoteDataSource>(
-      () => _i722.AccountRemoteDataSource(),
-    );
+    gh.lazySingleton<_i536.CategoryMapper>(() => _i536.CategoryMapper());
     gh.lazySingleton<_i678.CurrencyRemoteDataSource>(
       () => _i678.CurrencyRemoteDataSource(),
+    );
+    gh.lazySingleton<_i755.ProfileRemoteDataSource>(
+      () => _i755.ProfileRemoteDataSource(),
     );
     gh.lazySingleton<_i705.SyncCursorRepo>(
       () => _i705.SyncCursorRepo(gh<_i460.SharedPreferences>()),
@@ -225,20 +227,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i252.QueueLocalDataSource>(
       () => _i252.QueueLocalDataSource(gh<_i779.Database>()),
     );
-    gh.lazySingleton<_i871.CategoryLocalDataSource>(
-      () => _i871.CategoryLocalDataSource(gh<_i779.Database>()),
+    gh.lazySingleton<_i1071.AccountLocalDataSource>(
+      () => _i1071.AccountLocalDataSource(gh<_i779.Database>()),
     );
     gh.lazySingleton<_i125.BookingLocalDataSource>(
       () => _i125.BookingLocalDataSource(gh<_i779.Database>()),
     );
-    gh.lazySingleton<_i372.ProfileLocalDataSource>(
-      () => _i372.ProfileLocalDataSource(gh<_i779.Database>()),
-    );
-    gh.lazySingleton<_i1071.AccountLocalDataSource>(
-      () => _i1071.AccountLocalDataSource(gh<_i779.Database>()),
+    gh.lazySingleton<_i871.CategoryLocalDataSource>(
+      () => _i871.CategoryLocalDataSource(gh<_i779.Database>()),
     );
     gh.lazySingleton<_i692.CurrencyLocalDataSource>(
       () => _i692.CurrencyLocalDataSource(gh<_i779.Database>()),
+    );
+    gh.lazySingleton<_i372.ProfileLocalDataSource>(
+      () => _i372.ProfileLocalDataSource(gh<_i779.Database>()),
     );
     gh.lazySingleton<_i318.FilterAndGroupBookingsUseCase>(
       () =>
@@ -248,6 +250,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1046.QueueManager(
         gh<_i252.QueueLocalDataSource>(),
         gh<_i714.RemoteLoadingService>(),
+      ),
+    );
+    gh.singleton<_i752.SyncCoordinator>(
+      () => _i752.SyncCoordinator(
+        gh<_i714.QueueManager>(),
+        gh<_i777.SyncManager>(),
       ),
     );
     gh.lazySingleton<_i654.DataManagerFactory>(
