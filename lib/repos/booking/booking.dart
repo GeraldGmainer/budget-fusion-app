@@ -1,2 +1,2 @@
-export 'booking_data_manager.dart';
+export 'booking_repo.dart';
 export 'entities/booking.dart';

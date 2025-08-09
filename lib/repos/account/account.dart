@@ -1,2 +1,2 @@
-export 'account_data_manager.dart';
+export 'account_repo.dart';
 export 'entities/account.dart';

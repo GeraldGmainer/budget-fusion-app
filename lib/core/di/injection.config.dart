@@ -84,15 +84,13 @@ import 'package:budget_fusion_app/features/profile/bloc/language_cubit.dart'
 import 'package:budget_fusion_app/main/bloc/main_cubit.dart' as _i976;
 import 'package:budget_fusion_app/main/bloc/repo_loader_cubit.dart' as _i738;
 import 'package:budget_fusion_app/repos/account/account.dart' as _i500;
-import 'package:budget_fusion_app/repos/account/account_data_manager.dart'
-    as _i50;
+import 'package:budget_fusion_app/repos/account/account_repo.dart' as _i564;
 import 'package:budget_fusion_app/repos/account/data_sources/account_local_data_source.dart'
     as _i1071;
 import 'package:budget_fusion_app/repos/account/data_sources/account_remote_data_source.dart'
     as _i722;
 import 'package:budget_fusion_app/repos/booking/booking.dart' as _i269;
-import 'package:budget_fusion_app/repos/booking/booking_data_manager.dart'
-    as _i683;
+import 'package:budget_fusion_app/repos/booking/booking_repo.dart' as _i427;
 import 'package:budget_fusion_app/repos/booking/data_sources/booking_local_data_source.dart'
     as _i125;
 import 'package:budget_fusion_app/repos/booking/data_sources/booking_remote_data_source.dart'
@@ -100,8 +98,7 @@ import 'package:budget_fusion_app/repos/booking/data_sources/booking_remote_data
 import 'package:budget_fusion_app/repos/booking/mappers/booking_mapper.dart'
     as _i1048;
 import 'package:budget_fusion_app/repos/category/category.dart' as _i531;
-import 'package:budget_fusion_app/repos/category/category_data_manager.dart'
-    as _i375;
+import 'package:budget_fusion_app/repos/category/category_repo.dart' as _i28;
 import 'package:budget_fusion_app/repos/category/data_sources/category_local_data_source.dart'
     as _i871;
 import 'package:budget_fusion_app/repos/category/data_sources/category_remote_data_source.dart'
@@ -109,8 +106,7 @@ import 'package:budget_fusion_app/repos/category/data_sources/category_remote_da
 import 'package:budget_fusion_app/repos/category/mappers/category_mapper.dart'
     as _i536;
 import 'package:budget_fusion_app/repos/currency/currency.dart' as _i881;
-import 'package:budget_fusion_app/repos/currency/currency_data_manager.dart'
-    as _i822;
+import 'package:budget_fusion_app/repos/currency/currency_repo.dart' as _i864;
 import 'package:budget_fusion_app/repos/currency/data_sources/currency_local_data_source.dart'
     as _i692;
 import 'package:budget_fusion_app/repos/currency/data_sources/currency_remote_data_source.dart'
@@ -120,8 +116,7 @@ import 'package:budget_fusion_app/repos/profile/data_sources/profile_local_data_
 import 'package:budget_fusion_app/repos/profile/data_sources/profile_remote_data_source.dart'
     as _i755;
 import 'package:budget_fusion_app/repos/profile/profile.dart' as _i421;
-import 'package:budget_fusion_app/repos/profile/profile_data_manager.dart'
-    as _i313;
+import 'package:budget_fusion_app/repos/profile/profile_repo.dart' as _i1018;
 import 'package:budget_fusion_app/utils/service/connectivity_service.dart'
     as _i702;
 import 'package:budget_fusion_app/utils/service/datetime_service.dart' as _i25;
@@ -266,8 +261,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i777.SyncManager>(),
       ),
     );
-    gh.singleton<_i822.CurrencyRepo>(
-      () => _i822.CurrencyRepo(
+    gh.singleton<_i864.CurrencyRepo>(
+      () => _i864.CurrencyRepo(
         gh<_i714.DataManagerFactory>(),
         gh<_i692.CurrencyLocalDataSource>(),
         gh<_i678.CurrencyRemoteDataSource>(),
@@ -276,31 +271,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i920.OfflineFirstQueueCubit>(
       () => _i920.OfflineFirstQueueCubit(gh<_i1046.QueueManager>()),
     );
-    gh.singleton<_i313.ProfileRepo>(
-      () => _i313.ProfileRepo(
+    gh.singleton<_i1018.ProfileRepo>(
+      () => _i1018.ProfileRepo(
         gh<_i714.DataManagerFactory>(),
         gh<_i372.ProfileLocalDataSource>(),
         gh<_i755.ProfileRemoteDataSource>(),
         gh<_i881.CurrencyRepo>(),
       ),
     );
-    gh.singleton<_i375.CategoryRepo>(
-      () => _i375.CategoryRepo(
+    gh.singleton<_i28.CategoryRepo>(
+      () => _i28.CategoryRepo(
         gh<_i714.DataManagerFactory>(),
         gh<_i871.CategoryLocalDataSource>(),
         gh<_i110.CategoryRemoteDataSource>(),
         gh<_i536.CategoryMapper>(),
       ),
     );
-    gh.singleton<_i50.AccountRepo>(
-      () => _i50.AccountRepo(
+    gh.singleton<_i564.AccountRepo>(
+      () => _i564.AccountRepo(
         gh<_i714.DataManagerFactory>(),
         gh<_i1071.AccountLocalDataSource>(),
         gh<_i722.AccountRemoteDataSource>(),
       ),
-    );
-    gh.lazySingleton<_i576.BookingAccountService>(
-      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
     );
     gh.lazySingleton<_i507.GenerateBudgetSummaryUseCase>(
       () => _i507.GenerateBudgetSummaryUseCase(
@@ -308,11 +300,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.SummaryDataGenerator>(),
       ),
     );
-    gh.lazySingleton<_i656.DefaultAccountUseCase>(
-      () => _i656.DefaultAccountUseCase(gh<_i576.BookingAccountService>()),
+    gh.lazySingleton<_i455.LoadCategoryListUseCase>(
+      () => _i455.LoadCategoryListUseCase(gh<_i531.CategoryRepo>()),
     );
-    gh.singleton<_i683.BookingRepo>(
-      () => _i683.BookingRepo(
+    gh.factory<_i1005.CategorySaveCubit>(
+      () => _i1005.CategorySaveCubit(gh<_i531.CategoryRepo>()),
+    );
+    gh.singleton<_i427.BookingRepo>(
+      () => _i427.BookingRepo(
         gh<_i714.DataManagerFactory>(),
         gh<_i125.BookingLocalDataSource>(),
         gh<_i1026.BookingRemoteDataSource>(),
@@ -322,11 +317,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i421.ProfileRepo>(),
       ),
     );
-    gh.factory<_i1005.CategorySaveCubit>(
-      () => _i1005.CategorySaveCubit(gh<_i531.CategoryRepo>()),
+    gh.singleton<List<_i714.Repo<dynamic>>>(
+      () => dataManagerModule.repos(
+        gh<_i881.CurrencyRepo>(),
+        gh<_i421.ProfileRepo>(),
+        gh<_i531.CategoryRepo>(),
+        gh<_i500.AccountRepo>(),
+        gh<_i269.BookingRepo>(),
+      ),
     );
-    gh.lazySingleton<_i455.LoadCategoryListUseCase>(
-      () => _i455.LoadCategoryListUseCase(gh<_i531.CategoryRepo>()),
+    gh.lazySingleton<_i576.BookingAccountService>(
+      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
+    );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
+    );
+    gh.factory<_i788.CategoryListCubit>(
+      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
+    );
+    gh.lazySingleton<_i656.DefaultAccountUseCase>(
+      () => _i656.DefaultAccountUseCase(gh<_i576.BookingAccountService>()),
     );
     gh.factory<_i963.SuggestionCubit>(
       () => _i963.SuggestionCubit(gh<_i269.BookingRepo>()),
@@ -335,6 +345,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i405.SaveBookingUseCase(
         gh<_i269.BookingRepo>(),
         gh<_i421.ProfileRepo>(),
+      ),
+    );
+    gh.factory<_i738.RepoLoaderCubit>(
+      () => _i738.RepoLoaderCubit(
+        gh<_i714.QueueManager>(),
+        gh<List<_i714.Repo<dynamic>>>(),
       ),
     );
     gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
@@ -354,21 +370,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.DefaultNewDateUseCase>(),
       ),
     );
-    gh.singleton<List<_i714.Repo<dynamic>>>(
-      () => dataManagerModule.repos(
-        gh<_i881.CurrencyRepo>(),
-        gh<_i421.ProfileRepo>(),
-        gh<_i531.CategoryRepo>(),
-        gh<_i500.AccountRepo>(),
-        gh<_i269.BookingRepo>(),
-      ),
-    );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
-    );
-    gh.factory<_i788.CategoryListCubit>(
-      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
-    );
     gh.factory<_i569.BudgetBookCubit>(
       () => _i569.BudgetBookCubit(
         gh<_i507.GenerateBudgetSummaryUseCase>(),
@@ -376,12 +377,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
         gh<_i562.ResetBudgetBookUseCase>(),
         gh<_i196.GenerateBudgetTransactionUseCase>(),
-      ),
-    );
-    gh.factory<_i738.RepoLoaderCubit>(
-      () => _i738.RepoLoaderCubit(
-        gh<_i714.QueueManager>(),
-        gh<List<_i714.Repo<dynamic>>>(),
       ),
     );
     return this;

@@ -1,2 +1,2 @@
-export 'category_data_manager.dart';
+export 'category_repo.dart';
 export 'entities/category.dart';
