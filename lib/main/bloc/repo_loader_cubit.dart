@@ -11,11 +11,11 @@ import '../../repos/currency/currency.dart';
 import '../../repos/profile/profile.dart';
 import '../../utils/utils.dart';
 
-part 'offline_first_loader_cubit.freezed.dart';
-part 'offline_first_loader_state.dart';
+part 'repo_loader_cubit.freezed.dart';
+part 'repo_loader_state.dart';
 
 @injectable
-class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
+class RepoLoaderCubit extends Cubit<RepoLoaderState> {
   final QueueManager _queueManager;
   final CategoryRepo _categoryRepo;
   final AccountRepo _accountRepo;
@@ -23,12 +23,11 @@ class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
   final ProfileRepo _profileRepo;
   final CurrencyRepo _currencyRepo;
 
-  OfflineFirstLoaderCubit(this._queueManager, this._categoryRepo, this._accountRepo, this._bookingRepo, this._profileRepo, this._currencyRepo)
-    : super(const OfflineFirstLoaderState.initial());
+  RepoLoaderCubit(this._queueManager, this._categoryRepo, this._accountRepo, this._bookingRepo, this._profileRepo, this._currencyRepo) : super(const RepoLoaderState.initial());
 
   Future<void> init() async {
     try {
-      emit(OfflineFirstLoaderState.loading());
+      emit(RepoLoaderState.loading());
       await _refreshToken();
       Future.wait([
         _queueManager.init(),
@@ -38,13 +37,13 @@ class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
         _bookingRepo.loadAll(),
         _profileRepo.loadAll(),
       ]);
-      emit(OfflineFirstLoaderState.success());
+      emit(RepoLoaderState.success());
     } on TranslatedException catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} TranslatedException", e, stackTrace);
-      emit(OfflineFirstLoaderState.error(e.error));
+      emit(RepoLoaderState.error(e.error));
     } catch (e, stackTrace) {
       BudgetLogger.instance.e("${runtimeType.toString()} Exception", e, stackTrace);
-      emit(OfflineFirstLoaderState.error(AppError.unknown));
+      emit(RepoLoaderState.error(AppError.unknown));
     }
   }
 

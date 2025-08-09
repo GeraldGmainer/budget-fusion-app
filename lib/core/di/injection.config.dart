@@ -80,8 +80,7 @@ import 'package:budget_fusion_app/features/category/use_cases/load_category_list
 import 'package:budget_fusion_app/features/profile/bloc/language_cubit.dart'
     as _i801;
 import 'package:budget_fusion_app/main/bloc/main_cubit.dart' as _i976;
-import 'package:budget_fusion_app/main/bloc/offline_first_loader_cubit.dart'
-    as _i655;
+import 'package:budget_fusion_app/main/bloc/repo_loader_cubit.dart' as _i738;
 import 'package:budget_fusion_app/repos/account/account.dart' as _i500;
 import 'package:budget_fusion_app/repos/account/account_data_manager.dart'
     as _i50;
@@ -347,8 +346,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.DefaultNewDateUseCase>(),
       ),
     );
-    gh.factory<_i655.OfflineFirstLoaderCubit>(
-      () => _i655.OfflineFirstLoaderCubit(
+    gh.factory<_i738.RepoLoaderCubit>(
+      () => _i738.RepoLoaderCubit(
         gh<_i714.QueueManager>(),
         gh<_i531.CategoryRepo>(),
         gh<_i500.AccountRepo>(),

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'offline_first_loader_cubit.dart';
+part of 'repo_loader_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$OfflineFirstLoaderState {
+mixin _$RepoLoaderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -64,27 +64,24 @@ mixin _$OfflineFirstLoaderState {
 }
 
 /// @nodoc
-abstract class $OfflineFirstLoaderStateCopyWith<$Res> {
-  factory $OfflineFirstLoaderStateCopyWith(
-    OfflineFirstLoaderState value,
-    $Res Function(OfflineFirstLoaderState) then,
-  ) = _$OfflineFirstLoaderStateCopyWithImpl<$Res, OfflineFirstLoaderState>;
+abstract class $RepoLoaderStateCopyWith<$Res> {
+  factory $RepoLoaderStateCopyWith(
+    RepoLoaderState value,
+    $Res Function(RepoLoaderState) then,
+  ) = _$RepoLoaderStateCopyWithImpl<$Res, RepoLoaderState>;
 }
 
 /// @nodoc
-class _$OfflineFirstLoaderStateCopyWithImpl<
-  $Res,
-  $Val extends OfflineFirstLoaderState
->
-    implements $OfflineFirstLoaderStateCopyWith<$Res> {
-  _$OfflineFirstLoaderStateCopyWithImpl(this._value, this._then);
+class _$RepoLoaderStateCopyWithImpl<$Res, $Val extends RepoLoaderState>
+    implements $RepoLoaderStateCopyWith<$Res> {
+  _$RepoLoaderStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -98,14 +95,14 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$OfflineFirstLoaderStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$RepoLoaderStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
     _$InitialImpl _value,
     $Res Function(_$InitialImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -116,7 +113,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'OfflineFirstLoaderState.initial()';
+    return 'RepoLoaderState.initial()';
   }
 
   @override
@@ -203,7 +200,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements OfflineFirstLoaderState {
+abstract class _Initial implements RepoLoaderState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -217,14 +214,14 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$OfflineFirstLoaderStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$RepoLoaderStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
     _$LoadingImpl _value,
     $Res Function(_$LoadingImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -235,7 +232,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'OfflineFirstLoaderState.loading()';
+    return 'RepoLoaderState.loading()';
   }
 
   @override
@@ -322,7 +319,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements OfflineFirstLoaderState {
+abstract class _Loading implements RepoLoaderState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -336,14 +333,14 @@ abstract class _$$SuccessImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$OfflineFirstLoaderStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$RepoLoaderStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
     _$SuccessImpl _value,
     $Res Function(_$SuccessImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -354,7 +351,7 @@ class _$SuccessImpl implements _Success {
 
   @override
   String toString() {
-    return 'OfflineFirstLoaderState.success()';
+    return 'RepoLoaderState.success()';
   }
 
   @override
@@ -441,7 +438,7 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements OfflineFirstLoaderState {
+abstract class _Success implements RepoLoaderState {
   const factory _Success() = _$SuccessImpl;
 }
 
@@ -457,14 +454,14 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$OfflineFirstLoaderStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$RepoLoaderStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
     _$ErrorImpl _value,
     $Res Function(_$ErrorImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -490,7 +487,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'OfflineFirstLoaderState.error(error: $error)';
+    return 'RepoLoaderState.error(error: $error)';
   }
 
   @override
@@ -504,7 +501,7 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -587,12 +584,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements OfflineFirstLoaderState {
+abstract class _Error implements RepoLoaderState {
   const factory _Error(final AppError error) = _$ErrorImpl;
 
   AppError get error;
 
-  /// Create a copy of OfflineFirstLoaderState
+  /// Create a copy of RepoLoaderState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

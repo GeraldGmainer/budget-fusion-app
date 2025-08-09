@@ -2,17 +2,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../core/core.dart';
-import '../repos/account/account.dart';
-import '../repos/booking/booking.dart';
-import '../repos/category/category.dart';
-import '../repos/currency/currency.dart';
-import '../repos/profile/profile.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/budget_book/budget_book.dart';
 import '../features/category/category.dart';
 import '../features/profile/profile.dart';
 import '../main/main.dart';
+import '../repos/account/account.dart';
+import '../repos/booking/booking.dart';
+import '../repos/category/category.dart';
+import '../repos/currency/currency.dart';
+import '../repos/profile/profile.dart';
 
 List<BlocProvider> getBlocProviders() {
   return [
@@ -25,7 +25,7 @@ List<BlocProvider> getBlocProviders() {
     BlocProvider<SuggestionCubit>(create: (_) => GetIt.I<SuggestionCubit>()),
     BlocProvider<OfflineFirstQueueCubit>(create: (_) => GetIt.I<OfflineFirstQueueCubit>()),
     BlocProvider<RemoteLoadingCubit>(create: (_) => GetIt.I<RemoteLoadingCubit>()),
-    BlocProvider<OfflineFirstLoaderCubit>(create: (_) => GetIt.I<OfflineFirstLoaderCubit>()),
+    BlocProvider<RepoLoaderCubit>(create: (_) => GetIt.I<RepoLoaderCubit>()),
     ..._dataManagerProviders(),
   ];
 }
