@@ -51,9 +51,9 @@ class BookingRepo extends Repo<Booking> with AutoSubscribe<Booking> {
 
   Future<void> reset() => _manager.reset();
 
-  Future<List<BookingSuggestion>> loadSuggestions() async => (await _lds.getSuggestions()).map((dto) => BookingSuggestion.fromDto(dto)).toList();
-
   Future<void> delete(Booking booking) async => await _manager.delete(booking.toDto());
 
   Future<void> save(Booking booking) async => await _manager.save(booking.toDto());
+
+  Future<List<BookingSuggestion>> loadSuggestions() async => (await _lds.getSuggestions()).map((dto) => BookingSuggestion.fromDto(dto)).toList();
 }

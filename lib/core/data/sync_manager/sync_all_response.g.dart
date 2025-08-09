@@ -6,60 +6,33 @@ part of 'sync_all_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SyncDeltaImpl<T> _$$SyncDeltaImplFromJson<T extends Dto>(
-  Map<String, dynamic> json,
-  T Function(Object? json) fromJsonT,
-) => _$SyncDeltaImpl<T>(
-  upserts: (json['upserts'] as List<dynamic>).map(fromJsonT).toList(),
-  deletes: (json['deletes'] as List<dynamic>).map((e) => e as String).toList(),
-);
-
-Map<String, dynamic> _$$SyncDeltaImplToJson<T extends Dto>(
-  _$SyncDeltaImpl<T> instance,
-  Object? Function(T value) toJsonT,
-) => <String, dynamic>{
-  'upserts': instance.upserts.map(toJsonT).toList(),
-  'deletes': instance.deletes,
-};
-
-_$NewTimestampsImpl _$$NewTimestampsImplFromJson(Map<String, dynamic> json) =>
-    _$NewTimestampsImpl(
-      account: _parseNullable(json['account'] as String?),
-      booking: _parseNullable(json['booking'] as String?),
-      profile: _parseNullable(json['profile'] as String?),
-      category: _parseNullable(json['category'] as String?),
-      currency: _parseNullable(json['currency'] as String?),
+_$RawDeltaImpl _$$RawDeltaImplFromJson(Map<String, dynamic> json) =>
+    _$RawDeltaImpl(
+      upserts:
+          (json['upserts'] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
+      deletes:
+          (json['deletes'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$NewTimestampsImplToJson(_$NewTimestampsImpl instance) =>
-    <String, dynamic>{
-      'account': _stringifyNullable(instance.account),
-      'booking': _stringifyNullable(instance.booking),
-      'profile': _stringifyNullable(instance.profile),
-      'category': _stringifyNullable(instance.category),
-      'currency': _stringifyNullable(instance.currency),
-    };
+Map<String, dynamic> _$$RawDeltaImplToJson(_$RawDeltaImpl instance) =>
+    <String, dynamic>{'upserts': instance.upserts, 'deletes': instance.deletes};
 
 _$SyncAllResponseImpl _$$SyncAllResponseImplFromJson(
   Map<String, dynamic> json,
 ) => _$SyncAllResponseImpl(
-  account: _accountDeltaFromJson(json['account'] as Map<String, dynamic>),
-  booking: _bookingDeltaFromJson(json['booking'] as Map<String, dynamic>),
-  profile: _profileDeltaFromJson(json['profile'] as Map<String, dynamic>),
-  category: _categoryDeltaFromJson(json['category'] as Map<String, dynamic>),
-  currency: _currencyDeltaFromJson(json['currency'] as Map<String, dynamic>),
-  newTimestamps: NewTimestamps.fromJson(
-    json['newTimestamps'] as Map<String, dynamic>,
+  serverNow: DateTime.parse(json['serverNow'] as String),
+  deltas: (json['deltas'] as Map<String, dynamic>).map(
+    (k, e) => MapEntry(k, RawDelta.fromJson(e as Map<String, dynamic>)),
   ),
+  newTimestamps: _tsMapFromJson(json['newTimestamps'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$SyncAllResponseImplToJson(
   _$SyncAllResponseImpl instance,
 ) => <String, dynamic>{
-  'account': _accountDeltaToJson(instance.account),
-  'booking': _bookingDeltaToJson(instance.booking),
-  'profile': _profileDeltaToJson(instance.profile),
-  'category': _categoryDeltaToJson(instance.category),
-  'currency': _currencyDeltaToJson(instance.currency),
-  'newTimestamps': instance.newTimestamps,
+  'serverNow': instance.serverNow.toIso8601String(),
+  'deltas': instance.deltas,
+  'newTimestamps': _tsMapToJson(instance.newTimestamps),
 };

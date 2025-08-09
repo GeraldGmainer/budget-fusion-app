@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:budget_fusion_app/core/data/sync_manager/sync_all_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../utils/utils.dart';
 import '../../core.dart';
 import '../data_sources/data_source_adapter.dart';
-import 'sync_all_response.dart';
 import 'sync_cursor_repo.dart';
 import 'sync_remote_source.dart';
 
@@ -54,51 +54,56 @@ class SyncManager {
 
   Future<void> _syncAll() async {
     final cursors = await _syncCursorRepo.getAll();
-    final result = await _syncRemoteSource.syncAll(cursors);
+    final result = await _syncRemoteSource.syncAll(cursors: cursors, entities: _adapters.keys);
 
-    // TODO dont define every EntityType manually
-    final deltas = <EntityType, SyncDelta>{
-      EntityType.account: result.account,
-      EntityType.category: result.category,
-      EntityType.booking: result.booking,
-      EntityType.profile: result.profile,
-      EntityType.currency: result.currency,
-    };
-
-    for (final entry in deltas.entries) {
-      final entity = entry.key;
-      final delta = entry.value;
-      final localDataSource = _adapters[entity]!.local;
-      await localDataSource.saveAllNotSynced(delta.upserts);
-      for (final id in delta.deletes) {
-        await localDataSource.deleteById(id);
-      }
+    for (final entry in _adapters.entries) {
+      final raw = result.deltas[entry.key.name];
+      if (raw == null) continue;
+      final adapter = entry.value;
+      await adapter.applyRaw(upserts: raw.upserts, deletes: raw.deletes);
     }
 
     for (final dm in _dataManagers.values) {
-      dm.refresh();
+      await dm.refresh();
     }
 
-    final newTs = result.newTimestamps;
-    final tsByEntity = <EntityType, DateTime?>{
-      EntityType.account: newTs.account,
-      EntityType.category: newTs.category,
-      EntityType.booking: newTs.booking,
-      EntityType.profile: newTs.profile,
-      EntityType.currency: newTs.currency,
-    };
-
-    for (final entry in deltas.entries) {
-      final entity = entry.key;
-      final delta = entry.value;
-      if (delta.upserts.isEmpty && delta.deletes.isEmpty) continue;
-      final ts = tsByEntity[entity];
-      if (ts == null) continue;
-      await _syncCursorRepo.setLastSyncedAt(entity, ts);
+    final updatedTimestamps = <EntityType, DateTime>{};
+    for (final type in _adapters.keys) {
+      final key = type.name;
+      final raw = result.deltas[key];
+      if (raw == null) continue;
+      if (raw.upserts.isEmpty && raw.deletes.isEmpty) continue;
+      final ts = result.newTimestamps[key];
+      if (ts != null) {
+        await _syncCursorRepo.setLastSyncedAt(type, ts);
+        updatedTimestamps[type] = ts;
+      }
     }
+    _logTimestamps(updatedTimestamps);
+    _logChanges(result);
+  }
 
-    final changes = deltas.map((e, d) => MapEntry(e, d.upserts.length + d.deletes.length));
-    final logStr = changes.entries.map((e) => '${e.key.name}:${e.value}').join(', ');
+  void _logTimestamps(Map<EntityType, DateTime> updated) {
+    if (updated.isEmpty) {
+      _log("skipped cursor update (0 changes)");
+      return;
+    }
+    for (final e in updated.entries) {
+      _log("updated cursor for ${e.key.name}: ${_formatTime(e.value)}");
+    }
+  }
+
+  String _formatTime(DateTime dt) => dt.toUtc().toIso8601String().split('.').first;
+
+  void _logChanges(SyncAllResponse result) {
+    final logStr = _adapters.keys
+        .map((t) {
+          final k = t.name;
+          final r = result.deltas[k];
+          final c = r == null ? 0 : r.upserts.length + r.deletes.length;
+          return '${t.name}:$c';
+        })
+        .join(', ');
     _log('sync done --> changes: $logStr', dark: true);
   }
 

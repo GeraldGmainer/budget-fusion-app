@@ -4,7 +4,6 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../../utils/utils.dart';
 import '../../core.dart';
-import '../enums/sync_status.dart';
 
 abstract class LocalDataSource<E extends Dto> {
   final Database db;

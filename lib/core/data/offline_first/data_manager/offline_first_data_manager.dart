@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:budget_fusion_app/core/data/data_sources/data_source_adapter.dart';
 import 'package:collection/collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
-import '../../enums/sync_status.dart';
+import '../../data_sources/data_source_adapter.dart';
 import '../../sync_manager/sync_manager.dart';
 import '../models/queue_item.dart';
 import '../realtime/realtime_notifier_service.dart';

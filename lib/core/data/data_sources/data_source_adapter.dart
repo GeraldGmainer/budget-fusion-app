@@ -13,4 +13,17 @@ class DataSourceAdapter<E extends Dto> {
     required this.local,
     required this.remote,
   });
+
+  Future<void> applyRaw({
+    required List<Map<String, dynamic>> upserts,
+    required List<String> deletes,
+  }) async {
+    if (upserts.isNotEmpty) {
+      final dtos = upserts.map(local.fromJson).toList();
+      await local.saveAllNotSynced(List<E>.from(dtos));
+    }
+    for (final id in deletes) {
+      await local.deleteById(id);
+    }
+  }
 }

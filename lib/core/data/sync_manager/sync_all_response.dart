@@ -1,77 +1,29 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../repos/account/dtos/account_dto.dart';
-import '../../../repos/booking/dtos/booking_dto.dart';
-import '../../../repos/category/dtos/category_dto.dart';
-import '../../../repos/currency/currency.dart';
-import '../../../repos/profile/dtos/profile_dto.dart';
-import '../models/dto.dart';
-
 part 'sync_all_response.freezed.dart';
 part 'sync_all_response.g.dart';
 
-DateTime? _parseNullable(String? s) => s == null ? null : DateTime.parse(s);
+Map<String, DateTime?> _tsMapFromJson(Map<String, dynamic> json) => json.map((k, v) => MapEntry(k, v == null ? null : DateTime.parse(v as String)));
 
-String? _stringifyNullable(DateTime? dt) => dt?.toIso8601String();
-
-@Freezed(genericArgumentFactories: true)
-class SyncDelta<T extends Dto> with _$SyncDelta<T> {
-  const factory SyncDelta({
-    required List<T> upserts,
-    required List<String> deletes,
-  }) = _SyncDelta<T>;
-
-  factory SyncDelta.fromJson(
-    Map<String, dynamic> json,
-    T Function(Object? json) fromJsonT,
-  ) => _$SyncDeltaFromJson<T>(json, fromJsonT);
-}
+Map<String, dynamic> _tsMapToJson(Map<String, DateTime?> map) => map.map((k, v) => MapEntry(k, v?.toIso8601String()));
 
 @freezed
-class NewTimestamps with _$NewTimestamps {
-  const factory NewTimestamps({
-    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? account,
-    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? booking,
-    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? profile,
-    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? category,
-    @JsonKey(fromJson: _parseNullable, toJson: _stringifyNullable) DateTime? currency,
-  }) = _NewTimestamps;
+class RawDelta with _$RawDelta {
+  const factory RawDelta({
+    required List<Map<String, dynamic>> upserts,
+    required List<String> deletes,
+  }) = _RawDelta;
 
-  factory NewTimestamps.fromJson(Map<String, dynamic> json) => _$NewTimestampsFromJson(json);
+  factory RawDelta.fromJson(Map<String, dynamic> json) => _$RawDeltaFromJson(json);
 }
 
 @freezed
 class SyncAllResponse with _$SyncAllResponse {
   const factory SyncAllResponse({
-    // TODO use dynamic instead of concrete Dtos?
-    // TODO dont define every EntityType manually
-    @JsonKey(fromJson: _accountDeltaFromJson, toJson: _accountDeltaToJson) required SyncDelta<AccountDto> account,
-    @JsonKey(fromJson: _bookingDeltaFromJson, toJson: _bookingDeltaToJson) required SyncDelta<BookingDto> booking,
-    @JsonKey(fromJson: _profileDeltaFromJson, toJson: _profileDeltaToJson) required SyncDelta<ProfileDto> profile,
-    @JsonKey(fromJson: _categoryDeltaFromJson, toJson: _categoryDeltaToJson) required SyncDelta<CategoryDto> category,
-    @JsonKey(fromJson: _currencyDeltaFromJson, toJson: _currencyDeltaToJson) required SyncDelta<CurrencyDto> currency,
-    @JsonKey(name: 'newTimestamps') required NewTimestamps newTimestamps,
+    required DateTime serverNow,
+    required Map<String, RawDelta> deltas,
+    @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) required Map<String, DateTime?> newTimestamps,
   }) = _SyncAllResponse;
 
   factory SyncAllResponse.fromJson(Map<String, dynamic> json) => _$SyncAllResponseFromJson(json);
 }
-
-SyncDelta<AccountDto> _accountDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => AccountDto.fromJson(j as Map<String, dynamic>));
-
-Map<String, dynamic> _accountDeltaToJson(SyncDelta<AccountDto> delta) => delta.toJson((a) => a.toJson());
-
-SyncDelta<BookingDto> _bookingDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => BookingDto.fromJson(j as Map<String, dynamic>));
-
-Map<String, dynamic> _bookingDeltaToJson(SyncDelta<BookingDto> delta) => delta.toJson((a) => a.toJson());
-
-SyncDelta<ProfileDto> _profileDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => ProfileDto.fromJson(j as Map<String, dynamic>));
-
-Map<String, dynamic> _profileDeltaToJson(SyncDelta<ProfileDto> delta) => delta.toJson((a) => a.toJson());
-
-SyncDelta<CategoryDto> _categoryDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => CategoryDto.fromJson(j as Map<String, dynamic>));
-
-Map<String, dynamic> _categoryDeltaToJson(SyncDelta<CategoryDto> delta) => delta.toJson((a) => a.toJson());
-
-SyncDelta<CurrencyDto> _currencyDeltaFromJson(Map<String, dynamic> json) => SyncDelta.fromJson(json, (j) => CurrencyDto.fromJson(j as Map<String, dynamic>));
-
-Map<String, dynamic> _currencyDeltaToJson(SyncDelta<CurrencyDto> delta) => delta.toJson((a) => a.toJson());
