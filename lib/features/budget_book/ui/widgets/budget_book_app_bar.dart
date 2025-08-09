@@ -9,7 +9,7 @@ import '../../bloc/budget_book_cubit.dart';
 import 'budget_filter_button.dart';
 import 'budget_tab_title.dart';
 
-enum BudgetMenuAction { reload, settings }
+enum BudgetMenuAction { reload, forceReload, settings }
 
 class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BudgetBookAppBar({super.key});
@@ -28,6 +28,8 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(CommunityMaterialIcons.dots_vertical),
           onSelected: (action) {
             if (action == BudgetMenuAction.reload) {
+              context.read<BudgetBookCubit>().reload();
+            } else if (action == BudgetMenuAction.forceReload) {
               context.read<BudgetBookCubit>().resetAndLoad();
             } else {
               context.showComingSoon();
@@ -35,14 +37,22 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           itemBuilder: (ctx) {
             final isLoading = ctx.read<BudgetBookCubit>().state.isLoading;
-            return [_buildReload(isLoading), PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr()))];
+            return [
+              _buildReload(isLoading),
+              _buildForceReload(isLoading),
+              PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr())),
+            ];
           },
         ),
       ],
     );
   }
 
+  PopupMenuItem<BudgetMenuAction> _buildForceReload(bool isLoading) {
+    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.forceReload, enabled: !isLoading, child: Text('Force Reload'));
+  }
+
   PopupMenuItem<BudgetMenuAction> _buildReload(bool isLoading) {
-    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.reload, enabled: !isLoading, child: Text('Reload Data'));
+    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.reload, enabled: !isLoading, child: Text('Reload'));
   }
 }

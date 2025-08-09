@@ -16,7 +16,11 @@ class ResetBudgetBookUseCase {
 
   ResetBudgetBookUseCase(this._syncCursorRepo, this._categoryRepo, this._accountRepo, this._bookingRepo, this._profileRepo);
 
-  Future<void> reset() async {
+  Future<void> reload() async {
+    await Future.wait([_accountRepo.loadAll(), _categoryRepo.loadAll(), _bookingRepo.loadAll(), _profileRepo.loadAll()]);
+  }
+
+  Future<void> resetAndLoad() async {
     await _syncCursorRepo.clear();
     await _bookingRepo.reset();
     await _categoryRepo.reset();
