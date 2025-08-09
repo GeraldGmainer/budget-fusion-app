@@ -21,6 +21,8 @@ import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.da
     as _i1046;
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_notifier_service.dart'
     as _i342;
+import 'package:budget_fusion_app/core/data/sync_manager/sync_coordinator.dart'
+    as _i752;
 import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart'
     as _i705;
 import 'package:budget_fusion_app/core/data/sync_manager/sync_manager.dart'
@@ -248,6 +250,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1046.QueueManager(
         gh<_i252.QueueLocalDataSource>(),
         gh<_i714.RemoteLoadingService>(),
+      ),
+    );
+    gh.singleton<_i752.SyncCoordinator>(
+      () => _i752.SyncCoordinator(
+        gh<_i714.QueueManager>(),
+        gh<_i777.SyncManager>(),
       ),
     );
     gh.lazySingleton<_i654.DataManagerFactory>(

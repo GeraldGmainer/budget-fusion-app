@@ -25,7 +25,7 @@ class SyncManager {
     _adapters[adapter.type] = adapter;
   }
 
-  Future<void> syncAll() async {
+  Future<void> syncAll({Set<String> excludeIds = const {}}) async {
     final now = DateTime.now();
     if (_ongoingSync != null) {
       return _ongoingSync!;
@@ -41,7 +41,7 @@ class SyncManager {
     _ongoingSync = completer.future;
 
     try {
-      await _syncAll();
+      await _syncAll(excludeIds);
       _lastSyncTime = DateTime.now();
       completer.complete();
     } catch (e, st) {
@@ -52,9 +52,9 @@ class SyncManager {
     }
   }
 
-  Future<void> _syncAll() async {
+  Future<void> _syncAll(Set<String> excludeIds) async {
     final cursors = await _syncCursorRepo.getAll();
-    final result = await _syncRemoteSource.syncAll(cursors: cursors, entities: _adapters.keys);
+    final result = await _syncRemoteSource.syncAll(cursors: cursors, entities: _adapters.keys, excludeIds: excludeIds);
 
     for (final entry in _adapters.entries) {
       final raw = result.deltas[entry.key.name];
