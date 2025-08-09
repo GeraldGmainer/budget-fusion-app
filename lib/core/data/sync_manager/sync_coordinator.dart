@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core.dart';
@@ -17,7 +16,6 @@ class SyncCoordinator {
   /// So we exclude the new entity from the sync
   SyncCoordinator(this.queueManager, this.syncManager) {
     _sub = queueManager.drainedIds.listen((ids) {
-      BudgetLogger.instance.d("drainedIds $ids");
       if (ids.isEmpty) return;
       syncManager.syncAll(excludeIds: ids);
     });

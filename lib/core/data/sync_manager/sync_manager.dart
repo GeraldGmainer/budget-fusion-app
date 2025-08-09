@@ -56,35 +56,41 @@ class SyncManager {
     final cursors = await _syncCursorRepo.getAll();
     final result = await _syncRemoteSource.syncAll(cursors: cursors, entities: _adapters.keys, excludeIds: excludeIds);
 
+    final changed = <EntityType>{};
+
     for (final entry in _adapters.entries) {
       final raw = result.deltas[entry.key.name];
       if (raw == null) continue;
-      final adapter = entry.value;
       if (raw.upserts.isNotEmpty) {
-        final dtos = adapter.fromJsons(raw.upserts);
-        await adapter.local.saveAllNotSynced(dtos);
+        final dtos = entry.value.fromJsons(raw.upserts);
+        await entry.value.local.saveAllNotSynced(dtos);
+        changed.add(entry.key);
       }
-      for (final id in raw.deletes) {
-        await adapter.local.deleteById(id);
+      if (raw.deletes.isNotEmpty) {
+        for (final id in raw.deletes) {
+          await entry.value.local.deleteById(id);
+        }
+        changed.add(entry.key);
       }
     }
 
-    for (final dm in _dataManagers.values) {
-      await dm.refresh();
+    for (final type in changed) {
+      final dm = _dataManagers[type];
+      if (dm != null) {
+        await dm.refresh();
+      }
     }
 
     final updatedTimestamps = <EntityType, DateTime>{};
-    for (final type in _adapters.keys) {
+    for (final type in changed) {
       final key = type.name;
-      final raw = result.deltas[key];
-      if (raw == null) continue;
-      if (raw.upserts.isEmpty && raw.deletes.isEmpty) continue;
       final ts = result.newTimestamps[key];
       if (ts != null) {
         await _syncCursorRepo.setLastSyncedAt(type, ts);
         updatedTimestamps[type] = ts;
       }
     }
+
     _logTimestamps(updatedTimestamps);
     _logChanges(result);
   }

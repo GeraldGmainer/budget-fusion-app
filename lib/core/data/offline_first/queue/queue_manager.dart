@@ -135,21 +135,16 @@ class QueueManager {
       BudgetLogger.instance.e("Queue processing error", e, stackTrace);
       rethrow;
     }
-    BudgetLogger.instance.d("----- _excludeIdsBuffer $_excludeIdsBuffer");
   }
 
   void _scheduleDrainIfIdle() {
     if (_inMemoryQueue.isNotEmpty || _isProcessing || _excludeIdsBuffer.isEmpty) return;
     _drainTimer?.cancel();
     _drainTimer = Timer(const Duration(milliseconds: 80), () {
-      BudgetLogger.instance.d("----- _excludeIdsBuffer $_excludeIdsBuffer");
       if (_inMemoryQueue.isEmpty && !_isProcessing && _excludeIdsBuffer.isNotEmpty) {
         final ids = Set<String>.from(_excludeIdsBuffer);
         _excludeIdsBuffer.clear();
-        BudgetLogger.instance.i("fire _drainedIds $_drainedIds");
         _drainedIds.add(ids);
-      } else {
-        BudgetLogger.instance.d("_inMemoryQueue.isEmpty $_inMemoryQueue.isEmpty / $_isProcessing _isProcessing / $_excludeIdsBuffer ${_excludeIdsBuffer.length}");
       }
     });
   }
