@@ -7,10 +7,10 @@ import 'dtos/account_dto.dart';
 import 'entities/account.dart';
 
 @singleton
-class AccountDataManager extends DataManager<Account> with AutoSubscribe<Account> {
+class AccountRepo extends Repo<Account> with AutoSubscribe<Account> {
   late final OfflineFirstDataManager<AccountDto> _manager;
 
-  AccountDataManager(DataManagerFactory dmf, AccountLocalDataSource lds, AccountRemoteDataSource rds)
+  AccountRepo(DataManagerFactory dmf, AccountLocalDataSource lds, AccountRemoteDataSource rds)
     : _manager = dmf.createManager<AccountDto>(entityType: EntityType.account, localDataSource: lds, remoteDataSource: rds);
 
   @override

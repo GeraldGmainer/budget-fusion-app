@@ -1,18 +1,17 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../core/core.dart';
-import '../../../data_managers/category/category.dart';
+import '../../../repos/category/category.dart';
 
 @lazySingleton
 class LoadCategoryListUseCase {
-  final CategoryDataManager _manager;
+  final CategoryRepo _repo;
 
-  LoadCategoryListUseCase(this._manager);
+  LoadCategoryListUseCase(this._repo);
 
   Future<List<Category>> load(bool clearCache) async {
     if (clearCache) {
-      await _manager.reset();
+      await _repo.reset();
     }
-    return await _manager.loadAll();
+    return await _repo.loadAll();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../data_managers/booking/booking.dart';
+import '../../../../repos/booking/booking.dart';
 import '../../view_models/budget_page_data.dart';
 import '../../view_models/transaction_group.dart';
 import '../../view_models/transaction_view_data.dart';

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/loadable_state.dart';
-import 'data_manager_cubit.dart';
+import 'repo_cubit.dart';
 
-class DataManagerSingleNullable<T> extends StatelessWidget {
+class RepoSingleNullable<T> extends StatelessWidget {
   final Widget Function(BuildContext context, T? data) builder;
 
-  const DataManagerSingleNullable({super.key, required this.builder});
+  const RepoSingleNullable({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DataManagerCubit<T>, LoadableState<List<T>>>(
+    return BlocBuilder<RepoCubit<T>, LoadableState<List<T>>>(
       builder: (context, state) {
         return state.maybeWhen(loaded: (data) => builder(context, data.first), orElse: () => builder(context, null));
       },

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-abstract class DataManager<T> {
+abstract class Repo<T> {
   Future<List<T>> loadAll({Map<String, dynamic>? filters});
 
   Stream<List<T>> watch();
@@ -15,7 +15,7 @@ abstract class DataManager<T> {
   Future<void> disposeStreams();
 }
 
-mixin AutoSubscribe<T> on DataManager<T> {
+mixin AutoSubscribe<T> on Repo<T> {
   late final StreamSubscription<List<T>> _sub;
 
   @override

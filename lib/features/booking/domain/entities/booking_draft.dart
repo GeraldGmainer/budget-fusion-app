@@ -2,10 +2,10 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../data_managers/account/account.dart';
-import '../../../../data_managers/booking/booking.dart';
-import '../../../../data_managers/category/category.dart';
-import '../../../../data_managers/currency/currency.dart';
+import '../../../../repos/account/account.dart';
+import '../../../../repos/booking/booking.dart';
+import '../../../../repos/category/category.dart';
+import '../../../../repos/currency/currency.dart';
 
 part 'booking_draft.freezed.dart';
 

@@ -2,13 +2,13 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data_managers/booking/booking.dart';
+import '../../../../repos/booking/booking.dart';
 
 class AnalyticsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: DataManagerList<Booking>(
+      child: RepoList<Booking>(
         builder: (context, data) {
           return _buildBookings(data);
         },

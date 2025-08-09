@@ -1,5 +1,5 @@
 import '../../../../core/core.dart';
-import '../../../../data_managers/booking/dtos/booking_suggestion_dto.dart';
+import '../../../../repos/booking/dtos/booking_suggestion_dto.dart';
 
 class BookingSuggestion {
   final String suggestion;

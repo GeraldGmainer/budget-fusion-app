@@ -9,8 +9,8 @@ import 'package:decimal/decimal.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../data_managers/account/account.dart';
-import '../../../data_managers/booking/booking.dart';
+import '../../../repos/account/account.dart';
+import '../../../repos/booking/booking.dart';
 import '../domain/entities/booking_draft.dart';
 import '../use_cases/default_account_use_case.dart';
 import '../use_cases/save_booking_use_case.dart';
@@ -23,10 +23,9 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
   final DefaultAccountUseCase _defaultAccountUseCase;
   final DefaultNewDateUseCase _defaultNewDateUseCase;
   final SaveBookingUseCase _saveBookingUseCase;
-  final BookingDataManager _bookingDataManager;
+  final BookingRepo _bookingRepo;
 
-  BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._bookingDataManager, this._defaultNewDateUseCase)
-    : super(BookingSaveState.initial(draft: _initialDraft()));
+  BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._bookingRepo, this._defaultNewDateUseCase) : super(BookingSaveState.initial(draft: _initialDraft()));
 
   static BookingDraft _initialDraft({Account? account, DateTime? date}) {
     return BookingDraft(date: date ?? DateTime.now(), amount: Decimal.zero, account: account);
@@ -69,7 +68,7 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
   Future<void> delete(Booking booking) async {
     final draft = state.draft;
     try {
-      await _bookingDataManager.delete(booking);
+      await _bookingRepo.delete(booking);
       emit(BookingSaveState.deleted(draft: draft, booking: booking));
     } on TranslatedException catch (e, stack) {
       BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);

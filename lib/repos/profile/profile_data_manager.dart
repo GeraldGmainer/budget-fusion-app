@@ -12,19 +12,19 @@ import 'entities/profile.dart';
 import 'entities/profile_setting.dart';
 
 @singleton
-class ProfileDataManager extends DataManager<Profile> with AutoSubscribe<Profile> {
+class ProfileRepo extends Repo<Profile> with AutoSubscribe<Profile> {
   late final OfflineFirstDataManager<ProfileDto> _manager;
   late final Stream<List<Profile>> _sharedStream;
-  final CurrencyDataManager _currencyDataManager;
+  final CurrencyRepo _currencyRepo;
 
-  ProfileDataManager(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds, this._currencyDataManager)
+  ProfileRepo(DataManagerFactory dmf, ProfileLocalDataSource lds, ProfileRemoteDataSource rds, this._currencyRepo)
     : _manager = dmf.createManager<ProfileDto>(entityType: EntityType.profile, localDataSource: lds, remoteDataSource: rds);
 
   @override
   void setupStreams() {
     _sharedStream = Rx.combineLatest2<List<SyncedDto<ProfileDto>>, List<Currency>, List<Profile>>(
       _manager.stream,
-      _currencyDataManager.watch(),
+      _currencyRepo.watch(),
       (profileDtos, currencies) => _mapProfiles(profileDtos, currencies),
     ).debounceTime(FeatureConstants.mapperDebounceDuration).shareReplay(maxSize: 1);
     super.setupStreams();

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 
-import '../../../../data_managers/profile/profile.dart';
+import '../../../../repos/profile/profile.dart';
 import '../../bloc/calculator_cubit.dart';
 
 class AmountDisplay extends StatefulWidget {
@@ -93,7 +93,7 @@ class AmountDisplayState extends State<AmountDisplay> with SingleTickerProviderS
   }
 
   Widget _buildCurrency(BuildContext context) {
-    return BlocBuilder<DataManagerCubit<Profile>, LoadableState<List<Profile>>>(
+    return BlocBuilder<RepoCubit<Profile>, LoadableState<List<Profile>>>(
       builder: (context, state) {
         final value = state.whenOrNull(loaded: (data) => data.first.setting.currency.symbol);
         return Text(value ?? "", style: TextStyle(fontSize: 24, color: AppColors.primaryTextColor));

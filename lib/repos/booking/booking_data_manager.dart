@@ -15,16 +15,16 @@ import 'entities/booking.dart';
 import 'mappers/booking_mapper.dart';
 
 @singleton
-class BookingDataManager extends DataManager<Booking> with AutoSubscribe<Booking> {
+class BookingRepo extends Repo<Booking> with AutoSubscribe<Booking> {
   late final OfflineFirstDataManager<BookingDto> _manager;
-  final AccountDataManager _accountDataManager;
-  final CategoryDataManager _categoryDataManager;
-  final ProfileDataManager _profileDataManager;
+  final AccountRepo _accountRepo;
+  final CategoryRepo _categoryRepo;
+  final ProfileRepo _profileRepo;
   final BookingMapper _mapper;
   final BookingLocalDataSource _lds;
   late final Stream<List<Booking>> _sharedStream;
 
-  BookingDataManager(DataManagerFactory dmf, this._lds, BookingRemoteDataSource rds, this._mapper, this._accountDataManager, this._categoryDataManager, this._profileDataManager) {
+  BookingRepo(DataManagerFactory dmf, this._lds, BookingRemoteDataSource rds, this._mapper, this._accountRepo, this._categoryRepo, this._profileRepo) {
     _manager = dmf.createManager<BookingDto>(entityType: EntityType.booking, localDataSource: _lds, remoteDataSource: rds);
   }
 
@@ -32,9 +32,9 @@ class BookingDataManager extends DataManager<Booking> with AutoSubscribe<Booking
   void setupStreams() {
     _sharedStream = Rx.combineLatest4<List<SyncedDto<BookingDto>>, List<Account>, List<Category>, List<Profile>, List<Booking>>(
       _manager.stream,
-      _accountDataManager.watch(),
-      _categoryDataManager.watch(),
-      _profileDataManager.watch().startWith([]).where((profiles) => profiles.isNotEmpty),
+      _accountRepo.watch(),
+      _categoryRepo.watch(),
+      _profileRepo.watch().startWith([]).where((profiles) => profiles.isNotEmpty),
       (bookingDtos, accounts, categories, profiles) => _mapper.mapBookings(bookingDtos, accounts, categories, profiles),
     ).debounceTime(FeatureConstants.mapperDebounceDuration).shareReplay(maxSize: 1);
     super.setupStreams();

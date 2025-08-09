@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../data_managers/account/dtos/account_dto.dart';
-import '../../../data_managers/booking/dtos/booking_dto.dart';
-import '../../../data_managers/category/dtos/category_dto.dart';
-import '../../../data_managers/currency/currency.dart';
-import '../../../data_managers/profile/dtos/profile_dto.dart';
+import '../../../repos/account/dtos/account_dto.dart';
+import '../../../repos/booking/dtos/booking_dto.dart';
+import '../../../repos/category/dtos/category_dto.dart';
+import '../../../repos/currency/currency.dart';
+import '../../../repos/profile/dtos/profile_dto.dart';
 import '../models/dto.dart';
 
 part 'sync_all_response.freezed.dart';

@@ -2,11 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../core/core.dart';
-import '../data_managers/account/account.dart';
-import '../data_managers/booking/booking.dart';
-import '../data_managers/category/category.dart';
-import '../data_managers/currency/currency.dart';
-import '../data_managers/profile/profile.dart';
+import '../repos/account/account.dart';
+import '../repos/booking/booking.dart';
+import '../repos/category/category.dart';
+import '../repos/currency/currency.dart';
+import '../repos/profile/profile.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/budget_book/budget_book.dart';
@@ -32,10 +32,10 @@ List<BlocProvider> getBlocProviders() {
 
 List<BlocProvider> _dataManagerProviders() {
   return [
-    BlocProvider<DataManagerCubit<Account>>(create: (_) => DataManagerCubit(GetIt.I<AccountDataManager>())),
-    BlocProvider<DataManagerCubit<Category>>(create: (_) => DataManagerCubit(GetIt.I<CategoryDataManager>())),
-    BlocProvider<DataManagerCubit<Booking>>(create: (_) => DataManagerCubit(GetIt.I<BookingDataManager>())),
-    BlocProvider<DataManagerCubit<Profile>>(create: (_) => DataManagerCubit(GetIt.I<ProfileDataManager>())),
-    BlocProvider<DataManagerCubit<Currency>>(create: (_) => DataManagerCubit(GetIt.I<CurrencyDataManager>())),
+    BlocProvider<RepoCubit<Account>>(create: (_) => RepoCubit(GetIt.I<AccountRepo>())),
+    BlocProvider<RepoCubit<Category>>(create: (_) => RepoCubit(GetIt.I<CategoryRepo>())),
+    BlocProvider<RepoCubit<Booking>>(create: (_) => RepoCubit(GetIt.I<BookingRepo>())),
+    BlocProvider<RepoCubit<Profile>>(create: (_) => RepoCubit(GetIt.I<ProfileRepo>())),
+    BlocProvider<RepoCubit<Currency>>(create: (_) => RepoCubit(GetIt.I<CurrencyRepo>())),
   ];
 }

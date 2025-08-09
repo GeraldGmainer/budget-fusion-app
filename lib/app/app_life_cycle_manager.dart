@@ -9,7 +9,7 @@ import '../utils/service/connectivity_service.dart';
 
 @singleton
 class AppLifecycleManager {
-  final List<DataManager<dynamic>> _dataManagers;
+  final List<Repo<dynamic>> _dataManagers;
 
   AppLifecycleManager(this._dataManagers);
 

@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
 
-import '../../data_managers/account/account.dart';
-import '../../data_managers/booking/booking.dart';
-import '../../data_managers/category/category.dart';
-import '../../data_managers/currency/currency.dart';
-import '../../data_managers/profile/profile.dart';
+import '../../repos/account/account.dart';
+import '../../repos/booking/booking.dart';
+import '../../repos/category/category.dart';
+import '../../repos/currency/currency.dart';
+import '../../repos/profile/profile.dart';
 import '../core.dart';
 
 @module
@@ -13,11 +13,11 @@ abstract class DataManagerModule {
   /// ATTENTION: order is important
   /// booking data manager needs profile manager, so profile manager must be before!
   @singleton
-  List<DataManager<dynamic>> managers(
-    CurrencyDataManager currencyDM,
-    ProfileDataManager profileDM,
-    CategoryDataManager categoryDM,
-    AccountDataManager accountDM,
-    BookingDataManager bookingDM,
-  ) => [currencyDM, profileDM, categoryDM, accountDM, bookingDM];
+  List<Repo<dynamic>> managers(
+    CurrencyRepo currencyRepo,
+    ProfileRepo profileRepo,
+    CategoryRepo categoryRepo,
+    AccountRepo accountRepo,
+    BookingRepo bookingRepo,
+  ) => [currencyRepo, profileRepo, categoryRepo, accountRepo, bookingRepo];
 }

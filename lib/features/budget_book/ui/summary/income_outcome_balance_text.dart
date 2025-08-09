@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data_managers/currency/currency.dart';
+import '../../../../repos/currency/currency.dart';
 import '../../../../shared/shared.dart';
 
 class IncomeOutcomeBalanceText extends StatefulWidget {

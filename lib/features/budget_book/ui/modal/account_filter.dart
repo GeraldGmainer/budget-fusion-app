@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data_managers/account/account.dart';
+import '../../../../repos/account/account.dart';
 import '../../view_models/budget_book_filter.dart';
 
 class AccountFilter extends StatelessWidget {
@@ -12,7 +12,7 @@ class AccountFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataManagerList<Account>(
+    return RepoList<Account>(
       builder: (context, data) {
         return FilterChipGroup(
           title: 'Accounts',

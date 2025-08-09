@@ -1,14 +1,14 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/core.dart';
-import '../../data_managers/account/account.dart';
-import '../../data_managers/booking/booking.dart';
-import '../../data_managers/category/category.dart';
-import '../../data_managers/currency/currency.dart';
-import '../../data_managers/profile/profile.dart';
+import '../../repos/account/account.dart';
+import '../../repos/booking/booking.dart';
+import '../../repos/category/category.dart';
+import '../../repos/currency/currency.dart';
+import '../../repos/profile/profile.dart';
 import '../../utils/utils.dart';
 
 part 'offline_first_loader_cubit.freezed.dart';
@@ -17,13 +17,13 @@ part 'offline_first_loader_state.dart';
 @injectable
 class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
   final QueueManager _queueManager;
-  final CategoryDataManager _categoryManager;
-  final AccountDataManager _accountManager;
-  final BookingDataManager _bookingManager;
-  final ProfileDataManager _profileManager;
-  final CurrencyDataManager _currencyDataManager;
+  final CategoryRepo _categoryRepo;
+  final AccountRepo _accountRepo;
+  final BookingRepo _bookingRepo;
+  final ProfileRepo _profileRepo;
+  final CurrencyRepo _currencyRepo;
 
-  OfflineFirstLoaderCubit(this._queueManager, this._categoryManager, this._accountManager, this._bookingManager, this._profileManager, this._currencyDataManager)
+  OfflineFirstLoaderCubit(this._queueManager, this._categoryRepo, this._accountRepo, this._bookingRepo, this._profileRepo, this._currencyRepo)
     : super(const OfflineFirstLoaderState.initial());
 
   Future<void> init() async {
@@ -32,11 +32,11 @@ class OfflineFirstLoaderCubit extends Cubit<OfflineFirstLoaderState> {
       await _refreshToken();
       Future.wait([
         _queueManager.init(),
-        _currencyDataManager.loadAll(),
-        _categoryManager.loadAll(),
-        _accountManager.loadAll(),
-        _bookingManager.loadAll(),
-        _profileManager.loadAll(),
+        _currencyRepo.loadAll(),
+        _categoryRepo.loadAll(),
+        _accountRepo.loadAll(),
+        _bookingRepo.loadAll(),
+        _profileRepo.loadAll(),
       ]);
       emit(OfflineFirstLoaderState.success());
     } on TranslatedException catch (e, stackTrace) {

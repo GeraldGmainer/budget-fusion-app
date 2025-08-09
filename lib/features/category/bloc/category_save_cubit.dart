@@ -3,7 +3,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../data_managers/category/category.dart';
+import '../../../repos/category/category.dart';
 import '../domain/entities/category_draft.dart';
 
 part 'category_save_cubit.freezed.dart';
@@ -11,9 +11,9 @@ part 'category_save_state.dart';
 
 @injectable
 class CategorySaveCubit extends ErrorHandledCubit<CategorySaveState> {
-  final CategoryDataManager _manager;
+  final CategoryRepo _repo;
 
-  CategorySaveCubit(this._manager) : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
+  CategorySaveCubit(this._repo) : super(CategorySaveState.initial(draft: CategoryDraft.initial()));
 
   Future<void> init(CategoryDraft draft) => safeRun(
     action: () async => emit(CategorySaveState.draftUpdate(draft: draft, initialDraft: draft)),
@@ -31,7 +31,7 @@ class CategorySaveCubit extends ErrorHandledCubit<CategorySaveState> {
         BudgetLogger.instance.e("${runtimeType.toString()} RefreshException", "CategoryDraft ID is NULL");
         return;
       }
-      final category = await _manager.loadById(id);
+      final category = await _repo.loadById(id);
       if (category == null) {
         BudgetLogger.instance.e("${runtimeType.toString()} RefreshException", "found Category by ID is NULL");
         return;
@@ -46,7 +46,7 @@ class CategorySaveCubit extends ErrorHandledCubit<CategorySaveState> {
     action: () async {
       final CategoryDraft draft = state.draft;
       emit(CategorySaveState.loading(draft: draft));
-      await _manager.save(draft.toCategory());
+      await _repo.save(draft.toCategory());
       emit(CategorySaveState.saved(draft: draft));
     },
     onError: (e, appError) => CategorySaveState.error(draft: state.draft, error: appError),
@@ -55,7 +55,7 @@ class CategorySaveCubit extends ErrorHandledCubit<CategorySaveState> {
   Future<void> delete() => safeRun(
     action: () async {
       final draft = state.draft;
-      await _manager.delete(draft.toCategory());
+      await _repo.delete(draft.toCategory());
       emit(CategorySaveState.deleted(draft: draft));
     },
     onError: (e, appError) => CategorySaveState.error(draft: state.draft, error: appError),

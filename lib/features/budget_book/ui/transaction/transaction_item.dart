@@ -2,7 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data_managers/booking/booking.dart';
+import '../../../../repos/booking/booking.dart';
 
 class TransactionItem extends StatelessWidget {
   final Booking booking;

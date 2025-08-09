@@ -8,10 +8,10 @@ import 'dtos/currency_dto.dart';
 import 'entities/currency.dart';
 
 @singleton
-class CurrencyDataManager extends DataManager<Currency> with AutoSubscribe<Currency> {
+class CurrencyRepo extends Repo<Currency> with AutoSubscribe<Currency> {
   late final OfflineFirstDataManager<CurrencyDto> _manager;
 
-  CurrencyDataManager(DataManagerFactory dmf, CurrencyLocalDataSource lds, CurrencyRemoteDataSource rds)
+  CurrencyRepo(DataManagerFactory dmf, CurrencyLocalDataSource lds, CurrencyRemoteDataSource rds)
     : _manager = dmf.createManager<CurrencyDto>(entityType: EntityType.currency, localDataSource: lds, remoteDataSource: rds);
 
   @override

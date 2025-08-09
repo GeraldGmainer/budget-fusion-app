@@ -8,11 +8,11 @@ import 'entities/category.dart';
 import 'mappers/category_mapper.dart';
 
 @singleton
-class CategoryDataManager extends DataManager<Category> with AutoSubscribe<Category> {
+class CategoryRepo extends Repo<Category> with AutoSubscribe<Category> {
   late final OfflineFirstDataManager<CategoryDto> _manager;
   final CategoryMapper _mapper;
 
-  CategoryDataManager(DataManagerFactory dmf, CategoryLocalDataSource lds, CategoryRemoteDataSource rds, this._mapper)
+  CategoryRepo(DataManagerFactory dmf, CategoryLocalDataSource lds, CategoryRemoteDataSource rds, this._mapper)
     : _manager = dmf.createManager<CategoryDto>(entityType: EntityType.category, localDataSource: lds, remoteDataSource: rds);
 
   @override

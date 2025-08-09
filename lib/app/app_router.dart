@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import '../data_managers/booking/booking.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/category/category.dart';
 import '../features/settings/settings.dart';
 import '../main/main.dart';
+import '../repos/booking/booking.dart';
 
 // TODO SignUpPage, ForgotPasswordPage, ResetPasswordPage
 class AppRouter {

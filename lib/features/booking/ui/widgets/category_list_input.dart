@@ -4,7 +4,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data_managers/category/category.dart';
+import '../../../../repos/category/category.dart';
 
 enum CategoryPickerRoute { parent, subcategories }
 

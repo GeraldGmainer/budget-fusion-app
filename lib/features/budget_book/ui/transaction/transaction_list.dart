@@ -4,7 +4,7 @@ import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../data_managers/booking/booking.dart';
+import '../../../../repos/booking/booking.dart';
 import '../../view_models/transaction_group.dart';
 import '../../view_models/transaction_view_data.dart';
 import 'transaction_item.dart';

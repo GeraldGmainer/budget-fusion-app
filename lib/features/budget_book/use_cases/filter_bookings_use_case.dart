@@ -1,7 +1,7 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../data_managers/booking/booking.dart';
+import '../../../repos/booking/booking.dart';
 import '../view_models/budget_book_filter.dart';
 
 @lazySingleton
