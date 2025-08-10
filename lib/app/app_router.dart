@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import '../features/auth/auth.dart';
 import '../features/booking/booking.dart';
 import '../features/category/category.dart';
+import '../features/debug/debug.dart';
 import '../features/settings/settings.dart';
 import '../main/main.dart';
 import '../repos/booking/booking.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   final Map<String, RouteFactory> _routes = {
     AppRoutes.login: (settings) => DefaultRoute(builder: (_) => LoginPage(), settings: settings),
     AppRoutes.main: (settings) => DefaultRoute(builder: (_) => MainPage(), settings: settings),
+    AppRoutes.debug: (settings) => DefaultRoute(builder: (_) => DebugPage(), settings: settings),
     AppRoutes.bookingSave:
         (settings) => SlideRightRoute(
           builder: (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),

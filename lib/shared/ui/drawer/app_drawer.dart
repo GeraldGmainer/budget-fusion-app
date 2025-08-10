@@ -34,6 +34,12 @@ class AppDrawer extends StatelessWidget {
           title: 'Shopping List',
           color: Color(0xFF4DB6AC), // teal
         ),
+        DrawerItem(
+          icon: CommunityMaterialIcons.android,
+          title: 'Debug',
+          color: Color(0xFFa4c639),
+          route: AppRoutes.debug,
+        ),
       ],
     ),
     DrawerSection(

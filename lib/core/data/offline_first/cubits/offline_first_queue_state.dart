@@ -6,5 +6,8 @@ class OfflineFirstQueueState with _$OfflineFirstQueueState {
 
   const factory OfflineFirstQueueState.loading() = _Loading;
 
-  const factory OfflineFirstQueueState.loaded() = _Loaded;
+  const factory OfflineFirstQueueState.loaded({
+    required List<QueueItem> items,
+    required List<QueueLogEntry> logs,
+  }) = _Loaded;
 }
