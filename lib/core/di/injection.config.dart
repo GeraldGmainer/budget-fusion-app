@@ -17,6 +17,8 @@ import 'package:budget_fusion_app/core/data/offline_first/data_manager/data_mana
     as _i654;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_local_data_source.dart'
     as _i252;
+import 'package:budget_fusion_app/core/data/offline_first/queue/queue_logger.dart'
+    as _i509;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.dart'
     as _i1046;
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_notifier_service.dart'
@@ -187,6 +189,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i755.ProfileRemoteDataSource>(
       () => _i755.ProfileRemoteDataSource(),
     );
+    gh.lazySingleton<_i509.QueueLogger>(() => _i509.QueueLogger());
     gh.lazySingleton<_i705.SyncCursorRepo>(
       () => _i705.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
@@ -195,12 +198,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i78.BudgetPageDataService>(
       () => _i78.BudgetPageDataService(gh<_i428.DatetimeService>()),
-    );
-    gh.lazySingleton<_i777.SyncManager>(
-      () => _i777.SyncManager(
-        gh<_i705.SyncCursorRepo>(),
-        gh<_i467.SyncRemoteSource>(),
-      ),
     );
     gh.factory<_i234.RemoteLoadingCubit>(
       () => _i234.RemoteLoadingCubit(gh<_i247.RemoteLoadingService>()),
@@ -241,10 +238,18 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i318.FilterAndGroupBookingsUseCase(gh<_i78.BudgetPageDataService>()),
     );
+    gh.lazySingleton<_i777.SyncManager>(
+      () => _i777.SyncManager(
+        gh<_i705.SyncCursorRepo>(),
+        gh<_i467.SyncRemoteSource>(),
+        gh<_i428.ConnectivityService>(),
+      ),
+    );
     gh.lazySingleton<_i1046.QueueManager>(
       () => _i1046.QueueManager(
         gh<_i252.QueueLocalDataSource>(),
         gh<_i714.RemoteLoadingService>(),
+        gh<_i428.ConnectivityService>(),
       ),
     );
     gh.singleton<_i752.SyncCoordinator>(
