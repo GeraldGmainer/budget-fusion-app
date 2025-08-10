@@ -10,7 +10,21 @@ enum EntityType {
   String get text => _toSnakeCase(name);
 
   static EntityType fromString(String value) {
-    return EntityType.values.firstWhere((e) => e.name == value, orElse: () => throw Exception("Invalid entity type: $value"));
+    final core = value.trim().split('.').last;
+    final norm = core.replaceAll(RegExp(r'[^a-zA-Z]'), '').toLowerCase();
+    for (final e in EntityType.values) {
+      if (e.name.toLowerCase() == norm) return e;
+    }
+    throw Exception("Invalid entity type: $value");
+  }
+
+  static EntityType? tryParse(String value) {
+    final core = value.trim().split('.').last;
+    final norm = core.replaceAll(RegExp(r'[^a-zA-Z]'), '').toLowerCase();
+    for (final e in EntityType.values) {
+      if (e.name.toLowerCase() == norm) return e;
+    }
+    return null;
   }
 }
 

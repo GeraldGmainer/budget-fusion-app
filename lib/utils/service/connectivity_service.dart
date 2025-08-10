@@ -41,4 +41,6 @@ class ConnectivityService {
   evaluateResult(List<ConnectivityResult> results) {
     return results.contains(ConnectivityResult.mobile) || results.contains(ConnectivityResult.wifi);
   }
+
+  checkConnectivity() => _connectivity.checkConnectivity();
 }
