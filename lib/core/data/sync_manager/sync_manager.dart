@@ -15,6 +15,7 @@ class SyncManager {
   final SyncCursorRepo _syncCursorRepo;
   final SyncRemoteSource _syncRemoteSource;
   final ConnectivityService _connectivityService;
+  final RemoteLoadingService remoteLoadingService;
   final Map<EntityType, OfflineFirstDataManager> _dataManagers = {};
   final Map<EntityType, DataSourceAdapter> _adapters = {};
   DateTime? _lastSyncTime;
@@ -23,7 +24,7 @@ class SyncManager {
   Future<void>? _ongoingSync;
   StreamSubscription<List<ConnectivityResult>>? _connSub;
 
-  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this._connectivityService) {
+  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this._connectivityService, this.remoteLoadingService) {
     _initConnectivity();
   }
 
@@ -58,7 +59,9 @@ class SyncManager {
     _ongoingSync = completer.future;
 
     try {
-      await _syncAll(excludeIds);
+      await remoteLoadingService.wrap(() async {
+        await _syncAll(excludeIds);
+      });
       _lastSyncTime = DateTime.now();
       _lastOfflineAt = null;
       completer.complete();

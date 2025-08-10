@@ -16,7 +16,6 @@ class OfflineFirstDataManager<E extends Dto> {
   final QueueManager queueManager;
   final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
-  final RemoteLoadingService remoteLoadingService;
 
   ReplaySubject<List<SyncedDto<E>>> streamController = ReplaySubject<List<SyncedDto<E>>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
@@ -28,7 +27,6 @@ class OfflineFirstDataManager<E extends Dto> {
     required this.queueManager,
     required this.syncManager,
     required this.realtimeNotifierService,
-    required this.remoteLoadingService,
   }) {
     queueManager.register(adapter);
     syncManager.register(this, adapter);

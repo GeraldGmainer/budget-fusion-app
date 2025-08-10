@@ -216,6 +216,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i601.TransactionDataGenerator>(),
       ),
     );
+    gh.lazySingleton<_i777.SyncManager>(
+      () => _i777.SyncManager(
+        gh<_i705.SyncCursorRepo>(),
+        gh<_i467.SyncRemoteSource>(),
+        gh<_i428.ConnectivityService>(),
+        gh<_i714.RemoteLoadingService>(),
+      ),
+    );
     gh.lazySingleton<_i252.QueueLocalDataSource>(
       () => _i252.QueueLocalDataSource(gh<_i779.Database>()),
     );
@@ -238,13 +246,6 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i318.FilterAndGroupBookingsUseCase(gh<_i78.BudgetPageDataService>()),
     );
-    gh.lazySingleton<_i777.SyncManager>(
-      () => _i777.SyncManager(
-        gh<_i705.SyncCursorRepo>(),
-        gh<_i467.SyncRemoteSource>(),
-        gh<_i428.ConnectivityService>(),
-      ),
-    );
     gh.lazySingleton<_i1046.QueueManager>(
       () => _i1046.QueueManager(
         gh<_i252.QueueLocalDataSource>(),
@@ -258,30 +259,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i777.SyncManager>(),
       ),
     );
+    gh.factory<_i920.OfflineFirstQueueCubit>(
+      () => _i920.OfflineFirstQueueCubit(gh<_i1046.QueueManager>()),
+    );
     gh.lazySingleton<_i654.DataManagerFactory>(
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i342.RealtimeNotifierService>(),
-        gh<_i247.RemoteLoadingService>(),
         gh<_i777.SyncManager>(),
-      ),
-    );
-    gh.singleton<_i864.CurrencyRepo>(
-      () => _i864.CurrencyRepo(
-        gh<_i714.DataManagerFactory>(),
-        gh<_i692.CurrencyLocalDataSource>(),
-        gh<_i678.CurrencyRemoteDataSource>(),
-      ),
-    );
-    gh.factory<_i920.OfflineFirstQueueCubit>(
-      () => _i920.OfflineFirstQueueCubit(gh<_i1046.QueueManager>()),
-    );
-    gh.singleton<_i1018.ProfileRepo>(
-      () => _i1018.ProfileRepo(
-        gh<_i714.DataManagerFactory>(),
-        gh<_i372.ProfileLocalDataSource>(),
-        gh<_i755.ProfileRemoteDataSource>(),
-        gh<_i881.CurrencyRepo>(),
       ),
     );
     gh.singleton<_i28.CategoryRepo>(
@@ -311,6 +296,30 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1005.CategorySaveCubit>(
       () => _i1005.CategorySaveCubit(gh<_i531.CategoryRepo>()),
     );
+    gh.singleton<_i864.CurrencyRepo>(
+      () => _i864.CurrencyRepo(
+        gh<_i714.DataManagerFactory>(),
+        gh<_i692.CurrencyLocalDataSource>(),
+        gh<_i678.CurrencyRemoteDataSource>(),
+      ),
+    );
+    gh.singleton<_i1018.ProfileRepo>(
+      () => _i1018.ProfileRepo(
+        gh<_i714.DataManagerFactory>(),
+        gh<_i372.ProfileLocalDataSource>(),
+        gh<_i755.ProfileRemoteDataSource>(),
+        gh<_i881.CurrencyRepo>(),
+      ),
+    );
+    gh.lazySingleton<_i576.BookingAccountService>(
+      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
+    );
+    gh.factory<_i788.CategoryListCubit>(
+      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
+    );
+    gh.lazySingleton<_i656.DefaultAccountUseCase>(
+      () => _i656.DefaultAccountUseCase(gh<_i576.BookingAccountService>()),
+    );
     gh.singleton<_i427.BookingRepo>(
       () => _i427.BookingRepo(
         gh<_i714.DataManagerFactory>(),
@@ -331,17 +340,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
       ),
     );
-    gh.lazySingleton<_i576.BookingAccountService>(
-      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
-    );
     gh.singleton<_i202.AppLifecycleManager>(
       () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
-    );
-    gh.factory<_i788.CategoryListCubit>(
-      () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
-    );
-    gh.lazySingleton<_i656.DefaultAccountUseCase>(
-      () => _i656.DefaultAccountUseCase(gh<_i576.BookingAccountService>()),
     );
     gh.factory<_i963.SuggestionCubit>(
       () => _i963.SuggestionCubit(gh<_i269.BookingRepo>()),

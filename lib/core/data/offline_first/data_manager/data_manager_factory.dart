@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../enums/entity_type.dart';
-import '../../../remote_loading/service/remote_loading_service.dart';
 import '../../data_sources/data_source_adapter.dart';
 import '../../data_sources/local_data_source.dart';
 import '../../data_sources/remote_data_source.dart';
@@ -16,12 +15,10 @@ class DataManagerFactory {
   final QueueManager queueManager;
   final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
-  final RemoteLoadingService remoteLoadingService;
 
   DataManagerFactory(
     this.queueManager,
     this.realtimeNotifierService,
-    this.remoteLoadingService,
     this.syncManager,
   );
 
@@ -35,7 +32,6 @@ class DataManagerFactory {
       queueManager: queueManager,
       syncManager: syncManager,
       realtimeNotifierService: realtimeNotifierService,
-      remoteLoadingService: remoteLoadingService,
     );
   }
 
