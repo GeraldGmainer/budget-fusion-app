@@ -1,46 +1,37 @@
-import 'dart:convert';
-
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BudgetGoalsTab extends StatefulWidget {
+import '../../../../core/core.dart';
+import '../../../../repos/category/category.dart';
+import '../../../../utils/utils.dart';
+
+class BudgetGoalsTab extends StatelessWidget {
+  const BudgetGoalsTab({super.key});
+
   @override
-  State<BudgetGoalsTab> createState() => _BudgetGoalsTabState();
+  Widget build(BuildContext context) {
+    return _BudgetGoalsView();
+  }
 }
 
-class _BudgetGoalsTabState extends State<BudgetGoalsTab> {
-  List<dynamic> categories = [];
+class _BudgetGoalsView extends StatelessWidget {
+  const _BudgetGoalsView();
 
-  @override
-  void initState() {
-    super.initState();
-    loadCategories();
-  }
+  Color hexToColor(String hex) => Color(int.parse(hex.substring(1, 7), radix: 16) + 0xFF000000);
 
-  Future<void> loadCategories() async {
-    String jsonString = await rootBundle.loadString('assets/categories.json');
-    setState(() {
-      categories = json.decode(jsonString);
-    });
-  }
-
-  Color hexToColor(String hex) {
-    return Color(int.parse(hex.substring(1, 7), radix: 16) + 0xFF000000);
-  }
-
-  Widget buildCategory(Map<String, dynamic> category) {
+  Widget buildCategory(Category category) {
     return Card(
       child: ExpansionTile(
         initiallyExpanded: true,
-        leading: Icon(IconConverter.getIcon(category['icon_name']), color: hexToColor(category['icon_color'])),
-        title: Text(category['name']),
-        children: (category['sub_categories'] as List<dynamic>).map((subCat) {
-          return ListTile(
-            leading: Icon(IconConverter.getIcon(subCat['icon_name']), color: hexToColor(subCat['icon_color'])),
-            title: Text(subCat['name']),
-          );
-        }).toList(),
+        leading: Icon(IconConverter.getIcon(category.iconName), color: hexToColor(category.iconColor)),
+        title: Text(category.name),
+        children:
+            category.subcategories.map((sub) {
+              return ListTile(
+                leading: Icon(IconConverter.getIcon(sub.iconName), color: hexToColor(sub.iconColor)),
+                title: Text(sub.name),
+              );
+            }).toList(),
       ),
     );
   }
@@ -48,11 +39,23 @@ class _BudgetGoalsTabState extends State<BudgetGoalsTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Categories Test')),
+      appBar: AppBar(title: const Text('Categories')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: categories.map((cat) => buildCategory(cat)).toList(),
+        child: BlocBuilder<RepoCubit<Category>, LoadableState<List<Category>>>(
+          builder:
+              (context, state) => state.when(
+                initial: () => const Center(child: CircularProgressIndicator()),
+                loading: (_) => const Center(child: CircularProgressIndicator()),
+                loaded: (data) {
+                  final parents = data.parentCategories;
+                  if (parents.isEmpty) return const Center(child: Text('No categories'));
+                  return ListView(
+                    children: parents.map(buildCategory).toList(),
+                  );
+                },
+                error: (e) => Center(child: Text('Error: $e')),
+              ),
         ),
       ),
     );

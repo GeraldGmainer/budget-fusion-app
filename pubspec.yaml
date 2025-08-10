@@ -79,7 +79,6 @@ flutter:
     - assets/splash.png
     - assets/logo.png
     - assets/translations/
-    - assets/categories.json
     - assets/category_icons.json
     - assets/migrations/
 
