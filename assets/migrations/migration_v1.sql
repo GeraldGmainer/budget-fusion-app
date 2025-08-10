@@ -16,9 +16,7 @@ CREATE TABLE currency
     symbol              TEXT  ,
     ui_order            INTEGER,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
 
 CREATE TABLE IF NOT EXISTS profile (
@@ -29,9 +27,7 @@ CREATE TABLE IF NOT EXISTS profile (
     avatar_url TEXT,
     settings TEXT,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
 
 CREATE TABLE IF NOT EXISTS profile (
@@ -42,9 +38,7 @@ CREATE TABLE IF NOT EXISTS profile (
     avatar_url TEXT,
     settings TEXT,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
 
 CREATE TABLE IF NOT EXISTS account (
@@ -53,9 +47,7 @@ CREATE TABLE IF NOT EXISTS account (
     icon_name TEXT,
     icon_color TEXT,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
 
 CREATE TABLE IF NOT EXISTS category (
@@ -66,9 +58,7 @@ CREATE TABLE IF NOT EXISTS category (
     category_type TEXT NOT NULL,
     parent_id TEXT,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
 
 CREATE TABLE IF NOT EXISTS booking (
@@ -79,7 +69,5 @@ CREATE TABLE IF NOT EXISTS booking (
     category_id TEXT NOT NULL,
     account_id TEXT  NOT NULL,
     updated_at TEXT,
-    sync_status TEXT    NOT NULL DEFAULT 'synced',
-    last_synced_at TEXT,
-    modified_locally_at TEXT
+    sync_status TEXT    NOT NULL DEFAULT 'synced'
 );
