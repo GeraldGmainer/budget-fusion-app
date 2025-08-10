@@ -40,8 +40,8 @@ class ProfileRepo extends Repo<Profile> with AutoSubscribe<Profile> {
   }
 
   @override
-  Future<List<Profile>> loadAll({Map<String, dynamic>? filters}) async {
-    await _manager.loadAll(filters: filters);
+  Future<List<Profile>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
+    await _manager.loadAll(filters: filters, forceReload: forceReload);
     return await _sharedStream.first;
   }
 

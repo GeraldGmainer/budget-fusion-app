@@ -41,8 +41,8 @@ class BookingRepo extends Repo<Booking> with AutoSubscribe<Booking> {
   }
 
   @override
-  Future<List<Booking>> loadAll({Map<String, dynamic>? filters}) async {
-    await _manager.loadAll();
+  Future<List<Booking>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
+    await _manager.loadAll(filters: filters, forceReload: forceReload);
     return await _sharedStream.first;
   }
 

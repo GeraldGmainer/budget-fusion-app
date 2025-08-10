@@ -14,8 +14,8 @@ class AccountRepo extends Repo<Account> with AutoSubscribe<Account> {
     : _manager = dmf.createManager<AccountDto>(entityType: EntityType.account, localDataSource: lds, remoteDataSource: rds);
 
   @override
-  Future<List<Account>> loadAll({Map<String, dynamic>? filters}) async {
-    final dtos = await _manager.loadAll(filters: filters);
+  Future<List<Account>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
+    final dtos = await _manager.loadAll(filters: filters, forceReload: forceReload);
     return _toEntities(dtos);
   }
 

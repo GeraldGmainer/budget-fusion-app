@@ -15,8 +15,8 @@ class CurrencyRepo extends Repo<Currency> with AutoSubscribe<Currency> {
     : _manager = dmf.createManager<CurrencyDto>(entityType: EntityType.currency, localDataSource: lds, remoteDataSource: rds);
 
   @override
-  Future<List<Currency>> loadAll({Map<String, dynamic>? filters}) async {
-    final dtos = await _manager.loadAll(filters: filters);
+  Future<List<Currency>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
+    final dtos = await _manager.loadAll(filters: filters, forceReload: forceReload);
     return _toEntities(dtos);
   }
 

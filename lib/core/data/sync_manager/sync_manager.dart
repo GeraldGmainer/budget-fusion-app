@@ -33,7 +33,7 @@ class SyncManager {
     _adapters[adapter.type] = adapter;
   }
 
-  Future<void> syncAll({Set<String> excludeIds = const {}}) async {
+  Future<void> syncAll({Set<String> excludeIds = const {}, bool forceReload = false}) async {
     final now = DateTime.now();
     if (_ongoingSync != null) return _ongoingSync!;
     if (!_isOnline) {
@@ -50,7 +50,7 @@ class SyncManager {
       }
     }
 
-    if (_lastSyncTime != null && now.difference(_lastSyncTime!) < FeatureConstants.syncAllCacheDuration) {
+    if (!forceReload && _lastSyncTime != null && now.difference(_lastSyncTime!) < FeatureConstants.syncAllCacheDuration) {
       _log("Recent sync already completed | skipping new sync");
       return;
     }

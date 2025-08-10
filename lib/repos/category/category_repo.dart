@@ -16,8 +16,8 @@ class CategoryRepo extends Repo<Category> with AutoSubscribe<Category> {
     : _manager = dmf.createManager<CategoryDto>(entityType: EntityType.category, localDataSource: lds, remoteDataSource: rds);
 
   @override
-  Future<List<Category>> loadAll({Map<String, dynamic>? filters}) async {
-    final dtos = await _manager.loadAll();
+  Future<List<Category>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
+    final dtos = await _manager.loadAll(filters: filters, forceReload: forceReload);
     return _mapper.fromDtos(dtos);
   }
 
@@ -27,7 +27,7 @@ class CategoryRepo extends Repo<Category> with AutoSubscribe<Category> {
   Future<Category?> loadById(Uuid id) async {
     final dto = await _manager.loadById(id.value);
     if (dto == null) return null;
-    final dtos = await _manager.loadAll();
+    final dtos = await _manager.loadAll(forceReload: false);
     return _mapper.fromDtos(dtos).firstWhere((c) => c.id == dto.id);
   }
 

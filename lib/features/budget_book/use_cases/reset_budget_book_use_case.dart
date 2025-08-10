@@ -25,7 +25,12 @@ class ResetBudgetBookUseCase {
     await _bookingRepo.reset();
     await _categoryRepo.reset();
     await _accountRepo.reset();
-    await _profileRepo.reset();
-    await Future.wait([_accountRepo.loadAll(), _categoryRepo.loadAll(), _bookingRepo.loadAll(), _profileRepo.loadAll()]);
+    // await _profileRepo.reset();
+    await Future.wait([
+      _accountRepo.loadAll(forceReload: true),
+      _categoryRepo.loadAll(forceReload: true),
+      _bookingRepo.loadAll(forceReload: true),
+      // _profileRepo.loadAll(forceReload: true),
+    ]);
   }
 }
