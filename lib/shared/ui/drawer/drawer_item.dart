@@ -19,6 +19,7 @@ class AppDrawerItem extends StatelessWidget {
       launchUrl(Uri.parse(url!), mode: LaunchMode.externalApplication);
       return;
     }
+    print(route);
     if (route != null) {
       final currentRoute = ModalRoute.of(context)?.settings.name;
       if (currentRoute != route) {
