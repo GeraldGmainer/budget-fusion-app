@@ -251,6 +251,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i252.QueueLocalDataSource>(),
         gh<_i714.RemoteLoadingService>(),
         gh<_i428.ConnectivityService>(),
+        gh<_i509.QueueLogger>(),
       ),
     );
     gh.singleton<_i752.SyncCoordinator>(

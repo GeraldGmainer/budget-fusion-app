@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../models/queue_item.dart';
+import '../queue/queue_log_entry.dart';
 import '../queue/queue_manager.dart';
 
 part 'offline_first_queue_cubit.freezed.dart';

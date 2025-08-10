@@ -21,6 +21,7 @@ export 'data/offline_first/data_manager/offline_first_data_manager.dart';
 export 'data/offline_first/filters/query_filter.dart';
 export 'data/offline_first/filters/query_operator.dart';
 export 'data/offline_first/interfaces/repo.dart';
+export 'data/offline_first/queue/queue_log_entry.dart';
 export 'data/offline_first/queue/queue_manager.dart';
 export 'database/database_manager.dart';
 export 'database/serializer/bool_int_serializer.dart';

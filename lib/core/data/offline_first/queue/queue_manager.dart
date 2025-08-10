@@ -10,6 +10,8 @@ import 'package:injectable/injectable.dart';
 
 import '../models/queue_item.dart';
 import 'queue_local_data_source.dart';
+import 'queue_log_entry.dart';
+import 'queue_logger.dart';
 
 @lazySingleton
 class QueueManager {
@@ -17,20 +19,20 @@ class QueueManager {
   static const offlineMaxRetries = 3;
   static const networkRetryDelay = Duration(seconds: 1);
 
-  final QueueLocalDataSource queueDataSource;
-  final RemoteLoadingService remoteLoadingService;
-  final ConnectivityService connectivityService;
+  final QueueLocalDataSource _queueDataSource;
+  final RemoteLoadingService _remoteLoadingService;
+  final ConnectivityService _connectivityService;
+  final QueueLogger _queueLogger;
 
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<EntityType, DataSourceAdapter> _adapters = {};
   final Set<String> _excludeIdsBuffer = <String>{};
-  final List<QueueLogEntry> _logs = [];
+
   final Map<String, int> _offlineRetryCount = {};
   final Set<String> _pausedIds = <String>{};
 
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
   final StreamController<Set<String>> _drainedIds = StreamController.broadcast();
-  final StreamController<List<QueueLogEntry>> _logController = StreamController.broadcast();
 
   Timer? _drainTimer;
   Timer? _retryTimer;
@@ -39,7 +41,11 @@ class QueueManager {
   bool _isOnline = true;
   StreamSubscription<List<ConnectivityResult>>? _connSub;
 
-  QueueManager(this.queueDataSource, this.remoteLoadingService, this.connectivityService) {
+  List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
+
+  List<QueueLogEntry> get logsSnapshot => _queueLogger.logsSnapshot;
+
+  QueueManager(this._queueDataSource, this._remoteLoadingService, this._connectivityService, this._queueLogger) {
     _initConnectivity();
   }
 
@@ -47,26 +53,25 @@ class QueueManager {
 
   Stream<Set<String>> get drainedIds => _drainedIds.stream;
 
-  Stream<List<QueueLogEntry>> get logsStream => _logController.stream;
+  Stream<List<QueueLogEntry>> get logsStream => _queueLogger.logsStream;
 
   void register(DataSourceAdapter adapter) => _adapters[adapter.type] = adapter;
 
   Future<void> init() async {
     _log("init QueueManager");
-    final items = await queueDataSource.fetchPendingItems();
+    final items = await _queueDataSource.fetchPendingItems();
     _inMemoryQueue.addAll(items);
     _initialized = true;
     _emitPending();
-    _emitLogs();
     _log("init QueueManager done");
     _processNext();
   }
 
   Future<void> add(QueueItem item) async {
     if (!_initialized) throw Exception("QueueManager not initialized yet!");
-    await queueDataSource.addQueueItem(item);
+    await _queueDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
-    _appendLog(QueueLogEvent.added, item, attempt: 0, note: null);
+    _queueLogger.log(QueueLogEvent.added, item, attempt: 0, note: null);
     _drainTimer?.cancel();
     if (!_isProcessing) {
       _processNext();
@@ -118,15 +123,15 @@ class QueueManager {
       return;
     }
 
-    _appendLog(QueueLogEvent.processing, currentItem, attempt: currentItem.attempts, note: null);
+    _queueLogger.log(QueueLogEvent.processing, currentItem, attempt: currentItem.attempts, note: null);
 
     try {
       await _processQueueItem(currentItem, adapter);
       _inMemoryQueue.removeFirst();
-      await queueDataSource.removeQueueItem(currentItem.entityId);
+      await _queueDataSource.removeQueueItem(currentItem.entityId);
       _offlineRetryCount.remove(currentItem.entityId);
       _pausedIds.remove(currentItem.entityId);
-      _appendLog(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
+      _queueLogger.log(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
       _emitPending();
     } catch (e, stack) {
       final offline = _isOfflineError(e);
@@ -135,11 +140,11 @@ class QueueManager {
         _offlineRetryCount[currentItem.entityId] = count;
         if (count >= offlineMaxRetries) {
           _pausedIds.add(currentItem.entityId);
-          _appendLog(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
           _emitPending();
         } else {
           BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled");
-          _appendLog(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(networkRetryDelay, () {
@@ -150,20 +155,20 @@ class QueueManager {
         final updatedAttempts = currentItem.attempts + 1;
         if (updatedAttempts >= maxAttempts) {
           final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
-          await queueDataSource.updateQueueItem(failedItem);
+          await _queueDataSource.updateQueueItem(failedItem);
           await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
           _inMemoryQueue.removeFirst();
           _offlineRetryCount.remove(currentItem.entityId);
           _pausedIds.remove(currentItem.entityId);
-          _appendLog(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: e.toString());
+          _queueLogger.log(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: e.toString());
           _emitPending();
         } else {
           final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addFirst(retriedItem);
-          await queueDataSource.updateQueueItem(retriedItem);
+          await _queueDataSource.updateQueueItem(retriedItem);
           BudgetLogger.instance.e("Queue task failed", e, stack);
-          _appendLog(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(networkRetryDelay, () {
@@ -188,7 +193,7 @@ class QueueManager {
   Future<void> _processQueueItem(QueueItem item, DataSourceAdapter adapter) async {
     _log("Processing queue item with entityId: ${item.entityId}");
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
-    await remoteLoadingService.wrap(() async {
+    await _remoteLoadingService.wrap(() async {
       switch (item.taskType) {
         case QueueTaskType.upsert:
           final updatedDto = await adapter.remote.upsert(item.entityId, jsonMap);
@@ -234,25 +239,7 @@ class QueueManager {
     _connSub?.cancel();
     _drainedIds.close();
     streamController.close();
-    _logController.close();
-  }
-
-  void _appendLog(QueueLogEvent event, QueueItem item, {required int attempt, String? note}) {
-    final entry = QueueLogEntry(
-      entityId: item.entityId,
-      entityType: item.entityType,
-      taskType: item.taskType,
-      event: event,
-      attempt: attempt,
-      at: DateTime.now(),
-      note: note,
-    );
-    _logs.insert(0, entry);
-    _emitLogs();
-  }
-
-  void _emitLogs() {
-    _logController.add(List.unmodifiable(_logs));
+    _queueLogger.dispose();
   }
 
   bool _isOfflineError(Object e) {
@@ -269,13 +256,13 @@ class QueueManager {
   }
 
   Future<void> _initConnectivity() async {
-    _connSub = connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
-    final r = await connectivityService.checkConnectivity();
+    _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
+    final r = await _connectivityService.checkConnectivity();
     _onConnectivityChanged(r);
   }
 
   void _onConnectivityChanged(List<ConnectivityResult> result) {
-    final nowOnline = connectivityService.evaluateResult(result);
+    final nowOnline = _connectivityService.evaluateResult(result);
     final wasOffline = !_isOnline && nowOnline;
     _isOnline = nowOnline;
     if (wasOffline) {
@@ -288,30 +275,4 @@ class QueueManager {
   _log(String msg) {
     EntityLogger.instance.d("QueueManager", "queue", msg);
   }
-
-  List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
-
-  List<QueueLogEntry> get logsSnapshot => List.unmodifiable(_logs);
-}
-
-enum QueueLogEvent { added, processing, retried, succeeded, failed }
-
-class QueueLogEntry {
-  final String entityId;
-  final EntityType entityType;
-  final QueueTaskType taskType;
-  final QueueLogEvent event;
-  final int attempt;
-  final DateTime at;
-  final String? note;
-
-  const QueueLogEntry({
-    required this.entityId,
-    required this.entityType,
-    required this.taskType,
-    required this.event,
-    required this.attempt,
-    required this.at,
-    this.note,
-  });
 }
