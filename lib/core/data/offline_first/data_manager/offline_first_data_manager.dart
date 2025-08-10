@@ -91,12 +91,8 @@ class OfflineFirstDataManager<E extends Dto> {
 
   Future<void> save(E dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
-    final now = DateTime.now();
     final existing = await adapter.local.fetchById(dto.id.value);
-    final newMeta =
-        (existing?.syncMeta != null)
-            ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally, modifiedLocallyAt: now)
-            : SyncMeta(status: SyncStatus.createdLocally, modifiedLocallyAt: now, lastSyncedAt: null);
+    final newMeta = (existing?.syncMeta != null) ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally) : SyncMeta(status: SyncStatus.createdLocally);
     final wrapped = SyncedDto<E>(dto: dto, syncMeta: newMeta);
 
     await adapter.local.save(wrapped);

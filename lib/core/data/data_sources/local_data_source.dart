@@ -13,12 +13,8 @@ abstract class LocalDataSource<E extends Dto> {
   SyncedDto<E> _mapRowToSyncedDto(Map<String, dynamic> row) {
     final m = Map<String, dynamic>.from(row);
     final statusString = m.remove('sync_status') as String;
-    final lastSyncedAtString = m.remove('last_synced_at') as String?;
-    final modifiedLocallyAtString = m.remove('modified_locally_at') as String?;
     final meta = SyncMeta(
       status: SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString),
-      lastSyncedAt: lastSyncedAtString == null ? null : DateTime.parse(lastSyncedAtString).toLocal(),
-      modifiedLocallyAt: modifiedLocallyAtString == null ? null : DateTime.parse(modifiedLocallyAtString).toLocal(),
     );
     final dto = fromJson(m);
     return SyncedDto(dto: dto, syncMeta: meta);
@@ -48,8 +44,6 @@ abstract class LocalDataSource<E extends Dto> {
     _log("save for id '${syncedDto.dto.id.value}'");
     final data = syncedDto.dto.toJson();
     data['sync_status'] = syncedDto.syncMeta.status.toString().split('.').last;
-    data['last_synced_at'] = syncedDto.syncMeta.lastSyncedAt?.toUtc().toIso8601String();
-    data['modified_locally_at'] = syncedDto.syncMeta.modifiedLocallyAt?.toUtc().toIso8601String();
     final stringifiedFields = _convertMapsToString(data);
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
@@ -61,8 +55,6 @@ abstract class LocalDataSource<E extends Dto> {
     for (final dto in syncedDtos) {
       final data = dto.dto.toJson();
       data['sync_status'] = dto.syncMeta.status.toString().split('.').last;
-      data['last_synced_at'] = dto.syncMeta.lastSyncedAt?.toUtc().toIso8601String();
-      data['modified_locally_at'] = dto.syncMeta.modifiedLocallyAt?.toUtc().toIso8601String();
       final stringifiedFields = _convertMapsToString(data);
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }
@@ -77,27 +69,15 @@ abstract class LocalDataSource<E extends Dto> {
     for (final dto in dtos) {
       final data = dto.toJson();
       data['sync_status'] = SyncStatus.synced.name;
-      data['last_synced_at'] = (dto.updatedAt ?? DateTime.now()).toUtc().toIso8601String();
-      data['modified_locally_at'] = null;
       batch.insert(table, _convertMapsToString(data), conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
     // _log("saveAllNotSynced success", darkColor: true);
   }
 
-  Future<void> saveNotSynced(E dto) async {
-    _log("saveNotSynced for id '${dto.id.value}'");
-    final data = dto.toJson();
-    data['sync_status'] = SyncStatus.synced.name;
-    data['last_synced_at'] = (dto.updatedAt ?? DateTime.now()).toUtc().toIso8601String();
-    data['modified_locally_at'] = null;
-    await db.insert(table, _convertMapsToString(data), conflictAlgorithm: ConflictAlgorithm.replace);
-    _log("saveNotSynced success for id '${dto.id.value}'", darkColor: true);
-  }
-
   Future<void> markAsSynced(String id, DateTime updated) async {
     _log("markAsSynced for id '$id' with updatedAt: $updated");
-    final data = {'sync_status': SyncStatus.synced.name, 'last_synced_at': updated.toUtc().toIso8601String(), 'updated_at': updated.toUtc().toIso8601String()};
+    final data = {'sync_status': SyncStatus.synced.name};
     await db.update(table, data, where: 'id = ?', whereArgs: [id]);
     _log("markAsSynced success for id '$id'", darkColor: true);
   }
@@ -105,18 +85,6 @@ abstract class LocalDataSource<E extends Dto> {
   Future<void> updateSyncStatus(String id, SyncStatus status) async {
     _log("updateSyncStatus for id '$id' with SyncStatus: $status");
     await db.update(table, {'sync_status': status.name}, where: 'id = ?', whereArgs: [id]);
-  }
-
-  Future<DateTime?> fetchMaxUpdatedAt() async {
-    _log("fetchMaxUpdatedAt");
-    final result = await db.rawQuery('SELECT MAX(updated_at) AS maxDate FROM $table');
-    if (result.isEmpty) {
-      _log("fetchMaxUpdatedAt not found", darkColor: true);
-      return null;
-    }
-    final maxDate = DateTime.parse(result.first['maxDate'] as String);
-    _log("fetchMaxUpdatedAt success: $maxDate", darkColor: true);
-    return maxDate;
   }
 
   MapEntry<String, List<dynamic>>? _buildWhereClause(List<QueryFilter>? filters) {
