@@ -143,7 +143,7 @@ class SyncManager {
       return;
     }
     for (final e in updated.entries) {
-      _log("updated cursor for ${e.key.name}: ${_formatTime(e.value)}");
+      _log("updated cursor for ${e.key.name}: ${_formatTime(e.value)}", type: e.key);
     }
   }
 
@@ -161,8 +161,8 @@ class SyncManager {
     _log('sync done --> changes: $logStr', dark: true);
   }
 
-  _log(String msg, {bool dark = false}) {
-    EntityLogger.instance.d("SyncManager", "sync", msg, darkColor: dark);
+  _log(String msg, {EntityType? type, bool dark = false}) {
+    EntityLogger.instance.d("SyncManager", type?.name ?? "sync", msg, darkColor: dark);
   }
 
   void dispose() {

@@ -29,6 +29,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   final ResetBudgetBookUseCase _resetBudgetBookUseCase;
 
   StreamSubscription<List<Booking>>? _bookingSub;
+  Timer? _loadingTimeout;
 
   BudgetBookCubit(this._generateBudgetSummaryUseCase, this._filterAndGroupBookingsUseCase, this._repo, this._resetBudgetBookUseCase, this._generateBudgetTransactionUseCase)
     : super(_initialState()) {
@@ -50,6 +51,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   Future<void> _onBookings(List<Booking> rawBookingList) => safeRun(
     action: () async {
+      _clearLoadingTimeout();
       final filtered = await _filterAndGroupBookingsUseCase.load(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
 
@@ -106,7 +108,8 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   Future<void> reload() => safeRun(
     action: () async {
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reload for budget book: ${state.viewMode} / ${state.filter}");
-      emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
+      emit(BudgetBookState.loading(items: state.items, filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
+      _startLoadingTimeout();
       await _resetBudgetBookUseCase.reload();
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
@@ -115,14 +118,31 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
   Future<void> resetAndLoad() => safeRun(
     action: () async {
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
-      emit(BudgetBookState.loading(items: [], filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
+      emit(BudgetBookState.loading(items: state.items, filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
+      _startLoadingTimeout();
       await _resetBudgetBookUseCase.resetAndLoad();
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
 
+  void _startLoadingTimeout() {
+    _loadingTimeout?.cancel();
+    final snapshot = state;
+    _loadingTimeout = Timer(const Duration(seconds: 10), () {
+      final stillLoading = state.maybeWhen(loading: (_, __, ___, ____) => true, orElse: () => false);
+      if (!stillLoading) return;
+      emit(BudgetBookState.loaded(items: snapshot.items, filter: snapshot.filter, viewMode: snapshot.viewMode, dateRange: snapshot.dateRange, isInitial: false));
+    });
+  }
+
+  void _clearLoadingTimeout() {
+    _loadingTimeout?.cancel();
+    _loadingTimeout = null;
+  }
+
   @override
   Future<void> close() async {
+    _clearLoadingTimeout();
     await _bookingSub?.cancel();
     return super.close();
   }

@@ -3,14 +3,13 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/core/data/data_sources/data_source_adapter.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data_sources/data_source_adapter.dart';
 import '../models/queue_item.dart';
 import 'queue_local_data_source.dart';
-import 'queue_log_entry.dart';
 import 'queue_logger.dart';
 
 @lazySingleton
