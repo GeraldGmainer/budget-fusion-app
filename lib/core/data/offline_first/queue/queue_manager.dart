@@ -14,6 +14,7 @@ import 'queue_local_data_source.dart';
 @lazySingleton
 class QueueManager {
   static const maxAttempts = 3;
+  static const offlineMaxRetries = 3;
   static const networkRetryDelay = Duration(seconds: 1);
 
   final QueueLocalDataSource queueDataSource;
@@ -24,6 +25,8 @@ class QueueManager {
   final Map<EntityType, DataSourceAdapter> _adapters = {};
   final Set<String> _excludeIdsBuffer = <String>{};
   final List<QueueLogEntry> _logs = [];
+  final Map<String, int> _offlineRetryCount = {};
+  final Set<String> _pausedIds = <String>{};
 
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
   final StreamController<Set<String>> _drainedIds = StreamController.broadcast();
@@ -83,6 +86,26 @@ class QueueManager {
       return;
     }
 
+    if (_isOnline && _pausedIds.isNotEmpty) {
+      _pausedIds.clear();
+      _offlineRetryCount.clear();
+    }
+
+    if (_allPaused()) {
+      _log("All items paused for offline");
+      _scheduleDrainIfIdle();
+      return;
+    }
+
+    while (_inMemoryQueue.isNotEmpty && _pausedIds.contains(_inMemoryQueue.first.entityId)) {
+      final moved = _inMemoryQueue.removeFirst();
+      _inMemoryQueue.addLast(moved);
+    }
+    if (_inMemoryQueue.isEmpty) {
+      _scheduleDrainIfIdle();
+      return;
+    }
+
     _emitPending();
     _isProcessing = true;
 
@@ -101,26 +124,22 @@ class QueueManager {
       await _processQueueItem(currentItem, adapter);
       _inMemoryQueue.removeFirst();
       await queueDataSource.removeQueueItem(currentItem.entityId);
+      _offlineRetryCount.remove(currentItem.entityId);
+      _pausedIds.remove(currentItem.entityId);
       _appendLog(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
       _emitPending();
     } catch (e, stack) {
       final offline = _isOfflineError(e);
       if (offline) {
-        final updatedAttempts = currentItem.attempts + 1;
-        if (updatedAttempts >= maxAttempts) {
-          final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
-          await queueDataSource.updateQueueItem(failedItem);
-          await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
-          _inMemoryQueue.removeFirst();
-          _appendLog(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: "offline");
+        final count = (_offlineRetryCount[currentItem.entityId] ?? 0) + 1;
+        _offlineRetryCount[currentItem.entityId] = count;
+        if (count >= offlineMaxRetries) {
+          _pausedIds.add(currentItem.entityId);
+          _appendLog(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
           _emitPending();
         } else {
-          final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
-          _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addFirst(retriedItem);
-          await queueDataSource.updateQueueItem(retriedItem);
-          BudgetLogger.instance.i("Queue offline, retry scheduled");
-          _appendLog(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: "offline");
+          BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled");
+          _appendLog(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(networkRetryDelay, () {
@@ -134,6 +153,8 @@ class QueueManager {
           await queueDataSource.updateQueueItem(failedItem);
           await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
           _inMemoryQueue.removeFirst();
+          _offlineRetryCount.remove(currentItem.entityId);
+          _pausedIds.remove(currentItem.entityId);
           _appendLog(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: e.toString());
           _emitPending();
         } else {
@@ -239,6 +260,14 @@ class QueueManager {
     return e.runtimeType.toString() == 'NoInternetException' || s.contains('no internet') || s.contains('error.internet');
   }
 
+  bool _allPaused() {
+    if (_inMemoryQueue.isEmpty) return false;
+    for (final q in _inMemoryQueue) {
+      if (!_pausedIds.contains(q.entityId)) return false;
+    }
+    return true;
+  }
+
   Future<void> _initConnectivity() async {
     _connSub = connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
     final r = await connectivityService.checkConnectivity();
@@ -250,10 +279,9 @@ class QueueManager {
     final wasOffline = !_isOnline && nowOnline;
     _isOnline = nowOnline;
     if (wasOffline) {
-      if (_inMemoryQueue.isNotEmpty && !_isProcessing) {
-        _log("reconnected to internet, retry next queue item");
-        _processNext();
-      }
+      _pausedIds.clear();
+      _offlineRetryCount.clear();
+      if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
     }
   }
 

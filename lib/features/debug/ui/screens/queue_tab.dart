@@ -32,7 +32,7 @@ class QueueTab extends StatelessWidget {
                     ),
                     subtitle: Text(
                       '${e.entityType.name} • ${e.taskType.name} • attempt ${e.attempt}\n'
-                      'id: ${_shortId(e.entityId)}\n'
+                      'id: ${e.entityId}\n'
                       '${e.note ?? e.at.toLocal().toString()}',
                     ),
                     isThreeLine: true,
@@ -80,11 +80,6 @@ class QueueTab extends StatelessWidget {
       case QueueLogEvent.failed:
         return Colors.red;
     }
-  }
-
-  String _shortId(String id) {
-    if (id.length <= 12) return id;
-    return '${id.substring(0, 6)}…${id.substring(id.length - 4)}';
   }
 
   static Color ofName(String name) => byName[name] ?? Colors.grey;
