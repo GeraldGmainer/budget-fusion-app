@@ -44,16 +44,6 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     });
   }
 
-  Future<void> upsertAll(List<E> dtos) async {
-    final stopwatch = Stopwatch()..start();
-    _log("upsertAll ${dtos.length} DTOs");
-    return execute(table, () async {
-      final data = dtos.map((dto) => dto.toJson()).toList();
-      await supabase.from(table).upsert(data);
-      _log("upsertAll success", stopwatch: stopwatch);
-    });
-  }
-
   Future<void> deleteById(String id) async {
     final stopwatch = Stopwatch()..start();
     _log("delete by id '$id'");
