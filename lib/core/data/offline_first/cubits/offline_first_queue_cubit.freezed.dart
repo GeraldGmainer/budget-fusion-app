@@ -21,19 +21,20 @@ mixin _$OfflineFirstQueueState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)
+    loaded,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -127,7 +128,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)
+    loaded,
   }) {
     return initial();
   }
@@ -137,7 +139,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
   }) {
     return initial?.call();
   }
@@ -147,7 +149,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -240,7 +242,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)
+    loaded,
   }) {
     return loading();
   }
@@ -250,7 +253,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
   }) {
     return loading?.call();
   }
@@ -260,7 +263,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -314,6 +317,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
     _$LoadedImpl value,
     $Res Function(_$LoadedImpl) then,
   ) = __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<QueueItem> items, List<QueueLogEntry> logs});
 }
 
 /// @nodoc
@@ -327,35 +332,89 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
   /// Create a copy of OfflineFirstQueueState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? items = null, Object? logs = null}) {
+    return _then(
+      _$LoadedImpl(
+        items:
+            null == items
+                ? _value._items
+                : items // ignore: cast_nullable_to_non_nullable
+                    as List<QueueItem>,
+        logs:
+            null == logs
+                ? _value._logs
+                : logs // ignore: cast_nullable_to_non_nullable
+                    as List<QueueLogEntry>,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl({
+    required final List<QueueItem> items,
+    required final List<QueueLogEntry> logs,
+  }) : _items = items,
+       _logs = logs;
+
+  final List<QueueItem> _items;
+  @override
+  List<QueueItem> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
+
+  final List<QueueLogEntry> _logs;
+  @override
+  List<QueueLogEntry> get logs {
+    if (_logs is EqualUnmodifiableListView) return _logs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_logs);
+  }
 
   @override
   String toString() {
-    return 'OfflineFirstQueueState.loaded()';
+    return 'OfflineFirstQueueState.loaded(items: $items, logs: $logs)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality().equals(other._logs, _logs));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_items),
+    const DeepCollectionEquality().hash(_logs),
+  );
+
+  /// Create a copy of OfflineFirstQueueState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)
+    loaded,
   }) {
-    return loaded();
+    return loaded(items, logs);
   }
 
   @override
@@ -363,9 +422,9 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(items, logs);
   }
 
   @override
@@ -373,11 +432,11 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<QueueItem> items, List<QueueLogEntry> logs)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(items, logs);
     }
     return orElse();
   }
@@ -418,5 +477,17 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements OfflineFirstQueueState {
-  const factory _Loaded() = _$LoadedImpl;
+  const factory _Loaded({
+    required final List<QueueItem> items,
+    required final List<QueueLogEntry> logs,
+  }) = _$LoadedImpl;
+
+  List<QueueItem> get items;
+  List<QueueLogEntry> get logs;
+
+  /// Create a copy of OfflineFirstQueueState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

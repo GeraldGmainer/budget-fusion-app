@@ -18,8 +18,12 @@ class QueueManager {
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<EntityType, DataSourceAdapter> _adapters = {};
   final Set<String> _excludeIdsBuffer = <String>{};
+  final List<QueueLogEntry> _logs = [];
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
   final StreamController<Set<String>> _drainedIds = StreamController.broadcast();
+  final StreamController<List<QueueLogEntry>> _logController = StreamController.broadcast();
+
+  Stream<List<QueueLogEntry>> get logsStream => _logController.stream;
 
   Stream<Set<String>> get drainedIds => _drainedIds.stream;
 
@@ -39,6 +43,7 @@ class QueueManager {
     _inMemoryQueue.addAll(items);
     _initialized = true;
     _emitPending();
+    _emitLogs();
     _log("init QueueManager done");
     _processNext();
   }
@@ -47,6 +52,7 @@ class QueueManager {
     if (!_initialized) throw Exception("QueueManager not initialized yet!");
     await queueDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
+    await _appendLog(QueueLogEvent.added, item, attempt: 0, note: null);
     _drainTimer?.cancel();
     if (!_isProcessing) {
       _processNext();
@@ -77,10 +83,12 @@ class QueueManager {
       return;
     }
 
+    await _appendLog(QueueLogEvent.processing, currentItem, attempt: currentItem.attempts, note: null);
     try {
       await _processQueueItem(currentItem, adapter);
       _inMemoryQueue.removeFirst();
       await queueDataSource.removeQueueItem(currentItem.entityId);
+      await _appendLog(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
       _emitPending();
     } on Exception catch (e, stack) {
       BudgetLogger.instance.e("Queue task failed", e, stack);
@@ -90,12 +98,14 @@ class QueueManager {
         await queueDataSource.updateQueueItem(failedItem);
         await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
         _inMemoryQueue.removeFirst();
+        await _appendLog(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: e.toString());
         _emitPending();
       } else {
         final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
         _inMemoryQueue.removeFirst();
         _inMemoryQueue.addFirst(retriedItem);
         await queueDataSource.updateQueueItem(retriedItem);
+        await _appendLog(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
         _emitPending();
       }
     } finally {
@@ -163,9 +173,54 @@ class QueueManager {
     _drainTimer?.cancel();
     _drainedIds.close();
     streamController.close();
+    _logController.close();
+  }
+
+  Future<void> _appendLog(QueueLogEvent event, QueueItem item, {required int attempt, String? note}) async {
+    final entry = QueueLogEntry(
+      entityId: item.entityId,
+      entityType: item.entityType,
+      taskType: item.taskType,
+      event: event,
+      attempt: attempt,
+      at: DateTime.now(),
+      note: note,
+    );
+    _logs.insert(0, entry);
+    _emitLogs();
+  }
+
+  void _emitLogs() {
+    _logController.add(List.unmodifiable(_logs));
   }
 
   _log(String msg) {
     EntityLogger.instance.d("QueueManager", "queue", msg);
   }
+
+  List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
+
+  List<QueueLogEntry> get logsSnapshot => List.unmodifiable(_logs);
+}
+
+enum QueueLogEvent { added, processing, retried, succeeded, failed }
+
+class QueueLogEntry {
+  final String entityId;
+  final EntityType entityType;
+  final QueueTaskType taskType;
+  final QueueLogEvent event;
+  final int attempt;
+  final DateTime at;
+  final String? note;
+
+  const QueueLogEntry({
+    required this.entityId,
+    required this.entityType,
+    required this.taskType,
+    required this.event,
+    required this.attempt,
+    required this.at,
+    this.note,
+  });
 }
