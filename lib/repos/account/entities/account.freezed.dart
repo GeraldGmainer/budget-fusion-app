@@ -22,6 +22,9 @@ mixin _$Account {
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -40,6 +43,9 @@ abstract class $AccountCopyWith<$Res> {
     String iconName,
     String iconColor,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 }
 
@@ -63,6 +69,9 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? iconName = null,
     Object? iconColor = null,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -91,6 +100,21 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
                     ? _value.isSynced
                     : isSynced // ignore: cast_nullable_to_non_nullable
                         as bool,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -111,6 +135,9 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
     String iconName,
     String iconColor,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 }
 
@@ -133,6 +160,9 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? iconName = null,
     Object? iconColor = null,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$AccountImpl(
@@ -161,6 +191,21 @@ class __$$AccountImplCopyWithImpl<$Res>
                 ? _value.isSynced
                 : isSynced // ignore: cast_nullable_to_non_nullable
                     as bool,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -175,6 +220,9 @@ class _$AccountImpl extends _Account {
     required this.iconName,
     required this.iconColor,
     required this.isSynced,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.deletedAt,
   }) : super._();
 
   @override
@@ -187,10 +235,16 @@ class _$AccountImpl extends _Account {
   final String iconColor;
   @override
   final bool isSynced;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, isSynced: $isSynced)';
+    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -205,12 +259,27 @@ class _$AccountImpl extends _Account {
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
             (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+                other.isSynced == isSynced) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, iconName, iconColor, isSynced);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    iconName,
+    iconColor,
+    isSynced,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  );
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -228,6 +297,9 @@ abstract class _Account extends Account {
     required final String iconName,
     required final String iconColor,
     required final bool isSynced,
+    required final DateTime? createdAt,
+    required final DateTime? updatedAt,
+    required final DateTime? deletedAt,
   }) = _$AccountImpl;
   const _Account._() : super._();
 
@@ -241,6 +313,12 @@ abstract class _Account extends Account {
   String get iconColor;
   @override
   bool get isSynced;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  DateTime? get deletedAt;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.

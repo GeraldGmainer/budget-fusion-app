@@ -10,10 +10,12 @@ class AccountDto with _$AccountDto implements Dto {
 
   const factory AccountDto({
     @UuidSerializer() required Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     required String name,
     @JsonKey(name: 'icon_name') required String iconName,
     @JsonKey(name: 'icon_color') required String iconColor,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _AccountDto;
 
   factory AccountDto.fromJson(Map<String, dynamic> json) => _$AccountDtoFromJson(json);

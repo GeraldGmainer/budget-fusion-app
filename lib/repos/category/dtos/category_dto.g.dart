@@ -9,7 +9,6 @@ part of 'category_dto.dart';
 _$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
     _$CategoryDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       name: json['name'] as String,
       categoryType: const CategoryTypeSerializer().fromJson(
         json['category_type'] as String,
@@ -20,13 +19,15 @@ _$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
         json['parent_id'],
         const UuidSerializer().fromJson,
       ),
+      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
     );
 
 Map<String, dynamic> _$$CategoryDtoImplToJson(
   _$CategoryDtoImpl instance,
 ) => <String, dynamic>{
   'id': const UuidSerializer().toJson(instance.id),
-  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
   'name': instance.name,
   'category_type': const CategoryTypeSerializer().toJson(instance.categoryType),
   'icon_name': instance.iconName,
@@ -35,6 +36,9 @@ Map<String, dynamic> _$$CategoryDtoImplToJson(
     instance.parentId,
     const UuidSerializer().toJson,
   ),
+  'created_at': const DateTimeSerializer().toJson(instance.createdAt),
+  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
+  'deleted_at': const DateTimeSerializer().toJson(instance.deletedAt),
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

@@ -1,10 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
-class DateTimeSerializer implements JsonConverter<DateTime, dynamic> {
+class DateTimeSerializer implements JsonConverter<DateTime?, dynamic> {
   const DateTimeSerializer();
 
   @override
-  DateTime fromJson(dynamic json) {
+  DateTime? fromJson(dynamic json) {
+    if (json == null) {
+      return null;
+    }
     if (json is int) {
       return DateTime.fromMillisecondsSinceEpoch(json, isUtc: true).toLocal();
     }
@@ -15,7 +18,7 @@ class DateTimeSerializer implements JsonConverter<DateTime, dynamic> {
   }
 
   @override
-  dynamic toJson(DateTime object) {
-    return object.toUtc().toIso8601String();
+  dynamic toJson(DateTime? object) {
+    return object?.toUtc().toIso8601String();
   }
 }

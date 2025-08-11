@@ -25,6 +25,9 @@ mixin _$Category {
   Category? get parent => throw _privateConstructorUsedError;
   List<Category> get subcategories => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -47,6 +50,9 @@ abstract class $CategoryCopyWith<$Res> {
     Category? parent,
     List<Category> subcategories,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   $CategoryCopyWith<$Res>? get parent;
@@ -75,6 +81,9 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? parent = freezed,
     Object? subcategories = null,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -118,6 +127,21 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                     ? _value.isSynced
                     : isSynced // ignore: cast_nullable_to_non_nullable
                         as bool,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -156,6 +180,9 @@ abstract class _$$CategoryImplCopyWith<$Res>
     Category? parent,
     List<Category> subcategories,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   @override
@@ -184,6 +211,9 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? subcategories = null,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CategoryImpl(
@@ -227,6 +257,21 @@ class __$$CategoryImplCopyWithImpl<$Res>
                 ? _value.isSynced
                 : isSynced // ignore: cast_nullable_to_non_nullable
                     as bool,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -244,6 +289,9 @@ class _$CategoryImpl extends _Category {
     this.parent,
     final List<Category> subcategories = const [],
     required this.isSynced,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.deletedAt,
   }) : _subcategories = subcategories,
        super._();
 
@@ -270,10 +318,16 @@ class _$CategoryImpl extends _Category {
 
   @override
   final bool isSynced;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, isSynced: $isSynced)';
+    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -295,7 +349,13 @@ class _$CategoryImpl extends _Category {
               _subcategories,
             ) &&
             (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+                other.isSynced == isSynced) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @override
@@ -309,6 +369,9 @@ class _$CategoryImpl extends _Category {
     parent,
     const DeepCollectionEquality().hash(_subcategories),
     isSynced,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of Category
@@ -330,6 +393,9 @@ abstract class _Category extends Category {
     final Category? parent,
     final List<Category> subcategories,
     required final bool isSynced,
+    required final DateTime? createdAt,
+    required final DateTime? updatedAt,
+    required final DateTime? deletedAt,
   }) = _$CategoryImpl;
   const _Category._() : super._();
 
@@ -349,6 +415,12 @@ abstract class _Category extends Category {
   List<Category> get subcategories;
   @override
   bool get isSynced;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  DateTime? get deletedAt;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

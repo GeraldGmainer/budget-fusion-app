@@ -18,6 +18,9 @@ class CategoryDraft with _$CategoryDraft {
     Category? parent,
     @Default([]) List<Category> subcategories,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _CategoryDraft;
 
   bool get isCreating => id == null;
@@ -32,11 +35,14 @@ class CategoryDraft with _$CategoryDraft {
       parent: parent,
       subcategories: subcategories,
       isSynced: false,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
     );
   }
 
   factory CategoryDraft.initial({Category? parent}) {
-    return CategoryDraft(parent: parent);
+    return CategoryDraft(parent: parent, createdAt: null, updatedAt: null, deletedAt: null);
   }
 
   factory CategoryDraft.fromCategory(Category category) {
@@ -48,6 +54,9 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: category.iconColor,
       parent: category.parent,
       subcategories: category.subcategories,
+      createdAt: category.createdAt,
+      updatedAt: category.updatedAt,
+      deletedAt: category.deletedAt,
     );
   }
 }

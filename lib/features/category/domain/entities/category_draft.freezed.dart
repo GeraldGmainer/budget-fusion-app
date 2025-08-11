@@ -25,6 +25,9 @@ mixin _$CategoryDraft {
   Category? get parent => throw _privateConstructorUsedError;
   List<Category> get subcategories => throw _privateConstructorUsedError;
   SyncMeta? get syncMeta => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -49,6 +52,9 @@ abstract class $CategoryDraftCopyWith<$Res> {
     Category? parent,
     List<Category> subcategories,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   $CategoryCopyWith<$Res>? get parent;
@@ -77,6 +83,9 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
     Object? parent = freezed,
     Object? subcategories = null,
     Object? syncMeta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -120,6 +129,21 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
                     ? _value.syncMeta
                     : syncMeta // ignore: cast_nullable_to_non_nullable
                         as SyncMeta?,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -158,6 +182,9 @@ abstract class _$$CategoryDraftImplCopyWith<$Res>
     Category? parent,
     List<Category> subcategories,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   @override
@@ -186,6 +213,9 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
     Object? parent = freezed,
     Object? subcategories = null,
     Object? syncMeta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CategoryDraftImpl(
@@ -229,6 +259,21 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
                 ? _value.syncMeta
                 : syncMeta // ignore: cast_nullable_to_non_nullable
                     as SyncMeta?,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -246,6 +291,9 @@ class _$CategoryDraftImpl extends _CategoryDraft {
     this.parent,
     final List<Category> subcategories = const [],
     this.syncMeta,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : _subcategories = subcategories,
        super._();
 
@@ -275,10 +323,16 @@ class _$CategoryDraftImpl extends _CategoryDraft {
 
   @override
   final SyncMeta? syncMeta;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'CategoryDraft(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, syncMeta: $syncMeta)';
+    return 'CategoryDraft(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, syncMeta: $syncMeta, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -300,7 +354,13 @@ class _$CategoryDraftImpl extends _CategoryDraft {
               _subcategories,
             ) &&
             (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+                other.syncMeta == syncMeta) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @override
@@ -314,6 +374,9 @@ class _$CategoryDraftImpl extends _CategoryDraft {
     parent,
     const DeepCollectionEquality().hash(_subcategories),
     syncMeta,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of CategoryDraft
@@ -335,6 +398,9 @@ abstract class _CategoryDraft extends CategoryDraft {
     final Category? parent,
     final List<Category> subcategories,
     final SyncMeta? syncMeta,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$CategoryDraftImpl;
   _CategoryDraft._() : super._();
 
@@ -354,6 +420,12 @@ abstract class _CategoryDraft extends CategoryDraft {
   List<Category> get subcategories;
   @override
   SyncMeta? get syncMeta;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  DateTime? get deletedAt;
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.

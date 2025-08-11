@@ -25,6 +25,9 @@ mixin _$BookingDraft {
   Account? get account => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
   SyncMeta? get syncMeta => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -49,6 +52,9 @@ abstract class $BookingDraftCopyWith<$Res> {
     Account? account,
     CategoryType categoryType,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   $CategoryCopyWith<$Res>? get category;
@@ -78,6 +84,9 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
     Object? account = freezed,
     Object? categoryType = null,
     Object? syncMeta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -121,6 +130,21 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
                     ? _value.syncMeta
                     : syncMeta // ignore: cast_nullable_to_non_nullable
                         as SyncMeta?,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -173,6 +197,9 @@ abstract class _$$BookingDraftImplCopyWith<$Res>
     Account? account,
     CategoryType categoryType,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 
   @override
@@ -203,6 +230,9 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
     Object? account = freezed,
     Object? categoryType = null,
     Object? syncMeta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$BookingDraftImpl(
@@ -246,6 +276,21 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
                 ? _value.syncMeta
                 : syncMeta // ignore: cast_nullable_to_non_nullable
                     as SyncMeta?,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -263,6 +308,9 @@ class _$BookingDraftImpl extends _BookingDraft {
     this.account,
     this.categoryType = CategoryType.outcome,
     this.syncMeta,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : super._();
 
   @override
@@ -282,10 +330,16 @@ class _$BookingDraftImpl extends _BookingDraft {
   final CategoryType categoryType;
   @override
   final SyncMeta? syncMeta;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType, syncMeta: $syncMeta)';
+    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType, syncMeta: $syncMeta, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -304,7 +358,13 @@ class _$BookingDraftImpl extends _BookingDraft {
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
             (identical(other.syncMeta, syncMeta) ||
-                other.syncMeta == syncMeta));
+                other.syncMeta == syncMeta) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @override
@@ -318,6 +378,9 @@ class _$BookingDraftImpl extends _BookingDraft {
     account,
     categoryType,
     syncMeta,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of BookingDraft
@@ -339,6 +402,9 @@ abstract class _BookingDraft extends BookingDraft {
     final Account? account,
     final CategoryType categoryType,
     final SyncMeta? syncMeta,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$BookingDraftImpl;
   _BookingDraft._() : super._();
 
@@ -358,6 +424,12 @@ abstract class _BookingDraft extends BookingDraft {
   CategoryType get categoryType;
   @override
   SyncMeta? get syncMeta;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  DateTime? get deletedAt;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.

@@ -18,6 +18,9 @@ class CategoryMapper {
         iconColor: dto.iconColor,
         parentId: dto.parentId,
         isSynced: syncedDto.isSynced,
+        createdAt: dto.createdAt,
+        updatedAt: dto.updatedAt,
+        deletedAt: dto.deletedAt,
       );
     }
     for (var builder in builderMap.values) {
@@ -58,6 +61,9 @@ class CategoryMapper {
       parent: null,
       subcategories: children,
       isSynced: b.isSynced,
+      createdAt: b.createdAt,
+      updatedAt: b.updatedAt,
+      deletedAt: b.deletedAt,
     );
   }
 
@@ -78,6 +84,9 @@ class _CategoryBuilder {
   final bool isSynced;
   _CategoryBuilder? parentBuilder;
   final List<_CategoryBuilder> children = [];
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final DateTime? deletedAt;
 
   _CategoryBuilder({
     required this.id,
@@ -87,5 +96,8 @@ class _CategoryBuilder {
     required this.iconColor,
     required this.parentId,
     required this.isSynced,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.deletedAt,
   });
 }

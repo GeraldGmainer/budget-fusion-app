@@ -22,6 +22,9 @@ class BookingDraft with _$BookingDraft {
     Account? account,
     @Default(CategoryType.outcome) CategoryType categoryType,
     SyncMeta? syncMeta,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _BookingDraft;
 
   bool get isCreating => id == null;
@@ -35,6 +38,9 @@ class BookingDraft with _$BookingDraft {
       category: category!,
       account: account!,
       isSynced: false,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
     );
   }
 
@@ -47,6 +53,9 @@ class BookingDraft with _$BookingDraft {
       category: booking.category,
       account: booking.account,
       categoryType: booking.category.categoryType,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+      deletedAt: booking.deletedAt,
     );
   }
 }
