@@ -18,9 +18,9 @@ class Category with _$Category implements Entity {
     Category? parent,
     @Default([]) List<Category> subcategories,
     required bool isSynced,
-    required DateTime? createdAt,
-    required DateTime? updatedAt,
-    required DateTime? deletedAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _Category;
 
   factory Category.notFound() {
@@ -31,9 +31,6 @@ class Category with _$Category implements Entity {
       iconName: FeatureConstants.notFoundIconName,
       iconColor: FeatureConstants.notFoundIconColor,
       isSynced: true,
-      createdAt: null,
-      updatedAt: null,
-      deletedAt: null,
     );
   }
 

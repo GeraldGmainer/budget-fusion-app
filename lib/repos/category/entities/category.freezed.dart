@@ -289,9 +289,9 @@ class _$CategoryImpl extends _Category {
     this.parent,
     final List<Category> subcategories = const [],
     required this.isSynced,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : _subcategories = subcategories,
        super._();
 
@@ -393,9 +393,9 @@ abstract class _Category extends Category {
     final Category? parent,
     final List<Category> subcategories,
     required final bool isSynced,
-    required final DateTime? createdAt,
-    required final DateTime? updatedAt,
-    required final DateTime? deletedAt,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$CategoryImpl;
   const _Category._() : super._();
 

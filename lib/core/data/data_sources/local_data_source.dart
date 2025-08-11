@@ -75,10 +75,21 @@ abstract class LocalDataSource<E extends Dto> {
     // _log("saveAllNotSynced success", darkColor: true);
   }
 
-  Future<void> markAsSynced(String id, DateTime updated) async {
-    _log("markAsSynced for id '$id' with updatedAt: $updated");
-    final data = {'sync_status': SyncStatus.synced.name};
-    await db.update(table, data, where: 'id = ?', whereArgs: [id]);
+  Future<void> markAsSynced(String id, DateTime created, DateTime updated) async {
+    _log("markAsSynced for id '$id' with createdAt: $created, updatedAt: $updated");
+    await db.rawUpdate(
+      'UPDATE $table '
+      'SET sync_status = ?, '
+      '    updated_at = ?, '
+      '    created_at = COALESCE(created_at, ?) '
+      'WHERE id = ?',
+      [
+        SyncStatus.synced.name,
+        updated.toUtc().toIso8601String(),
+        created.toUtc().toIso8601String(),
+        id,
+      ],
+    );
     _log("markAsSynced success for id '$id'", darkColor: true);
   }
 

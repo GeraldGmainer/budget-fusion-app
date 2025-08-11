@@ -21,10 +21,7 @@ class BookingDraft with _$BookingDraft {
     Category? category,
     Account? account,
     @Default(CategoryType.outcome) CategoryType categoryType,
-    SyncMeta? syncMeta,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    DateTime? deletedAt,
+    required bool isSynced,
   }) = _BookingDraft;
 
   bool get isCreating => id == null;
@@ -37,10 +34,7 @@ class BookingDraft with _$BookingDraft {
       money: Money(amount: amount, currency: currency),
       category: category!,
       account: account!,
-      isSynced: false,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      deletedAt: deletedAt,
+      isSynced: isSynced,
     );
   }
 
@@ -53,9 +47,7 @@ class BookingDraft with _$BookingDraft {
       category: booking.category,
       account: booking.account,
       categoryType: booking.category.categoryType,
-      createdAt: booking.createdAt,
-      updatedAt: booking.updatedAt,
-      deletedAt: booking.deletedAt,
+      isSynced: booking.isSynced,
     );
   }
 }

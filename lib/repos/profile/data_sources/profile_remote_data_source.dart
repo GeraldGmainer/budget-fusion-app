@@ -9,7 +9,7 @@ class ProfileRemoteDataSource extends RemoteDataSource<ProfileDto> {
   String get table => 'profile';
 
   @override
-  String get columns => 'id, first_name, last_name, avatar_url, settings, updated_at';
+  String get columns => 'id, first_name, last_name, avatar_url, settings, created_at, updated_at, deleted_at';
 
   @override
   ProfileDto toDto(Map<String, dynamic> json) {

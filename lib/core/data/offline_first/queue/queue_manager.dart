@@ -196,10 +196,13 @@ class QueueManager {
       switch (item.taskType) {
         case QueueTaskType.upsert:
           final updatedDto = await adapter.remote.upsert(item.entityId, jsonMap);
+          if (updatedDto.createdAt == null) {
+            throw "QueueManager: upserting queue task returned createdAt as null";
+          }
           if (updatedDto.updatedAt == null) {
             throw "QueueManager: upserting queue task returned updatedAt as null";
           }
-          await adapter.local.markAsSynced(updatedDto.id.value, updatedDto.updatedAt!);
+          await adapter.local.markAsSynced(updatedDto.id.value, updatedDto.createdAt!, updatedDto.updatedAt!);
           _excludeIdsBuffer.add(updatedDto.id.value);
           break;
         case QueueTaskType.delete:

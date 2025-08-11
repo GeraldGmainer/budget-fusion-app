@@ -293,9 +293,9 @@ class _$BookingImpl extends _Booking {
     required this.category,
     required this.account,
     required this.isSynced,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : super._();
 
   @override
@@ -380,9 +380,9 @@ abstract class _Booking extends Booking {
     required final Category category,
     required final Account account,
     required final bool isSynced,
-    required final DateTime? createdAt,
-    required final DateTime? updatedAt,
-    required final DateTime? deletedAt,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$BookingImpl;
   const _Booking._() : super._();
 

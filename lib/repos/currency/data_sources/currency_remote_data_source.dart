@@ -9,7 +9,7 @@ class CurrencyRemoteDataSource extends RemoteDataSource<CurrencyDto> {
   String get table => 'currency';
 
   @override
-  String get columns => 'id, name, icon_name, icon_color, updated_at';
+  String get columns => 'id, name, icon_name, icon_color, created_at, updated_at, deleted_at';
 
   @override
   CurrencyDto toDto(Map<String, dynamic> json) {

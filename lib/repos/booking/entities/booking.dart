@@ -21,9 +21,9 @@ class Booking with _$Booking implements Entity {
     required Category category,
     required Account account,
     required bool isSynced,
-    required DateTime? createdAt,
-    required DateTime? updatedAt,
-    required DateTime? deletedAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _Booking;
 
   factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency, bool isSynced) {

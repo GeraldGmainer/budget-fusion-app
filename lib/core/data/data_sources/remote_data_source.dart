@@ -37,7 +37,13 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     final stopwatch = Stopwatch()..start();
     _log("upsert by id '$id'");
     return execute(table, () async {
-      final response = await supabase.from(table).upsert(json).eq('id', id).select();
+      final payload =
+          Map<String, dynamic>.from(json)
+            ..remove('created_at')
+            ..remove('updated_at')
+            ..remove('createdAt')
+            ..remove('updatedAt');
+      final response = await supabase.from(table).upsert(payload).eq('id', id).select();
       _log("upsert success", stopwatch: stopwatch);
       await Future.delayed(Duration(milliseconds: 1500));
       return toDto((response[0]));

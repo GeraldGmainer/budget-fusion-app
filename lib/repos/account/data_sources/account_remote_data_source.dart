@@ -9,7 +9,7 @@ class AccountRemoteDataSource extends RemoteDataSource<AccountDto> {
   String get table => 'account';
 
   @override
-  String get columns => 'id, name, icon_name, icon_color, updated_at';
+  String get columns => 'id, name, icon_name, icon_color, created_at, updated_at, deleted_at';
 
   @override
   AccountDto toDto(Map<String, dynamic> json) {
