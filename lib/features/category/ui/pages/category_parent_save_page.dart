@@ -7,6 +7,7 @@ import '../../../../repos/category/category.dart';
 import '../../bloc/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
+import '../widget/category_meta.dart';
 import '../widget/category_type_input.dart';
 import '../widget/icon_input.dart';
 import '../widget/name_input.dart';
@@ -59,7 +60,12 @@ class CategoryParentSavePage extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [NameInput(draft: draft, autofocus: draft.isCreating), const SizedBox(height: 8), CategoryTypeInput(draft: draft)],
+                      children: [
+                        NameInput(draft: draft, autofocus: draft.isCreating),
+                        const SizedBox(height: 8),
+                        CategoryTypeInput(draft: draft),
+                        if (draft.editedCategory != null) CategoryMeta(category: draft.editedCategory!),
+                      ],
                     ),
                   ),
                 ],

@@ -17,7 +17,7 @@ class CategoryDraft with _$CategoryDraft {
     @Default("9E9E9E") String iconColor,
     Category? parent,
     @Default([]) List<Category> subcategories,
-    required bool isSynced,
+    required Category? editedCategory,
   }) = _CategoryDraft;
 
   bool get isCreating => id == null;
@@ -31,12 +31,12 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: iconColor,
       parent: parent,
       subcategories: subcategories,
-      isSynced: isSynced,
+      isSynced: editedCategory?.isSynced ?? false,
     );
   }
 
   factory CategoryDraft.initial({Category? parent}) {
-    return CategoryDraft(parent: parent, isSynced: false);
+    return CategoryDraft(parent: parent, editedCategory: null);
   }
 
   factory CategoryDraft.fromCategory(Category category) {
@@ -48,7 +48,7 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: category.iconColor,
       parent: category.parent,
       subcategories: category.subcategories,
-      isSynced: category.isSynced,
+      editedCategory: category,
     );
   }
 }

@@ -24,7 +24,7 @@ mixin _$CategoryDraft {
   String get iconColor => throw _privateConstructorUsedError;
   Category? get parent => throw _privateConstructorUsedError;
   List<Category> get subcategories => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
+  Category? get editedCategory => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -48,10 +48,11 @@ abstract class $CategoryDraftCopyWith<$Res> {
     String iconColor,
     Category? parent,
     List<Category> subcategories,
-    bool isSynced,
+    Category? editedCategory,
   });
 
   $CategoryCopyWith<$Res>? get parent;
+  $CategoryCopyWith<$Res>? get editedCategory;
 }
 
 /// @nodoc
@@ -76,7 +77,7 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
     Object? iconColor = null,
     Object? parent = freezed,
     Object? subcategories = null,
-    Object? isSynced = null,
+    Object? editedCategory = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -115,11 +116,11 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
                     ? _value.subcategories
                     : subcategories // ignore: cast_nullable_to_non_nullable
                         as List<Category>,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            editedCategory:
+                freezed == editedCategory
+                    ? _value.editedCategory
+                    : editedCategory // ignore: cast_nullable_to_non_nullable
+                        as Category?,
           )
           as $Val,
     );
@@ -136,6 +137,20 @@ class _$CategoryDraftCopyWithImpl<$Res, $Val extends CategoryDraft>
 
     return $CategoryCopyWith<$Res>(_value.parent!, (value) {
       return _then(_value.copyWith(parent: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CategoryDraft
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get editedCategory {
+    if (_value.editedCategory == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.editedCategory!, (value) {
+      return _then(_value.copyWith(editedCategory: value) as $Val);
     });
   }
 }
@@ -157,11 +172,13 @@ abstract class _$$CategoryDraftImplCopyWith<$Res>
     String iconColor,
     Category? parent,
     List<Category> subcategories,
-    bool isSynced,
+    Category? editedCategory,
   });
 
   @override
   $CategoryCopyWith<$Res>? get parent;
+  @override
+  $CategoryCopyWith<$Res>? get editedCategory;
 }
 
 /// @nodoc
@@ -185,7 +202,7 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
     Object? iconColor = null,
     Object? parent = freezed,
     Object? subcategories = null,
-    Object? isSynced = null,
+    Object? editedCategory = freezed,
   }) {
     return _then(
       _$CategoryDraftImpl(
@@ -224,11 +241,11 @@ class __$$CategoryDraftImplCopyWithImpl<$Res>
                 ? _value._subcategories
                 : subcategories // ignore: cast_nullable_to_non_nullable
                     as List<Category>,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        editedCategory:
+            freezed == editedCategory
+                ? _value.editedCategory
+                : editedCategory // ignore: cast_nullable_to_non_nullable
+                    as Category?,
       ),
     );
   }
@@ -245,7 +262,7 @@ class _$CategoryDraftImpl extends _CategoryDraft {
     this.iconColor = "9E9E9E",
     this.parent,
     final List<Category> subcategories = const [],
-    required this.isSynced,
+    required this.editedCategory,
   }) : _subcategories = subcategories,
        super._();
 
@@ -274,11 +291,11 @@ class _$CategoryDraftImpl extends _CategoryDraft {
   }
 
   @override
-  final bool isSynced;
+  final Category? editedCategory;
 
   @override
   String toString() {
-    return 'CategoryDraft(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, isSynced: $isSynced)';
+    return 'CategoryDraft(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, editedCategory: $editedCategory)';
   }
 
   @override
@@ -299,8 +316,8 @@ class _$CategoryDraftImpl extends _CategoryDraft {
               other._subcategories,
               _subcategories,
             ) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+            (identical(other.editedCategory, editedCategory) ||
+                other.editedCategory == editedCategory));
   }
 
   @override
@@ -313,7 +330,7 @@ class _$CategoryDraftImpl extends _CategoryDraft {
     iconColor,
     parent,
     const DeepCollectionEquality().hash(_subcategories),
-    isSynced,
+    editedCategory,
   );
 
   /// Create a copy of CategoryDraft
@@ -334,7 +351,7 @@ abstract class _CategoryDraft extends CategoryDraft {
     final String iconColor,
     final Category? parent,
     final List<Category> subcategories,
-    required final bool isSynced,
+    required final Category? editedCategory,
   }) = _$CategoryDraftImpl;
   _CategoryDraft._() : super._();
 
@@ -353,7 +370,7 @@ abstract class _CategoryDraft extends CategoryDraft {
   @override
   List<Category> get subcategories;
   @override
-  bool get isSynced;
+  Category? get editedCategory;
 
   /// Create a copy of CategoryDraft
   /// with the given fields replaced by the non-null parameter values.
