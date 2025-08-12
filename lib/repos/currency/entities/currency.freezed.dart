@@ -24,6 +24,9 @@ mixin _$Currency {
   String get symbol => throw _privateConstructorUsedError;
   int? get uiOrder => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Currency
   /// with the given fields replaced by the non-null parameter values.
@@ -45,6 +48,9 @@ abstract class $CurrencyCopyWith<$Res> {
     String symbol,
     int? uiOrder,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 }
 
@@ -70,6 +76,9 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
     Object? symbol = null,
     Object? uiOrder = freezed,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -108,6 +117,21 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
                     ? _value.isSynced
                     : isSynced // ignore: cast_nullable_to_non_nullable
                         as bool,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -131,6 +155,9 @@ abstract class _$$CurrencyImplCopyWith<$Res>
     String symbol,
     int? uiOrder,
     bool isSynced,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   });
 }
 
@@ -155,6 +182,9 @@ class __$$CurrencyImplCopyWithImpl<$Res>
     Object? symbol = null,
     Object? uiOrder = freezed,
     Object? isSynced = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CurrencyImpl(
@@ -193,6 +223,21 @@ class __$$CurrencyImplCopyWithImpl<$Res>
                 ? _value.isSynced
                 : isSynced // ignore: cast_nullable_to_non_nullable
                     as bool,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -209,6 +254,9 @@ class _$CurrencyImpl extends _Currency {
     required this.symbol,
     this.uiOrder,
     required this.isSynced,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.deletedAt,
   }) : super._();
 
   @override
@@ -225,10 +273,16 @@ class _$CurrencyImpl extends _Currency {
   final int? uiOrder;
   @override
   final bool isSynced;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Currency(id: $id, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder, isSynced: $isSynced)';
+    return 'Currency(id: $id, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -245,7 +299,13 @@ class _$CurrencyImpl extends _Currency {
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.uiOrder, uiOrder) || other.uiOrder == uiOrder) &&
             (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+                other.isSynced == isSynced) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @override
@@ -258,6 +318,9 @@ class _$CurrencyImpl extends _Currency {
     symbol,
     uiOrder,
     isSynced,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of Currency
@@ -278,6 +341,9 @@ abstract class _Currency extends Currency {
     required final String symbol,
     final int? uiOrder,
     required final bool isSynced,
+    required final DateTime? createdAt,
+    required final DateTime? updatedAt,
+    required final DateTime? deletedAt,
   }) = _$CurrencyImpl;
   const _Currency._() : super._();
 
@@ -295,6 +361,12 @@ abstract class _Currency extends Currency {
   int? get uiOrder;
   @override
   bool get isSynced;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+  @override
+  DateTime? get deletedAt;
 
   /// Create a copy of Currency
   /// with the given fields replaced by the non-null parameter values.

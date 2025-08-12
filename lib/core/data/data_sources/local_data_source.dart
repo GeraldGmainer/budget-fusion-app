@@ -13,11 +13,9 @@ abstract class LocalDataSource<E extends Dto> {
   SyncedDto<E> _mapRowToSyncedDto(Map<String, dynamic> row) {
     final m = Map<String, dynamic>.from(row);
     final statusString = m.remove('sync_status') as String;
-    final meta = SyncMeta(
-      status: SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString),
-    );
+    final status = SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString);
     final dto = fromJson(m);
-    return SyncedDto(dto: dto, syncMeta: meta);
+    return SyncedDto(dto: dto, status: status);
   }
 
   Future<List<SyncedDto<E>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
@@ -43,7 +41,7 @@ abstract class LocalDataSource<E extends Dto> {
   Future<void> save(SyncedDto<E> syncedDto) async {
     _log("save for id '${syncedDto.dto.id.value}'");
     final data = syncedDto.dto.toJson();
-    data['sync_status'] = syncedDto.syncMeta.status.toString().split('.').last;
+    data['sync_status'] = syncedDto.status.toString().split('.').last;
     final stringifiedFields = _convertMapsToString(data);
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
@@ -54,7 +52,7 @@ abstract class LocalDataSource<E extends Dto> {
     final batch = db.batch();
     for (final dto in syncedDtos) {
       final data = dto.dto.toJson();
-      data['sync_status'] = dto.syncMeta.status.toString().split('.').last;
+      data['sync_status'] = dto.status.toString().split('.').last;
       final stringifiedFields = _convertMapsToString(data);
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }
@@ -75,10 +73,21 @@ abstract class LocalDataSource<E extends Dto> {
     // _log("saveAllNotSynced success", darkColor: true);
   }
 
-  Future<void> markAsSynced(String id, DateTime updated) async {
-    _log("markAsSynced for id '$id' with updatedAt: $updated");
-    final data = {'sync_status': SyncStatus.synced.name};
-    await db.update(table, data, where: 'id = ?', whereArgs: [id]);
+  Future<void> markAsSynced(String id, DateTime created, DateTime updated) async {
+    _log("markAsSynced for id '$id' with createdAt: $created, updatedAt: $updated");
+    await db.rawUpdate(
+      'UPDATE $table '
+      'SET sync_status = ?, '
+      '    updated_at = ?, '
+      '    created_at = COALESCE(created_at, ?) '
+      'WHERE id = ?',
+      [
+        SyncStatus.synced.name,
+        updated.toUtc().toIso8601String(),
+        created.toUtc().toIso8601String(),
+        id,
+      ],
+    );
     _log("markAsSynced success for id '$id'", darkColor: true);
   }
 

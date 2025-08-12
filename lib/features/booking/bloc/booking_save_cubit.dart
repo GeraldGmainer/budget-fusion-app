@@ -28,7 +28,7 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
   BookingSaveCubit(this._saveBookingUseCase, this._defaultAccountUseCase, this._bookingRepo, this._defaultNewDateUseCase) : super(BookingSaveState.initial(draft: _initialDraft()));
 
   static BookingDraft _initialDraft({Account? account, DateTime? date}) {
-    return BookingDraft(date: date ?? DateTime.now(), amount: Decimal.zero, account: account);
+    return BookingDraft(date: date ?? DateTime.now(), amount: Decimal.zero, account: account, isSynced: false);
   }
 
   Future<void> init(Booking? booking, BudgetDateRange dateRange, PeriodMode period) => safeRun(

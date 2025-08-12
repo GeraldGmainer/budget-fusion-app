@@ -12,12 +12,14 @@ class BookingDto with _$BookingDto implements Dto {
 
   const factory BookingDto({
     @UuidSerializer() required Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() required DateTime date,
     String? description,
     @DecimalConverter() required Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() required Uuid accountId,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _BookingDto;
 
   factory BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);

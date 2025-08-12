@@ -23,14 +23,20 @@ AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) {
 mixin _$AccountDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'icon_name')
   String get iconName => throw _privateConstructorUsedError;
   @JsonKey(name: 'icon_color')
   String get iconColor => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Serializes this AccountDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,10 +57,12 @@ abstract class $AccountDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -74,10 +82,12 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -86,11 +96,6 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
             name:
                 null == name
                     ? _value.name
@@ -106,6 +111,21 @@ class _$AccountDtoCopyWithImpl<$Res, $Val extends AccountDto>
                     ? _value.iconColor
                     : iconColor // ignore: cast_nullable_to_non_nullable
                         as String,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -123,10 +143,12 @@ abstract class _$$AccountDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -145,10 +167,12 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$AccountDtoImpl(
@@ -157,11 +181,6 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
         name:
             null == name
                 ? _value.name
@@ -177,6 +196,21 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
                 ? _value.iconColor
                 : iconColor // ignore: cast_nullable_to_non_nullable
                     as String,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -187,10 +221,12 @@ class __$$AccountDtoImplCopyWithImpl<$Res>
 class _$AccountDtoImpl extends _AccountDto {
   const _$AccountDtoImpl({
     @UuidSerializer() required this.id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     required this.name,
     @JsonKey(name: 'icon_name') required this.iconName,
     @JsonKey(name: 'icon_color') required this.iconColor,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
   }) : super._();
 
   factory _$AccountDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -200,10 +236,6 @@ class _$AccountDtoImpl extends _AccountDto {
   @UuidSerializer()
   final Uuid id;
   @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
-  @override
   final String name;
   @override
   @JsonKey(name: 'icon_name')
@@ -211,10 +243,22 @@ class _$AccountDtoImpl extends _AccountDto {
   @override
   @JsonKey(name: 'icon_color')
   final String iconColor;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'AccountDto(id: $id, updatedAt: $updatedAt, name: $name, iconName: $iconName, iconColor: $iconColor)';
+    return 'AccountDto(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -223,19 +267,31 @@ class _$AccountDtoImpl extends _AccountDto {
         (other.runtimeType == runtimeType &&
             other is _$AccountDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
-                other.iconColor == iconColor));
+                other.iconColor == iconColor) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, updatedAt, name, iconName, iconColor);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    iconName,
+    iconColor,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  );
 
   /// Create a copy of AccountDto
   /// with the given fields replaced by the non-null parameter values.
@@ -254,12 +310,18 @@ class _$AccountDtoImpl extends _AccountDto {
 abstract class _AccountDto extends AccountDto {
   const factory _AccountDto({
     @UuidSerializer() required final Uuid id,
-    @DateTimeSerializer()
-    @JsonKey(name: 'updated_at')
-    required final DateTime updatedAt,
     required final String name,
     @JsonKey(name: 'icon_name') required final String iconName,
     @JsonKey(name: 'icon_color') required final String iconColor,
+    @DateTimeSerializer()
+    @JsonKey(name: 'created_at')
+    required final DateTime? createdAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime? updatedAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'deleted_at')
+    required final DateTime? deletedAt,
   }) = _$AccountDtoImpl;
   const _AccountDto._() : super._();
 
@@ -270,10 +332,6 @@ abstract class _AccountDto extends AccountDto {
   @UuidSerializer()
   Uuid get id;
   @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
-  @override
   String get name;
   @override
   @JsonKey(name: 'icon_name')
@@ -281,6 +339,18 @@ abstract class _AccountDto extends AccountDto {
   @override
   @JsonKey(name: 'icon_color')
   String get iconColor;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt;
 
   /// Create a copy of AccountDto
   /// with the given fields replaced by the non-null parameter values.

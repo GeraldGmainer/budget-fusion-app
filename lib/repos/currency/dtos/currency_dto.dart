@@ -11,12 +11,14 @@ class CurrencyDto with _$CurrencyDto implements Dto {
 
   const factory CurrencyDto({
     @UuidSerializer() required Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime updatedAt,
     required String name,
     @JsonKey(name: 'decimal_precision') required int decimalPrecision,
     @BoolIntSerializer() @JsonKey(name: 'unit_position_front') required bool unitPositionFront,
     required String symbol,
     @JsonKey(name: 'ui_order') int? uiOrder,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _CurrencyDto;
 
   factory CurrencyDto.fromJson(Map<String, dynamic> json) => _$CurrencyDtoFromJson(json);

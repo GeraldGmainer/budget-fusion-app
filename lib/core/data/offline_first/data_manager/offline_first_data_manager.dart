@@ -8,7 +8,6 @@ import '../../../../utils/utils.dart';
 import '../../../core.dart';
 import '../../data_sources/data_source_adapter.dart';
 import '../../sync_manager/sync_manager.dart';
-import '../models/queue_item.dart';
 import '../realtime/realtime_notifier_service.dart';
 
 class OfflineFirstDataManager<E extends Dto> {
@@ -90,8 +89,8 @@ class OfflineFirstDataManager<E extends Dto> {
   Future<void> save(E dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
     final existing = await adapter.local.fetchById(dto.id.value);
-    final newMeta = (existing?.syncMeta != null) ? existing!.syncMeta.copyWith(status: SyncStatus.updatedLocally) : SyncMeta(status: SyncStatus.createdLocally);
-    final wrapped = SyncedDto<E>(dto: dto, syncMeta: newMeta);
+    final newStatus = (existing?.status != null) ? SyncStatus.updatedLocally : SyncStatus.createdLocally;
+    final wrapped = SyncedDto<E>(dto: dto, status: newStatus);
 
     await adapter.local.save(wrapped);
 

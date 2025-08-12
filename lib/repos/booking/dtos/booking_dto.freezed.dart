@@ -23,9 +23,6 @@ BookingDto _$BookingDtoFromJson(Map<String, dynamic> json) {
 mixin _$BookingDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'date')
   @DateSerializer()
   DateTime get date => throw _privateConstructorUsedError;
@@ -38,6 +35,15 @@ mixin _$BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   Uuid get accountId => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Serializes this BookingDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,12 +64,14 @@ abstract class $BookingDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() Uuid accountId,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -83,12 +91,14 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? categoryId = null,
     Object? accountId = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -97,11 +107,6 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
             date:
                 null == date
                     ? _value.date
@@ -127,6 +132,21 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
                     ? _value.accountId
                     : accountId // ignore: cast_nullable_to_non_nullable
                         as Uuid,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -144,12 +164,14 @@ abstract class _$$BookingDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() DateTime date,
     String? description,
     @DecimalConverter() Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() Uuid accountId,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -168,12 +190,14 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? date = null,
     Object? description = freezed,
     Object? amount = null,
     Object? categoryId = null,
     Object? accountId = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$BookingDtoImpl(
@@ -182,11 +206,6 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
         date:
             null == date
                 ? _value.date
@@ -212,6 +231,21 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
                 ? _value.accountId
                 : accountId // ignore: cast_nullable_to_non_nullable
                     as Uuid,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -222,12 +256,14 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
 class _$BookingDtoImpl extends _BookingDto {
   const _$BookingDtoImpl({
     @UuidSerializer() required this.id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @JsonKey(name: 'date') @DateSerializer() required this.date,
     this.description,
     @DecimalConverter() required this.amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required this.categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() required this.accountId,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
   }) : super._();
 
   factory _$BookingDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -236,10 +272,6 @@ class _$BookingDtoImpl extends _BookingDto {
   @override
   @UuidSerializer()
   final Uuid id;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
   @override
   @JsonKey(name: 'date')
   @DateSerializer()
@@ -257,10 +289,22 @@ class _$BookingDtoImpl extends _BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   final Uuid accountId;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'BookingDto(id: $id, updatedAt: $updatedAt, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId)';
+    return 'BookingDto(id: $id, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -269,8 +313,6 @@ class _$BookingDtoImpl extends _BookingDto {
         (other.runtimeType == runtimeType &&
             other is _$BookingDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -278,7 +320,13 @@ class _$BookingDtoImpl extends _BookingDto {
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.accountId, accountId) ||
-                other.accountId == accountId));
+                other.accountId == accountId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -286,12 +334,14 @@ class _$BookingDtoImpl extends _BookingDto {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    updatedAt,
     date,
     description,
     amount,
     categoryId,
     accountId,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of BookingDto
@@ -311,9 +361,6 @@ class _$BookingDtoImpl extends _BookingDto {
 abstract class _BookingDto extends BookingDto {
   const factory _BookingDto({
     @UuidSerializer() required final Uuid id,
-    @DateTimeSerializer()
-    @JsonKey(name: 'updated_at')
-    required final DateTime updatedAt,
     @JsonKey(name: 'date') @DateSerializer() required final DateTime date,
     final String? description,
     @DecimalConverter() required final Decimal amount,
@@ -323,6 +370,15 @@ abstract class _BookingDto extends BookingDto {
     @JsonKey(name: 'account_id')
     @UuidSerializer()
     required final Uuid accountId,
+    @DateTimeSerializer()
+    @JsonKey(name: 'created_at')
+    required final DateTime? createdAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime? updatedAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'deleted_at')
+    required final DateTime? deletedAt,
   }) = _$BookingDtoImpl;
   const _BookingDto._() : super._();
 
@@ -332,10 +388,6 @@ abstract class _BookingDto extends BookingDto {
   @override
   @UuidSerializer()
   Uuid get id;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
   @override
   @JsonKey(name: 'date')
   @DateSerializer()
@@ -353,6 +405,18 @@ abstract class _BookingDto extends BookingDto {
   @JsonKey(name: 'account_id')
   @UuidSerializer()
   Uuid get accountId;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt;
 
   /// Create a copy of BookingDto
   /// with the given fields replaced by the non-null parameter values.

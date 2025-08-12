@@ -18,14 +18,15 @@ class CategoryParentSavePage extends StatelessWidget {
   const CategoryParentSavePage({super.key, required this.draft});
 
   _onAddSubcategory(BuildContext context) {
-    _handleSave(context, CategoryDraft.initial(parent: draft.toCategory()));
+    _navigateToSub(context, CategoryDraft.initial(parent: draft.toCategory()));
   }
 
   _onEditSubcategory(BuildContext context, Category category) {
-    _handleSave(context, CategoryDraft.fromCategory(category));
+    print("--- _onEditSubcategory ${category.id}");
+    _navigateToSub(context, CategoryDraft.fromCategory(category));
   }
 
-  _handleSave(BuildContext context, CategoryDraft saveDraft) async {
+  _navigateToSub(BuildContext context, CategoryDraft saveDraft) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
     final bool? shouldRefresh = result as bool?;
     if (context.mounted && shouldRefresh == true) {
@@ -59,7 +60,12 @@ class CategoryParentSavePage extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [NameInput(draft: draft, autofocus: draft.isCreating), const SizedBox(height: 8), CategoryTypeInput(draft: draft)],
+                      children: [
+                        NameInput(draft: draft, autofocus: draft.isCreating),
+                        const SizedBox(height: 8),
+                        CategoryTypeInput(draft: draft),
+                        if (draft.editedCategory != null) EntityMetaWidget<Category>(id: draft.editedCategory!.id, repo: getIt<CategoryRepo>()),
+                      ],
                     ),
                   ),
                 ],

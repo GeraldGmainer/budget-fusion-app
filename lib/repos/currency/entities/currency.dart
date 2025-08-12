@@ -17,6 +17,9 @@ class Currency with _$Currency implements Entity {
     required String symbol,
     int? uiOrder,
     required bool isSynced,
+    required DateTime? createdAt,
+    required DateTime? updatedAt,
+    required DateTime? deletedAt,
   }) = _Currency;
 
   factory Currency.fromDto(CurrencyDto dto, {required bool isSynced}) {
@@ -28,15 +31,39 @@ class Currency with _$Currency implements Entity {
       symbol: dto.symbol,
       uiOrder: dto.uiOrder,
       isSynced: isSynced,
+      createdAt: dto.createdAt,
+      updatedAt: dto.updatedAt,
+      deletedAt: dto.deletedAt,
     );
   }
 
   // TODO load currency from offline only database
   factory Currency.notFound() {
-    return Currency(id: Uuid.generate(), name: "not found", decimalPrecision: 2, symbol: "€", unitPositionFront: false, uiOrder: 1, isSynced: true);
+    return Currency(
+      id: Uuid.generate(),
+      name: "not found",
+      decimalPrecision: 2,
+      symbol: "€",
+      unitPositionFront: false,
+      uiOrder: 1,
+      isSynced: true,
+      createdAt: null,
+      updatedAt: null,
+      deletedAt: null,
+    );
   }
 
   CurrencyDto toDto() {
-    return CurrencyDto(id: id, name: name, decimalPrecision: decimalPrecision, unitPositionFront: unitPositionFront, symbol: symbol, uiOrder: uiOrder, updatedAt: DateTime.now());
+    return CurrencyDto(
+      id: id,
+      name: name,
+      decimalPrecision: decimalPrecision,
+      unitPositionFront: unitPositionFront,
+      symbol: symbol,
+      uiOrder: uiOrder,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      deletedAt: deletedAt,
+    );
   }
 }

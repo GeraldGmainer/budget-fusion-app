@@ -23,9 +23,6 @@ CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) {
 mixin _$CurrencyDto {
   @UuidSerializer()
   Uuid get id => throw _privateConstructorUsedError;
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'decimal_precision')
   int get decimalPrecision => throw _privateConstructorUsedError;
@@ -35,6 +32,15 @@ mixin _$CurrencyDto {
   String get symbol => throw _privateConstructorUsedError;
   @JsonKey(name: 'ui_order')
   int? get uiOrder => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Serializes this CurrencyDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +61,6 @@ abstract class $CurrencyDtoCopyWith<$Res> {
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'decimal_precision') int decimalPrecision,
     @BoolIntSerializer()
@@ -63,6 +68,9 @@ abstract class $CurrencyDtoCopyWith<$Res> {
     bool unitPositionFront,
     String symbol,
     @JsonKey(name: 'ui_order') int? uiOrder,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -82,12 +90,14 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? name = null,
     Object? decimalPrecision = null,
     Object? unitPositionFront = null,
     Object? symbol = null,
     Object? uiOrder = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -96,11 +106,6 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
                     ? _value.id
                     : id // ignore: cast_nullable_to_non_nullable
                         as Uuid,
-            updatedAt:
-                null == updatedAt
-                    ? _value.updatedAt
-                    : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime,
             name:
                 null == name
                     ? _value.name
@@ -126,6 +131,21 @@ class _$CurrencyDtoCopyWithImpl<$Res, $Val extends CurrencyDto>
                     ? _value.uiOrder
                     : uiOrder // ignore: cast_nullable_to_non_nullable
                         as int?,
+            createdAt:
+                freezed == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            updatedAt:
+                freezed == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
+            deletedAt:
+                freezed == deletedAt
+                    ? _value.deletedAt
+                    : deletedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime?,
           )
           as $Val,
     );
@@ -143,7 +163,6 @@ abstract class _$$CurrencyDtoImplCopyWith<$Res>
   @useResult
   $Res call({
     @UuidSerializer() Uuid id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime updatedAt,
     String name,
     @JsonKey(name: 'decimal_precision') int decimalPrecision,
     @BoolIntSerializer()
@@ -151,6 +170,9 @@ abstract class _$$CurrencyDtoImplCopyWith<$Res>
     bool unitPositionFront,
     String symbol,
     @JsonKey(name: 'ui_order') int? uiOrder,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -169,12 +191,14 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? updatedAt = null,
     Object? name = null,
     Object? decimalPrecision = null,
     Object? unitPositionFront = null,
     Object? symbol = null,
     Object? uiOrder = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CurrencyDtoImpl(
@@ -183,11 +207,6 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                     as Uuid,
-        updatedAt:
-            null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime,
         name:
             null == name
                 ? _value.name
@@ -213,6 +232,21 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
                 ? _value.uiOrder
                 : uiOrder // ignore: cast_nullable_to_non_nullable
                     as int?,
+        createdAt:
+            freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        updatedAt:
+            freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
+        deletedAt:
+            freezed == deletedAt
+                ? _value.deletedAt
+                : deletedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime?,
       ),
     );
   }
@@ -223,7 +257,6 @@ class __$$CurrencyDtoImplCopyWithImpl<$Res>
 class _$CurrencyDtoImpl extends _CurrencyDto {
   const _$CurrencyDtoImpl({
     @UuidSerializer() required this.id,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     required this.name,
     @JsonKey(name: 'decimal_precision') required this.decimalPrecision,
     @BoolIntSerializer()
@@ -231,6 +264,9 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
     required this.unitPositionFront,
     required this.symbol,
     @JsonKey(name: 'ui_order') this.uiOrder,
+    @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
+    @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
+    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
   }) : super._();
 
   factory _$CurrencyDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -239,10 +275,6 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
   @override
   @UuidSerializer()
   final Uuid id;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
   @override
   final String name;
   @override
@@ -257,10 +289,22 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
   @override
   @JsonKey(name: 'ui_order')
   final int? uiOrder;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'CurrencyDto(id: $id, updatedAt: $updatedAt, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder)';
+    return 'CurrencyDto(id: $id, name: $name, decimalPrecision: $decimalPrecision, unitPositionFront: $unitPositionFront, symbol: $symbol, uiOrder: $uiOrder, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -269,15 +313,19 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
         (other.runtimeType == runtimeType &&
             other is _$CurrencyDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.decimalPrecision, decimalPrecision) ||
                 other.decimalPrecision == decimalPrecision) &&
             (identical(other.unitPositionFront, unitPositionFront) ||
                 other.unitPositionFront == unitPositionFront) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
-            (identical(other.uiOrder, uiOrder) || other.uiOrder == uiOrder));
+            (identical(other.uiOrder, uiOrder) || other.uiOrder == uiOrder) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deletedAt, deletedAt) ||
+                other.deletedAt == deletedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -285,12 +333,14 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    updatedAt,
     name,
     decimalPrecision,
     unitPositionFront,
     symbol,
     uiOrder,
+    createdAt,
+    updatedAt,
+    deletedAt,
   );
 
   /// Create a copy of CurrencyDto
@@ -310,9 +360,6 @@ class _$CurrencyDtoImpl extends _CurrencyDto {
 abstract class _CurrencyDto extends CurrencyDto {
   const factory _CurrencyDto({
     @UuidSerializer() required final Uuid id,
-    @DateTimeSerializer()
-    @JsonKey(name: 'updated_at')
-    required final DateTime updatedAt,
     required final String name,
     @JsonKey(name: 'decimal_precision') required final int decimalPrecision,
     @BoolIntSerializer()
@@ -320,6 +367,15 @@ abstract class _CurrencyDto extends CurrencyDto {
     required final bool unitPositionFront,
     required final String symbol,
     @JsonKey(name: 'ui_order') final int? uiOrder,
+    @DateTimeSerializer()
+    @JsonKey(name: 'created_at')
+    required final DateTime? createdAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'updated_at')
+    required final DateTime? updatedAt,
+    @DateTimeSerializer()
+    @JsonKey(name: 'deleted_at')
+    required final DateTime? deletedAt,
   }) = _$CurrencyDtoImpl;
   const _CurrencyDto._() : super._();
 
@@ -329,10 +385,6 @@ abstract class _CurrencyDto extends CurrencyDto {
   @override
   @UuidSerializer()
   Uuid get id;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
   @override
   String get name;
   @override
@@ -347,6 +399,18 @@ abstract class _CurrencyDto extends CurrencyDto {
   @override
   @JsonKey(name: 'ui_order')
   int? get uiOrder;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt;
+  @override
+  @DateTimeSerializer()
+  @JsonKey(name: 'deleted_at')
+  DateTime? get deletedAt;
 
   /// Create a copy of CurrencyDto
   /// with the given fields replaced by the non-null parameter values.

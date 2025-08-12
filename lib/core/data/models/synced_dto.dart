@@ -1,14 +1,14 @@
 import '../../value_objects/uuid.dart';
+import '../enums/sync_status.dart';
 import 'dto.dart';
-import 'sync_meta.dart';
 
 class SyncedDto<T extends Dto> {
   final T dto;
-  final SyncMeta syncMeta;
+  final SyncStatus status;
 
-  const SyncedDto({required this.dto, required this.syncMeta});
+  const SyncedDto({required this.dto, required this.status});
 
-  bool get isSynced => syncMeta.isSynced;
+  bool get isSynced => status == SyncStatus.synced;
 
   Uuid get id => dto.id;
 }

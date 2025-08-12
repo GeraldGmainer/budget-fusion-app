@@ -85,12 +85,12 @@ class _BookingSavePageState extends State<BookingSavePage> {
 
   _onAccountChange(Account value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
 
+  _onDescriptionChange(String? value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
+
   _onCategoryChange(Category category) {
     setState(() => _categoryError = true);
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
   }
-
-  _onDescriptionChange(String? value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
 
   _showAmountError() {
     Haptics.vibrate(HapticsType.error);
@@ -194,6 +194,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 CategorySelectInput(draft: draft, onChange: _onCategoryChange, hasError: _categoryError),
                 _buildDivider(),
                 DescriptionInput(draft: draft, onChanged: _onDescriptionChange),
+                if (widget.model != null) _buildDivider(),
+                if (widget.model != null) EntityMetaWidget<Booking>(id: widget.model!.id, repo: getIt<BookingRepo>(), padding: const EdgeInsets.fromLTRB(16, 4, 16, 8)),
               ],
             ),
           ),

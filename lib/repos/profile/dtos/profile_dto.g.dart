@@ -9,20 +9,24 @@ part of 'profile_dto.dart';
 _$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
     _$ProfileDtoImpl(
       id: const UuidSerializer().fromJson(json['id'] as String),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       avatarUrl: json['avatar_url'] as String?,
       settingDto: const ProfileSettingDtoConverter().fromJson(json['settings']),
+      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
     );
 
 Map<String, dynamic> _$$ProfileDtoImplToJson(
   _$ProfileDtoImpl instance,
 ) => <String, dynamic>{
   'id': const UuidSerializer().toJson(instance.id),
-  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
   'first_name': instance.firstName,
   'last_name': instance.lastName,
   'avatar_url': instance.avatarUrl,
   'settings': const ProfileSettingDtoConverter().toJson(instance.settingDto),
+  'created_at': const DateTimeSerializer().toJson(instance.createdAt),
+  'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
+  'deleted_at': const DateTimeSerializer().toJson(instance.deletedAt),
 };
