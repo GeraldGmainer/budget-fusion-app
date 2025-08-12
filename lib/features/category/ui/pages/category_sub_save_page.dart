@@ -3,9 +3,9 @@ import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../repos/category/category.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
-import '../widget/category_meta.dart';
 import '../widget/icon_input.dart';
 import '../widget/name_input.dart';
 
@@ -43,7 +43,7 @@ class CategorySubSavePage extends StatelessWidget {
                     DisabledField(label: 'booking.fields.type'.tr(), value: draft.categoryType.label.tr()),
                     const SizedBox(height: 8),
                     DisabledField(label: 'category.fields.parent'.tr(), value: draft.parent?.name ?? "unknown"),
-                    if (draft.editedCategory != null) CategoryMeta(category: draft.editedCategory!),
+                    if (draft.id != null) EntityMetaWidget<Category>(id: draft.id!, repo: getIt<CategoryRepo>()),
                   ],
                 ),
               ),

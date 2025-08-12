@@ -81,4 +81,20 @@ extension CategoryListX on List<Category> {
   List<Category> get parentOutcomeCategories => where((c) => c.isParent && c.categoryType == CategoryType.outcome).sortedByName();
 
   List<Category> get parentIncomeCategories => where((c) => c.isParent && c.categoryType == CategoryType.income).sortedByName();
+
+  List<Category> flat() {
+    final out = <Category>[];
+    final stack = <Category>[];
+    stack.addAll(this);
+    while (stack.isNotEmpty) {
+      final c = stack.removeLast();
+      out.add(c);
+      if (c.subcategories.isNotEmpty) {
+        stack.addAll(c.subcategories);
+      }
+    }
+    return out;
+  }
+
+  List<R> flatMap<R>(R Function(Category c) mapper) => flat().map(mapper).toList();
 }

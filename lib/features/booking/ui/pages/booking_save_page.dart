@@ -17,7 +17,6 @@ import '../../bloc/suggestion_cubit.dart';
 import '../../domain/entities/booking_draft.dart';
 import '../widgets/account_select_input.dart';
 import '../widgets/amount_display.dart';
-import '../widgets/booking_meta.dart';
 import '../widgets/calculator_sheet.dart';
 import '../widgets/category_select_input.dart';
 import '../widgets/date_input.dart';
@@ -195,7 +194,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 CategorySelectInput(draft: draft, onChange: _onCategoryChange, hasError: _categoryError),
                 _buildDivider(),
                 DescriptionInput(draft: draft, onChanged: _onDescriptionChange),
-                if (widget.model != null) BookingMeta(booking: widget.model!),
+                if (widget.model != null) _buildDivider(),
+                if (widget.model != null) EntityMetaWidget<Booking>(id: widget.model!.id, repo: getIt<BookingRepo>(), padding: const EdgeInsets.fromLTRB(16, 4, 16, 8)),
               ],
             ),
           ),

@@ -45,7 +45,7 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
             ..remove('updatedAt');
       final response = await supabase.from(table).upsert(payload).eq('id', id).select();
       _log("upsert success", stopwatch: stopwatch);
-      await Future.delayed(Duration(milliseconds: 1500));
+      await Future.delayed(Duration(milliseconds: 3500));
       return toDto((response[0]));
     });
   }

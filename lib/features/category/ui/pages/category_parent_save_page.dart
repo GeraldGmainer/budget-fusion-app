@@ -7,7 +7,6 @@ import '../../../../repos/category/category.dart';
 import '../../bloc/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
-import '../widget/category_meta.dart';
 import '../widget/category_type_input.dart';
 import '../widget/icon_input.dart';
 import '../widget/name_input.dart';
@@ -19,14 +18,15 @@ class CategoryParentSavePage extends StatelessWidget {
   const CategoryParentSavePage({super.key, required this.draft});
 
   _onAddSubcategory(BuildContext context) {
-    _handleSave(context, CategoryDraft.initial(parent: draft.toCategory()));
+    _navigateToSub(context, CategoryDraft.initial(parent: draft.toCategory()));
   }
 
   _onEditSubcategory(BuildContext context, Category category) {
-    _handleSave(context, CategoryDraft.fromCategory(category));
+    print("--- _onEditSubcategory ${category.id}");
+    _navigateToSub(context, CategoryDraft.fromCategory(category));
   }
 
-  _handleSave(BuildContext context, CategoryDraft saveDraft) async {
+  _navigateToSub(BuildContext context, CategoryDraft saveDraft) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
     final bool? shouldRefresh = result as bool?;
     if (context.mounted && shouldRefresh == true) {
@@ -64,7 +64,7 @@ class CategoryParentSavePage extends StatelessWidget {
                         NameInput(draft: draft, autofocus: draft.isCreating),
                         const SizedBox(height: 8),
                         CategoryTypeInput(draft: draft),
-                        if (draft.editedCategory != null) CategoryMeta(category: draft.editedCategory!),
+                        if (draft.editedCategory != null) EntityMetaWidget<Category>(id: draft.editedCategory!.id, repo: getIt<CategoryRepo>()),
                       ],
                     ),
                   ),
