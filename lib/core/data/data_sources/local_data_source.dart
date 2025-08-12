@@ -13,11 +13,9 @@ abstract class LocalDataSource<E extends Dto> {
   SyncedDto<E> _mapRowToSyncedDto(Map<String, dynamic> row) {
     final m = Map<String, dynamic>.from(row);
     final statusString = m.remove('sync_status') as String;
-    final meta = SyncMeta(
-      status: SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString),
-    );
+    final status = SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString);
     final dto = fromJson(m);
-    return SyncedDto(dto: dto, syncMeta: meta);
+    return SyncedDto(dto: dto, status: status);
   }
 
   Future<List<SyncedDto<E>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
@@ -43,7 +41,7 @@ abstract class LocalDataSource<E extends Dto> {
   Future<void> save(SyncedDto<E> syncedDto) async {
     _log("save for id '${syncedDto.dto.id.value}'");
     final data = syncedDto.dto.toJson();
-    data['sync_status'] = syncedDto.syncMeta.status.toString().split('.').last;
+    data['sync_status'] = syncedDto.status.toString().split('.').last;
     final stringifiedFields = _convertMapsToString(data);
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
@@ -54,7 +52,7 @@ abstract class LocalDataSource<E extends Dto> {
     final batch = db.batch();
     for (final dto in syncedDtos) {
       final data = dto.dto.toJson();
-      data['sync_status'] = dto.syncMeta.status.toString().split('.').last;
+      data['sync_status'] = dto.status.toString().split('.').last;
       final stringifiedFields = _convertMapsToString(data);
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }
