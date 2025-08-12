@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +63,7 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text('•', style: style),
                   const SizedBox(width: 8),
-                  Icon(Icons.schedule, size: 12, color: onSurface),
+                  Icon(CommunityMaterialIcons.calendar_plus, size: 14, color: onSurface),
                   const SizedBox(width: 4),
                   Text(_relative(m.updatedAt!), style: style),
                 ]);
@@ -72,7 +73,7 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text('•', style: style),
                   const SizedBox(width: 8),
-                  Icon(Icons.calendar_today, size: 12, color: onSurface),
+                  Icon(CommunityMaterialIcons.calendar_edit, size: 14, color: onSurface),
                   const SizedBox(width: 4),
                   Text(DateFormat('dd.MM.yyyy').format(m.createdAt!.toLocal()), style: style),
                 ]);
