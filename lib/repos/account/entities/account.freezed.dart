@@ -21,7 +21,7 @@ mixin _$Account {
   String get name => throw _privateConstructorUsedError;
   String get iconName => throw _privateConstructorUsedError;
   String get iconColor => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get deletedAt => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $AccountCopyWith<$Res> {
     String name,
     String iconName,
     String iconColor,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -68,7 +68,7 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -95,11 +95,11 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
                     ? _value.iconColor
                     : iconColor // ignore: cast_nullable_to_non_nullable
                         as String,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -134,7 +134,7 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
     String name,
     String iconName,
     String iconColor,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -159,7 +159,7 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? name = null,
     Object? iconName = null,
     Object? iconColor = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -186,11 +186,11 @@ class __$$AccountImplCopyWithImpl<$Res>
                 ? _value.iconColor
                 : iconColor // ignore: cast_nullable_to_non_nullable
                     as String,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -219,10 +219,10 @@ class _$AccountImpl extends _Account {
     required this.name,
     required this.iconName,
     required this.iconColor,
-    required this.isSynced,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    this.syncStatus,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : super._();
 
   @override
@@ -234,7 +234,7 @@ class _$AccountImpl extends _Account {
   @override
   final String iconColor;
   @override
-  final bool isSynced;
+  final SyncStatus? syncStatus;
   @override
   final DateTime? createdAt;
   @override
@@ -244,7 +244,7 @@ class _$AccountImpl extends _Account {
 
   @override
   String toString() {
-    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Account(id: $id, name: $name, iconName: $iconName, iconColor: $iconColor, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -258,8 +258,8 @@ class _$AccountImpl extends _Account {
                 other.iconName == iconName) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -275,7 +275,7 @@ class _$AccountImpl extends _Account {
     name,
     iconName,
     iconColor,
-    isSynced,
+    syncStatus,
     createdAt,
     updatedAt,
     deletedAt,
@@ -296,10 +296,10 @@ abstract class _Account extends Account {
     required final String name,
     required final String iconName,
     required final String iconColor,
-    required final bool isSynced,
-    required final DateTime? createdAt,
-    required final DateTime? updatedAt,
-    required final DateTime? deletedAt,
+    final SyncStatus? syncStatus,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$AccountImpl;
   const _Account._() : super._();
 
@@ -312,7 +312,7 @@ abstract class _Account extends Account {
   @override
   String get iconColor;
   @override
-  bool get isSynced;
+  SyncStatus? get syncStatus;
   @override
   DateTime? get createdAt;
   @override

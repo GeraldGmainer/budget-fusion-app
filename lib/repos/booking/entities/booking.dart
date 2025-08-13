@@ -10,7 +10,7 @@ import '../dtos/booking_dto.dart';
 part 'booking.freezed.dart';
 
 @freezed
-class Booking with _$Booking implements Entity {
+class Booking with _$Booking, Entity {
   const Booking._();
 
   const factory Booking({
@@ -20,13 +20,13 @@ class Booking with _$Booking implements Entity {
     required Money money,
     required Category category,
     required Account account,
-    required bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
   }) = _Booking;
 
-  factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency, bool isSynced) {
+  factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency) {
     return Booking(
       id: dto.id,
       date: dto.date,
@@ -34,7 +34,7 @@ class Booking with _$Booking implements Entity {
       money: Money(amount: dto.amount, currency: currency),
       category: category,
       account: account,
-      isSynced: isSynced,
+      syncStatus: dto.syncStatus,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
       deletedAt: dto.deletedAt,
@@ -49,6 +49,7 @@ class Booking with _$Booking implements Entity {
       amount: amount,
       categoryId: category.id,
       accountId: account.id,
+      syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

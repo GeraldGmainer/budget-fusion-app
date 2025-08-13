@@ -30,7 +30,7 @@ class BookingRepo extends Repo<Booking> with AutoSubscribe<Booking> {
 
   @override
   void setupStreams() {
-    _sharedStream = Rx.combineLatest4<List<SyncedDto<BookingDto>>, List<Account>, List<Category>, List<Profile>, List<Booking>>(
+    _sharedStream = Rx.combineLatest4<List<BookingDto>, List<Account>, List<Category>, List<Profile>, List<Booking>>(
       _manager.stream,
       _accountRepo.watch(),
       _categoryRepo.watch(),

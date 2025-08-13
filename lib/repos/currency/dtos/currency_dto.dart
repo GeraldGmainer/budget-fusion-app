@@ -16,6 +16,7 @@ class CurrencyDto with _$CurrencyDto implements Dto {
     @BoolIntSerializer() @JsonKey(name: 'unit_position_front') required bool unitPositionFront,
     required String symbol,
     @JsonKey(name: 'ui_order') int? uiOrder,
+    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,

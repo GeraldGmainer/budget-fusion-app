@@ -34,6 +34,9 @@ mixin _$CategoryDto {
   @JsonKey(name: 'parent_id')
   @UuidSerializer()
   Uuid? get parentId => throw _privateConstructorUsedError;
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -70,6 +73,9 @@ abstract class $CategoryDtoCopyWith<$Res> {
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -97,6 +103,7 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parentId = freezed,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -133,6 +140,11 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
                     ? _value.parentId
                     : parentId // ignore: cast_nullable_to_non_nullable
                         as Uuid?,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -172,6 +184,9 @@ abstract class _$$CategoryDtoImplCopyWith<$Res>
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -198,6 +213,7 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parentId = freezed,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -234,6 +250,11 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
                 ? _value.parentId
                 : parentId // ignore: cast_nullable_to_non_nullable
                     as Uuid?,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -266,6 +287,9 @@ class _$CategoryDtoImpl extends _CategoryDto {
     @JsonKey(name: 'icon_name') required this.iconName,
     @JsonKey(name: 'icon_color') required this.iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() required this.parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required this.syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
@@ -294,6 +318,10 @@ class _$CategoryDtoImpl extends _CategoryDto {
   @UuidSerializer()
   final Uuid? parentId;
   @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  final SyncStatus? syncStatus;
+  @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -308,7 +336,7 @@ class _$CategoryDtoImpl extends _CategoryDto {
 
   @override
   String toString() {
-    return 'CategoryDto(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'CategoryDto(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -326,6 +354,8 @@ class _$CategoryDtoImpl extends _CategoryDto {
                 other.iconColor == iconColor) &&
             (identical(other.parentId, parentId) ||
                 other.parentId == parentId) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -344,6 +374,7 @@ class _$CategoryDtoImpl extends _CategoryDto {
     iconName,
     iconColor,
     parentId,
+    syncStatus,
     createdAt,
     updatedAt,
     deletedAt,
@@ -373,6 +404,9 @@ abstract class _CategoryDto extends CategoryDto {
     @JsonKey(name: 'icon_name') required final String iconName,
     @JsonKey(name: 'icon_color') required final String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() required final Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required final SyncStatus? syncStatus,
     @DateTimeSerializer()
     @JsonKey(name: 'created_at')
     required final DateTime? createdAt,
@@ -407,6 +441,10 @@ abstract class _CategoryDto extends CategoryDto {
   @JsonKey(name: 'parent_id')
   @UuidSerializer()
   Uuid? get parentId;
+  @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus;
   @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')

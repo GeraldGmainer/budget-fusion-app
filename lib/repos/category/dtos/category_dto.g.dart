@@ -19,6 +19,10 @@ _$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
         json['parent_id'],
         const UuidSerializer().fromJson,
       ),
+      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+        json['sync_status'],
+        const SyncStatusSerializer().fromJson,
+      ),
       createdAt: const DateTimeSerializer().fromJson(json['created_at']),
       updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
@@ -35,6 +39,10 @@ Map<String, dynamic> _$$CategoryDtoImplToJson(
   'parent_id': _$JsonConverterToJson<String, Uuid>(
     instance.parentId,
     const UuidSerializer().toJson,
+  ),
+  'sync_status': _$JsonConverterToJson<String, SyncStatus>(
+    instance.syncStatus,
+    const SyncStatusSerializer().toJson,
   ),
   'created_at': const DateTimeSerializer().toJson(instance.createdAt),
   'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),

@@ -47,7 +47,8 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
             ..remove('created_at')
             ..remove('updated_at')
             ..remove('createdAt')
-            ..remove('updatedAt');
+            ..remove('updatedAt')
+            ..remove('sync_status');
       final response = await supabase.from(table).upsert(payload).eq('id', id).select();
       await _randomDelay();
       _log("upsert success", stopwatch: stopwatch);

@@ -21,7 +21,7 @@ class BookingDraft with _$BookingDraft {
     Category? category,
     Account? account,
     @Default(CategoryType.outcome) CategoryType categoryType,
-    required bool isSynced,
+    SyncStatus? syncStatus,
   }) = _BookingDraft;
 
   bool get isCreating => id == null;
@@ -34,7 +34,7 @@ class BookingDraft with _$BookingDraft {
       money: Money(amount: amount, currency: currency),
       category: category!,
       account: account!,
-      isSynced: isSynced,
+      syncStatus: syncStatus,
     );
   }
 
@@ -47,7 +47,7 @@ class BookingDraft with _$BookingDraft {
       category: booking.category,
       account: booking.account,
       categoryType: booking.category.categoryType,
-      isSynced: booking.isSynced,
+      syncStatus: booking.syncStatus,
     );
   }
 }

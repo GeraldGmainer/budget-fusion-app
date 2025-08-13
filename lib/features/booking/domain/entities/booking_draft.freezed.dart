@@ -24,7 +24,7 @@ mixin _$BookingDraft {
   Category? get category => throw _privateConstructorUsedError;
   Account? get account => throw _privateConstructorUsedError;
   CategoryType get categoryType => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.
@@ -48,7 +48,7 @@ abstract class $BookingDraftCopyWith<$Res> {
     Category? category,
     Account? account,
     CategoryType categoryType,
-    bool isSynced,
+    SyncStatus? syncStatus,
   });
 
   $CategoryCopyWith<$Res>? get category;
@@ -77,7 +77,7 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
     Object? category = freezed,
     Object? account = freezed,
     Object? categoryType = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -116,11 +116,11 @@ class _$BookingDraftCopyWithImpl<$Res, $Val extends BookingDraft>
                     ? _value.categoryType
                     : categoryType // ignore: cast_nullable_to_non_nullable
                         as CategoryType,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
           )
           as $Val,
     );
@@ -172,7 +172,7 @@ abstract class _$$BookingDraftImplCopyWith<$Res>
     Category? category,
     Account? account,
     CategoryType categoryType,
-    bool isSynced,
+    SyncStatus? syncStatus,
   });
 
   @override
@@ -202,7 +202,7 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
     Object? category = freezed,
     Object? account = freezed,
     Object? categoryType = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
   }) {
     return _then(
       _$BookingDraftImpl(
@@ -241,11 +241,11 @@ class __$$BookingDraftImplCopyWithImpl<$Res>
                 ? _value.categoryType
                 : categoryType // ignore: cast_nullable_to_non_nullable
                     as CategoryType,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
       ),
     );
   }
@@ -262,7 +262,7 @@ class _$BookingDraftImpl extends _BookingDraft {
     this.category,
     this.account,
     this.categoryType = CategoryType.outcome,
-    required this.isSynced,
+    this.syncStatus,
   }) : super._();
 
   @override
@@ -281,11 +281,11 @@ class _$BookingDraftImpl extends _BookingDraft {
   @JsonKey()
   final CategoryType categoryType;
   @override
-  final bool isSynced;
+  final SyncStatus? syncStatus;
 
   @override
   String toString() {
-    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType, isSynced: $isSynced)';
+    return 'BookingDraft(id: $id, date: $date, description: $description, amount: $amount, category: $category, account: $account, categoryType: $categoryType, syncStatus: $syncStatus)';
   }
 
   @override
@@ -303,8 +303,8 @@ class _$BookingDraftImpl extends _BookingDraft {
             (identical(other.account, account) || other.account == account) &&
             (identical(other.categoryType, categoryType) ||
                 other.categoryType == categoryType) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced));
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus));
   }
 
   @override
@@ -317,7 +317,7 @@ class _$BookingDraftImpl extends _BookingDraft {
     category,
     account,
     categoryType,
-    isSynced,
+    syncStatus,
   );
 
   /// Create a copy of BookingDraft
@@ -338,7 +338,7 @@ abstract class _BookingDraft extends BookingDraft {
     final Category? category,
     final Account? account,
     final CategoryType categoryType,
-    required final bool isSynced,
+    final SyncStatus? syncStatus,
   }) = _$BookingDraftImpl;
   _BookingDraft._() : super._();
 
@@ -357,7 +357,7 @@ abstract class _BookingDraft extends BookingDraft {
   @override
   CategoryType get categoryType;
   @override
-  bool get isSynced;
+  SyncStatus? get syncStatus;
 
   /// Create a copy of BookingDraft
   /// with the given fields replaced by the non-null parameter values.

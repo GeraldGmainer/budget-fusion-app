@@ -10,24 +10,16 @@ abstract class LocalDataSource<E extends Dto> {
 
   LocalDataSource(this.db);
 
-  SyncedDto<E> _mapRowToSyncedDto(Map<String, dynamic> row) {
-    final m = Map<String, dynamic>.from(row);
-    final statusString = m.remove('sync_status') as String;
-    final status = SyncStatus.values.firstWhere((e) => e.toString().split('.').last == statusString);
-    final dto = fromJson(m);
-    return SyncedDto(dto: dto, status: status);
-  }
-
-  Future<List<SyncedDto<E>>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
+  Future<List<E>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
     final effectiveOrderBy = orderBy ?? defaultOrderBy;
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
     final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value, orderBy: effectiveOrderBy);
     _log("fetched ${EntityLogger.bold(rows.length)} DTOs", darkColor: true);
-    return rows.map(_mapRowToSyncedDto).toList();
+    return rows.map((m) => fromJson(m)).toList();
   }
 
-  Future<SyncedDto<E>?> fetchById(String id) async {
+  Future<E?> fetchById(String id) async {
     _log("fetchById '$id'");
     final rows = await db.query(table, where: 'id = ?', whereArgs: [id], limit: 1);
     if (rows.isEmpty) {
@@ -35,24 +27,22 @@ abstract class LocalDataSource<E extends Dto> {
       return null;
     }
     _log("fetched row for id '$id'", darkColor: true);
-    return _mapRowToSyncedDto(rows.first);
+    return fromJson(rows.first);
   }
 
-  Future<void> save(SyncedDto<E> syncedDto) async {
-    _log("save for id '${syncedDto.dto.id.value}'");
-    final data = syncedDto.dto.toJson();
-    data['sync_status'] = syncedDto.status.toString().split('.').last;
+  Future<void> save(E dto) async {
+    _log("save for id '${dto.id.value}'");
+    final data = dto.toJson();
     final stringifiedFields = _convertMapsToString(data);
     await db.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
-    _log("save success for id '${syncedDto.dto.id.value}'", darkColor: true);
+    _log("save success for id '${dto.id.value}'", darkColor: true);
   }
 
-  Future<void> saveAll(List<SyncedDto<E>> syncedDtos) async {
-    _log("saveAll ${EntityLogger.bold(syncedDtos.length)} DTOs");
+  Future<void> saveAll(List<E> dtos) async {
+    _log("saveAll ${EntityLogger.bold(dtos.length)} DTOs");
     final batch = db.batch();
-    for (final dto in syncedDtos) {
-      final data = dto.dto.toJson();
-      data['sync_status'] = dto.status.toString().split('.').last;
+    for (final dto in dtos) {
+      final data = dto.toJson();
       final stringifiedFields = _convertMapsToString(data);
       batch.insert(table, stringifiedFields, conflictAlgorithm: ConflictAlgorithm.replace);
     }

@@ -16,6 +16,7 @@ class CategoryDto with _$CategoryDto implements Dto {
     @JsonKey(name: 'icon_name') required String iconName,
     @JsonKey(name: 'icon_color') required String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() required Uuid? parentId,
+    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,

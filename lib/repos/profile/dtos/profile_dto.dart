@@ -17,6 +17,7 @@ class ProfileDto with _$ProfileDto implements Dto {
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
     @JsonKey(name: 'settings') @ProfileSettingDtoConverter() required ProfileSettingDto settingDto,
+    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,

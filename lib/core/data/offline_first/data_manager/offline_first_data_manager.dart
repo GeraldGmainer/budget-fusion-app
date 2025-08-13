@@ -16,9 +16,9 @@ class OfflineFirstDataManager<E extends Dto> {
   final SyncManager syncManager;
   final RealtimeNotifierService realtimeNotifierService;
 
-  ReplaySubject<List<SyncedDto<E>>> streamController = ReplaySubject<List<SyncedDto<E>>>(maxSize: 1);
+  ReplaySubject<List<E>> streamController = ReplaySubject<List<E>>(maxSize: 1);
   bool _isRealtimeSubscribed = false;
-  Future<List<SyncedDto<E>>>? _refreshing;
+  Future<List<E>>? _refreshing;
   late final StreamSubscription<List<QueueItem>> _queueSub;
 
   OfflineFirstDataManager({
@@ -39,9 +39,9 @@ class OfflineFirstDataManager<E extends Dto> {
         });
   }
 
-  Stream<List<SyncedDto<E>>> get stream => streamController.stream;
+  Stream<List<E>> get stream => streamController.stream;
 
-  Future<List<SyncedDto<E>>> loadAll({Map<String, dynamic>? filters, required bool forceReload}) async {
+  Future<List<E>> loadAll({Map<String, dynamic>? filters, required bool forceReload}) async {
     _log("start loadAll");
     _subscribeToRealtime();
 
@@ -60,12 +60,12 @@ class OfflineFirstDataManager<E extends Dto> {
     return first;
   }
 
-  Future<SyncedDto<E>?> loadById(String id) async {
+  Future<E?> loadById(String id) async {
     _log("start loadById '$id'");
     _subscribeToRealtime();
     final local = await adapter.local.fetchById(id);
     if (local != null) {
-      _log("Local data by id '${local.dto.id}' found");
+      _log("Local data by id '${local.id}' found");
       return local;
     }
     _log("No local data found. Fetching remote data by id '$id' ...");
@@ -73,7 +73,7 @@ class OfflineFirstDataManager<E extends Dto> {
     await syncManager.syncAll();
     final local2 = await adapter.local.fetchById(id);
     if (local2 != null) {
-      _log("Local data by id '${local2.dto.id}' found");
+      _log("Local data by id '${local2.id}' found");
       return local2;
     }
     _log("No local data found after syncAll for ID '$id' ...");
@@ -89,10 +89,10 @@ class OfflineFirstDataManager<E extends Dto> {
   Future<void> save(E dto) async {
     _log("Saving DTO with id '${dto.id.value}'");
     final existing = await adapter.local.fetchById(dto.id.value);
-    final newStatus = (existing?.status != null) ? SyncStatus.updatedLocally : SyncStatus.createdLocally;
-    final wrapped = SyncedDto<E>(dto: dto, status: newStatus);
+    final newStatus = (existing?.syncStatus != null) ? SyncStatus.updatedLocally : SyncStatus.createdLocally;
+    final newDto = (dto as dynamic).copyWith(syncStatus: newStatus);
 
-    await adapter.local.save(wrapped);
+    await adapter.local.save(newDto);
 
     final payload = jsonEncode(dto.toJson());
     final item = QueueItem(entityId: dto.id.value, entityType: adapter.type, taskType: QueueTaskType.upsert, entityPayload: payload);
@@ -100,7 +100,7 @@ class OfflineFirstDataManager<E extends Dto> {
     unawaited(queueManager.add(item));
   }
 
-  Future<List<SyncedDto<E>>> _refreshCacheFromLocalSource() async {
+  Future<List<E>> _refreshCacheFromLocalSource() async {
     if (_refreshing != null) {
       return await _refreshing!;
     }
@@ -128,7 +128,7 @@ class OfflineFirstDataManager<E extends Dto> {
     unawaited(queueManager.add(item));
   }
 
-  _emitToStream(List<SyncedDto<E>> dtos, {required bool forceReload}) {
+  _emitToStream(List<E> dtos, {required bool forceReload}) {
     _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
     if (forceReload) {
       streamController.add([]);

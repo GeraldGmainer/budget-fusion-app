@@ -6,7 +6,7 @@ import '../dtos/currency_dto.dart';
 part 'currency.freezed.dart';
 
 @freezed
-class Currency with _$Currency implements Entity {
+class Currency with _$Currency, Entity {
   const Currency._();
 
   const factory Currency({
@@ -16,13 +16,13 @@ class Currency with _$Currency implements Entity {
     required bool unitPositionFront,
     required String symbol,
     int? uiOrder,
-    required bool isSynced,
-    required DateTime? createdAt,
-    required DateTime? updatedAt,
-    required DateTime? deletedAt,
+    SyncStatus? syncStatus,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _Currency;
 
-  factory Currency.fromDto(CurrencyDto dto, {required bool isSynced}) {
+  factory Currency.fromDto(CurrencyDto dto) {
     return Currency(
       id: dto.id,
       name: dto.name,
@@ -30,7 +30,7 @@ class Currency with _$Currency implements Entity {
       unitPositionFront: dto.unitPositionFront,
       symbol: dto.symbol,
       uiOrder: dto.uiOrder,
-      isSynced: isSynced,
+      syncStatus: dto.syncStatus,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
       deletedAt: dto.deletedAt,
@@ -46,10 +46,6 @@ class Currency with _$Currency implements Entity {
       symbol: "€",
       unitPositionFront: false,
       uiOrder: 1,
-      isSynced: true,
-      createdAt: null,
-      updatedAt: null,
-      deletedAt: null,
     );
   }
 
@@ -61,6 +57,7 @@ class Currency with _$Currency implements Entity {
       unitPositionFront: unitPositionFront,
       symbol: symbol,
       uiOrder: uiOrder,
+      syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

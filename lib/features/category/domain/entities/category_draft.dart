@@ -31,7 +31,7 @@ class CategoryDraft with _$CategoryDraft {
       iconColor: iconColor,
       parent: parent,
       subcategories: subcategories,
-      isSynced: editedCategory?.isSynced ?? false,
+      syncStatus: editedCategory?.syncStatus,
     );
   }
 
