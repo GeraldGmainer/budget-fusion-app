@@ -1,13 +1,10 @@
 import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../enums/entity_type.dart';
 
 @lazySingleton
 class SyncCursorRepo {
-  static const String nullDate = "1970-01-01T00:00:00Z";
   static const _key = 'sync_cursors';
   final SharedPreferences prefs;
 
@@ -31,9 +28,15 @@ class SyncCursorRepo {
 
   Future<void> setAll(Map<EntityType, DateTime?> map) async {
     final data = _read();
-    map.forEach((k, v) {
-      data[k.name] = v != null ? v.toIso8601String() : nullDate;
-    });
+    for (final e in map.entries) {
+      final key = e.key.name;
+      final ts = e.value;
+      if (ts == null) {
+        data.remove(key); // omit key to signal bootstrap for that entity
+      } else {
+        data[key] = ts.toIso8601String();
+      }
+    }
     await prefs.setString(_key, jsonEncode(data));
   }
 
@@ -43,12 +46,14 @@ class SyncCursorRepo {
 
   Map<String, String> _read() {
     final raw = prefs.getString(_key);
-    if (raw == null) {
-      return Map.fromEntries(
-        EntityType.values.map((e) => MapEntry(e.name, nullDate)),
-      );
-    }
-    final decoded = jsonDecode(raw) as Map<String, dynamic>;
-    return decoded.map((k, v) => MapEntry(k, v ?? nullDate));
+    if (raw == null) return {};
+    final decoded = (jsonDecode(raw) as Map<String, dynamic>);
+    final cursors = <String, String>{};
+    decoded.forEach((k, v) {
+      if (v is String && v.isNotEmpty) {
+        cursors[k] = v;
+      }
+    });
+    return cursors;
   }
 }

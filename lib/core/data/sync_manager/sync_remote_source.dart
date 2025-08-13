@@ -8,11 +8,7 @@ import 'sync_all_response.dart';
 
 @lazySingleton
 class SyncRemoteSource extends SupabaseClient {
-  Future<SyncAllResponse> syncAll({
-    required Map<String, String> cursors,
-    required Iterable<EntityType> entities,
-    Set<String> excludeIds = const {},
-  }) async {
+  Future<SyncAllResponse> syncAll({required Map<String, String> cursors, required Iterable<EntityType> entities, Set<String> excludeIds = const {}}) async {
     final payload = <String, String>{};
     for (final e in entities) {
       final v = cursors[e.name];
@@ -29,12 +25,6 @@ class SyncRemoteSource extends SupabaseClient {
       final response = await supabase.rpc('sync_all', params: {'p_last_synced': payload, 'p_exclude_ids': excludeJson});
       final data = response as Map<String, dynamic>;
       final result = SyncAllResponse.fromJson(data);
-      result.deltas.forEach((key, value) {
-        if (key == EntityType.booking.name) {
-          BudgetLogger.instance.i(value.upserts);
-          BudgetLogger.instance.i(value.deletes);
-        }
-      });
 
       final kB = (utf8.encode(jsonEncode(data)).length / 1024).toStringAsFixed(1);
       _log('syncAll response size is ${EntityLogger.bold("${kB}kB")} and', stopwatch: stopwatch, dark: true);
