@@ -44,9 +44,6 @@ mixin _$BookingDto {
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Serializes this BookingDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -77,7 +74,6 @@ abstract class $BookingDtoCopyWith<$Res> {
     SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -105,7 +101,6 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -154,11 +149,6 @@ class _$BookingDtoCopyWithImpl<$Res, $Val extends BookingDto>
                     ? _value.updatedAt
                     : updatedAt // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
-            deletedAt:
-                freezed == deletedAt
-                    ? _value.deletedAt
-                    : deletedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
           )
           as $Val,
     );
@@ -186,7 +176,6 @@ abstract class _$$BookingDtoImplCopyWith<$Res>
     SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -213,7 +202,6 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _$BookingDtoImpl(
@@ -262,11 +250,6 @@ class __$$BookingDtoImplCopyWithImpl<$Res>
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
-        deletedAt:
-            freezed == deletedAt
-                ? _value.deletedAt
-                : deletedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
       ),
     );
   }
@@ -287,7 +270,6 @@ class _$BookingDtoImpl extends _BookingDto {
     required this.syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
   }) : super._();
 
   factory _$BookingDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -325,14 +307,10 @@ class _$BookingDtoImpl extends _BookingDto {
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'BookingDto(id: $id, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'BookingDto(id: $id, date: $date, description: $description, amount: $amount, categoryId: $categoryId, accountId: $accountId, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -354,9 +332,7 @@ class _$BookingDtoImpl extends _BookingDto {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -372,7 +348,6 @@ class _$BookingDtoImpl extends _BookingDto {
     syncStatus,
     createdAt,
     updatedAt,
-    deletedAt,
   );
 
   /// Create a copy of BookingDto
@@ -410,9 +385,6 @@ abstract class _BookingDto extends BookingDto {
     @DateTimeSerializer()
     @JsonKey(name: 'updated_at')
     required final DateTime? updatedAt,
-    @DateTimeSerializer()
-    @JsonKey(name: 'deleted_at')
-    required final DateTime? deletedAt,
   }) = _$BookingDtoImpl;
   const _BookingDto._() : super._();
 
@@ -451,10 +423,6 @@ abstract class _BookingDto extends BookingDto {
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt;
 
   /// Create a copy of BookingDto
   /// with the given fields replaced by the non-null parameter values.

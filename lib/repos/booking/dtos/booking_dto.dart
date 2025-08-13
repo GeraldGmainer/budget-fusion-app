@@ -20,7 +20,6 @@ class BookingDto with _$BookingDto implements Dto {
     @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _BookingDto;
 
   factory BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);

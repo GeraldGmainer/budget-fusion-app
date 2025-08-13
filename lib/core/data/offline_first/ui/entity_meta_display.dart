@@ -48,7 +48,6 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
           return state.when(
             loading: () => const SizedBox.shrink(),
             created: () => const SizedBox.shrink(),
-            deleted: (_) => _row(style, Colors.red, 'Deleted'),
             error: (_) => _row(style, Colors.red, 'Error'),
             upserted: (m) {
               final label = m.isFailed ? 'Delete failed' : (m.isPendingDelete ? 'Deleting…' : (m.isPending ? 'Pending' : 'Up to date'));

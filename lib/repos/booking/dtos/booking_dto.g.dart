@@ -22,7 +22,6 @@ _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
       ),
       createdAt: const DateTimeSerializer().fromJson(json['created_at']),
       updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
     );
 
 Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
@@ -39,7 +38,6 @@ Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
       ),
       'created_at': const DateTimeSerializer().toJson(instance.createdAt),
       'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
-      'deleted_at': const DateTimeSerializer().toJson(instance.deletedAt),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

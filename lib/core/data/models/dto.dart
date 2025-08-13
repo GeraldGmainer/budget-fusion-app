@@ -10,7 +10,5 @@ abstract class Dto {
 
   DateTime? get updatedAt;
 
-  DateTime? get deletedAt;
-
   Map<String, dynamic> toJson();
 }

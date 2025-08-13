@@ -19,7 +19,6 @@ class CategoryMapper {
         syncStatus: dto.syncStatus,
         createdAt: dto.createdAt,
         updatedAt: dto.updatedAt,
-        deletedAt: dto.deletedAt,
       );
     }
     for (var builder in builderMap.values) {
@@ -62,7 +61,6 @@ class CategoryMapper {
       syncStatus: b.syncStatus,
       createdAt: b.createdAt,
       updatedAt: b.updatedAt,
-      deletedAt: b.deletedAt,
     );
   }
 
@@ -85,7 +83,6 @@ class _CategoryBuilder {
   final SyncStatus? syncStatus;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final DateTime? deletedAt;
 
   _CategoryBuilder({
     required this.id,
@@ -97,6 +94,5 @@ class _CategoryBuilder {
     required this.syncStatus,
     required this.createdAt,
     required this.updatedAt,
-    required this.deletedAt,
   });
 }

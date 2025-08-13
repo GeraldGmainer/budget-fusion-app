@@ -27,7 +27,6 @@ mixin _$Category {
   SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -52,7 +51,6 @@ abstract class $CategoryCopyWith<$Res> {
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   $CategoryCopyWith<$Res>? get parent;
@@ -83,7 +81,6 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -137,11 +134,6 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
                     ? _value.updatedAt
                     : updatedAt // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
-            deletedAt:
-                freezed == deletedAt
-                    ? _value.deletedAt
-                    : deletedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
           )
           as $Val,
     );
@@ -182,7 +174,6 @@ abstract class _$$CategoryImplCopyWith<$Res>
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   @override
@@ -213,7 +204,6 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CategoryImpl(
@@ -267,11 +257,6 @@ class __$$CategoryImplCopyWithImpl<$Res>
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
-        deletedAt:
-            freezed == deletedAt
-                ? _value.deletedAt
-                : deletedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
       ),
     );
   }
@@ -291,7 +276,6 @@ class _$CategoryImpl extends _Category {
     this.syncStatus,
     this.createdAt,
     this.updatedAt,
-    this.deletedAt,
   }) : _subcategories = subcategories,
        super._();
 
@@ -322,12 +306,10 @@ class _$CategoryImpl extends _Category {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Category(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parent: $parent, subcategories: $subcategories, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -353,9 +335,7 @@ class _$CategoryImpl extends _Category {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+                other.updatedAt == updatedAt));
   }
 
   @override
@@ -371,7 +351,6 @@ class _$CategoryImpl extends _Category {
     syncStatus,
     createdAt,
     updatedAt,
-    deletedAt,
   );
 
   /// Create a copy of Category
@@ -395,7 +374,6 @@ abstract class _Category extends Category {
     final SyncStatus? syncStatus,
     final DateTime? createdAt,
     final DateTime? updatedAt,
-    final DateTime? deletedAt,
   }) = _$CategoryImpl;
   const _Category._() : super._();
 
@@ -419,8 +397,6 @@ abstract class _Category extends Category {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-  @override
-  DateTime? get deletedAt;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.

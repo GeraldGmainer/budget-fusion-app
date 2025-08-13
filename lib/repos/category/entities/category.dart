@@ -20,7 +20,6 @@ class Category with _$Category, Entity {
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   }) = _Category;
 
   factory Category.notFound() {
@@ -43,7 +42,6 @@ class Category with _$Category, Entity {
       syncStatus: dto.syncStatus,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
-      deletedAt: dto.deletedAt,
     );
   }
 
@@ -58,7 +56,6 @@ class Category with _$Category, Entity {
       syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      deletedAt: deletedAt,
     );
   }
 

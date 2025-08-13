@@ -23,7 +23,6 @@ class Booking with _$Booking, Entity {
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   }) = _Booking;
 
   factory Booking.fromDto(BookingDto dto, Account account, Category category, Currency currency) {
@@ -37,7 +36,6 @@ class Booking with _$Booking, Entity {
       syncStatus: dto.syncStatus,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
-      deletedAt: dto.deletedAt,
     );
   }
 
@@ -52,7 +50,6 @@ class Booking with _$Booking, Entity {
       syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      deletedAt: deletedAt,
     );
   }
 

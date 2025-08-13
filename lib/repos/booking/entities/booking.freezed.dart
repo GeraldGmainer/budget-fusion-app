@@ -26,7 +26,6 @@ mixin _$Booking {
   SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -49,7 +48,6 @@ abstract class $BookingCopyWith<$Res> {
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   $MoneyCopyWith<$Res> get money;
@@ -81,7 +79,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -129,11 +126,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                 freezed == updatedAt
                     ? _value.updatedAt
                     : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
-            deletedAt:
-                freezed == deletedAt
-                    ? _value.deletedAt
-                    : deletedAt // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
           )
           as $Val,
@@ -189,7 +181,6 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
     SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   @override
@@ -223,7 +214,6 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _$BookingImpl(
@@ -272,11 +262,6 @@ class __$$BookingImplCopyWithImpl<$Res>
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
-        deletedAt:
-            freezed == deletedAt
-                ? _value.deletedAt
-                : deletedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
       ),
     );
   }
@@ -295,7 +280,6 @@ class _$BookingImpl extends _Booking {
     this.syncStatus,
     this.createdAt,
     this.updatedAt,
-    this.deletedAt,
   }) : super._();
 
   @override
@@ -316,12 +300,10 @@ class _$BookingImpl extends _Booking {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -342,9 +324,7 @@ class _$BookingImpl extends _Booking {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+                other.updatedAt == updatedAt));
   }
 
   @override
@@ -359,7 +339,6 @@ class _$BookingImpl extends _Booking {
     syncStatus,
     createdAt,
     updatedAt,
-    deletedAt,
   );
 
   /// Create a copy of Booking
@@ -382,7 +361,6 @@ abstract class _Booking extends Booking {
     final SyncStatus? syncStatus,
     final DateTime? createdAt,
     final DateTime? updatedAt,
-    final DateTime? deletedAt,
   }) = _$BookingImpl;
   const _Booking._() : super._();
 
@@ -404,8 +382,6 @@ abstract class _Booking extends Booking {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-  @override
-  DateTime? get deletedAt;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

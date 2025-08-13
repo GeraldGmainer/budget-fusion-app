@@ -10,7 +10,5 @@ mixin Entity {
 
   DateTime? get updatedAt;
 
-  DateTime? get deletedAt;
-
   bool get isSynced => syncStatus == SyncStatus.synced;
 }

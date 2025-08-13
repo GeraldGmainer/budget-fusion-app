@@ -19,7 +19,6 @@ class CategoryDto with _$CategoryDto implements Dto {
     @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _CategoryDto;
 
   factory CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);

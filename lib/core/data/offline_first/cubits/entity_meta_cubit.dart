@@ -77,14 +77,9 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
       emit(const EntityMetaState.created());
       return;
     }
-    if (e != null && e.deletedAt != null) {
-      emit(EntityMetaState.deleted(e.deletedAt));
-      return;
-    }
     final meta = EntityMeta(
       createdAt: e?.createdAt,
       updatedAt: e?.updatedAt,
-      deletedAt: e?.deletedAt,
       isPending: _pending != null,
       isPendingDelete: _pending?.taskType == QueueTaskType.delete,
       isFailed: _failed ?? false,
