@@ -8,7 +8,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data_sources/data_source_adapter.dart';
-import '../models/queue_item.dart';
+import '../../sync_manager/sync_manager.dart';
 import 'queue_local_data_source.dart';
 import 'queue_logger.dart';
 
@@ -22,6 +22,7 @@ class QueueManager {
   final RemoteLoadingService _remoteLoadingService;
   final ConnectivityService _connectivityService;
   final QueueLogger _queueLogger;
+  final SyncManager _syncManager;
 
   final Queue<QueueItem> _inMemoryQueue = Queue();
   final Map<EntityType, DataSourceAdapter> _adapters = {};
@@ -44,7 +45,13 @@ class QueueManager {
 
   List<QueueLogEntry> get logsSnapshot => _queueLogger.logsSnapshot;
 
-  QueueManager(this._queueDataSource, this._remoteLoadingService, this._connectivityService, this._queueLogger) {
+  QueueManager(
+    this._queueDataSource,
+    this._remoteLoadingService,
+    this._connectivityService,
+    this._queueLogger,
+    this._syncManager,
+  ) {
     _initConnectivity();
   }
 
@@ -155,7 +162,8 @@ class QueueManager {
         if (updatedAttempts >= maxAttempts) {
           final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
           await _queueDataSource.updateQueueItem(failedItem);
-          await adapter.local.updateSyncStatus(currentItem.entityId, SyncStatus.syncFailed);
+          final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
+          await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           _inMemoryQueue.removeFirst();
           _offlineRetryCount.remove(currentItem.entityId);
           _pausedIds.remove(currentItem.entityId);
@@ -166,12 +174,16 @@ class QueueManager {
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addFirst(retriedItem);
           await _queueDataSource.updateQueueItem(retriedItem);
+          final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
+          await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           BudgetLogger.instance.e("Queue task failed", e, stack);
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(networkRetryDelay, () {
-            if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
+            if (_inMemoryQueue.isNotEmpty && !_isProcessing) {
+              _processNext();
+            }
           });
         }
       }
@@ -196,18 +208,15 @@ class QueueManager {
       switch (item.taskType) {
         case QueueTaskType.upsert:
           final updatedDto = await adapter.remote.upsert(item.entityId, jsonMap);
-          if (updatedDto.createdAt == null) {
-            throw "QueueManager: upserting queue task returned createdAt as null";
-          }
-          if (updatedDto.updatedAt == null) {
-            throw "QueueManager: upserting queue task returned updatedAt as null";
-          }
+          if (updatedDto.createdAt == null) throw "QueueManager: upserting queue task returned createdAt as null";
+          if (updatedDto.updatedAt == null) throw "QueueManager: upserting queue task returned updatedAt as null";
           await adapter.local.markAsSynced(updatedDto.id.value, updatedDto.createdAt!, updatedDto.updatedAt!);
           _excludeIdsBuffer.add(updatedDto.id.value);
           break;
+
         case QueueTaskType.delete:
           await adapter.remote.deleteById(item.entityId);
-          _excludeIdsBuffer.add(item.entityId);
+          unawaited(_syncManager.syncAll());
           break;
       }
     });

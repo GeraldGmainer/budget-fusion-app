@@ -118,7 +118,7 @@ class OfflineFirstDataManager<E extends Dto> {
 
   Future<void> delete(E dto) async {
     _log("Deleting DTO with id '${dto.id.value}'");
-    await adapter.local.deleteById(dto.id.value);
+    await adapter.local.markPendingDelete(dto.id.value);
 
     final dtos = await _refreshCacheFromLocalSource();
     _emitToStream(dtos, forceReload: false);

@@ -24,11 +24,18 @@ class SyncRemoteSource extends SupabaseClient {
     return execute("syncAll", () async {
       final excludeJson = excludeIds.toList();
       if (excludeIds.isNotEmpty) {
-        _log("calling syncAll and exclude IDs: $excludeJson");
+        _log("exclude IDs: $excludeJson");
       }
       final response = await supabase.rpc('sync_all', params: {'p_last_synced': payload, 'p_exclude_ids': excludeJson});
       final data = response as Map<String, dynamic>;
       final result = SyncAllResponse.fromJson(data);
+      result.deltas.forEach((key, value) {
+        if (key == EntityType.booking.name) {
+          BudgetLogger.instance.i(value.upserts);
+          BudgetLogger.instance.i(value.deletes);
+        }
+      });
+
       final kB = (utf8.encode(jsonEncode(data)).length / 1024).toStringAsFixed(1);
       _log('syncAll response size is ${EntityLogger.bold("${kB}kB")} and', stopwatch: stopwatch, dark: true);
       return result;

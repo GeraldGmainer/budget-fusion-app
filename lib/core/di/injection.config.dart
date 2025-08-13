@@ -252,11 +252,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.RemoteLoadingService>(),
         gh<_i428.ConnectivityService>(),
         gh<_i509.QueueLogger>(),
-      ),
-    );
-    gh.singleton<_i752.SyncCoordinator>(
-      () => _i752.SyncCoordinator(
-        gh<_i714.QueueManager>(),
         gh<_i777.SyncManager>(),
       ),
     );
@@ -267,6 +262,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i342.RealtimeNotifierService>(),
+        gh<_i777.SyncManager>(),
+      ),
+    );
+    gh.singleton<_i752.SyncCoordinator>(
+      () => _i752.SyncCoordinator(
+        gh<_i714.QueueManager>(),
         gh<_i777.SyncManager>(),
       ),
     );

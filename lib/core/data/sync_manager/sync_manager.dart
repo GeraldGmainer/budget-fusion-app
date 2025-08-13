@@ -93,9 +93,7 @@ class SyncManager {
         changed.add(entry.key);
       }
       if (raw.deletes.isNotEmpty) {
-        for (final id in raw.deletes) {
-          await entry.value.local.deleteById(id);
-        }
+        await entry.value.local.deleteByIds(raw.deletes);
         changed.add(entry.key);
       }
     }

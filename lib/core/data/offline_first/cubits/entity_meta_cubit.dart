@@ -86,6 +86,7 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
       updatedAt: e?.updatedAt,
       deletedAt: e?.deletedAt,
       isPending: _pending != null,
+      isPendingDelete: _pending?.taskType == QueueTaskType.delete,
       isFailed: _failed ?? false,
       attempts: _pending?.attempts ?? 0,
     );

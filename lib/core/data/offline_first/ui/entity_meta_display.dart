@@ -51,8 +51,8 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
             deleted: (_) => _row(style, Colors.red, 'Deleted'),
             error: (_) => _row(style, Colors.red, 'Error'),
             upserted: (m) {
-              final label = m.isFailed ? 'Failed' : (m.isPending ? 'Pending' : 'Up to date');
-              final color = m.isFailed ? Colors.red : (m.isPending ? Colors.orange : Colors.green);
+              final label = m.isFailed ? 'Delete failed' : (m.isPendingDelete ? 'Deleting…' : (m.isPending ? 'Pending' : 'Up to date'));
+              final color = m.isFailed ? Colors.red : (m.isPendingDelete ? Colors.orange : (m.isPending ? Colors.orange : Colors.green));
               final parts = <Widget>[
                 Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
                 const SizedBox(width: 6),

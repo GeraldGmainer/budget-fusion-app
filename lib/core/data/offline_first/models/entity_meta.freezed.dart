@@ -21,6 +21,7 @@ mixin _$EntityMeta {
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get deletedAt => throw _privateConstructorUsedError;
   bool get isPending => throw _privateConstructorUsedError;
+  bool get isPendingDelete => throw _privateConstructorUsedError;
   bool get isFailed => throw _privateConstructorUsedError;
   int get attempts => throw _privateConstructorUsedError;
 
@@ -43,6 +44,7 @@ abstract class $EntityMetaCopyWith<$Res> {
     DateTime? updatedAt,
     DateTime? deletedAt,
     bool isPending,
+    bool isPendingDelete,
     bool isFailed,
     int attempts,
   });
@@ -67,6 +69,7 @@ class _$EntityMetaCopyWithImpl<$Res, $Val extends EntityMeta>
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
     Object? isPending = null,
+    Object? isPendingDelete = null,
     Object? isFailed = null,
     Object? attempts = null,
   }) {
@@ -91,6 +94,11 @@ class _$EntityMetaCopyWithImpl<$Res, $Val extends EntityMeta>
                 null == isPending
                     ? _value.isPending
                     : isPending // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            isPendingDelete:
+                null == isPendingDelete
+                    ? _value.isPendingDelete
+                    : isPendingDelete // ignore: cast_nullable_to_non_nullable
                         as bool,
             isFailed:
                 null == isFailed
@@ -122,6 +130,7 @@ abstract class _$$EntityMetaImplCopyWith<$Res>
     DateTime? updatedAt,
     DateTime? deletedAt,
     bool isPending,
+    bool isPendingDelete,
     bool isFailed,
     int attempts,
   });
@@ -145,6 +154,7 @@ class __$$EntityMetaImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
     Object? isPending = null,
+    Object? isPendingDelete = null,
     Object? isFailed = null,
     Object? attempts = null,
   }) {
@@ -170,6 +180,11 @@ class __$$EntityMetaImplCopyWithImpl<$Res>
                 ? _value.isPending
                 : isPending // ignore: cast_nullable_to_non_nullable
                     as bool,
+        isPendingDelete:
+            null == isPendingDelete
+                ? _value.isPendingDelete
+                : isPendingDelete // ignore: cast_nullable_to_non_nullable
+                    as bool,
         isFailed:
             null == isFailed
                 ? _value.isFailed
@@ -193,6 +208,7 @@ class _$EntityMetaImpl implements _EntityMeta {
     this.updatedAt,
     this.deletedAt,
     this.isPending = false,
+    this.isPendingDelete = false,
     this.isFailed = false,
     this.attempts = 0,
   });
@@ -208,6 +224,9 @@ class _$EntityMetaImpl implements _EntityMeta {
   final bool isPending;
   @override
   @JsonKey()
+  final bool isPendingDelete;
+  @override
+  @JsonKey()
   final bool isFailed;
   @override
   @JsonKey()
@@ -215,7 +234,7 @@ class _$EntityMetaImpl implements _EntityMeta {
 
   @override
   String toString() {
-    return 'EntityMeta(createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isPending: $isPending, isFailed: $isFailed, attempts: $attempts)';
+    return 'EntityMeta(createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isPending: $isPending, isPendingDelete: $isPendingDelete, isFailed: $isFailed, attempts: $attempts)';
   }
 
   @override
@@ -231,6 +250,8 @@ class _$EntityMetaImpl implements _EntityMeta {
                 other.deletedAt == deletedAt) &&
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending) &&
+            (identical(other.isPendingDelete, isPendingDelete) ||
+                other.isPendingDelete == isPendingDelete) &&
             (identical(other.isFailed, isFailed) ||
                 other.isFailed == isFailed) &&
             (identical(other.attempts, attempts) ||
@@ -244,6 +265,7 @@ class _$EntityMetaImpl implements _EntityMeta {
     updatedAt,
     deletedAt,
     isPending,
+    isPendingDelete,
     isFailed,
     attempts,
   );
@@ -263,6 +285,7 @@ abstract class _EntityMeta implements EntityMeta {
     final DateTime? updatedAt,
     final DateTime? deletedAt,
     final bool isPending,
+    final bool isPendingDelete,
     final bool isFailed,
     final int attempts,
   }) = _$EntityMetaImpl;
@@ -275,6 +298,8 @@ abstract class _EntityMeta implements EntityMeta {
   DateTime? get deletedAt;
   @override
   bool get isPending;
+  @override
+  bool get isPendingDelete;
   @override
   bool get isFailed;
   @override

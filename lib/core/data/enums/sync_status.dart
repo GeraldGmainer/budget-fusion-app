@@ -3,4 +3,6 @@ enum SyncStatus {
   createdLocally,
   updatedLocally,
   syncFailed,
+  pendingDelete,
+  deleteFailed,
 }
