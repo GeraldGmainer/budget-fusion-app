@@ -119,6 +119,13 @@ class SyncManager {
     _logChanges(result);
   }
 
+  // TODO remove hackifix
+  hackifixRefresh() {
+    _dataManagers.forEach((type, dm) async {
+      await dm.refresh();
+    });
+  }
+
   Future<void> _initConnectivity() async {
     _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
     final r = await _connectivityService.checkConnectivity();

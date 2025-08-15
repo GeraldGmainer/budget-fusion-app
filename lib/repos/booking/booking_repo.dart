@@ -35,7 +35,7 @@ class BookingRepo extends Repo<Booking> with AutoSubscribe<Booking> {
       _accountRepo.watch(),
       _categoryRepo.watch(),
       _profileRepo.watch().startWith([]).where((profiles) => profiles.isNotEmpty),
-      (bookingDtos, accounts, categories, profiles) => _mapper.mapBookings(bookingDtos, accounts, categories, profiles),
+      (bookingDtos, accounts, categories, profiles) => _mapper.mapBookings(bookingDtos.withoutPendingDelete(), accounts, categories, profiles),
     ).debounceTime(FeatureConstants.mapperDebounceDuration).shareReplay(maxSize: 1);
     super.setupStreams();
   }

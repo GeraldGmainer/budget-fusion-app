@@ -26,5 +26,5 @@ class AccountRepo extends Repo<Account> with AutoSubscribe<Account> {
   @override
   Stream<List<Account>> watch() => _manager.stream.map((dtos) => _toEntities(dtos));
 
-  List<Account> _toEntities(List<AccountDto> dtos) => dtos.map(Account.fromDto).toList();
+  List<Account> _toEntities(List<AccountDto> dtos) => dtos.withoutPendingDelete().map(Account.fromDto).toList();
 }

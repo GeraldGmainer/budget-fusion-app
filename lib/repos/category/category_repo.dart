@@ -18,18 +18,20 @@ class CategoryRepo extends Repo<Category> with AutoSubscribe<Category> {
   @override
   Future<List<Category>> loadAll({Map<String, dynamic>? filters, bool forceReload = false}) async {
     final dtos = await _manager.loadAll(filters: filters, forceReload: forceReload);
-    return _mapper.fromDtos(dtos);
+    return _toEntities(dtos);
   }
 
   @override
-  Stream<List<Category>> watch() => _manager.stream.map((dtos) => _mapper.fromDtos(dtos));
+  Stream<List<Category>> watch() => _manager.stream.map((dtos) => _mapper.fromDtos(dtos.withoutPendingDelete()));
 
   Future<Category?> loadById(Uuid id) async {
     final dto = await _manager.loadById(id.value);
     if (dto == null) return null;
     final dtos = await _manager.loadAll(forceReload: false);
-    return _mapper.fromDtos(dtos).firstWhere((c) => c.id == dto.id);
+    return _toEntities(dtos).firstWhere((c) => c.id == dto.id);
   }
+
+  List<Category> _toEntities(List<CategoryDto> dtos) => dtos.withoutPendingDelete().map(Category.fromDto).toList();
 
   Future<void> delete(Category entity) async => await _manager.delete(entity.toDto());
 

@@ -12,3 +12,9 @@ abstract class Dto {
 
   Map<String, dynamic> toJson();
 }
+
+extension DtoListX<T extends Dto> on List<T> {
+  List<T> withoutPendingDelete() {
+    return where((dto) => dto.syncStatus != SyncStatus.pendingDelete).toList();
+  }
+}

@@ -16,7 +16,6 @@ import 'queue_logger.dart';
 class QueueManager {
   static const maxAttempts = 3;
   static const offlineMaxRetries = 3;
-  static const networkRetryDelay = Duration(seconds: 1);
 
   final QueueLocalDataSource _queueDataSource;
   final RemoteLoadingService _remoteLoadingService;
@@ -144,16 +143,25 @@ class QueueManager {
       if (offline) {
         final count = (_offlineRetryCount[currentItem.entityId] ?? 0) + 1;
         _offlineRetryCount[currentItem.entityId] = count;
+
         if (count >= offlineMaxRetries) {
+          BudgetLogger.instance.i("Queue offline, pausing");
           _pausedIds.add(currentItem.entityId);
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
+          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
+          await adapter.local.updateSyncStatus(currentItem.entityId, status);
           _emitPending();
+          // TODO remove hackifix
+          // TODO just reload data manager for entityType
+          _syncManager.hackifixRefresh();
         } else {
           BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled");
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
+          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
+          await adapter.local.updateSyncStatus(currentItem.entityId, status);
           _emitPending();
           _retryTimer?.cancel();
-          _retryTimer = Timer(networkRetryDelay, () {
+          _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
             if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
           });
         }
@@ -180,7 +188,7 @@ class QueueManager {
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
           _emitPending();
           _retryTimer?.cancel();
-          _retryTimer = Timer(networkRetryDelay, () {
+          _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
             if (_inMemoryQueue.isNotEmpty && !_isProcessing) {
               _processNext();
             }
