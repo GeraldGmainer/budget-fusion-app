@@ -8,5 +8,7 @@ class EntityMetaState with _$EntityMetaState {
 
   const factory EntityMetaState.upserted(EntityMeta meta) = _Upserted;
 
+  const factory EntityMetaState.deleted() = _Deleted;
+
   const factory EntityMetaState.error(String message) = _Error;
 }
