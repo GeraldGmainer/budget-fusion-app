@@ -34,15 +34,15 @@ mixin _$CategoryDto {
   @JsonKey(name: 'parent_id')
   @UuidSerializer()
   Uuid? get parentId => throw _privateConstructorUsedError;
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -70,9 +70,11 @@ abstract class $CategoryDtoCopyWith<$Res> {
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -97,9 +99,9 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parentId = freezed,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -133,6 +135,11 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
                     ? _value.parentId
                     : parentId // ignore: cast_nullable_to_non_nullable
                         as Uuid?,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -142,11 +149,6 @@ class _$CategoryDtoCopyWithImpl<$Res, $Val extends CategoryDto>
                 freezed == updatedAt
                     ? _value.updatedAt
                     : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
-            deletedAt:
-                freezed == deletedAt
-                    ? _value.deletedAt
-                    : deletedAt // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
           )
           as $Val,
@@ -172,9 +174,11 @@ abstract class _$$CategoryDtoImplCopyWith<$Res>
     @JsonKey(name: 'icon_name') String iconName,
     @JsonKey(name: 'icon_color') String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
   });
 }
 
@@ -198,9 +202,9 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
     Object? iconName = null,
     Object? iconColor = null,
     Object? parentId = freezed,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _$CategoryDtoImpl(
@@ -234,6 +238,11 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
                 ? _value.parentId
                 : parentId // ignore: cast_nullable_to_non_nullable
                     as Uuid?,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -243,11 +252,6 @@ class __$$CategoryDtoImplCopyWithImpl<$Res>
             freezed == updatedAt
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
-        deletedAt:
-            freezed == deletedAt
-                ? _value.deletedAt
-                : deletedAt // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
       ),
     );
@@ -266,9 +270,11 @@ class _$CategoryDtoImpl extends _CategoryDto {
     @JsonKey(name: 'icon_name') required this.iconName,
     @JsonKey(name: 'icon_color') required this.iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() required this.parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required this.syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
   }) : super._();
 
   factory _$CategoryDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -294,6 +300,10 @@ class _$CategoryDtoImpl extends _CategoryDto {
   @UuidSerializer()
   final Uuid? parentId;
   @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  final SyncStatus? syncStatus;
+  @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -301,14 +311,10 @@ class _$CategoryDtoImpl extends _CategoryDto {
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'CategoryDto(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'CategoryDto(id: $id, name: $name, categoryType: $categoryType, iconName: $iconName, iconColor: $iconColor, parentId: $parentId, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -326,12 +332,12 @@ class _$CategoryDtoImpl extends _CategoryDto {
                 other.iconColor == iconColor) &&
             (identical(other.parentId, parentId) ||
                 other.parentId == parentId) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -344,9 +350,9 @@ class _$CategoryDtoImpl extends _CategoryDto {
     iconName,
     iconColor,
     parentId,
+    syncStatus,
     createdAt,
     updatedAt,
-    deletedAt,
   );
 
   /// Create a copy of CategoryDto
@@ -373,15 +379,15 @@ abstract class _CategoryDto extends CategoryDto {
     @JsonKey(name: 'icon_name') required final String iconName,
     @JsonKey(name: 'icon_color') required final String iconColor,
     @JsonKey(name: 'parent_id') @UuidSerializer() required final Uuid? parentId,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required final SyncStatus? syncStatus,
     @DateTimeSerializer()
     @JsonKey(name: 'created_at')
     required final DateTime? createdAt,
     @DateTimeSerializer()
     @JsonKey(name: 'updated_at')
     required final DateTime? updatedAt,
-    @DateTimeSerializer()
-    @JsonKey(name: 'deleted_at')
-    required final DateTime? deletedAt,
   }) = _$CategoryDtoImpl;
   const _CategoryDto._() : super._();
 
@@ -408,6 +414,10 @@ abstract class _CategoryDto extends CategoryDto {
   @UuidSerializer()
   Uuid? get parentId;
   @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus;
+  @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   DateTime? get createdAt;
@@ -415,10 +425,6 @@ abstract class _CategoryDto extends CategoryDto {
   @DateTimeSerializer()
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
-  @override
-  @DateTimeSerializer()
-  @JsonKey(name: 'deleted_at')
-  DateTime? get deletedAt;
 
   /// Create a copy of CategoryDto
   /// with the given fields replaced by the non-null parameter values.

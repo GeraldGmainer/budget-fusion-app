@@ -12,7 +12,8 @@ class CategoryRemoteDataSource extends RemoteDataSource<CategoryDto> {
   String get columns => 'id, name, category_type, icon_name, icon_color, parent_id, created_at, updated_at, deleted_at';
 
   @override
-  CategoryDto toDto(Map<String, dynamic> json) {
-    return CategoryDto.fromJson(json);
-  }
+  String get deleteRpcName => 'category_delete';
+
+  @override
+  CategoryDto toDto(Map<String, dynamic> json) => CategoryDto.fromJson(json);
 }

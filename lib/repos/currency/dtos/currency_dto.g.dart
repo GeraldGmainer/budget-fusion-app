@@ -16,6 +16,10 @@ _$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
       ),
       symbol: json['symbol'] as String,
       uiOrder: (json['ui_order'] as num?)?.toInt(),
+      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+        json['sync_status'],
+        const SyncStatusSerializer().fromJson,
+      ),
       createdAt: const DateTimeSerializer().fromJson(json['created_at']),
       updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
       deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
@@ -31,7 +35,21 @@ Map<String, dynamic> _$$CurrencyDtoImplToJson(_$CurrencyDtoImpl instance) =>
       ),
       'symbol': instance.symbol,
       'ui_order': instance.uiOrder,
+      'sync_status': _$JsonConverterToJson<String, SyncStatus>(
+        instance.syncStatus,
+        const SyncStatusSerializer().toJson,
+      ),
       'created_at': const DateTimeSerializer().toJson(instance.createdAt),
       'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
       'deleted_at': const DateTimeSerializer().toJson(instance.deletedAt),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);

@@ -1,4 +1,3 @@
-// TODO read only data manager
 import 'package:injectable/injectable.dart';
 
 import '../../core/core.dart';
@@ -27,5 +26,5 @@ class CurrencyRepo extends Repo<Currency> with AutoSubscribe<Currency> {
   @override
   Stream<List<Currency>> watch() => _manager.stream.map((dtos) => _toEntities(dtos));
 
-  List<Currency> _toEntities(List<SyncedDto<CurrencyDto>> dtos) => dtos.map((dto) => Currency.fromDto(dto.dto, isSynced: dto.isSynced)).toList();
+  List<Currency> _toEntities(List<CurrencyDto> dtos) => dtos.map(Currency.fromDto).toList();
 }

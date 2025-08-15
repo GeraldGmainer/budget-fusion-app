@@ -32,6 +32,9 @@ mixin _$ProfileDto {
   @JsonKey(name: 'settings')
   @ProfileSettingDtoConverter()
   ProfileSettingDto get settingDto => throw _privateConstructorUsedError;
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -67,6 +70,9 @@ abstract class $ProfileDtoCopyWith<$Res> {
     @JsonKey(name: 'settings')
     @ProfileSettingDtoConverter()
     ProfileSettingDto settingDto,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -95,6 +101,7 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? settingDto = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -126,6 +133,11 @@ class _$ProfileDtoCopyWithImpl<$Res, $Val extends ProfileDto>
                     ? _value.settingDto
                     : settingDto // ignore: cast_nullable_to_non_nullable
                         as ProfileSettingDto,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -174,6 +186,9 @@ abstract class _$$ProfileDtoImplCopyWith<$Res>
     @JsonKey(name: 'settings')
     @ProfileSettingDtoConverter()
     ProfileSettingDto settingDto,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -202,6 +217,7 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? settingDto = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -233,6 +249,11 @@ class __$$ProfileDtoImplCopyWithImpl<$Res>
                 ? _value.settingDto
                 : settingDto // ignore: cast_nullable_to_non_nullable
                     as ProfileSettingDto,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -264,6 +285,9 @@ class _$ProfileDtoImpl extends _ProfileDto {
     @JsonKey(name: 'settings')
     @ProfileSettingDtoConverter()
     required this.settingDto,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required this.syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required this.createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required this.updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required this.deletedAt,
@@ -289,6 +313,10 @@ class _$ProfileDtoImpl extends _ProfileDto {
   @ProfileSettingDtoConverter()
   final ProfileSettingDto settingDto;
   @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  final SyncStatus? syncStatus;
+  @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -303,7 +331,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
 
   @override
   String toString() {
-    return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settingDto: $settingDto, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settingDto: $settingDto, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -320,6 +348,8 @@ class _$ProfileDtoImpl extends _ProfileDto {
                 other.avatarUrl == avatarUrl) &&
             (identical(other.settingDto, settingDto) ||
                 other.settingDto == settingDto) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -337,6 +367,7 @@ class _$ProfileDtoImpl extends _ProfileDto {
     lastName,
     avatarUrl,
     settingDto,
+    syncStatus,
     createdAt,
     updatedAt,
     deletedAt,
@@ -365,6 +396,9 @@ abstract class _ProfileDto extends ProfileDto {
     @JsonKey(name: 'settings')
     @ProfileSettingDtoConverter()
     required final ProfileSettingDto settingDto,
+    @SyncStatusSerializer()
+    @JsonKey(name: 'sync_status')
+    required final SyncStatus? syncStatus,
     @DateTimeSerializer()
     @JsonKey(name: 'created_at')
     required final DateTime? createdAt,
@@ -396,6 +430,10 @@ abstract class _ProfileDto extends ProfileDto {
   @JsonKey(name: 'settings')
   @ProfileSettingDtoConverter()
   ProfileSettingDto get settingDto;
+  @override
+  @SyncStatusSerializer()
+  @JsonKey(name: 'sync_status')
+  SyncStatus? get syncStatus;
   @override
   @DateTimeSerializer()
   @JsonKey(name: 'created_at')

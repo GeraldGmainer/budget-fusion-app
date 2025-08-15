@@ -16,9 +16,12 @@ _$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
         json['category_id'] as String,
       ),
       accountId: const UuidSerializer().fromJson(json['account_id'] as String),
+      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+        json['sync_status'],
+        const SyncStatusSerializer().fromJson,
+      ),
       createdAt: const DateTimeSerializer().fromJson(json['created_at']),
       updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
     );
 
 Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
@@ -29,7 +32,20 @@ Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
       'amount': const DecimalConverter().toJson(instance.amount),
       'category_id': const UuidSerializer().toJson(instance.categoryId),
       'account_id': const UuidSerializer().toJson(instance.accountId),
+      'sync_status': _$JsonConverterToJson<String, SyncStatus>(
+        instance.syncStatus,
+        const SyncStatusSerializer().toJson,
+      ),
       'created_at': const DateTimeSerializer().toJson(instance.createdAt),
       'updated_at': const DateTimeSerializer().toJson(instance.updatedAt),
-      'deleted_at': const DateTimeSerializer().toJson(instance.deletedAt),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);

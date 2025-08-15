@@ -252,11 +252,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.RemoteLoadingService>(),
         gh<_i428.ConnectivityService>(),
         gh<_i509.QueueLogger>(),
-      ),
-    );
-    gh.singleton<_i752.SyncCoordinator>(
-      () => _i752.SyncCoordinator(
-        gh<_i714.QueueManager>(),
         gh<_i777.SyncManager>(),
       ),
     );
@@ -267,6 +262,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i342.RealtimeNotifierService>(),
+        gh<_i777.SyncManager>(),
+      ),
+    );
+    gh.singleton<_i752.SyncCoordinator>(
+      () => _i752.SyncCoordinator(
+        gh<_i714.QueueManager>(),
         gh<_i777.SyncManager>(),
       ),
     );
@@ -344,6 +345,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i202.AppLifecycleManager>(
       () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
     );
+    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
+      () => _i562.ResetBudgetBookUseCase(
+        gh<_i705.SyncCursorRepo>(),
+        gh<_i531.CategoryRepo>(),
+        gh<_i500.AccountRepo>(),
+        gh<_i269.BookingRepo>(),
+      ),
+    );
+    gh.factory<_i569.BudgetBookCubit>(
+      () => _i569.BudgetBookCubit(
+        gh<_i507.GenerateBudgetSummaryUseCase>(),
+        gh<_i318.FilterAndGroupBookingsUseCase>(),
+        gh<_i269.BookingRepo>(),
+        gh<_i562.ResetBudgetBookUseCase>(),
+        gh<_i196.GenerateBudgetTransactionUseCase>(),
+      ),
+    );
     gh.factory<_i963.SuggestionCubit>(
       () => _i963.SuggestionCubit(gh<_i269.BookingRepo>()),
     );
@@ -359,30 +377,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<List<_i714.Repo<dynamic>>>(),
       ),
     );
-    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
-      () => _i562.ResetBudgetBookUseCase(
-        gh<_i705.SyncCursorRepo>(),
-        gh<_i531.CategoryRepo>(),
-        gh<_i500.AccountRepo>(),
-        gh<_i269.BookingRepo>(),
-        gh<_i421.ProfileRepo>(),
-      ),
-    );
     gh.factory<_i863.BookingSaveCubit>(
       () => _i863.BookingSaveCubit(
         gh<_i405.SaveBookingUseCase>(),
         gh<_i656.DefaultAccountUseCase>(),
         gh<_i269.BookingRepo>(),
         gh<_i226.DefaultNewDateUseCase>(),
-      ),
-    );
-    gh.factory<_i569.BudgetBookCubit>(
-      () => _i569.BudgetBookCubit(
-        gh<_i507.GenerateBudgetSummaryUseCase>(),
-        gh<_i318.FilterAndGroupBookingsUseCase>(),
-        gh<_i269.BookingRepo>(),
-        gh<_i562.ResetBudgetBookUseCase>(),
-        gh<_i196.GenerateBudgetTransactionUseCase>(),
       ),
     );
     return this;

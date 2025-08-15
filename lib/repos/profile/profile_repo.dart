@@ -22,7 +22,7 @@ class ProfileRepo extends Repo<Profile> with AutoSubscribe<Profile> {
 
   @override
   void setupStreams() {
-    _sharedStream = Rx.combineLatest2<List<SyncedDto<ProfileDto>>, List<Currency>, List<Profile>>(
+    _sharedStream = Rx.combineLatest2<List<ProfileDto>, List<Currency>, List<Profile>>(
       _manager.stream,
       _currencyRepo.watch(),
       (profileDtos, currencies) => _mapProfiles(profileDtos, currencies),
@@ -30,12 +30,12 @@ class ProfileRepo extends Repo<Profile> with AutoSubscribe<Profile> {
     super.setupStreams();
   }
 
-  List<Profile> _mapProfiles(List<SyncedDto<ProfileDto>> profileDtos, List<Currency> currencies) {
+  List<Profile> _mapProfiles(List<ProfileDto> profileDtos, List<Currency> currencies) {
     return profileDtos.map((dto) {
       EntityLogger.instance.d("DataManager", EntityType.profile.text, "mapping Profile with ${currencies.length} currencies");
       final email = supabase.auth.currentUser?.email ?? "unknown email";
-      final currency = currencies.firstWhereOrNull((c) => c.id == dto.dto.settingDto.currencyId) ?? Currency.notFound();
-      return Profile.fromDto(dto.dto, email: email, isSynced: dto.isSynced, currency: currency);
+      final currency = currencies.firstWhereOrNull((c) => c.id == dto.settingDto.currencyId) ?? Currency.notFound();
+      return Profile.fromDto(dto, email: email, currency: currency);
     }).toList();
   }
 

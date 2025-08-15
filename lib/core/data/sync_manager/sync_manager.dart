@@ -93,9 +93,7 @@ class SyncManager {
         changed.add(entry.key);
       }
       if (raw.deletes.isNotEmpty) {
-        for (final id in raw.deletes) {
-          await entry.value.local.deleteById(id);
-        }
+        await entry.value.local.deleteByIds(raw.deletes);
         changed.add(entry.key);
       }
     }
@@ -119,6 +117,13 @@ class SyncManager {
 
     _logTimestamps(updatedTimestamps);
     _logChanges(result);
+  }
+
+  // TODO remove hackifix
+  hackifixRefresh() {
+    _dataManagers.forEach((type, dm) async {
+      await dm.refresh();
+    });
   }
 
   Future<void> _initConnectivity() async {

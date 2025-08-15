@@ -17,9 +17,9 @@ class BookingDto with _$BookingDto implements Dto {
     @DecimalConverter() required Decimal amount,
     @JsonKey(name: 'category_id') @UuidSerializer() required Uuid categoryId,
     @JsonKey(name: 'account_id') @UuidSerializer() required Uuid accountId,
+    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
   }) = _BookingDto;
 
   factory BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);

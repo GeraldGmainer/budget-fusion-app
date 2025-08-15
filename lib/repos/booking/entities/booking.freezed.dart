@@ -23,10 +23,9 @@ mixin _$Booking {
   Money get money => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  DateTime? get deletedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -46,10 +45,9 @@ abstract class $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   $MoneyCopyWith<$Res> get money;
@@ -78,10 +76,9 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -115,11 +112,11 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                     ? _value.account
                     : account // ignore: cast_nullable_to_non_nullable
                         as Account,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -129,11 +126,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
                 freezed == updatedAt
                     ? _value.updatedAt
                     : updatedAt // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
-            deletedAt:
-                freezed == deletedAt
-                    ? _value.deletedAt
-                    : deletedAt // ignore: cast_nullable_to_non_nullable
                         as DateTime?,
           )
           as $Val,
@@ -186,10 +178,9 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
     Money money,
     Category category,
     Account account,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
-    DateTime? deletedAt,
   });
 
   @override
@@ -220,10 +211,9 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? money = null,
     Object? category = null,
     Object? account = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? deletedAt = freezed,
   }) {
     return _then(
       _$BookingImpl(
@@ -257,11 +247,11 @@ class __$$BookingImplCopyWithImpl<$Res>
                 ? _value.account
                 : account // ignore: cast_nullable_to_non_nullable
                     as Account,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -271,11 +261,6 @@ class __$$BookingImplCopyWithImpl<$Res>
             freezed == updatedAt
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
-        deletedAt:
-            freezed == deletedAt
-                ? _value.deletedAt
-                : deletedAt // ignore: cast_nullable_to_non_nullable
                     as DateTime?,
       ),
     );
@@ -292,10 +277,9 @@ class _$BookingImpl extends _Booking {
     required this.money,
     required this.category,
     required this.account,
-    required this.isSynced,
+    this.syncStatus,
     this.createdAt,
     this.updatedAt,
-    this.deletedAt,
   }) : super._();
 
   @override
@@ -311,17 +295,15 @@ class _$BookingImpl extends _Booking {
   @override
   final Account account;
   @override
-  final bool isSynced;
+  final SyncStatus? syncStatus;
   @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final DateTime? deletedAt;
 
   @override
   String toString() {
-    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Booking(id: $id, date: $date, description: $description, money: $money, category: $category, account: $account, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -337,14 +319,12 @@ class _$BookingImpl extends _Booking {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.account, account) || other.account == account) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deletedAt, deletedAt) ||
-                other.deletedAt == deletedAt));
+                other.updatedAt == updatedAt));
   }
 
   @override
@@ -356,10 +336,9 @@ class _$BookingImpl extends _Booking {
     money,
     category,
     account,
-    isSynced,
+    syncStatus,
     createdAt,
     updatedAt,
-    deletedAt,
   );
 
   /// Create a copy of Booking
@@ -379,10 +358,9 @@ abstract class _Booking extends Booking {
     required final Money money,
     required final Category category,
     required final Account account,
-    required final bool isSynced,
+    final SyncStatus? syncStatus,
     final DateTime? createdAt,
     final DateTime? updatedAt,
-    final DateTime? deletedAt,
   }) = _$BookingImpl;
   const _Booking._() : super._();
 
@@ -399,13 +377,11 @@ abstract class _Booking extends Booking {
   @override
   Account get account;
   @override
-  bool get isSynced;
+  SyncStatus? get syncStatus;
   @override
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-  @override
-  DateTime? get deletedAt;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

@@ -8,6 +8,9 @@ class FeatureConstants {
   /// debounce to reduce stream emits
   static const Duration mapperDebounceDuration = Duration(milliseconds: 250);
 
+  ///
+  static const queueNetworkRetryDelay = Duration(seconds: 2);
+
   /// Queue retry delay
   static const Duration queueRetryDelay = Duration(seconds: 5);
 

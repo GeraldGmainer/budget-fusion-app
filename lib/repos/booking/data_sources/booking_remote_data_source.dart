@@ -12,7 +12,8 @@ class BookingRemoteDataSource extends RemoteDataSource<BookingDto> {
   String get columns => 'id, date, description, amount, category_id, account_id, created_at, updated_at, deleted_at';
 
   @override
-  BookingDto toDto(Map<String, dynamic> json) {
-    return BookingDto.fromJson(json);
-  }
+  String get deleteRpcName => 'booking_delete';
+
+  @override
+  BookingDto toDto(Map<String, dynamic> json) => BookingDto.fromJson(json);
 }

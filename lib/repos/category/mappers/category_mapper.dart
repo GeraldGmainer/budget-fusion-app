@@ -6,10 +6,9 @@ import '../entities/category.dart';
 
 @lazySingleton
 class CategoryMapper {
-  List<Category> fromDtos(List<SyncedDto<CategoryDto>> syncedDtos) {
+  List<Category> fromDtos(List<CategoryDto> dtos) {
     final Map<Uuid, _CategoryBuilder> builderMap = {};
-    for (var syncedDto in syncedDtos) {
-      final dto = syncedDto.dto;
+    for (var dto in dtos) {
       builderMap[dto.id] = _CategoryBuilder(
         id: dto.id,
         name: dto.name,
@@ -17,10 +16,9 @@ class CategoryMapper {
         iconName: dto.iconName,
         iconColor: dto.iconColor,
         parentId: dto.parentId,
-        isSynced: syncedDto.isSynced,
+        syncStatus: dto.syncStatus,
         createdAt: dto.createdAt,
         updatedAt: dto.updatedAt,
-        deletedAt: dto.deletedAt,
       );
     }
     for (var builder in builderMap.values) {
@@ -60,10 +58,9 @@ class CategoryMapper {
       iconColor: b.iconColor,
       parent: null,
       subcategories: children,
-      isSynced: b.isSynced,
+      syncStatus: b.syncStatus,
       createdAt: b.createdAt,
       updatedAt: b.updatedAt,
-      deletedAt: b.deletedAt,
     );
   }
 
@@ -81,12 +78,11 @@ class _CategoryBuilder {
   final String iconName;
   final String iconColor;
   final Uuid? parentId;
-  final bool isSynced;
   _CategoryBuilder? parentBuilder;
   final List<_CategoryBuilder> children = [];
+  final SyncStatus? syncStatus;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final DateTime? deletedAt;
 
   _CategoryBuilder({
     required this.id,
@@ -95,9 +91,8 @@ class _CategoryBuilder {
     required this.iconName,
     required this.iconColor,
     required this.parentId,
-    required this.isSynced,
+    required this.syncStatus,
     required this.createdAt,
     required this.updatedAt,
-    required this.deletedAt,
   });
 }

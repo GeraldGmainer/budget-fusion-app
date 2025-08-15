@@ -23,7 +23,7 @@ mixin _$Profile {
   String? get lastName => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
   ProfileSetting get setting => throw _privateConstructorUsedError;
-  bool get isSynced => throw _privateConstructorUsedError;
+  SyncStatus? get syncStatus => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get deletedAt => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $ProfileCopyWith<$Res> {
     String? lastName,
     String? avatarUrl,
     ProfileSetting setting,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -76,7 +76,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? setting = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -113,11 +113,11 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
                     ? _value.setting
                     : setting // ignore: cast_nullable_to_non_nullable
                         as ProfileSetting,
-            isSynced:
-                null == isSynced
-                    ? _value.isSynced
-                    : isSynced // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            syncStatus:
+                freezed == syncStatus
+                    ? _value.syncStatus
+                    : syncStatus // ignore: cast_nullable_to_non_nullable
+                        as SyncStatus?,
             createdAt:
                 freezed == createdAt
                     ? _value.createdAt
@@ -164,7 +164,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
     String? lastName,
     String? avatarUrl,
     ProfileSetting setting,
-    bool isSynced,
+    SyncStatus? syncStatus,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -194,7 +194,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? avatarUrl = freezed,
     Object? setting = null,
-    Object? isSynced = null,
+    Object? syncStatus = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
@@ -231,11 +231,11 @@ class __$$ProfileImplCopyWithImpl<$Res>
                 ? _value.setting
                 : setting // ignore: cast_nullable_to_non_nullable
                     as ProfileSetting,
-        isSynced:
-            null == isSynced
-                ? _value.isSynced
-                : isSynced // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        syncStatus:
+            freezed == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                    as SyncStatus?,
         createdAt:
             freezed == createdAt
                 ? _value.createdAt
@@ -266,10 +266,10 @@ class _$ProfileImpl extends _Profile {
     this.lastName,
     this.avatarUrl,
     required this.setting,
-    required this.isSynced,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
+    this.syncStatus,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
   }) : super._();
 
   @override
@@ -285,7 +285,7 @@ class _$ProfileImpl extends _Profile {
   @override
   final ProfileSetting setting;
   @override
-  final bool isSynced;
+  final SyncStatus? syncStatus;
   @override
   final DateTime? createdAt;
   @override
@@ -295,7 +295,7 @@ class _$ProfileImpl extends _Profile {
 
   @override
   String toString() {
-    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, setting: $setting, isSynced: $isSynced, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Profile(id: $id, email: $email, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, setting: $setting, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
   }
 
   @override
@@ -312,8 +312,8 @@ class _$ProfileImpl extends _Profile {
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
             (identical(other.setting, setting) || other.setting == setting) &&
-            (identical(other.isSynced, isSynced) ||
-                other.isSynced == isSynced) &&
+            (identical(other.syncStatus, syncStatus) ||
+                other.syncStatus == syncStatus) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -331,7 +331,7 @@ class _$ProfileImpl extends _Profile {
     lastName,
     avatarUrl,
     setting,
-    isSynced,
+    syncStatus,
     createdAt,
     updatedAt,
     deletedAt,
@@ -354,10 +354,10 @@ abstract class _Profile extends Profile {
     final String? lastName,
     final String? avatarUrl,
     required final ProfileSetting setting,
-    required final bool isSynced,
-    required final DateTime? createdAt,
-    required final DateTime? updatedAt,
-    required final DateTime? deletedAt,
+    final SyncStatus? syncStatus,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final DateTime? deletedAt,
   }) = _$ProfileImpl;
   const _Profile._() : super._();
 
@@ -374,7 +374,7 @@ abstract class _Profile extends Profile {
   @override
   ProfileSetting get setting;
   @override
-  bool get isSynced;
+  SyncStatus? get syncStatus;
   @override
   DateTime? get createdAt;
   @override

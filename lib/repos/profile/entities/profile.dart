@@ -8,7 +8,7 @@ import 'profile_setting.dart';
 part 'profile.freezed.dart';
 
 @freezed
-class Profile with _$Profile implements Entity {
+class Profile with _$Profile, Entity {
   const Profile._();
 
   const factory Profile({
@@ -18,13 +18,13 @@ class Profile with _$Profile implements Entity {
     String? lastName,
     String? avatarUrl,
     required ProfileSetting setting,
-    required bool isSynced,
-    required DateTime? createdAt,
-    required DateTime? updatedAt,
-    required DateTime? deletedAt,
+    SyncStatus? syncStatus,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
   }) = _Profile;
 
-  factory Profile.fromDto(ProfileDto dto, {required String email, required Currency currency, required bool isSynced}) {
+  factory Profile.fromDto(ProfileDto dto, {required String email, required Currency currency}) {
     return Profile(
       id: dto.id,
       email: email,
@@ -32,7 +32,7 @@ class Profile with _$Profile implements Entity {
       lastName: dto.lastName,
       avatarUrl: dto.avatarUrl,
       setting: ProfileSetting(currency: currency),
-      isSynced: isSynced,
+      syncStatus: dto.syncStatus,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
       deletedAt: dto.deletedAt,
@@ -46,6 +46,7 @@ class Profile with _$Profile implements Entity {
       lastName: lastName,
       avatarUrl: avatarUrl,
       settingDto: setting.toDto(),
+      syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

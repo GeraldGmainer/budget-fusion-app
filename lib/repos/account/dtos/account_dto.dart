@@ -13,6 +13,7 @@ class AccountDto with _$AccountDto implements Dto {
     required String name,
     @JsonKey(name: 'icon_name') required String iconName,
     @JsonKey(name: 'icon_color') required String iconColor,
+    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
     @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
     @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
     @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,

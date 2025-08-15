@@ -22,7 +22,7 @@ mixin _$EntityMetaState {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,7 +30,7 @@ mixin _$EntityMetaState {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,7 +38,7 @@ mixin _$EntityMetaState {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -137,7 +137,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -149,7 +149,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -161,7 +161,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -262,7 +262,7 @@ class _$CreatedImpl implements _Created {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
     return created();
@@ -274,7 +274,7 @@ class _$CreatedImpl implements _Created {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
     return created?.call();
@@ -286,7 +286,7 @@ class _$CreatedImpl implements _Created {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -426,7 +426,7 @@ class _$UpsertedImpl implements _Upserted {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
     return upserted(meta);
@@ -438,7 +438,7 @@ class _$UpsertedImpl implements _Upserted {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
     return upserted?.call(meta);
@@ -450,7 +450,7 @@ class _$UpsertedImpl implements _Upserted {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -519,8 +519,6 @@ abstract class _$$DeletedImplCopyWith<$Res> {
     _$DeletedImpl value,
     $Res Function(_$DeletedImpl) then,
   ) = __$$DeletedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({DateTime? at});
 }
 
 /// @nodoc
@@ -534,51 +532,26 @@ class __$$DeletedImplCopyWithImpl<$Res>
 
   /// Create a copy of EntityMetaState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? at = freezed}) {
-    return _then(
-      _$DeletedImpl(
-        freezed == at
-            ? _value.at
-            : at // ignore: cast_nullable_to_non_nullable
-                as DateTime?,
-      ),
-    );
-  }
 }
 
 /// @nodoc
 
 class _$DeletedImpl implements _Deleted {
-  const _$DeletedImpl(this.at);
-
-  @override
-  final DateTime? at;
+  const _$DeletedImpl();
 
   @override
   String toString() {
-    return 'EntityMetaState.deleted(at: $at)';
+    return 'EntityMetaState.deleted()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DeletedImpl &&
-            (identical(other.at, at) || other.at == at));
+        (other.runtimeType == runtimeType && other is _$DeletedImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, at);
-
-  /// Create a copy of EntityMetaState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      __$$DeletedImplCopyWithImpl<_$DeletedImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
@@ -586,10 +559,10 @@ class _$DeletedImpl implements _Deleted {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
-    return deleted(at);
+    return deleted();
   }
 
   @override
@@ -598,10 +571,10 @@ class _$DeletedImpl implements _Deleted {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
-    return deleted?.call(at);
+    return deleted?.call();
   }
 
   @override
@@ -610,12 +583,12 @@ class _$DeletedImpl implements _Deleted {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (deleted != null) {
-      return deleted(at);
+      return deleted();
     }
     return orElse();
   }
@@ -662,15 +635,7 @@ class _$DeletedImpl implements _Deleted {
 }
 
 abstract class _Deleted implements EntityMetaState {
-  const factory _Deleted(final DateTime? at) = _$DeletedImpl;
-
-  DateTime? get at;
-
-  /// Create a copy of EntityMetaState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _Deleted() = _$DeletedImpl;
 }
 
 /// @nodoc
@@ -746,7 +711,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() loading,
     required TResult Function() created,
     required TResult Function(EntityMeta meta) upserted,
-    required TResult Function(DateTime? at) deleted,
+    required TResult Function() deleted,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -758,7 +723,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? loading,
     TResult? Function()? created,
     TResult? Function(EntityMeta meta)? upserted,
-    TResult? Function(DateTime? at)? deleted,
+    TResult? Function()? deleted,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -770,7 +735,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? loading,
     TResult Function()? created,
     TResult Function(EntityMeta meta)? upserted,
-    TResult Function(DateTime? at)? deleted,
+    TResult Function()? deleted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

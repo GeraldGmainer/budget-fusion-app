@@ -22,6 +22,7 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   T? _entity;
   QueueItem? _pending;
+  bool _wasPendingDelete = false;
   bool? _failed = false;
 
   EntityMetaCubit({required this.repo, required this.queueManager, required this.id}) : super(const EntityMetaState.loading());
@@ -49,6 +50,7 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
     _qSub = queueManager.pendingItemsStream.listen((items) {
       _pending = items.where((q) => q.entityId == id).cast<QueueItem?>().fold<QueueItem?>(null, (prev, e) => e);
+      if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
       _recompute();
     });
 
@@ -65,6 +67,7 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   void _findPending(List<QueueItem> pendingSnapshot) {
     _pending = pendingSnapshot.firstWhereOrNull((q) => q.entityId == id);
+    if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
   }
 
   void _findFailed(List<QueueLogEntry> logsSnapshot) {
@@ -73,19 +76,19 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   void _recompute() {
     final e = _entity;
-    if (e == null && _pending == null) {
-      emit(const EntityMetaState.created());
+    if (e == null && _pending == null && _wasPendingDelete) {
+      emit(EntityMetaState.deleted());
       return;
     }
-    if (e != null && e.deletedAt != null) {
-      emit(EntityMetaState.deleted(e.deletedAt));
+    if (e == null && _pending == null) {
+      emit(const EntityMetaState.created());
       return;
     }
     final meta = EntityMeta(
       createdAt: e?.createdAt,
       updatedAt: e?.updatedAt,
-      deletedAt: e?.deletedAt,
       isPending: _pending != null,
+      isPendingDelete: _pending?.taskType == QueueTaskType.delete,
       isFailed: _failed ?? false,
       attempts: _pending?.attempts ?? 0,
     );
