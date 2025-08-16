@@ -52,7 +52,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
             color: AppColors.primaryColor,
             child: TabBar(
               controller: _tabController,
-              tabs: CategoryType.values.map((vm) => Tab(text: vm.label.tr())).toList(),
+              tabs: [Tab(text: CategoryType.outcome.label.tr()), Tab(text: CategoryType.income.label.tr())],
               isScrollable: true,
               tabAlignment: TabAlignment.center,
             ),
