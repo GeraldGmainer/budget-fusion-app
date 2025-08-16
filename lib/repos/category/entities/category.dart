@@ -92,6 +92,4 @@ extension CategoryListX on List<Category> {
     }
     return out;
   }
-
-  List<R> flatMap<R>(R Function(Category c) mapper) => flat().map(mapper).toList();
 }

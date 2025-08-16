@@ -71,9 +71,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     return BlocBuilder<CategoryListCubit, LoadableState<List<Category>>>(
       builder: (context, state) {
         return state.maybeWhen(
-          loaded: (cats) {
-            return _buildContent(type, cats);
-          },
+          loaded: (cats) => _buildContent(type, cats),
           error: (message) => ErrorText(error: message, onReload: _reloadCategories),
           orElse: () => const Center(child: CircularProgressIndicator()),
         );
