@@ -163,7 +163,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   Widget _buildContent(BookingDraft draft) {
-    return Padding(
+    return FormScroll(
       padding: AppDimensions.pageCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
