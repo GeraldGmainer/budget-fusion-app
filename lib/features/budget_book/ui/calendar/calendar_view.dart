@@ -133,7 +133,7 @@ class _WeekdayRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = MaterialLocalizations.of(context);
-    final days = List.generate(7, (i) => l.narrowWeekdays[(i + l.firstDayOfWeekIndex) % 7].toUpperCase());
+    final days = List.generate(7, (i) => l.narrowWeekdays[(i + l.firstDayOfWeekIndex + 1) % 7].toUpperCase());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Row(
