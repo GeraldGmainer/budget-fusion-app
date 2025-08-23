@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +18,13 @@ class SubcategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RepoCubit<Category>, LoadableState<List<Category>>>(
       builder: (context, state) {
-        final List<Category> subs = state.maybeWhen(loaded: (cats) => cats.where((cat) => cat.id.value == draft.id?.value).toList(), orElse: () => []);
-        return _buildList(subs.first.subcategories);
+        return state.maybeWhen(
+          loaded: (cats) {
+            final category = cats.firstWhereOrNull((cat) => cat.id.value == draft.id?.value);
+            return _buildList(category?.subcategories ?? []);
+          },
+          orElse: () => _buildList([]),
+        );
       },
     );
   }
