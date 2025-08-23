@@ -14,4 +14,6 @@ class LoadCategoryListUseCase {
     }
     return await _repo.loadAll();
   }
+
+  Stream<List<Category>> watch() => _repo.watch();
 }
