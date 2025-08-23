@@ -125,7 +125,10 @@ class OfflineFirstDataManager<E extends Dto> {
 
     final item = QueueItem(entityId: dto.id.value, entityType: adapter.type, taskType: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing delete for id '${dto.id.value}'");
-    unawaited(queueManager.add(item));
+    // unawaited(queueManager.add(item));
+    await queueManager.add(item);
+    BudgetLogger.instance.d("queue manager done");
+    await Future.delayed(Duration(seconds: 1));
   }
 
   _emitToStream(List<E> dtos, {required bool forceReload}) {
