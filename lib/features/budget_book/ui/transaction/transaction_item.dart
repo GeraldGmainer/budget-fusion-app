@@ -9,9 +9,7 @@ class TransactionItem extends StatelessWidget {
 
   const TransactionItem({super.key, required this.booking});
 
-  _onTap(BuildContext context) {
-    Navigator.of(context).pushNamed(AppRoutes.bookingSave, arguments: booking);
-  }
+  _onTap(BuildContext context) => Navigator.of(context).pushNamed(AppRoutes.bookingSave, arguments: booking);
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +27,25 @@ class TransactionItem extends StatelessWidget {
   }
 
   Widget _buildIcon() {
-    return SizedBox(
-      width: 40,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BudgetIcon(name: booking.category.iconName, color: booking.category.iconColor),
-          if (!booking.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
-        ],
-      ),
+    // return SizedBox(
+    //   width: 40,
+    //   child: Row(
+    //     mainAxisSize: MainAxisSize.min,
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       BudgetIcon(name: booking.category.iconName, color: booking.category.iconColor),
+    //       if (!booking.isSynced) Container(width: 6, height: 6, decoration: const BoxDecoration(color: AppColors.errorColor, shape: BoxShape.circle)),
+    //     ],
+    //   ),
+    // );
+    return BudgetIcon(
+      name: booking.category.iconName,
+      color: booking.category.iconColor,
+      isSynced: booking.isSynced,
     );
   }
 
-  Widget _buildTitle() {
-    return Text(booking.category.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
-  }
+  Widget _buildTitle() => Text(booking.category.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
 
   Widget? _buildSubtitle(BuildContext context) {
     if (booking.description == null || booking.description!.isEmpty) {

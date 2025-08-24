@@ -45,7 +45,12 @@ class SubcategoryList extends StatelessWidget {
           separatorBuilder: (context, index) => const Divider(color: AppColors.disabledTextColor, thickness: 1),
           itemBuilder: (context, index) {
             final sub = subcategories[index];
-            return ListTile(dense: true, title: Text(sub.name), leading: BudgetIcon(name: sub.iconName, color: sub.iconColor), onTap: () => onTap(sub));
+            return ListTile(
+              dense: true,
+              title: Text(sub.name),
+              leading: BudgetIcon(name: sub.iconName, color: sub.iconColor, isSynced: sub.isSynced),
+              onTap: () => onTap(sub),
+            );
           },
         ),
       ),
