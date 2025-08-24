@@ -18,19 +18,14 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardWithAction(
       floatingOption: true,
-      onOptionTap: () {
-        context.showComingSoon();
-      },
+      onOptionTap: () => context.showComingSoon(),
       child: _buildList(),
     );
   }
 
   Widget _buildList() {
     return ListView.separated(
-      itemBuilder: (BuildContext context, int index) {
-        final group = data.transactionGroups[index];
-        return _buildDay(group);
-      },
+      itemBuilder: (BuildContext context, int index) => _buildDay(data.transactionGroups[index]),
       itemCount: data.transactionGroups.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),

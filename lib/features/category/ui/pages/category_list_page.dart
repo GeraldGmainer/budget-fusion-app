@@ -104,7 +104,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
       dense: true,
       onTap: () => _onCategoryTap(category),
       visualDensity: const VisualDensity(vertical: 0),
-      leading: SizedBox(width: 40, child: BudgetIcon(name: category.iconName, color: category.iconColor)),
+      leading: BudgetIcon(name: category.iconName, color: category.iconColor, isSynced: category.isSynced),
       title: Text(category.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       subtitle: _buildSubtitle(category),
     );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../repos/category/category.dart';
+import '../../../../utils/singletons/budget_logger.dart';
 import '../../bloc/category_save_cubit.dart';
 import '../../domain/entities/category_draft.dart';
 import '../containers/category_save_container.dart';
@@ -22,13 +23,13 @@ class CategoryParentSavePage extends StatelessWidget {
   }
 
   _onEditSubcategory(BuildContext context, Category category) {
-    print("--- _onEditSubcategory ${category.id}");
     _navigateToSub(context, CategoryDraft.fromCategory(category));
   }
 
   _navigateToSub(BuildContext context, CategoryDraft saveDraft) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
     final bool? shouldRefresh = result as bool?;
+    BudgetLogger.instance.d("CategoryParentSavePage shouldRefresh: $shouldRefresh");
     if (context.mounted && shouldRefresh == true) {
       context.read<CategorySaveCubit>().refresh();
     }
@@ -76,7 +77,12 @@ class CategoryParentSavePage extends StatelessWidget {
             ],
           ),
         ),
-        if (!draft.isCreating) Expanded(child: SingleChildScrollView(child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)))),
+        if (!draft.isCreating)
+          Expanded(
+            child: SingleChildScrollView(
+              child: SubcategoryList(draft: draft, onTap: (category) => _onEditSubcategory(context, category)),
+            ),
+          ),
       ],
     );
   }

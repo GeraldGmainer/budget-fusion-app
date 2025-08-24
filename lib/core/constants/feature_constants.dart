@@ -1,4 +1,6 @@
 class FeatureConstants {
+  static const bool useCard = false;
+
   /// short cache time so that multiple domain can share the same of syncAll, in case syncAll request is faster than other domain loading time
   static const Duration syncAllCacheDuration = Duration(seconds: 5);
 
