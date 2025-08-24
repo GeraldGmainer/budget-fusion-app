@@ -150,15 +150,17 @@ class QueueManager {
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
           final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, status);
+          _inMemoryQueue.removeFirst();
+          _inMemoryQueue.addLast(currentItem);
           _emitPending();
-          // TODO remove hackifix
-          // TODO just reload data manager for entityType
           _syncManager.hackifixRefresh();
         } else {
-          BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled");
+          BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled\n$currentItem");
           _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
           final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
           await adapter.local.updateSyncStatus(currentItem.entityId, status);
+          _inMemoryQueue.removeFirst();
+          _inMemoryQueue.addLast(currentItem);
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
@@ -166,6 +168,18 @@ class QueueManager {
           });
         }
       } else {
+        if (_isForeignKeyMissing(e)) {
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: 'blocked:fk');
+          _inMemoryQueue.removeFirst();
+          _inMemoryQueue.addLast(currentItem);
+          _emitPending();
+          _retryTimer?.cancel();
+          _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
+            if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
+          });
+          return;
+        }
+
         final updatedAttempts = currentItem.attempts + 1;
         if (updatedAttempts >= maxAttempts) {
           final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
@@ -180,7 +194,7 @@ class QueueManager {
         } else {
           final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
           _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addFirst(retriedItem);
+          _inMemoryQueue.addLast(retriedItem);
           await _queueDataSource.updateQueueItem(retriedItem);
           final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
@@ -221,7 +235,6 @@ class QueueManager {
           await adapter.local.markAsSynced(updatedDto.id.value, updatedDto.createdAt!, updatedDto.updatedAt!);
           _excludeIdsBuffer.add(updatedDto.id.value);
           break;
-
         case QueueTaskType.delete:
           await adapter.remote.deleteById(item.entityId);
           unawaited(_syncManager.syncAll());
@@ -289,6 +302,12 @@ class QueueManager {
       _offlineRetryCount.clear();
       if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
     }
+  }
+
+  bool _isForeignKeyMissing(Object e) {
+    final s = e.toString();
+    if (!s.contains('PostgrestException')) return false;
+    return s.contains('23503') || s.toLowerCase().contains('foreign key constraint') || s.toLowerCase().contains('is not present in table');
   }
 
   _log(String msg) {
