@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS queue_items (
     entity_type TEXT NOT NULL,
     task_type TEXT NOT NULL,
     attempts INTEGER NOT NULL,
-    done INTEGER NOT NULL
+    done INTEGER NOT NULL,
+    pause_reason TEXT
 );
 
 CREATE TABLE currency

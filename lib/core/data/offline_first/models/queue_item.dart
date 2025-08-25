@@ -1,27 +1,6 @@
 import '../../../enums/entity_type.dart';
-
-enum QueueTaskType {
-  upsert,
-  delete;
-
-  static QueueTaskType fromString(String value) {
-    final core = value.trim().split('.').last;
-    final norm = core.replaceAll(RegExp(r'[^a-zA-Z]'), '').toLowerCase();
-    return QueueTaskType.values.firstWhere(
-      (e) => e.name.toLowerCase() == norm,
-      orElse: () => throw Exception("Invalid queue task type: $value"),
-    );
-  }
-
-  static QueueTaskType? tryParse(String value) {
-    final core = value.trim().split('.').last;
-    final norm = core.replaceAll(RegExp(r'[^a-zA-Z]'), '').toLowerCase();
-    for (final e in QueueTaskType.values) {
-      if (e.name.toLowerCase() == norm) return e;
-    }
-    return null;
-  }
-}
+import '../enums/queue_pause_reason.dart';
+import '../enums/queue_task_type.dart';
 
 class QueueItem {
   final String entityId;
@@ -30,10 +9,27 @@ class QueueItem {
   final QueueTaskType taskType;
   final int attempts;
   final bool done;
+  final QueuePauseReason? pauseReason;
 
-  QueueItem({required this.entityId, required this.entityType, required this.taskType, required this.entityPayload, this.attempts = 0, this.done = false});
+  QueueItem({
+    required this.entityId,
+    required this.entityType,
+    required this.taskType,
+    required this.entityPayload,
+    this.attempts = 0,
+    this.done = false,
+    this.pauseReason,
+  });
 
-  QueueItem copyWith({String? entityId, EntityType? entityType, QueueTaskType? taskType, String? entityPayload, int? attempts, bool? done}) {
+  QueueItem copyWith({
+    String? entityId,
+    EntityType? entityType,
+    QueueTaskType? taskType,
+    String? entityPayload,
+    int? attempts,
+    bool? done,
+    QueuePauseReason? pausedReason,
+  }) {
     return QueueItem(
       entityId: entityId ?? this.entityId,
       entityType: entityType ?? this.entityType,
@@ -41,11 +37,12 @@ class QueueItem {
       entityPayload: entityPayload ?? this.entityPayload,
       attempts: attempts ?? this.attempts,
       done: done ?? this.done,
+      pauseReason: pausedReason,
     );
   }
 
   @override
   String toString() {
-    return "QueueItem(entityId: $entityId, entityPayload: $entityPayload, entityType: $entityType, taskType: $taskType, attempts: $attempts, done: $done)";
+    return "QueueItem(entityId: $entityId, entityPayload: $entityPayload, entityType: $entityType, taskType: $taskType, attempts: $attempts, done: $done, pausedReason: $pauseReason)";
   }
 }

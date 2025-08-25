@@ -1,5 +1,6 @@
 import '../../../enums/entity_type.dart';
-import '../models/queue_item.dart';
+import '../enums/queue_pause_reason.dart';
+import '../enums/queue_task_type.dart';
 
 enum QueueLogEvent { added, processing, retried, succeeded, failed }
 
@@ -11,6 +12,7 @@ class QueueLogEntry {
   final int attempt;
   final DateTime at;
   final String? note;
+  final QueuePauseReason? pauseReason;
 
   const QueueLogEntry({
     required this.entityId,
@@ -20,5 +22,6 @@ class QueueLogEntry {
     required this.attempt,
     required this.at,
     this.note,
+    this.pauseReason,
   });
 }

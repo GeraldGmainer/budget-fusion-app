@@ -28,7 +28,7 @@ class QueueManager {
   final Set<String> _excludeIdsBuffer = <String>{};
 
   final Map<String, int> _offlineRetryCount = {};
-  final Set<String> _pausedIds = <String>{};
+  final Map<String, QueuePauseReason> _paused = {};
 
   final StreamController<List<QueueItem>> streamController = StreamController.broadcast();
   final StreamController<Set<String>> _drainedIds = StreamController.broadcast();
@@ -65,10 +65,41 @@ class QueueManager {
   Future<void> init() async {
     _log("init QueueManager");
     final items = await _queueDataSource.fetchPendingItems();
-    _inMemoryQueue.addAll(items);
+    for (final it in items) {
+      if (it.pauseReason == QueuePauseReason.attemptsExhausted) {
+        final reset = it.copyWith(attempts: 0, pausedReason: null);
+        await _queueDataSource.updateQueueItem(reset);
+        _inMemoryQueue.add(reset);
+      } else if (it.pauseReason == QueuePauseReason.offline) {
+        _paused[it.entityId] = QueuePauseReason.offline;
+        _inMemoryQueue.add(it);
+      } else {
+        _inMemoryQueue.add(it);
+      }
+    }
     _initialized = true;
     _emitPending();
     _log("init QueueManager done");
+
+    if (_isOnline && _paused.isNotEmpty) {
+      final ids = _paused.entries.where((e) => e.value == QueuePauseReason.offline).map((e) => e.key).toList();
+      final list = _inMemoryQueue.toList();
+      for (final id in ids) {
+        final ix = list.indexWhere((q) => q.entityId == id);
+        if (ix >= 0) {
+          final it = list[ix];
+          final reset = it.copyWith(attempts: 0, pausedReason: null);
+          list[ix] = reset;
+          unawaited(_queueDataSource.updateQueueItem(reset));
+        }
+        _paused.remove(id);
+        _offlineRetryCount.remove(id);
+      }
+      _inMemoryQueue
+        ..clear()
+        ..addAll(list);
+      _emitPending();
+    }
     _processNext();
   }
 
@@ -96,18 +127,13 @@ class QueueManager {
       return;
     }
 
-    if (_isOnline && _pausedIds.isNotEmpty) {
-      _pausedIds.clear();
-      _offlineRetryCount.clear();
-    }
-
     if (_allPaused()) {
       _log("All items paused for offline");
       _scheduleDrainIfIdle();
       return;
     }
 
-    while (_inMemoryQueue.isNotEmpty && _pausedIds.contains(_inMemoryQueue.first.entityId)) {
+    while (_inMemoryQueue.isNotEmpty && _paused.containsKey(_inMemoryQueue.first.entityId)) {
       final moved = _inMemoryQueue.removeFirst();
       _inMemoryQueue.addLast(moved);
     }
@@ -135,7 +161,7 @@ class QueueManager {
       _inMemoryQueue.removeFirst();
       await _queueDataSource.removeQueueItem(currentItem.entityId);
       _offlineRetryCount.remove(currentItem.entityId);
-      _pausedIds.remove(currentItem.entityId);
+      _paused.remove(currentItem.entityId);
       _queueLogger.log(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
       _emitPending();
     } catch (e, stack) {
@@ -146,12 +172,14 @@ class QueueManager {
 
         if (count >= offlineMaxRetries) {
           BudgetLogger.instance.i("Queue offline, pausing");
-          _pausedIds.add(currentItem.entityId);
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
-          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
-          await adapter.local.updateSyncStatus(currentItem.entityId, status);
+          _paused[currentItem.entityId] = QueuePauseReason.offline;
+          final paused = currentItem.copyWith(pausedReason: QueuePauseReason.offline);
+          await _queueDataSource.updateQueueItem(paused);
           _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addLast(currentItem);
+          _inMemoryQueue.addLast(paused);
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
+          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
+          await adapter.local.updateSyncStatus(currentItem.entityId, status);
           _emitPending();
           _syncManager.hackifixRefresh();
         } else {
@@ -182,14 +210,14 @@ class QueueManager {
 
         final updatedAttempts = currentItem.attempts + 1;
         if (updatedAttempts >= maxAttempts) {
-          final failedItem = currentItem.copyWith(attempts: updatedAttempts, done: true);
-          await _queueDataSource.updateQueueItem(failedItem);
+          final paused = currentItem.copyWith(attempts: updatedAttempts, pausedReason: QueuePauseReason.attemptsExhausted);
+          await _queueDataSource.updateQueueItem(paused);
           final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           _inMemoryQueue.removeFirst();
-          _offlineRetryCount.remove(currentItem.entityId);
-          _pausedIds.remove(currentItem.entityId);
-          _queueLogger.log(QueueLogEvent.failed, currentItem, attempt: updatedAttempts, note: e.toString());
+          _paused[currentItem.entityId] = QueuePauseReason.attemptsExhausted;
+          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: 'exhausted-paused');
+          _inMemoryQueue.addLast(paused);
           _emitPending();
         } else {
           final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
@@ -203,9 +231,7 @@ class QueueManager {
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
-            if (_inMemoryQueue.isNotEmpty && !_isProcessing) {
-              _processNext();
-            }
+            if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
           });
         }
       }
@@ -244,10 +270,10 @@ class QueueManager {
   }
 
   void _scheduleDrainIfIdle() {
-    if (_inMemoryQueue.isNotEmpty || _isProcessing || _excludeIdsBuffer.isEmpty) return;
+    if (_isProcessing || _excludeIdsBuffer.isEmpty) return;
     _drainTimer?.cancel();
     _drainTimer = Timer(const Duration(milliseconds: 80), () {
-      if (_inMemoryQueue.isEmpty && !_isProcessing && _excludeIdsBuffer.isNotEmpty) {
+      if (!_isProcessing && _excludeIdsBuffer.isNotEmpty) {
         final ids = Set<String>.from(_excludeIdsBuffer);
         _excludeIdsBuffer.clear();
         _drainedIds.add(ids);
@@ -280,9 +306,10 @@ class QueueManager {
   }
 
   bool _allPaused() {
-    if (_inMemoryQueue.isEmpty) return false;
-    for (final q in _inMemoryQueue) {
-      if (!_pausedIds.contains(q.entityId)) return false;
+    final pending = _inMemoryQueue.where((q) => !q.done);
+    if (pending.isEmpty) return false;
+    for (final q in pending) {
+      if (!_paused.containsKey(q.entityId)) return false;
     }
     return true;
   }
@@ -298,8 +325,24 @@ class QueueManager {
     final wasOffline = !_isOnline && nowOnline;
     _isOnline = nowOnline;
     if (wasOffline) {
-      _pausedIds.clear();
-      _offlineRetryCount.clear();
+      final toWake = _paused.entries.where((e) => e.value == QueuePauseReason.offline || e.value == QueuePauseReason.attemptsExhausted).map((e) => e.key).toList();
+
+      final list = _inMemoryQueue.toList();
+      for (final id in toWake) {
+        final ix = list.indexWhere((q) => q.entityId == id);
+        if (ix >= 0) {
+          final it = list[ix];
+          final reset = it.copyWith(attempts: 0, pausedReason: null);
+          list[ix] = reset;
+          unawaited(_queueDataSource.updateQueueItem(reset));
+        }
+        _paused.remove(id);
+        _offlineRetryCount.remove(id);
+      }
+      _inMemoryQueue
+        ..clear()
+        ..addAll(list);
+
       if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
     }
   }

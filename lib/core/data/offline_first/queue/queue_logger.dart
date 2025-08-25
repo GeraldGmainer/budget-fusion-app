@@ -21,6 +21,7 @@ class QueueLogger {
       attempt: attempt,
       at: DateTime.now(),
       note: note,
+      pauseReason: item.pauseReason,
     );
     _logs.insert(0, entry);
     _emitLogs();
