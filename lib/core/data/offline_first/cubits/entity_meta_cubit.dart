@@ -9,6 +9,7 @@ import '../../../core.dart';
 import '../models/entity_meta.dart';
 
 part 'entity_meta_cubit.freezed.dart';
+
 part 'entity_meta_state.dart';
 
 class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
@@ -27,13 +28,15 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   EntityMetaCubit({required this.repo, required this.queueManager, required this.id}) : super(const EntityMetaState.loading());
 
-  void init() {
+  void init() async {
     _repoSub?.cancel();
     _qSub?.cancel();
     _logSub?.cancel();
 
     _findPending(queueManager.pendingSnapshot);
-    _findFailed(queueManager.logsSnapshot);
+    final logs = await queueManager.logsSnapshot;
+    _findFailed(logs);
+
     _recompute();
 
     unawaited(

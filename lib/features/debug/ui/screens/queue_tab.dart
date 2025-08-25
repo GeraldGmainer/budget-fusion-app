@@ -33,7 +33,7 @@ class QueueTab extends StatelessWidget {
                     subtitle: Text(
                       '${e.entityType.name} • ${e.taskType.name} • attempt ${e.attempt}\n'
                       'id: ${e.entityId}\n'
-                      '${e.note ?? e.at.toLocal().toString()}',
+                      '${e.pauseReason ?? e.note ?? e.at.toLocal().toString()}',
                     ),
                     isThreeLine: true,
                     trailing: Chip(

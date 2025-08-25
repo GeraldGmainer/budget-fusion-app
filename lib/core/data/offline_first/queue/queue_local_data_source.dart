@@ -65,7 +65,7 @@ class QueueLocalDataSource {
         entityPayload: map['entity_payload'] as String,
         attempts: map['attempts'] as int,
         done: (map['done'] as int) == 1,
-        pauseReason: QueuePauseReason.fromString(map['pause_reason'] as String),
+        pauseReason: QueuePauseReason.fromString(map['pause_reason'] as String?),
       );
     }).toList();
   }

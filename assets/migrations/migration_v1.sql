@@ -8,6 +8,18 @@ CREATE TABLE IF NOT EXISTS queue_items (
     pause_reason TEXT
 );
 
+CREATE TABLE IF NOT EXISTS queue_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  entity_id TEXT NOT NULL,
+  entity_type TEXT NOT NULL,
+  task_type TEXT NOT NULL,
+  event TEXT NOT NULL,
+  attempt INTEGER NOT NULL,
+  at TEXT NOT NULL,
+  note TEXT,
+  pause_reason TEXT
+);
+
 CREATE TABLE currency
 (
     id                  TEXT PRIMARY KEY,

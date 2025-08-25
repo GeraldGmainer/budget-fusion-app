@@ -42,7 +42,7 @@ class QueueManager {
 
   List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
 
-  List<QueueLogEntry> get logsSnapshot => _queueLogger.logsSnapshot;
+  Future<List<QueueLogEntry>> get logsSnapshot => _queueLogger.logsSnapshot;
 
   QueueManager(
     this._queueDataSource,

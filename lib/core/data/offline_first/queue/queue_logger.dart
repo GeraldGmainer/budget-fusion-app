@@ -4,15 +4,18 @@ import 'package:injectable/injectable.dart';
 
 import '../models/queue_item.dart';
 import 'queue_log_entry.dart';
+import 'queue_log_local_data_source.dart';
 
 @lazySingleton
 class QueueLogger {
-  final List<QueueLogEntry> _logs = [];
+  final QueueLogLocalDataSource _dataSource;
   final StreamController<List<QueueLogEntry>> _logController = StreamController.broadcast();
+
+  QueueLogger(this._dataSource);
 
   Stream<List<QueueLogEntry>> get logsStream => _logController.stream;
 
-  void log(QueueLogEvent event, QueueItem item, {required int attempt, String? note}) {
+  Future<void> log(QueueLogEvent event, QueueItem item, {required int attempt, String? note}) async {
     final entry = QueueLogEntry(
       entityId: item.entityId,
       entityType: item.entityType,
@@ -23,17 +26,14 @@ class QueueLogger {
       note: note,
       pauseReason: item.pauseReason,
     );
-    _logs.insert(0, entry);
-    _emitLogs();
+    await _dataSource.insertLog(entry);
+    final logs = await _dataSource.fetchLogs();
+    _logController.add(logs);
   }
 
-  void _emitLogs() {
-    _logController.add(List.unmodifiable(_logs));
-  }
+  Future<List<QueueLogEntry>> get logsSnapshot => _dataSource.fetchLogs();
 
   void dispose() {
     _logController.close();
   }
-
-  List<QueueLogEntry> get logsSnapshot => List.unmodifiable(_logs);
 }
