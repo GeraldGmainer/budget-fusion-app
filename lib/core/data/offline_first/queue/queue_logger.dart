@@ -30,6 +30,11 @@ class QueueLogger {
     _logController.add(logs);
   }
 
+  Future<void> clearAll() async {
+    await _dataSource.clear();
+    _logController.add(const []);
+  }
+
   Future<List<QueueLogEntry>> get logsSnapshot => _dataSource.fetchLogs();
 
   void dispose() {

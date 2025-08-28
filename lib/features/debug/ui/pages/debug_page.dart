@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/core.dart';
 import '../screens/booking_tab.dart';
 import '../screens/category_tab.dart';
 import '../screens/queue_tab.dart';
+
+enum _DebugAction { resetQueue }
 
 class DebugPage extends StatelessWidget {
   const DebugPage({super.key});
@@ -22,6 +26,22 @@ class DebugPage extends StatelessWidget {
               Tab(text: 'Bookings'),
             ],
           ),
+          actions: [
+            PopupMenuButton<_DebugAction>(
+              onSelected: (value) async {
+                if (value == _DebugAction.resetQueue) {
+                  await context.read<OfflineFirstQueueCubit>().resetQueue();
+                }
+              },
+              itemBuilder:
+                  (context) => const [
+                    PopupMenuItem(
+                      value: _DebugAction.resetQueue,
+                      child: Text('Reset queue'),
+                    ),
+                  ],
+            ),
+          ],
         ),
         body: TabBarView(
           children: [

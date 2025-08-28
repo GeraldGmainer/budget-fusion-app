@@ -262,14 +262,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i777.SyncManager>(),
       ),
     );
-    gh.factory<_i920.OfflineFirstQueueCubit>(
-      () => _i920.OfflineFirstQueueCubit(gh<_i1046.QueueManager>()),
-    );
     gh.lazySingleton<_i654.DataManagerFactory>(
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i342.RealtimeNotifierService>(),
         gh<_i777.SyncManager>(),
+      ),
+    );
+    gh.factory<_i920.OfflineFirstQueueCubit>(
+      () => _i920.OfflineFirstQueueCubit(
+        gh<_i1046.QueueManager>(),
+        gh<_i509.QueueLogger>(),
       ),
     );
     gh.singleton<_i752.SyncCoordinator>(
