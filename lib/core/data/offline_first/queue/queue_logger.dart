@@ -15,15 +15,14 @@ class QueueLogger {
 
   Stream<List<QueueLogEntry>> get logsStream => _logController.stream;
 
-  Future<void> log(QueueLogEvent event, QueueItem item, {required int attempt, String? note}) async {
+  Future<void> log(QueueLogEvent event, QueueItem item) async {
     final entry = QueueLogEntry(
       entityId: item.entityId,
       entityType: item.entityType,
       taskType: item.taskType,
       event: event,
-      attempt: attempt,
+      attempt: item.attempts,
       at: DateTime.now(),
-      note: note,
       pauseReason: item.pauseReason,
     );
     await _dataSource.insertLog(entry);

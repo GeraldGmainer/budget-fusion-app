@@ -14,7 +14,7 @@ class QueueTab extends StatelessWidget {
             loaded: (items, logs) {
               if (logs.isEmpty) return const Center(child: Text('No queue activity'));
               return ListView.separated(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: logs.length,
                 separatorBuilder: (_, __) => const Divider(height: 1),
                 itemBuilder: (_, i) {
@@ -31,11 +31,13 @@ class QueueTab extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      '${e.entityType.name} • ${e.taskType.name} • attempt ${e.attempt}\n'
-                      'id: ${e.entityId}\n'
-                      '${e.pauseReason ?? e.note ?? e.at.toLocal().toString()}',
+                      '${e.at} • attempt ${e.attempt}\n'
+                      'id: ${e.entityId}'
+                      '${e.pauseReason != null ? "\n${e.pauseReason}" : ''}',
                     ),
-                    isThreeLine: true,
+                    isThreeLine: e.pauseReason != null,
+                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+
                     trailing: Chip(
                       padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2),
                       visualDensity: VisualDensity.compact,
@@ -57,13 +59,17 @@ class QueueTab extends StatelessWidget {
       case QueueLogEvent.added:
         return 'added';
       case QueueLogEvent.processing:
-        return 'processing';
-      case QueueLogEvent.retried:
+        return 'process';
+      case QueueLogEvent.retry:
         return 'retry';
       case QueueLogEvent.succeeded:
-        return 'ok';
+        return 'OK';
       case QueueLogEvent.failed:
         return 'failed';
+      case QueueLogEvent.pause:
+        return 'pause';
+      case QueueLogEvent.missingForeignKey:
+        return 'FK';
     }
   }
 
@@ -73,12 +79,16 @@ class QueueTab extends StatelessWidget {
         return Colors.grey;
       case QueueLogEvent.processing:
         return Colors.blue;
-      case QueueLogEvent.retried:
+      case QueueLogEvent.retry:
         return Colors.orange;
       case QueueLogEvent.succeeded:
         return Colors.green;
       case QueueLogEvent.failed:
         return Colors.red;
+      case QueueLogEvent.pause:
+        return Colors.orangeAccent;
+      case QueueLogEvent.missingForeignKey:
+        return Colors.pink;
     }
   }
 

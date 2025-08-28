@@ -17,7 +17,6 @@ class QueueLogLocalDataSource {
       'event': entry.event.name,
       'attempt': entry.attempt,
       'at': entry.at.toIso8601String(),
-      'note': entry.note,
       'pause_reason': entry.pauseReason?.name,
     });
   }
@@ -36,7 +35,6 @@ class QueueLogLocalDataSource {
         event: QueueLogEvent.values.firstWhere((e) => e.name == map['event']),
         attempt: map['attempt'] as int,
         at: DateTime.parse(map['at'] as String),
-        note: map['note'] as String?,
         pauseReason: QueuePauseReason.fromString(map['pause_reason'] as String?),
       );
     }).toList();

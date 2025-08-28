@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS queue_logs (
   event TEXT NOT NULL,
   attempt INTEGER NOT NULL,
   at TEXT NOT NULL,
-  note TEXT,
   pause_reason TEXT
 );
 

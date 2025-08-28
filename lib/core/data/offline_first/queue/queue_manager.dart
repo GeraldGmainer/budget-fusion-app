@@ -107,7 +107,7 @@ class QueueManager {
     if (!_initialized) throw Exception("QueueManager not initialized yet!");
     await _queueDataSource.addQueueItem(item);
     _inMemoryQueue.add(item);
-    _queueLogger.log(QueueLogEvent.added, item, attempt: 0, note: null);
+    _queueLogger.log(QueueLogEvent.added, item);
     _drainTimer?.cancel();
     if (!_isProcessing) {
       _processNext();
@@ -154,7 +154,7 @@ class QueueManager {
       return;
     }
 
-    _queueLogger.log(QueueLogEvent.processing, currentItem, attempt: currentItem.attempts, note: null);
+    _queueLogger.log(QueueLogEvent.processing, currentItem);
 
     try {
       await _processQueueItem(currentItem, adapter);
@@ -162,7 +162,7 @@ class QueueManager {
       await _queueDataSource.removeQueueItem(currentItem.entityId);
       _offlineRetryCount.remove(currentItem.entityId);
       _paused.remove(currentItem.entityId);
-      _queueLogger.log(QueueLogEvent.succeeded, currentItem, attempt: currentItem.attempts, note: null);
+      _queueLogger.log(QueueLogEvent.succeeded, currentItem);
       _emitPending();
     } catch (e, stack) {
       final offline = _isOfflineError(e);
@@ -173,22 +173,23 @@ class QueueManager {
         if (count >= offlineMaxRetries) {
           BudgetLogger.instance.i("Queue offline, pausing");
           _paused[currentItem.entityId] = QueuePauseReason.offline;
-          final paused = currentItem.copyWith(pausedReason: QueuePauseReason.offline);
-          await _queueDataSource.updateQueueItem(paused);
+          final pausedItem = currentItem.copyWith(pausedReason: QueuePauseReason.offline, attempts: count);
+          await _queueDataSource.updateQueueItem(pausedItem);
           _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addLast(paused);
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline paused");
+          _inMemoryQueue.addLast(pausedItem);
+          _queueLogger.log(QueueLogEvent.pause, pausedItem);
           final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
           await adapter.local.updateSyncStatus(currentItem.entityId, status);
           _emitPending();
           _syncManager.hackifixRefresh();
         } else {
           BudgetLogger.instance.i("Queue offline, retry $count/$offlineMaxRetries scheduled\n$currentItem");
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: "offline");
+          final retriedItem = currentItem.copyWith(attempts: count);
+          _queueLogger.log(QueueLogEvent.retry, retriedItem);
           final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
-          await adapter.local.updateSyncStatus(currentItem.entityId, status);
+          await adapter.local.updateSyncStatus(retriedItem.entityId, status);
           _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addLast(currentItem);
+          _inMemoryQueue.addLast(retriedItem);
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
@@ -197,7 +198,7 @@ class QueueManager {
         }
       } else {
         if (_isForeignKeyMissing(e)) {
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: currentItem.attempts, note: 'blocked:fk');
+          _queueLogger.log(QueueLogEvent.missingForeignKey, currentItem);
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addLast(currentItem);
           _emitPending();
@@ -210,14 +211,14 @@ class QueueManager {
 
         final updatedAttempts = currentItem.attempts + 1;
         if (updatedAttempts >= maxAttempts) {
-          final paused = currentItem.copyWith(attempts: updatedAttempts, pausedReason: QueuePauseReason.attemptsExhausted);
-          await _queueDataSource.updateQueueItem(paused);
+          final pausedItem = currentItem.copyWith(attempts: updatedAttempts, pausedReason: QueuePauseReason.attemptsExhausted);
+          await _queueDataSource.updateQueueItem(pausedItem);
           final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           _inMemoryQueue.removeFirst();
           _paused[currentItem.entityId] = QueuePauseReason.attemptsExhausted;
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: 'exhausted-paused');
-          _inMemoryQueue.addLast(paused);
+          _queueLogger.log(QueueLogEvent.pause, pausedItem);
+          _inMemoryQueue.addLast(pausedItem);
           _emitPending();
         } else {
           final retriedItem = currentItem.copyWith(attempts: updatedAttempts);
@@ -227,7 +228,7 @@ class QueueManager {
           final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           BudgetLogger.instance.e("Queue task failed", e, stack);
-          _queueLogger.log(QueueLogEvent.retried, currentItem, attempt: updatedAttempts, note: e.toString());
+          _queueLogger.log(QueueLogEvent.retry, retriedItem);
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
