@@ -16,7 +16,10 @@ class QueueTab extends StatelessWidget {
               return ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 itemCount: logs.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
+                separatorBuilder: (_, i) {
+                  final show = logs[i].entityId != logs[i + 1].entityId;
+                  return show ? const Divider(height: 1) : const SizedBox.shrink();
+                },
                 itemBuilder: (_, i) {
                   final e = logs[i];
                   final color = ofType(e.entityType);
