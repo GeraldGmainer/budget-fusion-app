@@ -8,7 +8,19 @@ import '../../../../utils/utils.dart';
 class CategoriesTab extends StatelessWidget {
   const CategoriesTab({super.key});
 
-  Color hexToColor(String hex) => Color(int.parse(hex.substring(1, 7), radix: 16) + 0xFF000000);
+  Color hexToColor(String hex) {
+    try {
+      return Color(int.parse(hex.substring(1, 7), radix: 16) + 0xFF000000);
+    } catch (e) {
+      try {
+        return Color(int.parse(hex.substring(0, 6), radix: 16) + 0xFF000000);
+      } catch (e) {
+        BudgetLogger.instance.i("Unknown category color $hex");
+      }
+    }
+
+    return Colors.white;
+  }
 
   Widget buildCategory(Category category) {
     return Card(
