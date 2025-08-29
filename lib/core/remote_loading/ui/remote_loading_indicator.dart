@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_colors.dart';
 import '../bloc/remote_loading_cubit.dart';
 
 class RemoteLoadingIndicator extends StatelessWidget {
@@ -9,7 +10,14 @@ class RemoteLoadingIndicator extends StatelessWidget {
     return BlocSelector<RemoteLoadingCubit, bool, bool>(
       selector: (state) => state,
       builder: (context, isLoading) {
-        return isLoading ? Align(alignment: Alignment.bottomCenter, child: SizedBox(height: 3, child: LinearProgressIndicator())) : const SizedBox.shrink();
+        return isLoading
+            ? Align(
+              alignment: Alignment.bottomCenter,
+              child: SafeArea(
+                child: LinearProgressIndicator(color: AppColors.primaryColor, minHeight: 3),
+              ),
+            )
+            : const SizedBox.shrink();
       },
     );
   }

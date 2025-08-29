@@ -23,6 +23,8 @@ export 'data/offline_first/filters/query_operator.dart';
 export 'data/offline_first/interfaces/repo.dart';
 export 'data/offline_first/models/queue_item.dart';
 export 'data/offline_first/queue/queue_log_entry.dart';
+export 'data/offline_first/enums/queue_pause_reason.dart';
+export 'data/offline_first/enums/queue_task_type.dart';
 export 'data/offline_first/queue/queue_manager.dart';
 export 'data/offline_first/ui/entity_meta_display.dart';
 export 'database/database_manager.dart';

@@ -17,6 +17,8 @@ import 'package:budget_fusion_app/core/data/offline_first/data_manager/data_mana
     as _i654;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_local_data_source.dart'
     as _i252;
+import 'package:budget_fusion_app/core/data/offline_first/queue/queue_log_local_data_source.dart'
+    as _i779;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_logger.dart'
     as _i509;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.dart'
@@ -189,7 +191,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i755.ProfileRemoteDataSource>(
       () => _i755.ProfileRemoteDataSource(),
     );
-    gh.lazySingleton<_i509.QueueLogger>(() => _i509.QueueLogger());
     gh.lazySingleton<_i705.SyncCursorRepo>(
       () => _i705.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
@@ -242,9 +243,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i372.ProfileLocalDataSource>(
       () => _i372.ProfileLocalDataSource(gh<_i779.Database>()),
     );
+    gh.lazySingleton<_i779.QueueLogLocalDataSource>(
+      () => _i779.QueueLogLocalDataSource(gh<_i779.Database>()),
+    );
     gh.lazySingleton<_i318.FilterAndGroupBookingsUseCase>(
       () =>
           _i318.FilterAndGroupBookingsUseCase(gh<_i78.BudgetPageDataService>()),
+    );
+    gh.lazySingleton<_i509.QueueLogger>(
+      () => _i509.QueueLogger(gh<_i779.QueueLogLocalDataSource>()),
     );
     gh.lazySingleton<_i1046.QueueManager>(
       () => _i1046.QueueManager(
@@ -255,14 +262,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i777.SyncManager>(),
       ),
     );
-    gh.factory<_i920.OfflineFirstQueueCubit>(
-      () => _i920.OfflineFirstQueueCubit(gh<_i1046.QueueManager>()),
-    );
     gh.lazySingleton<_i654.DataManagerFactory>(
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i342.RealtimeNotifierService>(),
         gh<_i777.SyncManager>(),
+      ),
+    );
+    gh.factory<_i920.OfflineFirstQueueCubit>(
+      () => _i920.OfflineFirstQueueCubit(
+        gh<_i1046.QueueManager>(),
+        gh<_i509.QueueLogger>(),
       ),
     );
     gh.singleton<_i752.SyncCoordinator>(
@@ -342,16 +352,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
       ),
     );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
-    );
     gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
       () => _i562.ResetBudgetBookUseCase(
         gh<_i705.SyncCursorRepo>(),
         gh<_i531.CategoryRepo>(),
         gh<_i500.AccountRepo>(),
         gh<_i269.BookingRepo>(),
+        gh<_i714.QueueManager>(),
       ),
+    );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
     );
     gh.factory<_i569.BudgetBookCubit>(
       () => _i569.BudgetBookCubit(

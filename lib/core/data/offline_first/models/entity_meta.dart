@@ -10,7 +10,6 @@ class EntityMeta with _$EntityMeta {
     DateTime? deletedAt,
     @Default(false) bool isPending,
     @Default(false) bool isPendingDelete,
-    @Default(false) bool isFailed,
     @Default(0) int attempts,
   }) = _EntityMeta;
 }

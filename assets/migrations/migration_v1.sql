@@ -4,7 +4,19 @@ CREATE TABLE IF NOT EXISTS queue_items (
     entity_type TEXT NOT NULL,
     task_type TEXT NOT NULL,
     attempts INTEGER NOT NULL,
-    done INTEGER NOT NULL
+    done INTEGER NOT NULL,
+    pause_reason TEXT
+);
+
+CREATE TABLE IF NOT EXISTS queue_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  entity_id TEXT NOT NULL,
+  entity_type TEXT NOT NULL,
+  task_type TEXT NOT NULL,
+  event TEXT NOT NULL,
+  attempt INTEGER NOT NULL,
+  at TEXT NOT NULL,
+  pause_reason TEXT
 );
 
 CREATE TABLE currency

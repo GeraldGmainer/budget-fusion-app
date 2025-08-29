@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../models/queue_item.dart';
 import '../queue/queue_log_entry.dart';
+import '../queue/queue_logger.dart';
 import '../queue/queue_manager.dart';
 
 part 'offline_first_queue_cubit.freezed.dart';
@@ -14,20 +15,36 @@ part 'offline_first_queue_state.dart';
 @injectable
 class OfflineFirstQueueCubit extends Cubit<OfflineFirstQueueState> {
   final QueueManager _queueManager;
+  final QueueLogger _queueLogger;
   StreamSubscription<List<QueueItem>>? _itemsSub;
   StreamSubscription<List<QueueLogEntry>>? _logsSub;
 
-  OfflineFirstQueueCubit(this._queueManager) : super(const OfflineFirstQueueState.loading()) {
-    _itemsSub = _queueManager.pendingItemsStream.listen((items) {
-      final logs = state.maybeWhen(loaded: (_, l) => l, orElse: () => _queueManager.logsSnapshot);
-      emit(OfflineFirstQueueState.loaded(items: items, logs: logs));
+  OfflineFirstQueueCubit(this._queueManager, this._queueLogger) : super(const OfflineFirstQueueState.loading()) {
+    _itemsSub = _queueManager.pendingItemsStream.listen((items) async {
+      state.maybeWhen(
+        loaded: (_, logs) => emit(OfflineFirstQueueState.loaded(items: items, logs: logs)),
+        orElse: () async {
+          final logs = await _queueManager.logsSnapshot;
+          emit(OfflineFirstQueueState.loaded(items: items, logs: logs));
+        },
+      );
     });
     _logsSub = _queueManager.logsStream.listen((logs) {
-      final items = state.maybeWhen(loaded: (i, _) => i, orElse: () => _queueManager.pendingSnapshot);
-      emit(OfflineFirstQueueState.loaded(items: items, logs: logs));
+      state.maybeWhen(
+        loaded: (items, _) => emit(OfflineFirstQueueState.loaded(items: items, logs: logs)),
+        orElse: () {
+          emit(OfflineFirstQueueState.loaded(items: _queueManager.pendingSnapshot, logs: logs));
+        },
+      );
     });
 
-    emit(OfflineFirstQueueState.loaded(items: _queueManager.pendingSnapshot, logs: _queueManager.logsSnapshot));
+    _queueManager.logsSnapshot.then((logs) {
+      emit(OfflineFirstQueueState.loaded(items: _queueManager.pendingSnapshot, logs: logs));
+    });
+  }
+
+  Future<void> resetQueue() async {
+    await _queueLogger.clearAll();
   }
 
   @override

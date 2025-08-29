@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../enums/entity_type.dart';
+import '../enums/queue_pause_reason.dart';
+import '../enums/queue_task_type.dart';
 import '../models/queue_item.dart';
 
 @lazySingleton
@@ -18,15 +20,16 @@ class QueueLocalDataSource {
       "   taskType: ${item.taskType}\n"
       "   entityType: ${item.entityType}\n"
       "   entityPayload: ${item.entityPayload}\n"
-      "   attempts: ${item.attempts} / done: ${item.done}",
+      "   attempts: ${item.attempts} / done: ${item.done} / pauseReason: ${item.pauseReason}",
     );
     await db.insert('queue_items', {
       'entity_id': item.entityId,
-      'task_type': item.taskType.toString(),
+      'task_type': item.taskType.name.toString(),
       'entity_type': item.entityType.toString(),
       'entity_payload': item.entityPayload,
       'attempts': item.attempts,
       'done': item.done ? 1 : 0,
+      'pause_reason': item.pauseReason?.name.toString(),
     }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
@@ -34,7 +37,13 @@ class QueueLocalDataSource {
     _log("Updating queue item with entityId '${item.entityId}' in ${EntityLogger.applyColor(item.entityType.name)}");
     await db.update(
       'queue_items',
-      {'task_type': item.taskType.name, 'entity_payload': item.entityPayload, 'attempts': item.attempts, 'done': item.done ? 1 : 0},
+      {
+        'task_type': item.taskType.name.toString(),
+        'entity_payload': item.entityPayload.toString(),
+        'attempts': item.attempts,
+        'done': item.done ? 1 : 0,
+        'pause_reason': item.pauseReason?.name.toString(),
+      },
       where: 'entity_id = ?',
       whereArgs: [item.entityId],
     );
@@ -56,6 +65,7 @@ class QueueLocalDataSource {
         entityPayload: map['entity_payload'] as String,
         attempts: map['attempts'] as int,
         done: (map['done'] as int) == 1,
+        pauseReason: QueuePauseReason.fromString(map['pause_reason'] as String?),
       );
     }).toList();
   }
