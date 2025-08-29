@@ -24,7 +24,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
   T? _entity;
   QueueItem? _pending;
   bool _wasPendingDelete = false;
-  bool? _failed = false;
 
   EntityMetaCubit({required this.repo, required this.queueManager, required this.id}) : super(const EntityMetaState.loading());
 
@@ -34,8 +33,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
     _logSub?.cancel();
 
     _findPending(queueManager.pendingSnapshot);
-    final logs = await queueManager.logsSnapshot;
-    _findFailed(logs);
 
     _recompute();
 
@@ -56,12 +53,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
       if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
       _recompute();
     });
-
-    _logSub = queueManager.logsStream.listen((logs) {
-      final last = logs.firstWhereOrNull((l) => l.entityId == id && (l.event == QueueLogEvent.failed));
-      _failed = last != null;
-      _recompute();
-    });
   }
 
   void _findEntity(List<T> list) {
@@ -71,10 +62,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
   void _findPending(List<QueueItem> pendingSnapshot) {
     _pending = pendingSnapshot.firstWhereOrNull((q) => q.entityId == id);
     if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
-  }
-
-  void _findFailed(List<QueueLogEntry> logsSnapshot) {
-    _failed = logsSnapshot.any((l) => l.entityId == id && l.event == QueueLogEvent.failed);
   }
 
   void _recompute() {
@@ -92,7 +79,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
       updatedAt: e?.updatedAt,
       isPending: _pending != null,
       isPendingDelete: _pending?.taskType == QueueTaskType.delete,
-      isFailed: _failed ?? false,
       attempts: _pending?.attempts ?? 0,
     );
     emit(EntityMetaState.upserted(meta));

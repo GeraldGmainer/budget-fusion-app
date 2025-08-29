@@ -67,8 +67,6 @@ class QueueTab extends StatelessWidget {
         return 'retry';
       case QueueLogEvent.succeeded:
         return 'OK';
-      case QueueLogEvent.failed:
-        return 'failed';
       case QueueLogEvent.pause:
         return 'pause';
       case QueueLogEvent.missingForeignKey:
@@ -86,8 +84,6 @@ class QueueTab extends StatelessWidget {
         return Colors.orange;
       case QueueLogEvent.succeeded:
         return Colors.green;
-      case QueueLogEvent.failed:
-        return Colors.red;
       case QueueLogEvent.pause:
         return Colors.orangeAccent;
       case QueueLogEvent.missingForeignKey:

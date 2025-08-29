@@ -2,7 +2,7 @@ import '../../../enums/entity_type.dart';
 import '../enums/queue_pause_reason.dart';
 import '../enums/queue_task_type.dart';
 
-enum QueueLogEvent { added, processing, retry, succeeded, failed, pause, missingForeignKey }
+enum QueueLogEvent { added, processing, retry, succeeded, pause, missingForeignKey }
 
 class QueueLogEntry {
   final String entityId;
