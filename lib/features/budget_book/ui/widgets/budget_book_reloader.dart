@@ -10,6 +10,6 @@ class BudgetBookReloader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(onRefresh: () => context.read<BudgetBookCubit>().resetAndLoad(), child: child);
+    return RefreshIndicator(onRefresh: () => context.read<BudgetBookCubit>().reload(), child: child);
   }
 }

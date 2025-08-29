@@ -100,7 +100,39 @@ class QueueManager {
         ..addAll(list);
       _emitPending();
     }
-    _processNext();
+    wakePausedItemsAndProcess();
+  }
+
+  Future<void> wakePausedItemsAndProcess({bool moveToFront = true}) async {
+    final toWakeIds = _paused.entries.map((e) => e.key).toList();
+    if (toWakeIds.isEmpty) {
+      _log("No items to wake");
+      if (!_isProcessing) _processNext();
+      return;
+    }
+
+    final list = _inMemoryQueue.toList();
+    final items = <QueueItem>[];
+
+    for (final it in list) {
+      if (toWakeIds.contains(it.entityId)) {
+        final reset = it.copyWith(attempts: 0, pausedReason: null);
+        unawaited(_queueDataSource.updateQueueItem(reset));
+        _paused.remove(it.entityId);
+        _offlineRetryCount.remove(it.entityId);
+        items.add(reset);
+      } else {
+        items.add(it);
+      }
+    }
+
+    _inMemoryQueue
+      ..clear()
+      ..addAll(items);
+
+    _emitPending();
+    _retryTimer?.cancel();
+    if (!_isProcessing) _processNext();
   }
 
   Future<void> add(QueueItem item) async {

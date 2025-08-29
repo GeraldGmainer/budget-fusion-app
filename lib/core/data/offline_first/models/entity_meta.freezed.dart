@@ -22,7 +22,6 @@ mixin _$EntityMeta {
   DateTime? get deletedAt => throw _privateConstructorUsedError;
   bool get isPending => throw _privateConstructorUsedError;
   bool get isPendingDelete => throw _privateConstructorUsedError;
-  bool get isFailed => throw _privateConstructorUsedError;
   int get attempts => throw _privateConstructorUsedError;
 
   /// Create a copy of EntityMeta
@@ -45,7 +44,6 @@ abstract class $EntityMetaCopyWith<$Res> {
     DateTime? deletedAt,
     bool isPending,
     bool isPendingDelete,
-    bool isFailed,
     int attempts,
   });
 }
@@ -70,7 +68,6 @@ class _$EntityMetaCopyWithImpl<$Res, $Val extends EntityMeta>
     Object? deletedAt = freezed,
     Object? isPending = null,
     Object? isPendingDelete = null,
-    Object? isFailed = null,
     Object? attempts = null,
   }) {
     return _then(
@@ -100,11 +97,6 @@ class _$EntityMetaCopyWithImpl<$Res, $Val extends EntityMeta>
                     ? _value.isPendingDelete
                     : isPendingDelete // ignore: cast_nullable_to_non_nullable
                         as bool,
-            isFailed:
-                null == isFailed
-                    ? _value.isFailed
-                    : isFailed // ignore: cast_nullable_to_non_nullable
-                        as bool,
             attempts:
                 null == attempts
                     ? _value.attempts
@@ -131,7 +123,6 @@ abstract class _$$EntityMetaImplCopyWith<$Res>
     DateTime? deletedAt,
     bool isPending,
     bool isPendingDelete,
-    bool isFailed,
     int attempts,
   });
 }
@@ -155,7 +146,6 @@ class __$$EntityMetaImplCopyWithImpl<$Res>
     Object? deletedAt = freezed,
     Object? isPending = null,
     Object? isPendingDelete = null,
-    Object? isFailed = null,
     Object? attempts = null,
   }) {
     return _then(
@@ -185,11 +175,6 @@ class __$$EntityMetaImplCopyWithImpl<$Res>
                 ? _value.isPendingDelete
                 : isPendingDelete // ignore: cast_nullable_to_non_nullable
                     as bool,
-        isFailed:
-            null == isFailed
-                ? _value.isFailed
-                : isFailed // ignore: cast_nullable_to_non_nullable
-                    as bool,
         attempts:
             null == attempts
                 ? _value.attempts
@@ -209,7 +194,6 @@ class _$EntityMetaImpl implements _EntityMeta {
     this.deletedAt,
     this.isPending = false,
     this.isPendingDelete = false,
-    this.isFailed = false,
     this.attempts = 0,
   });
 
@@ -227,14 +211,11 @@ class _$EntityMetaImpl implements _EntityMeta {
   final bool isPendingDelete;
   @override
   @JsonKey()
-  final bool isFailed;
-  @override
-  @JsonKey()
   final int attempts;
 
   @override
   String toString() {
-    return 'EntityMeta(createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isPending: $isPending, isPendingDelete: $isPendingDelete, isFailed: $isFailed, attempts: $attempts)';
+    return 'EntityMeta(createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isPending: $isPending, isPendingDelete: $isPendingDelete, attempts: $attempts)';
   }
 
   @override
@@ -252,8 +233,6 @@ class _$EntityMetaImpl implements _EntityMeta {
                 other.isPending == isPending) &&
             (identical(other.isPendingDelete, isPendingDelete) ||
                 other.isPendingDelete == isPendingDelete) &&
-            (identical(other.isFailed, isFailed) ||
-                other.isFailed == isFailed) &&
             (identical(other.attempts, attempts) ||
                 other.attempts == attempts));
   }
@@ -266,7 +245,6 @@ class _$EntityMetaImpl implements _EntityMeta {
     deletedAt,
     isPending,
     isPendingDelete,
-    isFailed,
     attempts,
   );
 
@@ -286,7 +264,6 @@ abstract class _EntityMeta implements EntityMeta {
     final DateTime? deletedAt,
     final bool isPending,
     final bool isPendingDelete,
-    final bool isFailed,
     final int attempts,
   }) = _$EntityMetaImpl;
 
@@ -300,8 +277,6 @@ abstract class _EntityMeta implements EntityMeta {
   bool get isPending;
   @override
   bool get isPendingDelete;
-  @override
-  bool get isFailed;
   @override
   int get attempts;
 

@@ -1,3 +1,4 @@
+import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,11 +12,13 @@ class ResetBudgetBookUseCase {
   final CategoryRepo _categoryRepo;
   final AccountRepo _accountRepo;
   final BookingRepo _bookingRepo;
+  final QueueManager _queueManager;
 
-  ResetBudgetBookUseCase(this._syncCursorRepo, this._categoryRepo, this._accountRepo, this._bookingRepo);
+  ResetBudgetBookUseCase(this._syncCursorRepo, this._categoryRepo, this._accountRepo, this._bookingRepo, this._queueManager);
 
   Future<void> reload() async {
     await Future.wait([_accountRepo.loadAll(), _categoryRepo.loadAll(), _bookingRepo.loadAll()]);
+    await _queueManager.wakePausedItemsAndProcess();
   }
 
   Future<void> resetAndLoad() async {
@@ -28,5 +31,6 @@ class ResetBudgetBookUseCase {
       _categoryRepo.loadAll(forceReload: true),
       _bookingRepo.loadAll(forceReload: true),
     ]);
+    await _queueManager.wakePausedItemsAndProcess();
   }
 }
