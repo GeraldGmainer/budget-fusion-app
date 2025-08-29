@@ -103,32 +103,44 @@ class QueueManager {
     wakePausedItemsAndProcess();
   }
 
-  Future<void> wakePausedItemsAndProcess({bool moveToFront = true}) async {
-    final toWakeIds = _paused.entries.map((e) => e.key).toList();
+  Future<void> wakePausedItemsAndProcess() async {
+    final toWakeIds = _paused.keys.toList();
     if (toWakeIds.isEmpty) {
-      _log("No items to wake");
       if (!_isProcessing) _processNext();
       return;
     }
 
-    final list = _inMemoryQueue.toList();
-    final items = <QueueItem>[];
+    final headId = _inMemoryQueue.isNotEmpty ? _inMemoryQueue.first.entityId : null;
+    final protectHead = _isProcessing && headId != null;
 
-    for (final it in list) {
+    final list = _inMemoryQueue.toList();
+    final front = <QueueItem>[];
+    final rest = <QueueItem>[];
+
+    for (var i = 0; i < list.length; i++) {
+      final it = list[i];
+      if (protectHead && i == 0) {
+        rest.add(it);
+        continue;
+      }
       if (toWakeIds.contains(it.entityId)) {
         final reset = it.copyWith(attempts: 0, pausedReason: null);
         unawaited(_queueDataSource.updateQueueItem(reset));
         _paused.remove(it.entityId);
         _offlineRetryCount.remove(it.entityId);
-        items.add(reset);
+        front.add(reset);
       } else {
-        items.add(it);
+        rest.add(it);
       }
     }
 
     _inMemoryQueue
       ..clear()
-      ..addAll(items);
+      ..addAll([
+        ...(protectHead ? [rest.first] : []),
+        ...front,
+        ...(protectHead ? rest.skip(1) : rest),
+      ]);
 
     _emitPending();
     _retryTimer?.cancel();
@@ -137,15 +149,59 @@ class QueueManager {
 
   Future<void> add(QueueItem item) async {
     if (!_initialized) throw Exception("QueueManager not initialized yet!");
-    await _queueDataSource.addQueueItem(item);
-    _inMemoryQueue.add(item);
-    _queueLogger.log(QueueLogEvent.added, item);
+    await _coalesceAndEnqueue(item);
     _drainTimer?.cancel();
     if (!_isProcessing) {
       _processNext();
     } else {
       _emitPending();
     }
+  }
+
+  Future<void> _coalesceAndEnqueue(QueueItem item) async {
+    final id = item.entityId;
+    final list = _inMemoryQueue.toList();
+    final headId = _inMemoryQueue.isNotEmpty ? _inMemoryQueue.first.entityId : null;
+    final protectHead = _isProcessing && headId == id;
+
+    _paused.remove(id);
+    _offlineRetryCount.remove(id);
+
+    final kept = <QueueItem>[];
+    var removedFromStore = false;
+    for (var i = 0; i < list.length; i++) {
+      final it = list[i];
+      if (protectHead && i == 0) {
+        kept.add(it);
+        continue;
+      }
+      if (it.entityId == id) {
+        if (!removedFromStore) {
+          await _queueDataSource.removeQueueItem(id);
+          removedFromStore = true;
+        }
+        continue;
+      }
+      kept.add(it);
+    }
+
+    if (item.taskType == QueueTaskType.delete) {
+      if (protectHead) {
+        kept.insert(1, item);
+      } else {
+        kept.insert(0, item);
+      }
+    } else {
+      kept.add(item);
+    }
+
+    _inMemoryQueue
+      ..clear()
+      ..addAll(kept);
+
+    await _queueDataSource.addQueueItem(item);
+    _queueLogger.log(QueueLogEvent.added, item);
+    _emitPending();
   }
 
   Future<void> _processNext() async {
