@@ -197,18 +197,6 @@ class QueueManager {
           });
         }
       } else {
-        if (_isForeignKeyMissing(e)) {
-          _queueLogger.log(QueueLogEvent.missingForeignKey, currentItem);
-          _inMemoryQueue.removeFirst();
-          _inMemoryQueue.addLast(currentItem);
-          _emitPending();
-          _retryTimer?.cancel();
-          _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
-            if (_inMemoryQueue.isNotEmpty && !_isProcessing) _processNext();
-          });
-          return;
-        }
-
         final updatedAttempts = currentItem.attempts + 1;
         if (updatedAttempts >= maxAttempts) {
           final pausedItem = currentItem.copyWith(attempts: updatedAttempts, pausedReason: QueuePauseReason.attemptsExhausted);
@@ -228,7 +216,8 @@ class QueueManager {
           final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
           await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           BudgetLogger.instance.e("Queue task failed", e, stack);
-          _queueLogger.log(QueueLogEvent.retry, retriedItem);
+          final isFKError = _isForeignKeyMissing(e);
+          _queueLogger.log(isFKError ? QueueLogEvent.missingForeignKey : QueueLogEvent.retry, retriedItem);
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
