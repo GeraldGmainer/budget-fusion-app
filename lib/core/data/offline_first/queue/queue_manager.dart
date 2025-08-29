@@ -178,8 +178,8 @@ class QueueManager {
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addLast(pausedItem);
           _queueLogger.log(QueueLogEvent.pause, pausedItem);
-          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
-          await adapter.local.updateSyncStatus(currentItem.entityId, status);
+          final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
+          await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           _emitPending();
           _syncManager.hackifixRefresh();
         } else {
@@ -213,11 +213,11 @@ class QueueManager {
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addLast(retriedItem);
           await _queueDataSource.updateQueueItem(retriedItem);
-          final failStatus = currentItem.taskType == QueueTaskType.delete ? SyncStatus.deleteFailed : SyncStatus.syncFailed;
-          await adapter.local.updateSyncStatus(currentItem.entityId, failStatus);
           BudgetLogger.instance.e("Queue task failed", e, stack);
           final isFKError = _isForeignKeyMissing(e);
           _queueLogger.log(isFKError ? QueueLogEvent.missingForeignKey : QueueLogEvent.retry, retriedItem);
+          final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;
+          await adapter.local.updateSyncStatus(retriedItem.entityId, status);
           _emitPending();
           _retryTimer?.cancel();
           _retryTimer = Timer(FeatureConstants.queueNetworkRetryDelay, () {
