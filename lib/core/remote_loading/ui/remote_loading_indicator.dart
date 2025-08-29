@@ -10,7 +10,7 @@ class RemoteLoadingIndicator extends StatelessWidget {
     return BlocSelector<RemoteLoadingCubit, bool, bool>(
       selector: (state) => state,
       builder: (context, isLoading) {
-        return !isLoading
+        return isLoading
             ? Align(
               alignment: Alignment.bottomCenter,
               child: SafeArea(
