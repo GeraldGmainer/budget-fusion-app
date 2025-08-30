@@ -6,7 +6,7 @@ import '../dtos/profile_setting_dto.dart';
 part 'profile_setting.freezed.dart';
 
 @freezed
-class ProfileSetting with _$ProfileSetting {
+abstract class ProfileSetting with _$ProfileSetting {
   const ProfileSetting._();
 
   const factory ProfileSetting({

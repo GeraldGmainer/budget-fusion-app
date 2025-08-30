@@ -5,7 +5,7 @@ part 'booking_suggestion_dto.freezed.dart';
 part 'booking_suggestion_dto.g.dart';
 
 @freezed
-class BookingSuggestionDto with _$BookingSuggestionDto {
+abstract class BookingSuggestionDto with _$BookingSuggestionDto {
   const BookingSuggestionDto._();
 
   const factory BookingSuggestionDto({
@@ -14,7 +14,4 @@ class BookingSuggestionDto with _$BookingSuggestionDto {
   }) = _BookingSuggestionDto;
 
   factory BookingSuggestionDto.fromJson(Map<String, dynamic> json) => _$BookingSuggestionDtoFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$$BookingSuggestionDtoImplToJson(this as _$BookingSuggestionDtoImpl);
 }

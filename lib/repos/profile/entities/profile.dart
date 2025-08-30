@@ -8,7 +8,7 @@ import 'profile_setting.dart';
 part 'profile.freezed.dart';
 
 @freezed
-class Profile with _$Profile, Entity {
+abstract class Profile with _$Profile, Entity {
   const Profile._();
 
   const factory Profile({

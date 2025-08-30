@@ -6,7 +6,7 @@ import '../dtos/account_dto.dart';
 part 'account.freezed.dart';
 
 @freezed
-class Account with _$Account, Entity {
+abstract class Account with _$Account, Entity {
   const Account._();
 
   const factory Account({

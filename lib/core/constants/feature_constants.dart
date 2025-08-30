@@ -19,6 +19,9 @@ class FeatureConstants {
   /// Queue retry count
   static const int queueRetryCount = 3;
 
+  /// Realtime debounce duration to reload data managers
+  static const Duration realtimeDebounceDuration = Duration(milliseconds: 250);
+
   static const int descriptionMaxLength = 20;
   static const notFoundIconName = "not_found";
   static const notFoundIconColor = "B2BEB5";

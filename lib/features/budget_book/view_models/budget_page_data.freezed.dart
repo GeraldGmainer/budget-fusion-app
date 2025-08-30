@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,279 +9,332 @@ part of 'budget_page_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$BudgetPageData {
-  BudgetDateRange get dateRange => throw _privateConstructorUsedError;
-  Money get income => throw _privateConstructorUsedError;
-  Money get outcome => throw _privateConstructorUsedError;
-  List<Booking> get bookings => throw _privateConstructorUsedError;
 
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BudgetPageDataCopyWith<BudgetPageData> get copyWith =>
-      throw _privateConstructorUsedError;
+ BudgetDateRange get dateRange; Money get income; Money get outcome; List<Booking> get bookings;
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BudgetPageDataCopyWith<BudgetPageData> get copyWith => _$BudgetPageDataCopyWithImpl<BudgetPageData>(this as BudgetPageData, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BudgetPageData&&(identical(other.dateRange, dateRange) || other.dateRange == dateRange)&&(identical(other.income, income) || other.income == income)&&(identical(other.outcome, outcome) || other.outcome == outcome)&&const DeepCollectionEquality().equals(other.bookings, bookings));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,dateRange,income,outcome,const DeepCollectionEquality().hash(bookings));
+
+@override
+String toString() {
+  return 'BudgetPageData(dateRange: $dateRange, income: $income, outcome: $outcome, bookings: $bookings)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BudgetPageDataCopyWith<$Res> {
-  factory $BudgetPageDataCopyWith(
-    BudgetPageData value,
-    $Res Function(BudgetPageData) then,
-  ) = _$BudgetPageDataCopyWithImpl<$Res, BudgetPageData>;
-  @useResult
-  $Res call({
-    BudgetDateRange dateRange,
-    Money income,
-    Money outcome,
-    List<Booking> bookings,
-  });
+abstract mixin class $BudgetPageDataCopyWith<$Res>  {
+  factory $BudgetPageDataCopyWith(BudgetPageData value, $Res Function(BudgetPageData) _then) = _$BudgetPageDataCopyWithImpl;
+@useResult
+$Res call({
+ BudgetDateRange dateRange, Money income, Money outcome, List<Booking> bookings
+});
 
-  $BudgetDateRangeCopyWith<$Res> get dateRange;
-  $MoneyCopyWith<$Res> get income;
-  $MoneyCopyWith<$Res> get outcome;
+
+$BudgetDateRangeCopyWith<$Res> get dateRange;$MoneyCopyWith<$Res> get income;$MoneyCopyWith<$Res> get outcome;
+
 }
-
 /// @nodoc
-class _$BudgetPageDataCopyWithImpl<$Res, $Val extends BudgetPageData>
+class _$BudgetPageDataCopyWithImpl<$Res>
     implements $BudgetPageDataCopyWith<$Res> {
-  _$BudgetPageDataCopyWithImpl(this._value, this._then);
+  _$BudgetPageDataCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BudgetPageData _self;
+  final $Res Function(BudgetPageData) _then;
 
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dateRange = null,
-    Object? income = null,
-    Object? outcome = null,
-    Object? bookings = null,
-  }) {
-    return _then(
-      _value.copyWith(
-            dateRange:
-                null == dateRange
-                    ? _value.dateRange
-                    : dateRange // ignore: cast_nullable_to_non_nullable
-                        as BudgetDateRange,
-            income:
-                null == income
-                    ? _value.income
-                    : income // ignore: cast_nullable_to_non_nullable
-                        as Money,
-            outcome:
-                null == outcome
-                    ? _value.outcome
-                    : outcome // ignore: cast_nullable_to_non_nullable
-                        as Money,
-            bookings:
-                null == bookings
-                    ? _value.bookings
-                    : bookings // ignore: cast_nullable_to_non_nullable
-                        as List<Booking>,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BudgetDateRangeCopyWith<$Res> get dateRange {
-    return $BudgetDateRangeCopyWith<$Res>(_value.dateRange, (value) {
-      return _then(_value.copyWith(dateRange: value) as $Val);
-    });
-  }
-
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MoneyCopyWith<$Res> get income {
-    return $MoneyCopyWith<$Res>(_value.income, (value) {
-      return _then(_value.copyWith(income: value) as $Val);
-    });
-  }
-
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MoneyCopyWith<$Res> get outcome {
-    return $MoneyCopyWith<$Res>(_value.outcome, (value) {
-      return _then(_value.copyWith(outcome: value) as $Val);
-    });
-  }
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? dateRange = null,Object? income = null,Object? outcome = null,Object? bookings = null,}) {
+  return _then(_self.copyWith(
+dateRange: null == dateRange ? _self.dateRange : dateRange // ignore: cast_nullable_to_non_nullable
+as BudgetDateRange,income: null == income ? _self.income : income // ignore: cast_nullable_to_non_nullable
+as Money,outcome: null == outcome ? _self.outcome : outcome // ignore: cast_nullable_to_non_nullable
+as Money,bookings: null == bookings ? _self.bookings : bookings // ignore: cast_nullable_to_non_nullable
+as List<Booking>,
+  ));
 }
-
-/// @nodoc
-abstract class _$$BudgetPageDataImplCopyWith<$Res>
-    implements $BudgetPageDataCopyWith<$Res> {
-  factory _$$BudgetPageDataImplCopyWith(
-    _$BudgetPageDataImpl value,
-    $Res Function(_$BudgetPageDataImpl) then,
-  ) = __$$BudgetPageDataImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({
-    BudgetDateRange dateRange,
-    Money income,
-    Money outcome,
-    List<Booking> bookings,
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BudgetDateRangeCopyWith<$Res> get dateRange {
+  
+  return $BudgetDateRangeCopyWith<$Res>(_self.dateRange, (value) {
+    return _then(_self.copyWith(dateRange: value));
   });
+}/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MoneyCopyWith<$Res> get income {
+  
+  return $MoneyCopyWith<$Res>(_self.income, (value) {
+    return _then(_self.copyWith(income: value));
+  });
+}/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MoneyCopyWith<$Res> get outcome {
+  
+  return $MoneyCopyWith<$Res>(_self.outcome, (value) {
+    return _then(_self.copyWith(outcome: value));
+  });
+}
+}
 
-  @override
-  $BudgetDateRangeCopyWith<$Res> get dateRange;
-  @override
-  $MoneyCopyWith<$Res> get income;
-  @override
-  $MoneyCopyWith<$Res> get outcome;
+
+/// Adds pattern-matching-related methods to [BudgetPageData].
+extension BudgetPageDataPatterns on BudgetPageData {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BudgetPageData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BudgetPageData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BudgetPageData value)  $default,){
+final _that = this;
+switch (_that) {
+case _BudgetPageData():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BudgetPageData value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BudgetPageData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BudgetDateRange dateRange,  Money income,  Money outcome,  List<Booking> bookings)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BudgetPageData() when $default != null:
+return $default(_that.dateRange,_that.income,_that.outcome,_that.bookings);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BudgetDateRange dateRange,  Money income,  Money outcome,  List<Booking> bookings)  $default,) {final _that = this;
+switch (_that) {
+case _BudgetPageData():
+return $default(_that.dateRange,_that.income,_that.outcome,_that.bookings);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BudgetDateRange dateRange,  Money income,  Money outcome,  List<Booking> bookings)?  $default,) {final _that = this;
+switch (_that) {
+case _BudgetPageData() when $default != null:
+return $default(_that.dateRange,_that.income,_that.outcome,_that.bookings);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-class __$$BudgetPageDataImplCopyWithImpl<$Res>
-    extends _$BudgetPageDataCopyWithImpl<$Res, _$BudgetPageDataImpl>
-    implements _$$BudgetPageDataImplCopyWith<$Res> {
-  __$$BudgetPageDataImplCopyWithImpl(
-    _$BudgetPageDataImpl _value,
-    $Res Function(_$BudgetPageDataImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dateRange = null,
-    Object? income = null,
-    Object? outcome = null,
-    Object? bookings = null,
-  }) {
-    return _then(
-      _$BudgetPageDataImpl(
-        dateRange:
-            null == dateRange
-                ? _value.dateRange
-                : dateRange // ignore: cast_nullable_to_non_nullable
-                    as BudgetDateRange,
-        income:
-            null == income
-                ? _value.income
-                : income // ignore: cast_nullable_to_non_nullable
-                    as Money,
-        outcome:
-            null == outcome
-                ? _value.outcome
-                : outcome // ignore: cast_nullable_to_non_nullable
-                    as Money,
-        bookings:
-            null == bookings
-                ? _value._bookings
-                : bookings // ignore: cast_nullable_to_non_nullable
-                    as List<Booking>,
-      ),
-    );
-  }
+
+class _BudgetPageData extends BudgetPageData {
+  const _BudgetPageData({required this.dateRange, required this.income, required this.outcome, final  List<Booking> bookings = const []}): _bookings = bookings,super._();
+  
+
+@override final  BudgetDateRange dateRange;
+@override final  Money income;
+@override final  Money outcome;
+ final  List<Booking> _bookings;
+@override@JsonKey() List<Booking> get bookings {
+  if (_bookings is EqualUnmodifiableListView) return _bookings;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_bookings);
+}
+
+
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BudgetPageDataCopyWith<_BudgetPageData> get copyWith => __$BudgetPageDataCopyWithImpl<_BudgetPageData>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BudgetPageData&&(identical(other.dateRange, dateRange) || other.dateRange == dateRange)&&(identical(other.income, income) || other.income == income)&&(identical(other.outcome, outcome) || other.outcome == outcome)&&const DeepCollectionEquality().equals(other._bookings, _bookings));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,dateRange,income,outcome,const DeepCollectionEquality().hash(_bookings));
+
+@override
+String toString() {
+  return 'BudgetPageData(dateRange: $dateRange, income: $income, outcome: $outcome, bookings: $bookings)';
+}
+
+
 }
 
 /// @nodoc
+abstract mixin class _$BudgetPageDataCopyWith<$Res> implements $BudgetPageDataCopyWith<$Res> {
+  factory _$BudgetPageDataCopyWith(_BudgetPageData value, $Res Function(_BudgetPageData) _then) = __$BudgetPageDataCopyWithImpl;
+@override @useResult
+$Res call({
+ BudgetDateRange dateRange, Money income, Money outcome, List<Booking> bookings
+});
 
-class _$BudgetPageDataImpl extends _BudgetPageData {
-  const _$BudgetPageDataImpl({
-    required this.dateRange,
-    required this.income,
-    required this.outcome,
-    final List<Booking> bookings = const [],
-  }) : _bookings = bookings,
-       super._();
 
-  @override
-  final BudgetDateRange dateRange;
-  @override
-  final Money income;
-  @override
-  final Money outcome;
-  final List<Booking> _bookings;
-  @override
-  @JsonKey()
-  List<Booking> get bookings {
-    if (_bookings is EqualUnmodifiableListView) return _bookings;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_bookings);
-  }
+@override $BudgetDateRangeCopyWith<$Res> get dateRange;@override $MoneyCopyWith<$Res> get income;@override $MoneyCopyWith<$Res> get outcome;
 
-  @override
-  String toString() {
-    return 'BudgetPageData(dateRange: $dateRange, income: $income, outcome: $outcome, bookings: $bookings)';
-  }
+}
+/// @nodoc
+class __$BudgetPageDataCopyWithImpl<$Res>
+    implements _$BudgetPageDataCopyWith<$Res> {
+  __$BudgetPageDataCopyWithImpl(this._self, this._then);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BudgetPageDataImpl &&
-            (identical(other.dateRange, dateRange) ||
-                other.dateRange == dateRange) &&
-            (identical(other.income, income) || other.income == income) &&
-            (identical(other.outcome, outcome) || other.outcome == outcome) &&
-            const DeepCollectionEquality().equals(other._bookings, _bookings));
-  }
+  final _BudgetPageData _self;
+  final $Res Function(_BudgetPageData) _then;
 
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    dateRange,
-    income,
-    outcome,
-    const DeepCollectionEquality().hash(_bookings),
-  );
-
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BudgetPageDataImplCopyWith<_$BudgetPageDataImpl> get copyWith =>
-      __$$BudgetPageDataImplCopyWithImpl<_$BudgetPageDataImpl>(
-        this,
-        _$identity,
-      );
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? dateRange = null,Object? income = null,Object? outcome = null,Object? bookings = null,}) {
+  return _then(_BudgetPageData(
+dateRange: null == dateRange ? _self.dateRange : dateRange // ignore: cast_nullable_to_non_nullable
+as BudgetDateRange,income: null == income ? _self.income : income // ignore: cast_nullable_to_non_nullable
+as Money,outcome: null == outcome ? _self.outcome : outcome // ignore: cast_nullable_to_non_nullable
+as Money,bookings: null == bookings ? _self._bookings : bookings // ignore: cast_nullable_to_non_nullable
+as List<Booking>,
+  ));
 }
 
-abstract class _BudgetPageData extends BudgetPageData {
-  const factory _BudgetPageData({
-    required final BudgetDateRange dateRange,
-    required final Money income,
-    required final Money outcome,
-    final List<Booking> bookings,
-  }) = _$BudgetPageDataImpl;
-  const _BudgetPageData._() : super._();
-
-  @override
-  BudgetDateRange get dateRange;
-  @override
-  Money get income;
-  @override
-  Money get outcome;
-  @override
-  List<Booking> get bookings;
-
-  /// Create a copy of BudgetPageData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BudgetPageDataImplCopyWith<_$BudgetPageDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BudgetDateRangeCopyWith<$Res> get dateRange {
+  
+  return $BudgetDateRangeCopyWith<$Res>(_self.dateRange, (value) {
+    return _then(_self.copyWith(dateRange: value));
+  });
+}/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MoneyCopyWith<$Res> get income {
+  
+  return $MoneyCopyWith<$Res>(_self.income, (value) {
+    return _then(_self.copyWith(income: value));
+  });
+}/// Create a copy of BudgetPageData
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MoneyCopyWith<$Res> get outcome {
+  
+  return $MoneyCopyWith<$Res>(_self.outcome, (value) {
+    return _then(_self.copyWith(outcome: value));
+  });
 }
+}
+
+// dart format on

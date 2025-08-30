@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,163 +9,281 @@ part of 'profile_setting.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$ProfileSetting {
-  Currency get currency => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProfileSettingCopyWith<ProfileSetting> get copyWith =>
-      throw _privateConstructorUsedError;
+ Currency get currency;
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ProfileSettingCopyWith<ProfileSetting> get copyWith => _$ProfileSettingCopyWithImpl<ProfileSetting>(this as ProfileSetting, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileSetting&&(identical(other.currency, currency) || other.currency == currency));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,currency);
+
+@override
+String toString() {
+  return 'ProfileSetting(currency: $currency)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ProfileSettingCopyWith<$Res> {
-  factory $ProfileSettingCopyWith(
-    ProfileSetting value,
-    $Res Function(ProfileSetting) then,
-  ) = _$ProfileSettingCopyWithImpl<$Res, ProfileSetting>;
-  @useResult
-  $Res call({Currency currency});
+abstract mixin class $ProfileSettingCopyWith<$Res>  {
+  factory $ProfileSettingCopyWith(ProfileSetting value, $Res Function(ProfileSetting) _then) = _$ProfileSettingCopyWithImpl;
+@useResult
+$Res call({
+ Currency currency
+});
 
-  $CurrencyCopyWith<$Res> get currency;
+
+$CurrencyCopyWith<$Res> get currency;
+
 }
-
 /// @nodoc
-class _$ProfileSettingCopyWithImpl<$Res, $Val extends ProfileSetting>
+class _$ProfileSettingCopyWithImpl<$Res>
     implements $ProfileSettingCopyWith<$Res> {
-  _$ProfileSettingCopyWithImpl(this._value, this._then);
+  _$ProfileSettingCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ProfileSetting _self;
+  final $Res Function(ProfileSetting) _then;
 
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? currency = null}) {
-    return _then(
-      _value.copyWith(
-            currency:
-                null == currency
-                    ? _value.currency
-                    : currency // ignore: cast_nullable_to_non_nullable
-                        as Currency,
-          )
-          as $Val,
-    );
-  }
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? currency = null,}) {
+  return _then(_self.copyWith(
+currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,
+  ));
+}
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CurrencyCopyWith<$Res> get currency {
+  
+  return $CurrencyCopyWith<$Res>(_self.currency, (value) {
+    return _then(_self.copyWith(currency: value));
+  });
+}
+}
 
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CurrencyCopyWith<$Res> get currency {
-    return $CurrencyCopyWith<$Res>(_value.currency, (value) {
-      return _then(_value.copyWith(currency: value) as $Val);
-    });
-  }
+
+/// Adds pattern-matching-related methods to [ProfileSetting].
+extension ProfileSettingPatterns on ProfileSetting {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileSetting value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ProfileSetting() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileSetting value)  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileSetting():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileSetting value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ProfileSetting() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Currency currency)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ProfileSetting() when $default != null:
+return $default(_that.currency);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Currency currency)  $default,) {final _that = this;
+switch (_that) {
+case _ProfileSetting():
+return $default(_that.currency);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Currency currency)?  $default,) {final _that = this;
+switch (_that) {
+case _ProfileSetting() when $default != null:
+return $default(_that.currency);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
-abstract class _$$ProfileSettingImplCopyWith<$Res>
-    implements $ProfileSettingCopyWith<$Res> {
-  factory _$$ProfileSettingImplCopyWith(
-    _$ProfileSettingImpl value,
-    $Res Function(_$ProfileSettingImpl) then,
-  ) = __$$ProfileSettingImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({Currency currency});
 
-  @override
-  $CurrencyCopyWith<$Res> get currency;
+
+class _ProfileSetting extends ProfileSetting {
+  const _ProfileSetting({required this.currency}): super._();
+  
+
+@override final  Currency currency;
+
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ProfileSettingCopyWith<_ProfileSetting> get copyWith => __$ProfileSettingCopyWithImpl<_ProfileSetting>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileSetting&&(identical(other.currency, currency) || other.currency == currency));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,currency);
+
+@override
+String toString() {
+  return 'ProfileSetting(currency: $currency)';
+}
+
+
 }
 
 /// @nodoc
-class __$$ProfileSettingImplCopyWithImpl<$Res>
-    extends _$ProfileSettingCopyWithImpl<$Res, _$ProfileSettingImpl>
-    implements _$$ProfileSettingImplCopyWith<$Res> {
-  __$$ProfileSettingImplCopyWithImpl(
-    _$ProfileSettingImpl _value,
-    $Res Function(_$ProfileSettingImpl) _then,
-  ) : super(_value, _then);
+abstract mixin class _$ProfileSettingCopyWith<$Res> implements $ProfileSettingCopyWith<$Res> {
+  factory _$ProfileSettingCopyWith(_ProfileSetting value, $Res Function(_ProfileSetting) _then) = __$ProfileSettingCopyWithImpl;
+@override @useResult
+$Res call({
+ Currency currency
+});
 
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? currency = null}) {
-    return _then(
-      _$ProfileSettingImpl(
-        currency:
-            null == currency
-                ? _value.currency
-                : currency // ignore: cast_nullable_to_non_nullable
-                    as Currency,
-      ),
-    );
-  }
+
+@override $CurrencyCopyWith<$Res> get currency;
+
 }
-
 /// @nodoc
+class __$ProfileSettingCopyWithImpl<$Res>
+    implements _$ProfileSettingCopyWith<$Res> {
+  __$ProfileSettingCopyWithImpl(this._self, this._then);
 
-class _$ProfileSettingImpl extends _ProfileSetting {
-  const _$ProfileSettingImpl({required this.currency}) : super._();
+  final _ProfileSetting _self;
+  final $Res Function(_ProfileSetting) _then;
 
-  @override
-  final Currency currency;
-
-  @override
-  String toString() {
-    return 'ProfileSetting(currency: $currency)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileSettingImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, currency);
-
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileSettingImplCopyWith<_$ProfileSettingImpl> get copyWith =>
-      __$$ProfileSettingImplCopyWithImpl<_$ProfileSettingImpl>(
-        this,
-        _$identity,
-      );
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? currency = null,}) {
+  return _then(_ProfileSetting(
+currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as Currency,
+  ));
 }
 
-abstract class _ProfileSetting extends ProfileSetting {
-  const factory _ProfileSetting({required final Currency currency}) =
-      _$ProfileSettingImpl;
-  const _ProfileSetting._() : super._();
-
-  @override
-  Currency get currency;
-
-  /// Create a copy of ProfileSetting
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileSettingImplCopyWith<_$ProfileSettingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+/// Create a copy of ProfileSetting
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CurrencyCopyWith<$Res> get currency {
+  
+  return $CurrencyCopyWith<$Res>(_self.currency, (value) {
+    return _then(_self.copyWith(currency: value));
+  });
 }
+}
+
+// dart format on

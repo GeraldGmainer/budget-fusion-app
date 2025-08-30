@@ -6,7 +6,7 @@ import '../dtos/category_dto.dart';
 part 'category.freezed.dart';
 
 @freezed
-class Category with _$Category, Entity {
+abstract class Category with _$Category, Entity {
   const Category._();
 
   const factory Category({

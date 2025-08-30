@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,1226 +9,699 @@ part of 'category_save_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$CategorySaveState {
-  CategoryDraft get draft => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CategorySaveStateCopyWith<CategorySaveState> get copyWith =>
-      throw _privateConstructorUsedError;
+ CategoryDraft get draft;
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CategorySaveStateCopyWith<CategorySaveState> get copyWith => _$CategorySaveStateCopyWithImpl<CategorySaveState>(this as CategorySaveState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategorySaveState&&(identical(other.draft, draft) || other.draft == draft));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,draft);
+
+@override
+String toString() {
+  return 'CategorySaveState(draft: $draft)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $CategorySaveStateCopyWith<$Res> {
-  factory $CategorySaveStateCopyWith(
-    CategorySaveState value,
-    $Res Function(CategorySaveState) then,
-  ) = _$CategorySaveStateCopyWithImpl<$Res, CategorySaveState>;
-  @useResult
-  $Res call({CategoryDraft draft});
+abstract mixin class $CategorySaveStateCopyWith<$Res>  {
+  factory $CategorySaveStateCopyWith(CategorySaveState value, $Res Function(CategorySaveState) _then) = _$CategorySaveStateCopyWithImpl;
+@useResult
+$Res call({
+ CategoryDraft draft
+});
 
-  $CategoryDraftCopyWith<$Res> get draft;
+
+$CategoryDraftCopyWith<$Res> get draft;
+
 }
-
 /// @nodoc
-class _$CategorySaveStateCopyWithImpl<$Res, $Val extends CategorySaveState>
+class _$CategorySaveStateCopyWithImpl<$Res>
     implements $CategorySaveStateCopyWith<$Res> {
-  _$CategorySaveStateCopyWithImpl(this._value, this._then);
+  _$CategorySaveStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final CategorySaveState _self;
+  final $Res Function(CategorySaveState) _then;
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null}) {
-    return _then(
-      _value.copyWith(
-            draft:
-                null == draft
-                    ? _value.draft
-                    : draft // ignore: cast_nullable_to_non_nullable
-                        as CategoryDraft,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryDraftCopyWith<$Res> get draft {
-    return $CategoryDraftCopyWith<$Res>(_value.draft, (value) {
-      return _then(_value.copyWith(draft: value) as $Val);
-    });
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? draft = null,}) {
+  return _then(_self.copyWith(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
+}
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
 }
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft});
 
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
+/// Adds pattern-matching-related methods to [CategorySaveState].
+extension CategorySaveStatePatterns on CategorySaveState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _DraftUpdate value)?  draftUpdate,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  saved,TResult Function( _Deleted value)?  deleted,TResult Function( _Error value)?  error,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _DraftUpdate() when draftUpdate != null:
+return draftUpdate(_that);case _Loading() when loading != null:
+return loading(_that);case _Loaded() when saved != null:
+return saved(_that);case _Deleted() when deleted != null:
+return deleted(_that);case _Error() when error != null:
+return error(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _DraftUpdate value)  draftUpdate,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  saved,required TResult Function( _Deleted value)  deleted,required TResult Function( _Error value)  error,}){
+final _that = this;
+switch (_that) {
+case _Initial():
+return initial(_that);case _DraftUpdate():
+return draftUpdate(_that);case _Loading():
+return loading(_that);case _Loaded():
+return saved(_that);case _Deleted():
+return deleted(_that);case _Error():
+return error(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _DraftUpdate value)?  draftUpdate,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  saved,TResult? Function( _Deleted value)?  deleted,TResult? Function( _Error value)?  error,}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _DraftUpdate() when draftUpdate != null:
+return draftUpdate(_that);case _Loading() when loading != null:
+return loading(_that);case _Loaded() when saved != null:
+return saved(_that);case _Deleted() when deleted != null:
+return deleted(_that);case _Error() when error != null:
+return error(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( CategoryDraft draft)?  initial,TResult Function( CategoryDraft draft,  CategoryDraft initialDraft)?  draftUpdate,TResult Function( CategoryDraft draft)?  loading,TResult Function( CategoryDraft draft)?  saved,TResult Function( CategoryDraft draft)?  deleted,TResult Function( CategoryDraft draft,  AppError error)?  error,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that.draft);case _DraftUpdate() when draftUpdate != null:
+return draftUpdate(_that.draft,_that.initialDraft);case _Loading() when loading != null:
+return loading(_that.draft);case _Loaded() when saved != null:
+return saved(_that.draft);case _Deleted() when deleted != null:
+return deleted(_that.draft);case _Error() when error != null:
+return error(_that.draft,_that.error);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( CategoryDraft draft)  initial,required TResult Function( CategoryDraft draft,  CategoryDraft initialDraft)  draftUpdate,required TResult Function( CategoryDraft draft)  loading,required TResult Function( CategoryDraft draft)  saved,required TResult Function( CategoryDraft draft)  deleted,required TResult Function( CategoryDraft draft,  AppError error)  error,}) {final _that = this;
+switch (_that) {
+case _Initial():
+return initial(_that.draft);case _DraftUpdate():
+return draftUpdate(_that.draft,_that.initialDraft);case _Loading():
+return loading(_that.draft);case _Loaded():
+return saved(_that.draft);case _Deleted():
+return deleted(_that.draft);case _Error():
+return error(_that.draft,_that.error);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( CategoryDraft draft)?  initial,TResult? Function( CategoryDraft draft,  CategoryDraft initialDraft)?  draftUpdate,TResult? Function( CategoryDraft draft)?  loading,TResult? Function( CategoryDraft draft)?  saved,TResult? Function( CategoryDraft draft)?  deleted,TResult? Function( CategoryDraft draft,  AppError error)?  error,}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that.draft);case _DraftUpdate() when draftUpdate != null:
+return draftUpdate(_that.draft,_that.initialDraft);case _Loading() when loading != null:
+return loading(_that.draft);case _Loaded() when saved != null:
+return saved(_that.draft);case _Deleted() when deleted != null:
+return deleted(_that.draft);case _Error() when error != null:
+return error(_that.draft,_that.error);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null}) {
-    return _then(
-      _$InitialImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$InitialImpl implements _Initial {
-  _$InitialImpl({required this.draft});
-
-  @override
-  final CategoryDraft draft;
-
-  @override
-  String toString() {
-    return 'CategorySaveState.initial(draft: $draft)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, draft);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return initial(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return initial?.call(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(draft);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements CategorySaveState {
-  factory _Initial({required final CategoryDraft draft}) = _$InitialImpl;
-
-  @override
-  CategoryDraft get draft;
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$DraftUpdateImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$DraftUpdateImplCopyWith(
-    _$DraftUpdateImpl value,
-    $Res Function(_$DraftUpdateImpl) then,
-  ) = __$$DraftUpdateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft, CategoryDraft initialDraft});
-
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
-  $CategoryDraftCopyWith<$Res> get initialDraft;
-}
-
-/// @nodoc
-class __$$DraftUpdateImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$DraftUpdateImpl>
-    implements _$$DraftUpdateImplCopyWith<$Res> {
-  __$$DraftUpdateImplCopyWithImpl(
-    _$DraftUpdateImpl _value,
-    $Res Function(_$DraftUpdateImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null, Object? initialDraft = null}) {
-    return _then(
-      _$DraftUpdateImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-        initialDraft:
-            null == initialDraft
-                ? _value.initialDraft
-                : initialDraft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-      ),
-    );
-  }
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryDraftCopyWith<$Res> get initialDraft {
-    return $CategoryDraftCopyWith<$Res>(_value.initialDraft, (value) {
-      return _then(_value.copyWith(initialDraft: value));
-    });
-  }
 }
 
 /// @nodoc
 
-class _$DraftUpdateImpl implements _DraftUpdate {
-  _$DraftUpdateImpl({required this.draft, required this.initialDraft});
 
-  @override
-  final CategoryDraft draft;
-  @override
-  final CategoryDraft initialDraft;
+class _Initial implements CategorySaveState {
+   _Initial({required this.draft});
+  
 
-  @override
-  String toString() {
-    return 'CategorySaveState.draftUpdate(draft: $draft, initialDraft: $initialDraft)';
-  }
+@override final  CategoryDraft draft;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DraftUpdateImpl &&
-            (identical(other.draft, draft) || other.draft == draft) &&
-            (identical(other.initialDraft, initialDraft) ||
-                other.initialDraft == initialDraft));
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, draft, initialDraft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DraftUpdateImplCopyWith<_$DraftUpdateImpl> get copyWith =>
-      __$$DraftUpdateImplCopyWithImpl<_$DraftUpdateImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return draftUpdate(draft, initialDraft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return draftUpdate?.call(draft, initialDraft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (draftUpdate != null) {
-      return draftUpdate(draft, initialDraft);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return draftUpdate(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return draftUpdate?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (draftUpdate != null) {
-      return draftUpdate(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial&&(identical(other.draft, draft) || other.draft == draft));
 }
 
-abstract class _DraftUpdate implements CategorySaveState {
-  factory _DraftUpdate({
-    required final CategoryDraft draft,
-    required final CategoryDraft initialDraft,
-  }) = _$DraftUpdateImpl;
 
-  @override
-  CategoryDraft get draft;
-  CategoryDraft get initialDraft;
+@override
+int get hashCode => Object.hash(runtimeType,draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DraftUpdateImplCopyWith<_$DraftUpdateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CategorySaveState.initial(draft: $draft)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft});
+abstract mixin class _$InitialCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft
+});
 
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
+
+@override $CategoryDraftCopyWith<$Res> get draft;
+
+}
+/// @nodoc
+class __$InitialCopyWithImpl<$Res>
+    implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,}) {
+  return _then(_Initial(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
 }
 
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null}) {
-    return _then(
-      _$LoadingImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-      ),
-    );
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
 }
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl({required this.draft});
 
-  @override
-  final CategoryDraft draft;
+class _DraftUpdate implements CategorySaveState {
+   _DraftUpdate({required this.draft, required this.initialDraft});
+  
 
-  @override
-  String toString() {
-    return 'CategorySaveState.loading(draft: $draft)';
-  }
+@override final  CategoryDraft draft;
+ final  CategoryDraft initialDraft;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DraftUpdateCopyWith<_DraftUpdate> get copyWith => __$DraftUpdateCopyWithImpl<_DraftUpdate>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return loading(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return loading?.call(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(draft);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DraftUpdate&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.initialDraft, initialDraft) || other.initialDraft == initialDraft));
 }
 
-abstract class _Loading implements CategorySaveState {
-  const factory _Loading({required final CategoryDraft draft}) = _$LoadingImpl;
 
-  @override
-  CategoryDraft get draft;
+@override
+int get hashCode => Object.hash(runtimeType,draft,initialDraft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CategorySaveState.draftUpdate(draft: $draft, initialDraft: $initialDraft)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft});
+abstract mixin class _$DraftUpdateCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$DraftUpdateCopyWith(_DraftUpdate value, $Res Function(_DraftUpdate) _then) = __$DraftUpdateCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft, CategoryDraft initialDraft
+});
 
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
+
+@override $CategoryDraftCopyWith<$Res> get draft;$CategoryDraftCopyWith<$Res> get initialDraft;
+
+}
+/// @nodoc
+class __$DraftUpdateCopyWithImpl<$Res>
+    implements _$DraftUpdateCopyWith<$Res> {
+  __$DraftUpdateCopyWithImpl(this._self, this._then);
+
+  final _DraftUpdate _self;
+  final $Res Function(_DraftUpdate) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,Object? initialDraft = null,}) {
+  return _then(_DraftUpdate(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,initialDraft: null == initialDraft ? _self.initialDraft : initialDraft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
 }
 
-/// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null}) {
-    return _then(
-      _$LoadedImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-      ),
-    );
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get initialDraft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.initialDraft, (value) {
+    return _then(_self.copyWith(initialDraft: value));
+  });
+}
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl({required this.draft});
 
-  @override
-  final CategoryDraft draft;
+class _Loading implements CategorySaveState {
+  const _Loading({required this.draft});
+  
 
-  @override
-  String toString() {
-    return 'CategorySaveState.saved(draft: $draft)';
-  }
+@override final  CategoryDraft draft;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return saved(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return saved?.call(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(draft);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return saved(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return saved?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&(identical(other.draft, draft) || other.draft == draft));
 }
 
-abstract class _Loaded implements CategorySaveState {
-  const factory _Loaded({required final CategoryDraft draft}) = _$LoadedImpl;
 
-  @override
-  CategoryDraft get draft;
+@override
+int get hashCode => Object.hash(runtimeType,draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CategorySaveState.loading(draft: $draft)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$DeletedImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$DeletedImplCopyWith(
-    _$DeletedImpl value,
-    $Res Function(_$DeletedImpl) then,
-  ) = __$$DeletedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft});
+abstract mixin class _$LoadingCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft
+});
 
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
+
+@override $CategoryDraftCopyWith<$Res> get draft;
+
+}
+/// @nodoc
+class __$LoadingCopyWithImpl<$Res>
+    implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,}) {
+  return _then(_Loading(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
 }
 
-/// @nodoc
-class __$$DeletedImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$DeletedImpl>
-    implements _$$DeletedImplCopyWith<$Res> {
-  __$$DeletedImplCopyWithImpl(
-    _$DeletedImpl _value,
-    $Res Function(_$DeletedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null}) {
-    return _then(
-      _$DeletedImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-      ),
-    );
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
 }
 
 /// @nodoc
 
-class _$DeletedImpl implements _Deleted {
-  const _$DeletedImpl({required this.draft});
 
-  @override
-  final CategoryDraft draft;
+class _Loaded implements CategorySaveState {
+  const _Loaded({required this.draft});
+  
 
-  @override
-  String toString() {
-    return 'CategorySaveState.deleted(draft: $draft)';
-  }
+@override final  CategoryDraft draft;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DeletedImpl &&
-            (identical(other.draft, draft) || other.draft == draft));
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      __$$DeletedImplCopyWithImpl<_$DeletedImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return deleted(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return deleted?.call(draft);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted(draft);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return deleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return deleted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.draft, draft) || other.draft == draft));
 }
 
-abstract class _Deleted implements CategorySaveState {
-  const factory _Deleted({required final CategoryDraft draft}) = _$DeletedImpl;
 
-  @override
-  CategoryDraft get draft;
+@override
+int get hashCode => Object.hash(runtimeType,draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CategorySaveState.saved(draft: $draft)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
-    implements $CategorySaveStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({CategoryDraft draft, AppError error});
+abstract mixin class _$LoadedCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft
+});
 
-  @override
-  $CategoryDraftCopyWith<$Res> get draft;
+
+@override $CategoryDraftCopyWith<$Res> get draft;
+
+}
+/// @nodoc
+class __$LoadedCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,}) {
+  return _then(_Loaded(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
 }
 
-/// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$CategorySaveStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? draft = null, Object? error = null}) {
-    return _then(
-      _$ErrorImpl(
-        draft:
-            null == draft
-                ? _value.draft
-                : draft // ignore: cast_nullable_to_non_nullable
-                    as CategoryDraft,
-        error:
-            null == error
-                ? _value.error
-                : error // ignore: cast_nullable_to_non_nullable
-                    as AppError,
-      ),
-    );
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl({required this.draft, required this.error});
 
-  @override
-  final CategoryDraft draft;
-  @override
-  final AppError error;
+class _Deleted implements CategorySaveState {
+  const _Deleted({required this.draft});
+  
 
-  @override
-  String toString() {
-    return 'CategorySaveState.error(draft: $draft, error: $error)';
-  }
+@override final  CategoryDraft draft;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.draft, draft) || other.draft == draft) &&
-            (identical(other.error, error) || other.error == error));
-  }
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeletedCopyWith<_Deleted> get copyWith => __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, draft, error);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(CategoryDraft draft) initial,
-    required TResult Function(CategoryDraft draft, CategoryDraft initialDraft)
-    draftUpdate,
-    required TResult Function(CategoryDraft draft) loading,
-    required TResult Function(CategoryDraft draft) saved,
-    required TResult Function(CategoryDraft draft) deleted,
-    required TResult Function(CategoryDraft draft, AppError error) error,
-  }) {
-    return error(draft, this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(CategoryDraft draft)? initial,
-    TResult? Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult? Function(CategoryDraft draft)? loading,
-    TResult? Function(CategoryDraft draft)? saved,
-    TResult? Function(CategoryDraft draft)? deleted,
-    TResult? Function(CategoryDraft draft, AppError error)? error,
-  }) {
-    return error?.call(draft, this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(CategoryDraft draft)? initial,
-    TResult Function(CategoryDraft draft, CategoryDraft initialDraft)?
-    draftUpdate,
-    TResult Function(CategoryDraft draft)? loading,
-    TResult Function(CategoryDraft draft)? saved,
-    TResult Function(CategoryDraft draft)? deleted,
-    TResult Function(CategoryDraft draft, AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(draft, this.error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_DraftUpdate value) draftUpdate,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_DraftUpdate value)? draftUpdate,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_DraftUpdate value)? draftUpdate,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Deleted&&(identical(other.draft, draft) || other.draft == draft));
 }
 
-abstract class _Error implements CategorySaveState {
-  const factory _Error({
-    required final CategoryDraft draft,
-    required final AppError error,
-  }) = _$ErrorImpl;
 
-  @override
-  CategoryDraft get draft;
-  AppError get error;
+@override
+int get hashCode => Object.hash(runtimeType,draft);
 
-  /// Create a copy of CategorySaveState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CategorySaveState.deleted(draft: $draft)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeletedCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) = __$DeletedCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft
+});
+
+
+@override $CategoryDraftCopyWith<$Res> get draft;
+
+}
+/// @nodoc
+class __$DeletedCopyWithImpl<$Res>
+    implements _$DeletedCopyWith<$Res> {
+  __$DeletedCopyWithImpl(this._self, this._then);
+
+  final _Deleted _self;
+  final $Res Function(_Deleted) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,}) {
+  return _then(_Deleted(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,
+  ));
+}
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class _Error implements CategorySaveState {
+  const _Error({required this.draft, required this.error});
+  
+
+@override final  CategoryDraft draft;
+ final  AppError error;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.error, error) || other.error == error));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,draft,error);
+
+@override
+String toString() {
+  return 'CategorySaveState.error(draft: $draft, error: $error)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res> implements $CategorySaveStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+@override @useResult
+$Res call({
+ CategoryDraft draft, AppError error
+});
+
+
+@override $CategoryDraftCopyWith<$Res> get draft;
+
+}
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res>
+    implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? draft = null,Object? error = null,}) {
+  return _then(_Error(
+draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
+as CategoryDraft,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppError,
+  ));
+}
+
+/// Create a copy of CategorySaveState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CategoryDraftCopyWith<$Res> get draft {
+  
+  return $CategoryDraftCopyWith<$Res>(_self.draft, (value) {
+    return _then(_self.copyWith(draft: value));
+  });
+}
+}
+
+// dart format on

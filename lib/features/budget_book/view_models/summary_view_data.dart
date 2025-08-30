@@ -9,7 +9,7 @@ import 'pie_data.dart';
 part 'summary_view_data.freezed.dart';
 
 @freezed
-class SummaryViewData with _$SummaryViewData implements BudgetViewData {
+abstract class SummaryViewData with _$SummaryViewData implements BudgetViewData {
   const SummaryViewData._();
 
   const factory SummaryViewData({

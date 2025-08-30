@@ -10,7 +10,7 @@ import '../dtos/booking_dto.dart';
 part 'booking.freezed.dart';
 
 @freezed
-class Booking with _$Booking, Entity {
+abstract class Booking with _$Booking, Entity {
   const Booking._();
 
   const factory Booking({

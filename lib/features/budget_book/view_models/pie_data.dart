@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pie_data.freezed.dart';
 
 @freezed
-class PieData with _$PieData {
+abstract class PieData with _$PieData {
   const PieData._();
 
   const factory PieData({

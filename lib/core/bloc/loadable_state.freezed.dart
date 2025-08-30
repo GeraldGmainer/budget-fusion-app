@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,662 +9,414 @@ part of 'loadable_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$LoadableState<T> {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(T? data) loading,
-    required TResult Function(T data) loaded,
-    required TResult Function(AppError error) error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(T? data)? loading,
-    TResult? Function(T data)? loaded,
-    TResult? Function(AppError error)? error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(T? data)? loading,
-    TResult Function(T data)? loaded,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_Loaded<T> value) loaded,
-    required TResult Function(_Error<T> value) error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_Loaded<T> value)? loaded,
-    TResult? Function(_Error<T> value)? error,
-  }) => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_Loaded<T> value)? loaded,
-    TResult Function(_Error<T> value)? error,
-    required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadableState<T>);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'LoadableState<$T>()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $LoadableStateCopyWith<T, $Res> {
-  factory $LoadableStateCopyWith(
-    LoadableState<T> value,
-    $Res Function(LoadableState<T>) then,
-  ) = _$LoadableStateCopyWithImpl<T, $Res, LoadableState<T>>;
+class $LoadableStateCopyWith<T,$Res>  {
+$LoadableStateCopyWith(LoadableState<T> _, $Res Function(LoadableState<T>) __);
 }
 
-/// @nodoc
-class _$LoadableStateCopyWithImpl<T, $Res, $Val extends LoadableState<T>>
-    implements $LoadableStateCopyWith<T, $Res> {
-  _$LoadableStateCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+/// Adds pattern-matching-related methods to [LoadableState].
+extension LoadableStatePatterns<T> on LoadableState<T> {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial<T> value)?  initial,TResult Function( _Loading<T> value)?  loading,TResult Function( _Loaded<T> value)?  loaded,TResult Function( _Error<T> value)?  error,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
+return loaded(_that);case _Error() when error != null:
+return error(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial<T> value)  initial,required TResult Function( _Loading<T> value)  loading,required TResult Function( _Loaded<T> value)  loaded,required TResult Function( _Error<T> value)  error,}){
+final _that = this;
+switch (_that) {
+case _Initial():
+return initial(_that);case _Loading():
+return loading(_that);case _Loaded():
+return loaded(_that);case _Error():
+return error(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial<T> value)?  initial,TResult? Function( _Loading<T> value)?  loading,TResult? Function( _Loaded<T> value)?  loaded,TResult? Function( _Error<T> value)?  error,}){
+final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial(_that);case _Loading() when loading != null:
+return loading(_that);case _Loaded() when loaded != null:
+return loaded(_that);case _Error() when error != null:
+return error(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( T? data)?  loading,TResult Function( T data)?  loaded,TResult Function( AppError error)?  error,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial();case _Loading() when loading != null:
+return loading(_that.data);case _Loaded() when loaded != null:
+return loaded(_that.data);case _Error() when error != null:
+return error(_that.error);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( T? data)  loading,required TResult Function( T data)  loaded,required TResult Function( AppError error)  error,}) {final _that = this;
+switch (_that) {
+case _Initial():
+return initial();case _Loading():
+return loading(_that.data);case _Loaded():
+return loaded(_that.data);case _Error():
+return error(_that.error);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( T? data)?  loading,TResult? Function( T data)?  loaded,TResult? Function( AppError error)?  error,}) {final _that = this;
+switch (_that) {
+case _Initial() when initial != null:
+return initial();case _Loading() when loading != null:
+return loading(_that.data);case _Loaded() when loaded != null:
+return loaded(_that.data);case _Error() when error != null:
+return error(_that.error);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<T, $Res> {
-  factory _$$InitialImplCopyWith(
-    _$InitialImpl<T> value,
-    $Res Function(_$InitialImpl<T>) then,
-  ) = __$$InitialImplCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<T, $Res>
-    extends _$LoadableStateCopyWithImpl<T, $Res, _$InitialImpl<T>>
-    implements _$$InitialImplCopyWith<T, $Res> {
-  __$$InitialImplCopyWithImpl(
-    _$InitialImpl<T> _value,
-    $Res Function(_$InitialImpl<T>) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$InitialImpl<T> implements _Initial<T> {
-  const _$InitialImpl();
-
-  @override
-  String toString() {
-    return 'LoadableState<$T>.initial()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(T? data) loading,
-    required TResult Function(T data) loaded,
-    required TResult Function(AppError error) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(T? data)? loading,
-    TResult? Function(T data)? loaded,
-    TResult? Function(AppError error)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(T? data)? loading,
-    TResult Function(T data)? loaded,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_Loaded<T> value) loaded,
-    required TResult Function(_Error<T> value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_Loaded<T> value)? loaded,
-    TResult? Function(_Error<T> value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_Loaded<T> value)? loaded,
-    TResult Function(_Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial<T> implements LoadableState<T> {
-  const factory _Initial() = _$InitialImpl<T>;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<T, $Res> {
-  factory _$$LoadingImplCopyWith(
-    _$LoadingImpl<T> value,
-    $Res Function(_$LoadingImpl<T>) then,
-  ) = __$$LoadingImplCopyWithImpl<T, $Res>;
-  @useResult
-  $Res call({T? data});
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<T, $Res>
-    extends _$LoadableStateCopyWithImpl<T, $Res, _$LoadingImpl<T>>
-    implements _$$LoadingImplCopyWith<T, $Res> {
-  __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl<T> _value,
-    $Res Function(_$LoadingImpl<T>) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? data = freezed}) {
-    return _then(
-      _$LoadingImpl<T>(
-        data:
-            freezed == data
-                ? _value.data
-                : data // ignore: cast_nullable_to_non_nullable
-                    as T?,
-      ),
-    );
-  }
 }
 
 /// @nodoc
 
-class _$LoadingImpl<T> implements _Loading<T> {
-  const _$LoadingImpl({this.data});
 
-  @override
-  final T? data;
+class _Initial<T> implements LoadableState<T> {
+  const _Initial();
+  
 
-  @override
-  String toString() {
-    return 'LoadableState<$T>.loading(data: $data)';
-  }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
-  }
 
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<T, _$LoadingImpl<T>> get copyWith =>
-      __$$LoadingImplCopyWithImpl<T, _$LoadingImpl<T>>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(T? data) loading,
-    required TResult Function(T data) loaded,
-    required TResult Function(AppError error) error,
-  }) {
-    return loading(data);
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(T? data)? loading,
-    TResult? Function(T data)? loaded,
-    TResult? Function(AppError error)? error,
-  }) {
-    return loading?.call(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(T? data)? loading,
-    TResult Function(T data)? loaded,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_Loaded<T> value) loaded,
-    required TResult Function(_Error<T> value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_Loaded<T> value)? loaded,
-    TResult? Function(_Error<T> value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_Loaded<T> value)? loaded,
-    TResult Function(_Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial<T>);
 }
 
-abstract class _Loading<T> implements LoadableState<T> {
-  const factory _Loading({final T? data}) = _$LoadingImpl<T>;
 
-  T? get data;
+@override
+int get hashCode => runtimeType.hashCode;
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<T, _$LoadingImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'LoadableState<$T>.initial()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _Loading<T> implements LoadableState<T> {
+  const _Loading({this.data});
+  
+
+ final  T? data;
+
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LoadingCopyWith<T, _Loading<T>> get copyWith => __$LoadingCopyWithImpl<T, _Loading<T>>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading<T>&&const DeepCollectionEquality().equals(other.data, data));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
+
+@override
+String toString() {
+  return 'LoadableState<$T>.loading(data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<T, $Res> {
-  factory _$$LoadedImplCopyWith(
-    _$LoadedImpl<T> value,
-    $Res Function(_$LoadedImpl<T>) then,
-  ) = __$$LoadedImplCopyWithImpl<T, $Res>;
-  @useResult
-  $Res call({T data});
+abstract mixin class _$LoadingCopyWith<T,$Res> implements $LoadableStateCopyWith<T, $Res> {
+  factory _$LoadingCopyWith(_Loading<T> value, $Res Function(_Loading<T>) _then) = __$LoadingCopyWithImpl;
+@useResult
+$Res call({
+ T? data
+});
+
+
+
+
+}
+/// @nodoc
+class __$LoadingCopyWithImpl<T,$Res>
+    implements _$LoadingCopyWith<T, $Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading<T> _self;
+  final $Res Function(_Loading<T>) _then;
+
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,}) {
+  return _then(_Loading<T>(
+data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as T?,
+  ));
 }
 
-/// @nodoc
-class __$$LoadedImplCopyWithImpl<T, $Res>
-    extends _$LoadableStateCopyWithImpl<T, $Res, _$LoadedImpl<T>>
-    implements _$$LoadedImplCopyWith<T, $Res> {
-  __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl<T> _value,
-    $Res Function(_$LoadedImpl<T>) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? data = freezed}) {
-    return _then(
-      _$LoadedImpl<T>(
-        freezed == data
-            ? _value.data
-            : data // ignore: cast_nullable_to_non_nullable
-                as T,
-      ),
-    );
-  }
 }
 
 /// @nodoc
 
-class _$LoadedImpl<T> implements _Loaded<T> {
-  const _$LoadedImpl(this.data);
 
-  @override
-  final T data;
+class _Loaded<T> implements LoadableState<T> {
+  const _Loaded(this.data);
+  
 
-  @override
-  String toString() {
-    return 'LoadableState<$T>.loaded(data: $data)';
-  }
+ final  T data;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl<T> &&
-            const DeepCollectionEquality().equals(other.data, data));
-  }
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$LoadedCopyWith<T, _Loaded<T>> get copyWith => __$LoadedCopyWithImpl<T, _Loaded<T>>(this, _$identity);
 
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<T, _$LoadedImpl<T>> get copyWith =>
-      __$$LoadedImplCopyWithImpl<T, _$LoadedImpl<T>>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(T? data) loading,
-    required TResult Function(T data) loaded,
-    required TResult Function(AppError error) error,
-  }) {
-    return loaded(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(T? data)? loading,
-    TResult? Function(T data)? loaded,
-    TResult? Function(AppError error)? error,
-  }) {
-    return loaded?.call(data);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(T? data)? loading,
-    TResult Function(T data)? loaded,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(data);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_Loaded<T> value) loaded,
-    required TResult Function(_Error<T> value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_Loaded<T> value)? loaded,
-    TResult? Function(_Error<T> value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_Loaded<T> value)? loaded,
-    TResult Function(_Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded<T>&&const DeepCollectionEquality().equals(other.data, data));
 }
 
-abstract class _Loaded<T> implements LoadableState<T> {
-  const factory _Loaded(final T data) = _$LoadedImpl<T>;
 
-  T get data;
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(data));
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<T, _$LoadedImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'LoadableState<$T>.loaded(data: $data)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<T, $Res> {
-  factory _$$ErrorImplCopyWith(
-    _$ErrorImpl<T> value,
-    $Res Function(_$ErrorImpl<T>) then,
-  ) = __$$ErrorImplCopyWithImpl<T, $Res>;
-  @useResult
-  $Res call({AppError error});
+abstract mixin class _$LoadedCopyWith<T,$Res> implements $LoadableStateCopyWith<T, $Res> {
+  factory _$LoadedCopyWith(_Loaded<T> value, $Res Function(_Loaded<T>) _then) = __$LoadedCopyWithImpl;
+@useResult
+$Res call({
+ T data
+});
+
+
+
+
+}
+/// @nodoc
+class __$LoadedCopyWithImpl<T,$Res>
+    implements _$LoadedCopyWith<T, $Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded<T> _self;
+  final $Res Function(_Loaded<T>) _then;
+
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = freezed,}) {
+  return _then(_Loaded<T>(
+freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as T,
+  ));
 }
 
-/// @nodoc
-class __$$ErrorImplCopyWithImpl<T, $Res>
-    extends _$LoadableStateCopyWithImpl<T, $Res, _$ErrorImpl<T>>
-    implements _$$ErrorImplCopyWith<T, $Res> {
-  __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl<T> _value,
-    $Res Function(_$ErrorImpl<T>) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? error = null}) {
-    return _then(
-      _$ErrorImpl<T>(
-        null == error
-            ? _value.error
-            : error // ignore: cast_nullable_to_non_nullable
-                as AppError,
-      ),
-    );
-  }
 }
 
 /// @nodoc
 
-class _$ErrorImpl<T> implements _Error<T> {
-  const _$ErrorImpl(this.error);
 
-  @override
-  final AppError error;
+class _Error<T> implements LoadableState<T> {
+  const _Error(this.error);
+  
 
-  @override
-  String toString() {
-    return 'LoadableState<$T>.error(error: $error)';
-  }
+ final  AppError error;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl<T> &&
-            (identical(other.error, error) || other.error == error));
-  }
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ErrorCopyWith<T, _Error<T>> get copyWith => __$ErrorCopyWithImpl<T, _Error<T>>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
-      __$$ErrorImplCopyWithImpl<T, _$ErrorImpl<T>>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(T? data) loading,
-    required TResult Function(T data) loaded,
-    required TResult Function(AppError error) error,
-  }) {
-    return error(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(T? data)? loading,
-    TResult? Function(T data)? loaded,
-    TResult? Function(AppError error)? error,
-  }) {
-    return error?.call(this.error);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(T? data)? loading,
-    TResult Function(T data)? loaded,
-    TResult Function(AppError error)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this.error);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial<T> value) initial,
-    required TResult Function(_Loading<T> value) loading,
-    required TResult Function(_Loaded<T> value) loaded,
-    required TResult Function(_Error<T> value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial<T> value)? initial,
-    TResult? Function(_Loading<T> value)? loading,
-    TResult? Function(_Loaded<T> value)? loaded,
-    TResult? Function(_Error<T> value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial<T> value)? initial,
-    TResult Function(_Loading<T> value)? loading,
-    TResult Function(_Loaded<T> value)? loaded,
-    TResult Function(_Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error<T>&&(identical(other.error, error) || other.error == error));
 }
 
-abstract class _Error<T> implements LoadableState<T> {
-  const factory _Error(final AppError error) = _$ErrorImpl<T>;
 
-  AppError get error;
+@override
+int get hashCode => Object.hash(runtimeType,error);
 
-  /// Create a copy of LoadableState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<T, _$ErrorImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'LoadableState<$T>.error(error: $error)';
 }
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<T,$Res> implements $LoadableStateCopyWith<T, $Res> {
+  factory _$ErrorCopyWith(_Error<T> value, $Res Function(_Error<T>) _then) = __$ErrorCopyWithImpl;
+@useResult
+$Res call({
+ AppError error
+});
+
+
+
+
+}
+/// @nodoc
+class __$ErrorCopyWithImpl<T,$Res>
+    implements _$ErrorCopyWith<T, $Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error<T> _self;
+  final $Res Function(_Error<T>) _then;
+
+/// Create a copy of LoadableState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? error = null,}) {
+  return _then(_Error<T>(
+null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as AppError,
+  ));
+}
+
+
+}
+
+// dart format on
