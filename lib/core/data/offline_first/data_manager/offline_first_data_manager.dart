@@ -8,16 +8,15 @@ import '../../../../utils/utils.dart';
 import '../../../core.dart';
 import '../../data_sources/data_source_adapter.dart';
 import '../../sync_manager/sync_manager.dart';
-import '../realtime/realtime_notifier_service.dart';
+import '../realtime/realtime_manager.dart';
 
 class OfflineFirstDataManager<E extends Dto> {
   final DataSourceAdapter<E> adapter;
   final QueueManager queueManager;
   final SyncManager syncManager;
-  final RealtimeNotifierService realtimeNotifierService;
+  final RealtimeManager realtimeManager;
 
   ReplaySubject<List<E>> streamController = ReplaySubject<List<E>>(maxSize: 1);
-  bool _isRealtimeSubscribed = false;
   Future<List<E>>? _refreshing;
   late final StreamSubscription<List<QueueItem>> _queueSub;
 
@@ -25,10 +24,11 @@ class OfflineFirstDataManager<E extends Dto> {
     required this.adapter,
     required this.queueManager,
     required this.syncManager,
-    required this.realtimeNotifierService,
+    required this.realtimeManager,
   }) {
     queueManager.register(adapter);
     syncManager.register(this, adapter);
+    realtimeManager.register(this, adapter, loadAll);
 
     _queueSub = queueManager.pendingItemsStream
         .map((items) => items.where((item) => item.entityType == adapter.type).toList())
@@ -43,8 +43,7 @@ class OfflineFirstDataManager<E extends Dto> {
 
   Future<List<E>> loadAll({Map<String, dynamic>? filters, required bool forceReload}) async {
     _log("start loadAll");
-    _subscribeToRealtime();
-
+    realtimeManager.listen(adapter.remote.table);
     final localDtos = await adapter.local.fetchAll();
     if (localDtos.isNotEmpty) {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
@@ -62,7 +61,6 @@ class OfflineFirstDataManager<E extends Dto> {
 
   Future<E?> loadById(String id) async {
     _log("start loadById '$id'");
-    _subscribeToRealtime();
     final local = await adapter.local.fetchById(id);
     if (local != null) {
       _log("Local data by id '${local.id}' found");
@@ -104,11 +102,10 @@ class OfflineFirstDataManager<E extends Dto> {
     if (_refreshing != null) {
       return await _refreshing!;
     }
-    _refreshing =
-        (() async {
-          final dtos = await adapter.local.fetchAll();
-          return dtos;
-        })();
+    _refreshing = (() async {
+      final dtos = await adapter.local.fetchAll();
+      return dtos;
+    })();
     try {
       return await _refreshing!;
     } finally {
@@ -131,18 +128,12 @@ class OfflineFirstDataManager<E extends Dto> {
     await Future.delayed(Duration(seconds: 1));
   }
 
-  _emitToStream(List<E> dtos, {required bool forceReload}) {
+  void _emitToStream(List<E> dtos, {required bool forceReload}) {
     _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
     if (forceReload) {
       streamController.add([]);
     }
     streamController.add(dtos);
-  }
-
-  void _subscribeToRealtime() {
-    if (_isRealtimeSubscribed || !adapter.type.realtimeEnabled) return;
-    _isRealtimeSubscribed = true;
-    realtimeNotifierService.startListeningForEntity(adapter.type, adapter.remote.table);
   }
 
   Future<void> reset() async {
@@ -155,10 +146,10 @@ class OfflineFirstDataManager<E extends Dto> {
     _log("Disposing OfflineFirstDataManager", darkColor: true);
     _queueSub.cancel();
     streamController.close();
-    realtimeNotifierService.stopListeningForEntity(adapter.type, adapter.remote.table);
+    realtimeManager.unregister(this, adapter);
   }
 
-  _log(String msg, {bool darkColor = false}) {
+  void _log(String msg, {bool darkColor = false}) {
     EntityLogger.instance.d("DataManager", adapter.type.text, msg, darkColor: darkColor);
   }
 }

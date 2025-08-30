@@ -50,7 +50,7 @@ class EntityLogger {
     if (service == "DataManager") {
       return darkColor ? AnsiColor.fg(92) : AnsiColor.fg(140);
     }
-    if (service == "RealtimeNotifier") {
+    if (service == "RealtimeManager") {
       return darkColor ? AnsiColor.fg(35) : AnsiColor.fg(95);
     }
     if (service == "QueueDataSource") {
