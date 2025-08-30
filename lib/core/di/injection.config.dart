@@ -25,14 +25,14 @@ import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.da
     as _i1046;
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_manager.dart'
     as _i258;
-import 'package:budget_fusion_app/core/data/sync_manager/sync_coordinator.dart'
-    as _i752;
-import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart'
-    as _i705;
-import 'package:budget_fusion_app/core/data/sync_manager/sync_manager.dart'
-    as _i777;
-import 'package:budget_fusion_app/core/data/sync_manager/sync_remote_source.dart'
-    as _i467;
+import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_coordinator.dart'
+    as _i244;
+import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_cursor_repo.dart'
+    as _i225;
+import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_manager.dart'
+    as _i39;
+import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_remote_source.dart'
+    as _i251;
 import 'package:budget_fusion_app/core/di/data_manager_module.dart' as _i192;
 import 'package:budget_fusion_app/core/di/database_module.dart' as _i752;
 import 'package:budget_fusion_app/core/di/injection.dart' as _i87;
@@ -173,7 +173,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i247.RemoteLoadingService>(
       () => _i247.RemoteLoadingService(),
     );
-    gh.lazySingleton<_i467.SyncRemoteSource>(() => _i467.SyncRemoteSource());
     gh.lazySingleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
     gh.lazySingleton<_i226.DefaultNewDateUseCase>(
@@ -189,8 +188,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i226.SummaryDataGenerator(),
     );
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i705.SyncCursorRepo>(
-      () => _i705.SyncCursorRepo(gh<_i460.SharedPreferences>()),
+    gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
+    gh.lazySingleton<_i225.SyncCursorRepo>(
+      () => _i225.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i871.UserRepo>(
       () => _i871.UserRepo(gh<_i478.UserRemoteSource>()),
@@ -213,14 +213,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i196.GenerateBudgetTransactionUseCase>(
       () => _i196.GenerateBudgetTransactionUseCase(
         gh<_i601.TransactionDataGenerator>(),
-      ),
-    );
-    gh.lazySingleton<_i777.SyncManager>(
-      () => _i777.SyncManager(
-        gh<_i705.SyncCursorRepo>(),
-        gh<_i467.SyncRemoteSource>(),
-        gh<_i428.ConnectivityService>(),
-        gh<_i714.RemoteLoadingService>(),
       ),
     );
     gh.lazySingleton<_i871.CategoryLocalDataSource>(
@@ -251,20 +243,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i509.QueueLogger>(
       () => _i509.QueueLogger(gh<_i779.QueueLogLocalDataSource>()),
     );
+    gh.lazySingleton<_i39.SyncManager>(
+      () => _i39.SyncManager(
+        gh<_i714.SyncCursorRepo>(),
+        gh<_i251.SyncRemoteSource>(),
+        gh<_i428.ConnectivityService>(),
+        gh<_i714.RemoteLoadingService>(),
+      ),
+    );
     gh.lazySingleton<_i1046.QueueManager>(
       () => _i1046.QueueManager(
         gh<_i252.QueueLocalDataSource>(),
         gh<_i714.RemoteLoadingService>(),
         gh<_i428.ConnectivityService>(),
         gh<_i509.QueueLogger>(),
-        gh<_i777.SyncManager>(),
+        gh<_i39.SyncManager>(),
       ),
     );
     gh.lazySingleton<_i654.DataManagerFactory>(
       () => _i654.DataManagerFactory(
         gh<_i1046.QueueManager>(),
         gh<_i258.RealtimeManager>(),
-        gh<_i777.SyncManager>(),
+        gh<_i39.SyncManager>(),
       ),
     );
     gh.singleton<_i864.CurrencyRepo>(
@@ -280,10 +280,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i509.QueueLogger>(),
       ),
     );
-    gh.singleton<_i752.SyncCoordinator>(
-      () => _i752.SyncCoordinator(
+    gh.singleton<_i244.SyncCoordinator>(
+      () => _i244.SyncCoordinator(
         gh<_i714.QueueManager>(),
-        gh<_i777.SyncManager>(),
+        gh<_i39.SyncManager>(),
       ),
     );
     gh.singleton<_i1018.ProfileRepo>(
@@ -341,17 +341,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
       ),
     );
+    gh.lazySingleton<_i576.BookingAccountService>(
+      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
+    );
     gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
       () => _i562.ResetBudgetBookUseCase(
-        gh<_i705.SyncCursorRepo>(),
+        gh<_i714.SyncCursorRepo>(),
         gh<_i531.CategoryRepo>(),
         gh<_i500.AccountRepo>(),
         gh<_i269.BookingRepo>(),
         gh<_i714.QueueManager>(),
       ),
-    );
-    gh.lazySingleton<_i576.BookingAccountService>(
-      () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
     );
     gh.singleton<_i202.AppLifecycleManager>(
       () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),

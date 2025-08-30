@@ -223,8 +223,8 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.se
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(explicitToJson: true)
 class _ProfileDto extends ProfileDto {
   const _ProfileDto({@UuidSerializer() required this.id, @JsonKey(name: 'first_name') this.firstName, @JsonKey(name: 'last_name') this.lastName, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'settings')@ProfileSettingDtoConverter() required this.settingDto, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at') required this.deletedAt}): super._();
   factory _ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);

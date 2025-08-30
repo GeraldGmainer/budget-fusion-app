@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../utils/utils.dart';
-import '../../core.dart';
+import '../../../../utils/utils.dart';
+import '../../../core.dart';
 import 'sync_all_response.dart';
 
 @lazySingleton

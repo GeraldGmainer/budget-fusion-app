@@ -7,8 +7,8 @@ import 'package:rxdart/rxdart.dart';
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
 import '../../data_sources/data_source_adapter.dart';
-import '../../sync_manager/sync_manager.dart';
 import '../realtime/realtime_manager.dart';
+import '../sync_manager/sync_manager.dart';
 
 class OfflineFirstDataManager<E extends Dto> {
   final DataSourceAdapter<E> adapter;

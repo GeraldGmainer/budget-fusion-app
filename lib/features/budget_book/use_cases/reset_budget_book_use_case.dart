@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/core.dart';
-import 'package:budget_fusion_app/core/data/sync_manager/sync_cursor_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../repos/account/account.dart';

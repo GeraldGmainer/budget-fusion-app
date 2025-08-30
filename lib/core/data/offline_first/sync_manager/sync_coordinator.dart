@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../../core.dart';
+import '../../../core.dart';
 import 'sync_manager.dart';
 
 @singleton

@@ -5,9 +5,9 @@ import '../../data_sources/data_source_adapter.dart';
 import '../../data_sources/local_data_source.dart';
 import '../../data_sources/remote_data_source.dart';
 import '../../models/dto.dart';
-import '../../sync_manager/sync_manager.dart';
 import '../queue/queue_manager.dart';
 import '../realtime/realtime_manager.dart';
+import '../sync_manager/sync_manager.dart';
 import 'offline_first_data_manager.dart';
 
 @lazySingleton

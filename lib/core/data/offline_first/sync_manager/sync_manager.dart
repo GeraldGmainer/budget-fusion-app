@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/core/data/sync_manager/sync_all_response.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../utils/utils.dart';
-import '../../core.dart';
-import '../data_sources/data_source_adapter.dart';
+import '../../../../utils/utils.dart';
+import '../../../core.dart';
+import '../../data_sources/data_source_adapter.dart';
+import 'sync_all_response.dart';
 import 'sync_cursor_repo.dart';
 import 'sync_remote_source.dart';
 

@@ -8,7 +8,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data_sources/data_source_adapter.dart';
-import '../../sync_manager/sync_manager.dart';
+import '../sync_manager/sync_manager.dart';
 import 'queue_local_data_source.dart';
 import 'queue_logger.dart';
 
