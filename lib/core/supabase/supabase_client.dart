@@ -35,7 +35,7 @@ abstract class SupabaseClient {
   }
 
   Future<void> checkToken() async {
-    if (_connectivityService.hasNoInternet) {
+    if (_connectivityService.isOffline) {
       throw NoInternetException();
     }
     if (supabase.auth.currentUser == null || supabase.auth.currentSession == null) {

@@ -6,10 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 
 import '../core/core.dart';
+import 'app_navigator_observer.dart';
 import 'app_router.dart';
 import 'bloc_providers.dart';
 
 class MyApp extends StatelessWidget {
+  final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+  final ValueNotifier<bool> navReady = ValueNotifier(false);
   final AppRouter _appRouter = AppRouter();
 
   MyApp({super.key}) {
@@ -25,10 +28,14 @@ class MyApp extends StatelessWidget {
         ...getBlocProviders(),
       ],
       child: SupabaseContainer(
+        rootNavigatorKey: rootNavigatorKey,
+        navReady: navReady,
         child: MaterialApp(
+          navigatorKey: rootNavigatorKey,
           title: 'Budget book',
           theme: createTheme(context),
           onGenerateRoute: _appRouter.onGenerateRoute,
+          navigatorObservers: [BootstrapNavObserver(navReady)],
           debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,

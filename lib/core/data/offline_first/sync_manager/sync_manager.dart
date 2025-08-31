@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../core.dart';
 import '../../data_sources/data_source_adapter.dart';
 import 'sync_all_response.dart';
-import 'sync_cursor_repo.dart';
 import 'sync_remote_source.dart';
 
 @lazySingleton
@@ -22,10 +20,10 @@ class SyncManager {
   DateTime? _lastOfflineAt;
   bool _isOnline = true;
   Future<void>? _ongoingSync;
-  StreamSubscription<List<ConnectivityResult>>? _connSub;
+  StreamSubscription<bool>? _connSub;
 
   SyncManager(this._syncCursorRepo, this._syncRemoteSource, this._connectivityService, this.remoteLoadingService) {
-    _initConnectivity();
+    // _initConnectivity();
   }
 
   void register(OfflineFirstDataManager dataManager, DataSourceAdapter adapter) {
@@ -127,15 +125,14 @@ class SyncManager {
   }
 
   Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkConnectivity();
+    _connSub = _connectivityService.onlineStream.listen(_onConnectivityChanged);
+    final r = await _connectivityService.checkNow();
     _onConnectivityChanged(r);
   }
 
-  void _onConnectivityChanged(List<ConnectivityResult> result) {
-    final nowOnline = _connectivityService.evaluateResult(result);
-    final wasOffline = !_isOnline && nowOnline;
-    _isOnline = nowOnline;
+  void _onConnectivityChanged(bool isOnline) {
+    final wasOffline = !_isOnline && isOnline;
+    _isOnline = isOnline;
     if (wasOffline) {
       _lastOfflineAt = null;
       unawaited(syncAll());

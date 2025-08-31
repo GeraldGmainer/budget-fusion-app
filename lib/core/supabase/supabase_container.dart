@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/main/bloc/repo_loader_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,8 +12,10 @@ import '../core.dart';
 
 class SupabaseContainer extends StatefulWidget {
   final Widget child;
+  final GlobalKey<NavigatorState> rootNavigatorKey;
+  final ValueNotifier<bool> navReady;
 
-  const SupabaseContainer({required this.child});
+  const SupabaseContainer({required this.child, required this.rootNavigatorKey, required this.navReady});
 
   @override
   State<SupabaseContainer> createState() => _SupabaseContainerState();
@@ -22,16 +23,25 @@ class SupabaseContainer extends StatefulWidget {
 
 class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeepLinkingMixin {
   late final StreamSubscription<AuthState> _authSubscription;
+  late final VoidCallback _navReadyListener;
 
   @override
   void initState() {
-    _authSubscription = supabase.auth.onAuthStateChange.listen(_onAuthStateChange);
-    startDeeplinkObserver();
     super.initState();
-    FlutterNativeSplash.remove();
+    _navReadyListener = () {
+      if (!widget.navReady.value) return;
+      widget.navReady.removeListener(_navReadyListener);
+      _attachAuth();
+    };
+    widget.navReady.addListener(_navReadyListener);
+    startDeeplinkObserver();
   }
 
-  _onAuthStateChange(AuthState state) {
+  void _attachAuth() {
+    _authSubscription = supabase.auth.onAuthStateChange.listen(_onAuthStateChange);
+  }
+
+  void _onAuthStateChange(AuthState state) {
     final AuthChangeEvent event = state.event;
     final Session? session = state.session;
     switch (event) {
@@ -51,37 +61,48 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
         _onTokenRefreshed(session!);
         break;
 
+      case AuthChangeEvent.initialSession:
+        // _onUnauthenticated();
+        BudgetLogger.instance.d("initialSession", short: true);
+        break;
+
       default:
         BudgetLogger.instance.i("unhandled AuthChangeEvent: $event");
     }
   }
 
+  void _go(String route) {
+    final nav = widget.rootNavigatorKey.currentState;
+    if (nav == null) return;
+    scheduleMicrotask(() {
+      if (!mounted) return;
+      nav.pushNamedAndRemoveUntil(route, (_) => false);
+    });
+  }
+
   void _onUnauthenticated() {
-    if (mounted) {
-      BudgetLogger.instance.d("onUnauthenticated");
-      Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false);
-    }
+    if (!mounted) return;
+    BudgetLogger.instance.d("onUnauthenticated");
+
+    _go(AppRoutes.login);
   }
 
-  _onAuthenticated(Session session) {
-    if (mounted) {
-      BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
-      context.read<RepoLoaderCubit>().init();
-    }
+  void _onAuthenticated(Session session) {
+    BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
   }
 
-  _onTokenRefreshed(Session session) {
+  void _onTokenRefreshed(Session session) {
     BudgetLogger.instance.d("onTokenRefreshed: ${session.user.id}");
     // context.loadUserProfileData();
   }
 
-  _onPasswordRecovery(Session session) {
+  void _onPasswordRecovery(Session session) {
     BudgetLogger.instance.d("onPasswordRecovery: ${session.user}");
     // TODO reset password page
     Navigator.of(context).pushNamed(AppRoutes.passwordReset);
   }
 
-  _onErrorAuthenticating(String message) {
+  void _onErrorAuthenticating(String message) {
     // TODO better message for sentry
     BudgetLogger.instance.w(message);
     // String text = message;
@@ -95,18 +116,19 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
     _showErrorMessage(AppError.unknown);
   }
 
-  _showMessage(String message) {
+  void _showMessage(String message) {
     final scaffoldContext = prov.Provider.of<ScaffoldProvider>(context, listen: false).scaffoldContext;
     scaffoldContext?.showSnackBar(message);
   }
 
-  _showErrorMessage(AppError error) {
+  void _showErrorMessage(AppError error) {
     final scaffoldContext = prov.Provider.of<ScaffoldProvider>(context, listen: false).scaffoldContext;
     scaffoldContext?.showErrorSnackBar(error);
   }
 
   @override
   void dispose() {
+    widget.navReady.removeListener(_navReadyListener);
     _authSubscription.cancel();
     super.dispose();
   }
@@ -123,7 +145,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
     _recoverSessionFromDeeplink(uri, uriParameters['type']);
   }
 
-  _recoverSessionFromDeeplink(Uri uri, String? deepLinkType) async {
+  Future<void> _recoverSessionFromDeeplink(Uri uri, String? deepLinkType) async {
     BudgetLogger.instance.d("_recoverSessionFromDeeplink  / type: $deepLinkType");
     try {
       final AuthSessionUrlResponse response = await Supabase.instance.client.auth.getSessionFromUrl(uri);

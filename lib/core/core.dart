@@ -10,6 +10,8 @@ export 'data/data_sources/remote_data_source.dart';
 export 'data/enums/sync_status.dart';
 export 'data/enums/sync_status_serializer.dart';
 export 'data/models/dto.dart';
+export 'data/offline_first/coordinator/offline_first_coordination_state.dart';
+export 'data/offline_first/coordinator/offline_first_coordinator.dart';
 export 'data/offline_first/cubits/entity_meta_cubit.dart';
 export 'data/offline_first/cubits/offline_first_queue_cubit.dart';
 export 'data/offline_first/cubits/repo_cubit.dart';

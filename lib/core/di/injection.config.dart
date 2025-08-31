@@ -11,10 +11,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:budget_fusion_app/app/app_life_cycle_manager.dart' as _i202;
 import 'package:budget_fusion_app/core/core.dart' as _i714;
+import 'package:budget_fusion_app/core/data/offline_first/coordinator/offline_first_coordinator.dart'
+    as _i105;
 import 'package:budget_fusion_app/core/data/offline_first/cubits/offline_first_queue_cubit.dart'
     as _i920;
 import 'package:budget_fusion_app/core/data/offline_first/data_manager/data_manager_factory.dart'
     as _i654;
+import 'package:budget_fusion_app/core/data/offline_first/interfaces/repo.dart'
+    as _i38;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_local_data_source.dart'
     as _i252;
 import 'package:budget_fusion_app/core/data/offline_first/queue/queue_log_local_data_source.dart'
@@ -25,8 +29,6 @@ import 'package:budget_fusion_app/core/data/offline_first/queue/queue_manager.da
     as _i1046;
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_manager.dart'
     as _i258;
-import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_coordinator.dart'
-    as _i244;
 import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_cursor_repo.dart'
     as _i225;
 import 'package:budget_fusion_app/core/data/offline_first/sync_manager/sync_manager.dart'
@@ -86,7 +88,6 @@ import 'package:budget_fusion_app/features/category/use_cases/load_category_list
 import 'package:budget_fusion_app/features/profile/bloc/language_cubit.dart'
     as _i801;
 import 'package:budget_fusion_app/main/bloc/main_cubit.dart' as _i976;
-import 'package:budget_fusion_app/main/bloc/repo_loader_cubit.dart' as _i738;
 import 'package:budget_fusion_app/repos/account/account.dart' as _i500;
 import 'package:budget_fusion_app/repos/account/account_repo.dart' as _i564;
 import 'package:budget_fusion_app/repos/account/data_sources/account_local_data_source.dart'
@@ -151,7 +152,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
-    gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
     gh.lazySingleton<_i110.CategoryRemoteDataSource>(
       () => _i110.CategoryRemoteDataSource(),
     );
@@ -280,12 +280,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i509.QueueLogger>(),
       ),
     );
-    gh.singleton<_i244.SyncCoordinator>(
-      () => _i244.SyncCoordinator(
-        gh<_i714.QueueManager>(),
-        gh<_i39.SyncManager>(),
-      ),
-    );
     gh.singleton<_i1018.ProfileRepo>(
       () => _i1018.ProfileRepo(
         gh<_i714.DataManagerFactory>(),
@@ -353,9 +347,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i714.QueueManager>(),
       ),
     );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<List<_i714.Repo<dynamic>>>()),
-    );
     gh.factory<_i788.CategoryListCubit>(
       () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
     );
@@ -380,10 +371,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i421.ProfileRepo>(),
       ),
     );
-    gh.factory<_i738.RepoLoaderCubit>(
-      () => _i738.RepoLoaderCubit(
-        gh<_i714.QueueManager>(),
-        gh<List<_i714.Repo<dynamic>>>(),
+    gh.lazySingleton<_i105.OfflineFirstCoordinator>(
+      () => _i105.OfflineFirstCoordinator(
+        gh<_i1046.QueueManager>(),
+        gh<_i39.SyncManager>(),
+        gh<_i258.RealtimeManager>(),
+        gh<List<_i38.Repo<dynamic>>>(),
+        gh<_i428.ConnectivityService>(),
       ),
     );
     gh.factory<_i863.BookingSaveCubit>(
@@ -393,6 +387,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
         gh<_i226.DefaultNewDateUseCase>(),
       ),
+    );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(gh<_i714.OfflineFirstCoordinator>()),
+    );
+    gh.factory<_i976.MainCubit>(
+      () => _i976.MainCubit(gh<_i714.OfflineFirstCoordinator>()),
     );
     return this;
   }

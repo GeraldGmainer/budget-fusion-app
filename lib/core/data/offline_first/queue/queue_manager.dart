@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data_sources/data_source_adapter.dart';
@@ -38,7 +37,7 @@ class QueueManager {
   bool _isProcessing = false;
   bool _initialized = false;
   bool _isOnline = true;
-  StreamSubscription<List<ConnectivityResult>>? _connSub;
+  StreamSubscription<bool>? _connSub;
 
   List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
 
@@ -393,15 +392,14 @@ class QueueManager {
   }
 
   Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkConnectivity();
+    _connSub = _connectivityService.onlineStream.listen(_onConnectivityChanged);
+    final r = await _connectivityService.checkNow();
     _onConnectivityChanged(r);
   }
 
-  void _onConnectivityChanged(List<ConnectivityResult> result) {
-    final nowOnline = _connectivityService.evaluateResult(result);
-    final wasOffline = !_isOnline && nowOnline;
-    _isOnline = nowOnline;
+  void _onConnectivityChanged(bool isOnline) {
+    final wasOffline = !_isOnline && isOnline;
+    _isOnline = isOnline;
     if (wasOffline) {
       final toWake = _paused.entries.where((e) => e.value == QueuePauseReason.offline || e.value == QueuePauseReason.attemptsExhausted).map((e) => e.key).toList();
 
