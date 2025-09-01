@@ -125,7 +125,6 @@ class OfflineFirstDataManager<E extends Dto> {
     // unawaited(queueManager.add(item));
     await queueManager.add(item);
     BudgetLogger.instance.d("queue manager done");
-    await Future.delayed(Duration(seconds: 1));
   }
 
   void _emitToStream(List<E> dtos, {required bool forceReload}) {

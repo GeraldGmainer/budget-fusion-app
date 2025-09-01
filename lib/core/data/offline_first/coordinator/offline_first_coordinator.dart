@@ -31,13 +31,11 @@ class OfflineFirstCoordinator {
   /// It would be possible to set the entity sync cursor, but there is a risk to loose data
   /// So we exclude the new entity from the sync
   void _onQueueDrainedIds(Set<String> ids) {
-    BudgetLogger.instance.d("_onQueueDrainedIds");
     if (ids.isEmpty) return;
     _syncManager.syncAll(excludeIds: ids);
   }
 
   void _onAuthStateChange(AuthState state) {
-    BudgetLogger.instance.d("_onAuthStateChange ${state.event}", short: true);
     if (state.event == AuthChangeEvent.signedIn || (state.event == AuthChangeEvent.initialSession && state.session != null)) {
       _onLogin();
     }

@@ -307,11 +307,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.SummaryDataGenerator>(),
       ),
     );
-    gh.lazySingleton<_i455.LoadCategoryListUseCase>(
-      () => _i455.LoadCategoryListUseCase(gh<_i531.CategoryRepo>()),
-    );
     gh.factory<_i1005.CategorySaveCubit>(
       () => _i1005.CategorySaveCubit(gh<_i531.CategoryRepo>()),
+    );
+    gh.lazySingleton<_i455.LoadCategoryListUseCase>(
+      () => _i455.LoadCategoryListUseCase(
+        gh<_i531.CategoryRepo>(),
+        gh<_i714.QueueManager>(),
+      ),
     );
     gh.singleton<_i427.BookingRepo>(
       () => _i427.BookingRepo(
