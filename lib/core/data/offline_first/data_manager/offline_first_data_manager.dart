@@ -28,7 +28,7 @@ class OfflineFirstDataManager<E extends Dto> {
   }) {
     queueManager.register(adapter);
     syncManager.register(this, adapter);
-    realtimeManager.register(this, adapter, loadAll);
+    realtimeManager.onEvent(adapter.remote.table, () => loadAll(forceReload: false));
 
     _queueSub = queueManager.pendingItemsStream
         .map((items) => items.where((item) => item.entityType == adapter.type).toList())
@@ -43,7 +43,6 @@ class OfflineFirstDataManager<E extends Dto> {
 
   Future<List<E>> loadAll({Map<String, dynamic>? filters, required bool forceReload}) async {
     _log("start loadAll");
-    realtimeManager.listen(adapter.remote.table);
     final localDtos = await adapter.local.fetchAll();
     if (localDtos.isNotEmpty) {
       _log("Local ${EntityLogger.bold(localDtos.length)} items found");
@@ -145,7 +144,7 @@ class OfflineFirstDataManager<E extends Dto> {
     _log("Disposing OfflineFirstDataManager", darkColor: true);
     _queueSub.cancel();
     streamController.close();
-    realtimeManager.unregister(this, adapter);
+    realtimeManager.dispose();
   }
 
   void _log(String msg, {bool darkColor = false}) {

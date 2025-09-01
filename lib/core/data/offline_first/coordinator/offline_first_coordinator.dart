@@ -36,15 +36,24 @@ class OfflineFirstCoordinator {
   }
 
   void _onAuthStateChange(AuthState state) {
-    if (state.event == AuthChangeEvent.signedIn || (state.event == AuthChangeEvent.initialSession && state.session != null)) {
+    final signedIn = state.event == AuthChangeEvent.signedIn || (state.event == AuthChangeEvent.initialSession && state.session != null);
+    if (signedIn) {
       _onLogin();
+    } else {
+      _onLogout();
     }
   }
 
   void _onConnectivityChanged(bool isOnline) {
     _syncManager.onConnectivityChanged(isOnline);
-    _realtimeManager.onConnectivityChanged(isOnline);
     _queueManager.onConnectivityChanged(isOnline);
+    if (isOnline && supabase.auth.currentSession != null) {
+      _realtimeManager.start();
+      _state.add(OfflineFirstCoordinationState.online);
+    } else {
+      _realtimeManager.stop();
+      _state.add(OfflineFirstCoordinationState.offline);
+    }
   }
 
   void init() {
@@ -59,10 +68,16 @@ class OfflineFirstCoordinator {
 
   Future<void> _onLogin() async {
     await Future.wait([_queueManager.init(), loadRepos()]);
+    if (_connectivityService.isOnline) _realtimeManager.start();
     _state.add(_connectivityService.isOnline ? OfflineFirstCoordinationState.online : OfflineFirstCoordinationState.offline);
   }
 
   Future<void> loadRepos() async {
     await Future.wait(_repos.map((repo) => repo.loadAll()));
+  }
+
+  Future<void> _onLogout() async {
+    _realtimeManager.stop();
+    _state.add(OfflineFirstCoordinationState.offline);
   }
 }
