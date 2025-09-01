@@ -14,21 +14,18 @@ import 'offline_first_coordination_state.dart';
 
 @lazySingleton
 class OfflineFirstCoordinator {
-  final QueueManager queueManager;
-  final SyncManager syncManager;
-  final RealtimeManager realtimeManager;
+  final QueueManager _queueManager;
+  final SyncManager _syncManager;
+  final RealtimeManager _realtimeManager;
   final ConnectivityService _connectivityService;
   final List<Repo<dynamic>> _repos;
   final BehaviorSubject<OfflineFirstCoordinationState> _state = BehaviorSubject.seeded(OfflineFirstCoordinationState.initial);
-  late final StreamSubscription<Set<String>> _queueSub;
-  late final StreamSubscription<AuthState> _authSub;
-  late final StreamSubscription<bool> _connectivitySub;
 
   Stream<OfflineFirstCoordinationState> get state => _state.stream.distinct();
 
   OfflineFirstCoordinationState get current => _state.value;
 
-  OfflineFirstCoordinator(this.queueManager, this.syncManager, this.realtimeManager, this._repos, this._connectivityService);
+  OfflineFirstCoordinator(this._queueManager, this._syncManager, this._realtimeManager, this._repos, this._connectivityService);
 
   /// After saving an entity, we want to sync all data. But the new entity will be returned also, causing network traffic and a new stream it
   /// It would be possible to set the entity sync cursor, but there is a risk to loose data
@@ -36,7 +33,7 @@ class OfflineFirstCoordinator {
   void _onQueueDrainedIds(Set<String> ids) {
     BudgetLogger.instance.d("_onQueueDrainedIds");
     if (ids.isEmpty) return;
-    syncManager.syncAll(excludeIds: ids);
+    _syncManager.syncAll(excludeIds: ids);
   }
 
   void _onAuthStateChange(AuthState state) {
@@ -46,12 +43,16 @@ class OfflineFirstCoordinator {
     }
   }
 
-  void _onConnectivityChanged(bool isOnline) {}
+  void _onConnectivityChanged(bool isOnline) {
+    _syncManager.onConnectivityChanged(isOnline);
+    _realtimeManager.onConnectivityChanged(isOnline);
+    _queueManager.onConnectivityChanged(isOnline);
+  }
 
   void init() {
-    _queueSub = queueManager.drainedIds.listen(_onQueueDrainedIds);
-    _authSub = supabase.auth.onAuthStateChange.listen(_onAuthStateChange);
-    _connectivitySub = _connectivityService.onlineStream.listen(_onConnectivityChanged);
+    _queueManager.drainedIds.listen(_onQueueDrainedIds);
+    supabase.auth.onAuthStateChange.listen(_onAuthStateChange);
+    _connectivityService.onlineStream.listen(_onConnectivityChanged);
     _connectivityService.checkNow().then(_onConnectivityChanged);
     for (final repo in _repos) {
       repo.setupStreams();
@@ -59,7 +60,7 @@ class OfflineFirstCoordinator {
   }
 
   Future<void> _onLogin() async {
-    await Future.wait([queueManager.init(), loadRepos()]);
+    await Future.wait([_queueManager.init(), loadRepos()]);
     _state.add(_connectivityService.isOnline ? OfflineFirstCoordinationState.online : OfflineFirstCoordinationState.offline);
   }
 

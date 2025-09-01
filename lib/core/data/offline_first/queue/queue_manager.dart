@@ -18,7 +18,6 @@ class QueueManager {
 
   final QueueLocalDataSource _queueDataSource;
   final RemoteLoadingService _remoteLoadingService;
-  final ConnectivityService _connectivityService;
   final QueueLogger _queueLogger;
   final SyncManager _syncManager;
 
@@ -37,27 +36,18 @@ class QueueManager {
   bool _isProcessing = false;
   bool _initialized = false;
   bool _isOnline = true;
-  StreamSubscription<bool>? _connSub;
 
   List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
 
   Future<List<QueueLogEntry>> get logsSnapshot => _queueLogger.logsSnapshot;
-
-  QueueManager(
-    this._queueDataSource,
-    this._remoteLoadingService,
-    this._connectivityService,
-    this._queueLogger,
-    this._syncManager,
-  ) {
-    _initConnectivity();
-  }
 
   Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
 
   Stream<Set<String>> get drainedIds => _drainedIds.stream;
 
   Stream<List<QueueLogEntry>> get logsStream => _queueLogger.logsStream;
+
+  QueueManager(this._queueDataSource, this._remoteLoadingService, this._queueLogger, this._syncManager);
 
   void register(DataSourceAdapter adapter) => _adapters[adapter.type] = adapter;
 
@@ -371,7 +361,6 @@ class QueueManager {
   void dispose() {
     _drainTimer?.cancel();
     _retryTimer?.cancel();
-    _connSub?.cancel();
     _drainedIds.close();
     streamController.close();
     _queueLogger.dispose();
@@ -391,13 +380,7 @@ class QueueManager {
     return true;
   }
 
-  Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onlineStream.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkNow();
-    _onConnectivityChanged(r);
-  }
-
-  void _onConnectivityChanged(bool isOnline) {
+  void onConnectivityChanged(bool isOnline) {
     final wasOffline = !_isOnline && isOnline;
     _isOnline = isOnline;
     if (wasOffline) {

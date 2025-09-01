@@ -89,4 +89,8 @@ class RealtimeManager {
     _subjects.clear();
     _reloaders.clear();
   }
+
+  void onConnectivityChanged(bool isOnline) {
+    // TODO anything to do here?
+  }
 }

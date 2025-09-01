@@ -18,7 +18,6 @@ class AppLifecycleManager {
     await EasyLocalization.ensureInitialized();
     await dotenv.load(fileName: kReleaseMode ? ".env.prod" : ".env.dev");
     await connectivityService.init();
-
     await Supabase.initialize(url: dotenv.env['SUPABASE_URL'] ?? "", anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? "");
     offlineFirstCoordinator.init();
   }

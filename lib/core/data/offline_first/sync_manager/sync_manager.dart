@@ -12,7 +12,6 @@ import 'sync_remote_source.dart';
 class SyncManager {
   final SyncCursorRepo _syncCursorRepo;
   final SyncRemoteSource _syncRemoteSource;
-  final ConnectivityService _connectivityService;
   final RemoteLoadingService remoteLoadingService;
   final Map<EntityType, OfflineFirstDataManager> _dataManagers = {};
   final Map<EntityType, DataSourceAdapter> _adapters = {};
@@ -22,9 +21,7 @@ class SyncManager {
   Future<void>? _ongoingSync;
   StreamSubscription<bool>? _connSub;
 
-  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this._connectivityService, this.remoteLoadingService) {
-    // _initConnectivity();
-  }
+  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this.remoteLoadingService);
 
   void register(OfflineFirstDataManager dataManager, DataSourceAdapter adapter) {
     _dataManagers[adapter.type] = dataManager;
@@ -118,19 +115,13 @@ class SyncManager {
   }
 
   // TODO remove hackifix
-  hackifixRefresh() {
+  void hackifixRefresh() {
     _dataManagers.forEach((type, dm) async {
       await dm.refresh();
     });
   }
 
-  Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onlineStream.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkNow();
-    _onConnectivityChanged(r);
-  }
-
-  void _onConnectivityChanged(bool isOnline) {
+  void onConnectivityChanged(bool isOnline) {
     final wasOffline = !_isOnline && isOnline;
     _isOnline = isOnline;
     if (wasOffline) {
@@ -163,7 +154,7 @@ class SyncManager {
     _log('sync done --> changes: $logStr', dark: true);
   }
 
-  _log(String msg, {EntityType? type, bool dark = false}) {
+  void _log(String msg, {EntityType? type, bool dark = false}) {
     EntityLogger.instance.d("SyncManager", type?.name ?? "sync", msg, darkColor: dark);
   }
 
