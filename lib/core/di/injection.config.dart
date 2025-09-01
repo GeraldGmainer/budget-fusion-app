@@ -174,6 +174,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i247.RemoteLoadingService(),
     );
     gh.lazySingleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
+    gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
     gh.lazySingleton<_i226.DefaultNewDateUseCase>(
       () => _i226.DefaultNewDateUseCase(),
@@ -188,7 +189,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i226.SummaryDataGenerator(),
     );
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i225.SyncCursorRepo>(
       () => _i225.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
