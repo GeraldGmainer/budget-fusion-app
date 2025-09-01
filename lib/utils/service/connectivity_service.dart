@@ -20,7 +20,7 @@ class ConnectivityService {
 
   bool get isOffline => !_online$.value;
 
-  Future<void> start() async {
+  Future<void> init() async {
     final results = await _connectivity.checkConnectivity();
     _setResult(results);
     _sub = _connectivity.onConnectivityChanged.listen(_setResult);

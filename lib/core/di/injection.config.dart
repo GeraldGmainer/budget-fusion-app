@@ -389,7 +389,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(gh<_i714.OfflineFirstCoordinator>()),
+      () => _i202.AppLifecycleManager(
+        gh<_i702.ConnectivityService>(),
+        gh<_i714.OfflineFirstCoordinator>(),
+      ),
     );
     gh.factory<_i976.MainCubit>(
       () => _i976.MainCubit(gh<_i714.OfflineFirstCoordinator>()),

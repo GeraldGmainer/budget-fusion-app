@@ -66,13 +66,4 @@ class OfflineFirstCoordinator {
   Future<void> loadRepos() async {
     await Future.wait(_repos.map((repo) => repo.loadAll()));
   }
-
-  Future<void> dispose() async {
-    for (final lc in _repos) {
-      await lc.disposeStreams();
-    }
-    _queueSub.cancel();
-    _authSub.cancel();
-    _connectivitySub.cancel();
-  }
 }
