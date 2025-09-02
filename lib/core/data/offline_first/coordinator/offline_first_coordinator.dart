@@ -67,12 +67,12 @@ class OfflineFirstCoordinator {
   }
 
   Future<void> _onLogin() async {
-    await Future.wait([_queueManager.init(), loadRepos()]);
+    await Future.wait([_queueManager.init(), _loadRepos()]);
     if (_connectivityService.isOnline) _realtimeManager.start();
     _state.add(_connectivityService.isOnline ? OfflineFirstCoordinationState.online : OfflineFirstCoordinationState.offline);
   }
 
-  Future<void> loadRepos() async {
+  Future<void> _loadRepos() async {
     await Future.wait(_repos.map((repo) => repo.loadAll()));
   }
 

@@ -19,7 +19,6 @@ class SyncManager {
   DateTime? _lastOfflineAt;
   bool _isOnline = true;
   Future<void>? _ongoingSync;
-  StreamSubscription<bool>? _connSub;
 
   SyncManager(this._syncCursorRepo, this._syncRemoteSource, this.remoteLoadingService);
 
@@ -156,9 +155,5 @@ class SyncManager {
 
   void _log(String msg, {EntityType? type, bool dark = false}) {
     EntityLogger.instance.d("SyncManager", type?.name ?? "sync", msg, darkColor: dark);
-  }
-
-  void dispose() {
-    _connSub?.cancel();
   }
 }
