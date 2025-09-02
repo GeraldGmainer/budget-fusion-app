@@ -65,7 +65,7 @@ class SummaryGraph extends StatelessWidget {
         gradient: LinearGradient(colors: [sliceColor, darkerColor], begin: Alignment.topCenter, end: Alignment.bottomCenter),
         showTitle: false,
         titleStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-        badgeWidget: (!pieData.hideIcon && pieData.iconName.isNotEmpty) ? BudgetIcon(name: pieData.iconName, color: '#FFFFFF', size: 24) : null,
+        badgeWidget: (!pieData.hideIcon && pieData.iconName.isNotEmpty && !pieData.iconName.isNotEmpty) ? BudgetIcon(name: pieData.iconName, color: '#FFFFFF', size: 24) : null,
         badgePositionPercentageOffset: 0.5,
         radius: 40,
       );

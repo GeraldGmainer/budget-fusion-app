@@ -51,6 +51,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
 
   Future<void> _onBookings(List<Booking> rawBookingList) => safeRun(
     action: () async {
+      EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "generate view for ${rawBookingList.length} bookings");
       _clearLoadingTimeout();
       final filtered = await _filterAndGroupBookingsUseCase.load(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
@@ -111,6 +112,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       emit(BudgetBookState.loading(items: state.items, filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
       _startLoadingTimeout();
       await _resetBudgetBookUseCase.reload();
+      EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reload for budget book done");
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );

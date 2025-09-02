@@ -68,7 +68,6 @@ class QueueManager {
     }
     _initialized = true;
     _emitPending();
-    _log("init QueueManager done");
 
     if (_isOnline && _paused.isNotEmpty) {
       final ids = _paused.entries.where((e) => e.value == QueuePauseReason.offline).map((e) => e.key).toList();
