@@ -9,7 +9,7 @@ import '../../bloc/budget_book_cubit.dart';
 import 'budget_filter_button.dart';
 import 'budget_tab_title.dart';
 
-enum BudgetMenuAction { reload, forceReload, settings }
+enum BudgetMenuAction { reload, settings }
 
 class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BudgetBookAppBar({super.key});
@@ -29,8 +29,6 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
           onSelected: (action) {
             if (action == BudgetMenuAction.reload) {
               context.read<BudgetBookCubit>().reload();
-            } else if (action == BudgetMenuAction.forceReload) {
-              context.read<BudgetBookCubit>().resetAndLoad();
             } else {
               context.showComingSoon();
             }
@@ -39,17 +37,12 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
             final isLoading = ctx.read<BudgetBookCubit>().state.isLoading;
             return [
               _buildReload(isLoading),
-              _buildForceReload(isLoading),
               PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr())),
             ];
           },
         ),
       ],
     );
-  }
-
-  PopupMenuItem<BudgetMenuAction> _buildForceReload(bool isLoading) {
-    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.forceReload, enabled: !isLoading, child: Text('Force Reload'));
   }
 
   PopupMenuItem<BudgetMenuAction> _buildReload(bool isLoading) {

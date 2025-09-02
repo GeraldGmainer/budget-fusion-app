@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashPage> {
   }
 
   void _onProfileLoaded() {
-    // TODO remove splash page here
+    // TODO dont navigate to main page here when logged
     Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (_) => false);
   }
 

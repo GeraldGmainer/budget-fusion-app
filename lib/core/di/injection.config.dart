@@ -336,6 +336,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
       ),
     );
+    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
+      () => _i562.ResetBudgetBookUseCase(
+        gh<_i531.CategoryRepo>(),
+        gh<_i500.AccountRepo>(),
+        gh<_i269.BookingRepo>(),
+        gh<_i714.QueueManager>(),
+      ),
+    );
     gh.lazySingleton<_i576.BookingAccountService>(
       () => _i576.BookingAccountService(gh<_i500.AccountRepo>()),
     );
@@ -346,15 +354,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i258.RealtimeManager>(),
         gh<List<_i38.Repo<dynamic>>>(),
         gh<_i428.ConnectivityService>(),
-      ),
-    );
-    gh.lazySingleton<_i562.ResetBudgetBookUseCase>(
-      () => _i562.ResetBudgetBookUseCase(
-        gh<_i714.SyncCursorRepo>(),
-        gh<_i531.CategoryRepo>(),
-        gh<_i500.AccountRepo>(),
-        gh<_i269.BookingRepo>(),
-        gh<_i714.QueueManager>(),
       ),
     );
     gh.factory<_i788.CategoryListCubit>(

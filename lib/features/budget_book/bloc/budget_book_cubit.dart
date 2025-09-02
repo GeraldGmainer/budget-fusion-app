@@ -117,16 +117,6 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
 
-  Future<void> resetAndLoad() => safeRun(
-    action: () async {
-      EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "reset and load for budget book: ${state.viewMode} / ${state.filter}");
-      emit(BudgetBookState.loading(items: state.items, filter: state.filter, viewMode: state.viewMode, dateRange: state.dateRange));
-      _startLoadingTimeout();
-      await _resetBudgetBookUseCase.resetAndLoad();
-    },
-    onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
-  );
-
   void _startLoadingTimeout() {
     _loadingTimeout?.cancel();
     final snapshot = state;
