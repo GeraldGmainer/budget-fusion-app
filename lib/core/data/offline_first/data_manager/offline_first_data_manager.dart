@@ -28,31 +28,30 @@ class OfflineFirstDataManager<E extends Dto> {
   }) {
     queueManager.register(adapter);
     syncManager.register(this, adapter);
-    realtimeManager.onEvent(adapter.remote.table, () => loadAll(forceReload: false));
+    realtimeManager.onEvent(adapter.remote.table, loadAll);
 
     _queueSub = queueManager.pendingItemsStream
         .map((items) => items.where((item) => item.entityType == adapter.type).toList())
         .distinct((prev, next) => const ListEquality<QueueItem>().equals(prev, next))
         .listen((_) async {
           final dtos = await _refreshCacheFromLocalSource();
-          _emitToStream(dtos, forceReload: false);
+          _emitToStream(dtos);
         });
   }
 
   Stream<List<E>> get stream => streamController.stream;
 
-  Future<List<E>> loadAll({Map<String, dynamic>? filters, required bool forceReload}) async {
+  Future<List<E>> loadAll({Map<String, dynamic>? filters, bool invalidateCache = false}) async {
     _log("start loadAll");
     final localDtos = await adapter.local.fetchAll();
     if (localDtos.isNotEmpty) {
-      _log("Local ${EntityLogger.bold(localDtos.length)} items found");
-      _emitToStream(localDtos, forceReload: forceReload);
-      unawaited(syncManager.syncAll(forceReload: forceReload));
+      _emitToStream(localDtos, invalidateCache: invalidateCache);
+      unawaited(syncManager.syncAll());
       return localDtos;
     }
 
     _log("No local data found. Fetching remote data ...");
-    await syncManager.syncAll(forceReload: forceReload);
+    await syncManager.syncAll();
     final first = await streamController.first;
     _log("loadAll completed with ${first.length} items");
     return first;
@@ -80,7 +79,7 @@ class OfflineFirstDataManager<E extends Dto> {
   Future<void> refresh() async {
     _log("Refreshing local data ...");
     final localDtos = await adapter.local.fetchAll();
-    _emitToStream(localDtos, forceReload: false);
+    _emitToStream(localDtos);
   }
 
   Future<void> save(E dto) async {
@@ -117,27 +116,32 @@ class OfflineFirstDataManager<E extends Dto> {
     await adapter.local.markPendingDelete(dto.id.value);
 
     final dtos = await _refreshCacheFromLocalSource();
-    _emitToStream(dtos, forceReload: false);
+    _emitToStream(dtos);
 
     final item = QueueItem(entityId: dto.id.value, entityType: adapter.type, taskType: QueueTaskType.delete, entityPayload: jsonEncode(dto.toJson()));
     _log("Queuing delete for id '${dto.id.value}'");
-    // unawaited(queueManager.add(item));
     await queueManager.add(item);
     BudgetLogger.instance.d("queue manager done");
   }
 
-  void _emitToStream(List<E> dtos, {required bool forceReload}) {
+  int? _lastEmittedFingerprint;
+
+  void _emitToStream(List<E> dtos, {bool invalidateCache = false}) {
+    // if (clearStream) streamController.add([]);   was used for forceReload
+    if (invalidateCache) _lastEmittedFingerprint = null;
+    final fingerprint = _calcHash(dtos);
+    if (_lastEmittedFingerprint == fingerprint) return;
+    _lastEmittedFingerprint = fingerprint;
     _log("Emitting ${EntityLogger.bold(dtos.length)} DTOs", darkColor: true);
-    if (forceReload) {
-      streamController.add([]);
-    }
     streamController.add(dtos);
   }
+
+  int _calcHash(List<E> dtos) => Object.hashAllUnordered(dtos.map((e) => Object.hash(e.id.value, e.updatedAt?.millisecondsSinceEpoch ?? 0)));
 
   Future<void> reset() async {
     _log("Resetting OfflineFirstDataManager", darkColor: true);
     await adapter.local.deleteAll();
-    _emitToStream(const [], forceReload: false);
+    _emitToStream(const []);
   }
 
   void dispose() {

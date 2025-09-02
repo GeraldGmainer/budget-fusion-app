@@ -16,7 +16,11 @@ class ResetBudgetBookUseCase {
   ResetBudgetBookUseCase(this._syncCursorRepo, this._categoryRepo, this._accountRepo, this._bookingRepo, this._queueManager);
 
   Future<void> reload() async {
-    await Future.wait([_accountRepo.loadAll(), _categoryRepo.loadAll(), _bookingRepo.loadAll()]);
+    await Future.wait([
+      _accountRepo.loadAll(invalidateCache: true),
+      _categoryRepo.loadAll(invalidateCache: true),
+      _bookingRepo.loadAll(invalidateCache: true),
+    ]);
     await _queueManager.wakePausedItemsAndProcess();
   }
 
@@ -26,9 +30,9 @@ class ResetBudgetBookUseCase {
     await _categoryRepo.reset();
     await _accountRepo.reset();
     await Future.wait([
-      _accountRepo.loadAll(forceReload: true),
-      _categoryRepo.loadAll(forceReload: true),
-      _bookingRepo.loadAll(forceReload: true),
+      _accountRepo.loadAll(invalidateCache: true),
+      _categoryRepo.loadAll(invalidateCache: true),
+      _bookingRepo.loadAll(invalidateCache: true),
     ]);
     await _queueManager.wakePausedItemsAndProcess();
   }
