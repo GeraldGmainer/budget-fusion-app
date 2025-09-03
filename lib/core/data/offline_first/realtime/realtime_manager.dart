@@ -64,6 +64,7 @@ class RealtimeManager {
   }
 
   Future<void> dispose() async {
+    BudgetLogger.instance.w("REALTIME MANAGER disposed");
     await stop();
     for (final s in _subjects.values) {
       await s.close();

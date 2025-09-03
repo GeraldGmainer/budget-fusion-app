@@ -319,6 +319,7 @@ class QueueManager {
     _log("Processing queue item with entityId: ${item.entityId}");
     final jsonMap = jsonDecode(item.entityPayload) as Map<String, dynamic>;
     await _remoteLoadingService.wrap(() async {
+      await _randomDelay();
       switch (item.taskType) {
         case QueueTaskType.upsert:
           final updatedDto = await adapter.remote.upsert(item.entityId, jsonMap);
@@ -411,7 +412,14 @@ class QueueManager {
     return s.contains('23503') || s.toLowerCase().contains('foreign key constraint') || s.toLowerCase().contains('is not present in table');
   }
 
-  _log(String msg) {
+  void _log(String msg) {
     EntityLogger.instance.d("QueueManager", "queue", msg);
+  }
+
+  Future<void> _randomDelay() async {
+    final delay = FeatureConstants.randomNetworkDelay();
+    if (delay > Duration.zero) {
+      await Future.delayed(delay);
+    }
   }
 }

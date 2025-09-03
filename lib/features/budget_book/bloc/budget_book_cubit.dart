@@ -55,22 +55,29 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       _clearLoadingTimeout();
       final filtered = await _filterAndGroupBookingsUseCase.load(rawBookingList, state.filter);
       final items = await _generateViewData(filtered, state.viewMode);
+      bool isInitial = state.maybeWhen(initial: (_, _, _, _) => true, orElse: () => false);
+      BudgetDateRange dateRange = _determineDateRange(isInitial, items);
 
-      final now = DateTime.now();
-      BudgetDateRange? dateRange;
-      for (final p in items) {
-        if (!now.isBefore(p.dateRange.from) && !now.isAfter(p.dateRange.to)) {
-          dateRange = p.dateRange;
-          break;
-        }
-      }
-      dateRange ??= items.isNotEmpty ? items.first.dateRange : state.dateRange;
       EntityLogger.instance.d(runtimeType.toString(), EntityType.booking.name, "loaded bookings for budget book: $dateRange");
-
       emit(BudgetBookState.loaded(items: items, filter: state.filter, viewMode: state.viewMode, dateRange: dateRange, isInitial: true));
     },
     onError: (e, appError) => BudgetBookState.fromError(error: appError, state: state),
   );
+
+  BudgetDateRange _determineDateRange(bool isInitial, List<BudgetViewData> items) {
+    if (isInitial) {
+      final now = DateTime.now();
+      for (final p in items) {
+        if (!now.isBefore(p.dateRange.from) && !now.isAfter(p.dateRange.to)) {
+          return p.dateRange;
+        }
+      }
+      if (items.isNotEmpty) {
+        return items.first.dateRange;
+      }
+    }
+    return state.dateRange;
+  }
 
   Future<List<BudgetViewData>> _generateViewData(List<BudgetPageData> filtered, BudgetViewMode viewMode) async {
     switch (viewMode) {
