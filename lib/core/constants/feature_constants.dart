@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
+
 class FeatureConstants {
   static const bool useCard = false;
 
@@ -28,4 +32,9 @@ class FeatureConstants {
 
   /// Hide Icon in the pie chart when pie is too small
   static const hideIconInPiePercent = 7.0;
+
+  /// Artificial network delay (for dev/testing).
+  static Duration randomNetworkDelay() {
+    return kReleaseMode ? Duration.zero : Duration(milliseconds: Random().nextInt(500) + 1000);
+  }
 }

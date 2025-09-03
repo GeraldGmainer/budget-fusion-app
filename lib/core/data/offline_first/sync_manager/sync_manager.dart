@@ -74,6 +74,7 @@ class SyncManager {
 
   Future<void> _syncAll(Set<String> excludeIds) async {
     final cursors = await _syncCursorRepo.getAll();
+    await _randomDelay();
     final result = await _syncRemoteSource.syncAll(cursors: cursors, entities: _adapters.keys, excludeIds: excludeIds);
 
     final changed = <EntityType>{};
@@ -155,5 +156,12 @@ class SyncManager {
 
   void _log(String msg, {EntityType? type, bool dark = false}) {
     EntityLogger.instance.d("SyncManager", type?.name ?? "sync", msg, darkColor: dark);
+  }
+
+  Future<void> _randomDelay() async {
+    final delay = FeatureConstants.randomNetworkDelay();
+    if (delay > Duration.zero) {
+      await Future.delayed(delay);
+    }
   }
 }

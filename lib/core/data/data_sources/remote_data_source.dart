@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestFilterBuilder, PostgrestList;
 
@@ -7,12 +6,6 @@ import '../../../../utils/utils.dart';
 import '../../core.dart';
 
 abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
-  Future<void> _randomDelay() async {
-    Random random = Random();
-    int randomNumber = random.nextInt(500) + 1000;
-    await Future.delayed(Duration(milliseconds: randomNumber));
-  }
-
   Future<List<E>> fetchAll({List<QueryFilter>? filters}) async {
     final stopwatch = Stopwatch()..start();
     _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
@@ -42,13 +35,12 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     final stopwatch = Stopwatch()..start();
     _log("upsert by id '$id'");
     return execute(table, () async {
-      final payload =
-          Map<String, dynamic>.from(json)
-            ..remove('created_at')
-            ..remove('updated_at')
-            ..remove('createdAt')
-            ..remove('updatedAt')
-            ..remove('sync_status');
+      final payload = Map<String, dynamic>.from(json)
+        ..remove('created_at')
+        ..remove('updated_at')
+        ..remove('createdAt')
+        ..remove('updatedAt')
+        ..remove('sync_status');
       final response = await supabase.from(table).upsert(payload).eq('id', id).select();
       await _randomDelay();
       _log("upsert success", stopwatch: stopwatch);
@@ -62,8 +54,6 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     _log("soft delete by id '$id'");
     return execute(table, () async {
       await supabase.rpc(deleteRpcName, params: {'p_id': id});
-      await _randomDelay();
-      await _randomDelay();
       await _randomDelay();
       _log("soft delete success", stopwatch: stopwatch);
     });
@@ -92,11 +82,18 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
     return query;
   }
 
-  _log(String msg, {Stopwatch? stopwatch}) {
+  void _log(String msg, {Stopwatch? stopwatch}) {
     if (stopwatch != null) {
       EntityLogger.instance.d("RemoteDataSource", table, "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: true);
     } else {
       EntityLogger.instance.d("RemoteDataSource", table, msg, darkColor: true);
+    }
+  }
+
+  Future<void> _randomDelay() async {
+    final delay = FeatureConstants.randomNetworkDelay();
+    if (delay > Duration.zero) {
+      await Future.delayed(delay);
     }
   }
 
@@ -108,3 +105,5 @@ abstract class RemoteDataSource<E extends Dto> extends SupabaseClient {
 
   E toDto(Map<String, dynamic> json);
 }
+
+// TODO test if random delay is working for me
