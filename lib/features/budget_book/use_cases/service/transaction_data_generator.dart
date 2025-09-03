@@ -20,6 +20,15 @@ class TransactionDataGenerator {
       groups.putIfAbsent(day, () => []).add(booking);
     }
     final sortedDates = groups.keys.toList()..sort((a, b) => b.compareTo(a));
-    return sortedDates.map((day) => TransactionGroup(date: day, bookings: groups[day]!)).toList();
+    return sortedDates.map((day) {
+      final dayBookings = groups[day]!
+        ..sort((a, b) {
+          if (a.createdAt == null && b.createdAt == null) return 0;
+          if (a.createdAt == null) return -1;
+          if (b.createdAt == null) return 1;
+          return b.createdAt!.compareTo(a.createdAt!);
+        });
+      return TransactionGroup(date: day, bookings: dayBookings);
+    }).toList();
   }
 }
