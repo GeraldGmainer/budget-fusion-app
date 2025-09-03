@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- Flutter: 3.29.3
-- Dart:  3.7.2
-- Java: openjdk 17.0.9
+- Flutter: 3.35.2
+- Dart:  3.9.0
+- Java: openjdk 21.0.4 2024-07-16 LTS
 - Android SDK: 34
 - Android Studio: 2024.3.2
 
