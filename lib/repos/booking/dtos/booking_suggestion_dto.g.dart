@@ -6,17 +6,17 @@ part of 'booking_suggestion_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BookingSuggestionDtoImpl _$$BookingSuggestionDtoImplFromJson(
+_BookingSuggestionDto _$BookingSuggestionDtoFromJson(
   Map<String, dynamic> json,
-) => _$BookingSuggestionDtoImpl(
+) => _BookingSuggestionDto(
   suggestion: json['suggestion'] as String,
   categoryType: const CategoryTypeSerializer().fromJson(
     json['category_type'] as String,
   ),
 );
 
-Map<String, dynamic> _$$BookingSuggestionDtoImplToJson(
-  _$BookingSuggestionDtoImpl instance,
+Map<String, dynamic> _$BookingSuggestionDtoToJson(
+  _BookingSuggestionDto instance,
 ) => <String, dynamic>{
   'suggestion': instance.suggestion,
   'category_type': const CategoryTypeSerializer().toJson(instance.categoryType),

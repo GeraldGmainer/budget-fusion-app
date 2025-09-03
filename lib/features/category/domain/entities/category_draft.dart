@@ -6,7 +6,7 @@ import '../../../../repos/category/category.dart';
 part 'category_draft.freezed.dart';
 
 @freezed
-class CategoryDraft with _$CategoryDraft {
+abstract class CategoryDraft with _$CategoryDraft {
   const CategoryDraft._();
 
   factory CategoryDraft({

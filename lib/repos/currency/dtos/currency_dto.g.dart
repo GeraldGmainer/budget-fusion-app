@@ -6,26 +6,25 @@ part of 'currency_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CurrencyDtoImpl _$$CurrencyDtoImplFromJson(Map<String, dynamic> json) =>
-    _$CurrencyDtoImpl(
-      id: const UuidSerializer().fromJson(json['id'] as String),
-      name: json['name'] as String,
-      decimalPrecision: (json['decimal_precision'] as num).toInt(),
-      unitPositionFront: const BoolIntSerializer().fromJson(
-        json['unit_position_front'],
-      ),
-      symbol: json['symbol'] as String,
-      uiOrder: (json['ui_order'] as num?)?.toInt(),
-      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
-        json['sync_status'],
-        const SyncStatusSerializer().fromJson,
-      ),
-      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
-    );
+_CurrencyDto _$CurrencyDtoFromJson(Map<String, dynamic> json) => _CurrencyDto(
+  id: const UuidSerializer().fromJson(json['id'] as String),
+  name: json['name'] as String,
+  decimalPrecision: (json['decimal_precision'] as num).toInt(),
+  unitPositionFront: const BoolIntSerializer().fromJson(
+    json['unit_position_front'],
+  ),
+  symbol: json['symbol'] as String,
+  uiOrder: (json['ui_order'] as num?)?.toInt(),
+  syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+    json['sync_status'],
+    const SyncStatusSerializer().fromJson,
+  ),
+  createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+  deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
+);
 
-Map<String, dynamic> _$$CurrencyDtoImplToJson(_$CurrencyDtoImpl instance) =>
+Map<String, dynamic> _$CurrencyDtoToJson(_CurrencyDto instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
       'name': instance.name,

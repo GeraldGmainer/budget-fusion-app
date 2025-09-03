@@ -10,7 +10,7 @@ import '../../../../repos/currency/currency.dart';
 part 'booking_draft.freezed.dart';
 
 @freezed
-class BookingDraft with _$BookingDraft {
+abstract class BookingDraft with _$BookingDraft {
   const BookingDraft._();
 
   factory BookingDraft({

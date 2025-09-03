@@ -12,10 +12,8 @@ abstract class LocalDataSource<E extends Dto> {
 
   Future<List<E>> fetchAll({List<QueryFilter>? filters, String? orderBy}) async {
     final effectiveOrderBy = orderBy ?? defaultOrderBy;
-    _log("fetchAll ${filters != null ? "with filters: $filters" : ""}");
     final filterClause = _buildWhereClause(filters);
     final rows = await db.query(table, where: filterClause?.key, whereArgs: filterClause?.value, orderBy: effectiveOrderBy);
-    _log("fetched ${EntityLogger.bold(rows.length)} DTOs", darkColor: true);
     return rows.map((m) => fromJson(m)).toList();
   }
 
@@ -130,15 +128,14 @@ abstract class LocalDataSource<E extends Dto> {
       if (value is Map) {
         output[key] = jsonEncode(value);
       } else if (value is List) {
-        output[key] =
-            value.map((element) {
-              if (element is Map) {
-                return jsonEncode(element);
-              } else if (element is List) {
-                return element.map((e) => e is Map ? jsonEncode(e) : e).toList();
-              }
-              return element;
-            }).toList();
+        output[key] = value.map((element) {
+          if (element is Map) {
+            return jsonEncode(element);
+          } else if (element is List) {
+            return element.map((e) => e is Map ? jsonEncode(e) : e).toList();
+          }
+          return element;
+        }).toList();
       } else {
         output[key] = value;
       }

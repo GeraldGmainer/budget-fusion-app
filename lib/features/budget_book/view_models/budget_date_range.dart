@@ -5,7 +5,7 @@ import '../enums/period_mode.dart';
 part 'budget_date_range.freezed.dart';
 
 @freezed
-class BudgetDateRange with _$BudgetDateRange {
+abstract class BudgetDateRange with _$BudgetDateRange {
   const BudgetDateRange._();
 
   @Assert('period == PeriodMode.all || (from != null && to != null)')

@@ -7,7 +7,7 @@ import 'transaction_group.dart';
 part 'transaction_view_data.freezed.dart';
 
 @freezed
-class TransactionViewData with _$TransactionViewData implements BudgetViewData {
+abstract class TransactionViewData with _$TransactionViewData implements BudgetViewData {
   const TransactionViewData._();
 
   const factory TransactionViewData({required BudgetDateRange dateRange, required List<TransactionGroup> transactionGroups}) = _TransactionViewData;

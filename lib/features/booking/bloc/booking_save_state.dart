@@ -1,7 +1,7 @@
 part of 'booking_save_cubit.dart';
 
 @freezed
-class BookingSaveState with _$BookingSaveState {
+abstract class BookingSaveState with _$BookingSaveState {
   factory BookingSaveState.initial({required BookingDraft draft}) = _Initial;
 
   factory BookingSaveState.draftUpdate({required BookingDraft draft, required BookingDraft initialDraft}) = _DraftUpdate;

@@ -6,29 +6,28 @@ part of 'category_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CategoryDtoImpl _$$CategoryDtoImplFromJson(Map<String, dynamic> json) =>
-    _$CategoryDtoImpl(
-      id: const UuidSerializer().fromJson(json['id'] as String),
-      name: json['name'] as String,
-      categoryType: const CategoryTypeSerializer().fromJson(
-        json['category_type'] as String,
-      ),
-      iconName: json['icon_name'] as String,
-      iconColor: json['icon_color'] as String,
-      parentId: _$JsonConverterFromJson<String, Uuid>(
-        json['parent_id'],
-        const UuidSerializer().fromJson,
-      ),
-      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
-        json['sync_status'],
-        const SyncStatusSerializer().fromJson,
-      ),
-      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-    );
+_CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) => _CategoryDto(
+  id: const UuidSerializer().fromJson(json['id'] as String),
+  name: json['name'] as String,
+  categoryType: const CategoryTypeSerializer().fromJson(
+    json['category_type'] as String,
+  ),
+  iconName: json['icon_name'] as String,
+  iconColor: json['icon_color'] as String,
+  parentId: _$JsonConverterFromJson<String, Uuid>(
+    json['parent_id'],
+    const UuidSerializer().fromJson,
+  ),
+  syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+    json['sync_status'],
+    const SyncStatusSerializer().fromJson,
+  ),
+  createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+);
 
-Map<String, dynamic> _$$CategoryDtoImplToJson(
-  _$CategoryDtoImpl instance,
+Map<String, dynamic> _$CategoryDtoToJson(
+  _CategoryDto instance,
 ) => <String, dynamic>{
   'id': const UuidSerializer().toJson(instance.id),
   'name': instance.name,

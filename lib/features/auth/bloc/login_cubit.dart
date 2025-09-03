@@ -25,7 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(const LoginState.loading());
     BudgetLogger.instance.d("login with google");
 
-    if (_connectivityService.hasNoInternet) {
+    if (_connectivityService.isOffline) {
       emit(const LoginState.error(AppError.internet));
       return;
     }

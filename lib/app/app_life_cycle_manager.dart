@@ -9,26 +9,16 @@ import '../utils/service/connectivity_service.dart';
 
 @singleton
 class AppLifecycleManager {
-  final List<Repo<dynamic>> _repos;
+  final ConnectivityService connectivityService;
+  final OfflineFirstCoordinator offlineFirstCoordinator;
 
-  AppLifecycleManager(this._repos);
+  AppLifecycleManager(this.connectivityService, this.offlineFirstCoordinator);
 
   Future<void> init() async {
     await EasyLocalization.ensureInitialized();
     await dotenv.load(fileName: kReleaseMode ? ".env.prod" : ".env.dev");
-    final connectivityService = getIt<ConnectivityService>();
-    await connectivityService.start();
-
+    await connectivityService.init();
     await Supabase.initialize(url: dotenv.env['SUPABASE_URL'] ?? "", anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? "");
-
-    for (final repo in _repos) {
-      repo.setupStreams();
-    }
-  }
-
-  Future<void> dispose() async {
-    for (final lc in _repos) {
-      await lc.disposeStreams();
-    }
+    offlineFirstCoordinator.init();
   }
 }

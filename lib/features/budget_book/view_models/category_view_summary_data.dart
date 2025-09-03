@@ -6,7 +6,7 @@ import '../../../repos/currency/currency.dart';
 part 'category_view_summary_data.freezed.dart';
 
 @freezed
-class CategoryViewSummaryData with _$CategoryViewSummaryData {
+abstract class CategoryViewSummaryData with _$CategoryViewSummaryData {
   const CategoryViewSummaryData._();
 
   const factory CategoryViewSummaryData({

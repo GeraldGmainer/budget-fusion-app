@@ -5,7 +5,7 @@ part 'profile_setting_dto.freezed.dart';
 part 'profile_setting_dto.g.dart';
 
 @freezed
-class ProfileSettingDto with _$ProfileSettingDto {
+abstract class ProfileSettingDto with _$ProfileSettingDto {
   const ProfileSettingDto._();
 
   const factory ProfileSettingDto({

@@ -2,6 +2,7 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../../../features/analytics/analytics.dart';
 import '../../../features/budget_book/budget_book.dart';
@@ -39,6 +40,7 @@ class _MainPageState extends State<MainPage> {
       MainBottomNavigationTabItem(icon: Icons.golf_course, label: 'Goals', tabIndex: 3),
       MainBottomNavigationTabItem(icon: Icons.analytics, label: 'Analytics', tabIndex: 4),
     ];
+    FlutterNativeSplash.remove();
   }
 
   void _createBooking() {

@@ -8,7 +8,7 @@ part 'profile_dto.freezed.dart';
 part 'profile_dto.g.dart';
 
 @freezed
-class ProfileDto with _$ProfileDto implements Dto {
+abstract class ProfileDto with _$ProfileDto implements Dto {
   const ProfileDto._();
 
   const factory ProfileDto({
@@ -24,7 +24,4 @@ class ProfileDto with _$ProfileDto implements Dto {
   }) = _ProfileDto;
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$$ProfileDtoImplToJson(this as _$ProfileDtoImpl);
 }

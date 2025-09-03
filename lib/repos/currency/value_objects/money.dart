@@ -6,7 +6,7 @@ import '../entities/currency.dart';
 part 'money.freezed.dart';
 
 @freezed
-class Money with _$Money {
+abstract class Money with _$Money {
   const Money._();
 
   const factory Money({required Decimal amount, required Currency? currency}) = _Money;

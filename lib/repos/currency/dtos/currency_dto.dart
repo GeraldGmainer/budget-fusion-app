@@ -6,7 +6,7 @@ part 'currency_dto.freezed.dart';
 part 'currency_dto.g.dart';
 
 @freezed
-class CurrencyDto with _$CurrencyDto implements Dto {
+abstract class CurrencyDto with _$CurrencyDto implements Dto {
   const CurrencyDto._();
 
   const factory CurrencyDto({
@@ -23,7 +23,4 @@ class CurrencyDto with _$CurrencyDto implements Dto {
   }) = _CurrencyDto;
 
   factory CurrencyDto.fromJson(Map<String, dynamic> json) => _$CurrencyDtoFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$$CurrencyDtoImplToJson(this as _$CurrencyDtoImpl);
 }

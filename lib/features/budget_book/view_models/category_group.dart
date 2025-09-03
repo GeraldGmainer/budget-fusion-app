@@ -8,7 +8,7 @@ import '../../../repos/currency/currency.dart';
 part 'category_group.freezed.dart';
 
 @freezed
-class CategoryGroup with _$CategoryGroup {
+abstract class CategoryGroup with _$CategoryGroup {
   const CategoryGroup._();
 
   const factory CategoryGroup({required Category category, @Default([]) List<Booking> bookings, required Money money, @Default([]) List<CategoryGroup> subGroups}) = _CategoryGroup;

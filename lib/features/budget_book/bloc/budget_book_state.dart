@@ -1,7 +1,7 @@
 part of 'budget_book_cubit.dart';
 
 @freezed
-class BudgetBookState with _$BudgetBookState {
+abstract class BudgetBookState with _$BudgetBookState {
   factory BudgetBookState.initial({
     @Default([]) List<BudgetViewData> items,
     required BudgetBookFilter filter,

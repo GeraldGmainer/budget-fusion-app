@@ -6,24 +6,23 @@ part of 'profile_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProfileDtoImpl _$$ProfileDtoImplFromJson(Map<String, dynamic> json) =>
-    _$ProfileDtoImpl(
-      id: const UuidSerializer().fromJson(json['id'] as String),
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
-      settingDto: const ProfileSettingDtoConverter().fromJson(json['settings']),
-      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
-        json['sync_status'],
-        const SyncStatusSerializer().fromJson,
-      ),
-      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
-    );
+_ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => _ProfileDto(
+  id: const UuidSerializer().fromJson(json['id'] as String),
+  firstName: json['first_name'] as String?,
+  lastName: json['last_name'] as String?,
+  avatarUrl: json['avatar_url'] as String?,
+  settingDto: const ProfileSettingDtoConverter().fromJson(json['settings']),
+  syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+    json['sync_status'],
+    const SyncStatusSerializer().fromJson,
+  ),
+  createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+  deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
+);
 
-Map<String, dynamic> _$$ProfileDtoImplToJson(
-  _$ProfileDtoImpl instance,
+Map<String, dynamic> _$ProfileDtoToJson(
+  _ProfileDto instance,
 ) => <String, dynamic>{
   'id': const UuidSerializer().toJson(instance.id),
   'first_name': instance.firstName,

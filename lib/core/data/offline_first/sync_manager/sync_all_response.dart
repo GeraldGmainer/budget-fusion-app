@@ -7,8 +7,8 @@ Map<String, DateTime?> _tsMapFromJson(Map<String, dynamic> json) => json.map((k,
 
 Map<String, dynamic> _tsMapToJson(Map<String, DateTime?> map) => map.map((k, v) => MapEntry(k, v?.toIso8601String()));
 
-@freezed
-class RawDelta with _$RawDelta {
+@Freezed(fromJson: true, toJson: true)
+abstract class RawDelta with _$RawDelta {
   const factory RawDelta({
     required List<Map<String, dynamic>> upserts,
     required List<String> deletes,
@@ -17,8 +17,8 @@ class RawDelta with _$RawDelta {
   factory RawDelta.fromJson(Map<String, dynamic> json) => _$RawDeltaFromJson(json);
 }
 
-@freezed
-class SyncAllResponse with _$SyncAllResponse {
+@Freezed(fromJson: true, toJson: true)
+abstract class SyncAllResponse with _$SyncAllResponse {
   const factory SyncAllResponse({
     required DateTime serverNow,
     required Map<String, RawDelta> deltas,

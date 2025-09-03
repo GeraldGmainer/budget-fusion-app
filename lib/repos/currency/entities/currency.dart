@@ -6,7 +6,7 @@ import '../dtos/currency_dto.dart';
 part 'currency.freezed.dart';
 
 @freezed
-class Currency with _$Currency, Entity {
+abstract class Currency with _$Currency, Entity {
   const Currency._();
 
   const factory Currency({

@@ -1,18 +1,21 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../core/core.dart';
 import '../../../repos/category/category.dart';
 
 @lazySingleton
 class LoadCategoryListUseCase {
   final CategoryRepo _repo;
+  final QueueManager _queueManager;
 
-  LoadCategoryListUseCase(this._repo);
+  LoadCategoryListUseCase(this._repo, this._queueManager);
 
-  Future<List<Category>> load(bool clearCache) async {
+  Future<void> load(bool clearCache) async {
     if (clearCache) {
       await _repo.reset();
     }
-    return await _repo.loadAll();
+    await _repo.loadAll();
+    await _queueManager.wakePausedItemsAndProcess();
   }
 
   Stream<List<Category>> watch() => _repo.watch();

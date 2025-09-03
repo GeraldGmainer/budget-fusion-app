@@ -6,22 +6,21 @@ part of 'account_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AccountDtoImpl _$$AccountDtoImplFromJson(Map<String, dynamic> json) =>
-    _$AccountDtoImpl(
-      id: const UuidSerializer().fromJson(json['id'] as String),
-      name: json['name'] as String,
-      iconName: json['icon_name'] as String,
-      iconColor: json['icon_color'] as String,
-      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
-        json['sync_status'],
-        const SyncStatusSerializer().fromJson,
-      ),
-      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-      deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
-    );
+_AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) => _AccountDto(
+  id: const UuidSerializer().fromJson(json['id'] as String),
+  name: json['name'] as String,
+  iconName: json['icon_name'] as String,
+  iconColor: json['icon_color'] as String,
+  syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+    json['sync_status'],
+    const SyncStatusSerializer().fromJson,
+  ),
+  createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+  deletedAt: const DateTimeSerializer().fromJson(json['deleted_at']),
+);
 
-Map<String, dynamic> _$$AccountDtoImplToJson(_$AccountDtoImpl instance) =>
+Map<String, dynamic> _$AccountDtoToJson(_AccountDto instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
       'name': instance.name,

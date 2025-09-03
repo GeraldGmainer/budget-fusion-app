@@ -19,7 +19,12 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ScaffoldProvider(),
-      child: EasyLocalization(supportedLocales: const [Locale('en'), Locale('de')], path: 'assets/translations', fallbackLocale: Locale('en'), child: MyApp()),
+      child: EasyLocalization(
+        supportedLocales: const [Locale('en'), Locale('de')],
+        path: 'assets/translations',
+        fallbackLocale: Locale('en'),
+        child: MyApp(),
+      ),
     ),
   );
 }

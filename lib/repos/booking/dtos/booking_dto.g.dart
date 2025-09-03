@@ -6,25 +6,22 @@ part of 'booking_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BookingDtoImpl _$$BookingDtoImplFromJson(Map<String, dynamic> json) =>
-    _$BookingDtoImpl(
-      id: const UuidSerializer().fromJson(json['id'] as String),
-      date: const DateSerializer().fromJson(json['date'] as String),
-      description: json['description'] as String?,
-      amount: const DecimalConverter().fromJson(json['amount']),
-      categoryId: const UuidSerializer().fromJson(
-        json['category_id'] as String,
-      ),
-      accountId: const UuidSerializer().fromJson(json['account_id'] as String),
-      syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
-        json['sync_status'],
-        const SyncStatusSerializer().fromJson,
-      ),
-      createdAt: const DateTimeSerializer().fromJson(json['created_at']),
-      updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
-    );
+_BookingDto _$BookingDtoFromJson(Map<String, dynamic> json) => _BookingDto(
+  id: const UuidSerializer().fromJson(json['id'] as String),
+  date: const DateSerializer().fromJson(json['date'] as String),
+  description: json['description'] as String?,
+  amount: const DecimalConverter().fromJson(json['amount']),
+  categoryId: const UuidSerializer().fromJson(json['category_id'] as String),
+  accountId: const UuidSerializer().fromJson(json['account_id'] as String),
+  syncStatus: _$JsonConverterFromJson<String, SyncStatus>(
+    json['sync_status'],
+    const SyncStatusSerializer().fromJson,
+  ),
+  createdAt: const DateTimeSerializer().fromJson(json['created_at']),
+  updatedAt: const DateTimeSerializer().fromJson(json['updated_at']),
+);
 
-Map<String, dynamic> _$$BookingDtoImplToJson(_$BookingDtoImpl instance) =>
+Map<String, dynamic> _$BookingDtoToJson(_BookingDto instance) =>
     <String, dynamic>{
       'id': const UuidSerializer().toJson(instance.id),
       'date': const DateSerializer().toJson(instance.date),

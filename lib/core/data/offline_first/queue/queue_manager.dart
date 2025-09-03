@@ -4,11 +4,10 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data_sources/data_source_adapter.dart';
-import '../../sync_manager/sync_manager.dart';
+import '../sync_manager/sync_manager.dart';
 import 'queue_local_data_source.dart';
 import 'queue_logger.dart';
 
@@ -19,7 +18,6 @@ class QueueManager {
 
   final QueueLocalDataSource _queueDataSource;
   final RemoteLoadingService _remoteLoadingService;
-  final ConnectivityService _connectivityService;
   final QueueLogger _queueLogger;
   final SyncManager _syncManager;
 
@@ -38,27 +36,18 @@ class QueueManager {
   bool _isProcessing = false;
   bool _initialized = false;
   bool _isOnline = true;
-  StreamSubscription<List<ConnectivityResult>>? _connSub;
 
   List<QueueItem> get pendingSnapshot => List.unmodifiable(_inMemoryQueue.where((q) => !q.done));
 
   Future<List<QueueLogEntry>> get logsSnapshot => _queueLogger.logsSnapshot;
-
-  QueueManager(
-    this._queueDataSource,
-    this._remoteLoadingService,
-    this._connectivityService,
-    this._queueLogger,
-    this._syncManager,
-  ) {
-    _initConnectivity();
-  }
 
   Stream<List<QueueItem>> get pendingItemsStream => streamController.stream;
 
   Stream<Set<String>> get drainedIds => _drainedIds.stream;
 
   Stream<List<QueueLogEntry>> get logsStream => _queueLogger.logsStream;
+
+  QueueManager(this._queueDataSource, this._remoteLoadingService, this._queueLogger, this._syncManager);
 
   void register(DataSourceAdapter adapter) => _adapters[adapter.type] = adapter;
 
@@ -79,7 +68,6 @@ class QueueManager {
     }
     _initialized = true;
     _emitPending();
-    _log("init QueueManager done");
 
     if (_isOnline && _paused.isNotEmpty) {
       final ids = _paused.entries.where((e) => e.value == QueuePauseReason.offline).map((e) => e.key).toList();
@@ -372,7 +360,6 @@ class QueueManager {
   void dispose() {
     _drainTimer?.cancel();
     _retryTimer?.cancel();
-    _connSub?.cancel();
     _drainedIds.close();
     streamController.close();
     _queueLogger.dispose();
@@ -392,16 +379,9 @@ class QueueManager {
     return true;
   }
 
-  Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkConnectivity();
-    _onConnectivityChanged(r);
-  }
-
-  void _onConnectivityChanged(List<ConnectivityResult> result) {
-    final nowOnline = _connectivityService.evaluateResult(result);
-    final wasOffline = !_isOnline && nowOnline;
-    _isOnline = nowOnline;
+  void onConnectivityChanged(bool isOnline) {
+    final wasOffline = !_isOnline && isOnline;
+    _isOnline = isOnline;
     if (wasOffline) {
       final toWake = _paused.entries.where((e) => e.value == QueuePauseReason.offline || e.value == QueuePauseReason.attemptsExhausted).map((e) => e.key).toList();
 

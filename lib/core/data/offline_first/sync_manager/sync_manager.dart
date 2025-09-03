@@ -1,20 +1,17 @@
 import 'dart:async';
 
-import 'package:budget_fusion_app/core/data/sync_manager/sync_all_response.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../utils/utils.dart';
-import '../../core.dart';
-import '../data_sources/data_source_adapter.dart';
-import 'sync_cursor_repo.dart';
+import '../../../../utils/utils.dart';
+import '../../../core.dart';
+import '../../data_sources/data_source_adapter.dart';
+import 'sync_all_response.dart';
 import 'sync_remote_source.dart';
 
 @lazySingleton
 class SyncManager {
   final SyncCursorRepo _syncCursorRepo;
   final SyncRemoteSource _syncRemoteSource;
-  final ConnectivityService _connectivityService;
   final RemoteLoadingService remoteLoadingService;
   final Map<EntityType, OfflineFirstDataManager> _dataManagers = {};
   final Map<EntityType, DataSourceAdapter> _adapters = {};
@@ -22,18 +19,15 @@ class SyncManager {
   DateTime? _lastOfflineAt;
   bool _isOnline = true;
   Future<void>? _ongoingSync;
-  StreamSubscription<List<ConnectivityResult>>? _connSub;
 
-  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this._connectivityService, this.remoteLoadingService) {
-    _initConnectivity();
-  }
+  SyncManager(this._syncCursorRepo, this._syncRemoteSource, this.remoteLoadingService);
 
   void register(OfflineFirstDataManager dataManager, DataSourceAdapter adapter) {
     _dataManagers[adapter.type] = dataManager;
     _adapters[adapter.type] = adapter;
   }
 
-  Future<void> syncAll({Set<String> excludeIds = const {}, bool forceReload = false}) async {
+  Future<void> syncAll({Set<String> excludeIds = const {}}) async {
     final now = DateTime.now();
     if (_ongoingSync != null) return _ongoingSync!;
     if (!_isOnline) {
@@ -50,7 +44,7 @@ class SyncManager {
       }
     }
 
-    if (!forceReload && _lastSyncTime != null && now.difference(_lastSyncTime!) < FeatureConstants.syncAllCacheDuration) {
+    if (_lastSyncTime != null && now.difference(_lastSyncTime!) < FeatureConstants.syncAllCacheDuration) {
       _log("Recent sync already completed | skipping new sync");
       return;
     }
@@ -120,22 +114,15 @@ class SyncManager {
   }
 
   // TODO remove hackifix
-  hackifixRefresh() {
+  void hackifixRefresh() {
     _dataManagers.forEach((type, dm) async {
       await dm.refresh();
     });
   }
 
-  Future<void> _initConnectivity() async {
-    _connSub = _connectivityService.onConnectivityChanged.listen(_onConnectivityChanged);
-    final r = await _connectivityService.checkConnectivity();
-    _onConnectivityChanged(r);
-  }
-
-  void _onConnectivityChanged(List<ConnectivityResult> result) {
-    final nowOnline = _connectivityService.evaluateResult(result);
-    final wasOffline = !_isOnline && nowOnline;
-    _isOnline = nowOnline;
+  void onConnectivityChanged(bool isOnline) {
+    final wasOffline = !_isOnline && isOnline;
+    _isOnline = isOnline;
     if (wasOffline) {
       _lastOfflineAt = null;
       unawaited(syncAll());
@@ -166,11 +153,7 @@ class SyncManager {
     _log('sync done --> changes: $logStr', dark: true);
   }
 
-  _log(String msg, {EntityType? type, bool dark = false}) {
+  void _log(String msg, {EntityType? type, bool dark = false}) {
     EntityLogger.instance.d("SyncManager", type?.name ?? "sync", msg, darkColor: dark);
-  }
-
-  void dispose() {
-    _connSub?.cancel();
   }
 }

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../utils/utils.dart';
-import '../../core.dart';
+import '../../../../utils/utils.dart';
+import '../../../core.dart';
 import 'sync_all_response.dart';
 
 @lazySingleton
@@ -16,7 +16,7 @@ class SyncRemoteSource extends SupabaseClient {
     }
 
     final stopwatch = Stopwatch()..start();
-    _log("call syncAll: ${payload.entries.map((e) => '${e.key}:${e.value.substring(0, 10)}').join(', ')}");
+    _log("syncAll: ${payload.entries.map((e) => '${e.key}:${e.value.substring(0, 10)}').join(', ')}");
     return execute("syncAll", () async {
       final excludeJson = excludeIds.toList();
       if (excludeIds.isNotEmpty) {

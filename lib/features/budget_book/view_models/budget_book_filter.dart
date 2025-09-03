@@ -7,7 +7,7 @@ import '../enums/period_mode.dart';
 part 'budget_book_filter.freezed.dart';
 
 @unfreezed
-class BudgetBookFilter with _$BudgetBookFilter {
+abstract class BudgetBookFilter with _$BudgetBookFilter {
   const BudgetBookFilter._();
 
   factory BudgetBookFilter({

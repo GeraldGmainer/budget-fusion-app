@@ -1,7 +1,7 @@
 part of 'category_save_cubit.dart';
 
 @freezed
-class CategorySaveState with _$CategorySaveState {
+abstract class CategorySaveState with _$CategorySaveState {
   factory CategorySaveState.initial({required CategoryDraft draft}) = _Initial;
 
   factory CategorySaveState.draftUpdate({required CategoryDraft draft, required CategoryDraft initialDraft}) = _DraftUpdate;
