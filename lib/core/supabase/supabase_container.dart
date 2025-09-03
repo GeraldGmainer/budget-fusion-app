@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart' as prov;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -62,8 +61,7 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
         break;
 
       case AuthChangeEvent.initialSession:
-        // _onUnauthenticated();
-        BudgetLogger.instance.d("initialSession", short: true);
+        _onInitialSession(session);
         break;
 
       default:
@@ -80,15 +78,27 @@ class _SupabaseContainerState extends State<SupabaseContainer> with SupabaseDeep
     });
   }
 
-  void _onUnauthenticated() {
-    if (!mounted) return;
-    BudgetLogger.instance.d("onUnauthenticated");
+  Future<void> _onInitialSession(Session? session) async {
+    if (session == null) {
+      _onUnauthenticated();
+      return;
+    }
+    try {
+      await supabase.auth.refreshSession();
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e(e, stackTrace);
+    }
+    _onAuthenticated(session);
+  }
 
+  void _onUnauthenticated() {
+    BudgetLogger.instance.d("onUnauthenticated");
     _go(AppRoutes.login);
   }
 
   void _onAuthenticated(Session session) {
     BudgetLogger.instance.d("onAuthenticated: ${session.user.id}");
+    _go(AppRoutes.main);
   }
 
   void _onTokenRefreshed(Session session) {

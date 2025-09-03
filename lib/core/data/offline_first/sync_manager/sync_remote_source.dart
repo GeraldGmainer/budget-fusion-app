@@ -16,7 +16,7 @@ class SyncRemoteSource extends SupabaseClient {
     }
 
     final stopwatch = Stopwatch()..start();
-    _log("call syncAll: ${payload.entries.map((e) => '${e.key}:${e.value.substring(0, 10)}').join(', ')}");
+    _log("syncAll: ${payload.entries.map((e) => '${e.key}:${e.value.substring(0, 10)}').join(', ')}");
     return execute("syncAll", () async {
       final excludeJson = excludeIds.toList();
       if (excludeIds.isNotEmpty) {

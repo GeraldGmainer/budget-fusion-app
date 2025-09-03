@@ -152,6 +152,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
+    gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
     gh.lazySingleton<_i110.CategoryRemoteDataSource>(
       () => _i110.CategoryRemoteDataSource(),
     );
@@ -385,9 +386,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.BookingRepo>(),
         gh<_i421.ProfileRepo>(),
       ),
-    );
-    gh.factory<_i976.MainCubit>(
-      () => _i976.MainCubit(gh<_i714.OfflineFirstCoordinator>()),
     );
     gh.factory<_i863.BookingSaveCubit>(
       () => _i863.BookingSaveCubit(
