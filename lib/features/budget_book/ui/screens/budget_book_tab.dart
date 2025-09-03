@@ -51,9 +51,15 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   void _handleSelectedRangeChange(BudgetBookState state) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final idx = state.items.indexWhere((e) => e.dateRange == state.dateRange);
-      if (idx == -1) return;
+      if (idx == -1) {
+        BudgetLogger.instance.d("index -1 ${state.dateRange}");
+        return;
+      }
       final targetPage = state.items.length - 1 - idx;
-      if (!_contentPageController.hasClients) return;
+      if (!_contentPageController.hasClients) {
+        BudgetLogger.instance.d("_contentPageController no clients");
+        return;
+      }
       final current = _contentPageController.page ?? _contentPageController.initialPage.toDouble();
       if (current.round() == targetPage) return;
       print("--------- jump to $targetPage");
@@ -73,9 +79,9 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     super.build(context);
     return BlocConsumer<BudgetBookCubit, BudgetBookState>(
       listener: (context, state) {
-        state.whenOrNull(error: (_, __, ___, dateRange, error) => _handleError(error));
+        state.whenOrNull(error: (_, _, _, dateRange, error) => _handleError(error));
         state.whenOrNull(
-          loaded: (_, __, ___, ____, isInitial) {
+          loaded: (_, _, _, _, isInitial) {
             if (isInitial) {
               _handleSelectedRangeChange(state);
             }
@@ -83,7 +89,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         );
       },
       builder: (context, state) {
-        final isInitial = state.maybeWhen(initial: (_, __, ___, ____) => true, orElse: () => false);
+        final isInitial = state.maybeWhen(initial: (_, _, _, _) => true, orElse: () => false);
         if (isInitial) return Center(child: CircularProgressIndicator());
         return Column(
           children: [
@@ -105,7 +111,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   }
 
   Widget _buildBody(BudgetBookState state) {
-    if (state.isLoading) return Center(child: CircularProgressIndicator());
     if (state.items.isEmpty) return Center(child: Text('budgetBook.tabs.empty'.tr()));
     final items = state.items.reversed.toList();
     return PageView.builder(

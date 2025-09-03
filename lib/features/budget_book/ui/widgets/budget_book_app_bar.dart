@@ -9,7 +9,7 @@ import '../../bloc/budget_book_cubit.dart';
 import 'budget_filter_button.dart';
 import 'budget_tab_title.dart';
 
-enum BudgetMenuAction { settings }
+enum BudgetMenuAction { reload, settings }
 
 class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BudgetBookAppBar({super.key});
@@ -27,17 +27,29 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
         PopupMenuButton<BudgetMenuAction>(
           icon: Icon(CommunityMaterialIcons.dots_vertical),
           onSelected: (action) {
-            if (action == BudgetMenuAction.settings) {
-              context.showComingSoon();
+            if (action == BudgetMenuAction.reload) {
+              context.read<BudgetBookCubit>().reload();
+            } else {
+              if (action == BudgetMenuAction.settings) {
+                context.showComingSoon();
+              }
             }
           },
           itemBuilder: (ctx) {
+            final isLoading = ctx.read<BudgetBookCubit>().state.isLoading;
+
             return [
+              _buildReload(isLoading),
+
               PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr())),
             ];
           },
         ),
       ],
     );
+  }
+
+  PopupMenuItem<BudgetMenuAction> _buildReload(bool isLoading) {
+    return PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.reload, enabled: !isLoading, child: Text('Reload'));
   }
 }

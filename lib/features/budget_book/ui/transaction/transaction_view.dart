@@ -31,6 +31,11 @@ class TransactionView extends StatelessWidget {
   }
 
   Widget _buildEmpty() {
-    return Card(child: Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(width: double.infinity, child: Text("budgetBook.tabs.transaction.empty".tr()))));
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(width: double.infinity, child: Text("budgetBook.tabs.transaction.empty".tr())),
+      ),
+    );
   }
 }
