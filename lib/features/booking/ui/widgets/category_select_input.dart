@@ -26,15 +26,10 @@ class CategorySelectInput extends StatelessWidget {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (sheetCtx) {
-        return RepoList<Category>(
-          builder: (ctx, data) {
-            return CategoryListInput(
-              categories: data,
-              categoryType: draft.categoryType,
-              onCategoryTap: (category) => _onCategoryTap(context, category),
-              selectedCategory: draft.category,
-            );
-          },
+        return CategoryListInput(
+          categoryType: draft.categoryType,
+          onCategoryTap: (category) => _onCategoryTap(context, category),
+          selectedCategory: draft.category,
         );
       },
     );
@@ -44,15 +39,15 @@ class CategorySelectInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasValue = draft.category != null;
     return ListTile(
-      leading:
-          hasValue ? BudgetIcon(name: draft.category!.iconName, color: draft.category!.iconColor) : Icon(CommunityMaterialIcons.table_large, color: Theme.of(context).hintColor),
+      leading: hasValue
+          ? BudgetIcon(name: draft.category!.iconName, color: draft.category!.iconColor)
+          : Icon(CommunityMaterialIcons.table_large, color: Theme.of(context).hintColor),
       title: Text(hasValue ? draft.category!.name : "booking.fields.category".tr(), style: hasValue ? null : TextStyle(color: Theme.of(context).hintColor)),
-      subtitle:
-          hasValue
-              ? Text("booking.fields.category".tr())
-              : hasError
-              ? Text("shared.validation.required".tr(), style: TextStyle(color: AppColors.validationErrorColor))
-              : null,
+      subtitle: hasValue
+          ? Text("booking.fields.category".tr())
+          : hasError
+          ? Text("shared.validation.required".tr(), style: TextStyle(color: AppColors.validationErrorColor))
+          : null,
       trailing: Icon(CommunityMaterialIcons.chevron_right),
       onTap: () => _openCategoryPicker(context),
       // onTap: onTap,

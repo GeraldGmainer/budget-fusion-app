@@ -13,4 +13,7 @@ class AppDimensions {
   static const double tabIconSize = 30;
   static const double iconSize = 14;
   static const double settingIconSize = 18;
+
+  static const double tileIconWidth = 40;
+  static const double tileIconSize = 24;
 }

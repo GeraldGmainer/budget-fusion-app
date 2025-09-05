@@ -30,7 +30,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     BlocProvider.of<CategorySaveCubit>(context).init(widget.draft);
   }
 
-  _onSave() {
+  void _onSave() {
     setState(() => _submitted = true);
     if (!_formKey.currentState!.validate()) {
       return;
@@ -38,21 +38,20 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     context.read<CategorySaveCubit>().save();
   }
 
-  _onSavedSuccess(CategoryDraft draft) {
+  void _onSavedSuccess(CategoryDraft draft) {
     context.showSnackBar(draft.isCreating ? "category.notifications.success.create" : "category.notifications.success.edit");
-    Navigator.of(context).pop(true);
+    Navigator.of(context).pop(draft);
   }
 
-  _onDelete(BuildContext context) {
+  void _onDelete(BuildContext context) {
     if (widget.draft.subcategories.isNotEmpty) {
       showDialog<void>(
         context: context,
-        builder:
-            (ctx) => AlertDialog(
-              title: Text("Cannot delete Category"),
-              content: Text("This category contains sub-categories and cannot be deleted yet. This feature is coming soon!"),
-              actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text('OK'))],
-            ),
+        builder: (ctx) => AlertDialog(
+          title: Text("Cannot delete Category"),
+          content: Text("This category contains sub-categories and cannot be deleted yet. This feature is coming soon!"),
+          actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text('OK'))],
+        ),
       );
       return;
     }
@@ -65,12 +64,12 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
     );
   }
 
-  _onDeleteSuccess() {
+  void _onDeleteSuccess() {
     context.showSnackBar("category.notifications.success.delete");
     Navigator.of(context).pop(true);
   }
 
-  _onError(AppError error) {
+  void _onError(AppError error) {
     context.showErrorSnackBar(error);
   }
 
@@ -87,7 +86,10 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
             key: _formKey,
             autovalidateMode: _submitted ? AutovalidateMode.always : AutovalidateMode.onUserInteraction,
             child: Scaffold(
-              appBar: AppBar(title: Text(widget.title).tr(), actions: [if (!widget.draft.isCreating) FormActionMenu(onDelete: () => _onDelete(context))]),
+              appBar: AppBar(
+                title: Text(widget.title).tr(),
+                actions: [if (!widget.draft.isCreating) FormActionMenu(onDelete: () => _onDelete(context))],
+              ),
               floatingActionButton: AppFab.save(_onSave),
               body: state.maybeWhen(
                 draftUpdate: (draft, _) => _buildContent(draft),

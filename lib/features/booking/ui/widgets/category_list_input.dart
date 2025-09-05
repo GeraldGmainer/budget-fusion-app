@@ -1,19 +1,20 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../repos/category/category.dart';
+import '../../../category/category.dart';
 
 enum CategoryPickerRoute { parent, subcategories }
 
 class CategoryListInput extends StatefulWidget {
-  final List<Category> categories;
   final CategoryType categoryType;
   final Function(Category) onCategoryTap;
   final Category? selectedCategory;
 
-  const CategoryListInput({super.key, required this.categories, required this.categoryType, required this.onCategoryTap, this.selectedCategory});
+  const CategoryListInput({super.key, required this.categoryType, required this.onCategoryTap, this.selectedCategory});
 
   @override
   State<CategoryListInput> createState() => _CategoryListInputState();
@@ -58,6 +59,7 @@ class _CategoryListInputState extends State<CategoryListInput> {
         final Category parent = settings.arguments as Category;
         return _createRoute(_buildSubcategoryPage(parent));
       default:
+        BudgetLogger.instance.i("unknown route: ${settings.name}");
         return _createRoute(_buildParentPage());
     }
   }
@@ -74,25 +76,33 @@ class _CategoryListInputState extends State<CategoryListInput> {
   }
 
   Widget _buildParentPage() {
-    return ParentCategoryList(
-      categories: widget.categories,
-      selectedCategory: _selectedCategoryNotifier.value,
-      onCategoryTap: widget.onCategoryTap,
-      onParentSelected: (Category parent) {
-        _navigatorKey.currentState?.pushNamed('subcategories', arguments: parent);
+    return RepoList<Category>(
+      builder: (ctx, data) {
+        return ParentCategoryList(
+          categories: data,
+          selectedCategory: _selectedCategoryNotifier.value,
+          onCategoryTap: widget.onCategoryTap,
+          onParentSelected: (Category parent) {
+            _navigatorKey.currentState?.pushNamed('subcategories', arguments: parent);
+          },
+          sortByName: _sortCategories,
+        );
       },
-      sortByName: _sortCategories,
     );
   }
 
   Widget _buildSubcategoryPage(Category parent) {
-    return SubcategoryListScreen(
-      parent: parent,
-      categories: widget.categories,
-      selectedCategory: _selectedCategoryNotifier.value,
-      onCategoryTap: widget.onCategoryTap,
-      onBack: () => _navigatorKey.currentState!.pop(),
-      sortByName: _sortCategories,
+    return RepoList<Category>(
+      builder: (ctx, data) {
+        return SubcategoryListScreen(
+          parent: parent,
+          categories: data,
+          selectedCategory: _selectedCategoryNotifier.value,
+          onCategoryTap: widget.onCategoryTap,
+          onBack: () => _navigatorKey.currentState!.pop(),
+          sortByName: _sortCategories,
+        );
+      },
     );
   }
 
@@ -180,11 +190,24 @@ class ParentCategoryList extends StatelessWidget {
             final parents = categories.where((c) => c.isParent && c.categoryType == categoryType).toList();
             sortByName(parents);
             return ListView.builder(
-              itemCount: parents.length,
+              itemCount: parents.length + 1,
               itemBuilder: (context, index) {
-                final category = parents[index];
+                if (index == parents.length) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
+                    title: Text("New".tr()),
+                    leading: SizedBox(
+                      width: AppDimensions.tileIconWidth,
+                      child: Icon(Icons.add, color: AppColors.primaryTextColor),
+                    ),
+                    onTap: () async {
+                      Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.categoryParentSave, arguments: CategoryDraft.initial());
+                    },
+                  );
+                }
+
                 return CategoryTile(
-                  category: category,
+                  category: parents[index],
                   allCategories: categories,
                   selectedCategory: selectedCat,
                   onTap: onCategoryTap,
