@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:budget_fusion_app/core/data/offline_first/realtime/realtime_manager.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../supabase/supabase.dart';
+import '../../../supabase/supabase_auth_event.dart';
+import '../../../supabase/supabase_auth_manager.dart';
 import '../interfaces/repo.dart';
 import '../queue/queue_manager.dart';
 import '../sync_manager/sync_manager.dart';
@@ -17,6 +18,7 @@ class OfflineFirstCoordinator {
   final QueueManager _queueManager;
   final SyncManager _syncManager;
   final RealtimeManager _realtimeManager;
+  final SupabaseAuthManager _supabaseAuthManager;
   final ConnectivityService _connectivityService;
   final List<Repo<dynamic>> _repos;
   final BehaviorSubject<OfflineFirstCoordinationState> _state = BehaviorSubject.seeded(OfflineFirstCoordinationState.initial);
@@ -25,7 +27,17 @@ class OfflineFirstCoordinator {
 
   OfflineFirstCoordinationState get current => _state.value;
 
-  OfflineFirstCoordinator(this._queueManager, this._syncManager, this._realtimeManager, this._repos, this._connectivityService);
+  OfflineFirstCoordinator(this._queueManager, this._syncManager, this._realtimeManager, this._repos, this._connectivityService, this._supabaseAuthManager);
+
+  void init() {
+    _queueManager.drainedIds.listen(_onQueueDrainedIds);
+    _supabaseAuthManager.stream.listen(_onAuthStateChange);
+    _connectivityService.onlineStream.listen(_onConnectivityChanged);
+    _connectivityService.checkNow().then(_onConnectivityChanged);
+    for (final repo in _repos) {
+      repo.setupStreams();
+    }
+  }
 
   /// After saving an entity, we want to sync all data. But the new entity will be returned also, causing network traffic and a new stream it
   /// It would be possible to set the entity sync cursor, but there is a risk to loose data
@@ -35,9 +47,8 @@ class OfflineFirstCoordinator {
     _syncManager.syncAll(excludeIds: ids);
   }
 
-  void _onAuthStateChange(AuthState state) {
-    final signedIn = state.event == AuthChangeEvent.signedIn || (state.event == AuthChangeEvent.initialSession && state.session != null);
-    if (signedIn) {
+  void _onAuthStateChange(SupabaseAuthEvent event) {
+    if (event.type == SupabaseAuthType.signedIn) {
       _onLogin();
     } else {
       _onLogout();
@@ -53,16 +64,6 @@ class OfflineFirstCoordinator {
     } else {
       _realtimeManager.stop();
       _state.add(OfflineFirstCoordinationState.offline);
-    }
-  }
-
-  void init() {
-    _queueManager.drainedIds.listen(_onQueueDrainedIds);
-    supabase.auth.onAuthStateChange.listen(_onAuthStateChange);
-    _connectivityService.onlineStream.listen(_onConnectivityChanged);
-    _connectivityService.checkNow().then(_onConnectivityChanged);
-    for (final repo in _repos) {
-      repo.setupStreams();
     }
   }
 

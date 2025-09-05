@@ -24,23 +24,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        ...getBlocProviders(),
-      ],
-      child: SupabaseContainer(
-        rootNavigatorKey: rootNavigatorKey,
-        navReady: navReady,
-        child: MaterialApp(
-          navigatorKey: rootNavigatorKey,
-          title: 'Budget book',
-          theme: createTheme(context),
-          onGenerateRoute: _appRouter.onGenerateRoute,
-          navigatorObservers: [BootstrapNavObserver(navReady)],
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-        ),
+      providers: getBlocProviders(),
+      child: MaterialApp(
+        navigatorKey: rootNavigatorKey,
+        title: 'Budget book',
+        theme: createTheme(context),
+        onGenerateRoute: _appRouter.onGenerateRoute,
+        navigatorObservers: [BootstrapNavObserver(navReady)],
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        builder: (ctx, child) {
+          void go(void Function(NavigatorState nav) f) {
+            final nav = rootNavigatorKey.currentState;
+            if (nav != null) {
+              f(nav);
+            } else {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                final n = rootNavigatorKey.currentState;
+                if (n != null) f(n);
+              });
+            }
+          }
+
+          return BlocListener<SupabaseAuthCubit, SupabaseAuthState>(
+            listener: (ctx, state) {
+              state.whenOrNull(
+                unauthenticated: () => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.login, (_) => false)),
+                authenticated: (_) => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.main, (_) => false)),
+                passwordRecovery: (_) => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.passwordReset, (_) => false)),
+              );
+            },
+            child: child,
+          );
+        },
       ),
     );
   }

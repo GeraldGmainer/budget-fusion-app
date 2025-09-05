@@ -54,6 +54,6 @@ export 'remote_loading/service/remote_loading_service.dart';
 export 'remote_loading/ui/remote_loading_indicator.dart';
 export 'supabase/supabase.dart';
 export 'supabase/supabase_client.dart';
-export 'supabase/supabase_container.dart';
-export 'supabase/user_context.dart';
+export 'supabase/supabase_auth_manager.dart';
+export 'supabase/supabase_auth_cubit.dart';
 export 'value_objects/uuid.dart';

@@ -42,6 +42,10 @@ import 'package:budget_fusion_app/core/remote_loading/bloc/remote_loading_cubit.
     as _i234;
 import 'package:budget_fusion_app/core/remote_loading/service/remote_loading_service.dart'
     as _i247;
+import 'package:budget_fusion_app/core/supabase/supabase_auth_cubit.dart'
+    as _i78;
+import 'package:budget_fusion_app/core/supabase/supabase_auth_manager.dart'
+    as _i942;
 import 'package:budget_fusion_app/features/auth/bloc/login_cubit.dart' as _i319;
 import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_source.dart'
     as _i478;
@@ -153,6 +157,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
     gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
+    gh.singleton<_i942.SupabaseAuthManager>(() => _i942.SupabaseAuthManager());
     gh.lazySingleton<_i110.CategoryRemoteDataSource>(
       () => _i110.CategoryRemoteDataSource(),
     );
@@ -201,6 +206,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i234.RemoteLoadingCubit>(
       () => _i234.RemoteLoadingCubit(gh<_i247.RemoteLoadingService>()),
+    );
+    gh.factory<_i78.SupabaseAuthCubit>(
+      () => _i78.SupabaseAuthCubit(gh<_i942.SupabaseAuthManager>()),
     );
     gh.lazySingleton<_i39.SyncManager>(
       () => _i39.SyncManager(
@@ -355,6 +363,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i258.RealtimeManager>(),
         gh<List<_i38.Repo<dynamic>>>(),
         gh<_i428.ConnectivityService>(),
+        gh<_i942.SupabaseAuthManager>(),
       ),
     );
     gh.factory<_i788.CategoryListCubit>(
@@ -364,6 +373,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i202.AppLifecycleManager(
         gh<_i702.ConnectivityService>(),
         gh<_i714.OfflineFirstCoordinator>(),
+        gh<_i714.SupabaseAuthManager>(),
       ),
     );
     gh.lazySingleton<_i656.DefaultAccountUseCase>(
