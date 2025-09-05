@@ -5,17 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 
-import '../core/core.dart';
-import 'app_navigator_observer.dart';
 import 'app_router.dart';
 import 'bloc_providers.dart';
+import 'supabase_container.dart';
 
-class MyApp extends StatelessWidget {
-  final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
-  final ValueNotifier<bool> navReady = ValueNotifier(false);
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
   final AppRouter _appRouter = AppRouter();
 
-  MyApp({super.key}) {
+  @override
+  void initState() {
+    super.initState();
     if (!kReleaseMode) {
       KeepScreenOn.turnOn();
     }
@@ -26,39 +33,18 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: getBlocProviders(),
       child: MaterialApp(
-        navigatorKey: rootNavigatorKey,
+        navigatorKey: _rootNavigatorKey,
         title: 'Budget book',
         theme: createTheme(context),
         onGenerateRoute: _appRouter.onGenerateRoute,
-        navigatorObservers: [BootstrapNavObserver(navReady)],
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        builder: (ctx, child) {
-          void go(void Function(NavigatorState nav) f) {
-            final nav = rootNavigatorKey.currentState;
-            if (nav != null) {
-              f(nav);
-            } else {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                final n = rootNavigatorKey.currentState;
-                if (n != null) f(n);
-              });
-            }
-          }
-
-          return BlocListener<SupabaseAuthCubit, SupabaseAuthState>(
-            listener: (ctx, state) {
-              state.whenOrNull(
-                unauthenticated: () => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.login, (_) => false)),
-                authenticated: (_) => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.main, (_) => false)),
-                passwordRecovery: (_) => go((n) => n.pushNamedAndRemoveUntil(AppRoutes.passwordReset, (_) => false)),
-              );
-            },
-            child: child,
-          );
-        },
+        builder: (ctx, child) => SupabaseContainer(
+          rootNavigatorKey: _rootNavigatorKey,
+          child: child,
+        ),
       ),
     );
   }
