@@ -1,6 +1,5 @@
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +23,6 @@ class _CategoryListInputState extends State<CategoryListInput> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   late final ValueNotifier<Category?> _selectedCategoryNotifier;
   late final ValueNotifier<CategoryType> _categoryTypeNotifier;
-  CategoryPickerRoute _currentRoute = CategoryPickerRoute.parent;
-  Category? _currentParent;
 
   @override
   void initState() {
@@ -53,30 +50,14 @@ class _CategoryListInputState extends State<CategoryListInput> {
     return true;
   }
 
-  void _onCreate() {
-    if (_currentRoute == CategoryPickerRoute.parent) {
-      BudgetLogger.instance.d("###### new parent category");
-      // widget.onCreateParent(context);
-    } else if (_currentRoute == 'subcategories' && _currentParent != null) {
-      // widget.onCreateSubcategory(context, _currentParent!);
-      BudgetLogger.instance.d("###### new sub category $_currentParent");
-    }
-  }
-
   Route _generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'parent':
-        _currentRoute = CategoryPickerRoute.parent;
-        _currentParent = null;
         return _createRoute(_buildParentPage());
       case 'subcategories':
-        _currentRoute = CategoryPickerRoute.subcategories;
         final Category parent = settings.arguments as Category;
-        _currentParent = parent;
         return _createRoute(_buildSubcategoryPage(parent));
       default:
-        _currentRoute = CategoryPickerRoute.parent;
-        _currentParent = null;
         return _createRoute(_buildParentPage());
     }
   }
@@ -139,7 +120,6 @@ class _CategoryListInputState extends State<CategoryListInput> {
             ),
           ),
         ),
-        floatingActionButton: AppFab.add(_onCreate),
       ),
     );
   }
@@ -304,7 +284,10 @@ class CategoryTile extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
         builder: (context, value, child) {
-          return Transform.scale(scale: value, child: Opacity(opacity: value, child: child));
+          return Transform.scale(
+            scale: value,
+            child: Opacity(opacity: value, child: child),
+          );
         },
         child: BudgetIcon(name: category.iconName, color: category.iconColor),
       ),
