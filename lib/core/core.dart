@@ -56,4 +56,5 @@ export 'supabase/supabase.dart';
 export 'supabase/supabase_client.dart';
 export 'supabase/supabase_auth_manager.dart';
 export 'supabase/supabase_auth_cubit.dart';
+export 'supabase/supabase_auth_event.dart';
 export 'value_objects/uuid.dart';

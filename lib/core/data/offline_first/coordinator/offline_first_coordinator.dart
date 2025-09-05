@@ -34,6 +34,7 @@ class OfflineFirstCoordinator {
     _supabaseAuthManager.stream.listen(_onAuthStateChange);
     _connectivityService.onlineStream.listen(_onConnectivityChanged);
     _connectivityService.checkNow().then(_onConnectivityChanged);
+    _realtimeManager.init();
     for (final repo in _repos) {
       repo.setupStreams();
     }

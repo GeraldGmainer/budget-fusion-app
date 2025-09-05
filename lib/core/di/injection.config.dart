@@ -193,10 +193,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i226.SummaryDataGenerator(),
     );
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
     gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i225.SyncCursorRepo>(
       () => _i225.SyncCursorRepo(gh<_i460.SharedPreferences>()),
+    );
+    gh.singleton<_i258.RealtimeManager>(
+      () => _i258.RealtimeManager(gh<_i714.SupabaseAuthManager>()),
     );
     gh.lazySingleton<_i871.UserRepo>(
       () => _i871.UserRepo(gh<_i478.UserRemoteSource>()),

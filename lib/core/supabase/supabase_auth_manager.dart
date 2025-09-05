@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:budget_fusion_app/utils/singletons/budget_logger.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
@@ -45,6 +46,7 @@ class SupabaseAuthManager {
   }
 
   Future<void> dispose() async {
+    BudgetLogger.instance.i("dispose SupabaseAuthManager");
     await _sbSub?.cancel();
     await _subject.close();
   }

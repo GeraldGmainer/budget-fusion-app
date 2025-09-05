@@ -5,17 +5,21 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../utils/utils.dart';
-import '../../../constants/feature_constants.dart';
-import '../../../supabase/supabase.dart';
+import '../../../core.dart';
 
 typedef ReloadFn = FutureOr<void> Function();
 
-@lazySingleton
+@singleton
 class RealtimeManager {
+  final SupabaseAuthManager supabaseAuthManager;
   final Map<String, PublishSubject<void>> _subjects = {};
   final Map<String, int> _refCounts = {};
   RealtimeChannel? _schemaChannel;
   bool _started = false;
+
+  StreamSubscription<SupabaseAuthEvent>? _authSub;
+
+  RealtimeManager(this.supabaseAuthManager);
 
   Stream<void> eventStream(String table) => _subjects.putIfAbsent(table, () => PublishSubject<void>()).stream;
 
@@ -32,7 +36,22 @@ class RealtimeManager {
       } else {
         _refCounts[table] = left;
       }
+      if (_subjects.isEmpty) _scheduleStop();
     };
+  }
+
+  Future<void> init() async {
+    _authSub = supabaseAuthManager.stream.listen((e) async {
+      if (e.type == SupabaseAuthType.tokenRefreshed && e.session != null) {
+        try {
+          Supabase.instance.client.realtime.setAuth(e.session!.accessToken);
+        } catch (_) {}
+        BudgetLogger.instance.i("restart realtime");
+        await restart();
+      } else if (e.type == SupabaseAuthType.signedOut) {
+        await stop();
+      }
+    });
   }
 
   Future<void> start() async {
@@ -45,16 +64,23 @@ class RealtimeManager {
           callback: (PostgresChangePayload payload) {
             final table = payload.table;
             final subject = _subjects[table];
-            EntityLogger.instance.d("RealtimeManager", table, "received realtime event --> loadAll");
+            EntityLogger.instance.d("RealtimeManager", table, "received");
             subject?.add(null);
           },
         )
         .subscribe();
     _started = true;
-    EntityLogger.instance.d("RealtimeManager", "realtime", "subscribed to all public schemas");
+    EntityLogger.instance.d("RealtimeManager", "realtime", "subscribed");
+  }
+
+  Future<void> restart() async {
+    BudgetLogger.instance.i("restart realtime $_started");
+    await stop();
+    await start();
   }
 
   Future<void> stop() async {
+    BudgetLogger.instance.i("stop realtime $_started");
     if (!_started) return;
     if (_schemaChannel != null) {
       await supabase.removeChannel(_schemaChannel!);
@@ -64,12 +90,18 @@ class RealtimeManager {
   }
 
   Future<void> dispose() async {
-    BudgetLogger.instance.w("REALTIME MANAGER disposed");
     await stop();
     for (final s in _subjects.values) {
       await s.close();
     }
     _subjects.clear();
     _refCounts.clear();
+    await _authSub?.cancel();
+  }
+
+  void _scheduleStop() {
+    Future<void>.delayed(const Duration(seconds: 5)).then((_) {
+      if (_subjects.isEmpty) stop();
+    });
   }
 }
