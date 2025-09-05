@@ -1,45 +1,32 @@
 import 'package:budget_fusion_app/app/theme.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keep_screen_on/keep_screen_on.dart';
 
-import '../core/core.dart';
-import 'app_navigator_observer.dart';
 import 'app_router.dart';
 import 'bloc_providers.dart';
+import 'supabase_container.dart';
 
 class MyApp extends StatelessWidget {
-  final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
-  final ValueNotifier<bool> navReady = ValueNotifier(false);
+  final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
   final AppRouter _appRouter = AppRouter();
-
-  MyApp({super.key}) {
-    if (!kReleaseMode) {
-      KeepScreenOn.turnOn();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        ...getBlocProviders(),
-      ],
-      child: SupabaseContainer(
-        rootNavigatorKey: rootNavigatorKey,
-        navReady: navReady,
-        child: MaterialApp(
-          navigatorKey: rootNavigatorKey,
-          title: 'Budget book',
-          theme: createTheme(context),
-          onGenerateRoute: _appRouter.onGenerateRoute,
-          navigatorObservers: [BootstrapNavObserver(navReady)],
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
+      providers: getBlocProviders(),
+      child: MaterialApp(
+        navigatorKey: _rootNavigatorKey,
+        title: 'Budget book',
+        theme: createTheme(context),
+        onGenerateRoute: _appRouter.onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        builder: (ctx, child) => SupabaseContainer(
+          rootNavigatorKey: _rootNavigatorKey,
+          child: child,
         ),
       ),
     );

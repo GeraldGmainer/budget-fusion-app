@@ -16,6 +16,7 @@ import '../repos/profile/profile.dart';
 
 List<BlocProvider> getBlocProviders() {
   return [
+    BlocProvider<SupabaseAuthCubit>(create: (_) => GetIt.I<SupabaseAuthCubit>()),
     BlocProvider<MainCubit>(create: (_) => GetIt.I<MainCubit>()),
     BlocProvider<LoginCubit>(create: (_) => GetIt.I<LoginCubit>()),
     BlocProvider<LanguageCubit>(create: (_) => GetIt.I<LanguageCubit>()),

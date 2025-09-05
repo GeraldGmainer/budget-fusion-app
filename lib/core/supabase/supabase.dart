@@ -5,7 +5,6 @@ import '../exceptions/unauthenticated_exception.dart';
 import '../value_objects/uuid.dart';
 
 export 'supabase_client.dart';
-export 'supabase_container.dart';
 
 final supabase = Supabase.instance.client;
 

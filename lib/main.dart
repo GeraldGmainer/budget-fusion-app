@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:provider/provider.dart';
 
 import 'app/app.dart';
@@ -15,6 +17,10 @@ Future<void> main() async {
   await configureInjection();
   final lifecycle = GetIt.I<AppLifecycleManager>();
   await lifecycle.init();
+
+  if (!kReleaseMode) {
+    KeepScreenOn.turnOn();
+  }
 
   runApp(
     ChangeNotifierProvider(
