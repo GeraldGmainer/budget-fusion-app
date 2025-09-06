@@ -40,7 +40,8 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     final filter = BudgetBookFilter.initial();
     final period = filter.period;
     final now = DateTime.now();
-    final dateRange = BudgetDateRange(period: period, from: now, to: now);
+    // TODO dateRange depends on period
+    final dateRange = BudgetDateRange(period: period, from: now.startOfMonth, to: now.endOfMonth);
     return BudgetBookState.initial(filter: filter, dateRange: dateRange);
   }
 

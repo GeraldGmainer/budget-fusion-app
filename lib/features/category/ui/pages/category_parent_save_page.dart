@@ -18,15 +18,15 @@ class CategoryParentSavePage extends StatelessWidget {
 
   const CategoryParentSavePage({super.key, required this.draft});
 
-  _onAddSubcategory(BuildContext context) {
+  void _onAddSubcategory(BuildContext context) {
     _navigateToSub(context, CategoryDraft.initial(parent: draft.toCategory()));
   }
 
-  _onEditSubcategory(BuildContext context, Category category) {
+  void _onEditSubcategory(BuildContext context, Category category) {
     _navigateToSub(context, CategoryDraft.fromCategory(category));
   }
 
-  _navigateToSub(BuildContext context, CategoryDraft saveDraft) async {
+  Future<void> _navigateToSub(BuildContext context, CategoryDraft saveDraft) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categorySubSave, arguments: saveDraft);
     final bool? shouldRefresh = result as bool?;
     BudgetLogger.instance.d("CategoryParentSavePage shouldRefresh: $shouldRefresh");
@@ -56,7 +56,10 @@ class CategoryParentSavePage extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0), child: IconInput(draft: draft)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0),
+                    child: IconInput(draft: draft),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -92,7 +95,10 @@ class CategoryParentSavePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('category.list.subcategories'.tr(), style: Theme.of(context).textTheme.titleMedium),
-        IconButton(onPressed: () => _onAddSubcategory(context), icon: Icon(Icons.add, color: AppColors.primaryTextColor)),
+        IconButton(
+          onPressed: () => _onAddSubcategory(context),
+          icon: Icon(Icons.add, color: AppColors.primaryTextColor),
+        ),
       ],
     );
   }

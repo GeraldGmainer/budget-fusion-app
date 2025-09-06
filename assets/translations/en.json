@@ -23,7 +23,8 @@
       "email": "Please enter a valid email address.",
       "minLength": "Must be at least {} characters.",
       "maxLength": "Must be no more than {} characters.",
-      "number": "Please enter a valid number."
+      "number": "Please enter a valid number.",
+      "duplicate": "This name is already in use."
     },
     "dialog": {
       "unsaved_changes": {

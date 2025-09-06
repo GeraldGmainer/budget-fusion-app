@@ -16,7 +16,7 @@ class BudgetIcon extends StatelessWidget {
     super.key,
     required this.name,
     required this.color,
-    this.width = 40.0,
+    this.width = AppDimensions.tileIconWidth,
     this.size = 24.0,
     this.isSynced = true,
     this.badgeSize = 8,
@@ -34,7 +34,9 @@ class BudgetIcon extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Center(child: Icon(IconConverter.getIcon(name), size: size, color: iconColor)),
+          Center(
+            child: Icon(IconConverter.getIcon(name), size: size, color: iconColor),
+          ),
           if (!isSynced)
             Align(
               alignment: badgeAlignment,
