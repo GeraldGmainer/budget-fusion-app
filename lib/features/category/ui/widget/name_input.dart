@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../repos/category/category.dart';
+
 class NameInput extends StatelessWidget {
   final CategoryDraft draft;
   final bool autofocus;
@@ -17,13 +19,17 @@ class NameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.select<RepoCubit<Category>, List<Category>?>(
+      (cubit) => cubit.state.maybeWhen(loaded: (data) => data, orElse: () => null),
+    );
+
     return TextFormField(
       initialValue: draft.name,
       autofocus: autofocus,
       style: TextStyle(fontSize: 13),
       maxLength: FeatureConstants.descriptionMaxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) => value.isNullOrEmpty ? 'shared.validation.required'.tr() : null,
+      validator: (value) => _validate(value, categories),
       decoration: InputDecoration(
         labelText: 'category.fields.name'.tr(),
         labelStyle: TextStyle(fontSize: 12, color: AppColors.secondaryTextColor),
@@ -31,5 +37,19 @@ class NameInput extends StatelessWidget {
       ),
       onChanged: (value) => _onNameChange(context, value),
     );
+  }
+
+  String? _validate(String? value, List<Category>? categories) {
+    if (value.isNullOrEmpty) {
+      return 'shared.validation.required'.tr();
+    }
+
+    if (categories != null) {
+      final exists = categories.any((c) => c.name.toLowerCase() == value!.trim().toLowerCase() && c.id != draft.id);
+      if (exists) {
+        return 'shared.validation.duplicate'.tr();
+      }
+    }
+    return null;
   }
 }
