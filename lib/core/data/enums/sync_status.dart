@@ -2,7 +2,7 @@ enum SyncStatus {
   synced,
   createdLocally,
   updatedLocally,
-  syncFailed,
+  upsertFailed,
   pendingDelete,
   deleteFailed,
 }

@@ -9,7 +9,6 @@ import '../../../core.dart';
 import '../models/entity_meta.dart';
 
 part 'entity_meta_cubit.freezed.dart';
-
 part 'entity_meta_state.dart';
 
 class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
@@ -19,21 +18,17 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   StreamSubscription<List<T>>? _repoSub;
   StreamSubscription<List<QueueItem>>? _qSub;
-  StreamSubscription<List<QueueLogEntry>>? _logSub;
 
   T? _entity;
   QueueItem? _pending;
-  bool _wasPendingDelete = false;
 
   EntityMetaCubit({required this.repo, required this.queueManager, required this.id}) : super(const EntityMetaState.loading());
 
   void init() async {
     _repoSub?.cancel();
     _qSub?.cancel();
-    _logSub?.cancel();
 
     _findPending(queueManager.pendingSnapshot);
-
     _recompute();
 
     unawaited(
@@ -50,7 +45,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
     _qSub = queueManager.pendingItemsStream.listen((items) {
       _pending = items.where((q) => q.entityId == id).cast<QueueItem?>().fold<QueueItem?>(null, (prev, e) => e);
-      if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
       _recompute();
     });
   }
@@ -61,22 +55,33 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
 
   void _findPending(List<QueueItem> pendingSnapshot) {
     _pending = pendingSnapshot.firstWhereOrNull((q) => q.entityId == id);
-    if (_pending?.taskType == QueueTaskType.delete) _wasPendingDelete = true;
   }
 
   void _recompute() {
-    final e = _entity;
-    if (e == null && _pending == null && _wasPendingDelete) {
-      emit(EntityMetaState.deleted());
-      return;
-    }
-    if (e == null && _pending == null) {
+    if (_entity == null && _pending == null) {
+      final wasDeleting = state.maybeWhen(
+        upserted: (m) => m.isPendingDelete,
+        error: (_, taskType) => taskType == QueueTaskType.delete,
+        orElse: () => false,
+      );
+      if (wasDeleting) {
+        emit(const EntityMetaState.deleted());
+        return;
+      }
       emit(const EntityMetaState.created());
       return;
     }
+
+    if (_pending != null) {
+      if (_pending!.pauseReason == QueuePauseReason.attemptsExhausted) {
+        emit(EntityMetaState.error(message: _pending!.lastError ?? "unknown pending error", taskType: _pending!.taskType));
+        return;
+      }
+    }
+
     final meta = EntityMeta(
-      createdAt: e?.createdAt,
-      updatedAt: e?.updatedAt,
+      createdAt: _entity?.createdAt,
+      updatedAt: _entity?.updatedAt,
       isPending: _pending != null,
       isPendingDelete: _pending?.taskType == QueueTaskType.delete,
       attempts: _pending?.attempts ?? 0,
@@ -88,7 +93,6 @@ class EntityMetaCubit<T extends Entity> extends Cubit<EntityMetaState> {
   Future<void> close() async {
     await _repoSub?.cancel();
     await _qSub?.cancel();
-    await _logSub?.cancel();
     return super.close();
   }
 }
