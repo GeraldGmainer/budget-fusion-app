@@ -32,7 +32,6 @@ class DateInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BudgetLogger.instance.i(draft.date);
     return ListTile(
       leading: const Icon(Icons.calendar_today),
       title: Text(DateTimeConverter.todMMMMYYY(draft.date)),
