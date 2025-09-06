@@ -131,14 +131,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function()?  created,TResult Function( EntityMeta meta)?  upserted,TResult Function()?  deleted,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function()?  created,TResult Function( EntityMeta meta)?  upserted,TResult Function()?  deleted,TResult Function( String message,  QueueTaskType taskType)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Loading() when loading != null:
 return loading();case _Created() when created != null:
 return created();case _Upserted() when upserted != null:
 return upserted(_that.meta);case _Deleted() when deleted != null:
 return deleted();case _Error() when error != null:
-return error(_that.message);case _:
+return error(_that.message,_that.taskType);case _:
   return orElse();
 
 }
@@ -156,14 +156,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function()  created,required TResult Function( EntityMeta meta)  upserted,required TResult Function()  deleted,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function()  created,required TResult Function( EntityMeta meta)  upserted,required TResult Function()  deleted,required TResult Function( String message,  QueueTaskType taskType)  error,}) {final _that = this;
 switch (_that) {
 case _Loading():
 return loading();case _Created():
 return created();case _Upserted():
 return upserted(_that.meta);case _Deleted():
 return deleted();case _Error():
-return error(_that.message);case _:
+return error(_that.message,_that.taskType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -180,14 +180,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function()?  created,TResult? Function( EntityMeta meta)?  upserted,TResult? Function()?  deleted,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function()?  created,TResult? Function( EntityMeta meta)?  upserted,TResult? Function()?  deleted,TResult? Function( String message,  QueueTaskType taskType)?  error,}) {final _that = this;
 switch (_that) {
 case _Loading() when loading != null:
 return loading();case _Created() when created != null:
 return created();case _Upserted() when upserted != null:
 return upserted(_that.meta);case _Deleted() when deleted != null:
 return deleted();case _Error() when error != null:
-return error(_that.message);case _:
+return error(_that.message,_that.taskType);case _:
   return null;
 
 }
@@ -370,10 +370,11 @@ String toString() {
 
 
 class _Error implements EntityMetaState {
-  const _Error(this.message);
+  const _Error({required this.message, required this.taskType});
   
 
  final  String message;
+ final  QueueTaskType taskType;
 
 /// Create a copy of EntityMetaState
 /// with the given fields replaced by the non-null parameter values.
@@ -385,16 +386,16 @@ _$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.message, message) || other.message == message)&&(identical(other.taskType, taskType) || other.taskType == taskType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message);
+int get hashCode => Object.hash(runtimeType,message,taskType);
 
 @override
 String toString() {
-  return 'EntityMetaState.error(message: $message)';
+  return 'EntityMetaState.error(message: $message, taskType: $taskType)';
 }
 
 
@@ -405,7 +406,7 @@ abstract mixin class _$ErrorCopyWith<$Res> implements $EntityMetaStateCopyWith<$
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
 @useResult
 $Res call({
- String message
+ String message, QueueTaskType taskType
 });
 
 
@@ -422,10 +423,11 @@ class __$ErrorCopyWithImpl<$Res>
 
 /// Create a copy of EntityMetaState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? message = null,Object? taskType = null,}) {
   return _then(_Error(
-null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,taskType: null == taskType ? _self.taskType : taskType // ignore: cast_nullable_to_non_nullable
+as QueueTaskType,
   ));
 }
 

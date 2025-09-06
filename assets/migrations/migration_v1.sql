@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS queue_items (
     task_type TEXT NOT NULL,
     attempts INTEGER NOT NULL,
     done INTEGER NOT NULL,
-    pause_reason TEXT
+    pause_reason TEXT,
+    last_error TEXT,
+    last_error_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS queue_logs (

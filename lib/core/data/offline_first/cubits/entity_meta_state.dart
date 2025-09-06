@@ -10,5 +10,5 @@ class EntityMetaState with _$EntityMetaState {
 
   const factory EntityMetaState.deleted() = _Deleted;
 
-  const factory EntityMetaState.error(String message) = _Error;
+  const factory EntityMetaState.error({required String message, required QueueTaskType taskType}) = _Error;
 }

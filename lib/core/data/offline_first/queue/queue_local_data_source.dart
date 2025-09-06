@@ -20,7 +20,8 @@ class QueueLocalDataSource {
       "   taskType: ${item.taskType}\n"
       "   entityType: ${item.entityType}\n"
       "   entityPayload: ${item.entityPayload}\n"
-      "   attempts: ${item.attempts} / done: ${item.done} / pauseReason: ${item.pauseReason}",
+      "   attempts: ${item.attempts} / done: ${item.done} / pauseReason: ${item.pauseReason}\n"
+      "   error: ${item.lastError} / at: ${item.lastErrorAt}",
     );
     await db.insert('queue_items', {
       'entity_id': item.entityId,
@@ -30,6 +31,8 @@ class QueueLocalDataSource {
       'attempts': item.attempts,
       'done': item.done ? 1 : 0,
       'pause_reason': item.pauseReason?.name.toString(),
+      'last_error': item.lastError,
+      'last_error_at': item.lastErrorAt?.toIso8601String(),
     }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
@@ -43,6 +46,8 @@ class QueueLocalDataSource {
         'attempts': item.attempts,
         'done': item.done ? 1 : 0,
         'pause_reason': item.pauseReason?.name.toString(),
+        'last_error': item.lastError,
+        'last_error_at': item.lastErrorAt?.toIso8601String(),
       },
       where: 'entity_id = ?',
       whereArgs: [item.entityId],
@@ -58,6 +63,8 @@ class QueueLocalDataSource {
     _log("Fetching pending queue items");
     final rows = await db.query('queue_items', where: 'done = 0');
     return rows.map((map) {
+      final atStr = map['last_error_at'] as String?;
+      final at = (atStr == null || atStr.isEmpty) ? null : DateTime.tryParse(atStr);
       return QueueItem(
         entityId: map['entity_id'] as String,
         entityType: EntityType.fromString(map['entity_type'] as String),
@@ -66,11 +73,13 @@ class QueueLocalDataSource {
         attempts: map['attempts'] as int,
         done: (map['done'] as int) == 1,
         pauseReason: QueuePauseReason.fromString(map['pause_reason'] as String?),
+        lastError: map['last_error'] as String?,
+        lastErrorAt: at,
       );
     }).toList();
   }
 
-  _log(String msg) {
+  void _log(String msg) {
     EntityLogger.instance.d("QueueDataSource", "queue", msg);
   }
 }

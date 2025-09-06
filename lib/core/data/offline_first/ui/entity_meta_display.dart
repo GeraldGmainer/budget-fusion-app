@@ -23,12 +23,11 @@ class EntityMetaWidget<T extends Entity> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<EntityMetaCubit<T>>(
-      create:
-          (_) => EntityMetaCubit<T>(
-            repo: repo,
-            queueManager: getIt<QueueManager>(),
-            id: id.value,
-          )..init(),
+      create: (_) => EntityMetaCubit<T>(
+        repo: repo,
+        queueManager: getIt<QueueManager>(),
+        id: id.value,
+      )..init(),
       child: _EntityMetaInner<T>(padding: padding, navigateBackAfterDelete: navigateBackAfterDelete),
     );
   }
@@ -40,7 +39,7 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
 
   const _EntityMetaInner({required this.padding, required this.navigateBackAfterDelete});
 
-  _onDeleted(BuildContext context) {
+  void _onDeleted(BuildContext context) {
     BudgetLogger.instance.d("Navigating back to previous screen after deletion");
     context.showSnackBar("item was deleted");
     Navigator.of(context).pop();
@@ -61,13 +60,17 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
           return state.when(
             loading: () => const SizedBox.shrink(),
             created: () => const SizedBox.shrink(),
-            error: (_) => _row(style, AppColors.validationErrorColor, 'Error'),
+            error: (message, taskType) => _row(style, AppColors.validationErrorColor, _formatError(message)),
             deleted: () => _row(style, AppColors.validationErrorColor, 'Deleted'),
             upserted: (m) {
               final label = m.isPendingDelete ? 'Deleting…' : (m.isPending ? 'Pending' : 'Up to date');
               final color = (m.isPendingDelete ? Colors.orange : (m.isPending ? Colors.orange : Colors.green));
               final parts = <Widget>[
-                Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                ),
                 const SizedBox(width: 6),
                 Text(label, style: style),
               ];
@@ -99,12 +102,24 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
     );
   }
 
+  String _formatError(String error) {
+    final l = error.toLowerCase();
+    if (l.contains('23505') || l.contains('unique constraint') || l.contains('duplicate key')) {
+      return 'A item with this name already exists';
+    }
+    return error;
+  }
+
   static Widget _row(TextStyle? style, Color dot, String label) {
     return Row(
       children: [
-        Container(width: 6, height: 6, decoration: BoxDecoration(color: dot, shape: BoxShape.circle)),
+        Container(
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
+        ),
         const SizedBox(width: 6),
-        Text(label, style: style),
+        Flexible(child: Text(label, style: style)),
       ],
     );
   }

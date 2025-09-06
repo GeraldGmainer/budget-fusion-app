@@ -33,6 +33,9 @@ class FeatureConstants {
   /// Hide Icon in the pie chart when pie is too small
   static const hideIconInPiePercent = 7.0;
 
+  /// Max Chars per failed queue item error message, which might be visible in EntityMetaDisplay widet
+  static const errorMaxCharLength = 300;
+
   /// Artificial network delay (for dev/testing).
   static Duration randomNetworkDelay() {
     return kReleaseMode ? Duration.zero : Duration(milliseconds: Random().nextInt(500) + 1000);
