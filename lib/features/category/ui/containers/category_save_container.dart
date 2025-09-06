@@ -40,7 +40,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
 
   void _onSavedSuccess(CategoryDraft draft) {
     context.showSnackBar(draft.isCreating ? "category.notifications.success.create" : "category.notifications.success.edit");
-    Navigator.of(context).pop(draft);
+    Navigator.of(context).pop(true);
   }
 
   void _onDelete(BuildContext context) {

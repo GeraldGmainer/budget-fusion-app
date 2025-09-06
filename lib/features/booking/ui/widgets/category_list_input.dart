@@ -96,7 +96,6 @@ class _CategoryListInputState extends State<CategoryListInput> {
       builder: (ctx, data) {
         return SubcategoryListScreen(
           parent: parent,
-          categories: data,
           selectedCategory: _selectedCategoryNotifier.value,
           onCategoryTap: widget.onCategoryTap,
           onBack: () => _navigatorKey.currentState!.pop(),
@@ -193,19 +192,8 @@ class ParentCategoryList extends StatelessWidget {
               itemCount: parents.length + 1,
               itemBuilder: (context, index) {
                 if (index == parents.length) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
-                    title: Text("New".tr()),
-                    leading: SizedBox(
-                      width: AppDimensions.tileIconWidth,
-                      child: Icon(Icons.add, color: AppColors.primaryTextColor),
-                    ),
-                    onTap: () async {
-                      Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.categoryParentSave, arguments: CategoryDraft.initial());
-                    },
-                  );
+                  return NewCategoryTile(parent: null);
                 }
-
                 return CategoryTile(
                   category: parents[index],
                   allCategories: categories,
@@ -224,7 +212,6 @@ class ParentCategoryList extends StatelessWidget {
 
 class SubcategoryListScreen extends StatelessWidget {
   final Category parent;
-  final List<Category> categories;
   final Category? selectedCategory;
   final void Function(Category) onCategoryTap;
   final VoidCallback onBack;
@@ -233,7 +220,6 @@ class SubcategoryListScreen extends StatelessWidget {
   const SubcategoryListScreen({
     super.key,
     required this.parent,
-    required this.categories,
     required this.selectedCategory,
     required this.onCategoryTap,
     required this.onBack,
@@ -248,10 +234,15 @@ class SubcategoryListScreen extends StatelessWidget {
         return ValueListenableBuilder<Category?>(
           valueListenable: SelectedCategoryNotifierProvider.of(context),
           builder: (context, selectedCat, _) {
-            final subs = parent.subcategories;
             return Material(
               color: AppColors.primaryColor,
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [_buildCategoryParent(context), _buildSubcategories(subs, selectedCat)]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildCategoryParent(context),
+                  _buildSubcategories(selectedCat),
+                ],
+              ),
             );
           },
         );
@@ -267,14 +258,30 @@ class SubcategoryListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSubcategories(List<Category> subs, Category? selectedCat) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: subs.length,
-        itemBuilder: (context, index) {
-          return CategoryTile(category: subs[index], allCategories: categories, selectedCategory: selectedCat, onTap: onCategoryTap, onParentSelected: (_) {});
-        },
-      ),
+  Widget _buildSubcategories(Category? selectedCat) {
+    return RepoList<Category>(
+      builder: (ctx, data) {
+        final updatedParent = data.firstWhere((c) => c.id == parent.id);
+        final subs = updatedParent.subcategories;
+
+        return Expanded(
+          child: ListView.builder(
+            itemCount: subs.length + 1,
+            itemBuilder: (context, index) {
+              if (index == subs.length) {
+                return NewCategoryTile(parent: parent);
+              }
+              return CategoryTile(
+                category: subs[index],
+                allCategories: data,
+                selectedCategory: selectedCat,
+                onTap: onCategoryTap,
+                onParentSelected: (_) {},
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -323,6 +330,33 @@ class CategoryTile extends StatelessWidget {
           onTap(category);
         }
       },
+    );
+  }
+}
+
+class NewCategoryTile extends StatelessWidget {
+  final Category? parent;
+
+  const NewCategoryTile({super.key, required this.parent});
+
+  void _onTap(BuildContext context) {
+    if (parent != null) {
+      Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.categorySubSave, arguments: CategoryDraft.initial(parent: parent!));
+      return;
+    }
+    Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.categoryParentSave, arguments: CategoryDraft.initial());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
+      title: Text("New".tr()),
+      leading: SizedBox(
+        width: AppDimensions.tileIconWidth,
+        child: Icon(Icons.add, color: AppColors.primaryTextColor),
+      ),
+      onTap: () => _onTap(context),
     );
   }
 }
