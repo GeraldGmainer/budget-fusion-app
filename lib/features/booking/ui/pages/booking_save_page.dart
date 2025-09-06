@@ -79,25 +79,25 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  _onCategoryTypeChange(CategoryType value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
+  void _onCategoryTypeChange(CategoryType value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value, category: null));
 
-  _onDateChange(DateTime value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
+  void _onDateChange(DateTime value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(date: value));
 
-  _onAccountChange(Account value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
+  void _onAccountChange(Account value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(account: value));
 
-  _onDescriptionChange(String? value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
+  void _onDescriptionChange(String? value) => context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(description: value));
 
-  _onCategoryChange(Category category) {
+  void _onCategoryChange(Category category) {
     setState(() => _categoryError = true);
     context.read<BookingSaveCubit>().updateDraft((draft) => draft.copyWith(category: category));
   }
 
-  _showAmountError() {
+  void _showAmountError() {
     Haptics.vibrate(HapticsType.error);
     _amountDisplayKey.currentState?.triggerShakeAnimation();
   }
 
-  _onSave(BookingDraft draft) {
+  void _onSave(BookingDraft draft) {
     bool isValid = true;
     if (draft.amount.toDouble() <= 0) {
       isValid = false;
@@ -113,14 +113,14 @@ class _BookingSavePageState extends State<BookingSavePage> {
     context.read<BookingSaveCubit>().save();
   }
 
-  _onSaveSuccess(BookingDraft draft) {
+  void _onSaveSuccess(BookingDraft draft) {
     context.showSnackBar(draft.isCreating ? "booking.notifications.success.create" : "booking.notifications.success.edit");
     Navigator.of(context).pop();
   }
 
-  _onError(AppError error) => context.showErrorSnackBar(error);
+  void _onError(AppError error) => context.showErrorSnackBar(error);
 
-  _onDelete() {
+  void _onDelete() {
     ConfirmDialog.show(
       context,
       headerText: "booking.dialogs.delete.title",
@@ -129,7 +129,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  _onDeleteSuccess(Booking booking) {
+  void _onDeleteSuccess(Booking booking) {
     context.showSnackBar("booking.notifications.delete.success");
     Navigator.of(context).pop();
   }
@@ -153,7 +153,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
             resizeToAvoidBottomInset: false,
             body: state.maybeWhen(
               draftUpdate: (draft, _) => _buildContent(draft),
-              error: (draft, __) => _buildContent(draft),
+              error: (draft, _) => _buildContent(draft),
               orElse: () => Center(child: CircularProgressIndicator()),
             ),
           ),
@@ -168,7 +168,10 @@ class _BookingSavePageState extends State<BookingSavePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4),
+            child: TransactionTypeInput(draft: draft, onChange: _onCategoryTypeChange),
+          ),
           SizedBox(height: AppDimensions.verticalPadding),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4),
@@ -204,5 +207,8 @@ class _BookingSavePageState extends State<BookingSavePage> {
     );
   }
 
-  Widget _buildDivider() => Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: Divider(color: AppColors.disabledTextColor));
+  Widget _buildDivider() => Padding(
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Divider(color: AppColors.disabledTextColor),
+  );
 }

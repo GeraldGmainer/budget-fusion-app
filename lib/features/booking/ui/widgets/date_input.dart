@@ -11,7 +11,7 @@ class DateInput extends StatelessWidget {
 
   const DateInput({super.key, required this.draft, required this.onChange});
 
-  _onQuickTap(BuildContext context, int count) {
+  void _onQuickTap(BuildContext context, int count) {
     final date = draft.date.add(Duration(days: count));
     onChange.call(date.startOfDay);
   }
@@ -32,6 +32,7 @@ class DateInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BudgetLogger.instance.i(draft.date);
     return ListTile(
       leading: const Icon(Icons.calendar_today),
       title: Text(DateTimeConverter.todMMMMYYY(draft.date)),
@@ -97,7 +98,10 @@ class DateSheet extends StatelessWidget {
             ],
           ),
         ),
-        Padding(padding: const EdgeInsets.symmetric(vertical: 8.0), child: Text(DateTimeConverter.toEEEEdMMMMYYY(draft.date), style: theme.textTheme.titleMedium)),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(DateTimeConverter.toEEEEdMMMMYYY(draft.date), style: theme.textTheme.titleMedium),
+        ),
         const Divider(height: 16),
         CalendarDatePicker(
           initialDate: draft.date,
