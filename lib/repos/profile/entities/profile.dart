@@ -45,7 +45,7 @@ abstract class Profile with _$Profile, Entity {
       firstName: firstName,
       lastName: lastName,
       avatarUrl: avatarUrl,
-      settingDto: setting.toDto(),
+      settings: setting.toDto(),
       syncStatus: syncStatus,
       createdAt: createdAt,
       updatedAt: updatedAt,

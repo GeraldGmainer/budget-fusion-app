@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileSettingDto {
 
-@UuidSerializer()@JsonKey(name: 'currency_id') Uuid get currencyId;
+@UuidSerializer() Uuid get currencyId;
 /// Create a copy of ProfileSettingDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ProfileSettingDtoCopyWith<$Res>  {
   factory $ProfileSettingDtoCopyWith(ProfileSettingDto value, $Res Function(ProfileSettingDto) _then) = _$ProfileSettingDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer()@JsonKey(name: 'currency_id') Uuid currencyId
+@UuidSerializer() Uuid currencyId
 });
 
 
@@ -153,7 +153,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()@JsonKey(name: 'currency_id')  Uuid currencyId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid currencyId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileSettingDto() when $default != null:
 return $default(_that.currencyId);case _:
@@ -174,7 +174,7 @@ return $default(_that.currencyId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()@JsonKey(name: 'currency_id')  Uuid currencyId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid currencyId)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileSettingDto():
 return $default(_that.currencyId);case _:
@@ -194,7 +194,7 @@ return $default(_that.currencyId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()@JsonKey(name: 'currency_id')  Uuid currencyId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid currencyId)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileSettingDto() when $default != null:
 return $default(_that.currencyId);case _:
@@ -206,13 +206,13 @@ return $default(_that.currencyId);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _ProfileSettingDto extends ProfileSettingDto {
-  const _ProfileSettingDto({@UuidSerializer()@JsonKey(name: 'currency_id') required this.currencyId}): super._();
+  const _ProfileSettingDto({@UuidSerializer() required this.currencyId}): super._();
   factory _ProfileSettingDto.fromJson(Map<String, dynamic> json) => _$ProfileSettingDtoFromJson(json);
 
-@override@UuidSerializer()@JsonKey(name: 'currency_id') final  Uuid currencyId;
+@override@UuidSerializer() final  Uuid currencyId;
 
 /// Create a copy of ProfileSettingDto
 /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +247,7 @@ abstract mixin class _$ProfileSettingDtoCopyWith<$Res> implements $ProfileSettin
   factory _$ProfileSettingDtoCopyWith(_ProfileSettingDto value, $Res Function(_ProfileSettingDto) _then) = __$ProfileSettingDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer()@JsonKey(name: 'currency_id') Uuid currencyId
+@UuidSerializer() Uuid currencyId
 });
 
 

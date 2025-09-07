@@ -19,10 +19,11 @@ abstract class RawDelta with _$RawDelta {
 
 @Freezed(fromJson: true, toJson: true)
 abstract class SyncAllResponse with _$SyncAllResponse {
+  @JsonSerializable(fieldRename: FieldRename.none, explicitToJson: true)
   const factory SyncAllResponse({
     required DateTime serverNow,
     required Map<String, RawDelta> deltas,
-    @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) required Map<String, DateTime?> newTimestamps,
+    @JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) required Map<String, DateTime?> newTimestamps,
   }) = _SyncAllResponse;
 
   factory SyncAllResponse.fromJson(Map<String, dynamic> json) => _$SyncAllResponseFromJson(json);

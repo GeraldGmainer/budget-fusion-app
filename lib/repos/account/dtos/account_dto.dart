@@ -8,15 +8,16 @@ part 'account_dto.g.dart';
 abstract class AccountDto with _$AccountDto implements Dto {
   const AccountDto._();
 
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory AccountDto({
     @UuidSerializer() required Uuid id,
     required String name,
-    @JsonKey(name: 'icon_name') required String iconName,
-    @JsonKey(name: 'icon_color') required String iconColor,
-    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
-    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
+    required String iconName,
+    required String iconColor,
+    @SyncStatusSerializer() required SyncStatus? syncStatus,
+    @DateTimeSerializer() required DateTime? createdAt,
+    @DateTimeSerializer() required DateTime? updatedAt,
+    @DateTimeSerializer() required DateTime? deletedAt,
   }) = _AccountDto;
 
   factory AccountDto.fromJson(Map<String, dynamic> json) => _$AccountDtoFromJson(json);

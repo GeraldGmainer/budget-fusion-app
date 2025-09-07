@@ -8,9 +8,10 @@ part 'booking_suggestion_dto.g.dart';
 abstract class BookingSuggestionDto with _$BookingSuggestionDto {
   const BookingSuggestionDto._();
 
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory BookingSuggestionDto({
     required String suggestion,
-    @JsonKey(name: 'category_type') @CategoryTypeSerializer() required CategoryType categoryType,
+    @CategoryTypeSerializer() required CategoryType categoryType,
   }) = _BookingSuggestionDto;
 
   factory BookingSuggestionDto.fromJson(Map<String, dynamic> json) => _$BookingSuggestionDtoFromJson(json);

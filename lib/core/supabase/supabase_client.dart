@@ -28,7 +28,8 @@ abstract class SupabaseClient {
       throw TranslatedException(AppError.postgrestError, msg, e);
     } on NoInternetException {
       throw NoInternetException();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("Supabase client execute exception", e, stackTrace);
       final msg = "Exception in $tableName";
       throw TranslatedException(AppError.unknown, msg, e);
     }
