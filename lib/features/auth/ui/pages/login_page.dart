@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: AppDimensions.formPadding,
                   child: Column(
                     children: [
-                      Image.asset('assets/logo.png', height: 100),
+                      Image.asset('assets/logo-full.png', height: 100),
                       const SizedBox(height: 20),
                       LoginForm(isLoading: isLoginLoading),
                     ],
