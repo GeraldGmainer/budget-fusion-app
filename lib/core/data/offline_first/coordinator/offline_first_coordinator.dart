@@ -34,7 +34,6 @@ class OfflineFirstCoordinator {
     _supabaseAuthManager.stream.listen(_onAuthStateChange);
     _connectivityService.onlineStream.listen(_onConnectivityChanged);
     _connectivityService.checkNow().then(_onConnectivityChanged);
-    _realtimeManager.init();
     for (final repo in _repos) {
       repo.setupStreams();
     }
@@ -51,6 +50,8 @@ class OfflineFirstCoordinator {
   void _onAuthStateChange(SupabaseAuthEvent event) {
     if (event.type == SupabaseAuthType.signedIn) {
       _onLogin();
+    } else if (event.type == SupabaseAuthType.tokenRefreshed) {
+      _onTokenRefresh();
     } else {
       _onLogout();
     }
@@ -76,6 +77,10 @@ class OfflineFirstCoordinator {
 
   Future<void> _loadRepos() async {
     await Future.wait(_repos.map((repo) => repo.loadAll()));
+  }
+
+  Future<void> _onTokenRefresh() async {
+    Future.delayed(Duration(seconds: 2), () => _realtimeManager.restart());
   }
 
   Future<void> _onLogout() async {

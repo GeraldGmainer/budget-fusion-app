@@ -157,6 +157,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
     gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
+    gh.singleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
     gh.singleton<_i942.SupabaseAuthManager>(() => _i942.SupabaseAuthManager());
     gh.lazySingleton<_i110.CategoryRemoteDataSource>(
       () => _i110.CategoryRemoteDataSource(),
@@ -196,9 +197,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i225.SyncCursorRepo>(
       () => _i225.SyncCursorRepo(gh<_i460.SharedPreferences>()),
-    );
-    gh.singleton<_i258.RealtimeManager>(
-      () => _i258.RealtimeManager(gh<_i714.SupabaseAuthManager>()),
     );
     gh.lazySingleton<_i871.UserRepo>(
       () => _i871.UserRepo(gh<_i478.UserRemoteSource>()),
