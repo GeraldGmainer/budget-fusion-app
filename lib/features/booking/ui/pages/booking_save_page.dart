@@ -130,7 +130,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
   }
 
   void _onDeleteSuccess(Booking booking) {
-    context.showSnackBar("booking.notifications.delete.success");
+    context.showSnackBar("booking.notifications.success.delete");
     Navigator.of(context).pop();
   }
 
