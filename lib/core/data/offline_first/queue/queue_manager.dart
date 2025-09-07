@@ -240,7 +240,7 @@ class QueueManager {
       _paused.remove(currentItem.entityId);
       _queueLogger.log(QueueLogEvent.succeeded, currentItem);
       _emitPending();
-    } catch (e, stack) {
+    } catch (e, stackTrace) {
       final offline = _isOfflineError(e);
       final now = DateTime.now();
       final errMsg = _displayError(e);
@@ -293,7 +293,7 @@ class QueueManager {
           _inMemoryQueue.removeFirst();
           _inMemoryQueue.addLast(retriedItem);
           await _queueDataSource.updateQueueItem(retriedItem);
-          BudgetLogger.instance.e("Queue task failed", e, stack);
+          BudgetLogger.instance.e("Queue task failed", e, stackTrace: stackTrace);
           final isFKError = _isForeignKeyMissing(e);
           _queueLogger.log(isFKError ? QueueLogEvent.missingForeignKey : QueueLogEvent.retry, retriedItem);
           final status = currentItem.taskType == QueueTaskType.delete ? SyncStatus.pendingDelete : SyncStatus.updatedLocally;

@@ -36,7 +36,7 @@ extension SupabaseClientX on SupabaseClient {
         await supabase.auth.refreshSession();
       }
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e("Error refreshing session", e, stackTrace);
+      BudgetLogger.instance.e("Error refreshing session", e, stackTrace: stackTrace);
     }
   }
 }

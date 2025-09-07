@@ -34,10 +34,10 @@ class LoginCubit extends Cubit<LoginState> {
       final user = await userRepo.googleLogin();
       emit(LoginState.success(user));
     } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace);
+      BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace: stackTrace);
       emit(LoginState.error(e.error));
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace);
+      BudgetLogger.instance.e("LoginBloc GoogleLoginEvent Exception", e, stackTrace: stackTrace);
       emit(const LoginState.error(AppError.internet));
     }
   }
@@ -50,10 +50,10 @@ class LoginCubit extends Cubit<LoginState> {
       final user = await userRepo.credentialsLogin(email, password);
       emit(LoginState.success(user));
     } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace);
+      BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace: stackTrace);
       emit(LoginState.error(e.error));
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace);
+      BudgetLogger.instance.e("LoginBloc CredentialsLoginEvent Exception", e, stackTrace: stackTrace);
       final errorMessage = e.toString().contains("Invalid login credentials") ? AppError.incorrectCredentials : AppError.unknown;
       emit(LoginState.error(errorMessage));
     }

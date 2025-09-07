@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
+import '../../core/exceptions/translated_exception.dart';
 
 class BudgetLogger {
   static final BudgetLogger _instance = BudgetLogger._();
@@ -38,13 +41,46 @@ class BudgetLogger {
   }
 
   /// Log a message at level [Level.error].
-  void e(dynamic message, dynamic e, [StackTrace? stackTrace]) {
+  void e(dynamic message, dynamic e, {StackTrace? stackTrace, bool sendToSentry = true}) {
     _logger.e(message, error: e, stackTrace: stackTrace);
+
+    if (sendToSentry) {
+      _capture(e, message, stackTrace, level: SentryLevel.error);
+    }
   }
 
   /// Log a message at level [Level.f].
-  void f(dynamic message, dynamic e, stackTrace) {
+  void f(dynamic message, dynamic e, {StackTrace? stackTrace, bool sendToSentry = true}) {
     _logger.f(message, error: e, stackTrace: stackTrace);
+
+    if (sendToSentry) {
+      _capture(e, message, stackTrace, level: SentryLevel.fatal);
+    }
+  }
+
+  void _capture(dynamic error, dynamic message, StackTrace? stackTrace, {SentryLevel level = SentryLevel.error}) {
+    final exception = (error is TranslatedException && error.cause != null)
+        ? error.cause! // unwrap original exception
+        : error ?? message;
+
+    Sentry.captureException(
+      exception,
+      stackTrace: stackTrace,
+      withScope: (scope) {
+        scope.level = level;
+        scope.setContexts('log', {
+          'level': level.name,
+          'message': message?.toString(),
+        });
+
+        if (error is TranslatedException) {
+          final pgCtx = error.postgresContext;
+          if (pgCtx != null) {
+            scope.setContexts('postgres', pgCtx);
+          }
+        }
+      },
+    );
   }
 }
 
