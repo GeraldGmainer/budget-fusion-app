@@ -293,7 +293,7 @@ as List<String>,
 /// @nodoc
 mixin _$SyncAllResponse {
 
- DateTime get serverNow; Map<String, RawDelta> get deltas;@JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> get newTimestamps;
+ DateTime get serverNow; Map<String, RawDelta> get deltas;@JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> get newTimestamps;
 /// Create a copy of SyncAllResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -326,7 +326,7 @@ abstract mixin class $SyncAllResponseCopyWith<$Res>  {
   factory $SyncAllResponseCopyWith(SyncAllResponse value, $Res Function(SyncAllResponse) _then) = _$SyncAllResponseCopyWithImpl;
 @useResult
 $Res call({
- DateTime serverNow, Map<String, RawDelta> deltas,@JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> newTimestamps
+ DateTime serverNow, Map<String, RawDelta> deltas,@JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> newTimestamps
 });
 
 
@@ -433,7 +433,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SyncAllResponse() when $default != null:
 return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
@@ -454,7 +454,7 @@ return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)  $default,) {final _that = this;
 switch (_that) {
 case _SyncAllResponse():
 return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
@@ -474,7 +474,7 @@ return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime serverNow,  Map<String, RawDelta> deltas, @JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson)  Map<String, DateTime?> newTimestamps)?  $default,) {final _that = this;
 switch (_that) {
 case _SyncAllResponse() when $default != null:
 return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
@@ -486,10 +486,10 @@ return $default(_that.serverNow,_that.deltas,_that.newTimestamps);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.none, explicitToJson: true)
 class _SyncAllResponse implements SyncAllResponse {
-  const _SyncAllResponse({required this.serverNow, required final  Map<String, RawDelta> deltas, @JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) required final  Map<String, DateTime?> newTimestamps}): _deltas = deltas,_newTimestamps = newTimestamps;
+  const _SyncAllResponse({required this.serverNow, required final  Map<String, RawDelta> deltas, @JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) required final  Map<String, DateTime?> newTimestamps}): _deltas = deltas,_newTimestamps = newTimestamps;
   factory _SyncAllResponse.fromJson(Map<String, dynamic> json) => _$SyncAllResponseFromJson(json);
 
 @override final  DateTime serverNow;
@@ -501,7 +501,7 @@ class _SyncAllResponse implements SyncAllResponse {
 }
 
  final  Map<String, DateTime?> _newTimestamps;
-@override@JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> get newTimestamps {
+@override@JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> get newTimestamps {
   if (_newTimestamps is EqualUnmodifiableMapView) return _newTimestamps;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_newTimestamps);
@@ -541,7 +541,7 @@ abstract mixin class _$SyncAllResponseCopyWith<$Res> implements $SyncAllResponse
   factory _$SyncAllResponseCopyWith(_SyncAllResponse value, $Res Function(_SyncAllResponse) _then) = __$SyncAllResponseCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime serverNow, Map<String, RawDelta> deltas,@JsonKey(name: 'newTimestamps', fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> newTimestamps
+ DateTime serverNow, Map<String, RawDelta> deltas,@JsonKey(fromJson: _tsMapFromJson, toJson: _tsMapToJson) Map<String, DateTime?> newTimestamps
 });
 
 

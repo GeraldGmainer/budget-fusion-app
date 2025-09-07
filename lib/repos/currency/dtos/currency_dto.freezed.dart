@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CurrencyDto {
 
-@UuidSerializer() Uuid get id; String get name;@JsonKey(name: 'decimal_precision') int get decimalPrecision;@BoolIntSerializer()@JsonKey(name: 'unit_position_front') bool get unitPositionFront; String get symbol;@JsonKey(name: 'ui_order') int? get uiOrder;@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? get syncStatus;@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? get createdAt;@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? get updatedAt;@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? get deletedAt;
+@UuidSerializer() Uuid get id; String get name; int get decimalPrecision;@BoolIntSerializer() bool get unitPositionFront; String get symbol; int? get uiOrder;@SyncStatusSerializer() SyncStatus? get syncStatus;@DateTimeSerializer() DateTime? get createdAt;@DateTimeSerializer() DateTime? get updatedAt;@DateTimeSerializer() DateTime? get deletedAt;
 /// Create a copy of CurrencyDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CurrencyDtoCopyWith<$Res>  {
   factory $CurrencyDtoCopyWith(CurrencyDto value, $Res Function(CurrencyDto) _then) = _$CurrencyDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'decimal_precision') int decimalPrecision,@BoolIntSerializer()@JsonKey(name: 'unit_position_front') bool unitPositionFront, String symbol,@JsonKey(name: 'ui_order') int? uiOrder,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String name, int decimalPrecision,@BoolIntSerializer() bool unitPositionFront, String symbol, int? uiOrder,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 
@@ -162,7 +162,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'decimal_precision')  int decimalPrecision, @BoolIntSerializer()@JsonKey(name: 'unit_position_front')  bool unitPositionFront,  String symbol, @JsonKey(name: 'ui_order')  int? uiOrder, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name,  int decimalPrecision, @BoolIntSerializer()  bool unitPositionFront,  String symbol,  int? uiOrder, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CurrencyDto() when $default != null:
 return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFront,_that.symbol,_that.uiOrder,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -183,7 +183,7 @@ return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFro
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'decimal_precision')  int decimalPrecision, @BoolIntSerializer()@JsonKey(name: 'unit_position_front')  bool unitPositionFront,  String symbol, @JsonKey(name: 'ui_order')  int? uiOrder, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name,  int decimalPrecision, @BoolIntSerializer()  bool unitPositionFront,  String symbol,  int? uiOrder, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)  $default,) {final _that = this;
 switch (_that) {
 case _CurrencyDto():
 return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFront,_that.symbol,_that.uiOrder,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -203,7 +203,7 @@ return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFro
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'decimal_precision')  int decimalPrecision, @BoolIntSerializer()@JsonKey(name: 'unit_position_front')  bool unitPositionFront,  String symbol, @JsonKey(name: 'ui_order')  int? uiOrder, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name,  int decimalPrecision, @BoolIntSerializer()  bool unitPositionFront,  String symbol,  int? uiOrder, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _CurrencyDto() when $default != null:
 return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFront,_that.symbol,_that.uiOrder,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -215,22 +215,22 @@ return $default(_that.id,_that.name,_that.decimalPrecision,_that.unitPositionFro
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _CurrencyDto extends CurrencyDto {
-  const _CurrencyDto({@UuidSerializer() required this.id, required this.name, @JsonKey(name: 'decimal_precision') required this.decimalPrecision, @BoolIntSerializer()@JsonKey(name: 'unit_position_front') required this.unitPositionFront, required this.symbol, @JsonKey(name: 'ui_order') this.uiOrder, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at') required this.deletedAt}): super._();
+  const _CurrencyDto({@UuidSerializer() required this.id, required this.name, required this.decimalPrecision, @BoolIntSerializer() required this.unitPositionFront, required this.symbol, this.uiOrder, @SyncStatusSerializer() required this.syncStatus, @DateTimeSerializer() required this.createdAt, @DateTimeSerializer() required this.updatedAt, @DateTimeSerializer() required this.deletedAt}): super._();
   factory _CurrencyDto.fromJson(Map<String, dynamic> json) => _$CurrencyDtoFromJson(json);
 
 @override@UuidSerializer() final  Uuid id;
 @override final  String name;
-@override@JsonKey(name: 'decimal_precision') final  int decimalPrecision;
-@override@BoolIntSerializer()@JsonKey(name: 'unit_position_front') final  bool unitPositionFront;
+@override final  int decimalPrecision;
+@override@BoolIntSerializer() final  bool unitPositionFront;
 @override final  String symbol;
-@override@JsonKey(name: 'ui_order') final  int? uiOrder;
-@override@SyncStatusSerializer()@JsonKey(name: 'sync_status') final  SyncStatus? syncStatus;
-@override@DateTimeSerializer()@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@DateTimeSerializer()@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
-@override@DateTimeSerializer()@JsonKey(name: 'deleted_at') final  DateTime? deletedAt;
+@override final  int? uiOrder;
+@override@SyncStatusSerializer() final  SyncStatus? syncStatus;
+@override@DateTimeSerializer() final  DateTime? createdAt;
+@override@DateTimeSerializer() final  DateTime? updatedAt;
+@override@DateTimeSerializer() final  DateTime? deletedAt;
 
 /// Create a copy of CurrencyDto
 /// with the given fields replaced by the non-null parameter values.
@@ -265,7 +265,7 @@ abstract mixin class _$CurrencyDtoCopyWith<$Res> implements $CurrencyDtoCopyWith
   factory _$CurrencyDtoCopyWith(_CurrencyDto value, $Res Function(_CurrencyDto) _then) = __$CurrencyDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'decimal_precision') int decimalPrecision,@BoolIntSerializer()@JsonKey(name: 'unit_position_front') bool unitPositionFront, String symbol,@JsonKey(name: 'ui_order') int? uiOrder,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String name, int decimalPrecision,@BoolIntSerializer() bool unitPositionFront, String symbol, int? uiOrder,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountDto {
 
-@UuidSerializer() Uuid get id; String get name;@JsonKey(name: 'icon_name') String get iconName;@JsonKey(name: 'icon_color') String get iconColor;@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? get syncStatus;@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? get createdAt;@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? get updatedAt;@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? get deletedAt;
+@UuidSerializer() Uuid get id; String get name; String get iconName; String get iconColor;@SyncStatusSerializer() SyncStatus? get syncStatus;@DateTimeSerializer() DateTime? get createdAt;@DateTimeSerializer() DateTime? get updatedAt;@DateTimeSerializer() DateTime? get deletedAt;
 /// Create a copy of AccountDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $AccountDtoCopyWith<$Res>  {
   factory $AccountDtoCopyWith(AccountDto value, $Res Function(AccountDto) _then) = _$AccountDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'icon_name') String iconName,@JsonKey(name: 'icon_color') String iconColor,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String name, String iconName, String iconColor,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name,  String iconName,  String iconColor, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountDto() when $default != null:
 return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncSta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name,  String iconName,  String iconColor, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)  $default,) {final _that = this;
 switch (_that) {
 case _AccountDto():
 return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncSta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name,  String iconName,  String iconColor, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountDto() when $default != null:
 return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
@@ -213,20 +213,20 @@ return $default(_that.id,_that.name,_that.iconName,_that.iconColor,_that.syncSta
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _AccountDto extends AccountDto {
-  const _AccountDto({@UuidSerializer() required this.id, required this.name, @JsonKey(name: 'icon_name') required this.iconName, @JsonKey(name: 'icon_color') required this.iconColor, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at') required this.deletedAt}): super._();
+  const _AccountDto({@UuidSerializer() required this.id, required this.name, required this.iconName, required this.iconColor, @SyncStatusSerializer() required this.syncStatus, @DateTimeSerializer() required this.createdAt, @DateTimeSerializer() required this.updatedAt, @DateTimeSerializer() required this.deletedAt}): super._();
   factory _AccountDto.fromJson(Map<String, dynamic> json) => _$AccountDtoFromJson(json);
 
 @override@UuidSerializer() final  Uuid id;
 @override final  String name;
-@override@JsonKey(name: 'icon_name') final  String iconName;
-@override@JsonKey(name: 'icon_color') final  String iconColor;
-@override@SyncStatusSerializer()@JsonKey(name: 'sync_status') final  SyncStatus? syncStatus;
-@override@DateTimeSerializer()@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@DateTimeSerializer()@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
-@override@DateTimeSerializer()@JsonKey(name: 'deleted_at') final  DateTime? deletedAt;
+@override final  String iconName;
+@override final  String iconColor;
+@override@SyncStatusSerializer() final  SyncStatus? syncStatus;
+@override@DateTimeSerializer() final  DateTime? createdAt;
+@override@DateTimeSerializer() final  DateTime? updatedAt;
+@override@DateTimeSerializer() final  DateTime? deletedAt;
 
 /// Create a copy of AccountDto
 /// with the given fields replaced by the non-null parameter values.
@@ -261,7 +261,7 @@ abstract mixin class _$AccountDtoCopyWith<$Res> implements $AccountDtoCopyWith<$
   factory _$AccountDtoCopyWith(_AccountDto value, $Res Function(_AccountDto) _then) = __$AccountDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'icon_name') String iconName,@JsonKey(name: 'icon_color') String iconColor,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String name, String iconName, String iconColor,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 

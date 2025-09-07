@@ -34,7 +34,7 @@ class ProfileRepo extends Repo<Profile> with AutoSubscribe<Profile> {
     return profileDtos.map((dto) {
       EntityLogger.instance.d("DataManager", EntityType.profile.text, "mapping Profile with ${currencies.length} currencies");
       final email = supabase.auth.currentUser?.email ?? "unknown email";
-      final currency = currencies.firstWhereOrNull((c) => c.id == dto.settingDto.currencyId) ?? Currency.notFound();
+      final currency = currencies.firstWhereOrNull((c) => c.id == dto.settings.currencyId) ?? Currency.notFound();
       return Profile.fromDto(dto, email: email, currency: currency);
     }).toList();
   }

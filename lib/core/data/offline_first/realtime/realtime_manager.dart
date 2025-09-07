@@ -11,15 +11,12 @@ typedef ReloadFn = FutureOr<void> Function();
 
 @singleton
 class RealtimeManager {
-  final SupabaseAuthManager supabaseAuthManager;
   final Map<String, PublishSubject<void>> _subjects = {};
   final Map<String, int> _refCounts = {};
   RealtimeChannel? _schemaChannel;
   bool _started = false;
 
   StreamSubscription<SupabaseAuthEvent>? _authSub;
-
-  RealtimeManager(this.supabaseAuthManager);
 
   Stream<void> eventStream(String table) => _subjects.putIfAbsent(table, () => PublishSubject<void>()).stream;
 
@@ -31,8 +28,8 @@ class RealtimeManager {
       final left = (_refCounts[table] ?? 1) - 1;
       if (left <= 0) {
         _refCounts.remove(table);
-        final s = _subjects.remove(table);
-        await s?.close();
+        final subject = _subjects.remove(table);
+        await subject?.close();
       } else {
         _refCounts[table] = left;
       }
@@ -40,22 +37,12 @@ class RealtimeManager {
     };
   }
 
-  Future<void> init() async {
-    _authSub = supabaseAuthManager.stream.listen((e) async {
-      if (e.type == SupabaseAuthType.tokenRefreshed && e.session != null) {
-        try {
-          Supabase.instance.client.realtime.setAuth(e.session!.accessToken);
-        } catch (_) {}
-        BudgetLogger.instance.i("restart realtime");
-        await restart();
-      } else if (e.type == SupabaseAuthType.signedOut) {
-        await stop();
-      }
-    });
-  }
-
   Future<void> start() async {
     if (_started) return;
+    final token = supabase.auth.currentSession?.accessToken;
+    if (token != null) {
+      supabase.realtime.setAuth(token);
+    }
     _schemaChannel = supabase
         .channel('realtime:public')
         .onPostgresChanges(
@@ -74,16 +61,17 @@ class RealtimeManager {
   }
 
   Future<void> restart() async {
-    BudgetLogger.instance.i("restart realtime $_started");
+    if (!_started) return;
     await stop();
+    await Future.delayed(Duration(seconds: 2));
     await start();
   }
 
   Future<void> stop() async {
-    BudgetLogger.instance.i("stop realtime $_started");
     if (!_started) return;
     if (_schemaChannel != null) {
       await supabase.removeChannel(_schemaChannel!);
+      EntityLogger.instance.d("RealtimeManager", "realtime", "stopped");
       _schemaChannel = null;
     }
     _started = false;
@@ -97,11 +85,15 @@ class RealtimeManager {
     _subjects.clear();
     _refCounts.clear();
     await _authSub?.cancel();
+    EntityLogger.instance.d("RealtimeManager", "realtime", "disposed");
   }
 
   void _scheduleStop() {
     Future<void>.delayed(const Duration(seconds: 5)).then((_) {
-      if (_subjects.isEmpty) stop();
+      if (_subjects.isEmpty) {
+        EntityLogger.instance.d("RealtimeManager", "realtime", "scheduled stop");
+        stop();
+      }
     });
   }
 }

@@ -10,16 +10,17 @@ part 'booking_dto.g.dart';
 abstract class BookingDto with _$BookingDto implements Dto {
   const BookingDto._();
 
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory BookingDto({
     @UuidSerializer() required Uuid id,
-    @JsonKey(name: 'date') @DateSerializer() required DateTime date,
+    @DateSerializer() required DateTime date,
     String? description,
     @DecimalConverter() required Decimal amount,
-    @JsonKey(name: 'category_id') @UuidSerializer() required Uuid categoryId,
-    @JsonKey(name: 'account_id') @UuidSerializer() required Uuid accountId,
-    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
-    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
+    @UuidSerializer() required Uuid categoryId,
+    @UuidSerializer() required Uuid accountId,
+    @SyncStatusSerializer() required SyncStatus? syncStatus,
+    @DateTimeSerializer() required DateTime? createdAt,
+    @DateTimeSerializer() required DateTime? updatedAt,
   }) = _BookingDto;
 
   factory BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);

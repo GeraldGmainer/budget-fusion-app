@@ -9,17 +9,18 @@ part 'currency_dto.g.dart';
 abstract class CurrencyDto with _$CurrencyDto implements Dto {
   const CurrencyDto._();
 
+  @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
   const factory CurrencyDto({
     @UuidSerializer() required Uuid id,
     required String name,
-    @JsonKey(name: 'decimal_precision') required int decimalPrecision,
-    @BoolIntSerializer() @JsonKey(name: 'unit_position_front') required bool unitPositionFront,
+    required int decimalPrecision,
+    @BoolIntSerializer() required bool unitPositionFront,
     required String symbol,
-    @JsonKey(name: 'ui_order') int? uiOrder,
-    @SyncStatusSerializer() @JsonKey(name: 'sync_status') required SyncStatus? syncStatus,
-    @DateTimeSerializer() @JsonKey(name: 'created_at') required DateTime? createdAt,
-    @DateTimeSerializer() @JsonKey(name: 'updated_at') required DateTime? updatedAt,
-    @DateTimeSerializer() @JsonKey(name: 'deleted_at') required DateTime? deletedAt,
+    int? uiOrder,
+    @SyncStatusSerializer() required SyncStatus? syncStatus,
+    @DateTimeSerializer() required DateTime? createdAt,
+    @DateTimeSerializer() required DateTime? updatedAt,
+    @DateTimeSerializer() required DateTime? deletedAt,
   }) = _CurrencyDto;
 
   factory CurrencyDto.fromJson(Map<String, dynamic> json) => _$CurrencyDtoFromJson(json);

@@ -32,6 +32,6 @@ _SyncAllResponse _$SyncAllResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SyncAllResponseToJson(_SyncAllResponse instance) =>
     <String, dynamic>{
       'serverNow': instance.serverNow.toIso8601String(),
-      'deltas': instance.deltas,
+      'deltas': instance.deltas.map((k, e) => MapEntry(k, e.toJson())),
       'newTimestamps': _tsMapToJson(instance.newTimestamps),
     };

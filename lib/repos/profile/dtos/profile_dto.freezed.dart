@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileDto {
 
-@UuidSerializer() Uuid get id;@JsonKey(name: 'first_name') String? get firstName;@JsonKey(name: 'last_name') String? get lastName;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'settings')@ProfileSettingDtoConverter() ProfileSettingDto get settingDto;@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? get syncStatus;@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? get createdAt;@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? get updatedAt;@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? get deletedAt;
+@UuidSerializer() Uuid get id; String? get firstName; String? get lastName; String? get avatarUrl;@ProfileSettingDtoConverter() ProfileSettingDto get settings;@SyncStatusSerializer() SyncStatus? get syncStatus;@DateTimeSerializer() DateTime? get createdAt;@DateTimeSerializer() DateTime? get updatedAt;@DateTimeSerializer() DateTime? get deletedAt;
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ProfileDtoCopyWith<ProfileDto> get copyWith => _$ProfileDtoCopyWithImpl<Profile
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.settingDto, settingDto) || other.settingDto == settingDto)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.settings, settings) || other.settings == settings)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,avatarUrl,settingDto,syncStatus,createdAt,updatedAt,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,avatarUrl,settings,syncStatus,createdAt,updatedAt,deletedAt);
 
 @override
 String toString() {
-  return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settingDto: $settingDto, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+  return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settings: $settings, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $ProfileDtoCopyWith<$Res>  {
   factory $ProfileDtoCopyWith(ProfileDto value, $Res Function(ProfileDto) _then) = _$ProfileDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer() Uuid id,@JsonKey(name: 'first_name') String? firstName,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'settings')@ProfileSettingDtoConverter() ProfileSettingDto settingDto,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String? firstName, String? lastName, String? avatarUrl,@ProfileSettingDtoConverter() ProfileSettingDto settings,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 
-$ProfileSettingDtoCopyWith<$Res> get settingDto;
+$ProfileSettingDtoCopyWith<$Res> get settings;
 
 }
 /// @nodoc
@@ -65,13 +65,13 @@ class _$ProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = freezed,Object? lastName = freezed,Object? avatarUrl = freezed,Object? settingDto = null,Object? syncStatus = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,Object? deletedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = freezed,Object? lastName = freezed,Object? avatarUrl = freezed,Object? settings = null,Object? syncStatus = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,Object? deletedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as Uuid,firstName: freezed == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,settingDto: null == settingDto ? _self.settingDto : settingDto // ignore: cast_nullable_to_non_nullable
+as String?,settings: null == settings ? _self.settings : settings // ignore: cast_nullable_to_non_nullable
 as ProfileSettingDto,syncStatus: freezed == syncStatus ? _self.syncStatus : syncStatus // ignore: cast_nullable_to_non_nullable
 as SyncStatus?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -83,10 +83,10 @@ as DateTime?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ProfileSettingDtoCopyWith<$Res> get settingDto {
+$ProfileSettingDtoCopyWith<$Res> get settings {
   
-  return $ProfileSettingDtoCopyWith<$Res>(_self.settingDto, (value) {
-    return _then(_self.copyWith(settingDto: value));
+  return $ProfileSettingDtoCopyWith<$Res>(_self.settings, (value) {
+    return _then(_self.copyWith(settings: value));
   });
 }
 }
@@ -170,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'first_name')  String? firstName, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'settings')@ProfileSettingDtoConverter()  ProfileSettingDto settingDto, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String? firstName,  String? lastName,  String? avatarUrl, @ProfileSettingDtoConverter()  ProfileSettingDto settings, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileDto() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settingDto,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settings,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
   return orElse();
 
 }
@@ -191,10 +191,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.se
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'first_name')  String? firstName, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'settings')@ProfileSettingDtoConverter()  ProfileSettingDto settingDto, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String? firstName,  String? lastName,  String? avatarUrl, @ProfileSettingDtoConverter()  ProfileSettingDto settings, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileDto():
-return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settingDto,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settings,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +211,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.se
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'first_name')  String? firstName, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'settings')@ProfileSettingDtoConverter()  ProfileSettingDto settingDto, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at')  DateTime? deletedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String? firstName,  String? lastName,  String? avatarUrl, @ProfileSettingDtoConverter()  ProfileSettingDto settings, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt, @DateTimeSerializer()  DateTime? deletedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileDto() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settingDto,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.settings,_that.syncStatus,_that.createdAt,_that.updatedAt,_that.deletedAt);case _:
   return null;
 
 }
@@ -223,21 +223,21 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.avatarUrl,_that.se
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _ProfileDto extends ProfileDto {
-  const _ProfileDto({@UuidSerializer() required this.id, @JsonKey(name: 'first_name') this.firstName, @JsonKey(name: 'last_name') this.lastName, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'settings')@ProfileSettingDtoConverter() required this.settingDto, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt, @DateTimeSerializer()@JsonKey(name: 'deleted_at') required this.deletedAt}): super._();
+  const _ProfileDto({@UuidSerializer() required this.id, this.firstName, this.lastName, this.avatarUrl, @ProfileSettingDtoConverter() required this.settings, @SyncStatusSerializer() required this.syncStatus, @DateTimeSerializer() this.createdAt, @DateTimeSerializer() this.updatedAt, @DateTimeSerializer() this.deletedAt}): super._();
   factory _ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
 
 @override@UuidSerializer() final  Uuid id;
-@override@JsonKey(name: 'first_name') final  String? firstName;
-@override@JsonKey(name: 'last_name') final  String? lastName;
-@override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
-@override@JsonKey(name: 'settings')@ProfileSettingDtoConverter() final  ProfileSettingDto settingDto;
-@override@SyncStatusSerializer()@JsonKey(name: 'sync_status') final  SyncStatus? syncStatus;
-@override@DateTimeSerializer()@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@DateTimeSerializer()@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
-@override@DateTimeSerializer()@JsonKey(name: 'deleted_at') final  DateTime? deletedAt;
+@override final  String? firstName;
+@override final  String? lastName;
+@override final  String? avatarUrl;
+@override@ProfileSettingDtoConverter() final  ProfileSettingDto settings;
+@override@SyncStatusSerializer() final  SyncStatus? syncStatus;
+@override@DateTimeSerializer() final  DateTime? createdAt;
+@override@DateTimeSerializer() final  DateTime? updatedAt;
+@override@DateTimeSerializer() final  DateTime? deletedAt;
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
@@ -252,16 +252,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.settingDto, settingDto) || other.settingDto == settingDto)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.settings, settings) || other.settings == settings)&&(identical(other.syncStatus, syncStatus) || other.syncStatus == syncStatus)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,avatarUrl,settingDto,syncStatus,createdAt,updatedAt,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,avatarUrl,settings,syncStatus,createdAt,updatedAt,deletedAt);
 
 @override
 String toString() {
-  return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settingDto: $settingDto, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+  return 'ProfileDto(id: $id, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, settings: $settings, syncStatus: $syncStatus, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
 }
 
 
@@ -272,11 +272,11 @@ abstract mixin class _$ProfileDtoCopyWith<$Res> implements $ProfileDtoCopyWith<$
   factory _$ProfileDtoCopyWith(_ProfileDto value, $Res Function(_ProfileDto) _then) = __$ProfileDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer() Uuid id,@JsonKey(name: 'first_name') String? firstName,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'settings')@ProfileSettingDtoConverter() ProfileSettingDto settingDto,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt,@DateTimeSerializer()@JsonKey(name: 'deleted_at') DateTime? deletedAt
+@UuidSerializer() Uuid id, String? firstName, String? lastName, String? avatarUrl,@ProfileSettingDtoConverter() ProfileSettingDto settings,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt,@DateTimeSerializer() DateTime? deletedAt
 });
 
 
-@override $ProfileSettingDtoCopyWith<$Res> get settingDto;
+@override $ProfileSettingDtoCopyWith<$Res> get settings;
 
 }
 /// @nodoc
@@ -289,13 +289,13 @@ class __$ProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of ProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = freezed,Object? lastName = freezed,Object? avatarUrl = freezed,Object? settingDto = null,Object? syncStatus = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,Object? deletedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = freezed,Object? lastName = freezed,Object? avatarUrl = freezed,Object? settings = null,Object? syncStatus = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,Object? deletedAt = freezed,}) {
   return _then(_ProfileDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as Uuid,firstName: freezed == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,settingDto: null == settingDto ? _self.settingDto : settingDto // ignore: cast_nullable_to_non_nullable
+as String?,settings: null == settings ? _self.settings : settings // ignore: cast_nullable_to_non_nullable
 as ProfileSettingDto,syncStatus: freezed == syncStatus ? _self.syncStatus : syncStatus // ignore: cast_nullable_to_non_nullable
 as SyncStatus?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -308,10 +308,10 @@ as DateTime?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ProfileSettingDtoCopyWith<$Res> get settingDto {
+$ProfileSettingDtoCopyWith<$Res> get settings {
   
-  return $ProfileSettingDtoCopyWith<$Res>(_self.settingDto, (value) {
-    return _then(_self.copyWith(settingDto: value));
+  return $ProfileSettingDtoCopyWith<$Res>(_self.settings, (value) {
+    return _then(_self.copyWith(settings: value));
   });
 }
 }

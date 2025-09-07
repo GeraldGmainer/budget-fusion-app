@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CategoryDto {
 
-@UuidSerializer() Uuid get id; String get name;@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType get categoryType;@JsonKey(name: 'icon_name') String get iconName;@JsonKey(name: 'icon_color') String get iconColor;@JsonKey(name: 'parent_id')@UuidSerializer() Uuid? get parentId;@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? get syncStatus;@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? get createdAt;@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? get updatedAt;
+@UuidSerializer() Uuid get id; String get name;@CategoryTypeSerializer() CategoryType get categoryType; String get iconName; String get iconColor;@UuidSerializer() Uuid? get parentId;@SyncStatusSerializer() SyncStatus? get syncStatus;@DateTimeSerializer() DateTime? get createdAt;@DateTimeSerializer() DateTime? get updatedAt;
 /// Create a copy of CategoryDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CategoryDtoCopyWith<$Res>  {
   factory $CategoryDtoCopyWith(CategoryDto value, $Res Function(CategoryDto) _then) = _$CategoryDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType categoryType,@JsonKey(name: 'icon_name') String iconName,@JsonKey(name: 'icon_color') String iconColor,@JsonKey(name: 'parent_id')@UuidSerializer() Uuid? parentId,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt
+@UuidSerializer() Uuid id, String name,@CategoryTypeSerializer() CategoryType categoryType, String iconName, String iconColor,@UuidSerializer() Uuid? parentId,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt
 });
 
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @JsonKey(name: 'parent_id')@UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @CategoryTypeSerializer()  CategoryType categoryType,  String iconName,  String iconColor, @UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoryDto() when $default != null:
 return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.iconColor,_that.parentId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.icon
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @JsonKey(name: 'parent_id')@UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id,  String name, @CategoryTypeSerializer()  CategoryType categoryType,  String iconName,  String iconColor, @UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _CategoryDto():
 return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.iconColor,_that.parentId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.icon
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType, @JsonKey(name: 'icon_name')  String iconName, @JsonKey(name: 'icon_color')  String iconColor, @JsonKey(name: 'parent_id')@UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id,  String name, @CategoryTypeSerializer()  CategoryType categoryType,  String iconName,  String iconColor, @UuidSerializer()  Uuid? parentId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoryDto() when $default != null:
 return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.iconColor,_that.parentId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -214,21 +214,21 @@ return $default(_that.id,_that.name,_that.categoryType,_that.iconName,_that.icon
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _CategoryDto extends CategoryDto {
-  const _CategoryDto({@UuidSerializer() required this.id, required this.name, @JsonKey(name: 'category_type')@CategoryTypeSerializer() required this.categoryType, @JsonKey(name: 'icon_name') required this.iconName, @JsonKey(name: 'icon_color') required this.iconColor, @JsonKey(name: 'parent_id')@UuidSerializer() required this.parentId, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt}): super._();
+  const _CategoryDto({@UuidSerializer() required this.id, required this.name, @CategoryTypeSerializer() required this.categoryType, required this.iconName, required this.iconColor, @UuidSerializer() required this.parentId, @SyncStatusSerializer() required this.syncStatus, @DateTimeSerializer() required this.createdAt, @DateTimeSerializer() required this.updatedAt}): super._();
   factory _CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);
 
 @override@UuidSerializer() final  Uuid id;
 @override final  String name;
-@override@JsonKey(name: 'category_type')@CategoryTypeSerializer() final  CategoryType categoryType;
-@override@JsonKey(name: 'icon_name') final  String iconName;
-@override@JsonKey(name: 'icon_color') final  String iconColor;
-@override@JsonKey(name: 'parent_id')@UuidSerializer() final  Uuid? parentId;
-@override@SyncStatusSerializer()@JsonKey(name: 'sync_status') final  SyncStatus? syncStatus;
-@override@DateTimeSerializer()@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@DateTimeSerializer()@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
+@override@CategoryTypeSerializer() final  CategoryType categoryType;
+@override final  String iconName;
+@override final  String iconColor;
+@override@UuidSerializer() final  Uuid? parentId;
+@override@SyncStatusSerializer() final  SyncStatus? syncStatus;
+@override@DateTimeSerializer() final  DateTime? createdAt;
+@override@DateTimeSerializer() final  DateTime? updatedAt;
 
 /// Create a copy of CategoryDto
 /// with the given fields replaced by the non-null parameter values.
@@ -263,7 +263,7 @@ abstract mixin class _$CategoryDtoCopyWith<$Res> implements $CategoryDtoCopyWith
   factory _$CategoryDtoCopyWith(_CategoryDto value, $Res Function(_CategoryDto) _then) = __$CategoryDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer() Uuid id, String name,@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType categoryType,@JsonKey(name: 'icon_name') String iconName,@JsonKey(name: 'icon_color') String iconColor,@JsonKey(name: 'parent_id')@UuidSerializer() Uuid? parentId,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt
+@UuidSerializer() Uuid id, String name,@CategoryTypeSerializer() CategoryType categoryType, String iconName, String iconColor,@UuidSerializer() Uuid? parentId,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt
 });
 
 

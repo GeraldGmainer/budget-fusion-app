@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookingSuggestionDto {
 
- String get suggestion;@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType get categoryType;
+ String get suggestion;@CategoryTypeSerializer() CategoryType get categoryType;
 /// Create a copy of BookingSuggestionDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $BookingSuggestionDtoCopyWith<$Res>  {
   factory $BookingSuggestionDtoCopyWith(BookingSuggestionDto value, $Res Function(BookingSuggestionDto) _then) = _$BookingSuggestionDtoCopyWithImpl;
 @useResult
 $Res call({
- String suggestion,@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType categoryType
+ String suggestion,@CategoryTypeSerializer() CategoryType categoryType
 });
 
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String suggestion, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String suggestion, @CategoryTypeSerializer()  CategoryType categoryType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookingSuggestionDto() when $default != null:
 return $default(_that.suggestion,_that.categoryType);case _:
@@ -175,7 +175,7 @@ return $default(_that.suggestion,_that.categoryType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String suggestion, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String suggestion, @CategoryTypeSerializer()  CategoryType categoryType)  $default,) {final _that = this;
 switch (_that) {
 case _BookingSuggestionDto():
 return $default(_that.suggestion,_that.categoryType);case _:
@@ -195,7 +195,7 @@ return $default(_that.suggestion,_that.categoryType);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String suggestion, @JsonKey(name: 'category_type')@CategoryTypeSerializer()  CategoryType categoryType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String suggestion, @CategoryTypeSerializer()  CategoryType categoryType)?  $default,) {final _that = this;
 switch (_that) {
 case _BookingSuggestionDto() when $default != null:
 return $default(_that.suggestion,_that.categoryType);case _:
@@ -207,14 +207,14 @@ return $default(_that.suggestion,_that.categoryType);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _BookingSuggestionDto extends BookingSuggestionDto {
-  const _BookingSuggestionDto({required this.suggestion, @JsonKey(name: 'category_type')@CategoryTypeSerializer() required this.categoryType}): super._();
+  const _BookingSuggestionDto({required this.suggestion, @CategoryTypeSerializer() required this.categoryType}): super._();
   factory _BookingSuggestionDto.fromJson(Map<String, dynamic> json) => _$BookingSuggestionDtoFromJson(json);
 
 @override final  String suggestion;
-@override@JsonKey(name: 'category_type')@CategoryTypeSerializer() final  CategoryType categoryType;
+@override@CategoryTypeSerializer() final  CategoryType categoryType;
 
 /// Create a copy of BookingSuggestionDto
 /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +249,7 @@ abstract mixin class _$BookingSuggestionDtoCopyWith<$Res> implements $BookingSug
   factory _$BookingSuggestionDtoCopyWith(_BookingSuggestionDto value, $Res Function(_BookingSuggestionDto) _then) = __$BookingSuggestionDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String suggestion,@JsonKey(name: 'category_type')@CategoryTypeSerializer() CategoryType categoryType
+ String suggestion,@CategoryTypeSerializer() CategoryType categoryType
 });
 
 

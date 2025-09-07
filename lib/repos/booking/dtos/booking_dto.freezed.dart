@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookingDto {
 
-@UuidSerializer() Uuid get id;@JsonKey(name: 'date')@DateSerializer() DateTime get date; String? get description;@DecimalConverter() Decimal get amount;@JsonKey(name: 'category_id')@UuidSerializer() Uuid get categoryId;@JsonKey(name: 'account_id')@UuidSerializer() Uuid get accountId;@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? get syncStatus;@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? get createdAt;@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? get updatedAt;
+@UuidSerializer() Uuid get id;@DateSerializer() DateTime get date; String? get description;@DecimalConverter() Decimal get amount;@UuidSerializer() Uuid get categoryId;@UuidSerializer() Uuid get accountId;@SyncStatusSerializer() SyncStatus? get syncStatus;@DateTimeSerializer() DateTime? get createdAt;@DateTimeSerializer() DateTime? get updatedAt;
 /// Create a copy of BookingDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $BookingDtoCopyWith<$Res>  {
   factory $BookingDtoCopyWith(BookingDto value, $Res Function(BookingDto) _then) = _$BookingDtoCopyWithImpl;
 @useResult
 $Res call({
-@UuidSerializer() Uuid id,@JsonKey(name: 'date')@DateSerializer() DateTime date, String? description,@DecimalConverter() Decimal amount,@JsonKey(name: 'category_id')@UuidSerializer() Uuid categoryId,@JsonKey(name: 'account_id')@UuidSerializer() Uuid accountId,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt
+@UuidSerializer() Uuid id,@DateSerializer() DateTime date, String? description,@DecimalConverter() Decimal amount,@UuidSerializer() Uuid categoryId,@UuidSerializer() Uuid accountId,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt
 });
 
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'date')@DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @JsonKey(name: 'category_id')@UuidSerializer()  Uuid categoryId, @JsonKey(name: 'account_id')@UuidSerializer()  Uuid accountId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @UuidSerializer()  Uuid categoryId, @UuidSerializer()  Uuid accountId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookingDto() when $default != null:
 return $default(_that.id,_that.date,_that.description,_that.amount,_that.categoryId,_that.accountId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.date,_that.description,_that.amount,_that.categor
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'date')@DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @JsonKey(name: 'category_id')@UuidSerializer()  Uuid categoryId, @JsonKey(name: 'account_id')@UuidSerializer()  Uuid accountId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@UuidSerializer()  Uuid id, @DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @UuidSerializer()  Uuid categoryId, @UuidSerializer()  Uuid accountId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _BookingDto():
 return $default(_that.id,_that.date,_that.description,_that.amount,_that.categoryId,_that.accountId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.date,_that.description,_that.amount,_that.categor
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id, @JsonKey(name: 'date')@DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @JsonKey(name: 'category_id')@UuidSerializer()  Uuid categoryId, @JsonKey(name: 'account_id')@UuidSerializer()  Uuid accountId, @SyncStatusSerializer()@JsonKey(name: 'sync_status')  SyncStatus? syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at')  DateTime? createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at')  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@UuidSerializer()  Uuid id, @DateSerializer()  DateTime date,  String? description, @DecimalConverter()  Decimal amount, @UuidSerializer()  Uuid categoryId, @UuidSerializer()  Uuid accountId, @SyncStatusSerializer()  SyncStatus? syncStatus, @DateTimeSerializer()  DateTime? createdAt, @DateTimeSerializer()  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _BookingDto() when $default != null:
 return $default(_that.id,_that.date,_that.description,_that.amount,_that.categoryId,_that.accountId,_that.syncStatus,_that.createdAt,_that.updatedAt);case _:
@@ -214,21 +214,21 @@ return $default(_that.id,_that.date,_that.description,_that.amount,_that.categor
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class _BookingDto extends BookingDto {
-  const _BookingDto({@UuidSerializer() required this.id, @JsonKey(name: 'date')@DateSerializer() required this.date, this.description, @DecimalConverter() required this.amount, @JsonKey(name: 'category_id')@UuidSerializer() required this.categoryId, @JsonKey(name: 'account_id')@UuidSerializer() required this.accountId, @SyncStatusSerializer()@JsonKey(name: 'sync_status') required this.syncStatus, @DateTimeSerializer()@JsonKey(name: 'created_at') required this.createdAt, @DateTimeSerializer()@JsonKey(name: 'updated_at') required this.updatedAt}): super._();
+  const _BookingDto({@UuidSerializer() required this.id, @DateSerializer() required this.date, this.description, @DecimalConverter() required this.amount, @UuidSerializer() required this.categoryId, @UuidSerializer() required this.accountId, @SyncStatusSerializer() required this.syncStatus, @DateTimeSerializer() required this.createdAt, @DateTimeSerializer() required this.updatedAt}): super._();
   factory _BookingDto.fromJson(Map<String, dynamic> json) => _$BookingDtoFromJson(json);
 
 @override@UuidSerializer() final  Uuid id;
-@override@JsonKey(name: 'date')@DateSerializer() final  DateTime date;
+@override@DateSerializer() final  DateTime date;
 @override final  String? description;
 @override@DecimalConverter() final  Decimal amount;
-@override@JsonKey(name: 'category_id')@UuidSerializer() final  Uuid categoryId;
-@override@JsonKey(name: 'account_id')@UuidSerializer() final  Uuid accountId;
-@override@SyncStatusSerializer()@JsonKey(name: 'sync_status') final  SyncStatus? syncStatus;
-@override@DateTimeSerializer()@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@DateTimeSerializer()@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
+@override@UuidSerializer() final  Uuid categoryId;
+@override@UuidSerializer() final  Uuid accountId;
+@override@SyncStatusSerializer() final  SyncStatus? syncStatus;
+@override@DateTimeSerializer() final  DateTime? createdAt;
+@override@DateTimeSerializer() final  DateTime? updatedAt;
 
 /// Create a copy of BookingDto
 /// with the given fields replaced by the non-null parameter values.
@@ -263,7 +263,7 @@ abstract mixin class _$BookingDtoCopyWith<$Res> implements $BookingDtoCopyWith<$
   factory _$BookingDtoCopyWith(_BookingDto value, $Res Function(_BookingDto) _then) = __$BookingDtoCopyWithImpl;
 @override @useResult
 $Res call({
-@UuidSerializer() Uuid id,@JsonKey(name: 'date')@DateSerializer() DateTime date, String? description,@DecimalConverter() Decimal amount,@JsonKey(name: 'category_id')@UuidSerializer() Uuid categoryId,@JsonKey(name: 'account_id')@UuidSerializer() Uuid accountId,@SyncStatusSerializer()@JsonKey(name: 'sync_status') SyncStatus? syncStatus,@DateTimeSerializer()@JsonKey(name: 'created_at') DateTime? createdAt,@DateTimeSerializer()@JsonKey(name: 'updated_at') DateTime? updatedAt
+@UuidSerializer() Uuid id,@DateSerializer() DateTime date, String? description,@DecimalConverter() Decimal amount,@UuidSerializer() Uuid categoryId,@UuidSerializer() Uuid accountId,@SyncStatusSerializer() SyncStatus? syncStatus,@DateTimeSerializer() DateTime? createdAt,@DateTimeSerializer() DateTime? updatedAt
 });
 
 

@@ -25,13 +25,13 @@ extension SupabaseUserProfile on User? {
 }
 
 extension SupabaseClientX on SupabaseClient {
-  Future<void> refreshToken() async {
+  Future<void> refreshToken({bool forceRefresh = false}) async {
     try {
       if (supabase.auth.currentUser == null || supabase.auth.currentSession == null) {
         throw UnauthenticatedException();
       }
       Session session = supabase.auth.currentSession!;
-      if ((session.expiresAt! - 5) < (DateTime.now().millisecondsSinceEpoch / 1000).round()) {
+      if (forceRefresh || (session.expiresAt! - 5) < (DateTime.now().millisecondsSinceEpoch / 1000).round()) {
         BudgetLogger.instance.i("REFRESH TOKEN");
         await supabase.auth.refreshSession();
       }
