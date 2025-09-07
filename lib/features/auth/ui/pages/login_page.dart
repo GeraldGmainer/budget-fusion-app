@@ -48,15 +48,17 @@ class _LoginPageState extends State<LoginPage> {
               final isLoginLoading = state is LoginLoadingState || state is LoginSuccessState;
 
               return SingleChildScrollView(
-                child: Container(
-                  width: AppDimensions.formWidth,
-                  padding: AppDimensions.formPadding,
-                  child: Column(
-                    children: [
-                      Image.asset('assets/logo-full.png', height: 100),
-                      const SizedBox(height: 20),
-                      LoginForm(isLoading: isLoginLoading),
-                    ],
+                child: Center(
+                  child: Container(
+                    width: AppDimensions.formWidth,
+                    padding: AppDimensions.formPadding,
+                    child: Column(
+                      children: [
+                        Image.asset('assets/logo-full.png', height: 100),
+                        const SizedBox(height: 20),
+                        LoginForm(isLoading: isLoginLoading),
+                      ],
+                    ),
                   ),
                 ),
               );

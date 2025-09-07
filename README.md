@@ -26,6 +26,13 @@ https://supabase.com/docs/guides/getting-started/ai-prompts
 
 fvm flutter run
 
+## Build release on Android phone
+
+```
+fvm flutter build apk --release 
+adb install -r build/app/outputs/flutter-apk/app-release.apk
+```
+
 ### Useful commands
 
 watch changes:

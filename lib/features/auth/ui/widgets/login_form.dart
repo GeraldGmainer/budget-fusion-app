@@ -1,6 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
@@ -27,28 +26,29 @@ class _LoginFormState extends State<LoginForm> {
   initState() {
     super.initState();
     BlocProvider.of<LoginCubit>(context).init();
-    if (!kReleaseMode) {
-      _emailController.text = "gerald_gmainer@designium.jp";
-      _passwordController.text = "aaaaaaA1";
-    }
+    // TODO only if (!kReleaseMode)
+    // if (!kReleaseMode) {
+    _emailController.text = "gerald_gmainer@designium.jp";
+    _passwordController.text = "aaaaaaA1";
+    // }
   }
 
-  _googleLogin() {
+  void _googleLogin() {
     BlocProvider.of<LoginCubit>(context).loginGoogle();
   }
 
-  _credentialsLogin() {
+  void _credentialsLogin() {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     BlocProvider.of<LoginCubit>(context).loginCredentials(_emailController.text, _passwordController.text);
   }
 
-  _forgotPassword() {
+  void _forgotPassword() {
     Navigator.of(context).pushNamed(AppRoutes.passwordForgot);
   }
 
-  _signUp() {
+  void _signUp() {
     Navigator.of(context).pushNamed(AppRoutes.signUp);
   }
 
@@ -89,9 +89,19 @@ class _LoginFormState extends State<LoginForm> {
   Widget _buildDivider() {
     return Row(
       children: [
-        Expanded(child: Container(margin: const EdgeInsets.only(right: 8), child: const Divider(color: Colors.white))),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.only(right: 8),
+            child: const Divider(color: Colors.white),
+          ),
+        ),
         Text("or continue with"),
-        Expanded(child: Container(margin: const EdgeInsets.only(left: 8), child: const Divider(color: Colors.white))),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.only(left: 8),
+            child: const Divider(color: Colors.white),
+          ),
+        ),
       ],
     );
   }
@@ -105,11 +115,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget _buildLoginButton(bool isLoading) {
-    return SizedBox(width: double.infinity, child: FormButton(text: "auth.login.submit".tr(), onPressed: _credentialsLogin, isLoading: isLoading));
+    return SizedBox(
+      width: double.infinity,
+      child: FormButton(text: "auth.login.submit".tr(), onPressed: _credentialsLogin, isLoading: isLoading),
+    );
   }
 
   Widget _buildForgotPassword(bool isLoading) {
-    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [TextButton(onPressed: isLoading ? null : _forgotPassword, child: Text("Forgot password"))]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [TextButton(onPressed: isLoading ? null : _forgotPassword, child: Text("Forgot password"))],
+    );
   }
 
   Widget _buildSignUp(bool isLoading) {
