@@ -2,9 +2,9 @@ import 'package:budget_fusion_app/core/core.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 
-import 'drawer_header.dart';
-import 'drawer_item.dart';
-import 'drawer_section.dart';
+import 'app_drawer_header.dart';
+import 'app_drawer_item.dart';
+import 'app_drawer_section.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -114,7 +114,15 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(child: Column(children: [const AppDrawerHeader(userName: 'John Doe'), Expanded(child: _buildList(context)), SizedBox(height: 16)]));
+    return Drawer(
+      child: Column(
+        children: [
+          const AppDrawerHeader(userName: 'John Doe'),
+          Expanded(child: _buildList(context)),
+          SizedBox(height: 16),
+        ],
+      ),
+    );
   }
 
   Widget _buildList(BuildContext context) {
