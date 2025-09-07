@@ -85,7 +85,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       if (e is RangeError || e is FormatException) {
         _updateState(state.result, history: history);
       } else {
-        BudgetLogger.instance.e("Calculate Result Exception", e, stackTrace);
+        BudgetLogger.instance.e("Calculate Result Exception", e, stackTrace: stackTrace);
       }
     }
   }

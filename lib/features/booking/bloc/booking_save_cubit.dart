@@ -56,11 +56,11 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
     try {
       await _saveBookingUseCase.save(draft);
       emit(BookingSaveState.loaded(draft: draft));
-    } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stack);
+    } on TranslatedException catch (e, stackTrace) {
+      BudgetLogger.instance.e("${runtimeType.toString()} save TranslatedException", e, stackTrace: stackTrace);
       emit(BookingSaveState.error(draft: draft, error: e.error));
-    } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stack);
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("${runtimeType.toString()} save Exception", e, stackTrace: stackTrace);
       emit(BookingSaveState.error(draft: draft, error: AppError.unknown));
     }
   }
@@ -70,11 +70,11 @@ class BookingSaveCubit extends ErrorHandledCubit<BookingSaveState> {
     try {
       await _bookingRepo.delete(booking);
       emit(BookingSaveState.deleted(draft: draft, booking: booking));
-    } on TranslatedException catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stack);
+    } on TranslatedException catch (e, stackTrace) {
+      BudgetLogger.instance.e("${runtimeType.toString()} delete TranslatedException", e, stackTrace: stackTrace);
       emit(BookingSaveState.error(draft: draft, error: e.error));
-    } catch (e, stack) {
-      BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stack);
+    } catch (e, stackTrace) {
+      BudgetLogger.instance.e("${runtimeType.toString()} delete Exception", e, stackTrace: stackTrace);
       emit(BookingSaveState.error(draft: draft, error: AppError.unknown));
     }
   }

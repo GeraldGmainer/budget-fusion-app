@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 class FeatureConstants {
+  /// use card design
   static const bool useCard = false;
 
   /// short cache time so that multiple domain can share the same of syncAll, in case syncAll request is faster than other domain loading time
@@ -40,4 +41,7 @@ class FeatureConstants {
   static Duration randomNetworkDelay() {
     return kReleaseMode ? Duration.zero : Duration(milliseconds: Random().nextInt(500) + 1000);
   }
+
+  static const bool useSentry = true;
+  // static const bool useSentry = kReleaseMode
 }

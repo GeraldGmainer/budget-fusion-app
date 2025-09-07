@@ -2,7 +2,7 @@ name: budget_fusion_app
 description: "Budget Book mobile app"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ">=3.8.0 <4.0.0"
@@ -55,6 +55,7 @@ dependencies:
   haptic_feedback: ^0.5.1+1
   url_launcher: ^6.3.1
   flutter_secure_storage: ^9.2.4
+  sentry_flutter: ^9.6.0
 
 dependency_overrides:
   vector_math: ^2.2.0
@@ -68,6 +69,7 @@ dev_dependencies:
   freezed: ^3.2.0
   json_serializable: ^6.8.0
   injectable_generator: ^2.6.2
+  sentry_dart_plugin: ^3.1.1
 
 flutter:
 
@@ -129,3 +131,9 @@ flutter_native_splash:
   web: false
   android_gravity: center
   ios_content_mode: scaleToFill
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: budget-fusion

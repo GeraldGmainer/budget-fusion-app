@@ -12,10 +12,10 @@ abstract class ErrorHandledCubit<S> extends Cubit<S> {
       final res = await call();
       onSuccess(res);
     } on TranslatedException catch (e, stackTrace) {
-      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace);
+      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace: stackTrace);
       emit(onError(e, e.error));
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace);
+      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace: stackTrace);
       emit(onError(e, AppError.unknown));
     }
   }
@@ -25,10 +25,10 @@ abstract class ErrorHandledCubit<S> extends Cubit<S> {
       await action();
     } on TranslatedException catch (e, stackTrace) {
       // TODO what to log, so that sentry gets nice messages
-      BudgetLogger.instance.e(e.message, e.e, stackTrace);
+      BudgetLogger.instance.e(e.message, e.cause, stackTrace: stackTrace);
       emit(onError(e, e.error));
     } catch (e, stackTrace) {
-      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace);
+      BudgetLogger.instance.e(runtimeType.toString(), e, stackTrace: stackTrace);
       emit(onError(e, AppError.unknown));
     }
   }
