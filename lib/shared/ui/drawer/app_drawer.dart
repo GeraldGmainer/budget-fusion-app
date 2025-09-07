@@ -117,7 +117,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          const AppDrawerHeader(userName: 'John Doe'),
+          AppDrawerHeader(),
           Expanded(child: _buildList(context)),
           SizedBox(height: 16),
         ],
