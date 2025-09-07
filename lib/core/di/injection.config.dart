@@ -46,6 +46,7 @@ import 'package:budget_fusion_app/core/supabase/supabase_auth_cubit.dart'
     as _i78;
 import 'package:budget_fusion_app/core/supabase/supabase_auth_manager.dart'
     as _i942;
+import 'package:budget_fusion_app/core/supabase/supabase_manager.dart' as _i799;
 import 'package:budget_fusion_app/features/auth/bloc/login_cubit.dart' as _i319;
 import 'package:budget_fusion_app/features/auth/data/remote_sources/user_remote_source.dart'
     as _i478;
@@ -157,8 +158,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i500.CalculatorCubit>(() => _i500.CalculatorCubit());
     gh.factory<_i801.LanguageCubit>(() => _i801.LanguageCubit());
     gh.factory<_i976.MainCubit>(() => _i976.MainCubit());
-    gh.singleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
     gh.singleton<_i942.SupabaseAuthManager>(() => _i942.SupabaseAuthManager());
+    gh.singleton<_i799.SupabaseManager>(() => _i799.SupabaseManager());
+    gh.singleton<_i258.RealtimeManager>(() => _i258.RealtimeManager());
     gh.lazySingleton<_i110.CategoryRemoteDataSource>(
       () => _i110.CategoryRemoteDataSource(),
     );
@@ -180,6 +182,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i247.RemoteLoadingService>(
       () => _i247.RemoteLoadingService(),
     );
+    gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i478.UserRemoteSource>(() => _i478.UserRemoteSource());
     gh.lazySingleton<_i226.DefaultNewDateUseCase>(
       () => _i226.DefaultNewDateUseCase(),
@@ -194,7 +197,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i226.SummaryDataGenerator(),
     );
     gh.lazySingleton<_i25.DatetimeService>(() => _i25.DatetimeService());
-    gh.lazySingleton<_i251.SyncRemoteSource>(() => _i251.SyncRemoteSource());
     gh.lazySingleton<_i225.SyncCursorRepo>(
       () => _i225.SyncCursorRepo(gh<_i460.SharedPreferences>()),
     );
@@ -369,13 +371,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i788.CategoryListCubit>(
       () => _i788.CategoryListCubit(gh<_i455.LoadCategoryListUseCase>()),
     );
-    gh.singleton<_i202.AppLifecycleManager>(
-      () => _i202.AppLifecycleManager(
-        gh<_i702.ConnectivityService>(),
-        gh<_i714.OfflineFirstCoordinator>(),
-        gh<_i714.SupabaseAuthManager>(),
-      ),
-    );
     gh.lazySingleton<_i656.DefaultAccountUseCase>(
       () => _i656.DefaultAccountUseCase(gh<_i576.BookingAccountService>()),
     );
@@ -395,6 +390,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i405.SaveBookingUseCase(
         gh<_i269.BookingRepo>(),
         gh<_i421.ProfileRepo>(),
+      ),
+    );
+    gh.singleton<_i202.AppLifecycleManager>(
+      () => _i202.AppLifecycleManager(
+        gh<_i702.ConnectivityService>(),
+        gh<_i714.OfflineFirstCoordinator>(),
+        gh<_i714.SupabaseAuthManager>(),
+        gh<_i799.SupabaseManager>(),
       ),
     );
     gh.factory<_i863.BookingSaveCubit>(
