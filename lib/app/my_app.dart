@@ -1,5 +1,6 @@
 import 'package:budget_fusion_app/app/theme.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,13 +21,16 @@ class MyApp extends StatelessWidget {
         title: 'Budget book',
         theme: createTheme(context),
         onGenerateRoute: _appRouter.onGenerateRoute,
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: !kReleaseMode,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        builder: (ctx, child) => SupabaseContainer(
-          rootNavigatorKey: _rootNavigatorKey,
-          child: child,
+        builder: (ctx, child) => SafeArea(
+          top: false,
+          child: SupabaseContainer(
+            rootNavigatorKey: _rootNavigatorKey,
+            child: child,
+          ),
         ),
       ),
     );

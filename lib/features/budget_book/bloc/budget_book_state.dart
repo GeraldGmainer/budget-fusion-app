@@ -41,18 +41,18 @@ abstract class BudgetBookState with _$BudgetBookState {
     return when(
       initial: (_, filter, viewMode, dateRange) => 'BookingPageState Initial:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
       loading: (_, filter, viewMode, dateRange) => 'BookingPageState Loading:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
-      loaded: (_, filter, viewMode, dateRange, __) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
+      loaded: (_, filter, viewMode, dateRange, _) => 'BookingPageState Loaded:\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
       error: (_, filter, viewMode, dateRange, error) => 'BookingPageState Error:\n- Message: $error\n- Filter: $filter\n- ViewMode: $viewMode\n- DateRange: $dateRange',
     );
   }
 }
 
 extension BookingPageStateExtensions on BudgetBookState {
-  bool get isLoading => maybeWhen(loading: (_, __, ___, ____) => true, orElse: () => false);
+  bool get isLoading => maybeWhen(loading: (_, _, _, _) => true, orElse: () => false);
 
-  bool get isLoaded => maybeWhen(loaded: (_, __, ___, ____, _____) => true, orElse: () => false);
+  bool get isLoaded => maybeWhen(loaded: (_, _, _, _, _) => true, orElse: () => false);
 
-  bool get isError => maybeWhen(error: (_, __, ___, ____, _____) => true, orElse: () => false);
+  bool get isError => maybeWhen(error: (_, _, _, _, _) => true, orElse: () => false);
 
   PeriodMode get period => filter.period;
 }

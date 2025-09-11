@@ -198,7 +198,7 @@ class _BookingSavePageState extends State<BookingSavePage> {
                 _buildDivider(),
                 DescriptionInput(draft: draft, onChanged: _onDescriptionChange),
                 if (widget.model != null) _buildDivider(),
-                if (widget.model != null) EntityMetaWidget<Booking>(id: widget.model!.id, repo: getIt<BookingRepo>(), padding: const EdgeInsets.fromLTRB(16, 4, 16, 8)),
+                if (widget.model != null) EntityMetaDisplay<Booking>(id: widget.model!.id, repo: getIt<BookingRepo>(), padding: const EdgeInsets.fromLTRB(16, 4, 16, 8)),
               ],
             ),
           ),

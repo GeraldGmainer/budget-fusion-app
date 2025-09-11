@@ -11,7 +11,7 @@ class ConnectivitySingleton {
     return _isConnected;
   }
 
-  setConnected(bool isConnected) {
+  void setConnected(bool isConnected) {
     _isConnected = isConnected;
   }
 }

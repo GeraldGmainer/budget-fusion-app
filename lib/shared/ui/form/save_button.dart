@@ -16,7 +16,7 @@ class SaveButton extends StatelessWidget {
     this.backgroundColor = AppColors.accentColor,
   });
 
-  _onTap() {
+  void _onTap() {
     onTap.call();
   }
 

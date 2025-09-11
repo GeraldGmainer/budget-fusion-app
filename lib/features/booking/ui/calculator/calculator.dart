@@ -15,7 +15,7 @@ class Calculator extends StatelessWidget {
 
   const Calculator({required this.bookingSaveCubit, required this.calculatorCubit});
 
-  _onPressed(BuildContext context, CalculatorKey key) {
+  void _onPressed(BuildContext context, CalculatorKey key) {
     switch (key) {
       case CalculatorKey.clear:
         calculatorCubit.clear();
@@ -39,7 +39,7 @@ class Calculator extends StatelessWidget {
     }
   }
 
-  _onValueChange(double value) {
+  void _onValueChange(double value) {
     bookingSaveCubit.updateDraft((draft) => draft.copyWith(amount: Decimal.parse(value.toString())));
   }
 

@@ -9,7 +9,7 @@ class IconInput extends StatelessWidget {
 
   const IconInput({super.key, required this.draft});
 
-  _onIconTap(BuildContext context) async {
+  Future<void> _onIconTap(BuildContext context) async {
     final result = await Navigator.of(context).pushNamed(AppRoutes.categoryIconColorPicker, arguments: draft);
     final obj = result as Map<String, String>?;
     if (obj != null && context.mounted) {

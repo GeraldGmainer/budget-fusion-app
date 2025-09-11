@@ -44,6 +44,9 @@ class AppColors {
   static const Color errorColor = Color(0xFFCF6679);
   static const Color validationErrorColor = Color(0xFFD32F2F);
   static const Color warningColor = Color(0xFFFFD54F);
+  static const Color entityUpToDate = Color(0xFF00C853);
+  static const Color entityPending = Color(0xFFFFB300);
+  static const Color entityError = Color(0xFFE53935);
 
   // Transaction Colors
   static const Color incomeColor = Color(0xFF4CAF50); // Green for income

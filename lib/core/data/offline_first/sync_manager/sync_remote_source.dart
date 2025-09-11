@@ -32,7 +32,7 @@ class SyncRemoteSource extends SupabaseClient {
     });
   }
 
-  _log(String msg, {Stopwatch? stopwatch, bool dark = false}) {
+  void _log(String msg, {Stopwatch? stopwatch, bool dark = false}) {
     if (stopwatch != null) {
       EntityLogger.instance.d("SyncRemoteSource", "sync", "$msg took ${stopwatch.elapsed.inMilliseconds} ms", darkColor: dark);
     } else {

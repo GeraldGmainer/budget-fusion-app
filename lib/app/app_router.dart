@@ -18,38 +18,35 @@ class AppRouter {
     AppRoutes.login: (settings) => DefaultRoute(builder: (_) => LoginPage(), settings: settings),
     AppRoutes.main: (settings) => DefaultRoute(builder: (_) => MainPage(), settings: settings),
     AppRoutes.debug: (settings) => DefaultRoute(builder: (_) => DebugPage(), settings: settings),
-    AppRoutes.bookingSave:
-        (settings) => SlideRightRoute(
-          builder: (_) => BlocProvider<BookingSaveCubit>(create: (_) => GetIt.I<BookingSaveCubit>(), child: BookingSavePage(model: settings.arguments as Booking?)),
-          settings: settings,
-        ),
+    AppRoutes.bookingSave: (settings) => SlideRightRoute(
+      builder: (_) => BlocProvider<BookingSaveCubit>(
+        create: (_) => GetIt.I<BookingSaveCubit>(),
+        child: BookingSavePage(model: settings.arguments as Booking?),
+      ),
+      settings: settings,
+    ),
     AppRoutes.categoryList: (settings) => DefaultRoute(builder: (_) => CategoryListPage(), settings: settings),
-    AppRoutes.categoryParentSave:
-        (settings) => SlideRightRoute(
-          builder:
-              (_) => BlocProvider<CategorySaveCubit>(
-                create: (_) => GetIt.I<CategorySaveCubit>(),
-                child: CategoryParentSavePage(draft: settings.arguments as CategoryDraft),
-              ),
-          settings: settings,
-        ),
-    AppRoutes.categorySubSave:
-        (settings) => SlideRightRoute(
-          builder:
-              (_) => BlocProvider<CategorySaveCubit>(
-                create: (_) => GetIt.I<CategorySaveCubit>(),
-                child: CategorySubSavePage(draft: settings.arguments as CategoryDraft),
-              ),
-          settings: settings,
-        ),
-    AppRoutes.categoryIconColorPicker:
-        (settings) => SlideUpRoute(
-          builder: (_) {
-            final draft = settings.arguments as CategoryDraft;
-            return IconColorPickerDialog(initialIconName: draft.iconName, initialIconColor: draft.iconColor);
-          },
-          settings: settings,
-        ),
+    AppRoutes.categoryParentSave: (settings) => SlideRightRoute(
+      builder: (_) => BlocProvider<CategorySaveCubit>(
+        create: (_) => GetIt.I<CategorySaveCubit>(),
+        child: CategoryParentSavePage(draft: settings.arguments as CategoryDraft),
+      ),
+      settings: settings,
+    ),
+    AppRoutes.categorySubSave: (settings) => SlideRightRoute(
+      builder: (_) => BlocProvider<CategorySaveCubit>(
+        create: (_) => GetIt.I<CategorySaveCubit>(),
+        child: CategorySubSavePage(draft: settings.arguments as CategoryDraft),
+      ),
+      settings: settings,
+    ),
+    AppRoutes.categoryIconColorPicker: (settings) => SlideUpRoute(
+      builder: (_) {
+        final draft = settings.arguments as CategoryDraft;
+        return IconColorPickerDialog(initialIconName: draft.iconName, initialIconColor: draft.iconColor);
+      },
+      settings: settings,
+    ),
     AppRoutes.settings: (settings) => DefaultRoute(builder: (_) => SettingsPage(), settings: settings),
   };
 
@@ -65,6 +62,9 @@ class AppRouter {
 
 class DefaultRoute<T> extends MaterialPageRoute<T> {
   DefaultRoute({required super.builder, super.settings});
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 500);
 }
 
 class SlideUpRoute<T> extends MaterialPageRoute<T> {

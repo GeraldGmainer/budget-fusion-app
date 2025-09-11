@@ -6,7 +6,7 @@ class CalendarView extends StatefulWidget {
 }
 
 class _CalendarViewState extends State<CalendarView> {
-  DateTime _focusedMonth = DateTime(DateTime.now().year, DateTime.now().month);
+  final DateTime _focusedMonth = DateTime(DateTime.now().year, DateTime.now().month);
   DateTime? _selected;
   late final Map<DateTime, List<_Tx>> _data = _mockData();
 
@@ -47,7 +47,7 @@ class _CalendarViewState extends State<CalendarView> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 160),
                     decoration: BoxDecoration(
-                      color: isSelected ? Theme.of(context).colorScheme.primary.withOpacity(.12) : null,
+                      color: isSelected ? Theme.of(context).colorScheme.primary.withValues(alpha: .12) : null,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -70,12 +70,11 @@ class _CalendarViewState extends State<CalendarView> {
                             style: TextStyle(
                               fontSize: 9,
                               fontWeight: FontWeight.w600,
-                              color:
-                                  net == 0
-                                      ? Theme.of(context).colorScheme.onSurfaceVariant
-                                      : net > 0
-                                      ? Colors.green
-                                      : Colors.red,
+                              color: net == 0
+                                  ? Theme.of(context).colorScheme.onSurfaceVariant
+                                  : net > 0
+                                  ? Colors.green
+                                  : Colors.red,
                             ),
                           ),
                       ],
@@ -138,7 +137,16 @@ class _WeekdayRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: days.map((d) => SizedBox(width: 36, child: Center(child: Text(d, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant))))).toList(),
+        children: days
+            .map(
+              (d) => SizedBox(
+                width: 36,
+                child: Center(
+                  child: Text(d, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

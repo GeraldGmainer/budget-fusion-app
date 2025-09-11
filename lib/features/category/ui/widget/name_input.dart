@@ -46,9 +46,9 @@ class NameInput extends StatelessWidget {
 
     if (categories != null) {
       final exists = categories.any((c) => c.name.toLowerCase() == value!.trim().toLowerCase() && c.id != draft.id);
-      // if (exists) {
-      //   return 'shared.validation.duplicate'.tr();
-      // }
+      if (exists) {
+        return 'shared.validation.duplicate'.tr();
+      }
     }
     return null;
   }

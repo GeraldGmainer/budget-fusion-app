@@ -43,27 +43,25 @@ class _SelectionBottomSheet<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(title.tr(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(title.tr(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
+          Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, index) => _buildTile(context, items[index]),
             ),
-            Flexible(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) => _buildTile(context, items[index]),
-              ),
-            ),
-            SizedBox(height: 16.0)
-          ],
-        ),
+          ),
+          SizedBox(height: 16.0),
+        ],
       ),
     );
   }

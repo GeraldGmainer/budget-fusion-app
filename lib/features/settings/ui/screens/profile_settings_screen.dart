@@ -5,7 +5,7 @@ import '../../../../core/core.dart';
 import '../ui.dart';
 
 class ProfileSettingScreen extends StatelessWidget {
-  _onLogout(BuildContext context) {}
+  void _onLogout(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

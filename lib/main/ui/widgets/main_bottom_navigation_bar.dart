@@ -9,13 +9,11 @@ abstract class MainBottomNavigationBarItem {
 }
 
 class MainBottomNavigationBar extends StatelessWidget {
-  final List<MainBottomNavigationBarItem> items;
+  const MainBottomNavigationBar({super.key});
 
-  const MainBottomNavigationBar({super.key, required this.items});
+  void _selectTab(BuildContext context, int index) => context.read<MainCubit>().selectTab(index);
 
-  void _selectTab(BuildContext context, int index) {
-    context.read<MainCubit>().selectTab(index);
-  }
+  void _createBooking(BuildContext context) => Navigator.of(context).pushNamed(AppRoutes.bookingSave);
 
   @override
   Widget build(BuildContext context) {
@@ -25,89 +23,90 @@ class MainBottomNavigationBar extends StatelessWidget {
         highlightColor: Colors.transparent,
       ),
       child: Container(
+        height: kBottomNavigationBarHeight,
         decoration: BoxDecoration(border: Border(top: AppBorders.secondaryBorder)),
-        child: BlocBuilder<MainCubit, MainState>(
-          builder: (context, state) {
-            final selectedIndex = state.selectedIndex;
-            return BottomNavigationBar(
-              selectedFontSize: 0,
-              unselectedFontSize: 0,
-              type: BottomNavigationBarType.fixed,
-              items: items.map((item) => item.build(selectedIndex)).toList(),
-              currentIndex: selectedIndex,
-              onTap: (index) {
-                _selectTab(context, index);
-              },
-              iconSize: 22,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-            );
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            _buildNavigationBar(),
+            RemoteLoadingIndicator(),
+            _buildCreateButton(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  BlocBuilder<MainCubit, MainState> _buildNavigationBar() {
+    return BlocBuilder<MainCubit, MainState>(
+      builder: (context, state) {
+        final selectedIndex = state.selectedIndex;
+        return BottomNavigationBar(
+          selectedFontSize: 0,
+          unselectedFontSize: 0,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            _buildNavItem(tabIndex: 0, selectedIndex: selectedIndex, icon: Icons.home, label: 'Home'),
+            _buildNavItem(tabIndex: 1, selectedIndex: selectedIndex, icon: Icons.book, label: 'Budget'),
+            _buildPlaceholderItem(),
+            _buildNavItem(tabIndex: 3, selectedIndex: selectedIndex, icon: Icons.golf_course, label: 'Goals'),
+            _buildNavItem(tabIndex: 4, selectedIndex: selectedIndex, icon: Icons.analytics, label: 'Analytics'),
+          ],
+          currentIndex: selectedIndex,
+          onTap: (index) {
+            if (index != 2) {
+              _selectTab(context, index);
+            }
           },
-        ),
-      ),
+          iconSize: 22,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+        );
+      },
     );
   }
-}
 
-class MainBottomNavigationCreateItem extends MainBottomNavigationBarItem {
-  final VoidCallback onTap;
-
-  MainBottomNavigationCreateItem({
-    required this.onTap,
-  });
-
-  @override
-  BottomNavigationBarItem build(int selectedIndex) {
-    return BottomNavigationBarItem(
-      label: '',
-      icon: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: AppColors.accentColor, // Replace with AppColors.accentColor if defined
-            shape: BoxShape.circle,
-          ),
-          child: Icon(Icons.add, color: Colors.white, size: 22),
-        ),
-      ),
-    );
-  }
-}
-
-class MainBottomNavigationTabItem extends MainBottomNavigationBarItem {
-  final int tabIndex;
-  final IconData icon;
-  final String label;
-
-  MainBottomNavigationTabItem({
-    required this.tabIndex,
-    required this.icon,
-    required this.label,
-  });
-
-  @override
-  BottomNavigationBarItem build(int selectedIndex) {
+  BottomNavigationBarItem _buildNavItem({
+    required int tabIndex,
+    required int selectedIndex,
+    required IconData icon,
+    required String label,
+  }) {
     final isSelected = selectedIndex == tabIndex;
+
     return BottomNavigationBarItem(
       label: '',
       icon: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 22,
-            color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor,
-            ),
-          ),
+          Icon(icon, size: 22, color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor),
+          Text(label, style: TextStyle(fontSize: 12, color: isSelected ? AppColors.primaryTextColor : AppColors.disabledTextColor)),
         ],
+      ),
+    );
+  }
+
+  BottomNavigationBarItem _buildPlaceholderItem() {
+    return const BottomNavigationBarItem(
+      label: '',
+      icon: SizedBox.shrink(),
+    );
+  }
+
+  Positioned _buildCreateButton(BuildContext context) {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 8,
+      child: Material(
+        elevation: 6,
+        shape: const CircleBorder(),
+        color: AppColors.accentColor,
+        child: InkWell(
+          onTap: () => _createBooking(context),
+          customBorder: const CircleBorder(),
+          child: const SizedBox(width: 56, height: 56, child: Icon(Icons.add, color: Colors.white, size: 30)),
+        ),
       ),
     );
   }

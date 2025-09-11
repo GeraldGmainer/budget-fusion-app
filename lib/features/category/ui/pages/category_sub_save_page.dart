@@ -32,7 +32,10 @@ class CategorySubSavePage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0), child: IconInput(draft: draft)),
+              Padding(
+                padding: const EdgeInsets.only(top: AppDimensions.verticalPadding, right: 8.0),
+                child: IconInput(draft: draft),
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(
@@ -43,7 +46,7 @@ class CategorySubSavePage extends StatelessWidget {
                     DisabledField(label: 'booking.fields.type'.tr(), value: draft.categoryType.label.tr()),
                     const SizedBox(height: 8),
                     DisabledField(label: 'category.fields.parent'.tr(), value: draft.parent?.name ?? "unknown"),
-                    if (draft.id != null) EntityMetaWidget<Category>(id: draft.id!, repo: getIt<CategoryRepo>()),
+                    if (draft.id != null) EntityMetaDisplay<Category>(id: draft.id!, repo: getIt<CategoryRepo>()),
                   ],
                 ),
               ),

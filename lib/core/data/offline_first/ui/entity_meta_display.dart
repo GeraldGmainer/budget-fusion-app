@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core.dart';
 
-class EntityMetaWidget<T extends Entity> extends StatelessWidget {
+class EntityMetaDisplay<T extends Entity> extends StatelessWidget {
   final Uuid id;
   final EdgeInsets padding;
   final Repo<T> repo;
   final bool navigateBackAfterDelete;
 
-  const EntityMetaWidget({
+  const EntityMetaDisplay({
     super.key,
     required this.id,
     required this.repo,
@@ -40,8 +40,9 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
   const _EntityMetaInner({required this.padding, required this.navigateBackAfterDelete});
 
   void _onDeleted(BuildContext context) {
+    if (!navigateBackAfterDelete) return;
     BudgetLogger.instance.d("Navigating back to previous screen after deletion");
-    context.showSnackBar("item was deleted");
+    context.showSnackBar("shared.notifications.auto_deleted");
     Navigator.of(context).pop();
   }
 
@@ -60,39 +61,37 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
           return state.when(
             loading: () => const SizedBox.shrink(),
             created: () => const SizedBox.shrink(),
-            error: (message, taskType) => _row(style, AppColors.validationErrorColor, _formatError(message)),
-            deleted: () => _row(style, AppColors.validationErrorColor, 'Deleted'),
+            error: (message, taskType) => _row(style, AppColors.entityError, _formatError(message)),
+            deleted: () => _row(style, AppColors.entityError, 'entity.state.deleted'),
             upserted: (m) {
-              final label = m.isPendingDelete ? 'Deleting…' : (m.isPending ? 'Pending' : 'Up to date');
-              final color = (m.isPendingDelete ? Colors.orange : (m.isPending ? Colors.orange : Colors.green));
+              final hasLabel = m.isPendingDelete || m.isPending;
+              final label = m.isPendingDelete ? 'entity.state.deleting' : (m.isPending ? 'entity.state.pending' : '');
+              final color = m.isPendingDelete || m.isPending ? AppColors.entityPending : AppColors.entityUpToDate;
+
               final parts = <Widget>[
                 Container(
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(color: color, shape: BoxShape.circle),
                 ),
-                const SizedBox(width: 6),
-                Text(label, style: style),
               ];
+
+              if (hasLabel) {
+                parts.addAll([const SizedBox(width: 6), Text(label, style: style)]);
+              }
+
+              void addTimestamp(IconData icon, Widget text) {
+                if (parts.length > 1) {
+                  parts.addAll([const SizedBox(width: 8), Text('•', style: style)]);
+                }
+                parts.addAll([const SizedBox(width: 8), Icon(icon, size: 14, color: onSurface), const SizedBox(width: 4), text]);
+              }
+
               if (m.updatedAt != null) {
-                parts.addAll([
-                  const SizedBox(width: 8),
-                  Text('•', style: style),
-                  const SizedBox(width: 8),
-                  Icon(CommunityMaterialIcons.calendar_plus, size: 14, color: onSurface),
-                  const SizedBox(width: 4),
-                  Text(_relative(m.updatedAt!), style: style),
-                ]);
+                addTimestamp(CommunityMaterialIcons.calendar_plus, Text(_relative(m.updatedAt!), style: style));
               }
               if (m.createdAt != null) {
-                parts.addAll([
-                  const SizedBox(width: 8),
-                  Text('•', style: style),
-                  const SizedBox(width: 8),
-                  Icon(CommunityMaterialIcons.calendar_edit, size: 14, color: onSurface),
-                  const SizedBox(width: 4),
-                  Text(DateFormat('dd.MM.yyyy').format(m.createdAt!.toLocal()), style: style),
-                ]);
+                addTimestamp(CommunityMaterialIcons.calendar_edit, Text(DateFormat('dd.MM.yyyy').format(m.createdAt!.toLocal()), style: style));
               }
               return Row(children: parts);
             },
@@ -119,7 +118,7 @@ class _EntityMetaInner<T extends Entity> extends StatelessWidget {
           decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
         ),
         const SizedBox(width: 6),
-        Flexible(child: Text(label, style: style)),
+        Flexible(child: Text(label.tr(), style: style)),
       ],
     );
   }

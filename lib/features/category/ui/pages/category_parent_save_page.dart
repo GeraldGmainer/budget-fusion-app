@@ -68,7 +68,7 @@ class CategoryParentSavePage extends StatelessWidget {
                         NameInput(draft: draft, autofocus: draft.isCreating),
                         const SizedBox(height: 8),
                         CategoryTypeInput(draft: draft),
-                        if (draft.editedCategory != null) EntityMetaWidget<Category>(id: draft.editedCategory!.id, repo: getIt<CategoryRepo>()),
+                        if (draft.editedCategory != null) EntityMetaDisplay<Category>(id: draft.editedCategory!.id, repo: getIt<CategoryRepo>()),
                       ],
                     ),
                   ),
