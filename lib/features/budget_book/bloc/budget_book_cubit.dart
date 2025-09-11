@@ -86,8 +86,8 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
         return await _generateBudgetSummaryUseCase.generate(filtered);
       case BudgetViewMode.transaction:
         return await _generateBudgetTransactionUseCase(filtered);
-      case BudgetViewMode.calendar:
-        return await _generateBudgetTransactionUseCase(filtered);
+      // case BudgetViewMode.calendar:
+      //   return await _generateBudgetTransactionUseCase(filtered);
     }
   }
 

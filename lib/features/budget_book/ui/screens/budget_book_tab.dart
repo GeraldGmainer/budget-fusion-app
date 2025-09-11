@@ -10,7 +10,6 @@ import '../../bloc/budget_book_cubit.dart';
 import '../../enums/budget_view_mode.dart';
 import '../../view_models/summary_view_data.dart';
 import '../../view_models/transaction_view_data.dart';
-import '../calendar/calendar_view.dart';
 import '../summary/summary_view.dart';
 import '../transaction/transaction_view.dart';
 import '../widgets/budget_book_app_bar.dart';
@@ -83,7 +82,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
         Expanded(
           child: BlocConsumer<BudgetBookCubit, BudgetBookState>(
             listener: (context, state) {
-              state.whenOrNull(error: (_, _, _, dateRange, error) => _handleError(error));
+              state.whenOrNull(error: (_, _, _, _, error) => _handleError(error));
               state.whenOrNull(
                 loaded: (_, _, _, _, isInitial) {
                   if (isInitial) {
@@ -134,7 +133,7 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
     return switch (viewMode) {
       BudgetViewMode.summary => SummaryView(data: item as SummaryViewData),
       BudgetViewMode.transaction => TransactionView(data: item as TransactionViewData),
-      BudgetViewMode.calendar => CalendarView(),
+      // BudgetViewMode.calendar => CalendarView(),
     };
   }
 
