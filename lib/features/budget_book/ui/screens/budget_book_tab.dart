@@ -13,6 +13,7 @@ import '../../view_models/transaction_view_data.dart';
 import '../calendar/calendar_view.dart';
 import '../summary/summary_view.dart';
 import '../transaction/transaction_view.dart';
+import '../widgets/budget_book_app_bar.dart';
 import '../widgets/period_selector.dart';
 
 class BudgetBookTab extends StatefulWidget {
@@ -62,7 +63,6 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
       }
       final current = _contentPageController.page ?? _contentPageController.initialPage.toDouble();
       if (current.round() == targetPage) return;
-      print("--------- jump to $targetPage");
       _contentPageController.jumpToPage(targetPage);
     });
   }
@@ -77,36 +77,43 @@ class _BudgetBookTabState extends State<BudgetBookTab> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocConsumer<BudgetBookCubit, BudgetBookState>(
-      listener: (context, state) {
-        state.whenOrNull(error: (_, _, _, dateRange, error) => _handleError(error));
-        state.whenOrNull(
-          loaded: (_, _, _, _, isInitial) {
-            if (isInitial) {
-              _handleSelectedRangeChange(state);
-            }
-          },
-        );
-      },
-      builder: (context, state) {
-        final isInitial = state.maybeWhen(initial: (_, _, _, _) => true, orElse: () => false);
-        if (isInitial) return Center(child: CircularProgressIndicator());
-        return Column(
-          children: [
-            PeriodSelector(pageController: _contentPageController),
-            Material(
-              color: AppColors.primaryColor,
-              child: TabBar(
-                controller: _budgetViewTabController,
-                isScrollable: true,
-                tabAlignment: TabAlignment.center,
-                tabs: BudgetViewMode.values.map((vm) => Tab(text: vm.label.tr())).toList(),
-              ),
-            ),
-            Expanded(child: _buildBody(state)),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        BudgetBookAppBar(),
+        Expanded(
+          child: BlocConsumer<BudgetBookCubit, BudgetBookState>(
+            listener: (context, state) {
+              state.whenOrNull(error: (_, _, _, dateRange, error) => _handleError(error));
+              state.whenOrNull(
+                loaded: (_, _, _, _, isInitial) {
+                  if (isInitial) {
+                    _handleSelectedRangeChange(state);
+                  }
+                },
+              );
+            },
+            builder: (context, state) {
+              final isInitial = state.maybeWhen(initial: (_, _, _, _) => true, orElse: () => false);
+              if (isInitial) return Center(child: CircularProgressIndicator());
+              return Column(
+                children: [
+                  PeriodSelector(pageController: _contentPageController),
+                  Material(
+                    color: AppColors.primaryColor,
+                    child: TabBar(
+                      controller: _budgetViewTabController,
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.center,
+                      tabs: BudgetViewMode.values.map((vm) => Tab(text: vm.label.tr())).toList(),
+                    ),
+                  ),
+                  Expanded(child: _buildBody(state)),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 

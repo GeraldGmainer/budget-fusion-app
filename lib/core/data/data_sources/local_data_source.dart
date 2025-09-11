@@ -117,7 +117,7 @@ abstract class LocalDataSource<E extends Dto> {
     return MapEntry(clause, whereArgs);
   }
 
-  _log(String msg, {bool darkColor = false}) {
+  void _log(String msg, {bool darkColor = false}) {
     EntityLogger.instance.d("LocalDataSource", table, msg, darkColor: darkColor);
   }
 

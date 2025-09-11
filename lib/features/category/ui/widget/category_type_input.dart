@@ -9,7 +9,7 @@ class CategoryTypeInput extends StatelessWidget {
 
   const CategoryTypeInput({super.key, required this.draft});
 
-  _onCategoryTypeChange(BuildContext context, CategoryType value) {
+  void _onCategoryTypeChange(BuildContext context, CategoryType value) {
     context.read<CategorySaveCubit>().updateDraft((draft) => draft.copyWith(categoryType: value));
   }
 

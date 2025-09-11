@@ -72,15 +72,15 @@ class _DescriptionInputModalState extends State<DescriptionInputModal> {
     super.dispose();
   }
 
-  _onSelect(String value) {
+  void _onSelect(String value) {
     _finish(value);
   }
 
-  _onSave() {
+  void _onSave() {
     _finish(_controller.text);
   }
 
-  _finish(String? value) {
+  void _finish(String? value) {
     widget.onChanged.call(value.isNullOrEmpty ? null : value);
     Navigator.of(context).pop();
   }

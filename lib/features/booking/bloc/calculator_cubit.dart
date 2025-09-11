@@ -36,20 +36,20 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     _updateState(0, history: []);
   }
 
-  back() async {
+  Future<void> back() async {
     if (state.history.isNotEmpty) {
       _calculateResult(state.history.sublist(0, state.history.length - 1));
     }
   }
 
-  equal() async {
+  Future<void> equal() async {
     if (state.history.isNotEmpty) {
       final value = state.result == state.result.truncate() ? state.result.toStringAsFixed(0) : state.result.toStringAsFixed(2);
       _calculateResult([value]);
     }
   }
 
-  key(CalculatorKey key) async {
+  Future<void> key(CalculatorKey key) async {
     List<String> history = [...state.history];
     if (key == CalculatorKey.dot) {
       final parts = history.join().split(RegExp(r'[+\-*/]'));
@@ -66,11 +66,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     _calculateResult(history);
   }
 
-  _updateState(double result, {List<String>? history}) {
+  void _updateState(double result, {List<String>? history}) {
     emit(CalculatorState.updated(history: history ?? state.history, result: result));
   }
 
-  _calculateResult(List<String> history) {
+  void _calculateResult(List<String> history) {
     if (history.isEmpty) {
       _updateState(0);
       return;
@@ -90,7 +90,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     }
   }
 
-  _isLastHistoryAOperation() {
+  bool _isLastHistoryAOperation() {
     if (state.history.isEmpty) {
       return false;
     }
@@ -98,7 +98,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     return operations.map((key) => key.calculateText).contains(lastString);
   }
 
-  _formatExpression(List<String> history) {
+  String _formatExpression(List<String> history) {
     final temp = [...history];
     String lastString = temp.last;
     if (operations.map((key) => key.calculateText).contains(lastString)) {

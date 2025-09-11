@@ -42,6 +42,11 @@ class FeatureConstants {
     return kReleaseMode ? Duration.zero : Duration(milliseconds: Random().nextInt(500) + 1000);
   }
 
+  /// enable Sentry logs and monitoring
   static const bool useSentry = true;
+
   // static const bool useSentry = kReleaseMode
+
+  /// minimum loading time to show loading indicator
+  static const Duration loadingIndicatorMinDuration = Duration(milliseconds: 5000);
 }

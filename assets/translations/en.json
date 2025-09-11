@@ -31,6 +31,19 @@
         "title": "Unsaved changes",
         "body": "You have unsaved changes. Are you sure you want to leave?"
       }
+    },
+    "notifications": {
+      "double_black_to_close": "Tap again to exit"
+    }
+  },
+  "entity": {
+    "state": {
+      "deleted": "Deleted",
+      "pending": "Pending",
+      "deleting": "Deleting…"
+    },
+    "notifications": {
+      "auto_deleted": "item was deleted"
     }
   },
   "account": {

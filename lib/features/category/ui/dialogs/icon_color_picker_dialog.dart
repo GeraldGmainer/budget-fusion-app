@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -13,11 +14,11 @@ class IconColorPickerDialog extends StatefulWidget {
   const IconColorPickerDialog({super.key, required this.initialIconName, required this.initialIconColor});
 
   @override
-  _IconColorPickerDialogState createState() => _IconColorPickerDialogState();
+  State<IconColorPickerDialog> createState() => _IconColorPickerDialogState();
 }
 
 class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
-  List<_IconGroup> _groups = [];
+  List<IconGroup> _groups = [];
   List<String> _colors = [];
   bool _loading = true;
   late String _selectedIconName;
@@ -38,9 +39,9 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
     final groups = list.map((g) {
       final name = g['name'] as String;
       final icons = (g['icons'] as List).cast<String>();
-      return _IconGroup(
+      return IconGroup(
         name: name,
-        icons: icons.map((i) => _IconOption(name: i)).toList(),
+        icons: icons.map((i) => IconOption(name: i)).toList(),
       );
     }).toList();
     final colorsData = map['colors'] as List<dynamic>;
@@ -66,25 +67,23 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
     if (_loading) {
       return const SizedBox(height: 200, child: Center(child: CircularProgressIndicator()));
     }
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        appBar: AppBar(
-          leading: CloseButton(),
-          title: Text('category.dialogs.icon.title'),
-          actions: [IconButton(onPressed: _save, icon: const Icon(Icons.check))],
-        ),
-        body: DefaultTabController(
-          length: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 8.0),
-              _buildPreview(),
-              _buildTabs(),
-              _buildTabViews(),
-            ],
-          ),
+    return Scaffold(
+      extendBody: true,
+      appBar: AppBar(
+        leading: CloseButton(),
+        title: Text('category.dialogs.icon.title').tr(),
+        actions: [IconButton(onPressed: _save, icon: const Icon(Icons.check))],
+      ),
+      body: DefaultTabController(
+        length: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 8.0),
+            _buildPreview(),
+            _buildTabs(),
+            _buildTabViews(),
+          ],
         ),
       ),
     );
@@ -131,17 +130,17 @@ class _IconColorPickerDialogState extends State<IconColorPickerDialog> {
   }
 }
 
-class _IconGroup {
+class IconGroup {
   final String name;
-  final List<_IconOption> icons;
+  final List<IconOption> icons;
 
-  _IconGroup({required this.name, required this.icons});
+  IconGroup({required this.name, required this.icons});
 }
 
-class _IconOption {
+class IconOption {
   final String name;
 
-  _IconOption({required this.name});
+  IconOption({required this.name});
 }
 
 class ColorSelectionTab extends StatefulWidget {
@@ -156,6 +155,7 @@ class ColorSelectionTab extends StatefulWidget {
 }
 
 class _ColorSelectionTabState extends State<ColorSelectionTab> {
+  static const double maxIconSize = 44;
   final Map<String, GlobalKey> _colorKeys = {};
   final ScrollController _scrollController = ScrollController();
 
@@ -178,8 +178,8 @@ class _ColorSelectionTabState extends State<ColorSelectionTab> {
         controller: _scrollController,
         crossAxisCount: 5,
         children: widget.colors.map((hex) {
-          final isSel = hex == widget.selectedColor;
           final key = _colorKeys.putIfAbsent(hex, () => GlobalKey());
+          final color = Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000);
           return GestureDetector(
             onTap: () => widget.onColorSelected(hex),
             child: Stack(
@@ -188,9 +188,17 @@ class _ColorSelectionTabState extends State<ColorSelectionTab> {
                 Container(
                   key: key,
                   margin: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(color: Color(int.parse(hex.substring(1), radix: 16) | 0xFF000000), shape: BoxShape.circle),
+                  constraints: BoxConstraints(maxHeight: maxIconSize, maxWidth: maxIconSize),
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
                 ),
-                if (isSel) Icon(Icons.check, color: Colors.white),
+                if (hex == widget.selectedColor)
+                  Icon(
+                    CommunityMaterialIcons.check_bold,
+                    color: adaptiveIconColor(color),
+                  ),
               ],
             ),
           );
@@ -198,10 +206,14 @@ class _ColorSelectionTabState extends State<ColorSelectionTab> {
       ),
     );
   }
+
+  Color adaptiveIconColor(Color background) {
+    return ThemeData.estimateBrightnessForColor(background) == Brightness.dark ? AppColors.primaryTextColor : AppColors.primaryColor;
+  }
 }
 
 class IconSelectionTab extends StatefulWidget {
-  final List<_IconGroup> groups;
+  final List<IconGroup> groups;
   final String selectedIconName;
   final Function(String) onIconSelected;
 

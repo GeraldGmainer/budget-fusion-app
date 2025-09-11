@@ -85,7 +85,7 @@ class DynamicSliverAppBar extends StatefulWidget {
   final CustomClipper<Path>? appBarClipper;
 
   @override
-  _DynamicSliverAppBarState createState() => _DynamicSliverAppBarState();
+  State<DynamicSliverAppBar> createState() => _DynamicSliverAppBarState();
 }
 
 class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
@@ -178,7 +178,7 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
             ),
             const Expanded(
               child: SizedBox.shrink(),
-            )
+            ),
           ],
         ),
       ),

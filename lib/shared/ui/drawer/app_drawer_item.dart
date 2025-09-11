@@ -19,7 +19,6 @@ class AppDrawerItem extends StatelessWidget {
       launchUrl(Uri.parse(url!), mode: LaunchMode.externalApplication);
       return;
     }
-    print(route);
     if (route != null) {
       final currentRoute = ModalRoute.of(context)?.settings.name;
       if (currentRoute != route) {
@@ -34,7 +33,10 @@ class AppDrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: isSelected ? Theme.of(context).colorScheme.secondary : (color ?? Colors.white70)),
-      title: Text(title, style: TextStyle(color: isSelected ? AppColors.accentColor : null, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+      title: Text(
+        title,
+        style: TextStyle(color: isSelected ? AppColors.accentColor : null, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal),
+      ),
       selected: isSelected,
       onTap: () => _onTap(context),
     );

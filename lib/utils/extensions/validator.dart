@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 
 extension CustomValidationBuilder on ValidationBuilder {
-  password() => add((value) {
+  ValidationBuilder password() => add((value) {
         if (value == null) {
           return "Enter a password";
         }
@@ -15,7 +15,7 @@ extension CustomValidationBuilder on ValidationBuilder {
         return null;
       });
 
-  match(TextEditingController other, [String? message]) => add((value) {
+  ValidationBuilder match(TextEditingController other, [String? message]) => add((value) {
         if (value != other.text) {
           return message ?? "Passwords dont match";
         }

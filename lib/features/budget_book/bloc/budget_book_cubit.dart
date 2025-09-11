@@ -102,7 +102,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
       final items = await _generateViewData(filtered, newViewMode);
 
       state.maybeWhen(
-        loaded: (_, __, ___, dateRange, ____) => emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, dateRange: dateRange, isInitial: false)),
+        loaded: (_, _, _, dateRange, _) => emit(BudgetBookState.loaded(items: items, filter: newFilter, viewMode: newViewMode, dateRange: dateRange, isInitial: false)),
         orElse: () => emit(state.copyWith(items: items, filter: newFilter, viewMode: newViewMode)),
       );
     },
@@ -129,7 +129,7 @@ class BudgetBookCubit extends ErrorHandledCubit<BudgetBookState> {
     _loadingTimeout?.cancel();
     final snapshot = state;
     _loadingTimeout = Timer(const Duration(seconds: 10), () {
-      final stillLoading = state.maybeWhen(loading: (_, __, ___, ____) => true, orElse: () => false);
+      final stillLoading = state.isLoading;
       if (!stillLoading) return;
       emit(BudgetBookState.loaded(items: snapshot.items, filter: snapshot.filter, viewMode: snapshot.viewMode, dateRange: snapshot.dateRange, isInitial: false));
     });

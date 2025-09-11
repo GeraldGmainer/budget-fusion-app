@@ -1,4 +1,3 @@
-import 'package:budget_fusion_app/core/core.dart';
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,7 @@ import '../../../features/budget_book/budget_book.dart';
 import '../../../features/budget_goals/budget_goals.dart';
 import '../../../features/overview/home.dart';
 import '../../main.dart';
+import '../widgets/double_back_to_close.dart';
 import '../widgets/main_bottom_navigation_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,7 +19,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final PageController _pageController = PageController();
   late final List<Widget> _tabs;
-  late final List<MainBottomNavigationBarItem> _items;
   int _currentIndex = 0;
 
   @override
@@ -33,18 +32,7 @@ class _MainPageState extends State<MainPage> {
       AnalyticsTab(),
     ];
 
-    _items = [
-      MainBottomNavigationTabItem(icon: Icons.home, label: 'Home', tabIndex: 0),
-      MainBottomNavigationTabItem(icon: Icons.book, label: 'Budget', tabIndex: 1),
-      MainBottomNavigationCreateItem(onTap: _createBooking),
-      MainBottomNavigationTabItem(icon: Icons.golf_course, label: 'Goals', tabIndex: 3),
-      MainBottomNavigationTabItem(icon: Icons.analytics, label: 'Analytics', tabIndex: 4),
-    ];
     FlutterNativeSplash.remove();
-  }
-
-  void _createBooking() {
-    Navigator.of(context).pushNamed(AppRoutes.bookingSave);
   }
 
   void _onTabChange(int index) {
@@ -61,31 +49,18 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<MainCubit, MainState>(
-      listener: (context, state) {
-        state.whenOrNull(tabChange: _onTabChange);
-      },
+      listener: (context, state) => state.whenOrNull(tabChange: _onTabChange),
       child: Scaffold(
-        appBar: _buildAppBarForIndex(_currentIndex),
         drawer: const AppDrawer(),
-        bottomNavigationBar: MainBottomNavigationBar(items: _items),
-        body: Stack(
-          children: [
-            PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: _tabs,
-            ),
-            RemoteLoadingIndicator(),
-          ],
+        bottomNavigationBar: MainBottomNavigationBar(),
+        body: DoubleBackToClose(
+          child: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: _tabs,
+          ),
         ),
       ),
     );
-  }
-
-  PreferredSizeWidget? _buildAppBarForIndex(int index) {
-    if (index == 1) {
-      return BudgetBookAppBar();
-    }
-    return null;
   }
 }

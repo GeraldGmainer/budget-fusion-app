@@ -93,7 +93,7 @@ class _CategorySaveContainerState extends State<CategorySaveContainer> {
               floatingActionButton: AppFab.save(_onSave),
               body: state.maybeWhen(
                 draftUpdate: (draft, _) => _buildContent(draft),
-                error: (draft, __) => _buildContent(draft),
+                error: (draft, _) => _buildContent(draft),
                 orElse: () => Center(child: CircularProgressIndicator()),
               ),
             ),

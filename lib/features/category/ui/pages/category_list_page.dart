@@ -29,7 +29,7 @@ class _CategoryListPageState extends State<CategoryListPage> with SingleTickerPr
     super.dispose();
   }
 
-  _reloadCategories() {
+  void _reloadCategories() {
     context.read<CategoryListCubit>().load(clearCache: true);
   }
 

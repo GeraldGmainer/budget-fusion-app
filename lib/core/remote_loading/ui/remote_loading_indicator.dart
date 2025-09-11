@@ -12,11 +12,11 @@ class RemoteLoadingIndicator extends StatelessWidget {
       builder: (context, isLoading) {
         return isLoading
             ? Align(
-              alignment: Alignment.bottomCenter,
-              child: SafeArea(
-                child: LinearProgressIndicator(color: AppColors.primaryColor, minHeight: 3),
-              ),
-            )
+                alignment: Alignment.topCenter,
+                child: SafeArea(
+                  child: LinearProgressIndicator(color: AppColors.primaryColor, minHeight: 3),
+                ),
+              )
             : const SizedBox.shrink();
       },
     );

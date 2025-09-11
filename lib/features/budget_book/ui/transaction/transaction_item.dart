@@ -9,7 +9,7 @@ class TransactionItem extends StatelessWidget {
 
   const TransactionItem({super.key, required this.booking});
 
-  _onTap(BuildContext context) => Navigator.of(context).pushNamed(AppRoutes.bookingSave, arguments: booking);
+  Future<Object?> _onTap(BuildContext context) => Navigator.of(context).pushNamed(AppRoutes.bookingSave, arguments: booking);
 
   @override
   Widget build(BuildContext context) {

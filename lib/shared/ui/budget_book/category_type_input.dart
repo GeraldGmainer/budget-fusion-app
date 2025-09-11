@@ -10,7 +10,7 @@ class CategoryTypeInput extends StatelessWidget {
 
   const CategoryTypeInput({super.key, required this.onChange, required this.value, this.disabled = false});
 
-  _onTransactionTypeTap(BuildContext context) async {
+  Future<void> _onTransactionTypeTap(BuildContext context) async {
     final CategoryType? selectedValue = await showSelectionBottomSheet<CategoryType>(
       context: context,
       title: "booking.fields.type".tr(),

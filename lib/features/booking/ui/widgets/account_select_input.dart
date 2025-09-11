@@ -14,7 +14,7 @@ class AccountSelectInput extends StatelessWidget {
 
   const AccountSelectInput({required this.draft, required this.onChange});
 
-  _onTap(BuildContext context) async {
+  Future<void> _onTap(BuildContext context) async {
     final accounts = context.read<RepoCubit<Account>>().state.whenOrNull(loaded: (accounts) => accounts) ?? [];
 
     final Account? selectedAccount = await showSelectionBottomSheet<Account>(
