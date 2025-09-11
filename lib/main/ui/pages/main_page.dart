@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../../features/analytics/analytics.dart';
 import '../../../features/budget_book/budget_book.dart';
-import '../../../features/budget_goals/budget_goals.dart';
 import '../../../features/overview/home.dart';
 import '../../main.dart';
 import '../widgets/double_back_to_close.dart';
@@ -26,10 +24,8 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     _tabs = [
       HomeTab(),
-      BudgetBookTab(),
       Container(),
-      BudgetGoalsTab(),
-      AnalyticsTab(),
+      BudgetBookTab(),
     ];
 
     FlutterNativeSplash.remove();

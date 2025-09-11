@@ -11,7 +11,11 @@ abstract class MainBottomNavigationBarItem {
 class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({super.key});
 
-  void _selectTab(BuildContext context, int index) => context.read<MainCubit>().selectTab(index);
+  void _selectTab(BuildContext context, int index) {
+    if (index != 1) {
+      context.read<MainCubit>().selectTab(index);
+    }
+  }
 
   void _createBooking(BuildContext context) => Navigator.of(context).pushNamed(AppRoutes.bookingSave);
 
@@ -47,17 +51,11 @@ class MainBottomNavigationBar extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
           items: [
             _buildNavItem(tabIndex: 0, selectedIndex: selectedIndex, icon: Icons.home, label: 'Home'),
-            _buildNavItem(tabIndex: 1, selectedIndex: selectedIndex, icon: Icons.book, label: 'Budget'),
             _buildPlaceholderItem(),
-            _buildNavItem(tabIndex: 3, selectedIndex: selectedIndex, icon: Icons.golf_course, label: 'Goals'),
-            _buildNavItem(tabIndex: 4, selectedIndex: selectedIndex, icon: Icons.analytics, label: 'Analytics'),
+            _buildNavItem(tabIndex: 2, selectedIndex: selectedIndex, icon: Icons.book, label: 'Budget'),
           ],
           currentIndex: selectedIndex,
-          onTap: (index) {
-            if (index != 2) {
-              _selectTab(context, index);
-            }
-          },
+          onTap: (index) => _selectTab(context, index),
           iconSize: 22,
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -66,14 +64,8 @@ class MainBottomNavigationBar extends StatelessWidget {
     );
   }
 
-  BottomNavigationBarItem _buildNavItem({
-    required int tabIndex,
-    required int selectedIndex,
-    required IconData icon,
-    required String label,
-  }) {
+  BottomNavigationBarItem _buildNavItem({required int tabIndex, required int selectedIndex, required IconData icon, required String label}) {
     final isSelected = selectedIndex == tabIndex;
-
     return BottomNavigationBarItem(
       label: '',
       icon: Column(
@@ -87,10 +79,7 @@ class MainBottomNavigationBar extends StatelessWidget {
   }
 
   BottomNavigationBarItem _buildPlaceholderItem() {
-    return const BottomNavigationBarItem(
-      label: '',
-      icon: SizedBox.shrink(),
-    );
+    return const BottomNavigationBarItem(label: '', icon: SizedBox.shrink());
   }
 
   Positioned _buildCreateButton(BuildContext context) {

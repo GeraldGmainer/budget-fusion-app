@@ -10,8 +10,6 @@ class MainCubit extends Cubit<MainState> {
   MainCubit() : super(const MainState.initial(0));
 
   void selectTab(int index) {
-    if (index != 2) {
-      emit(MainState.tabChange(index));
-    }
+    emit(MainState.tabChange(index));
   }
 }
