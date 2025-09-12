@@ -1,5 +1,4 @@
 import 'package:budget_fusion_app/core/constants/app_colors.dart';
-import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -33,9 +32,6 @@ class BudgetOverview extends StatelessWidget {
       title: "Monthly Balance",
       titleStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
       backgroundColor: AppColors.primaryColor,
-      onOptionTap: () {
-        context.showComingSoon();
-      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,36 +96,35 @@ class BudgetOverview extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
-              children:
-                  topCategories.map((category) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.deepPurple,
-                            radius: 12,
-                            child: Icon(
-                              _getCategoryIcon(category.category),
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              category.category,
-                              style: const TextStyle(fontSize: 14, color: Colors.white),
-                            ),
-                          ),
-                          Text(
-                            '\$${category.amount.toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                        ],
+              children: topCategories.map((category) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.deepPurple,
+                        radius: 12,
+                        child: Icon(
+                          _getCategoryIcon(category.category),
+                          color: Colors.white,
+                          size: 16,
+                        ),
                       ),
-                    );
-                  }).toList(),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          category.category,
+                          style: const TextStyle(fontSize: 14, color: Colors.white),
+                        ),
+                      ),
+                      Text(
+                        '\$${category.amount.toStringAsFixed(2)}',
+                        style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
           ),
           const SizedBox(height: 16),
@@ -193,15 +188,14 @@ class BudgetOverview extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    spots:
-                        balanceData
-                            .map(
-                              (data) => FlSpot(
-                                balanceData.indexOf(data).toDouble(),
-                                data.balance,
-                              ),
-                            )
-                            .toList(),
+                    spots: balanceData
+                        .map(
+                          (data) => FlSpot(
+                            balanceData.indexOf(data).toDouble(),
+                            data.balance,
+                          ),
+                        )
+                        .toList(),
                     isCurved: true,
                     color: AppColors.accentColor,
                     dotData: FlDotData(

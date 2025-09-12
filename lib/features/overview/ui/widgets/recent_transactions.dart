@@ -24,10 +24,8 @@ class RecentTransactions extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardWithAction(
       title: "Recent Transactions",
-      onOptionTap: () {
-        context.showComingSoon();
-      },
       onShowMoreTap: () {
+        // TODO got to budget book tab (overview or transactions
         context.showComingSoon();
       },
       child: _buildList(context),

@@ -106,11 +106,18 @@ class _DynamicSliverAppBarState extends State<DynamicSliverAppBar> {
   }
 
   void _updateHeight() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (_childKey.currentContext == null) return;
-      setState(() {
-        _height = (_childKey.currentContext!.findRenderObject()! as RenderBox).size.height;
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = _childKey.currentContext;
+      if (ctx == null) return;
+
+      final childH = (ctx.findRenderObject() as RenderBox).size.height;
+      final statusBar = MediaQuery.of(context).padding.top;
+      final toolbar = widget.toolbarHeight;
+
+      final newH = (childH - statusBar - toolbar).clamp(0.0, double.infinity) + toolbar;
+      if ((newH - _height).abs() > 0.5) {
+        setState(() => _height = newH);
+      }
     });
   }
 

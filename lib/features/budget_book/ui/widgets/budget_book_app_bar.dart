@@ -1,7 +1,6 @@
 import 'package:budget_fusion_app/shared/shared.dart';
 import 'package:budget_fusion_app/utils/utils.dart';
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,9 +29,7 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (action == BudgetMenuAction.reload) {
               context.read<BudgetBookCubit>().reload();
             } else {
-              if (action == BudgetMenuAction.settings) {
-                context.showComingSoon();
-              }
+              context.showComingSoon();
             }
           },
           itemBuilder: (ctx) {
@@ -40,8 +37,7 @@ class BudgetBookAppBar extends StatelessWidget implements PreferredSizeWidget {
 
             return [
               _buildReload(isLoading),
-
-              PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr())),
+              // PopupMenuItem<BudgetMenuAction>(value: BudgetMenuAction.settings, child: Text('shared.button.settings'.tr())),
             ];
           },
         ),

@@ -143,7 +143,7 @@
       },
       "budgetViewMode": {
         "summary": "Summary",
-        "transaction": "Transaction",
+        "transaction": "Transactions",
         "calendar": "Calendar"
       }
     },

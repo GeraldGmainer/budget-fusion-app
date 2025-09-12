@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
 import '../widgets/budget_overview.dart';
-import '../widgets/notifications.dart';
 import '../widgets/recent_transactions.dart';
-import '../widgets/reports.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -21,18 +19,16 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     return CustomScrollView(
       slivers: [
         DynamicSliverAppBar(
-          title: Text('Home', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+          title: Text(
+            'Home',
+            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           leading: AppDrawerButton(),
-          actions: [Notifications()],
           backgroundColor: AppColors.primaryColor,
           flexibleSpace: _buildFlexibleSpace(
             topPadding: toolbarPadding,
             child: BudgetOverview(),
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: AppDimensions.horizontalPadding),
-          sliver: SliverToBoxAdapter(child: Reports()),
         ),
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: AppDimensions.horizontalPadding, vertical: AppDimensions.verticalPadding),

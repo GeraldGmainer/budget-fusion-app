@@ -20,9 +20,6 @@ class SummaryGraph extends StatelessWidget {
 
     return CustomCardWithAction(
       floatingOption: true,
-      onOptionTap: () {
-        context.showComingSoon();
-      },
       child: Center(
         child: SizedBox(
           height: 220,

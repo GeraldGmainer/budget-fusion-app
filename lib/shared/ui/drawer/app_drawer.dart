@@ -19,21 +19,21 @@ class AppDrawer extends StatelessWidget {
           route: AppRoutes.main,
           color: Color(0xFF64B5F6), // light-blue
         ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.chart_line,
-          title: 'Investments',
-          color: Color(0xFF9575CD), // medium-purple
-        ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.chart_bar,
-          title: 'Predictions',
-          color: Color(0xFFFFB74D), // light-orange
-        ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.shopping,
-          title: 'Shopping List',
-          color: Color(0xFF4DB6AC), // teal
-        ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.chart_line,
+        //   title: 'Investments',
+        //   color: Color(0xFF9575CD), // medium-purple
+        // ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.chart_bar,
+        //   title: 'Predictions',
+        //   color: Color(0xFFFFB74D), // light-orange
+        // ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.shopping,
+        //   title: 'Shopping List',
+        //   color: Color(0xFF4DB6AC), // teal
+        // ),
         DrawerItem(
           icon: CommunityMaterialIcons.android,
           title: 'Debug',
@@ -56,46 +56,46 @@ class AppDrawer extends StatelessWidget {
           route: AppRoutes.categoryList,
           color: Color(0xFFFFCC80), // pale-amber
         ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.repeat,
-          title: 'Recurring Transactions',
-          color: Color(0xFF81C784), // green
-        ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.flag_variant,
-          title: 'Budget Goals',
-          color: Color(0xFFE57373), // red-light
-        ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.death_star,
-          title: 'Debts',
-          color: Color(0xFFE57373), // same red for debt
-        ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.repeat,
+        //   title: 'Recurring Transactions',
+        //   color: Color(0xFF81C784), // green
+        // ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.flag_variant,
+        //   title: 'Budget Goals',
+        //   color: Color(0xFFE57373), // red-light
+        // ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.death_star,
+        //   title: 'Debts',
+        //   color: Color(0xFFE57373), // same red for debt
+        // ),
       ],
     ),
-    DrawerSection(
-      header: 'Collaboration',
-      items: [
-        DrawerItem(
-          icon: CommunityMaterialIcons.account_group,
-          title: 'Workspace',
-          color: Color(0xFF4FC3F7), // light-cyan
-        ),
-      ],
-    ),
+    // DrawerSection(
+    //   header: 'Collaboration',
+    //   items: [
+    //     DrawerItem(
+    //       icon: CommunityMaterialIcons.account_group,
+    //       title: 'Workspace',
+    //       color: Color(0xFF4FC3F7), // light-cyan
+    //     ),
+    //   ],
+    // ),
     DrawerSection(
       header: 'Other',
       items: [
-        DrawerItem(
-          icon: CommunityMaterialIcons.crown,
-          title: 'Get Pro',
-          color: Color(0xFFFFF176), // yellow
-        ),
-        DrawerItem(
-          icon: CommunityMaterialIcons.web,
-          title: 'Open Webpage',
-          color: Color(0xFF90A4AE), // blue-grey
-        ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.crown,
+        //   title: 'Get Pro',
+        //   color: Color(0xFFFFF176), // yellow
+        // ),
+        // DrawerItem(
+        //   icon: CommunityMaterialIcons.web,
+        //   title: 'Open Webpage',
+        //   color: Color(0xFF90A4AE), // blue-grey
+        // ),
         DrawerItem(
           icon: CommunityMaterialIcons.cog_outline,
           title: 'Settings',
@@ -107,7 +107,11 @@ class AppDrawer extends StatelessWidget {
           title: 'Support',
           color: Color(0xFF80CBC4), // pale-teal
         ),
-        DrawerItem(icon: CommunityMaterialIcons.reddit, title: 'Budget Fusion Reddit', url: 'https://www.reddit.com/'),
+        DrawerItem(
+          icon: CommunityMaterialIcons.reddit,
+          title: 'Budget Fusion Reddit',
+          url: 'https://www.reddit.com/',
+        ),
       ],
     ),
   ];
